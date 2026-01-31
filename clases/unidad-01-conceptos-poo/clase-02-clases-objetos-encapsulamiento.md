@@ -5,17 +5,23 @@ paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 
-style: |
-  img {
-    max-width: 85%;
-    max-height: 60vh;
-    object-fit: contain;
-  }
   section {
     font-size: 24px;
   }
 
 ---
+<style>
+img {
+  max-width: 70% !important;
+  max-height: 50vh !important;
+  object-fit: contain !important;
+  height: auto !important;
+}
+section {
+  font-size: 24px;
+}
+</style>
+
 
 # Clase 2: Clases, Objetos y Encapsulamiento
 ## Los pilares de la Programación Orientada a Objetos
