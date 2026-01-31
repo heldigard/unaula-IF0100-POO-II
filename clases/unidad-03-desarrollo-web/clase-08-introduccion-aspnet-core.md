@@ -17,7 +17,7 @@ IMÁGENES GENERADAS:
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
-![Arquitectura ASP.NET Core](../../../assets/infografias/clase-08-aspnet-core.png)
+![Arquitectura ASP.NET Core](../../assets/infografias/clase-08-aspnet-core.png)
 
 ---
 

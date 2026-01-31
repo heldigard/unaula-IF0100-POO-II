@@ -17,6 +17,8 @@ IMÁGENES GENERADAS:
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
+![Arquitectura ADO.NET](../../assets/infografias/clase-12-ado-net.png)
+
 ---
 
 ## Objetivos de la Clase

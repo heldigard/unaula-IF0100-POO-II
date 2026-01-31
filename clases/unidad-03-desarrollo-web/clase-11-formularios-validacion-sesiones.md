@@ -114,6 +114,8 @@ public class EstudianteViewModel
 
 ### Lista completa de atributos
 
+![Validación de Formularios](../../assets/infografias/clase-11-validacion-formularios.png)
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │           DATA ANNOTATIONS DE VALIDACIÓN                    │

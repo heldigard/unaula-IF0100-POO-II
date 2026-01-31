@@ -17,7 +17,7 @@ IMÁGENES GENERADAS:
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
-![Bootstrap Grid System](../../../assets/infografias/clase-09-bootstrap-grid.png)
+![Bootstrap Grid System](../../assets/infografias/clase-09-bootstrap-grid.png)
 
 ---
 
