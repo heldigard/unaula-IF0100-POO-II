@@ -100,7 +100,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **Herencia** es un mecanismo que permite crear nuevas clases basadas en clases existentes, reutilizando código y estableciendo relaciones jerárquicas.
 
-![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -304,7 +304,7 @@ prof.Especialidad = "Programación"; // De Profesor
 
 > **Polimorfismo** permite que objetos de diferentes clases respondan al mismo mensaje (método) de manera específica.
 
-![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 

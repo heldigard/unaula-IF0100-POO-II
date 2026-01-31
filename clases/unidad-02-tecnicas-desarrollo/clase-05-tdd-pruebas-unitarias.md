@@ -154,7 +154,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Pirámide de pruebas
 
-![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -164,7 +164,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **TDD** es una metodología de desarrollo donde se escriben las pruebas ANTES de escribir el código de producción.
 
-![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 

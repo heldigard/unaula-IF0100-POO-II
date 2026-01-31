@@ -156,7 +156,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **.NET** es una plataforma de desarrollo unificada para construir cualquier tipo de aplicación: web, móvil, desktop, cloud, IoT, AI.
 
-![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 

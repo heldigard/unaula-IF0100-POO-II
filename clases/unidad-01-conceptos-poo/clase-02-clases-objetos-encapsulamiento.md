@@ -113,7 +113,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Analogía: Molde vs Producto
 
-![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
 
