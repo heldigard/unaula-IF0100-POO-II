@@ -2,7 +2,7 @@
 marp: true
 theme: default
 paginate: true
-header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
+| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1' |
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 
   section {
@@ -50,6 +50,50 @@ section code {
 section p {
   margin: 0.5em 0;
 }
+/* Estilos para tablas responsivas */
+section table {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.85em;
+  border-collapse: collapse;
+  margin: 0.5em auto;
+  table-layout: auto;
+}
+section th {
+  background-color: #1e40af;
+  color: white;
+  padding: 0.4em 0.6em;
+  text-align: left;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+}
+section td {
+  padding: 0.4em 0.6em;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  font-size: 0.85em;
+}
+section tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+section tbody tr:hover {
+  background-color: #e9ecef;
+}
+/* Asegurar que el contenido no desborde */
+section {
+  padding: 1em 2em;
+  box-sizing: border-box;
+}
+/* Responsividad para tablas anchas */
+@media screen and (max-width: 1280px) {
+  section table {
+    font-size: 0.75em;
+  }
+  section th, section td {
+    padding: 0.3em 0.4em;
+  }
+}
 </style>
 
 
@@ -86,6 +130,19 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 
 ## 1. ¿Qué es C#?
+
+### ¿Por qué C# en 2026?
+
+**Razones para aprenderlo:**
+- 🚀 **Versátil:** Web, Desktop, Mobile, Cloud, Games, IoT
+- 💼 **Demanda laboral:** Alto en empresas grandes
+- 🆓 **Gratis y multiplataforma:** Con .NET (Windows, Linux, macOS)
+- 🎮 **Unity:** Motor de juegos más popular usa C#
+- ☁️ **Cloud:** Azure tiene soporte nativo
+- 📈 **Moderno:** Actualizaciones anuales con nuevas características
+
+**Empresas que usan C#:** Microsoft, Stack Overflow, Alibaba, Delivery Hero
+
 
 ### Definición
 
@@ -189,7 +246,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ### Las tres eras de .NET
 
 | Era | Período | Características |
-|-----|---------|-----------------|
+| ----- | --------- | ----------------- |
 | **.NET Framework** | 2002-2024 | Windows-only, monolítico, cerrado |
 | **.NET Core** | 2016-2020 | Open source, multiplataforma, modular |
 | **.NET 5+** | 2020-presente | Unificación, una sola plataforma |
@@ -519,7 +576,7 @@ namespace CalculadoraArea
 ### Productividad
 
 | Atajo | Acción |
-|-------|--------|
+| ------- | -------- |
 | `Ctrl + K, Ctrl + C` | Comentar selección |
 | `Ctrl + K, Ctrl + U` | Descomentar selección |
 | `Ctrl + .` | Quick Actions (corregir errores) |
@@ -535,7 +592,7 @@ namespace CalculadoraArea
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-|----------|-------------|
+| ---------- | ------------- |
 | **C#** | Lenguaje moderno, orientado a objetos, type-safe |
 | **.NET 8** | Plataforma unificada, multiplataforma, open source |
 | **CLR** | Common Language Runtime, máquina virtual de .NET |

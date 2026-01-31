@@ -2,7 +2,7 @@
 marp: true
 theme: default
 paginate: true
-header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
+| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4' |
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 
   section {
@@ -49,6 +49,50 @@ section code {
 }
 section p {
   margin: 0.5em 0;
+}
+/* Estilos para tablas responsivas */
+section table {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.85em;
+  border-collapse: collapse;
+  margin: 0.5em auto;
+  table-layout: auto;
+}
+section th {
+  background-color: #1e40af;
+  color: white;
+  padding: 0.4em 0.6em;
+  text-align: left;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+}
+section td {
+  padding: 0.4em 0.6em;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  font-size: 0.85em;
+}
+section tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+section tbody tr:hover {
+  background-color: #e9ecef;
+}
+/* Asegurar que el contenido no desborde */
+section {
+  padding: 1em 2em;
+  box-sizing: border-box;
+}
+/* Responsividad para tablas anchas */
+@media screen and (max-width: 1280px) {
+  section table {
+    font-size: 0.75em;
+  }
+  section th, section td {
+    padding: 0.3em 0.4em;
+  }
 }
 </style>
 
@@ -133,7 +177,7 @@ File.WriteAllText("producto.json", json);
 ## 4. ¿Cuándo usar archivos planos?
 
 | Caso | Archivo plano | BD |
-|------|---------------|----|
+| ------ | --------------- | ---- |
 | Pocos datos | ✅ | ❌ |
 | Multiusuario | ❌ | ✅ |
 | Consultas complejas | ❌ | ✅ |
@@ -153,7 +197,7 @@ En parejas:
 ## Resumen
 
 | Concepto | Idea clave |
-|----------|------------|
+| ---------- | ------------ |
 | System.IO | API base de archivos |
 | CSV | Datos tabulares simples |
 | JSON | Intercambio estructurado |

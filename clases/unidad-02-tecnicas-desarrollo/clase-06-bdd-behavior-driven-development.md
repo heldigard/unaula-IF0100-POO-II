@@ -2,7 +2,7 @@
 marp: true
 theme: default
 paginate: true
-header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2'
+| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2' |
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 
   section {
@@ -49,6 +49,50 @@ section code {
 }
 section p {
   margin: 0.5em 0;
+}
+/* Estilos para tablas responsivas */
+section table {
+  width: 100%;
+  max-width: 100%;
+  font-size: 0.85em;
+  border-collapse: collapse;
+  margin: 0.5em auto;
+  table-layout: auto;
+}
+section th {
+  background-color: #1e40af;
+  color: white;
+  padding: 0.4em 0.6em;
+  text-align: left;
+  font-size: 0.9em;
+  border: 1px solid #ddd;
+}
+section td {
+  padding: 0.4em 0.6em;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  font-size: 0.85em;
+}
+section tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+section tbody tr:hover {
+  background-color: #e9ecef;
+}
+/* Asegurar que el contenido no desborde */
+section {
+  padding: 1em 2em;
+  box-sizing: border-box;
+}
+/* Responsividad para tablas anchas */
+@media screen and (max-width: 1280px) {
+  section table {
+    font-size: 0.75em;
+  }
+  section th, section td {
+    padding: 0.3em 0.4em;
+  }
 }
 </style>
 
@@ -181,7 +225,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 | Rol | Perspectiva | Pregunta clave |
-|-----|-------------|----------------|
+| ----- | ------------- | ---------------- |
 | **Negocio (PO)** | Valor | ¿Qué problema resolvemos? |
 | **Desarrollador** | Solución | ¿Cómo lo construimos? |
 | **Tester (QA)** | Calidad | ¿Qué podría fallar? |
@@ -296,7 +340,7 @@ Living Documentation
 ### Vocabulario básico
 
 | Español | Inglés | Propósito |
-|---------|--------|-----------|
+| --------- | -------- | ----------- |
 | `Característica` | `Feature` | Agrupa escenarios relacionados |
 | `Antecedentes` | `Background` | Pasos comunes a todos los escenarios |
 | `Escenario` | `Scenario` | Caso de prueba específico |
@@ -406,12 +450,12 @@ Característica: Cálculo de descuento
     Y el precio final debe ser <precio_final>
 
     Ejemplos:
-      | precio | categoria   | descuento | precio_final |
-      | 100    | "normal"    | 0         | 100          |
-      | 100    | "frecuente" | 5         | 95           |
-      | 100    | "vip"       | 10        | 90           |
-      | 200    | "vip"       | 10        | 180          |
-      | 500    | "frecuente" | 5         | 475          |
+| precio | categoria | descuento | precio_final |
+| 100 | "normal" | 0 | 100 |
+| 100 | "frecuente" | 5 | 95 |
+| 100 | "vip" | 10 | 90 |
+| 200 | "vip" | 10 | 180 |
+| 500 | "frecuente" | 5 | 475 |
 
   # Equivalente a escribir 5 escenarios separados
 ```
@@ -533,20 +577,20 @@ Característica: Gestión de calificaciones estudiantiles
   Escenario: Registrar calificaciones exitosamente
     Dado que el estudiante está inscrito en "Matemáticas"
     Cuando registro las notas:
-      | Parcial | Nota |
-      | 1       | 4.5  |
-      | 2       | 3.8  |
-      | 3       | 4.2  |
+| Parcial | Nota |
+| 1 | 4.5 |
+| 2 | 3.8 |
+| 3 | 4.2 |
     Entonces el promedio debe ser 4.17
     Y el estado debe ser "Aprobado"
 
   Escenario: Estudiante reprueba por promedio bajo
     Dado que el estudiante está inscrito en "Física"
     Cuando registro las notas:
-      | Parcial | Nota |
-      | 1       | 2.5  |
-      | 2       | 2.8  |
-      | 3       | 2.0  |
+| Parcial | Nota |
+| 1 | 2.5 |
+| 2 | 2.8 |
+| 3 | 2.0 |
     Entonces el promedio debe ser 2.43
     Y el estado debe ser "Reprobado"
 
@@ -833,7 +877,7 @@ Escenario: Autenticación fallida con credenciales inválidas
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-|----------|-------------|
+| ---------- | ------------- |
 | **BDD** | Desarrollo guiado por comportamiento de negocio |
 | **Gherkin** | Lenguaje estructurado para especificaciones |
 | **Given-When-Then** | Dado-Cuando-Entonces (formato escenarios) |
