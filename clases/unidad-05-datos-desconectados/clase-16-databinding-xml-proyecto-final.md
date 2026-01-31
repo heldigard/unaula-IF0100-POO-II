@@ -1,3 +1,26 @@
+---
+marp: true
+theme: default
+paginate: true
+header: 'IF0100 - POO II | Unidad 5'
+footer: 'UNAULA - Ingeniería Informática - 2026-I'
+---
+
+<style>
+img {
+  max-width: 65% !important;
+  max-height: 45vh !important;
+  object-fit: contain !important;
+  height: auto !important;
+}
+section {
+  font-size: 24px;
+}
+</style>
+
+<!--
+[2026-01-31] - Clase final del curso
+-->
 # Clase 16: DataBinding, XML y Proyecto Integrador Final
 
 **Curso:** IF0100 - Lenguaje de Programación OO II  
