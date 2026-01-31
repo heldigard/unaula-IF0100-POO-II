@@ -34,7 +34,7 @@ IMÁGENES GENERADAS:
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
-![Patrón MVC](../../assets/infografias/clase-10-mvc.png)
+![Patrón MVC](../../assets/infografias/clase-10-mvc.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 

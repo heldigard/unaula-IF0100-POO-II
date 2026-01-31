@@ -67,7 +67,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Dos conceptos frecuentemente confundidos
 
-![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png)
+![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 

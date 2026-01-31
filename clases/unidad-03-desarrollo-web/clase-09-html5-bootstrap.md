@@ -34,7 +34,7 @@ IMÁGENES GENERADAS:
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
-![Bootstrap Grid System](../../assets/infografias/clase-09-bootstrap-grid.png)
+![Bootstrap Grid System](../../assets/infografias/clase-09-bootstrap-grid.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -468,7 +468,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 <!-- TARJETAS (CARDS) -->
 <div class="card" style="width: 18rem;">
-    <img src="estudiante.jpg" class="card-img-top" alt="Estudiante">
+    <img src="estudiante.jpg" class="card-img-top" alt="Estudiante" style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;">
     <div class="card-body">
         <h5 class="card-title">María López</h5>
         <p class="card-text">Ingeniería Informática - 4° semestre</p>

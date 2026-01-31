@@ -783,7 +783,7 @@ public class ProcesadorPedidos
 
 ### Capas de DDD
 
-![Arquitectura DDD](../../assets/infografias/clase-07-ddd-arquitectura.png)
+![Arquitectura DDD](../../assets/infografias/clase-07-ddd-arquitectura.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ```
 ┌─────────────────────────────────────────────────────────────┐

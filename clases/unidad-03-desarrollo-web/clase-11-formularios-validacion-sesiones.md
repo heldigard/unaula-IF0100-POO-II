@@ -131,7 +131,7 @@ public class EstudianteViewModel
 
 ### Lista completa de atributos
 
-![Validación de Formularios](../../assets/infografias/clase-11-validacion-formularios.png)
+![Validación de Formularios](../../assets/infografias/clase-11-validacion-formularios.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ```
 ┌─────────────────────────────────────────────────────────────┐

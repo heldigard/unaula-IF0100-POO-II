@@ -68,7 +68,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Dos enfoques complementarios
 
-![TDD vs BDD](../../assets/infografias/clase-06-tdd-vs-bdd.png)
+![TDD vs BDD](../../assets/infografias/clase-06-tdd-vs-bdd.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -148,7 +148,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Colaboración clave en BDD
 
-![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png)
+![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 | Rol | Perspectiva | Pregunta clave |
 |-----|-------------|----------------|
@@ -282,7 +282,7 @@ Living Documentation
 
 ## Formato Given-When-Then Visual
 
-![Given When Then](../../assets/infografias/clase-06-bdd-given-when-then.png)
+![Given When Then](../../assets/infografias/clase-06-bdd-given-when-then.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 

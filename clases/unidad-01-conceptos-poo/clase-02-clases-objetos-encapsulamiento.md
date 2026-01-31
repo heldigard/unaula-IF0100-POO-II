@@ -83,7 +83,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Analogía: Molde vs Producto
 
-![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png)
+![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -232,7 +232,7 @@ STACK (variables)              HEAP (objetos)
 
 ## 3. Encapsulamiento
 
-![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png)
+![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ### Problema con campos públicos
 
