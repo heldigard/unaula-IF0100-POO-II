@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-12-ado-net.png: Arquitectura ADO.NET y componentes principales
+-->
+
 # Clase 12: Introducción a ADO.NET
 ## Acceso a datos con SQL Server
 
