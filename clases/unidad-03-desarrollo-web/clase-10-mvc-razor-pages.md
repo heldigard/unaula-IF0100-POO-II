@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-10-mvc.png: Patrón Model-View-Controller con flujo de datos
+-->
+
 # Clase 10: MVC y Razor Pages
 ## Patrón Model-View-Controller en profundidad
 

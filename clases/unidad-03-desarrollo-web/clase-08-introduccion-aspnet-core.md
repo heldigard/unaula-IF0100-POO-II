@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-08-aspnet-core.png: Arquitectura ASP.NET Core con middleware pipeline y MVC
+-->
+
 # Clase 8: Introducción a ASP.NET Core
 ## Desarrollo web moderno con C#
 

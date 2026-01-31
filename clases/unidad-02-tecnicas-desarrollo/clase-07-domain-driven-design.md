@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-07-ddd-arquitectura.png: Arquitectura Domain Driven Design con capas y bloques de construcción
+-->
+
 # Clase 7: Domain Driven Design (DDD)
 ## Diseño guiado por el dominio
 

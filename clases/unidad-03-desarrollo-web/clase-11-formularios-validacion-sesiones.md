@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-11-validacion-formularios.png: Validación de formularios en ASP.NET con Data Annotations
+-->
+
 # Clase 11: Formularios, Validación y Sesiones
 ## Validación de datos y estado en aplicaciones web
 

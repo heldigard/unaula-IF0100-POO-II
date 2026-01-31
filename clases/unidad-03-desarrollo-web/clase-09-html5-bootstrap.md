@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-09-bootstrap-grid.png: Sistema de cuadrícula Bootstrap 5 con breakpoints responsivos
+-->
+
 # Clase 9: HTML5 y Bootstrap
 ## Diseño web responsivo y moderno
 
