@@ -4,6 +4,17 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+
+style: |
+  img {
+    max-width: 85%;
+    max-height: 60vh;
+    object-fit: contain;
+  }
+  section {
+    font-size: 24px;
+  }
+
 ---
 
 <!--
