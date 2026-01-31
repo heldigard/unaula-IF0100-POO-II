@@ -11,6 +11,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
 
 IMÁGENES GENERADAS:
 - clase-03-herencia.png: Diagrama visual de jerarquía de herencia en POO
+- clase-03-polimorfismo.png: Diagrama explicativo de polimorfismo con animales
 -->
 
 # Clase 3: Herencia y Polimorfismo
@@ -255,6 +256,12 @@ prof.Especialidad = "Programación"; // De Profesor
 ### Un nombre, múltiples formas
 
 > **Polimorfismo** permite que objetos de diferentes clases respondan al mismo mensaje (método) de manera específica.
+
+![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png)
+
+---
+
+### Representación ASCII:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
