@@ -10,6 +10,19 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
+
+---
+
+## 💡 ¿Por qué es importante el CRUD?
+
+CRUD es la base de toda aplicación que gestiona datos:
+
+**Ejemplos:** 🏦 Banca, 🛒 E-commerce, 📱 Redes sociales
+
+**Industria:** Microsoft, bancos y grandes corporaciones usan ADO.NET para sistemas críticos.
+
+---
+
 <style>
 img {
   max-width: 70% !important;
