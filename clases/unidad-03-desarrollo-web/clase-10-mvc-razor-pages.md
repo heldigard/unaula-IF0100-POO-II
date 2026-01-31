@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 10: MVC y Razor Pages
+---
 ## Patrón Model-View-Controller en profundidad
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -183,6 +184,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Flujo MVC Detallado
 ---
 ## Flujo MVC Detallado
+---
 ### Ejemplo: Crear Estudiante
 
 ```
@@ -231,6 +233,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Controller Completo
 ---
 ## Controller Completo
+---
 ### CRUD de Estudiantes
 
 ```csharp
@@ -291,6 +294,7 @@ public class EstudiantesController : Controller
 ```
 ---
 
+---
 ## Controller: Crear y Editar
 
 ```csharp
@@ -506,6 +510,7 @@ public class EstudiantesController : Controller
 ## ViewModels
 ---
 ## ViewModels
+---
 ### Separar modelo de dominio de la vista
 
 ```csharp
@@ -597,6 +602,7 @@ public class EstudianteViewModel
 ## Estructura Razor Page
 ---
 ## Estructura Razor Page
+---
 ### Page + PageModel
 
 ```html

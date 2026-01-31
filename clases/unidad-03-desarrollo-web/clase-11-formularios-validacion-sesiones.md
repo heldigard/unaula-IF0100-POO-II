@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 11: Formularios, Validación y Sesiones
+---
 ## Validación de datos y estado en aplicaciones web
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -137,6 +138,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## 1. Validación con Data Annotations
 ---
 ## 1. Validación con Data Annotations
+---
 ### Atributos de validación en .NET
 
 ```csharp
@@ -244,6 +246,7 @@ public class EstudianteViewModel
 ## Validación Personalizada
 ---
 ## Validación Personalizada
+---
 ### Crear atributo custom
 
 ```csharp
@@ -451,6 +454,7 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ## Usando TempData
 ---
 ## Usando TempData
+---
 ### Mensajes de confirmación
 
 ```csharp
@@ -628,6 +632,7 @@ public class PreferenciasController : Controller
 ## 5. Upload de Archivos
 ---
 ## 5. Upload de Archivos
+---
 ### IFormFile
 
 ```html

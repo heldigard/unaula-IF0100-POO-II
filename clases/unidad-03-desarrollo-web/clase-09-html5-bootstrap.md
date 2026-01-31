@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 9: HTML5 y Bootstrap
+---
 ## Diseño web responsivo y moderno
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -209,6 +210,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Ejemplo: Estructura HTML5 Completa
 ---
 ## Ejemplo: Estructura HTML5 Completa
+---
 ### Página de blog
 
 ```html
@@ -273,6 +275,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## 2. Formularios HTML5
 ---
 ## 2. Formularios HTML5
+---
 ### Inputs modernos y validación
 
 ```html
@@ -447,6 +450,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Ejemplos de Grid
 ---
 ## Ejemplos de Grid
+---
 ### Layouts responsivos
 
 ```html
@@ -552,6 +556,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Más Componentes Bootstrap
 ---
 ## Más Componentes Bootstrap
+---
 ### Navbar, tablas, formularios
 
 ```html
@@ -676,6 +681,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## 5. Integración ASP.NET + Bootstrap
 ---
 ## 5. Integración ASP.NET + Bootstrap
+---
 ### En plantillas Razor
 
 ```html
@@ -747,6 +753,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Vista con Bootstrap
 ---
 ## Vista con Bootstrap
+---
 ### CRUD de Estudiantes
 
 ```html
@@ -816,6 +823,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Formulario con Bootstrap
 ---
 ## Formulario con Bootstrap
+---
 ### Crear/Editar estudiante
 
 ```html

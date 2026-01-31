@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 12: Introducción a ADO.NET
+---
 ## Acceso a datos con SQL Server
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -213,6 +214,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## 2. Arquitectura ADO.NET
 ---
 ## 2. Arquitectura ADO.NET
+---
 ### Componentes principales
 
 ```
@@ -449,6 +451,7 @@ var nuevoId = await repo.CrearAsync(new Estudiante
 ## Read (SELECT)
 ---
 ## Read (SELECT)
+---
 ### Obtener por ID y listado
 
 ```csharp
@@ -632,6 +635,7 @@ public async Task<bool> DesactivarAsync(int id)
 ## 5. Manejo de Transacciones
 ---
 ## 5. Manejo de Transacciones
+---
 ### Consistencia de datos
 
 ```csharp

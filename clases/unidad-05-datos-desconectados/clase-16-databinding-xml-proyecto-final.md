@@ -5,7 +5,6 @@ paginate: true
 | header: 'IF0100 - POO II | Unidad 5' |
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
-
 <style>
 img {
   max-width: 70% !important;
@@ -53,7 +52,8 @@ section table {
   font-size: 0.85em;
   border-collapse: collapse;
   margin: 0.5em auto;
-  table-layout: auto;
+---
+table-layout: auto;
 }
 section th {
   background-color: #1e40af;
@@ -101,7 +101,6 @@ section {
 **Unidad 5:** Arquitectura de Datos Desconectados  
 **Duración:** 150 minutos (Jueves 1h + revisión)  
 **Fecha:** 2026-05-28 (ÚLTIMA CLASE + EXAMEN FINAL)
-
 ---
 
 ## 🎯 Objetivos de Aprendizaje
@@ -186,6 +185,8 @@ public class FormEstudiantes : Form
         // Agregar controles al form
         Controls.Add(dgvEstudiantes);
         Controls.Add(txtNombre);
+---
+## 📋 Contenido
         Controls.Add(txtApellido);
         Controls.Add(txtEmail);
         Controls.Add(btnNuevo);
@@ -258,7 +259,6 @@ public class FormEstudiantes : Form
 - ✅ Filtrado y ordenamiento
 - ✅ Notificación de cambios
 ---
-
 ### 2. DataSet y XML (20 min)
 
 **2.1. Exportar DataSet a XML**
@@ -314,7 +314,8 @@ class Program
         dtEstudiantes.Columns.Add("Promedio", typeof(decimal));
         
         dtEstudiantes.Rows.Add(1, "Juan Pérez", 4.2m);
-        dtEstudiantes.Rows.Add(2, "María García", 4.5m);
+---
+dtEstudiantes.Rows.Add(2, "María García", 4.5m);
         
         dsUniversidad.Tables.Add(dtEstudiantes);
         
@@ -369,9 +370,7 @@ class Program
 - ✅ Intercambio entre aplicaciones
 - ✅ Configuración compleja
 - ✅ Datos temporales offline
-
 ---
-
 ### 3. Proyecto Integrador - Especificación (15 min)
 
 **Sistema de Gestión de Biblioteca (Proyecto Final)**
@@ -418,7 +417,7 @@ class Program
 - DataBinding en formularios
 
 **Modelo de datos (SQL):**
-
+---
 ```sql
 CREATE TABLE Libros (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -467,9 +466,7 @@ CREATE TABLE Prestamos (
 - Pruebas unitarias: 10 pts
 - Interfaz de usuario: 10 pts
 - Documentación: 5 pts
-
 ---
-
 ### 4. Integración de Conocimientos (20 min)
 
 **4.1. Ejemplo: Servicio de Préstamo Completo**
@@ -579,8 +576,8 @@ public class PrestamoRepository
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
-            
-            using (SqlTransaction trans = conn.BeginTransaction())
+---
+using (SqlTransaction trans = conn.BeginTransaction())
             {
                 try
                 {
@@ -688,7 +685,6 @@ public class PrestamoTests
     }
 }
 ```
-
 ---
 
 ## 🎯 Examen Final (70 min)

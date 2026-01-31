@@ -59,6 +59,8 @@ section table {
   margin: 0.5em auto;
   table-layout: auto;
 }
+---
+## TXT, CSV y JSON en C#
 section th {
   background-color: #1e40af;
   color: white;
@@ -107,7 +109,6 @@ IMÁGENES GENERADAS:
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
 ---
 
 ## Objetivos

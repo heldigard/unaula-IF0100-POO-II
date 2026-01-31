@@ -59,6 +59,7 @@ section table {
   margin: 0.5em auto;
   table-layout: auto;
 }
+---
 section th {
   background-color: #1e40af;
   color: white;
@@ -108,7 +109,6 @@ IMÁGENES GENERADAS:
 **Unidad 5:** Arquitectura de Datos Desconectados  
 **Duración:** 90 minutos (Lunes 2h)  
 **Fecha:** 2026-05-18
-
 ---
 
 ## 🎯 Objetivos de Aprendizaje
@@ -124,7 +124,25 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## 📋 Contenido
 
-### 1. Introducción a Datos Desconectados (10 min)
+### 1. Introducción a Datos Desconectados
+
+### 📊 Cuándo usar datos desconectados vs conectados
+
+| Escenario | Usa Conectado | Usa Desconectado |
+|-----------|---------------|------------------|
+| **Aplicación web** | ✅ (SqlDataReader) | ❌ |
+| **Aplicación desktop** | ⚠️ Depende | ✅ (DataSet) |
+| **App móvil** | ❌ | ✅ (DataSet + SQLite) |
+| **Reportes complejos** | ❌ | ✅ (DataSet) |
+| **Edición offline** | ❌ | ✅ (DataSet) |
+| **Lectura simple** | ✅ (DataReader) | ❌ |
+
+**Ventajas DataSet:**
+- ✅ Trabaja sin conexión
+- ✅ Manipula datos en memoria
+- ✅ Sincroniza cambios después
+- ❌ Usa más memoria
+ (10 min)
 
 **¿Qué son datos desconectados?**
 
@@ -194,7 +212,6 @@ Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan 
 - **DataRelation:** Relación entre tablas (FK)
 
 ---
-
 ### 3. DataSet Básico (15 min)
 
 **3.1. Crear DataSet manualmente**
@@ -243,7 +260,8 @@ public class EjemploDataSet
         dtEstudiantes.Rows.Add(3, "Carlos", "López", 19, 3.8m);
         
         // 5. Agregar tabla al DataSet
-        dsUniversidad.Tables.Add(dtEstudiantes);
+---
+dsUniversidad.Tables.Add(dtEstudiantes);
         
         // 6. Navegar datos
         Console.WriteLine($"DataSet: {dsUniversidad.DataSetName}");
@@ -291,9 +309,7 @@ filaEliminar.Delete();
 dtEstudiantes.AcceptChanges(); // Confirma cambios
 // dtEstudiantes.RejectChanges(); // Revierte cambios
 ```
-
 ---
-
 ### 4. DataAdapter - Puente con la BD (25 min)
 
 **4.1. Cargar datos desde BD (Fill)**
@@ -373,7 +389,8 @@ class Program
 {
     static void Main()
     {
-        var repo = new EstudianteDataAdapter();
+---
+var repo = new EstudianteDataAdapter();
         
         // 1. Cargar datos desde BD
         DataTable dt = repo.CargarEstudiantesTabla();
@@ -452,7 +469,6 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
     return adapter;
 }
 ```
-
 ---
 
 ### 5. Tracking de Cambios (10 min)
@@ -571,7 +587,6 @@ public void MostrarMatriculasPorEstudiante(DataSet ds, int estudianteId)
 - **Desconectado:** Aplicaciones de escritorio, edición compleja, trabajo offline
 
 ---
-
 ## 🛠️ Ejercicio para Casa (En Parejas)
 
 **Sistema de Gestión de Inventario Desconectado**
@@ -601,6 +616,8 @@ CREATE TABLE Movimientos (
 
 1. **Cargar datos al iniciar** (Fill de ambas tablas)
 2. **Menú interactivo:**
+---
+## 🛠️ Ejercicio para Casa (En Parejas)
    - Ver todos los productos
    - Agregar nuevo producto
    - Modificar precio/stock
@@ -631,7 +648,6 @@ CREATE TABLE Movimientos (
 - Script SQL para crear tablas
 - Video de 5 min demostrando funcionamiento
 - **Sustentación en parejas**
-
 ---
 
 ## 📚 Recursos Adicionales

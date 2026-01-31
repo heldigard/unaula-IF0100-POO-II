@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 7: Domain Driven Design (DDD)
+---
 ## Diseño guiado por el dominio
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -415,6 +416,7 @@ public class Cliente
 ## Value Object en C#
 ---
 ## Value Object en C#
+---
 ### Implementación inmutable
 
 ```csharp
@@ -522,6 +524,7 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 ## 4. Aggregates y Aggregate Roots
 ---
 ## 4. Aggregates y Aggregate Roots
+---
 ### Agrupación coherente de objetos
 
 ```
@@ -604,6 +607,7 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 
 ---
 
+---
 ## Implementación Aggregate Pedido
 
 ```csharp
@@ -785,6 +789,7 @@ public class PedidoRepository : IPedidoRepository
 ## Domain Service
 ---
 ## Domain Service
+---
 ### Lógica que cruza aggregates
 
 ```csharp
@@ -849,6 +854,7 @@ public class ProcesadorPedidos
 ## 6. Arquitectura en Capas
 ---
 ## 6. Arquitectura en Capas
+---
 ### Capas de DDD
 
 ![Arquitectura DDD](../../assets/infografias/clase-07-ddd-arquitectura.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
@@ -978,6 +984,7 @@ public interface IProductoRepository
 
 ---
 
+---
 ## Ejemplo: Application Layer
 
 ```csharp

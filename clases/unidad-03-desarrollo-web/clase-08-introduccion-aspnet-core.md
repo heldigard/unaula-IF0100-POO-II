@@ -103,6 +103,7 @@ IMÁGENES GENERADAS:
 -->
 
 # Clase 8: Introducción a ASP.NET Core
+---
 ## Desarrollo web moderno con C#
 
 **IF0100 - Lenguaje de Programación OO II**
@@ -713,6 +714,7 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 ## 6. Estructura de Proyecto
 ---
 ## 6. Estructura de Proyecto
+---
 ### Organización recomendada
 
 ```
