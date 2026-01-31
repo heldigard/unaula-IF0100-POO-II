@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-13-crud.png: Operaciones CRUD en ADO.NET
+-->
+
 # Clase 13: CRUD con ADO.NET y SQL Server
 ## Conexión, comandos y transacciones
 
