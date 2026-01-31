@@ -6,6 +6,13 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+[2026-01-31] - Clase enriquecida con infografías
+
+IMÁGENES GENERADAS:
+- clase-04-sobrecarga-vs-sobreescritura.png: Comparación visual entre sobrecarga y sobreescritura
+-->
+
 # Clase 4: Sobrecarga, Sobreescritura y Modelamiento de BD
 ## Polimorfismo estático y diseño de datos
 
@@ -43,6 +50,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Dos conceptos frecuentemente confundidos
 
+![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png)
+
+---
+
+### Representación ASCII:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │           SOBRECARGA (OVERLOADING)                          │

@@ -6,6 +6,13 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+[2026-01-31] - Clase enriquecida con infografías
+
+IMÁGENES GENERADAS:
+- clase-05-tdd-ciclo.png: Diagrama del ciclo Red-Green-Refactor de TDD
+-->
+
 # Clase 5: Test Driven Development (TDD)
 ## Desarrollo guiado por pruebas con xUnit
 
@@ -134,6 +141,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **TDD** es una metodología de desarrollo donde se escriben las pruebas ANTES de escribir el código de producción.
 
+![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png)
+
+---
+
+### Representación ASCII del ciclo:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                  CICLO TDD (MANTRA)                         │

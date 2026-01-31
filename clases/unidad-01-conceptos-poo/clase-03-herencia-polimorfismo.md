@@ -6,6 +6,13 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+[2026-01-31] - Clase enriquecida con infografías
+
+IMÁGENES GENERADAS:
+- clase-03-herencia.png: Diagrama visual de jerarquía de herencia en POO
+-->
+
 # Clase 3: Herencia y Polimorfismo
 ## Reutilización de código y comportamientos flexibles
 
@@ -45,6 +52,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **Herencia** es un mecanismo que permite crear nuevas clases basadas en clases existentes, reutilizando código y estableciendo relaciones jerárquicas.
 
+![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png)
+
+---
+
+### Representación ASCII:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    JERARQUÍA DE HERENCIA                    │
