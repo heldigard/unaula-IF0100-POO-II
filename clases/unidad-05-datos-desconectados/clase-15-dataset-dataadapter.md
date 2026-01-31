@@ -1,3 +1,16 @@
+---
+marp: true
+theme: default
+paginate: true
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 5'
+footer: 'UNAULA - Ingeniería Informática - 2026-I'
+---
+
+<!--
+IMÁGENES GENERADAS:
+- clase-15-dataset.png: Arquitectura desconectada con DataSet y DataAdapter
+-->
+
 # Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
 
 **Curso:** IF0100 - Lenguaje de Programación OO II  

@@ -6,6 +6,11 @@ header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<!--
+IMÁGENES GENERADAS:
+- clase-14-formatos-archivo.png: Comparación de formatos JSON, CSV y XML
+-->
+
 # Clase 14: Persistencia en Archivos Planos
 ## TXT, CSV y JSON en C#
 
