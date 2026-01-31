@@ -127,6 +127,20 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
+## Los Tres Amigos
+
+### Colaboración clave en BDD
+
+![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png)
+
+| Rol | Perspectiva | Pregunta clave |
+|-----|-------------|----------------|
+| **Negocio (PO)** | Valor | ¿Qué problema resolvemos? |
+| **Desarrollador** | Solución | ¿Cómo lo construimos? |
+| **Tester (QA)** | Calidad | ¿Qué podría fallar? |
+
+---
+
 ## Historia de BDD
 
 ### Origen y evolución

@@ -107,31 +107,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Pirámide de pruebas
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    PIRÁMIDE DE PRUEBAS                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│                      /
-                     /  \
-                    / E2E \          ← Pruebas End-to-End
-                   /_______\            (UI, integración total)
-                  /         \
-                 / Integration\      ← Pruebas de Integración
-                /_______________\       (APIs, servicios)
-               /                 \
-              /   UNIT TESTS       \   ← Pruebas Unitarias
-             /_______________________\    (más numerosas, rápidas)
-            
-            Menor costo ←─────────────────→ Mayor costo
-            Mayor velocidad               Mayor tiempo
-            Más aisladas                  Más integradas
-
-│                                                             │
-│  FOCO DE HOY: Pruebas Unitarias con TDD                    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png)
 
 ---
 
