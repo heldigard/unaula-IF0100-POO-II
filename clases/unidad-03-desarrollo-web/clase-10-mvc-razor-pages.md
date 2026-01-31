@@ -100,19 +100,12 @@ section {
 
 ---
 # Clase 10: MVC y Razor Pages
-
-*(continuación...)*
-
-
-
+## Patrón Model-View-Controller en profundidad
 
 <!--
 IMÁGENES GENERADAS:
 - clase-10-mvc.png: Patrón Model-View-Controller con flujo de datos
 -->
-
----
-## Patrón Model-View-Controller en profundidad
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*

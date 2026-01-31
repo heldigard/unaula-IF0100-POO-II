@@ -98,17 +98,12 @@ section {
 
 ---
 # Clase 12: Introducción a ADO.NET
-
-*(continuación...)*
-
+## Acceso a datos con SQL Server
 
 <!--
 IMÁGENES GENERADAS:
 - clase-12-ado-net.png: Arquitectura ADO.NET y componentes principales
 -->
-
----
-## Acceso a datos con SQL Server
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*

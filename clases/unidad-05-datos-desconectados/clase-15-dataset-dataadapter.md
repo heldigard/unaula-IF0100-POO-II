@@ -2,96 +2,64 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 5' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 5'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
 
-
-## 🎯 Objetivos de Aprendizaje
-
-Al finalizar esta clase, el estudiante será capaz de:
-
-1. **Comprender** la arquitectura de datos desconectados en ADO.NET
-2. **Utilizar** DataSet y DataAdapter para gestión de datos offline
-3. **Implementar** operaciones CRUD con datos desconectados
-4. **Aplicar** técnicas de sincronización entre DataSet y base de datos
-5. **Resolver** conflictos de concurrencia en escenarios multi-usuario
-
-
----
-# Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
+<style>
 section {
-  padding: 1em 2em;
-  box-sizing: border-box;
+  font-size: 20px;
+  overflow: hidden;
 }
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
+img {
+  max-width: 70% !important;
+  max-height: 50vh !important;
+  object-fit: contain !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
 }
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
 </style>
 
 ---
-# Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
-
-*(continuación...)*
-
+# Clase 15: Dataset y DataAdapter
+## Arquitectura de Datos Desconectados
 
 <!--
 IMÁGENES GENERADAS:
 - clase-15-dataset.png: Arquitectura desconectada con DataSet y DataAdapter
 -->
 
-
 **Curso:** IF0100 - Lenguaje de Programación OO II  
 **Unidad 5:** Arquitectura de Datos Desconectados  
-**Duración:** 90 minutos (Lunes 2h)  
+**Duración:** 90 minutos  
 **Fecha:** 2026-05-18
+
 ---
 
 ## 🎯 Objetivos de Aprendizaje
 
 Al finalizar esta clase, el estudiante será capaz de:
-1. Comprender el modelo de datos desconectados de ADO.NET
-2. Utilizar DataSet como cache de datos en memoria
-3. Implementar DataAdapter para sincronizar datos
-4. Navegar y manipular datos sin conexión activa
-5. Comparar modelo conectado vs desconectado
+1. **Comprender** el modelo de datos desconectados de ADO.NET
+2. **Utilizar** DataSet como cache de datos en memoria
+3. **Implementar** DataAdapter para sincronizar datos
+4. **Navegar** y manipular datos sin conexión activa
+5. **Comparar** modelo conectado vs desconectado
 
 ---
-### 📊 Cuándo usar datos desconectados vs conectados
-
-
+## 📊 Cuándo usar datos desconectados vs conectados
 
 | Escenario | Usa Conectado | Usa Desconectado |
 |-----------|---------------|------------------|
@@ -102,23 +70,12 @@ Al finalizar esta clase, el estudiante será capaz de:
 | **Edición offline** | ❌ | ✅ (DataSet) |
 | **Lectura simple** | ✅ (DataReader) | ❌ |
 
-**Ventajas DataSet:**
-- ✅ Trabaja sin conexión
-- ✅ Manipula datos en memoria
-- ✅ Sincroniza cambios después
-- ❌ Usa más memoria
- (10 min)
-
-**¿Qué son datos desconectados?**
+---
+## ¿Qué son datos desconectados?
 
 Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan con la BD. La conexión solo se usa para:
 - ⬇️ Cargar datos (Fill)
 - ⬆️ Sincronizar cambios (Update)
-
----
-### 📊 Cuándo usar datos desconectados vs conectados
-
-*(continuación...)*
 
 **Ventajas:**
 - ✅ Menor carga en el servidor de BD

@@ -98,17 +98,12 @@ section {
 
 ---
 # Clase 11: Formularios, Validación y Sesiones
-
-*(continuación...)*
-
+## Validación de datos y estado en aplicaciones web
 
 <!--
 IMÁGENES GENERADAS:
 - clase-11-validacion-formularios.png: Validación de formularios en ASP.NET con Data Annotations
 -->
-
----
-## Validación de datos y estado en aplicaciones web
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*

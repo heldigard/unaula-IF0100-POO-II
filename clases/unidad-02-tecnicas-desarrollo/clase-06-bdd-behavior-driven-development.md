@@ -97,10 +97,8 @@ section {
 </style>
 
 ---
+# Clase 6: BDD - Behavior-Driven Development
 ## Desarrollo guiado por comportamiento con SpecFlow
-
-*(continuación...)*
-
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -109,7 +107,6 @@ IMÁGENES GENERADAS:
 - clase-06-bdd-given-when-then.png: Diagrama Given-When-Then para BDD
 - clase-06-tdd-vs-bdd.png: Comparación TDD vs BDD
 -->
-
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*

@@ -99,19 +99,17 @@ section {
 </style>
 
 ---
+# Clase 13: CRUD con ADO.NET y SQL Server
 ## Conexión, comandos y transacciones
-
-*(continuación...)*
-
 
 <!--
 IMÁGENES GENERADAS:
 - clase-13-crud.png: Operaciones CRUD en ADO.NET
 -->
 
-
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
+
 ---
 
 ## Objetivos

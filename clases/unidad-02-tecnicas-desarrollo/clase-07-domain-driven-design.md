@@ -100,19 +100,12 @@ section {
 
 ---
 # Clase 7: Domain Driven Design (DDD)
-
-*(continuación...)*
-
-
-
+## Diseño guiado por el dominio
 
 <!--
 IMÁGENES GENERADAS:
 - clase-07-ddd-arquitectura.png: Arquitectura Domain Driven Design con capas y bloques de construcción
 -->
-
----
-## Diseño guiado por el dominio
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*

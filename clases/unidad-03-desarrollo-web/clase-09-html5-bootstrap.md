@@ -98,17 +98,12 @@ section {
 
 ---
 # Clase 9: HTML5 y Bootstrap
-
-*(continuación...)*
-
+## Diseño web responsivo y moderno
 
 <!--
 IMÁGENES GENERADAS:
 - clase-09-bootstrap-grid.png: Sistema de cuadrícula Bootstrap 5 con breakpoints responsivos
 -->
-
----
-## Diseño web responsivo y moderno
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
