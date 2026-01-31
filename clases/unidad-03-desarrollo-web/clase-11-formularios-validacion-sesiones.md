@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+# Clase 11: Formularios, Validación y Sesiones
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,13 +96,17 @@ section {
 }
 </style>
 
+---
+# Clase 11: Formularios, Validación y Sesiones
+
+*(continuación...)*
+
 
 <!--
 IMÁGENES GENERADAS:
 - clase-11-validacion-formularios.png: Validación de formularios en ASP.NET con Data Annotations
 -->
 
-# Clase 11: Formularios, Validación y Sesiones
 ---
 ## Validación de datos y estado en aplicaciones web
 
@@ -168,6 +172,11 @@ public class EstudianteViewModel
     [Display(Name = "Correo Electrónico")]
     public string Email { get; set; }
     
+---
+### Atributos de validación en .NET
+
+*(continuación...)*
+
     // VALIDACIÓN NUMÉRICA
     [Range(18, 100, ErrorMessage = "La edad debe estar entre 18 y 100 años")]
     public int Edad { get; set; }
@@ -194,6 +203,11 @@ public class EstudianteViewModel
     [DataType(DataType.Password)]
     public string Password { get; set; }
     
+---
+### Atributos de validación en .NET
+
+*(continuación...)*
+
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
     [Display(Name = "Confirmar Contraseña")]
@@ -268,6 +282,11 @@ public class FechaPasadaAttribute : ValidationAttribute
     }
 }
 
+---
+### Crear atributo custom
+
+*(continuación...)*
+
 // Uso
 public class EstudianteViewModel
 {
@@ -294,6 +313,11 @@ public class MayorDeEdadAttribute : ValidationAttribute
             if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
                 edad--;
             
+---
+### Crear atributo custom
+
+*(continuación...)*
+
             if (edad < _edadMinima)
             {
                 return new ValidationResult(
@@ -305,10 +329,8 @@ public class MayorDeEdadAttribute : ValidationAttribute
 }
 ```
 ---
-
-## Validación en el Servidor
-
 ### ModelState.IsValid
+
 
 ```csharp
 [HttpPost]
@@ -331,6 +353,11 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
         return View(model);
     }
     
+---
+### ModelState.IsValid
+
+*(continuación...)*
+
     // Guardar
     await _service.CrearAsync(model);
     return RedirectToAction(nameof(Index));
@@ -381,10 +408,8 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-
-## Configurar Validación Cliente
-
 ### jQuery Validation
+
 
 ```html
 <!-- Views/Shared/_ValidationScriptsPartial.cshtml -->
@@ -410,6 +435,11 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 }
 ```
 
+---
+### jQuery Validation
+
+*(continuación...)*
+
 ```javascript
 // jQuery Validation genera automáticamente:
 // - Validación de campos required
@@ -419,10 +449,8 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ```
 
 ---
-
-## 3. TempData y Mensajes Flash
-
 ### Pasar datos entre acciones
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -449,6 +477,11 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### Pasar datos entre acciones
+
+*(continuación...)*
 
 ---
 ## Usando TempData
@@ -488,6 +521,11 @@ public async Task<IActionResult> Eliminar(int id)
         TempData["TipoMensaje"] = "danger";
     }
     
+---
+### Mensajes de confirmación
+
+*(continuación...)*
+
     return RedirectToAction(nameof(Index));
 }
 ```
@@ -538,7 +576,6 @@ app.MapControllers();
 ---
 ## Usando Sesiones
 ---
-## Usando Sesiones
 ### Almacenar y recuperar datos
 
 ```csharp
@@ -567,6 +604,11 @@ public class AccountController : Controller
         var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
         var usuarioNombre = HttpContext.Session.GetString("UsuarioNombre");
         
+---
+### Almacenar y recuperar datos
+
+*(continuación...)*
+
         if (usuarioId == null)
         {
             return RedirectToAction("Login");
@@ -588,10 +630,8 @@ public class AccountController : Controller
 }
 ```
 ---
-
-## Cookies
-
 ### Manipulación directa
+
 
 ```csharp
 public class PreferenciasController : Controller
@@ -619,6 +659,11 @@ public class PreferenciasController : Controller
         return View();
     }
     
+---
+### Manipulación directa
+
+*(continuación...)*
+
     // Eliminar cookie
     public IActionResult EliminarTema()
     {
@@ -658,6 +703,11 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
         return View();
     }
     
+---
+### IFormFile
+
+*(continuación...)*
+
     // Validaciones
     var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
     var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
@@ -683,6 +733,11 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
     if (!Directory.Exists(rutaCarpeta))
         Directory.CreateDirectory(rutaCarpeta);
     
+---
+### IFormFile
+
+*(continuación...)*
+
     // Guardar archivo
     using (var stream = new FileStream(rutaCompleta, FileMode.Create))
     {
@@ -697,10 +752,8 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
 }
 ```
 ---
-
-## Múltiples Archivos
-
 ### Subir varios archivos
+
 
 ```html
 <form asp-action="SubirDocumentos" method="post" enctype="multipart/form-data">
@@ -727,16 +780,19 @@ public async Task<IActionResult> SubirDocumentos(List<IFormFile> archivos)
         }
     }
     
+---
+### Subir varios archivos
+
+*(continuación...)*
+
     TempData["Mensaje"] = $"{archivos.Count} archivos subidos";
     return RedirectToAction("Index");
 }
 ```
 
 ---
-
-## 6. Ejercicio Integrador
-
 ### Sistema de registro completo
+
 
 ```
 EJERCICIO: Formulario de Inscripción
@@ -761,6 +817,11 @@ Crear sistema de inscripción de estudiantes con:
    - Validación cliente activada
    - Vista previa de foto seleccionada (JS)
    - Mensajes de error específicos por campo
+
+---
+### Sistema de registro completo
+
+*(continuación...)*
 
 4. Sesión:
    - Guardar último estudiante registrado
@@ -839,3 +900,487 @@ CLASES 12-14: ADO.NET Y PERSISTENCIA
 **Unidad 3 completada: 4/4 clases ✅**
 
 **UNAULA - Ingeniería Informática - 2026-I**
+
+
+
+---
+
+## 💻 Actividad Práctica: Sistema de Login con Validación
+
+### Objetivo
+Implementar un sistema de login completo con validación de formularios y gestión de sesiones en ASP.NET Core.
+
+---
+### Parte 1: Modelo de Usuario (15 minutos)
+
+```csharp
+// Models/Usuario.cs
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApp.Models
+{
+    public class Usuario
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "El email es obligatorio")]
+        [EmailAddress(ErrorMessage = "Email no válido")]
+        [Display(Name = "Correo Electrónico")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [MinLength(6, ErrorMessage = "Mínimo 6 caracteres")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Contraseña")]
+        public string Password { get; set; }
+
+---
+### Parte 1: Modelo de Usuario (15 minutos)
+
+*(continuación...)*
+
+        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [StringLength(100, MinimumLength = 2)]
+        public string Nombre { get; set; }
+
+        public bool EstaActivo { get; set; } = true;
+        public DateTime FechaRegistro { get; set; } = DateTime.Now;
+    }
+
+    public class LoginViewModel
+    {
+        [Required(ErrorMessage = "Email requerido")]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Contraseña requerida")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Display(Name = "Recordarme")]
+        public bool RememberMe { get; set; }
+    }
+}
+```
+
+---
+### Parte 1: Modelo de Usuario (15 minutos)
+
+*(continuación...)*
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+```csharp
+// Controllers/AccountController.cs
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using WebApp.Models;
+
+namespace WebApp.Controllers
+{
+    public class AccountController : Controller
+    {
+        // Simulación de BD (en producción usar Entity Framework)
+        private static List<Usuario> _usuarios = new()
+        {
+            new Usuario 
+            { 
+                Id = 1, 
+                Email = "admin@unaula.edu.co", 
+                Password = "123456",  // En producción: hashear!
+                Nombre = "Administrador" 
+            }
+        };
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+*(continuación...)*
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            // Si ya está autenticado, redirigir
+            if (HttpContext.Session.GetInt32("UserId") != null)
+                return RedirectToAction("Index", "Home");
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // Buscar usuario
+            var usuario = _usuarios.FirstOrDefault(u => 
+                u.Email == model.Email && 
+                u.Password == model.Password &&
+                u.EstaActivo);
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+*(continuación...)*
+
+            if (usuario == null)
+            {
+                ModelState.AddModelError("", "Email o contraseña incorrectos");
+                return View(model);
+            }
+
+            // Crear sesión
+            HttpContext.Session.SetInt32("UserId", usuario.Id);
+            HttpContext.Session.SetString("UserName", usuario.Nombre);
+            HttpContext.Session.SetString("UserEmail", usuario.Email);
+
+            // Cookie persistente si "Recordarme"
+            if (model.RememberMe)
+            {
+                Response.Cookies.Append("UserEmail", usuario.Email, new CookieOptions
+                {
+                    Expires = DateTimeOffset.Now.AddDays(30),
+                    HttpOnly = true,
+                    Secure = true
+                });
+            }
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+*(continuación...)*
+
+            TempData["SuccessMessage"] = $"Bienvenido, {usuario.Nombre}!";
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("UserEmail");
+            
+            TempData["InfoMessage"] = "Sesión cerrada correctamente";
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult Dashboard()
+        {
+            // Verificar autenticación
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return RedirectToAction("Login");
+
+            ViewBag.UserName = HttpContext.Session.GetString("UserName");
+            ViewBag.UserEmail = HttpContext.Session.GetString("UserEmail");
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+*(continuación...)*
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(Usuario model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // Verificar si el email ya existe
+            if (_usuarios.Any(u => u.Email == model.Email))
+            {
+                ModelState.AddModelError("Email", "Este email ya está registrado");
+                return View(model);
+            }
+
+---
+### Parte 2: Controlador con Sesiones (30 minutos)
+
+*(continuación...)*
+
+            // En producción: hashear password con BCrypt o PBKDF2
+            model.Id = _usuarios.Max(u => u.Id) + 1;
+            _usuarios.Add(model);
+
+            TempData["SuccessMessage"] = "Registro exitoso. Ya puedes iniciar sesión.";
+            return RedirectToAction("Login");
+        }
+    }
+}
+```
+
+---
+### Parte 3: Vista de Login (20 minutos)
+
+```html
+@* Views/Account/Login.cshtml *@
+@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+
+---
+### Parte 3: Vista de Login (20 minutos)
+
+*(continuación...)*
+
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input asp-for="Email" 
+                                       class="form-control" 
+                                       placeholder="correo@ejemplo.com"
+                                       autofocus />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input asp-for="Password" 
+                                       class="form-control" 
+                                       placeholder="••••••" />
+                                <button class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+---
+### Parte 3: Vista de Login (20 minutos)
+
+*(continuación...)*
+
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label"></label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt"></i> Ingresar
+                            </button>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <p>¿No tienes cuenta? 
+                                <a asp-action="Register">Regístrate aquí</a>
+                            </p>
+                            <a href="#">¿Olvidaste tu contraseña?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+---
+### Parte 3: Vista de Login (20 minutos)
+
+*(continuación...)*
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        function togglePassword() {
+            const passwordInput = document.querySelector('input[name="Password"]');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Validación en tiempo real
+        document.querySelector('input[name="Email"]').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+---
+### Parte 3: Vista de Login (20 minutos)
+
+*(continuación...)*
+
+            if (!emailRegex.test(email)) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            }
+        });
+    </script>
+}
+```
+
+---
+### Parte 4: Configurar Sesiones en Program.cs (10 minutos)
+
+```csharp
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+
+// Agregar servicios de sesión
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+---
+### Parte 4: Configurar Sesiones en Program.cs (10 minutos)
+
+*(continuación...)*
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+// ¡IMPORTANTE! UseSession debe ir antes de UseAuthorization
+app.UseSession();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+```
+
+---
+### Parte 5: Crear Filtro de Autorización Personalizado (15 minutos)
+
+```csharp
+// Filters/SessionAuthorizationFilter.cs
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+
+namespace WebApp.Filters
+{
+    public class SessionAuthorizationFilter : Attribute, IAuthorizationFilter
+    {
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            var userId = context.HttpContext.Session.GetInt32("UserId");
+            
+            if (userId == null)
+            {
+                context.Result = new RedirectToActionResult("Login", "Account", null);
+            }
+        }
+    }
+}
+```
+
+---
+### Parte 5: Crear Filtro de Autorización Personalizado (15 minutos)
+
+*(continuación...)*
+
+**Uso en controladores:**
+```csharp
+[SessionAuthorizationFilter]
+public class AdminController : Controller
+{
+    // Todas las acciones requieren sesión activa
+    public IActionResult Index()
+    {
+        return View();
+    }
+}
+```
+
+---
+
+### Tareas del Estudiante
+
+1. **Implementar el código completo** (90 minutos)
+2. **Agregar validación adicional:**
+   - Password: mínimo 1 mayúscula, 1 número
+   - Email: solo dominios @unaula.edu.co
+3. **Agregar funcionalidad "Recuperar contraseña"**
+4. **Implementar contador de intentos fallidos** (bloquear después de 3)
+5. **Mostrar último login en Dashboard**
+
+---
+
+### Criterios de Evaluación
+
+| Criterio | Puntos |
+|----------|--------|
+| Validación de formularios funcional | 20 |
+| Sesiones implementadas correctamente | 25 |
+| UI responsiva y atractiva | 15 |
+| Seguridad (anti-CSRF, HttpOnly cookies) | 20 |
+| Código limpio y documentado | 10 |
+| Funcionalidades extra | 10 |
+| **TOTAL** | **100** |
+
+---

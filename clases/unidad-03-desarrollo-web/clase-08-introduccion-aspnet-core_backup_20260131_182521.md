@@ -1,5 +1,4 @@
 ---
-
 marp: true
 theme: default
 paginate: true
@@ -11,7 +10,6 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-# Clase 8: Introducción a ASP.NET Core
 <style>
 img {
   max-width: 70% !important;
@@ -98,19 +96,13 @@ section {
 }
 </style>
 
----
-# Clase 8: Introducción a ASP.NET Core
-
-*(continuación...)*
-
-
-
 
 <!--
 IMÁGENES GENERADAS:
 - clase-08-aspnet-core.png: Arquitectura ASP.NET Core con middleware pipeline y MVC
 -->
 
+# Clase 8: Introducción a ASP.NET Core
 ---
 ## Desarrollo web moderno con C#
 
@@ -145,8 +137,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Estructura de proyecto (10 min)
 
 ---
-### Framework web de Microsoft
 
+## 1. ¿Qué es ASP.NET Core?
+
+### Framework web de Microsoft
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -175,13 +169,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Framework web de Microsoft
 
-*(continuación...)*
+## Modelos de Programación
 
----
 ### Diferentes enfoques para diferentes necesidades
-
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -206,11 +197,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-### Diferentes enfoques para diferentes necesidades
-
-*(continuación...)*
 
 ---
 
@@ -242,10 +228,9 @@ Views/                            ├── Privacy.cshtml
 **En este curso usaremos MVC (más demandado laboralmente)**
 
 ---
+
 ## 2. Arquitectura ASP.NET Core
 
-
----
 ### Componentes principales
 
 ```
@@ -284,17 +269,10 @@ Views/                            ├── Privacy.cshtml
 ```
 
 ---
-### Componentes principales
-
-*(continuación...)*
-
----
 ## Flujo de una Petición HTTP
 ---
 ## Flujo de una Petición HTTP
 ### Request → Response
----
-## Flujo de una Petición HTTP (Continuación)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -337,14 +315,22 @@ Views/                            ├── Privacy.cshtml
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-# Estructura creada:
 
+## 3. Crear Primera Aplicación
+
+### Pasos iniciales
 
 ```bash
+# Crear proyecto MVC
 dotnet new mvc -n MiPrimeraWeb
 cd MiPrimeraWeb
 
+# O con Visual Studio:
+# 1. File → New → Project
+# 2. ASP.NET Core Web App (Model-View-Controller)
+# 3. .NET 8.0, HTTPS, No Docker
 
+# Estructura creada:
 MiPrimeraWeb/
 ├── Controllers/           ← Controladores
 │   └── HomeController.cs
@@ -369,13 +355,9 @@ MiPrimeraWeb/
 ```
 
 ---
-# Estructura creada:
-
-*(continuación...)*
-
----
 ## Program.cs Explicado
 ---
+## Program.cs Explicado
 ### Punto de entrada de la aplicación
 
 ```csharp
@@ -408,11 +390,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();  // HTTP Strict Transport Security
 }
 
----
-### Punto de entrada de la aplicación
-
-*(continuación...)*
-
 app.UseHttpsRedirection();    // Redirigir HTTP a HTTPS
 app.UseStaticFiles();         // Servir archivos de wwwroot
 app.UseRouting();             // Habilitar routing
@@ -431,6 +408,7 @@ app.Run();  // Iniciar aplicación
 ---
 ## Mi Primer Controller
 ---
+## Mi Primer Controller
 ### HomeController.cs
 
 ```csharp
@@ -456,11 +434,6 @@ namespace MiPrimeraWeb.Controllers
             return View();
         }
 
----
-### HomeController.cs
-
-*(continuación...)*
-
         // GET: /Home/Saludo?nombre=Juan
         public IActionResult Saludo(string nombre)
         {
@@ -484,8 +457,10 @@ namespace MiPrimeraWeb.Controllers
 }
 ```
 ---
-### Views/Home/Saludo.cshtml
 
+## Mi Primera Vista
+
+### Views/Home/Saludo.cshtml
 
 ```html
 @* Vista Razor para acción Saludo *@
@@ -514,11 +489,6 @@ namespace MiPrimeraWeb.Controllers
         </div>
     }
     
----
-### Views/Home/Saludo.cshtml
-
-*(continuación...)*
-
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
         Volver al Inicio
     </a>
@@ -530,6 +500,7 @@ namespace MiPrimeraWeb.Controllers
 ---
 ## Sintaxis Razor
 ---
+## Sintaxis Razor
 ### C# en HTML
 
 ```html
@@ -559,11 +530,6 @@ else
     <p>Buenas noches</p>
 }
 
----
-### C# en HTML
-
-*(continuación...)*
-
 @* 4. Bucles *@
 <ul>
 @foreach (var item in Model.Lista)
@@ -579,8 +545,10 @@ else
 <p>Email: usuario@@dominio.com</p>
 ```
 ---
-### Configuración del pipeline
 
+## 4. Middleware y Pipeline
+
+### Configuración del pipeline
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -613,13 +581,9 @@ else
 ```
 
 ---
-### Configuración del pipeline
-
-*(continuación...)*
-
----
 ## Crear Middleware Personalizado
 ---
+## Crear Middleware Personalizado
 ### Logging de peticiones
 
 ```csharp
@@ -645,11 +609,6 @@ public class RequestTimingMiddleware
             context.Request.Method,
             context.Request.Path);
 
----
-### Logging de peticiones
-
-*(continuación...)*
-
         await _next(context);  // Pasar al siguiente middleware
 
         stopwatch.Stop();
@@ -666,8 +625,10 @@ public class RequestTimingMiddleware
 app.UseMiddleware<RequestTimingMiddleware>();
 ```
 ---
-### Principio fundamental de ASP.NET Core
 
+## 5. Inyección de Dependencias
+
+### Principio fundamental de ASP.NET Core
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -703,13 +664,9 @@ app.UseMiddleware<RequestTimingMiddleware>();
 ```
 
 ---
-### Principio fundamental de ASP.NET Core
-
-*(continuación...)*
-
----
 ## Ciclo de Vida de Servicios
 ---
+## Ciclo de Vida de Servicios
 ### Scoped, Transient, Singleton
 
 ```csharp
@@ -734,11 +691,6 @@ public interface IClienteService
     Task<List<Cliente>> ObtenerTodos();
     Task<Cliente> ObtenerPorId(int id);
 }
-
----
-### Scoped, Transient, Singleton
-
-*(continuación...)*
 
 public class ClienteService : IClienteService
 {

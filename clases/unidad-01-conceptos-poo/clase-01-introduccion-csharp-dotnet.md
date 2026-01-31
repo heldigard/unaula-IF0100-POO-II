@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+## El ecosistema Microsoft para desarrollo moderno
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,9 +96,12 @@ section {
 }
 </style>
 
-
-# Clase 1: Introducción a C# y .NET
+---
 ## El ecosistema Microsoft para desarrollo moderno
+
+*(continuación...)*
+
+
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -502,10 +505,8 @@ var edad = 20;           // El compilador infiere: int
 ```
 
 ---
-
-## 5. Práctica: Crear Primera Aplicación
-
 ### Ejercicio en clase (25 min)
+
 
 **Objetivo:** Crear una aplicación de consola que calcule el área de un rectángulo
 
@@ -533,6 +534,11 @@ namespace CalculadoraArea
             // Salida
             Console.WriteLine($"El área es: {area:F2}");
             
+---
+### Ejercicio en clase (25 min)
+
+*(continuación...)*
+
             // Esperar antes de cerrar
             Console.WriteLine("\nPresione cualquier tecla...");
             Console.ReadKey();
@@ -586,6 +592,262 @@ namespace CalculadoraArea
 | `Ctrl + Space` | Forzar IntelliSense |
 | `F12` | Ir a definición |
 | `Ctrl + R, Ctrl + R` | Renombrar refactoring |
+
+---
+
+## 🎯 Características Avanzadas de C# 12
+
+### Novedades y Ventajas Competitivas
+
+```csharp
+// 1. Primary Constructors (C# 12)
+public class Persona(string nombre, int edad)
+{
+    public void Saludar() => Console.WriteLine($"Hola, soy {nombre}");
+}
+
+// 2. Collection Expressions
+int[] numeros = [1, 2, 3, 4, 5];
+List<string> nombres = ["Ana", "Juan", "María"];
+
+// 3. String Interpolation mejorado
+string mensaje = $"""
+    Usuario: {nombre}
+    Edad: {edad}
+    Fecha: {DateTime.Now:yyyy-MM-dd}
+    """;
+
+// 4. Pattern Matching avanzado
+string resultado = edad switch
+{
+    < 18 => "Menor de edad",
+    >= 18 and < 65 => "Adulto",
+    >= 65 => "Adulto mayor",
+};
+
+// 5. Null-coalescing assignment
+string nombre ??= "Anónimo";  // Si es null, asigna "Anónimo"
+```
+
+---
+
+## 📊 C# vs Otros Lenguajes: Comparativa
+
+### Benchmark de Rendimiento
+
+| Operación | C# | Java | Python | JavaScript |
+|-----------|-----|------|--------|------------|
+| **Hello World** | 30ms | 35ms | 50ms | 40ms |
+| **Loop 1M iteraciones** | 15ms | 18ms | 980ms | 25ms |
+| **Ordenar 100K items** | 180ms | 200ms | 450ms | 300ms |
+| **Manejo JSON** | 90ms | 100ms | 150ms | 80ms |
+| **Consumo memoria** | 25MB | 40MB | 15MB | 30MB |
+
+**Conclusión:** C# ofrece excelente balance
+rendimiento/productividad.
+
+---
+
+## 🏗️ Arquitectura .NET Core/8
+
+### Cómo Funciona Internamente
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                   TU APLICACIÓN C#                       │
+│              (código de alto nivel)                      │
+└────────────────────┬─────────────────────────────────────┘
+                     │ Compilación
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│            INTERMEDIATE LANGUAGE (IL)                    │
+│              (bytecode independiente)                    │
+└────────────────────┬─────────────────────────────────────┘
+                     │ JIT Compilation
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│     COMMON LANGUAGE RUNTIME (CLR)                        │
+│  ┌────────────┬──────────────┬─────────────────────┐    │
+│  │ Garbage    │   Security   │  Exception          │    │
+│  │ Collector  │   Manager    │  Handler            │    │
+│  └────────────┴──────────────┴─────────────────────┘    │
+└────────────────────┬─────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────┐
+│          SISTEMA OPERATIVO (Windows/Linux/macOS)         │
+└──────────────────────────────────────────────────────────┘
+```
+
+### Ventajas del CLR
+- ✅ **Garbage Collection automático**
+- ✅ **Seguridad de tipos en runtime**
+- ✅ **Manejo de excepciones estructurado**
+- ✅ **Interoperabilidad entre lenguajes**
+
+---
+
+## 💼 Casos de Uso Reales de .NET
+
+### Empresas que Usan .NET
+
+```
+MICROSOFT           → Azure, Visual Studio, Office 365
+STACK OVERFLOW      → Sitio web completo
+UNITY               → Motor de juegos (millones de juegos)
+SIEMENS             → Sistemas industriales
+DELL                → Herramientas internas
+ALASKA AIRLINES     → Sistema de reservas
+```
+
+### Proyectos Open Source Famosos
+
+| Proyecto | Descripción | GitHub Stars |
+|----------|-------------|--------------|
+| **ASP.NET Core** | Framework web | 35K+ ⭐ |
+| **Roslyn** | Compilador C# | 19K+ ⭐ |
+| **ML.NET** | Machine Learning | 9K+ ⭐ |
+| **Orleans** | Actor model framework | 10K+ ⭐ |
+| **Blazor** | WebAssembly con C# | (Parte de ASP.NET) |
+
+---
+
+## 🛠️ Herramientas del Ecosistema .NET
+
+### Más Allá de Visual Studio
+
+**IDEs Alternativos:**
+- 🟦 **Visual Studio Code** + C# Extension (Ligero, multiplataforma)
+- 🟦 **JetBrains Rider** (Potente, comercial)
+- 🟦 **Visual Studio for Mac** (Nativo macOS)
+
+**CLI (dotnet command):**
+```bash
+# Crear proyecto
+dotnet new console -n MiApp
+
+# Restaurar dependencias
+dotnet restore
+
+# Compilar
+dotnet build
+
+# Ejecutar
+dotnet run
+
+# Publicar para producción
+dotnet publish -c Release
+
+# Agregar paquete NuGet
+dotnet add package Newtonsoft.Json
+```
+
+**Herramientas de Testing:**
+- xUnit, NUnit, MSTest (frameworks de pruebas)
+- Moq (mocking)
+- BenchmarkDotNet (benchmarks)
+
+---
+
+## 📦 NuGet: Gestor de Paquetes
+
+### El "npm" de .NET
+
+```xml
+<!-- Archivo .csproj -->
+<ItemGroup>
+  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  <PackageReference Include="Dapper" Version="2.1.28" />
+  <PackageReference Include="Serilog" Version="3.1.1" />
+</ItemGroup>
+```
+
+**Repositorio oficial:** https://www.nuget.org/
+
+**Paquetes populares:**
+- **Newtonsoft.Json** - Manejo JSON (2.5B descargas)
+- **AutoMapper** - Mapeo de objetos
+- **Dapper** - Micro ORM rápido
+- **Serilog** - Logging estructurado
+- **FluentValidation** - Validaciones fluidas
+
+---
+
+## 🎓 Ejercicio Avanzado: Debugging
+
+### Práctica con Breakpoints
+
+**Código con bug intencional:**
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numeros = { 10, 20, 30, 40, 50 };
+        int suma = 0;
+        
+        for (int i = 0; i <= numeros.Length; i++)  // 🐛 Bug aquí
+        {
+            suma += numeros[i];
+        }
+        
+        Console.WriteLine($"Suma: {suma}");
+    }
+}
+```
+
+**Instrucciones:**
+1. Copiar código a Visual Studio
+2. Poner breakpoint en línea del `for`
+3. Presionar F5 (Debug)
+4. Usar F10 (Step Over) para ver el error
+5. Identificar y corregir el bug
+6. ¿Qué excepción lanza? ¿En qué línea?
+
+**Respuesta:** `IndexOutOfRangeException` - `i <= numeros.Length` debe ser `i < numeros.Length`
+
+---
+
+## 🔥 Mejores Prácticas desde el Día 1
+
+### Code Style y Convenciones
+
+```csharp
+// ✅ CORRECTO
+public class StudentManager        // PascalCase para clases
+{
+    private int _studentCount;     // camelCase con _ para campos privados
+    
+    public string Name { get; set; }  // PascalCase para propiedades
+    
+    public void AddStudent()       // PascalCase para métodos
+    {
+        int localVar = 10;         // camelCase para variables locales
+    }
+}
+
+// ❌ INCORRECTO
+public class student_manager      // Minúsculas y guiones bajos
+{
+    private int StudentCount;     // Sin _
+    
+    public string name { get; set; }  // Minúsculas
+    
+    public void add_student()     // Estilo Python
+    {
+        int LocalVar = 10;        // Mayúscula inicial
+    }
+}
+```
+
+### Reglas de Oro
+1. ✅ Usar nombres descriptivos
+2. ✅ Evitar abreviaturas confusas
+3. ✅ Comentar solo lo necesario
+4. ✅ Máximo 100-120 caracteres por línea
+5. ✅ Un archivo por clase (usualmente)
 
 ---
 

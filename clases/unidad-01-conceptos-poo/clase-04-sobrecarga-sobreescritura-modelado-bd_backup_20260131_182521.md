@@ -1,5 +1,4 @@
 ---
-
 marp: true
 theme: default
 paginate: true
@@ -11,7 +10,6 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-## Polimorfismo estático y diseño de datos
 <style>
 img {
   max-width: 70% !important;
@@ -98,13 +96,6 @@ section {
 }
 </style>
 
----
-## Polimorfismo estático y diseño de datos
-
-*(continuación...)*
-
-
-
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -113,6 +104,8 @@ IMÁGENES GENERADAS:
 - clase-04-sobrecarga-vs-sobreescritura.png: Comparación visual entre sobrecarga y sobreescritura
 -->
 
+# Clase 4: Sobrecarga, Sobreescritura y Modelamiento de BD
+## Polimorfismo estático y diseño de datos
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -151,6 +144,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
+
 ### Representación ASCII:
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -183,13 +177,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Representación ASCII:
 
-*(continuación...)*
+## 2. Sobrecarga de Métodos
 
----
 ### Mismo nombre, diferentes parámetros
-
 
 ```csharp
 public class Calculadora
@@ -215,11 +206,6 @@ public class Calculadora
         return a + b;
     }
     
----
-### Mismo nombre, diferentes parámetros
-
-*(continuación...)*
-
     // SOBRECARGA 4: Array de números (estructura diferente)
     public int Sumar(params int[] numeros)
     {
@@ -263,6 +249,7 @@ class Program
 ---
 ## Sobrecarga de Constructores
 ---
+## Sobrecarga de Constructores
 ### Ya lo hemos visto aplicado
 
 ```csharp
@@ -291,11 +278,6 @@ public class Estudiante
         Carrera = "Sin carrera";
     }
     
----
-### Ya lo hemos visto aplicado
-
-*(continuación...)*
-
     // Constructor 3: Cuatro parámetros
     public Estudiante(string nombre, string codigo, int edad, string carrera)
     {
@@ -307,8 +289,10 @@ public class Estudiante
 }
 ```
 ---
-### La palabra clave `this`
 
+## Llamando Constructores Entre Sí
+
+### La palabra clave `this`
 
 ```csharp
 public class Estudiante
@@ -334,11 +318,6 @@ public class Estudiante
         // No necesita código, todo lo hace el otro constructor
     }
     
----
-### La palabra clave `this`
-
-*(continuación...)*
-
     // Llama al de 2 parámetros, que a su vez llama al principal
     public Estudiante() 
         : this("Sin nombre", "0000000")
@@ -350,6 +329,7 @@ public class Estudiante
 ---
 ## 3. Sobrecarga de Operadores
 ---
+## 3. Sobrecarga de Operadores
 ### Definiendo comportamiento de operadores
 
 ```csharp
@@ -380,11 +360,6 @@ public class Fraccion
         return new Fraccion(nuevoNum, nuevoDen);
     }
     
----
-### Definiendo comportamiento de operadores
-
-*(continuación...)*
-
     // SOBRECARGA DE ToString()
     public override string ToString()
     {
@@ -427,6 +402,7 @@ class Program
 ---
 ## Sobrecarga de Operadores de Comparación
 ---
+## Sobrecarga de Operadores de Comparación
 ### Implementando igualdad
 
 ```csharp
@@ -451,11 +427,6 @@ public class Punto
         return !(a == b);
     }
     
----
-### Implementando igualdad
-
-*(continuación...)*
-
     // Siempre sobrescribir Equals y GetHashCode junto con ==
     public override bool Equals(object obj)
     {
@@ -524,8 +495,10 @@ public class Punto
 ```
 
 ---
-### Clasificación de propiedades
 
+## Tipos de Atributos
+
+### Clasificación de propiedades
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -558,13 +531,10 @@ public class Punto
 ```
 
 ---
-### Clasificación de propiedades
 
-*(continuación...)*
+## Relaciones entre Entidades
 
----
 ### Cardinalidad
-
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -592,11 +562,6 @@ public class Punto
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-### Cardinalidad
-
-*(continuación...)*
 
 ---
 ## Ejemplo: Sistema Universitario
@@ -677,6 +642,7 @@ public class Carrera
 ```
 
 ---
+
 ## Tablas SQL Equivalentes
 
 ```sql
@@ -703,11 +669,6 @@ CREATE TABLE Materias (
     Nombre VARCHAR(100) NOT NULL,
     Creditos INT
 );
-
----
-## Tablas SQL Equivalentes
-
-*(continuación...)*
 
 CREATE TABLE Inscripciones (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -742,27 +703,39 @@ CREATE TABLE Inscripciones (
 
 ## 6. Ejercicio Práctico
 
+### Diseñar modelo para Biblioteca
+
+```
+REQUISITOS:
+
+1. La biblioteca tiene LIBROS
    - ISBN (único)
    - Título
    - Autor
    - Año de publicación
    - Cantidad de ejemplares
+
+2. Los libros pertenecen a CATEGORÍAS
    - Una categoría tiene muchos libros
    - Nombre de categoría
+
+3. La biblioteca tiene USUARIOS
    - Código de usuario
    - Nombre
    - Email
----
-
-## 6. Ejercicio Práctico (Continuación) (2/2)
-
    - Tipo (estudiante, profesor, externo)
+
+4. Los usuarios realizan PRÉSTAMOS
    - Un usuario puede tener varios préstamos
    - Un libro puede estar en varios préstamos (en el tiempo)
    - Fecha de préstamo
    - Fecha de devolución esperada
    - Fecha de devolución real
    - Estado (activo, devuelto, vencido)
+
+TAREA: Crear diagrama ER y clases C# correspondientes
+```
+
 ---
 
 ## Solución Ejercicio Biblioteca
@@ -805,8 +778,6 @@ public class Categoria
     // Relación 1:N
     public List<Libro> Libros { get; set; }
 }
----
-## Clases C# para Biblioteca (Continuación)
 
 public class Libro
 {
@@ -831,11 +802,6 @@ public class Usuario
     public string Email { get; set; }
     public string Tipo { get; set; } // Estudiante, Profesor, Externo
     
----
-## Clases C# para Biblioteca (Continuación)
-
-*(continuación...)*
-
     // Relación 1:N
     public List<Prestamo> Prestamos { get; set; }
 }

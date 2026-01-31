@@ -5,55 +5,21 @@ paginate: true
 | header: 'IF0100 - POO II | Unidad 5' |
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
-<style>
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
+
+
+## 🎯 Objetivos de Aprendizaje
+
+Al finalizar esta clase, el estudiante será capaz de:
+
+1. **Implementar** data binding bidireccional en Windows Forms
+2. **Utilizar** archivos XML como fuente de datos
+3. **Integrar** todas las tecnologías del curso en un proyecto final
+4. **Aplicar** buenas prácticas de arquitectura de software (capas, patrones)
+5. **Documentar** y presentar un proyecto completo
+
+
 ---
-table-layout: auto;
+# Clase 16: DataBinding, XML y Proyecto Integrador Final
 }
 section th {
   background-color: #1e40af;
@@ -92,10 +58,14 @@ section {
 }
 </style>
 
+---
+# Clase 16: DataBinding, XML y Proyecto Integrador Final
+
+*(continuación...)*
+
 <!--
 [2026-01-31] - Clase final del curso
 -->
-# Clase 16: DataBinding, XML y Proyecto Integrador Final
 
 **Curso:** IF0100 - Lenguaje de Programación OO II  
 **Unidad 5:** Arquitectura de Datos Desconectados  
@@ -114,7 +84,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ## 📋 Contenido
 ---
-## 📋 Contenido
 ### 1. Data Binding - Enlace de Datos (20 min)
 
 **¿Qué es Data Binding?**
@@ -149,6 +118,11 @@ public class FormEstudiantes : Form
             SelectionMode = DataGridViewSelectionMode.FullRowSelect
         };
         
+---
+### 1. Data Binding - Enlace de Datos (20 min)
+
+*(continuación...)*
+
         txtNombre = new TextBox { Location = new Point(100, 320), Width = 200 };
         txtApellido = new TextBox { Location = new Point(100, 350), Width = 200 };
         txtEmail = new TextBox { Location = new Point(100, 380), Width = 200 };
@@ -177,6 +151,11 @@ public class FormEstudiantes : Form
         };
         btnEliminar.Click += BtnEliminar_Click;
         
+---
+### 1. Data Binding - Enlace de Datos (20 min)
+
+*(continuación...)*
+
         // Agregar labels
         Controls.Add(new Label { Text = "Nombre:", Location = new Point(20, 323) });
         Controls.Add(new Label { Text = "Apellido:", Location = new Point(20, 353) });
@@ -208,6 +187,11 @@ public class FormEstudiantes : Form
         dtEstudiantes.Columns.Add("Email", typeof(string));
         dtEstudiantes.PrimaryKey = new DataColumn[] { dtEstudiantes.Columns["Id"] };
         
+---
+## 📋 Contenido
+
+*(continuación...)*
+
         // Datos de ejemplo
         dtEstudiantes.Rows.Add(1, "Juan", "Pérez", "juan@unaula.edu.co");
         dtEstudiantes.Rows.Add(2, "María", "García", "maria@unaula.edu.co");
@@ -232,6 +216,11 @@ public class FormEstudiantes : Form
         txtNombre.Focus();
     }
     
+---
+## 📋 Contenido
+
+*(continuación...)*
+
     private void BtnGuardar_Click(object sender, EventArgs e)
     {
         bindingSource.EndEdit();
@@ -252,6 +241,11 @@ public class FormEstudiantes : Form
     }
 }
 ```
+
+---
+## 📋 Contenido
+
+*(continuación...)*
 
 **Ventajas de BindingSource:**
 - ✅ Sincronización automática entre controles
@@ -287,6 +281,11 @@ public class DataSetXmlHelper
         ds.WriteXmlSchema($"{archivoBase}_esquema.xsd");
     }
     
+---
+### 2. DataSet y XML (20 min)
+
+*(continuación...)*
+
     // Importar desde XML
     public DataSet ImportarDatos(string archivo)
     {
@@ -308,6 +307,11 @@ class Program
         // Crear DataSet con datos
         DataSet dsUniversidad = new DataSet("Universidad");
         
+---
+### 2. DataSet y XML (20 min)
+
+*(continuación...)*
+
         DataTable dtEstudiantes = new DataTable("Estudiantes");
         dtEstudiantes.Columns.Add("Id", typeof(int));
         dtEstudiantes.Columns.Add("Nombre", typeof(string));
@@ -315,7 +319,6 @@ class Program
         
         dtEstudiantes.Rows.Add(1, "Juan Pérez", 4.2m);
 ---
-dtEstudiantes.Rows.Add(2, "María García", 4.5m);
         
         dsUniversidad.Tables.Add(dtEstudiantes);
         
@@ -365,6 +368,11 @@ dtEstudiantes.Rows.Add(2, "María García", 4.5m);
 </Universidad>
 ```
 
+---
+
+
+*(continuación...)*
+
 **2.2. Aplicaciones prácticas:**
 - ✅ Backup de datos
 - ✅ Intercambio entre aplicaciones
@@ -397,6 +405,11 @@ dtEstudiantes.Rows.Add(2, "María García", 4.5m);
 - Validación de email único
 - Estado activo/inactivo
 
+---
+### 3. Proyecto Integrador - Especificación (15 min)
+
+*(continuación...)*
+
 **3. Préstamos**
 - Registrar préstamo (validar disponibilidad)
 - Registrar devolución
@@ -418,7 +431,6 @@ dtEstudiantes.Rows.Add(2, "María García", 4.5m);
 
 **Modelo de datos (SQL):**
 ---
-```sql
 CREATE TABLE Libros (
     Id INT PRIMARY KEY IDENTITY(1,1),
     Titulo NVARCHAR(200) NOT NULL,
@@ -449,6 +461,11 @@ CREATE TABLE Prestamos (
     Estado NVARCHAR(20) DEFAULT 'Activo' -- 'Activo', 'Devuelto', 'Vencido'
 );
 ```
+
+---
+
+
+*(continuación...)*
 
 **Entregables:**
 1. Código fuente completo (GitHub)
@@ -491,6 +508,11 @@ public class Prestamo
             if (FechaDevolucionReal.HasValue)
                 return 0;
             
+---
+### 4. Integración de Conocimientos (20 min)
+
+*(continuación...)*
+
             TimeSpan diferencia = DateTime.Now - FechaDevolucionEsperada;
             return diferencia.Days > 0 ? diferencia.Days : 0;
         }
@@ -516,6 +538,11 @@ public class PrestamoRepository
         {
             conn.Open();
             
+---
+### 4. Integración de Conocimientos (20 min)
+
+*(continuación...)*
+
             using (SqlTransaction trans = conn.BeginTransaction())
             {
                 try
@@ -541,6 +568,11 @@ public class PrestamoRepository
                         (@LibroId, @UsuarioId, GETDATE(), DATEADD(day, 15, GETDATE()));
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
                     
+---
+### 4. Integración de Conocimientos (20 min)
+
+*(continuación...)*
+
                     using (SqlCommand cmd = new SqlCommand(queryPrestamo, conn, trans))
                     {
                         cmd.Parameters.AddWithValue("@LibroId", libroId);
@@ -568,6 +600,11 @@ public class PrestamoRepository
             }
         }
         
+---
+### 4. Integración de Conocimientos (20 min)
+
+*(continuación...)*
+
         return prestamoId;
     }
     
@@ -577,7 +614,6 @@ public class PrestamoRepository
         {
             conn.Open();
 ---
-using (SqlTransaction trans = conn.BeginTransaction())
             {
                 try
                 {
@@ -603,6 +639,11 @@ using (SqlTransaction trans = conn.BeginTransaction())
                         }
                     }
                     
+---
+
+
+*(continuación...)*
+
                     // 2. Calcular multa si hay atraso
                     decimal multa = 0;
                     TimeSpan diferencia = DateTime.Now - fechaEsperada;
@@ -626,6 +667,11 @@ using (SqlTransaction trans = conn.BeginTransaction())
                         cmd.ExecuteNonQuery();
                     }
                     
+---
+
+
+*(continuación...)*
+
                     // 4. Marcar libro como disponible
                     string queryLibro = 
                         "UPDATE Libros SET Disponible = 1 WHERE Id = @LibroId";
@@ -647,6 +693,11 @@ using (SqlTransaction trans = conn.BeginTransaction())
         }
     }
 }
+
+---
+
+
+*(continuación...)*
 
 // Pruebas Unitarias (TDD - Unidad 2)
 [TestClass]
@@ -677,6 +728,11 @@ public class PrestamoTests
             FechaDevolucionEsperada = DateTime.Now.AddDays(-10)
         };
         
+---
+
+
+*(continuación...)*
+
         // Act
         decimal multa = prestamo.CalcularMulta();
         
@@ -736,7 +792,6 @@ Implementar un mini-sistema con las siguientes características:
 - [xUnit Testing](https://xunit.net/docs/getting-started)
 
 ---
-
 ## 🎯 Resumen del Semestre
 
 **Lo que aprendimos:**
@@ -761,6 +816,11 @@ Implementar un mini-sistema con las siguientes características:
 - ✅ CRUD completo
 - ✅ Transacciones
 - ✅ Archivos planos (JSON, XML, CSV)
+
+---
+## 🎯 Resumen del Semestre
+
+*(continuación...)*
 
 **Unidad 5 - Datos Desconectados:**
 - ✅ DataSet y DataTable
@@ -795,3 +855,337 @@ Han desarrollado habilidades fundamentales para cualquier desarrollador .NET:
 **Profesor:** [Nombre]  
 **Curso:** IF0100 - POO II  
 **¡Gracias por un excelente semestre!** 🎓
+
+
+
+---
+
+## 🎯 Objetivos de Aprendizaje
+
+Al finalizar esta clase, el estudiante será capaz de:
+
+1. **Implementar** data binding bidireccional en Windows Forms
+2. **Utilizar** archivos XML como fuente de datos
+3. **Integrar** todas las tecnologías del curso en un proyecto final
+4. **Aplicar** buenas prácticas de arquitectura de software (capas, patrones)
+5. **Documentar** y presentar un proyecto completo
+
+---
+
+## 💻 Actividad Final: Proyecto Integrador
+
+### Descripción del Proyecto
+
+Desarrollar un **Sistema de Gestión Académica** que integre todos los conceptos del curso:
+
+#### Tecnologías Obligatorias
+- ✅ C# con POO avanzada
+- ✅ Windows Forms / WPF
+- ✅ ADO.NET con SQL Server
+- ✅ Dataset y DataAdapter
+- ✅ Data Binding
+- ✅ Persistencia en XML (exportación)
+- ✅ TDD (pruebas unitarias con xUnit/NUnit)
+
+---
+
+### Funcionalidades Mínimas
+
+#### Módulo 1: Gestión de Estudiantes
+- [x] CRUD completo (Create, Read, Update, Delete)
+- [x] Validación de datos
+- [x] Búsqueda y filtros
+- [x] Exportar a XML
+
+#### Módulo 2: Gestión de Cursos
+- [x] CRUD de cursos
+- [x] Asignación de estudiantes a cursos
+- [x] Capacidad máxima por curso
+
+#### Módulo 3: Gestión de Notas
+- [x] Registrar calificaciones
+- [x] Calcular promedios automáticamente
+- [x] Generar reportes (top 10, estudiantes en riesgo)
+
+#### Módulo 4: Reportes
+- [x] Reporte de estudiantes por curso
+- [x] Historial académico de estudiante
+- [x] Estadísticas generales
+
+---
+
+### Entregables
+
+| Entregable | Descripción | Peso |
+|------------|-------------|------|
+| **Código Fuente** | Proyecto completo en GitHub | 40% |
+| **Base de Datos** | Script SQL con esquema y datos | 10% |
+| **Pruebas Unitarias** | Cobertura >70% | 15% |
+| **Documentación Técnica** | README, diagramas UML | 15% |
+| **Presentación** | Demo de 15 min | 10% |
+| **Video** | Screencast explicando arquitectura | 10% |
+
+---
+### Estructura del Proyecto
+
+```
+SistemaAcademico/
+├── src/
+│   ├── SistemaAcademico.Core/          # Lógica de negocio
+│   │   ├── Entities/
+│   │   │   ├── Estudiante.cs
+│   │   │   ├── Curso.cs
+│   │   │   └── Nota.cs
+│   │   ├── Interfaces/
+│   │   │   └── IEstudianteRepository.cs
+│   │   └── Services/
+│   │       └── EstudianteService.cs
+│   │
+│   ├── SistemaAcademico.Data/          # Acceso a datos
+│   │   ├── Repositories/
+│   │   │   └── EstudianteRepository.cs
+│   │   └── AppDbContext.cs
+│   │
+│   ├── SistemaAcademico.UI/            # Interfaz gráfica
+│   │   ├── Forms/
+│   │   │   ├── frmEstudiantes.cs
+│   │   │   └── frmCursos.cs
+│   │   └── Program.cs
+│   │
+│   └── SistemaAcademico.Tests/         # Pruebas unitarias
+│       └── EstudianteServiceTests.cs
+│
+├── database/
+│   └── create_schema.sql
+│
+├── docs/
+│   ├── README.md
+│   ├── arquitectura.md
+│   └── manual_usuario.pdf
+│
+└── SistemaAcademico.sln
+```
+
+---
+### Estructura del Proyecto
+
+*(continuación...)*
+
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+```csharp
+// frmEstudiantes.cs
+public partial class frmEstudiantes : Form
+{
+    private BindingSource bindingSource;
+    private DataSet dsEstudiantes;
+    private SqlDataAdapter dataAdapter;
+
+    public frmEstudiantes()
+    {
+        InitializeComponent();
+        ConfigurarDataBinding();
+        CargarDatos();
+    }
+
+    private void ConfigurarDataBinding()
+    {
+        bindingSource = new BindingSource();
+        
+        // Binding bidireccional
+        txtNombre.DataBindings.Add("Text", bindingSource, "Nombre", true, 
+            DataSourceUpdateMode.OnPropertyChanged);
+        txtApellido.DataBindings.Add("Text", bindingSource, "Apellido", true,
+            DataSourceUpdateMode.OnPropertyChanged);
+        txtEmail.DataBindings.Add("Text", bindingSource, "Email", true,
+            DataSourceUpdateMode.OnPropertyChanged);
+        numPromedio.DataBindings.Add("Value", bindingSource, "Promedio", true,
+            DataSourceUpdateMode.OnPropertyChanged);
+
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+*(continuación...)*
+
+        // DataGridView
+        dgvEstudiantes.DataSource = bindingSource;
+    }
+
+    private void CargarDatos()
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["UniversidadDB"].ConnectionString;
+        
+        dsEstudiantes = new DataSet();
+        
+        using (var connection = new SqlConnection(connectionString))
+        {
+            dataAdapter = new SqlDataAdapter("SELECT * FROM Estudiantes", connection);
+            
+            // Comandos automáticos para INSERT, UPDATE, DELETE
+            var commandBuilder = new SqlCommandBuilder(dataAdapter);
+            
+            dataAdapter.Fill(dsEstudiantes, "Estudiantes");
+        }
+
+        bindingSource.DataSource = dsEstudiantes.Tables["Estudiantes"];
+    }
+
+    private void btnGuardar_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            // Validar cambios
+            if (dsEstudiantes.HasChanges())
+            {
+                // Actualizar base de datos
+                dataAdapter.Update(dsEstudiantes, "Estudiantes");
+                dsEstudiantes.AcceptChanges();
+                
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+*(continuación...)*
+
+                MessageBox.Show("Cambios guardados exitosamente", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No hay cambios para guardar", "Info",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        catch (DBConcurrencyException ex)
+        {
+            MessageBox.Show("Conflicto de concurrencia. Otro usuario modificó los datos.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            CargarDatos(); // Recargar datos
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error al guardar: {ex.Message}", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+*(continuación...)*
+
+    private void btnExportarXML_Click(object sender, EventArgs e)
+    {
+        using (var saveDialog = new SaveFileDialog())
+        {
+            saveDialog.Filter = "XML Files|*.xml";
+            saveDialog.Title = "Exportar Estudiantes a XML";
+            saveDialog.FileName = $"estudiantes_{DateTime.Now:yyyyMMdd}.xml";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                dsEstudiantes.Tables["Estudiantes"].WriteXml(saveDialog.FileName, XmlWriteMode.WriteSchema);
+                MessageBox.Show("Exportación exitosa", "Éxito",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+    }
+
+    private void btnImportarXML_Click(object sender, EventArgs e)
+    {
+        using (var openDialog = new OpenFileDialog())
+        {
+            openDialog.Filter = "XML Files|*.xml";
+            openDialog.Title = "Importar Estudiantes desde XML";
+
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+*(continuación...)*
+
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                var dsImportado = new DataSet();
+                dsImportado.ReadXml(openDialog.FileName);
+                
+                // Merge con datos existentes
+                dsEstudiantes.Merge(dsImportado);
+                
+                MessageBox.Show($"Importados {dsImportado.Tables[0].Rows.Count} registros",
+                    "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+    }
+
+    private void btnNuevo_Click(object sender, EventArgs e)
+    {
+        bindingSource.AddNew();
+    }
+
+    private void btnEliminar_Click(object sender, EventArgs e)
+    {
+        if (MessageBox.Show("¿Eliminar este estudiante?", "Confirmar",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        {
+            bindingSource.RemoveCurrent();
+        }
+    }
+
+---
+### Ejemplo de Código: Data Binding Bidireccional
+
+*(continuación...)*
+
+    private void btnPrimero_Click(object sender, EventArgs e) => bindingSource.MoveFirst();
+    private void btnAnterior_Click(object sender, EventArgs e) => bindingSource.MovePrevious();
+    private void btnSiguiente_Click(object sender, EventArgs e) => bindingSource.MoveNext();
+    private void btnUltimo_Click(object sender, EventArgs e) => bindingSource.MoveLast();
+}
+```
+
+---
+
+### Cronograma de Desarrollo
+
+| Semana | Actividades |
+|--------|-------------|
+| **1-2** | Diseño de BD, modelos de entidades, interfaces |
+| **3-4** | Implementación de repositorios y servicios |
+| **5-6** | Desarrollo de interfaz gráfica (Windows Forms) |
+| **7** | Pruebas unitarias y corrección de bugs |
+| **8** | Documentación, video y preparación de presentación |
+
+---
+
+### Rúbrica de Evaluación Detallada
+
+#### Arquitectura y Diseño (25 puntos)
+- Separación de capas (Presentation, Business, Data) - 10 pts
+- Uso de interfaces y abstracciones - 8 pts
+- Patrones de diseño aplicados (Repository, Singleton, etc.) - 7 pts
+
+#### Funcionalidad (30 puntos)
+- CRUD completo funcional - 15 pts
+- Validaciones robustas - 8 pts
+- Manejo de errores - 7 pts
+
+#### Calidad de Código (20 puntos)
+- Código limpio y legible - 8 pts
+- Naming conventions - 5 pts
+- Comentarios y documentación inline - 7 pts
+
+#### Pruebas (15 puntos)
+- Cobertura >70% - 10 pts
+- Tests bien diseñados (AAA pattern) - 5 pts
+
+#### Presentación (10 puntos)
+- Claridad en la explicación - 5 pts
+- Dominio del tema - 5 pts
+
+---
+
+### Tiempo Total Estimado: 80 horas
+
+**¡Éxito en su proyecto final!** 🎓
+
+---

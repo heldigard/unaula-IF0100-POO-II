@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+## Desarrollo guiado por comportamiento con SpecFlow
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,6 +96,11 @@ section {
 }
 </style>
 
+---
+## Desarrollo guiado por comportamiento con SpecFlow
+
+*(continuación...)*
+
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -105,8 +110,6 @@ IMÁGENES GENERADAS:
 - clase-06-tdd-vs-bdd.png: Comparación TDD vs BDD
 -->
 
-# Clase 6: Behavior Driven Development (BDD)
-## Desarrollo guiado por comportamiento con SpecFlow
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -145,7 +148,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ![TDD vs BDD](../../assets/infografias/clase-06-tdd-vs-bdd.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
-
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    TDD vs BDD                               │
@@ -187,9 +189,12 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
-## ¿Qué es BDD?
 
+*(continuación...)*
+
+---
 ### Definición
+
 
 > **BDD** es una metodología de desarrollo de software que fomenta la colaboración entre desarrolladores, QA y equipos de negocio, utilizando un lenguaje compartido y comprensible para todos.
 
@@ -217,6 +222,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Definición
+
+*(continuación...)*
+
+---
 
 ## Los Tres Amigos
 
@@ -231,10 +241,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 | **Tester (QA)** | Calidad | ¿Qué podría fallar? |
 
 ---
-
-## Historia de BDD
-
 ### Origen y evolución
+
 
 ```
 2003 ──────────────────────────────────────────────────────────────►
@@ -264,13 +272,16 @@ Integración con CI/CD pipelines
 Living Documentation
 ```
 
+---
+### Origen y evolución
+
+*(continuación...)*
+
 **Dan North:** "BDD is using examples at multiple levels to create a shared understanding and surface uncertainty to deliver software that matters."
 
 ---
-
-## Los Tres Amigos (Three Amigos)
-
 ### Colaboración para definir comportamiento
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -303,10 +314,13 @@ Living Documentation
 ```
 
 ---
+### Colaboración para definir comportamiento
 
-## 2. Gherkin: Lenguaje de Especificación
+*(continuación...)*
 
+---
 ### Sintaxis simple y estructurada
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -334,6 +348,11 @@ Living Documentation
 ```
 
 ---
+### Sintaxis simple y estructurada
+
+*(continuación...)*
+
+---
 
 ## Palabras Clave de Gherkin
 
@@ -359,13 +378,10 @@ Living Documentation
 ![Given When Then](../../assets/infografias/clase-06-bdd-given-when-then.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
+# language: es
 
-## Ejemplo Gherkin: Calculadora
-
-### Archivo .feature
 
 ```gherkin
-# language: es
 Característica: Operaciones matemáticas básicas
   Como usuario de la calculadora
   Quiero realizar operaciones matemáticas
@@ -394,13 +410,15 @@ Característica: Operaciones matemáticas básicas
 ```
 
 ---
+# language: es
 
-## Ejemplo Gherkin: Sistema Bancario
+*(continuación...)*
 
-### Escenarios más complejos
+---
+# language: es
+
 
 ```gherkin
-# language: es
 Característica: Retiro de dinero desde cajero automático
   Como cliente del banco
   Quiero retirar dinero desde un cajero
@@ -420,6 +438,11 @@ Característica: Retiro de dinero desde cajero automático
     Entonces el cajero debe mostrar "Saldo insuficiente"
     Y no debe entregarme dinero
     Y el saldo de mi cuenta debe seguir siendo $100
+
+---
+# language: es
+
+*(continuación...)*
 
   Escenario: Retiro fallido por tarjeta bloqueada
     Dado que tengo una cuenta con saldo de $1000
@@ -495,16 +518,12 @@ Característica: Cálculo de descuento
 ```
 
 ---
+# O manualmente
 
-## 3. SpecFlow para .NET
-
-### Instalación y configuración
 
 ```bash
-# Crear proyecto de SpecFlow
 dotnet new specflowproject -n MiApp.Specs --framework xunit
 
-# O manualmente
 dotnet new classlib -n MiApp.Specs
 dotnet add package SpecFlow.xUnit
 dotnet add package SpecFlow.Tools.MsBuild.Generation
@@ -525,6 +544,11 @@ dotnet add reference ../MiApp/MiApp.csproj
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="xunit" Version="2.6.2" />
   </ItemGroup>
+
+---
+# O manualmente
+
+*(continuación...)*
 
   <ItemGroup>
     <ProjectReference Include="..\MiApp\MiApp.csproj" />
@@ -560,11 +584,9 @@ MiApp.Specs/
 ---
 ## 4. Escribiendo Escenarios BDD
 ---
-## 4. Escribiendo Escenarios BDD
-### Ejemplo: Sistema de calificaciones
+# language: es
 
 ```gherkin
-# language: es
 Característica: Gestión de calificaciones estudiantiles
   Como profesor
   Quiero registrar y consultar calificaciones
@@ -594,6 +616,11 @@ Característica: Gestión de calificaciones estudiantiles
     Entonces el promedio debe ser 2.43
     Y el estado debe ser "Reprobado"
 
+---
+# language: es
+
+*(continuación...)*
+
   Escenario: Validar notas fuera de rango
     Cuando intento registrar una nota de 6.5
     Entonces debe mostrar el error "La nota debe estar entre 0.0 y 5.0"
@@ -601,7 +628,6 @@ Característica: Gestión de calificaciones estudiantiles
 ---
 ## 5. Implementación de Step Definitions
 ---
-## 5. Implementación de Step Definitions
 ### Conectando Gherkin con C#
 
 ```csharp
@@ -628,6 +654,11 @@ namespace MiApp.Specs.StepDefinitions
             _context = context;
         }
 
+---
+### Conectando Gherkin con C#
+
+*(continuación...)*
+
         [Given(@"el estudiante con código ""([^""]*)",")]
         public void DadoElEstudianteConCodigo(string codigo)
         {
@@ -643,7 +674,6 @@ namespace MiApp.Specs.StepDefinitions
 }
 ```
 ---
-
 ## Step Definitions (continuación)
 
 ```csharp
@@ -667,6 +697,11 @@ public void CuandoRegistroLasNotas(Table tabla)
     _promedio = _estudiante.CalcularPromedio();
     _estado = _estudiante.ObtenerEstado();
 }
+
+---
+## Step Definitions (continuación)
+
+*(continuación...)*
 
 [Then(@"el promedio debe ser (.*)")]
 public void EntoncesElPromedioDebeSer(double esperado)
@@ -712,7 +747,6 @@ public void EntoncesDebeMostrarElError(string mensajeEsperado)
 ---
 ## Hooks en SpecFlow
 ---
-## Hooks en SpecFlow
 ### Configuración global
 
 ```csharp
@@ -737,6 +771,11 @@ namespace MiApp.Specs.Hooks
         {
             // Resetear estado, limpiar datos
         }
+
+---
+### Configuración global
+
+*(continuación...)*
 
         // Se ejecuta después de CADA escenario
         [AfterScenario]
@@ -843,10 +882,8 @@ Escenario: Autenticación fallida con credenciales inválidas
 ```
 
 ---
-
-## Living Documentation
-
 ### Documentación que nunca se desactualiza
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -871,6 +908,11 @@ Escenario: Autenticación fallida con credenciales inválidas
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### Documentación que nunca se desactualiza
+
+*(continuación...)*
 
 ---
 
@@ -912,10 +954,8 @@ Tareas:
 ```
 
 ---
-
-## Comparación Final: TDD vs BDD
-
 ### ¿Cuándo usar cada uno?
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -949,6 +989,11 @@ Tareas:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### ¿Cuándo usar cada uno?
+
+*(continuación...)*
 
 ---
 

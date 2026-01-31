@@ -1,5 +1,4 @@
 ---
-
 marp: true
 theme: default
 paginate: true
@@ -11,7 +10,6 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-# Clase 7: Domain Driven Design (DDD)
 <style>
 img {
   max-width: 70% !important;
@@ -98,19 +96,13 @@ section {
 }
 </style>
 
----
-# Clase 7: Domain Driven Design (DDD)
-
-*(continuación...)*
-
-
-
 
 <!--
 IMÁGENES GENERADAS:
 - clase-07-ddd-arquitectura.png: Arquitectura Domain Driven Design con capas y bloques de construcción
 -->
 
+# Clase 7: Domain Driven Design (DDD)
 ---
 ## Diseño guiado por el dominio
 
@@ -144,8 +136,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 7. Ejemplo práctico: Sistema de Pedidos (10 min)
 
 ---
-### Domain Driven Design
 
+## 1. ¿Qué es DDD?
+
+### Domain Driven Design
 
 > **DDD** es un enfoque de diseño de software que se centra en modelar el software según el dominio del negocio, utilizando un lenguaje común (Ubiquitous Language) entre desarrolladores y expertos del dominio.
 
@@ -175,13 +169,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Domain Driven Design
 
-*(continuación...)*
+## Cuándo usar DDD
 
----
 ### No es para todos los proyectos
-
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -216,13 +207,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### No es para todos los proyectos
 
-*(continuación...)*
+## Componentes de DDD
 
----
 ### Bloques de construcción tácticos
-
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -257,13 +245,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Bloques de construcción tácticos
 
-*(continuación...)*
+## 2. Ubiquitous Language
 
----
 ### Lenguaje ubicuo
-
 
 > **Ubiquitous Language** es un lenguaje compartido y estricto entre desarrolladores y expertos del dominio, usado en todo el ciclo de vida del proyecto.
 
@@ -299,13 +284,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Lenguaje ubicuo
 
-*(continuación...)*
+## Ejemplo: Lenguaje Ubicuo
 
----
 ### Tienda en línea
-
 
 ```csharp
 // ❌ ANTES: Lenguaje técnico
@@ -336,11 +318,6 @@ public class RealizarPedidoHandler
     }
 }
 
----
-### Tienda en línea
-
-*(continuación...)*
-
 // Lenguaje del negocio en el código:
 // - Cliente (no User)
 // - RealizarPedido (no CreateOrder)
@@ -348,10 +325,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
+
 ## 3. Entities vs Value Objects
 
-
----
 ### Distinguiendo objetos del dominio
 
 ```
@@ -384,13 +360,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
-### Distinguiendo objetos del dominio
-
-*(continuación...)*
-
----
 ## Entity en C#
 ---
+## Entity en C#
 ### Implementación
 
 ```csharp
@@ -418,11 +390,6 @@ public class Cliente
         FechaRegistro = DateTime.UtcNow;
     }
     
----
-### Implementación
-
-*(continuación...)*
-
     // Comportamientos del dominio
     public void CambiarEmail(Email nuevoEmail)
     {
@@ -477,11 +444,6 @@ public class Dinero : IEquatable<Dinero>
         return new Dinero(Monto + otro.Monto, Moneda);
     }
     
----
-### Implementación inmutable
-
-*(continuación...)*
-
     public Dinero AplicarDescuento(decimal porcentaje)
     {
         var descuento = Monto * (porcentaje / 100);
@@ -510,6 +472,7 @@ var descuento = precio.AplicarDescuento(10);  // 45000 COP
 ---
 ## Value Object: Dirección
 ---
+## Value Object: Dirección
 ### Otro ejemplo clásico
 
 ```csharp
@@ -535,11 +498,6 @@ public class Direccion : IEquatable<Direccion>
         return new Direccion(nuevaCalle, Ciudad, CodigoPostal, Pais);
     }
     
----
-### Otro ejemplo clásico
-
-*(continuación...)*
-
     public bool Equals(Direccion otro)
     {
         if (otro is null) return false;
@@ -611,8 +569,10 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-### Invariantes y consistencia
 
+## Reglas de Aggregates
+
+### Invariantes y consistencia
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -646,16 +606,9 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 ```
 
 ---
-### Invariantes y consistencia
-
-*(continuación...)*
-
----
 
 ---
 ## Implementación Aggregate Pedido
----
-## Implementación Aggregate Pedido (Continuación)
 
 ```csharp
 // AGGREGATE ROOT
@@ -682,11 +635,6 @@ public class Pedido
         _lineas = new List<LineaPedido>();
     }
     
----
-## Implementación Aggregate Pedido (Continuación)
-
-*(continuación...)*
-
     // Comportamiento del dominio
     public void AgregarProducto(ProductoId productoId, string nombreProducto, 
                                  int cantidad, Dinero precioUnitario)
@@ -709,11 +657,6 @@ public class Pedido
         );
     }
     
----
-## Implementación Aggregate Pedido (Continuación)
-
-*(continuación...)*
-
     public void Confirmar()
     {
         if (_lineas.Count == 0)
@@ -725,6 +668,7 @@ public class Pedido
 ```
 
 ---
+
 ## LineaPedido (Entity dentro del Aggregate)
 
 ```csharp
@@ -748,11 +692,6 @@ public class LineaPedido
     }
 }
 
----
-## LineaPedido (Entity dentro del Aggregate)
-
-*(continuación...)*
-
 public enum EstadoPedido
 {
     Pendiente,
@@ -765,8 +704,10 @@ public enum EstadoPedido
 ```
 
 ---
-### Persistencia y lógica de dominio
 
+## 5. Repositories y Services
+
+### Persistencia y lógica de dominio
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -798,13 +739,9 @@ public enum EstadoPedido
 ```
 
 ---
-### Persistencia y lógica de dominio
-
-*(continuación...)*
-
----
 ## Repository Pattern
 ---
+## Repository Pattern
 ### Abstracción de persistencia
 
 ```csharp
@@ -832,11 +769,6 @@ public class PedidoRepository : IPedidoRepository
         _context = context;
     }
     
----
-### Abstracción de persistencia
-
-*(continuación...)*
-
     public async Task<Pedido> ObtenerAsync(PedidoId id)
     {
         return await _context.Pedidos
@@ -886,11 +818,6 @@ public class ProcesadorPedidos
         if (pedido == null)
             return ResultadoProcesamiento.Error("Pedido no encontrado");
         
----
-### Lógica que cruza aggregates
-
-*(continuación...)*
-
         // 1. Verificar inventario
         foreach (var linea in pedido.Lineas)
         {
@@ -919,11 +846,6 @@ public class ProcesadorPedidos
             await _inventario.Reservar(linea.ProductoId, linea.Cantidad);
         }
         
----
-### Lógica que cruza aggregates
-
-*(continuación...)*
-
         return ResultadoProcesamiento.Exito(pedidoId);
     }
 }
@@ -983,8 +905,10 @@ public class ProcesadorPedidos
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-### Dependency Rule
 
+## Reglas de Dependencia
+
+### Dependency Rule
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1018,13 +942,10 @@ public class ProcesadorPedidos
 ```
 
 ---
-### Dependency Rule
 
-*(continuación...)*
+## 7. Ejemplo Práctico
 
----
 ### Sistema completo: Tienda en Línea
-
 
 ```csharp
 // ==================== DOMAIN ====================
@@ -1050,11 +971,6 @@ public class Producto
         StockDisponible -= cantidad;
     }
 }
-
----
-### Sistema completo: Tienda en Línea
-
-*(continuación...)*
 
 // Aggregate Root (visto anteriormente)
 public class Pedido { /* ... */ }
@@ -1094,11 +1010,6 @@ public class RealizarPedidoHandler
     private readonly IPedidoRepository _pedidoRepo;
     private readonly IProductoRepository _productoRepo;
     
----
-## Ejemplo: Application Layer
-
-*(continuación...)*
-
     public RealizarPedidoHandler(
         IPedidoRepository pedidoRepo, 
         IProductoRepository productoRepo)
@@ -1120,11 +1031,6 @@ public class RealizarPedidoHandler
         
         var pedido = new Pedido(pedidoId, command.ClienteId, direccion);
         
----
-## Ejemplo: Application Layer
-
-*(continuación...)*
-
         // Agregar productos
         foreach (var item in command.Items)
         {
@@ -1148,11 +1054,7 @@ public class RealizarPedidoHandler
 ```
 
 ---
-## Ejemplo: Application Layer
 
-*(continuación...)*
-
----
 ## Ejemplo: Presentation Layer
 
 ```csharp
@@ -1190,11 +1092,6 @@ public class PedidosController : ControllerBase
             }
         };
         
----
-## Ejemplo: Presentation Layer
-
-*(continuación...)*
-
         // Ejecutar
         var pedidoId = await _realizarPedidoHandler.Handle(command);
         
@@ -1294,8 +1191,10 @@ EJEMPLOS:
 - Microsoft: https://docs.microsoft.com/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/
 
 ---
-### TDD, BDD, DDD
 
+## Resumen Unidad 2
+
+### TDD, BDD, DDD
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1325,11 +1224,6 @@ EJEMPLOS:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-### TDD, BDD, DDD
-
-*(continuación...)*
 
 ---
 

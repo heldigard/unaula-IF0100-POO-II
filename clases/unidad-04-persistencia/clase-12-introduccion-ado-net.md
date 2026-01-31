@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+# Clase 12: Introducción a ADO.NET
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,13 +96,17 @@ section {
 }
 </style>
 
+---
+# Clase 12: Introducción a ADO.NET
+
+*(continuación...)*
+
 
 <!--
 IMÁGENES GENERADAS:
 - clase-12-ado-net.png: Arquitectura ADO.NET y componentes principales
 -->
 
-# Clase 12: Introducción a ADO.NET
 ---
 ## Acceso a datos con SQL Server
 
@@ -137,10 +141,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Buenas prácticas (10 min)
 
 ---
-
-## 1. ¿Qué es ADO.NET?
-
 ### Acceso a datos en .NET
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -174,10 +176,13 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Acceso a datos en .NET
 
-## ADO.NET vs Entity Framework
+*(continuación...)*
 
+---
 ### ¿Cuándo usar cada uno?
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -209,6 +214,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### ¿Cuándo usar cada uno?
+
+*(continuación...)*
 
 ---
 ## 2. Arquitectura ADO.NET
@@ -287,10 +297,8 @@ using Microsoft.Data.SqlClient;
 ```
 
 ---
-
-## 3. Conexión a SQL Server
-
 ### Connection String
+
 
 ```csharp
 // Program.cs - Configuración
@@ -321,13 +329,17 @@ var builder = new SqlConnectionStringBuilder
     ConnectTimeout = 30
 };
 
+---
+### Connection String
+
+*(continuación...)*
+
 string connectionString = builder.ConnectionString;
 ```
 
 ---
 ## Usando SqlConnection
 ---
-## Usando SqlConnection
 ### Patrón using (siempre)
 
 ```csharp
@@ -368,6 +380,11 @@ public class EstudianteRepository
                 }
             }
             
+---
+### Patrón using (siempre)
+
+*(continuación...)*
+
             // La conexión se cierra automáticamente al salir del using
         }
         
@@ -407,10 +424,8 @@ string nombre = reader["Nombre"].ToString();
 ```
 
 ---
-
-## 4. Operaciones CRUD
-
 ### Create (INSERT)
+
 
 ```csharp
 public async Task<int> CrearAsync(Estudiante estudiante)
@@ -435,6 +450,11 @@ public async Task<int> CrearAsync(Estudiante estudiante)
     // ExecuteScalar para retornar un solo valor (el ID)
     var id = Convert.ToInt32(await command.ExecuteScalarAsync());
     
+---
+### Create (INSERT)
+
+*(continuación...)*
+
     return id;
 }
 
@@ -478,6 +498,11 @@ public async Task<Estudiante> ObtenerPorIdAsync(int id)
         };
     }
     
+---
+### Obtener por ID y listado
+
+*(continuación...)*
+
     return null;  // No encontrado
 }
 
@@ -504,6 +529,11 @@ public async Task<List<Estudiante>> ObtenerPorNombreAsync(string busqueda)
         estudiantes.Add(MapFromReader(reader));
     }
     
+---
+### Obtener por ID y listado
+
+*(continuación...)*
+
     return estudiantes;
 }
 
@@ -554,10 +584,8 @@ public async Task<bool> ActualizarAsync(Estudiante estudiante)
 ```
 
 ---
-
-## Delete (DELETE)
-
 ### Eliminar registro
+
 
 ```csharp
 public async Task<bool> EliminarAsync(int id)
@@ -586,6 +614,11 @@ public async Task<bool> DesactivarAsync(int id)
         SET Activo = 0, FechaEliminacion = @Fecha 
         WHERE Id = @Id";
     
+---
+### Eliminar registro
+
+*(continuación...)*
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", id);
     command.Parameters.AddWithValue("@Fecha", DateTime.Now);
@@ -595,10 +628,8 @@ public async Task<bool> DesactivarAsync(int id)
 ```
 
 ---
-
-## Métodos Execute
-
 ### Diferencias
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -630,6 +661,11 @@ public async Task<bool> DesactivarAsync(int id)
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### Diferencias
+
+*(continuación...)*
 
 ---
 ## 5. Manejo de Transacciones
@@ -664,6 +700,11 @@ public async Task<bool> TransferirEstudianteAsync(
             await cmd1.ExecuteNonQueryAsync();
         }
         
+---
+### Consistencia de datos
+
+*(continuación...)*
+
         // 2. Actualizar carrera del estudiante
         var query2 = @"UPDATE Estudiantes 
                        SET CarreraId = @CarreraId 
@@ -776,10 +817,8 @@ public Estudiante BuscarPorCodigo(string codigo)
 | **Transaction** | Consistencia en operaciones múltiples |
 
 ---
-
-## Ejercicio Práctico
-
 ### Implementar Repository
+
 
 ```
 EJERCICIO: Repository de Estudiantes
@@ -806,6 +845,11 @@ Crear clase EstudianteRepository con métodos:
 
 6. BuscarPorNombre(string termino) : Task<List<Estudiante>>
    - Búsqueda parcial con LIKE
+
+---
+### Implementar Repository
+
+*(continuación...)*
 
 REQUISITOS:
 - Usar parámetros en todas las queries

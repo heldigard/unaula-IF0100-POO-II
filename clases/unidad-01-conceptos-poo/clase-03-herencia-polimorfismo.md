@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+## Reutilización de código y comportamientos flexibles
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,6 +96,11 @@ section {
 }
 </style>
 
+---
+## Reutilización de código y comportamientos flexibles
+
+*(continuación...)*
+
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -105,8 +110,6 @@ IMÁGENES GENERADAS:
 - clase-03-polimorfismo.png: Diagrama explicativo de polimorfismo con animales
 -->
 
-# Clase 3: Herencia y Polimorfismo
-## Reutilización de código y comportamientos flexibles
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -147,7 +150,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
-
 ### Representación ASCII:
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -177,10 +179,13 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Representación ASCII:
 
-## Sintaxis de Herencia en C#
+*(continuación...)*
 
+---
 ### La palabra clave `:``
+
 
 ```csharp
 // CLASE BASE (Padre)
@@ -203,6 +208,11 @@ public class Estudiante : Persona  // Estudiante HEREDA de Persona
     public string Carrera { get; set; }     // Atributo propio
     public int Semestre { get; set; }       // Atributo propio
     
+---
+### La palabra clave `:``
+
+*(continuación...)*
+
     public void Estudiar()
     {
         Console.WriteLine($"{Nombre} está estudiando");
@@ -270,10 +280,8 @@ public class Empleado : Persona
 ```
 
 ---
-
-## Llamando al Constructor Base
-
 ### La palabra clave `base`
+
 
 ```csharp
 public class Persona
@@ -301,6 +309,11 @@ public class Estudiante : Persona
     }
 }
 
+---
+### La palabra clave `base`
+
+*(continuación...)*
+
 // Uso
 Estudiante est = new Estudiante("María", 20, "2024001");
 // Primero: Persona("María", 20)
@@ -308,10 +321,8 @@ Estudiante est = new Estudiante("María", 20, "2024001");
 ```
 
 ---
-
-## Herencia Multinivel
-
 ### Jerarquías más profundas
+
 
 ```csharp
 // NIVEL 1: Clase base
@@ -341,6 +352,11 @@ prof.Especialidad = "Programación"; // De Profesor
 ```
 
 ---
+### Jerarquías más profundas
+
+*(continuación...)*
+
+---
 
 ## 2. Polimorfismo
 
@@ -351,7 +367,6 @@ prof.Especialidad = "Programación"; // De Profesor
 ![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
-
 ### Representación ASCII:
 
 ```
@@ -379,9 +394,13 @@ prof.Especialidad = "Programación"; // De Profesor
 ```
 
 ---
-## Virtual y Override
+### Representación ASCII:
+
+*(continuación...)*
+
 ---
 ## Virtual y Override
+---
 ### Sobrescritura de métodos
 
 ```csharp
@@ -409,6 +428,11 @@ public class Perro : Animal
         Console.WriteLine("¡Guau guau! 🐕");
     }
     
+---
+### Sobrescritura de métodos
+
+*(continuación...)*
+
     public override void Moverse()
     {
         Console.WriteLine("El perro corre en 4 patas");
@@ -424,10 +448,8 @@ public class Gato : Animal
 }
 ```
 ---
-
-## Polimorfismo en Acción
-
 ### Uso con referencias de clase base
+
 
 ```csharp
 class Program
@@ -452,6 +474,11 @@ class Program
             new Perro() 
         };
         
+---
+### Uso con referencias de clase base
+
+*(continuación...)*
+
         foreach (Animal a in animales)
         {
             a.HacerSonido();  // Cada uno hace su sonido
@@ -463,7 +490,6 @@ class Program
 ---
 ## Llamando al Método Base
 ---
-## Llamando al Método Base
 ### Preservando comportamiento padre
 
 ```csharp
@@ -488,6 +514,11 @@ public class Vendedor : Empleado
 {
     public decimal Comision { get; set; }
     
+---
+### Preservando comportamiento padre
+
+*(continuación...)*
+
     public override decimal CalcularSalario()
     {
         // Llamar al método base + agregar comportamiento
@@ -535,7 +566,6 @@ public abstract class Figura
 ---
 ## Implementando Clases Abstractas
 ---
-## Implementando Clases Abstractas
 ### Clases concretas que heredan
 
 ```csharp
@@ -561,6 +591,11 @@ public class Rectangulo : Figura
     public double Base { get; set; }
     public double Altura { get; set; }
     
+---
+### Clases concretas que heredan
+
+*(continuación...)*
+
     public override double CalcularArea()
     {
         return Base * Altura;
@@ -603,10 +638,8 @@ public abstract class Figura
 ```
 
 ---
-
-## 4. La Palabra Clave `sealed`
-
 ### Impidiendo la herencia
+
 
 ```csharp
 // sealed: Nadie puede heredar de esta clase
@@ -632,6 +665,11 @@ public class ImpuestosColombia : Impuestos
         return base.Calcular() + 0.19m; 
     }
 }
+
+---
+### Impidiendo la herencia
+
+*(continuación...)*
 
 // public class ImpuestosBogota : ImpuestosColombia
 // {
@@ -701,7 +739,6 @@ public class ImpuestosColombia : Impuestos
 ---
 ## 6. Ejemplo Práctico: Sistema de Figuras
 ---
-## 6. Ejemplo Práctico: Sistema de Figuras
 ### Implementación completa
 
 ```csharp
@@ -727,6 +764,11 @@ public class Circulo : Figura
 {
     public double Radio { get; set; }
     
+---
+### Implementación completa
+
+*(continuación...)*
+
     public override double CalcularArea() => Math.PI * Radio * Radio;
     public override double CalcularPerimetro() => 2 * Math.PI * Radio;
 }
@@ -742,7 +784,6 @@ public class Rectangulo : Figura
 }
 ```
 ---
-
 ## Uso del Sistema de Figuras
 
 ```csharp
@@ -768,6 +809,11 @@ class Program
             areaTotal += f.CalcularArea();
         }
         
+---
+## Uso del Sistema de Figuras
+
+*(continuación...)*
+
         Console.WriteLine($"\n📊 Área total de todas las figuras: {areaTotal:F2} cm²");
     }
 }

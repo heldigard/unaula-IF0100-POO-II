@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+## Desarrollo guiado por pruebas con xUnit
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,6 +96,9 @@ section {
 }
 </style>
 
+---
+# Clase 5: TDD - Test-Driven Development
+## Desarrollo guiado por pruebas con xUnit
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -103,9 +106,6 @@ section {
 IMÁGENES GENERADAS:
 - clase-05-tdd-ciclo.png: Diagrama del ciclo Red-Green-Refactor de TDD
 -->
-
-# Clase 5: Test Driven Development (TDD)
-## Desarrollo guiado por pruebas con xUnit
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -136,10 +136,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Buenas prácticas y casos de prueba (15 min)
 
 ---
-
-## 1. ¿Por qué Probar el Código?
-
 ### El problema del desarrollo tradicional
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -165,6 +163,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### El problema del desarrollo tradicional
+
+*(continuación...)*
 
 ---
 
@@ -211,7 +214,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
 
 ---
-
 ### Representación ASCII del ciclo:
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -255,10 +257,13 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Representación ASCII del ciclo:
 
-## Las Tres Leyes de TDD
+*(continuación...)*
 
+---
 ### Por Robert C. Martin (Uncle Bob)
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -286,10 +291,13 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Por Robert C. Martin (Uncle Bob)
 
-## Beneficios de TDD
+*(continuación...)*
 
+---
 ### ¿Por qué usarlo?
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -318,6 +326,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### ¿Por qué usarlo?
+
+*(continuación...)*
 
 ---
 
@@ -390,7 +403,6 @@ dotnet add reference ../MiProyecto/MiProyecto.csproj
 ---
 ## Estructura de Pruebas xUnit
 ---
-## Estructura de Pruebas xUnit
 ### Convenciones y organización
 
 ```
@@ -423,6 +435,11 @@ namespace Calculadora.Tests
             int a = 5;
             int b = 3;
 
+---
+### Convenciones y organización
+
+*(continuación...)*
+
             // Act (Actuar)
             int resultado = calc.Sumar(a, b);
 
@@ -433,10 +450,8 @@ namespace Calculadora.Tests
 }
 ```
 ---
-
-## 4. Estructura de Pruebas Unitarias
-
 ### Patrón AAA: Arrange, Act, Assert
+
 
 ```csharp
 [Fact]
@@ -465,10 +480,13 @@ public void Dividir_DivisorCero_LanzaExcepcion()
 ```
 
 ---
+### Patrón AAA: Arrange, Act, Assert
 
-## Asserts Comunes en xUnit
+*(continuación...)*
 
+---
 ### Verificaciones fundamentales
+
 
 ```csharp
 // IGUALDAD
@@ -495,6 +513,11 @@ Assert.NotEmpty(coleccion);               // No está vacía?
 // TIPOS
 Assert.IsType<TipoEsperado>(objeto);      // Es de tipo específico?
 Assert.IsAssignableFrom<TipoBase>(objeto); // Hereda de tipo?
+
+---
+### Verificaciones fundamentales
+
+*(continuación...)*
 
 // RANGOS
 Assert.InRange(valor, min, max);          // Dentro de rango?
@@ -688,10 +711,8 @@ public class Estudiante
 ```
 
 ---
-
-## 6. Buenas Prácticas
-
 ### Reglas para pruebas efectivas
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -726,10 +747,13 @@ public class Estudiante
 ```
 
 ---
+### Reglas para pruebas efectivas
 
-## Nomenclatura de Pruebas
+*(continuación...)*
 
+---
 ### Convención: Metodo_Escenario_Resultado
+
 
 ```csharp
 // ❌ Nombres malos
@@ -755,6 +779,11 @@ public void Dividir_DivisorCero_LanzaDivideByZeroException()
     // Scenario: Divisor es cero
     // Result: Lanza DivideByZeroException
 }
+
+---
+### Convención: Metodo_Escenario_Resultado
+
+*(continuación...)*
 
 [Fact]
 public void Constructor_SinParametros_InicializaValoresPorDefecto()

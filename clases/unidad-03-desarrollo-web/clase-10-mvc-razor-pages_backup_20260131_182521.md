@@ -1,5 +1,4 @@
 ---
-
 marp: true
 theme: default
 paginate: true
@@ -11,7 +10,6 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-# Clase 10: MVC y Razor Pages
 <style>
 img {
   max-width: 70% !important;
@@ -98,19 +96,13 @@ section {
 }
 </style>
 
----
-# Clase 10: MVC y Razor Pages
-
-*(continuación...)*
-
-
-
 
 <!--
 IMÁGENES GENERADAS:
 - clase-10-mvc.png: Patrón Model-View-Controller con flujo de datos
 -->
 
+# Clase 10: MVC y Razor Pages
 ---
 ## Patrón Model-View-Controller en profundidad
 
@@ -149,8 +141,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ## 1. Patrón MVC en Profundidad
 ### Separación de responsabilidades
----
-## 1. Patrón MVC en Profundidad (Continuación)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -269,11 +259,6 @@ public class EstudiantesController : Controller
     {
         _logger.LogInformation("Accediendo a lista de estudiantes");
         
----
-### CRUD de Estudiantes
-
-*(continuación...)*
-
         var estudiantes = await _service.ObtenerTodosAsync();
         
         // Filtrar si hay búsqueda
@@ -298,11 +283,6 @@ public class EstudiantesController : Controller
         if (id == null)
             return BadRequest("ID requerido");
         
----
-### CRUD de Estudiantes
-
-*(continuación...)*
-
         var estudiante = await _service.ObtenerPorIdAsync(id.Value);
         
         if (estudiante == null)
@@ -347,11 +327,6 @@ public class EstudiantesController : Controller
             return View(viewModel);  // Muestra vista con errores
         }
         
----
-## Controller: Crear y Editar
-
-*(continuación...)*
-
         try
         {
             var estudiante = MapearAEntidad(viewModel);
@@ -377,11 +352,6 @@ public class EstudiantesController : Controller
         if (estudiante == null)
             return NotFound();
         
----
-## Controller: Crear y Editar
-
-*(continuación...)*
-
         var viewModel = MapearAViewModel(estudiante);
         viewModel.Carreras = await _carreraService.ObtenerSelectListAsync();
         
@@ -422,8 +392,10 @@ app.MapControllerRoute(
 ```
 
 ---
-### Route, HttpGet, HttpPost
 
+## Atributos de Routing
+
+### Route, HttpGet, HttpPost
 
 ```csharp
 [Route("api/[controller]")]  // Ruta base: /api/Estudiantes
@@ -449,11 +421,6 @@ public class EstudiantesController : Controller
     [HttpPost]
     public async Task<IActionResult> Crear([FromBody] EstudianteDto dto) { }
 
----
-### Route, HttpGet, HttpPost
-
-*(continuación...)*
-
     // PUT: /api/Estudiantes/5
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Actualizar(int id, [FromBody] EstudianteDto dto) { }
@@ -465,8 +432,10 @@ public class EstudiantesController : Controller
 ```
 
 ---
-### Conversión automática de datos
 
+## 3. Model Binding
+
+### Conversión automática de datos
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -495,11 +464,7 @@ public class EstudiantesController : Controller
 ```
 
 ---
-### Conversión automática de datos
 
-*(continuación...)*
-
----
 ## Model Binding en Acción
 
 ```csharp
@@ -527,11 +492,6 @@ public class EstudiantesController : Controller
         // ASP.NET mapea automáticamente campos del form
         // a propiedades del ViewModel
     }
-
----
-## Model Binding en Acción
-
-*(continuación...)*
 
     // Binding específico con atributos
     public IActionResult Ejemplo(
@@ -573,11 +533,6 @@ public class EstudianteViewModel
 {
     public int? Id { get; set; }  // Nullable para crear
     
----
-### Separar modelo de dominio de la vista
-
-*(continuación...)*
-
     [Required(ErrorMessage = "El código es obligatorio")]
     [StringLength(10, ErrorMessage = "Máximo 10 caracteres")]
     [Display(Name = "Código Estudiantil")]
@@ -603,18 +558,15 @@ public class EstudianteViewModel
     // Propiedad auxiliar para dropdown
     public SelectList Carreras { get; set; }
     
----
-### Separar modelo de dominio de la vista
-
-*(continuación...)*
-
     // Propiedad calculada para mostrar
     public string NombreCompleto => $"{Nombre} {Apellido}";
 }
 ```
 ---
-### Alternativa a MVC para páginas simples
 
+## 4. Razor Pages
+
+### Alternativa a MVC para páginas simples
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -645,11 +597,6 @@ public class EstudianteViewModel
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-### Alternativa a MVC para páginas simples
-
-*(continuación...)*
 
 ---
 ## Estructura Razor Page
@@ -684,11 +631,6 @@ public class EstudianteViewModel
 }
 ```
 
----
-### Page + PageModel
-
-*(continuación...)*
-
 ```csharp
 // Pages/Estudiantes/Crear.cshtml.cs
 public class CrearModel : PageModel
@@ -715,11 +657,6 @@ public class CrearModel : PageModel
         if (!ModelState.IsValid)
             return Page();  // Muestra la misma página con errores
         
----
-### Page + PageModel
-
-*(continuación...)*
-
         await _service.CrearAsync(Estudiante);
         return RedirectToPage("Index");
     }
@@ -728,6 +665,7 @@ public class CrearModel : PageModel
 ---
 ## Handlers en Razor Pages
 ---
+## Handlers en Razor Pages
 ### Múltiples acciones por página
 
 ```csharp
@@ -759,11 +697,6 @@ public class DetallesModel : PageModel
         await _service.ActivarAsync(id);
         return RedirectToPage(new { id });
     }
-
----
-### Múltiples acciones por página
-
-*(continuación...)*
 
     // POST: /Estudiantes/Detalles/5?handler=Desactivar
     public async Task<IActionResult> OnPostDesactivarAsync(int id)
@@ -831,8 +764,10 @@ public class DetallesModel : PageModel
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-### Ejemplos prácticos
 
+## Tag Helpers Comunes
+
+### Ejemplos prácticos
 
 ```html
 <!-- LABEL -->
@@ -859,11 +794,6 @@ public class DetallesModel : PageModel
 <!-- COMPONENT -->
 @await Component.InvokeAsync("MenuCarreras")
 
----
-### Ejemplos prácticos
-
-*(continuación...)*
-
 <!-- ENVIRONMENT (condicional por ambiente) -->
 <environment include="Development">
     <script src="~/js/debug.js"></script>
@@ -877,8 +807,10 @@ public class DetallesModel : PageModel
 ```
 
 ---
-### Reutilización de UI
 
+## 6. ViewComponents y Partial Views
+
+### Reutilización de UI
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -906,13 +838,9 @@ public class DetallesModel : PageModel
 ```
 
 ---
-### Reutilización de UI
-
-*(continuación...)*
-
----
 ## Crear ViewComponent
 ---
+## Crear ViewComponent
 ### Componente reutilizable
 
 ```csharp
@@ -939,11 +867,6 @@ public class MenuCarrerasViewComponent : ViewComponent
         return View(viewModel);
     }
 }
-
----
-### Componente reutilizable
-
-*(continuación...)*
 
 // Vista del componente:
 // Views/Shared/Components/MenuCarreras/Default.cshtml

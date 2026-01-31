@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+## Los pilares de la Programación Orientada a Objetos
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,9 +96,12 @@ section {
 }
 </style>
 
-
-# Clase 2: Clases, Objetos y Encapsulamiento
+---
 ## Los pilares de la Programación Orientada a Objetos
+
+*(continuación...)*
+
+
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -129,10 +132,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Práctica: Clase Estudiante (5 min)
 
 ---
+### Programación Orientada a Objetos
 
-## 1. Repaso: ¿Qué es POO?
-
-### 💡 POO vs Programación Procedural
 
 **Programación Procedural (antigua):**
 ```csharp
@@ -155,7 +156,6 @@ Persona maria = new Persona("María", 30);
 - ✅ Trabajo en equipo más eficiente
 
 
-### Programación Orientada a Objetos
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -173,6 +173,11 @@ Persona maria = new Persona("María", 30);
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### Programación Orientada a Objetos
+
+*(continuación...)*
 
 ---
 
@@ -236,10 +241,8 @@ Persona maria = new Persona("María", 30);
 ```
 
 ---
-
-## Ejemplo: Clase Estudiante
-
 ### Primera versión (campos públicos)
+
 
 ```csharp
 using System;
@@ -268,10 +271,13 @@ namespace Universidad
 ```
 
 ---
+### Primera versión (campos públicos)
 
-## Creación de Objetos
+*(continuación...)*
 
+---
 ### Instanciación con new
+
 
 ```csharp
 using System;
@@ -300,6 +306,11 @@ class Program
     }
 }
 ```
+
+---
+### Instanciación con new
+
+*(continuación...)*
 
 ---
 
@@ -370,10 +381,8 @@ cuenta.saldo = -5000;    // ¡Saldo negativo válido!
 ```
 
 ---
-
-## Aplicando Encapsulamiento
-
 ### Campos privados, acceso controlado
+
 
 ```csharp
 public class CuentaBancaria
@@ -406,6 +415,11 @@ public class CuentaBancaria
 ```
 
 ---
+### Campos privados, acceso controlado
+
+*(continuación...)*
+
+---
 
 ## 4. Propiedades en C#
 
@@ -432,10 +446,8 @@ Console.WriteLine(estudiante.Nombre);  // get
 **Las propiedades parecen campos, pero son métodos disfrazados**
 
 ---
-
-## Tipos de Propiedades
-
 ### Diferentes configuraciones
+
 
 ```csharp
 public class Producto
@@ -461,6 +473,11 @@ public class Producto
         set { clave = value; }
     }
     
+---
+### Diferentes configuraciones
+
+*(continuación...)*
+
     // 4. Propiedad AUTOIMPLEMENTADA (sintaxis corta)
     public double Precio { get; set; }
     public double IVA { get; set; } = 0.19;  // valor por defecto
@@ -470,7 +487,6 @@ public class Producto
 ---
 ## Propiedades con Validación
 ---
-## Propiedades con Validación
 ### El poder del encapsulamiento
 
 ```csharp
@@ -504,6 +520,11 @@ public class Estudiante
         }
     }
     
+---
+### El poder del encapsulamiento
+
+*(continuación...)*
+
     public double Promedio
     {
         get { return promedio; }
@@ -518,10 +539,8 @@ public class Estudiante
 }
 ```
 ---
-
-## Propiedades de Solo Lectura (C# Moderno)
-
 ### Inicialización en constructores
+
 
 ```csharp
 public class Estudiante
@@ -546,16 +565,19 @@ public class Estudiante
     }
 }
 
+---
+### Inicialización en constructores
+
+*(continuación...)*
+
 // Uso
 var est = new Estudiante("2024001");
 // est.Codigo = "otro";  // ❌ ERROR: es de solo lectura
 ```
 
 ---
-
-## 5. Constructores
-
 ### Inicialización de objetos
+
 
 ```csharp
 public class Estudiante
@@ -580,6 +602,11 @@ public class Estudiante
         Edad = edad;
     }
     
+---
+### Inicialización de objetos
+
+*(continuación...)*
+
     // CONSTRUCTOR CON PARÁMETROS OPCIONALES
     public Estudiante(string nombre, string codigo)
     {
@@ -646,7 +673,6 @@ Estudiante est = new Estudiante("María", "2024001")
 ---
 ## Clase Estudiante Completa
 ---
-## Clase Estudiante Completa
 ### Versión final con buenas prácticas
 
 ```csharp
@@ -676,6 +702,11 @@ public class Estudiante
         Promedio = 0.0;
     }
     
+---
+### Versión final con buenas prácticas
+
+*(continuación...)*
+
     // Métodos
     public bool Aprobo()
     {
@@ -699,7 +730,6 @@ public class Estudiante
 ---
 ## 6. Práctica en Clase
 ---
-## 6. Práctica en Clase
 ### Ejercicio: Sistema de Gestión Estudiantil
 
 ```csharp
@@ -724,6 +754,11 @@ class Program
             Promedio = 2.8 
         });
         
+---
+### Ejercicio: Sistema de Gestión Estudiantil
+
+*(continuación...)*
+
         estudiantes.Add(new Estudiante("Ana Martínez", "2024003", 19) 
         { 
             Promedio = 3.5 

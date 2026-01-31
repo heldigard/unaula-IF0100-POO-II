@@ -10,57 +10,21 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
+
+
+## 🎯 Objetivos de Aprendizaje
+
+Al finalizar esta clase, el estudiante será capaz de:
+
+1. **Comprender** la arquitectura de datos desconectados en ADO.NET
+2. **Utilizar** DataSet y DataAdapter para gestión de datos offline
+3. **Implementar** operaciones CRUD con datos desconectados
+4. **Aplicar** técnicas de sincronización entre DataSet y base de datos
+5. **Resolver** conflictos de concurrencia en escenarios multi-usuario
+
+
 ---
-section th {
+# Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
   background-color: #1e40af;
   color: white;
   padding: 0.4em 0.6em;
@@ -97,13 +61,17 @@ section {
 }
 </style>
 
+---
+# Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
+
+*(continuación...)*
+
 
 <!--
 IMÁGENES GENERADAS:
 - clase-15-dataset.png: Arquitectura desconectada con DataSet y DataAdapter
 -->
 
-# Clase 15: Dataset y DataAdapter - Arquitectura Desconectada
 
 **Curso:** IF0100 - Lenguaje de Programación OO II  
 **Unidad 5:** Arquitectura de Datos Desconectados  
@@ -121,12 +89,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 5. Comparar modelo conectado vs desconectado
 
 ---
-
-## 📋 Contenido
-
-### 1. Introducción a Datos Desconectados
-
 ### 📊 Cuándo usar datos desconectados vs conectados
+
+
 
 | Escenario | Usa Conectado | Usa Desconectado |
 |-----------|---------------|------------------|
@@ -150,6 +115,11 @@ Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan 
 - ⬇️ Cargar datos (Fill)
 - ⬆️ Sincronizar cambios (Update)
 
+---
+### 📊 Cuándo usar datos desconectados vs conectados
+
+*(continuación...)*
+
 **Ventajas:**
 - ✅ Menor carga en el servidor de BD
 - ✅ Trabaja offline (sin conexión constante)
@@ -164,7 +134,6 @@ Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan 
 - ❌ No apto para datos de tiempo real
 
 ---
-
 ### 2. Componentes Principales (10 min)
 
 ```
@@ -203,6 +172,11 @@ Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan 
          └──────────┘
 ```
 
+---
+### 2. Componentes Principales (10 min)
+
+*(continuación...)*
+
 **Componentes clave:**
 - **DataSet:** Contenedor de datos en memoria (mini-BD)
 - **DataTable:** Tabla con filas y columnas
@@ -239,6 +213,11 @@ public class EjemploDataSet
         // Definir clave primaria
         dtEstudiantes.PrimaryKey = new DataColumn[] { dtEstudiantes.Columns["Id"] };
         
+---
+### 3. DataSet Básico (15 min)
+
+*(continuación...)*
+
         // 4. Agregar filas
         DataRow fila1 = dtEstudiantes.NewRow();
         fila1["Id"] = 1;
@@ -261,7 +240,6 @@ public class EjemploDataSet
         
         // 5. Agregar tabla al DataSet
 ---
-dsUniversidad.Tables.Add(dtEstudiantes);
         
         // 6. Navegar datos
         Console.WriteLine($"DataSet: {dsUniversidad.DataSetName}");
@@ -286,6 +264,11 @@ if (filaEncontrada != null)
 {
     Console.WriteLine($"Encontrado: {filaEncontrada["Nombre"]}");
 }
+
+---
+
+
+*(continuación...)*
 
 // Filtrar filas
 DataRow[] estudiantesDestacados = dtEstudiantes.Select("Promedio >= 4.0");
@@ -337,6 +320,11 @@ public class EstudianteDataAdapter
             adapter.Fill(ds, "Estudiantes");
         }
         
+---
+### 4. DataAdapter - Puente con la BD (25 min)
+
+*(continuación...)*
+
         Console.WriteLine($"Filas cargadas: {ds.Tables["Estudiantes"].Rows.Count}");
         return ds;
     }
@@ -365,6 +353,11 @@ public int GuardarCambios(DataTable dt)
 {
     int filasAfectadas = 0;
     
+---
+### 4. DataAdapter - Puente con la BD (25 min)
+
+*(continuación...)*
+
     using (SqlConnection conn = new SqlConnection(connectionString))
     {
         string selectQuery = "SELECT * FROM Estudiantes";
@@ -390,7 +383,6 @@ class Program
     static void Main()
     {
 ---
-var repo = new EstudianteDataAdapter();
         
         // 1. Cargar datos desde BD
         DataTable dt = repo.CargarEstudiantesTabla();
@@ -414,6 +406,11 @@ var repo = new EstudianteDataAdapter();
             filaActualizar["Email"] = "nuevo_email@unaula.edu.co";
         }
         
+---
+
+
+*(continuación...)*
+
         // Eliminar estudiante
         DataRow filaEliminar = dt.Rows.Find(5);
         if (filaEliminar != null)
@@ -441,6 +438,11 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
     string selectQuery = "SELECT Id, Nombre, Apellido, Email FROM Estudiantes";
     SqlDataAdapter adapter = new SqlDataAdapter(selectQuery, conn);
     
+---
+
+
+*(continuación...)*
+
     // INSERT personalizado
     adapter.InsertCommand = new SqlCommand(
         "INSERT INTO Estudiantes (Nombre, Apellido, Email) " +
@@ -464,13 +466,17 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
     adapter.DeleteCommand = new SqlCommand(
         "DELETE FROM Estudiantes WHERE Id = @Id", conn);
     
+---
+
+
+*(continuación...)*
+
     adapter.DeleteCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
     
     return adapter;
 }
 ```
 ---
-
 ### 5. Tracking de Cambios (10 min)
 
 **RowState - Estado de cada fila:**
@@ -499,6 +505,11 @@ public void MostrarEstadoFilas(DataTable dt)
 - `Deleted`: Fila eliminada
 - `Detached`: Fila no pertenece a ninguna tabla
 
+---
+### 5. Tracking de Cambios (10 min)
+
+*(continuación...)*
+
 **Versiones de datos:**
 - `Current`: Valor actual
 - `Original`: Valor original desde la BD
@@ -506,7 +517,6 @@ public void MostrarEstadoFilas(DataTable dt)
 - `Default`: Valor predeterminado
 
 ---
-
 ### 6. DataSet con Múltiples Tablas (10 min)
 
 ```csharp
@@ -532,6 +542,11 @@ public DataSet CargarUniversidadCompleta()
         adapterMat.Fill(ds, "Matriculas");
     }
     
+---
+### 6. DataSet con Múltiples Tablas (10 min)
+
+*(continuación...)*
+
     // Definir relaciones
     DataColumn pkEstudiante = ds.Tables["Estudiantes"].Columns["Id"];
     DataColumn fkMatricula = ds.Tables["Matriculas"].Columns["EstudianteId"];
@@ -557,6 +572,11 @@ public void MostrarMatriculasPorEstudiante(DataSet ds, int estudianteId)
         // Obtener filas hijas usando la relación
         DataRow[] matriculas = estudiante.GetChildRows("Estudiante_Matriculas");
         
+---
+### 6. DataSet con Múltiples Tablas (10 min)
+
+*(continuación...)*
+
         foreach (DataRow mat in matriculas)
         {
             Console.WriteLine($"  - Curso ID: {mat["CursoId"]}, Fecha: {mat["FechaMatricula"]}");
@@ -639,6 +659,11 @@ CREATE TABLE Movimientos (
    - Confirmar antes de guardar cambios
 
 5. **Bonus:**
+---
+## 🛠️ Ejercicio para Casa (En Parejas)
+
+*(continuación...)*
+
    - Exportar inventario a XML
    - Reporte de productos con bajo stock (< 10)
    - Calcular valor total del inventario
@@ -676,3 +701,19 @@ Hoy aprendimos:
 **Fecha:** 2026-05-18 (Lunes)  
 **Profesor:** [Nombre]  
 **Curso:** IF0100 - POO II
+
+
+
+---
+
+## 🎯 Objetivos de Aprendizaje
+
+Al finalizar esta clase, el estudiante será capaz de:
+
+1. **Comprender** la arquitectura de datos desconectados en ADO.NET
+2. **Utilizar** DataSet y DataAdapter para gestión de datos offline
+3. **Implementar** operaciones CRUD con datos desconectados
+4. **Aplicar** técnicas de sincronización entre DataSet y base de datos
+5. **Resolver** conflictos de concurrencia en escenarios multi-usuario
+
+---

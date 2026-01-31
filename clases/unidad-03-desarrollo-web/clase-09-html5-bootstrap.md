@@ -10,7 +10,7 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
   }
 
 ---
-<style>
+# Clase 9: HTML5 y Bootstrap
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -96,13 +96,17 @@ section {
 }
 </style>
 
+---
+# Clase 9: HTML5 y Bootstrap
+
+*(continuación...)*
+
 
 <!--
 IMÁGENES GENERADAS:
 - clase-09-bootstrap-grid.png: Sistema de cuadrícula Bootstrap 5 con breakpoints responsivos
 -->
 
-# Clase 9: HTML5 y Bootstrap
 ---
 ## Diseño web responsivo y moderno
 
@@ -137,10 +141,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Responsive Design (5 min)
 
 ---
-
-## 1. HTML5: Estructura Semántica
-
 ### Más allá de `<div>`
+
 
 ```html
 <!-- ❌ HTML ANTIGUO (no semántico) -->
@@ -166,14 +168,17 @@ Al finalizar esta clase, el estudiante será capaz de:
     </section>
 </main>
 
+---
+### Más allá de `<div>`
+
+*(continuación...)*
+
 <footer>...</footer>
 ```
 
 ---
-
-## Etiquetas Semánticas HTML5
-
 ### Significado y uso
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -207,6 +212,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Significado y uso
+
+*(continuación...)*
+
+---
 ## Ejemplo: Estructura HTML5 Completa
 ---
 ## Ejemplo: Estructura HTML5 Completa
@@ -233,6 +243,11 @@ Al finalizar esta clase, el estudiante será capaz de:
         </nav>
     </header>
 
+---
+### Página de blog
+
+*(continuación...)*
+
     <main>
         <section>
             <h2>Últimos Artículos</h2>
@@ -255,6 +270,11 @@ Al finalizar esta clase, el estudiante será capaz de:
             </article>
         </section>
         
+---
+### Página de blog
+
+*(continuación...)*
+
         <aside>
             <h3>Categorías</h3>
             <ul>
@@ -303,6 +323,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     <input type="number" id="edad" name="edad"
            min="18" max="100" value="18">
     
+---
+### Inputs modernos y validación
+
+*(continuación...)*
+
     <!-- Fecha -->
     <label for="fechaNacimiento">Fecha de nacimiento:</label>
     <input type="date" id="fechaNacimiento" name="fechaNacimiento"
@@ -331,15 +356,18 @@ Al finalizar esta clase, el estudiante será capaz de:
         <label><input type="radio" name="genero" value="O"> Otro</label>
     </fieldset>
     
+---
+### Inputs modernos y validación
+
+*(continuación...)*
+
     <button type="submit">Registrarse</button>
     <button type="reset">Limpiar</button>
 </form>
 ```
 ---
-
-## Inputs HTML5 Avanzados
-
 ### Nuevos tipos de input
+
 
 ```html
 <!-- URL -->
@@ -369,16 +397,19 @@ Al finalizar esta clase, el estudiante será capaz de:
 <!-- Archivo -->
 <input type="file" accept=".pdf,.doc,.docx">
 
+---
+### Nuevos tipos de input
+
+*(continuación...)*
+
 <!-- Área de texto -->
 <textarea rows="4" cols="50" maxlength="500"
           placeholder="Escribe tu mensaje..."></textarea>
 ```
 
 ---
-
-## 3. Bootstrap: Introducción
-
 ### Framework CSS más popular
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -413,10 +444,13 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+### Framework CSS más popular
 
-## Sistema de Grillas (Grid)
+*(continuación...)*
 
+---
 ### El corazón de Bootstrap
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -445,6 +479,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### El corazón de Bootstrap
+
+*(continuación...)*
 
 ---
 ## Ejemplos de Grid
@@ -479,6 +518,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 
+---
+### Layouts responsivos
+
+*(continuación...)*
+
 <!-- SIDEBAR + CONTENIDO -->
 <div class="container">
     <div class="row">
@@ -503,10 +547,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 ```
 ---
-
-## 4. Componentes Bootstrap
-
 ### Elementos UI listos para usar
+
 
 ```html
 <!-- BOTONES -->
@@ -538,6 +580,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     ⚠️ Atención: revise los datos
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
+
+---
+### Elementos UI listos para usar
+
+*(continuación...)*
 
 <!-- ─────────────────────────────────────────────── -->
 
@@ -584,6 +631,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </nav>
 
+---
+### Navbar, tablas, formularios
+
+*(continuación...)*
+
 <!-- ─────────────────────────────────────────────── -->
 
 <!-- TABLA ESTILIZADA -->
@@ -609,6 +661,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     </tbody>
 </table>
 
+---
+### Navbar, tablas, formularios
+
+*(continuación...)*
+
 <!-- ─────────────────────────────────────────────── -->
 
 <!-- FORMULARIO ESTILIZADO -->
@@ -625,10 +682,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 </form>
 ```
 ---
-
-## Utilidades Bootstrap
-
 ### Spacing, colors, display
+
 
 ```html
 <!-- SPACING: m = margin, p = padding -->
@@ -654,6 +709,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 <!-- ─────────────────────────────────────────────── -->
 
+---
+### Spacing, colors, display
+
+*(continuación...)*
+
 <!-- DISPLAY -->
 <div class="d-none">Oculto (display: none)</div>
 <div class="d-block">Block</div>
@@ -676,6 +736,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 <p class="fs-1">Tamaño 1 (más grande)</p>
 <p class="fs-6">Tamaño 6 (más pequeño)</p>
 ```
+
+---
+### Spacing, colors, display
+
+*(continuación...)*
 
 ---
 ## 5. Integración ASP.NET + Bootstrap
@@ -727,6 +792,11 @@ Al finalizar esta clase, el estudiante será capaz de:
             </div>
         </nav>
     </header>
+
+---
+### En plantillas Razor
+
+*(continuación...)*
 
     @* Contenido principal *@
     <div class="container mt-4">
@@ -851,6 +921,11 @@ Al finalizar esta clase, el estudiante será capaz de:
                         <span asp-validation-for="Codigo" class="text-danger"></span>
                     </div>
                     
+---
+### Crear/Editar estudiante
+
+*(continuación...)*
+
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>
                         <input asp-for="Nombre" class="form-control">
@@ -877,15 +952,18 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 
+---
+### Crear/Editar estudiante
+
+*(continuación...)*
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 ```
 ---
-
-## 6. Responsive Design
-
 ### Mobile-first con Bootstrap
+
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -917,6 +995,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+---
+### Mobile-first con Bootstrap
+
+*(continuación...)*
 
 ---
 
