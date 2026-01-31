@@ -474,6 +474,9 @@ dotnet add reference ../MiApp/MiApp.csproj
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" lang="C">
 <h2 id="4-escribiendo-escenarios-bdd">4. Escribiendo Escenarios BDD</h2>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" lang="C">
+<h2 id="4-escribiendo-escenarios-bdd-1">4. Escribiendo Escenarios BDD</h2>
 <h3 id="ejemplo-sistema-de-calificaciones">Ejemplo: Sistema de calificaciones</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-gherkin"><span class="hljs-comment"># language: es</span>
 Característica: Gestión de calificaciones estudiantiles
@@ -510,8 +513,11 @@ Característica: Gestión de calificaciones estudiantiles
     Entonces debe mostrar el error <span class="hljs-string">&quot;La nota debe estar entre 0.0 y 5.0&quot;</span>
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" lang="C">
 <h2 id="5-implementaci%C3%B3n-de-step-definitions">5. Implementación de Step Definitions</h2>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" lang="C">
+<h2 id="5-implementaci%C3%B3n-de-step-definitions-1">5. Implementación de Step Definitions</h2>
 <h3 id="conectando-gherkin-con-c">Conectando Gherkin con C#</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// StepDefinitions/CalificacionesSteps.cs</span>
 
@@ -551,7 +557,7 @@ Característica: Gestión de calificaciones estudiantiles
 }
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" lang="C">
 <h2 id="step-definitions-continuaci%C3%B3n">Step Definitions (continuación)</h2>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">Given(@<span class="hljs-string">&quot;que el estudiante está inscrito en &quot;</span><span class="hljs-string">&quot;([^&quot;</span><span class="hljs-string">&quot;]*)&quot;</span>,<span class="hljs-string">&quot;)]
 public void DadoQueElEstudianteEstaInscritoEn(string materia)
@@ -587,7 +593,7 @@ public void EntoncesElPromedioDebeSer(double esperado)
 }
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" lang="C">
 <h2 id="paso-con-excepciones">Paso con Excepciones</h2>
 <h3 id="manejo-de-errores-en-bdd">Manejo de errores en BDD</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">When(@<span class="hljs-string">&quot;intento registrar una nota de (.*)&quot;</span>)</span>]
@@ -611,8 +617,11 @@ public void EntoncesDebeMostrarElError(string mensajeEsperado)
 }
 </span></span></code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" lang="C">
 <h2 id="hooks-en-specflow">Hooks en SpecFlow</h2>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" lang="C">
+<h2 id="hooks-en-specflow-1">Hooks en SpecFlow</h2>
 <h3 id="configuraci%C3%B3n-global">Configuración global</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Hooks/Hooks.cs</span>
 <span class="hljs-keyword">using</span> TechTalk.SpecFlow;
@@ -653,7 +662,7 @@ public void EntoncesDebeMostrarElError(string mensajeEsperado)
 }
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" lang="C">
 <h2 id="ejecutar-pruebas-specflow">Ejecutar Pruebas SpecFlow</h2>
 <h3 id="en-visual-studio-y-cli">En Visual Studio y CLI</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-bash"><span class="hljs-comment"># Ejecutar todas las pruebas SpecFlow</span>
@@ -678,7 +687,7 @@ dotnet <span class="hljs-built_in">test</span> --collect:<span class="hljs-strin
 <li>Integración con IntelliSense</li>
 </ul>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" lang="C">
 <h2 id="6-buenas-pr%C3%A1cticas-bdd">6. Buenas Prácticas BDD</h2>
 <h3 id="anti-patrones-a-evitar">Anti-patrones a evitar</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-gherkin"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> ANTI-PATRÓN: UI-centric (demasiado técnico)
@@ -702,7 +711,7 @@ Escenario: Autenticación fallida con credenciales inválidas
   Y mostrar un mensaje de error de autenticación
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" lang="C">
 <h2 id="m%C3%A1s-buenas-pr%C3%A1cticas">Más Buenas Prácticas</h2>
 <h3 id="checklist-bdd">Checklist BDD</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> NIVEL DE ABSTRACCIÓN
@@ -730,7 +739,7 @@ Escenario: Autenticación fallida con credenciales inválidas
    • Si tiene &quot;Y&quot; en Then, considerar dividir
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" lang="C">
 <h2 id="living-documentation">Living Documentation</h2>
 <h3 id="documentaci%C3%B3n-que-nunca-se-desactualiza">Documentación que nunca se desactualiza</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────────────────────────────────────┐
@@ -756,7 +765,7 @@ Escenario: Autenticación fallida con credenciales inválidas
 └─────────────────────────────────────────────────────────────┘
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" lang="C">
 <h2 id="resumen-de-la-clase">Resumen de la Clase</h2>
 <table>
 <thead>
@@ -797,7 +806,7 @@ Escenario: Autenticación fallida con credenciales inválidas
 </tbody>
 </table>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" lang="C">
 <h2 id="ejercicio-pr%C3%A1ctico">Ejercicio Práctico</h2>
 <h3 id="taller-bdd-para-biblioteca">Taller: BDD para Biblioteca</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-gherkin">Ejercicio: Crear escenarios BDD para sistema de biblioteca
@@ -818,7 +827,7 @@ Tareas:
 4. Ejecutar y verificar
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" lang="C">
 <h2 id="comparaci%C3%B3n-final-tdd-vs-bdd">Comparación Final: TDD vs BDD</h2>
 <h3 id="%C2%BFcu%C3%A1ndo-usar-cada-uno">¿Cuándo usar cada uno?</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────────────────────────────────────┐
@@ -853,7 +862,7 @@ Tareas:
 └─────────────────────────────────────────────────────────────┘
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="34" lang="C">
 <h2 id="pr%C3%B3xima-clase">Próxima Clase</h2>
 <h3 id="domain-driven-design-ddd">Domain Driven Design (DDD)</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>CLASE 7: DOMAIN DRIVEN DESIGN
@@ -867,7 +876,7 @@ Tareas:
 • Bounded Contexts
 </code></pre>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" lang="C">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="35" lang="C">
 <h1 id="%C2%A1gracias">¡Gracias!</h1>
 <h2 id="%C2%BFpreguntas">¿Preguntas?</h2>
 <p><strong>&quot;El software es comportamiento, no código&quot;</strong></p>
