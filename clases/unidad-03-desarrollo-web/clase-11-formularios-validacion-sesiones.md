@@ -90,9 +90,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Ejercicio integrador (20 min)
 
 ---
-
 ## 1. Validación con Data Annotations
-
+---
+## 1. Validación con Data Annotations
 ### Atributos de validación en .NET
 
 ```csharp
@@ -154,11 +154,10 @@ public class EstudianteViewModel
     public string ConfirmarPassword { get; set; }
 }
 ```
-
 ---
-
 ## Data Annotations Disponibles
-
+---
+## Data Annotations Disponibles
 ### Lista completa de atributos
 
 ![Validación de Formularios](../../assets/infografias/clase-11-validacion-formularios.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
@@ -197,11 +196,10 @@ public class EstudianteViewModel
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
-
 ## Validación Personalizada
-
+---
+## Validación Personalizada
 ### Crear atributo custom
 
 ```csharp
@@ -259,7 +257,6 @@ public class MayorDeEdadAttribute : ValidationAttribute
     }
 }
 ```
-
 ---
 
 ## Validación en el Servidor
@@ -294,9 +291,9 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ```
 
 ---
-
 ## 2. Validación Cliente vs Servidor
-
+---
+## 2. Validación Cliente vs Servidor
 ### Doble validación
 
 ```
@@ -336,7 +333,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## Configurar Validación Cliente
@@ -408,9 +404,9 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ```
 
 ---
-
 ## Usando TempData
-
+---
+## Usando TempData
 ### Mensajes de confirmación
 
 ```csharp
@@ -466,7 +462,6 @@ public async Task<IActionResult> Eliminar(int id)
 <!-- O usando Partial View -->
 <partial name="_Mensajes" />
 ```
-
 ---
 
 ## 4. Sesiones y Cookies
@@ -493,9 +488,9 @@ app.MapControllers();
 ```
 
 ---
-
 ## Usando Sesiones
-
+---
+## Usando Sesiones
 ### Almacenar y recuperar datos
 
 ```csharp
@@ -544,7 +539,6 @@ public class AccountController : Controller
     }
 }
 ```
-
 ---
 
 ## Cookies
@@ -587,9 +581,9 @@ public class PreferenciasController : Controller
 ```
 
 ---
-
 ## 5. Upload de Archivos
-
+---
+## 5. Upload de Archivos
 ### IFormFile
 
 ```html
@@ -653,7 +647,6 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
     return RedirectToAction("Detalles", new { id = estudianteId });
 }
 ```
-
 ---
 
 ## Múltiples Archivos

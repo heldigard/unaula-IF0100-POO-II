@@ -315,9 +315,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
-
 ## Entity en C#
-
+---
+## Entity en C#
 ### Implementación
 
 ```csharp
@@ -367,11 +367,10 @@ public class Cliente
     public override int GetHashCode() => Id.GetHashCode();
 }
 ```
-
 ---
-
 ## Value Object en C#
-
+---
+## Value Object en C#
 ### Implementación inmutable
 
 ```csharp
@@ -424,11 +423,10 @@ public class Dinero : IEquatable<Dinero>
 var precio = Dinero.Pesos(50000);
 var descuento = precio.AplicarDescuento(10);  // 45000 COP
 ```
-
 ---
-
 ## Value Object: Dirección
-
+---
+## Value Object: Dirección
 ### Otro ejemplo clásico
 
 ```csharp
@@ -476,11 +474,10 @@ var direccion2 = new Direccion("Calle 123", "Medellín", "050001", "Colombia");
 Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 // No importa si son instancias diferentes
 ```
-
 ---
-
 ## 4. Aggregates y Aggregate Roots
-
+---
+## 4. Aggregates y Aggregate Roots
 ### Agrupación coherente de objetos
 
 ```
@@ -524,7 +521,6 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## Reglas de Aggregates
@@ -695,9 +691,9 @@ public enum EstadoPedido
 ```
 
 ---
-
 ## Repository Pattern
-
+---
+## Repository Pattern
 ### Abstracción de persistencia
 
 ```csharp
@@ -741,11 +737,10 @@ public class PedidoRepository : IPedidoRepository
     // ... otros métodos
 }
 ```
-
 ---
-
 ## Domain Service
-
+---
+## Domain Service
 ### Lógica que cruza aggregates
 
 ```csharp
@@ -806,11 +801,10 @@ public class ProcesadorPedidos
     }
 }
 ```
-
 ---
-
 ## 6. Arquitectura en Capas
-
+---
+## 6. Arquitectura en Capas
 ### Capas de DDD
 
 ![Arquitectura DDD](../../assets/infografias/clase-07-ddd-arquitectura.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
@@ -860,7 +854,6 @@ public class ProcesadorPedidos
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## Reglas de Dependencia

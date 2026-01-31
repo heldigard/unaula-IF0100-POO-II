@@ -224,9 +224,9 @@ Views/                            ├── Privacy.cshtml
 ```
 
 ---
-
 ## Flujo de una Petición HTTP
-
+---
+## Flujo de una Petición HTTP
 ### Request → Response
 
 ```
@@ -269,7 +269,6 @@ Views/                            ├── Privacy.cshtml
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## 3. Crear Primera Aplicación
@@ -311,9 +310,9 @@ MiPrimeraWeb/
 ```
 
 ---
-
 ## Program.cs Explicado
-
+---
+## Program.cs Explicado
 ### Punto de entrada de la aplicación
 
 ```csharp
@@ -361,11 +360,10 @@ app.MapControllerRoute(
 
 app.Run();  // Iniciar aplicación
 ```
-
 ---
-
 ## Mi Primer Controller
-
+---
+## Mi Primer Controller
 ### HomeController.cs
 
 ```csharp
@@ -413,7 +411,6 @@ namespace MiPrimeraWeb.Controllers
     }
 }
 ```
-
 ---
 
 ## Mi Primera Vista
@@ -456,9 +453,9 @@ namespace MiPrimeraWeb.Controllers
 ```
 
 ---
-
 ## Sintaxis Razor
-
+---
+## Sintaxis Razor
 ### C# en HTML
 
 ```html
@@ -502,7 +499,6 @@ else
 @* 6. Escapar @ *@
 <p>Email: usuario@@dominio.com</p>
 ```
-
 ---
 
 ## 4. Middleware y Pipeline
@@ -540,9 +536,9 @@ else
 ```
 
 ---
-
 ## Crear Middleware Personalizado
-
+---
+## Crear Middleware Personalizado
 ### Logging de peticiones
 
 ```csharp
@@ -583,7 +579,6 @@ public class RequestTimingMiddleware
 // Registro en Program.cs
 app.UseMiddleware<RequestTimingMiddleware>();
 ```
-
 ---
 
 ## 5. Inyección de Dependencias
@@ -624,9 +619,9 @@ app.UseMiddleware<RequestTimingMiddleware>();
 ```
 
 ---
-
 ## Ciclo de Vida de Servicios
-
+---
+## Ciclo de Vida de Servicios
 ### Scoped, Transient, Singleton
 
 ```csharp
@@ -670,11 +665,10 @@ public class ClienteService : IClienteService
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 ```
-
 ---
-
 ## 6. Estructura de Proyecto
-
+---
+## 6. Estructura de Proyecto
 ### Organización recomendada
 
 ```
@@ -725,7 +719,6 @@ MiAplicacionWeb/
 └── tests/
     └── MiAplicacionWeb.Tests/
 ```
-
 ---
 
 ## Resumen de la Clase

@@ -514,9 +514,9 @@ MiApp.Specs/
 ```
 
 ---
-
 ## 4. Escribiendo Escenarios BDD
-
+---
+## 4. Escribiendo Escenarios BDD
 ### Ejemplo: Sistema de calificaciones
 
 ```gherkin
@@ -554,11 +554,10 @@ Característica: Gestión de calificaciones estudiantiles
     Cuando intento registrar una nota de 6.5
     Entonces debe mostrar el error "La nota debe estar entre 0.0 y 5.0"
 ```
-
 ---
-
 ## 5. Implementación de Step Definitions
-
+---
+## 5. Implementación de Step Definitions
 ### Conectando Gherkin con C#
 
 ```csharp
@@ -599,7 +598,6 @@ namespace MiApp.Specs.StepDefinitions
     }
 }
 ```
-
 ---
 
 ## Step Definitions (continuación)
@@ -668,9 +666,9 @@ public void EntoncesDebeMostrarElError(string mensajeEsperado)
 ```
 
 ---
-
 ## Hooks en SpecFlow
-
+---
+## Hooks en SpecFlow
 ### Configuración global
 
 ```csharp
@@ -712,7 +710,6 @@ namespace MiApp.Specs.Hooks
     }
 }
 ```
-
 ---
 
 ## Ejecutar Pruebas SpecFlow

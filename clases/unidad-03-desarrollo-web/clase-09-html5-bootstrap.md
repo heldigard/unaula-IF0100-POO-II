@@ -162,9 +162,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-
 ## Ejemplo: Estructura HTML5 Completa
-
+---
+## Ejemplo: Estructura HTML5 Completa
 ### Página de blog
 
 ```html
@@ -225,11 +225,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 </body>
 </html>
 ```
-
 ---
-
 ## 2. Formularios HTML5
-
+---
+## 2. Formularios HTML5
 ### Inputs modernos y validación
 
 ```html
@@ -289,7 +288,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     <button type="reset">Limpiar</button>
 </form>
 ```
-
 ---
 
 ## Inputs HTML5 Avanzados
@@ -402,9 +400,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-
 ## Ejemplos de Grid
-
+---
+## Ejemplos de Grid
 ### Layouts responsivos
 
 ```html
@@ -456,7 +454,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 ```
-
 ---
 
 ## 4. Componentes Bootstrap
@@ -508,9 +505,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-
 ## Más Componentes Bootstrap
-
+---
+## Más Componentes Bootstrap
 ### Navbar, tablas, formularios
 
 ```html
@@ -578,7 +575,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>
 ```
-
 ---
 
 ## Utilidades Bootstrap
@@ -633,9 +629,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-
 ## 5. Integración ASP.NET + Bootstrap
-
+---
+## 5. Integración ASP.NET + Bootstrap
 ### En plantillas Razor
 
 ```html
@@ -703,11 +699,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 </body>
 </html>
 ```
-
 ---
-
 ## Vista con Bootstrap
-
+---
+## Vista con Bootstrap
 ### CRUD de Estudiantes
 
 ```html
@@ -773,11 +768,10 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 ```
-
 ---
-
 ## Formulario con Bootstrap
-
+---
+## Formulario con Bootstrap
 ### Crear/Editar estudiante
 
 ```html
@@ -835,7 +829,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 ```
-
 ---
 
 ## 6. Responsive Design

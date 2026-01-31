@@ -203,9 +203,9 @@ class Program
 - ❌ Solo diferente tipo de retorno (no es suficiente)
 
 ---
-
 ## Sobrecarga de Constructores
-
+---
+## Sobrecarga de Constructores
 ### Ya lo hemos visto aplicado
 
 ```csharp
@@ -244,7 +244,6 @@ public class Estudiante
     }
 }
 ```
-
 ---
 
 ## Llamando Constructores Entre Sí
@@ -284,9 +283,9 @@ public class Estudiante
 ```
 
 ---
-
 ## 3. Sobrecarga de Operadores
-
+---
+## 3. Sobrecarga de Operadores
 ### Definiendo comportamiento de operadores
 
 ```csharp
@@ -324,7 +323,6 @@ public class Fraccion
     }
 }
 ```
-
 ---
 
 ## Uso de Operadores Sobrecargados
@@ -358,9 +356,9 @@ class Program
 **NO se pueden sobrecargar:** `&&`, `||`, `??`, `?:`, `=`, `.`
 
 ---
-
 ## Sobrecarga de Operadores de Comparación
-
+---
+## Sobrecarga de Operadores de Comparación
 ### Implementando igualdad
 
 ```csharp
@@ -399,7 +397,6 @@ public class Punto
     }
 }
 ```
-
 ---
 
 ## 4. Modelamiento de Bases de Datos
@@ -523,9 +520,9 @@ public class Punto
 ```
 
 ---
-
 ## Ejemplo: Sistema Universitario
-
+---
+## Ejemplo: Sistema Universitario
 ### Diagrama ER completo
 
 ```
@@ -569,7 +566,6 @@ public class Punto
 │                                                                      │
 └──────────────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## 5. Mapeo Objeto-Relacional

@@ -344,9 +344,9 @@ dotnet add reference ../MiProyecto/MiProyecto.csproj
 ```
 
 ---
-
 ## Estructura de Pruebas xUnit
-
+---
+## Estructura de Pruebas xUnit
 ### Convenciones y organización
 
 ```
@@ -388,7 +388,6 @@ namespace Calculadora.Tests
     }
 }
 ```
-
 ---
 
 ## 4. Estructura de Pruebas Unitarias

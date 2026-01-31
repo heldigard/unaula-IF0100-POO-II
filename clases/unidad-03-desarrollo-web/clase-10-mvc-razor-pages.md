@@ -92,9 +92,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. ViewComponents y Partial Views (15 min)
 
 ---
-
 ## 1. Patrón MVC en Profundidad
-
+---
+## 1. Patrón MVC en Profundidad
 ### Separación de responsabilidades
 
 ```
@@ -135,11 +135,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
-
 ## Flujo MVC Detallado
-
+---
+## Flujo MVC Detallado
 ### Ejemplo: Crear Estudiante
 
 ```
@@ -184,11 +183,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
-
 ## Controller Completo
-
+---
+## Controller Completo
 ### CRUD de Estudiantes
 
 ```csharp
@@ -247,7 +245,6 @@ public class EstudiantesController : Controller
     }
 }
 ```
-
 ---
 
 ## Controller: Crear y Editar
@@ -462,9 +459,9 @@ public class EstudiantesController : Controller
 ```
 
 ---
-
 ## ViewModels
-
+---
+## ViewModels
 ### Separar modelo de dominio de la vista
 
 ```csharp
@@ -516,7 +513,6 @@ public class EstudianteViewModel
     public string NombreCompleto => $"{Nombre} {Apellido}";
 }
 ```
-
 ---
 
 ## 4. Razor Pages
@@ -554,9 +550,9 @@ public class EstudianteViewModel
 ```
 
 ---
-
 ## Estructura Razor Page
-
+---
+## Estructura Razor Page
 ### Page + PageModel
 
 ```html
@@ -616,11 +612,10 @@ public class CrearModel : PageModel
     }
 }
 ```
-
 ---
-
 ## Handlers en Razor Pages
-
+---
+## Handlers en Razor Pages
 ### Múltiples acciones por página
 
 ```csharp
@@ -672,11 +667,10 @@ public class DetallesModel : PageModel
     <button type="submit">Desactivar</button>
 </form>
 ```
-
 ---
-
 ## 5. Tag Helpers
-
+---
+## 5. Tag Helpers
 ### HTML semántico con funcionalidad ASP.NET
 
 ```
@@ -719,7 +713,6 @@ public class DetallesModel : PageModel
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## Tag Helpers Comunes
@@ -795,9 +788,9 @@ public class DetallesModel : PageModel
 ```
 
 ---
-
 ## Crear ViewComponent
-
+---
+## Crear ViewComponent
 ### Componente reutilizable
 
 ```csharp
@@ -843,7 +836,6 @@ public class MenuCarrerasViewComponent : ViewComponent
     }
 </ul>
 ```
-
 ---
 
 ## Resumen de la Clase

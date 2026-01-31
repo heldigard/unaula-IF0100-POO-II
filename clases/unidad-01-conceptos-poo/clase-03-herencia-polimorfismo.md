@@ -335,9 +335,9 @@ prof.Especialidad = "Programación"; // De Profesor
 ```
 
 ---
-
 ## Virtual y Override
-
+---
+## Virtual y Override
 ### Sobrescritura de métodos
 
 ```csharp
@@ -379,7 +379,6 @@ public class Gato : Animal
     }
 }
 ```
-
 ---
 
 ## Polimorfismo en Acción
@@ -418,9 +417,9 @@ class Program
 ```
 
 ---
-
 ## Llamando al Método Base
-
+---
+## Llamando al Método Base
 ### Preservando comportamiento padre
 
 ```csharp
@@ -459,7 +458,6 @@ public class Vendedor : Empleado
     }
 }
 ```
-
 ---
 
 ## 3. Clases y Métodos Abstractos
@@ -491,9 +489,9 @@ public abstract class Figura
 ```
 
 ---
-
 ## Implementando Clases Abstractas
-
+---
+## Implementando Clases Abstractas
 ### Clases concretas que heredan
 
 ```csharp
@@ -535,7 +533,6 @@ public class Rectangulo : Figura
 Figura f = new Circulo { Radio = 5 };  // ✅ Sí se puede
 f.CalcularArea();  // Llama a la implementación de Circulo
 ```
-
 ---
 
 ## Diferencias: Virtual vs Abstract
@@ -658,9 +655,9 @@ public class ImpuestosColombia : Impuestos
 ```
 
 ---
-
 ## 6. Ejemplo Práctico: Sistema de Figuras
-
+---
+## 6. Ejemplo Práctico: Sistema de Figuras
 ### Implementación completa
 
 ```csharp
@@ -700,7 +697,6 @@ public class Rectangulo : Figura
     public override double CalcularPerimetro() => 2 * (Base + Altura);
 }
 ```
-
 ---
 
 ## Uso del Sistema de Figuras

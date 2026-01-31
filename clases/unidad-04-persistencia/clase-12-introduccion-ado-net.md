@@ -166,9 +166,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-
 ## 2. Arquitectura ADO.NET
-
+---
+## 2. Arquitectura ADO.NET
 ### Componentes principales
 
 ```
@@ -217,7 +217,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## Namespaces y Paquetes
@@ -280,9 +279,9 @@ string connectionString = builder.ConnectionString;
 ```
 
 ---
-
 ## Usando SqlConnection
-
+---
+## Usando SqlConnection
 ### Patrón using (siempre)
 
 ```csharp
@@ -330,7 +329,6 @@ public class EstudianteRepository
     }
 }
 ```
-
 ---
 
 ## SqlDataReader
@@ -404,9 +402,9 @@ var nuevoId = await repo.CrearAsync(new Estudiante
 ```
 
 ---
-
 ## Read (SELECT)
-
+---
+## Read (SELECT)
 ### Obtener por ID y listado
 
 ```csharp
@@ -475,7 +473,6 @@ private Estudiante MapFromReader(SqlDataReader reader)
     };
 }
 ```
-
 ---
 
 ## Update (UPDATE)
@@ -588,9 +585,9 @@ public async Task<bool> DesactivarAsync(int id)
 ```
 
 ---
-
 ## 5. Manejo de Transacciones
-
+---
+## 5. Manejo de Transacciones
 ### Consistencia de datos
 
 ```csharp
@@ -644,11 +641,10 @@ public async Task<bool> TransferirEstudianteAsync(
     }
 }
 ```
-
 ---
-
 ## 6. Buenas Prácticas
-
+---
+## 6. Buenas Prácticas
 ### Checklist ADO.NET
 
 ```
@@ -689,7 +685,6 @@ public async Task<bool> TransferirEstudianteAsync(
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
 ---
 
 ## SQL Injection

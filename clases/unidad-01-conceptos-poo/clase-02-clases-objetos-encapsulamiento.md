@@ -401,9 +401,9 @@ public class Producto
 ```
 
 ---
-
 ## Propiedades con Validación
-
+---
+## Propiedades con Validación
 ### El poder del encapsulamiento
 
 ```csharp
@@ -450,7 +450,6 @@ public class Estudiante
     }
 }
 ```
-
 ---
 
 ## Propiedades de Solo Lectura (C# Moderno)
@@ -578,9 +577,9 @@ Estudiante est = new Estudiante("María", "2024001")
 ```
 
 ---
-
 ## Clase Estudiante Completa
-
+---
+## Clase Estudiante Completa
 ### Versión final con buenas prácticas
 
 ```csharp
@@ -630,11 +629,10 @@ public class Estudiante
     }
 }
 ```
-
 ---
-
 ## 6. Práctica en Clase
-
+---
+## 6. Práctica en Clase
 ### Ejercicio: Sistema de Gestión Estudiantil
 
 ```csharp
@@ -674,7 +672,6 @@ class Program
     }
 }
 ```
-
 ---
 
 ## Resumen de la Clase

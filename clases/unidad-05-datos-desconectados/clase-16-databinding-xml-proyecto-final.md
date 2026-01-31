@@ -69,9 +69,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 4. Presentar un proyecto completo con persistencia
 
 ---
-
 ## 📋 Contenido
-
+---
+## 📋 Contenido
 ### 1. Data Binding - Enlace de Datos (20 min)
 
 **¿Qué es Data Binding?**
@@ -213,7 +213,6 @@ public class FormEstudiantes : Form
 - ✅ Navegación entre registros (MoveNext, MovePrevious)
 - ✅ Filtrado y ordenamiento
 - ✅ Notificación de cambios
-
 ---
 
 ### 2. DataSet y XML (20 min)
