@@ -68,7 +68,12 @@ style: |
 
 ---
 
-## 💼 Quién usa C#
+## 💼 C# en el Mercado
+
+<div class="columns">
+<div>
+
+### 🏢 Quién usa C#
 
 | Empresa | Uso |
 |---------|-----|
@@ -77,17 +82,21 @@ style: |
 | **Stack Overflow** | Backend completo |
 | **Siemens** | Sistemas industriales |
 
----
+</div>
+<div>
 
-## C# vs Java vs Python
+### ⚖️ C# vs Competidores
 
-| 🟢 C# (2000) | 🟠 Java (1995) | 🔵 Python (1991) |
-|-------------|---------------|------------------|
-| `string nombre = "Juan";` | `String nombre = "Juan";` | `nombre = "Juan"` |
-| `Console.WriteLine($"Hola");` | `System.out.println("Hola");` | `print(f"Hola {nombre}")` |
-| **✅ Type-safe** | **✅ JVM portable** | **✅ Sintaxis simple** |
-| **✅ LINQ nativo** | **✅ Ecosistema grande** | **✅ Líder en Data** |
-| **✅ async/await** | | |
+| C# (2000) | Java (1995) | Python (1991) |
+|-----------|-------------|---------------|
+| ✅ Type-safe | ✅ JVM portable | ✅ Sintaxis simple |
+| ✅ LINQ nativo | ✅ Ecosistema grande | ✅ Líder en Data |
+| ✅ async/await | | |
+
+**C# destaca en:** Empresas, Azure, Gaming
+
+</div>
+</div>
 
 ---
 
@@ -164,28 +173,28 @@ int valor = nums[0]; // ✅ sin cast
 
 ---
 
-## Ecosistema .NET: Todo en Uno
+## Ecosistema .NET: De Fragmentación a Unificación
+
+<div class="columns">
+<div>
+
+### 🟢 AHORA (.NET 8)
 
 ```
-┌─────────────────────────────────────────────────┐
-│              .NET 8 UNIFICADO                    │
-├─────────────────────────────────────────────────┤
-│  🌐 ASP.NET Core  │  🖥️ Desktop  │  📱 MAUI   │
-│  • APIs REST      │  • WPF       │  • iOS/Droid│
-│  • MVC            │  • WinForms  │            │
-│  • Blazor         │              │            │
-├─────────────────────────────────────────────────┤
-│  ☁️ Azure Cloud  │  🎮 Unity    │  🤖 ML.NET │
-│  • Functions      │  • 2.5M+     │  • AI/ML    │
-│  • SDK nativo     │  • C# main   │            │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────┐
+│        .NET 8 UNIFICADO          │
+│  ┌───┬───┬───┬───┬───┬───┐      │
+│  │Web│Desk│Mob│Cl│Gam│AI │      │
+│  └───┴───┴───┴───┴───┴───┘      │
+│      ↓ UN RUNTIME               │
+│  Win  Linux  mac  iOS  Android  │
+└─────────────────────────────────┘
 ```
 
-**Una plataforma para:** Web + Desktop + Mobile + Cloud + Gaming + AI
+**100% código compartible**
 
----
-
-## Evolución .NET: Fragmentación → Unificación
+</div>
+<div>
 
 ### 🔴 ANTES (hasta 2016)
 
@@ -201,20 +210,10 @@ int valor = nums[0]; // ✅ sin cast
 
 **Problema:** Código NO compartible
 
-### 🟢 AHORA (.NET 8)
+</div>
+</div>
 
-```
-┌─────────────────────────────────┐
-│        .NET 8 UNIFICADO          │
-│  ┌───┬───┬───┬───┬───┬───┐      │
-│  │Web│Desk│Mob│Cl│Gam│AI │      │
-│  └───┴───┴───┴───┴───┴───┘      │
-│      ↓ UN RUNTIME               │
-│  Win  Linux  mac  iOS  Android  │
-└─────────────────────────────────┘
-```
-
-**Ventaja:** 100% código compartible
+**Una plataforma para:** Web + Desktop + Mobile + Cloud + Gaming + AI
 
 ---
 
@@ -330,7 +329,10 @@ System                    ← Raíz
 
 ---
 
-## Value Types vs Reference Types (1/2)
+## Value Types vs Reference Types
+
+<div class="columns">
+<div>
 
 ### 📦 VALUE TYPES (Stack)
 
@@ -345,14 +347,12 @@ System                    ← Raíz
 int edad = 25;
 int edad2 = edad;   // Copia
 edad2 = 30;
-
 Console.WriteLine(edad);   // 25 (independiente)
 Console.WriteLine(edad2);  // 30
 ```
 
----
-
-## Value Types vs Reference Types (2/2)
+</div>
+<div>
 
 ### 🔗 REFERENCE TYPES (Heap)
 
@@ -367,14 +367,21 @@ Console.WriteLine(edad2);  // 30
 string nombre = "Juan";
 string nombre2 = nombre;  // Misma ref
 nombre2 = "Maria";        // Nuevo obj
-
 Console.WriteLine(nombre);   // "Juan"
 Console.WriteLine(nombre2);  // "Maria"
 ```
 
+</div>
+</div>
+
 ---
 
-## Stack vs Heap: Visualización (1/2) - STACK
+## Stack vs Heap: Visualización Comparativa
+
+<div class="columns">
+<div>
+
+### 📦 STACK (Value Types)
 
 ```
 ┌─────────────────────────────────────────┐
@@ -393,9 +400,10 @@ Console.WriteLine(nombre2);  // "Maria"
 - Cada variable es independiente
 - Asignación = copia del valor
 
----
+</div>
+<div>
 
-## Stack vs Heap: Visualización (2/2) - HEAP
+### 🔗 HEAP (Reference Types)
 
 ```
 ┌─────────────────────────────────────────┐
@@ -416,6 +424,9 @@ Console.WriteLine(nombre2);  // "Maria"
 - Almacena referencias (direcciones)
 - Múltiples variables pueden apuntar al mismo objeto
 - Asignación = copia de la referencia
+
+</div>
+</div>
 
 ---
 
@@ -667,25 +678,23 @@ string patron = nums switch
 
 ---
 
-## Ejercicio: Calculadora de Área (1/2)
+## Ejercicio: Calculadora de Área
+
+<div class="columns">
+<div>
 
 ### 🎯 Objetivo
-
 Crear app de consola que calcule área de rectángulo
 
 ### ✅ Conceptos a practicar
+1. Console I/O (ReadLine/WriteLine)
+2. Variables double
+3. Parseo de strings
+4. Interpolación de strings
+5. Estructura básica C#
 
-| # | Tema |
-|---|------|
-| 1 | Console I/O (ReadLine/WriteLine) |
-| 2 | Variables double |
-| 3 | Parseo de strings |
-| 4 | Interpolación de strings |
-| 5 | Estructura básica C# |
-
----
-
-## Ejercicio: Calculadora de Área (2/2)
+</div>
+<div>
 
 ### 💻 Código base
 
@@ -711,10 +720,11 @@ namespace CalculadoraArea
 ```
 
 ### 🚀 Retos adicionales
-
 - Validar que no sean negativos
 - Agregar círculo y triángulo
-- Usar métodos reutilizables
+
+</div>
+</div>
 
 ---
 
@@ -742,13 +752,9 @@ Crear sistema que calcule promedios con validación
 double promedio = (n1 + n2 + n3) / 3;
 
 // Condicional
-string estado = promedio >= 3.0 ? 
+string estado = promedio >= 3.0 ?
     "APROBADO" : "REPROBADO";
 ```
-
----
-
-## Ejercicio: Sistema de Calificaciones (2/2)
 
 ### 📊 Salida Esperada
 
