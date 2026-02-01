@@ -4,47 +4,41 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.8em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; }
-section h2 { font-size: 1.4em; }
-section h3 { font-size: 1.2em; }
-section ul, section ol { font-size: 0.9em; margin-left: 1em; }
-section li { margin-bottom: 0.3em; }
-section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
-section code { font-size: 0.85em; }
-section p { margin: 0.5em 0; }
-section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
-section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-</style>
-
----
+<!-- _class: lead -->
 
 # Introducción a ADO.NET
 
-<!--
-IMÁGENES GENERADAS:
-- clase-12-ado-net.png: Arquitectura ADO.NET y componentes principales
--->
-
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
+
+**Duración:** 90 minutos
 
 ---
 
@@ -52,28 +46,32 @@ IMÁGENES GENERADAS:
 
 Al finalizar esta clase, el estudiante será capaz de:
 
-1. **Comprender** la arquitectura de ADO.NET
-2. **Configurar** la cadena de conexión a SQL Server
-3. **Implementar** operaciones CRUD con ADO.NET
-4. **Utilizar** SqlConnection, SqlCommand y SqlDataReader
-5. **Aplicar** buenas prácticas de manejo de conexiones
-
-**Duración:** 90 minutos
+| # | Objetivo |
+|---|-----------|
+| 1 | **Comprender** la arquitectura de ADO.NET |
+| 2 | **Configurar** la cadena de conexión a SQL Server |
+| 3 | **Implementar** operaciones CRUD con ADO.NET |
+| 4 | **Utilizar** SqlConnection, SqlCommand y SqlDataReader |
+| 5 | **Aplicar** buenas prácticas de manejo de conexiones |
 
 ---
 
 ## Agenda
 
-1. ¿Qué es ADO.NET? (10 min)
-2. Arquitectura y componentes (15 min)
-3. Conexión a SQL Server (15 min)
-4. Operaciones CRUD (25 min)
-5. Manejo de transacciones (15 min)
-6. Buenas prácticas (10 min)
+| Tiempo | Tema |
+|--------|------|
+| 10' | ¿Qué es ADO.NET? |
+| 15' | Arquitectura y componentes |
+| 15' | Conexión a SQL Server |
+| 25' | Operaciones CRUD |
+| 15' | Manejo de transacciones |
+| 10' | Buenas prácticas |
 
 ---
-### Acceso a datos en .NET
 
+## 1. ¿Qué es ADO.NET?
+
+### Acceso a datos en .NET
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -107,8 +105,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### ¿Cuándo usar cada uno?
 
+## ¿Cuándo usar cada uno?
+
+### ADO.NET vs Entity Framework
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -193,6 +193,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
 
 ## Namespaces y Paquetes
@@ -218,9 +219,9 @@ using Microsoft.Data.SqlClient;
 
 ---
 
-### Connection String
+## Connection String
 
-La cadena de conexión contiene los parámetros necesarios para conectar con la base de datos:
+### Configuración de conexión
 
 ```csharp
 // Program.cs - Configuración
@@ -256,7 +257,7 @@ string connectionString = builder.ConnectionString;
 
 ---
 
-## Usando SqlConnection
+## 3. Usando SqlConnection
 
 ### Patrón using (siempre)
 
@@ -273,14 +274,14 @@ public class EstudianteRepository
     public List<Estudiante> ObtenerTodos()
     {
         var estudiantes = new List<Estudiante>();
-        
+
         // SIEMPRE usar 'using' para garantizar cierre de conexión
         using (var connection = new SqlConnection(_connectionString))
         {
             connection.Open();
-            
+
             var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes";
-            
+
             using (var command = new SqlCommand(query, connection))
             {
                 using (var reader = command.ExecuteReader())
@@ -297,10 +298,10 @@ public class EstudianteRepository
                     }
                 }
             }
-            
+
             // La conexión se cierra automáticamente al salir del using
         }
-        
+
         return estudiantes;
     }
 }
@@ -338,32 +339,34 @@ string nombre = reader["Nombre"].ToString();
 ```
 
 ---
-### Create (INSERT)
 
+## 4. Operaciones CRUD
+
+### Create (INSERT)
 
 ```csharp
 public async Task<int> CrearAsync(Estudiante estudiante)
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     var query = @"
         INSERT INTO Estudiantes (Codigo, Nombre, Email, FechaRegistro)
         VALUES (@Codigo, @Nombre, @Email, @FechaRegistro);
         SELECT SCOPE_IDENTITY();";  // Retorna el ID generado
-    
+
     using var command = new SqlCommand(query, connection);
-    
+
     // Agregar parámetros (EVITA SQL INJECTION)
     command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
     command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    command.Parameters.AddWithValue("@Email", 
+    command.Parameters.AddWithValue("@Email",
         (object)estudiante.Email ?? DBNull.Value);
     command.Parameters.AddWithValue("@FechaRegistro", DateTime.Now);
-    
+
     // ExecuteScalar para retornar un solo valor (el ID)
     var id = Convert.ToInt32(await command.ExecuteScalarAsync());
-    
+
     return id;
 }
 
@@ -379,6 +382,7 @@ var nuevoId = await repo.CrearAsync(new Estudiante
 ---
 
 ## Read (SELECT)
+
 ### Obtener por ID y listado
 
 ```csharp
@@ -386,14 +390,14 @@ public async Task<Estudiante> ObtenerPorIdAsync(int id)
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = @Id";
-    
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", id);
-    
+
     using var reader = await command.ExecuteReaderAsync();
-    
+
     if (await reader.ReadAsync())
     {
         return new Estudiante
@@ -404,33 +408,33 @@ public async Task<Estudiante> ObtenerPorIdAsync(int id)
             Email = reader.IsDBNull(3) ? null : reader.GetString(3)
         };
     }
-    
+
     return null;  // No encontrado
 }
 
 public async Task<List<Estudiante>> ObtenerPorNombreAsync(string busqueda)
 {
     var estudiantes = new List<Estudiante>();
-    
+
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     // LIKE para búsqueda parcial
     var query = @"
-        SELECT Id, Codigo, Nombre, Email 
-        FROM Estudiantes 
-        WHERE Nombre LIKE @Busqueda 
+        SELECT Id, Codigo, Nombre, Email
+        FROM Estudiantes
+        WHERE Nombre LIKE @Busqueda
         ORDER BY Nombre";
-    
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Busqueda", $"%{busqueda}%");
-    
+
     using var reader = await command.ExecuteReaderAsync();
     while (await reader.ReadAsync())
     {
         estudiantes.Add(MapFromReader(reader));
     }
-    
+
     return estudiantes;
 }
 
@@ -441,8 +445,8 @@ private Estudiante MapFromReader(SqlDataReader reader)
         Id = reader.GetInt32(reader.GetOrdinal("Id")),
         Codigo = reader.GetString(reader.GetOrdinal("Codigo")),
         Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
-        Email = reader.IsDBNull(reader.GetOrdinal("Email")) 
-            ? null 
+        Email = reader.IsDBNull(reader.GetOrdinal("Email"))
+            ? null
             : reader.GetString(reader.GetOrdinal("Email"))
     };
 }
@@ -459,45 +463,47 @@ public async Task<bool> ActualizarAsync(Estudiante estudiante)
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     var query = @"
-        UPDATE Estudiantes 
-        SET Codigo = @Codigo, 
-            Nombre = @Nombre, 
+        UPDATE Estudiantes
+        SET Codigo = @Codigo,
+            Nombre = @Nombre,
             Email = @Email
         WHERE Id = @Id";
-    
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", estudiante.Id);
     command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
     command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    command.Parameters.AddWithValue("@Email", 
+    command.Parameters.AddWithValue("@Email",
         (object)estudiante.Email ?? DBNull.Value);
-    
+
     // ExecuteNonQuery retorna número de filas afectadas
     int filasAfectadas = await command.ExecuteNonQueryAsync();
-    
+
     return filasAfectadas > 0;  // True si se actualizó algo
 }
 ```
 
 ---
-### Eliminar registro
 
+## Delete (DELETE)
+
+### Eliminar registro
 
 ```csharp
 public async Task<bool> EliminarAsync(int id)
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     var query = "DELETE FROM Estudiantes WHERE Id = @Id";
-    
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", id);
-    
+
     int filasAfectadas = await command.ExecuteNonQueryAsync();
-    
+
     return filasAfectadas > 0;
 }
 
@@ -506,23 +512,26 @@ public async Task<bool> DesactivarAsync(int id)
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     var query = @"
-        UPDATE Estudiantes 
-        SET Activo = 0, FechaEliminacion = @Fecha 
+        UPDATE Estudiantes
+        SET Activo = 0, FechaEliminacion = @Fecha
         WHERE Id = @Id";
-    
+
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", id);
     command.Parameters.AddWithValue("@Fecha", DateTime.Now);
-    
+
     return await command.ExecuteNonQueryAsync() > 0;
 }
 ```
 
 ---
 
-### Diferencias
+## Métodos de Ejecución
+
+### Diferencias clave
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │              MÉTODOS DE EJECUCIÓN                           │
@@ -566,17 +575,17 @@ public async Task<bool> TransferirEstudianteAsync(
 {
     using var connection = new SqlConnection(_connectionString);
     await connection.OpenAsync();
-    
+
     // Iniciar transacción
     using var transaction = connection.BeginTransaction();
-    
+
     try
     {
         // 1. Registrar historial de transferencia
-        var query1 = @"INSERT INTO HistorialTransferencias 
+        var query1 = @"INSERT INTO HistorialTransferencias
                        (EstudianteId, CarreraOrigenId, CarreraDestinoId, Fecha)
                        VALUES (@EstId, @OrigId, @DestId, @Fecha)";
-        
+
         using (var cmd1 = new SqlCommand(query1, connection, transaction))
         {
             cmd1.Parameters.AddWithValue("@EstId", estudianteId);
@@ -585,19 +594,19 @@ public async Task<bool> TransferirEstudianteAsync(
             cmd1.Parameters.AddWithValue("@Fecha", DateTime.Now);
             await cmd1.ExecuteNonQueryAsync();
         }
-        
+
         // 2. Actualizar carrera del estudiante
-        var query2 = @"UPDATE Estudiantes 
-                       SET CarreraId = @CarreraId 
+        var query2 = @"UPDATE Estudiantes
+                       SET CarreraId = @CarreraId
                        WHERE Id = @Id";
-        
+
         using (var cmd2 = new SqlCommand(query2, connection, transaction))
         {
             cmd2.Parameters.AddWithValue("@CarreraId", carreraDestinoId);
             cmd2.Parameters.AddWithValue("@Id", estudianteId);
             await cmd2.ExecuteNonQueryAsync();
         }
-        
+
         // Si todo va bien, confirmar transacción
         transaction.Commit();
         return true;
@@ -656,6 +665,7 @@ public async Task<bool> TransferirEstudianteAsync(
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
 
 ## SQL Injection
@@ -798,20 +808,6 @@ public class EstudianteRepositoryAdapter
         // Update: sincroniza cambios con BD
         return adapter.Update(dataTable);
     }
-
-    public DataTable BuscarConRelacion()
-    {
-        using var connection = new SqlConnection(_connectionString);
-        var query = @"SELECT e.Id, e.Codigo, e.Nombre, c.Nombre as Carrera
-                     FROM Estudiantes e
-                     INNER JOIN Carreras c ON e.CarreraId = c.Id";
-
-        using var adapter = new SqlDataAdapter(query, connection);
-        var dataTable = new DataTable();
-        adapter.Fill(dataTable);
-
-        return dataTable;
-    }
 }
 ```
 
@@ -885,31 +881,6 @@ public class EstudianteRepositorySP
 
         return estudiantes;
     }
-
-    // SP con valor de retorno
-    public int CrearConRetornoSP(Estudiante estudiante)
-    {
-        using var connection = new SqlConnection(_connectionString);
-        using var command = new SqlCommand("sp_Estudiantes_CrearConRetorno", connection);
-
-        command.CommandType = CommandType.StoredProcedure;
-
-        // Parámetros de entrada
-        command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-        command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-
-        // Parámetro de retorno
-        var returnParam = new SqlParameter("ReturnValue", SqlDbType.Int)
-        {
-            Direction = ParameterDirection.ReturnValue
-        };
-        command.Parameters.Add(returnParam);
-
-        connection.Open();
-        command.ExecuteNonQuery();
-
-        return (int)returnParam.Value;
-    }
 }
 ```
 
@@ -974,37 +945,6 @@ public class EstudianteRepositorySafe
                 $"Error de base de datos: {ex.Message}", ex);
         }
     }
-
-    // Con retry policy para reintentos
-    public async Task<Estudiante> ObtenerPorIdConRetryAsync(int id, int maxRetries = 3)
-    {
-        for (int intento = 1; intento <= maxRetries; intento++)
-        {
-            try
-            {
-                using var connection = new SqlConnection(_connectionString);
-                await connection.OpenAsync();
-
-                var query = "SELECT * FROM Estudiantes WHERE Id = @Id";
-                using var command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", id);
-
-                using var reader = await command.ExecuteReaderAsync();
-                if (await reader.ReadAsync())
-                    return MapFromReader(reader);
-
-                return null;
-            }
-            catch (SqlException ex) when (ex.Number == -2 && intento < maxRetries)
-            {
-                // Timeout - reintentar con espera exponencial
-                await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, intento)));
-            }
-        }
-
-        throw new RetryLimitExceededException(
-            $"Máximo reintentos ({maxRetries}) excedido");
-    }
 }
 
 // Códigos de error SQL comunes
@@ -1025,7 +965,7 @@ public static class SqlErrorCodes
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-| ---------- | ------------- |
+|----------|-------------|
 | **SqlConnection** | Conexión a base de datos |
 | **SqlCommand** | Ejecutar SQL |
 | **SqlDataReader** | Leer resultados (forward-only) |
@@ -1041,64 +981,39 @@ public static class SqlErrorCodes
 
 ---
 
-## Ejercicio: Implementar Repository
+## Ejercicio Práctico
 
-```
-EJERCICIO: Repository de Estudiantes
+### Implementar Repository
+
+**EJERCICIO: Repository de Estudiantes**
 
 Crear clase EstudianteRepository con métodos:
 
-1. Crear(Estudiante estudiante) : Task<int>
-   - Insertar nuevo estudiante
-   - Retornar ID generado
+| # | Método |
+|---|--------|
+| 1 | `Crear(Estudiante estudiante) : Task<int>` - Insertar nuevo estudiante, retornar ID generado |
+| 2 | `ObtenerPorId(int id) : Task<Estudiante>` - Buscar por ID, retornar null si no existe |
+| 3 | `ObtenerTodos() : Task<List<Estudiante>>` - Lista completa ordenada por nombre |
+| 4 | `Actualizar(Estudiante estudiante) : Task<bool>` - Actualizar datos, retornar true si se actualizó |
+| 5 | `Eliminar(int id) : Task<bool>` - Eliminar físicamente |
+| 6 | `BuscarPorNombre(string termino) : Task<List<Estudiante>>` - Búsqueda parcial con LIKE |
 
-2. ObtenerPorId(int id) : Task<Estudiante>
-   - Buscar por ID
-   - Retornar null si no existe
-
-3. ObtenerTodos() : Task<List<Estudiante>>
-   - Lista completa ordenada por nombre
-
-4. Actualizar(Estudiante estudiante) : Task<bool>
-   - Actualizar datos
-   - Retornar true si se actualizó
-
-5. Eliminar(int id) : Task<bool>
-   - Eliminar físicamente
-
-6. BuscarPorNombre(string termino) : Task<List<Estudiante>>
-   - Búsqueda parcial con LIKE
-
-REQUISITOS:
+**REQUISITOS:**
 - Usar parámetros en todas las queries
 - Usar async/await
 - Usar transacción en método CrearConMateriasIniciales
-```
 
 ---
 
-## Próxima Clase
+## 🚀 Próxima Clase: Entity Framework Core
 
-### Clase 13: Entity Framework Core
-
-```
-CONTENIDO PRÓXIMA CLASE:
-
-• Entity Framework Core
-  - DbContext y DbSet
-  - Code First approach
-  - Migrations
-  
-• LINQ to Entities
-  - Consultas LINQ
-  - Eager Loading (Include)
-  
-• Relaciones
-  - One-to-Many
-  - Many-to-Many
-  
-• Comparación ADO.NET vs EF Core
-```
+| Tema | Descripción |
+|------|-------------|
+| **EF Core** | DbContext y DbSet |
+| **Code First** | Migrations |
+| **LINQ to Entities** | Consultas LINQ, Eager Loading (Include) |
+| **Relaciones** | One-to-Many, Many-to-Many |
+| **Comparación** | ADO.NET vs EF Core |
 
 ---
 

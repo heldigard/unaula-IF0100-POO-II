@@ -4,41 +4,41 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.8em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; }
-section h2 { font-size: 1.4em; }
-section h3 { font-size: 1.2em; }
-section ul, section ol { font-size: 0.9em; margin-left: 1em; }
-section li { margin-bottom: 0.3em; }
-section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
-section code { font-size: 0.85em; }
-section p { margin: 0.5em 0; }
-section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
-section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-</style>
+<!-- _class: lead -->
 
----
 # Introducción a ASP.NET Core
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
+
+**Duración:** 90 minutos | **Unidad 3 - Clase 8**
 
 ---
 
@@ -46,59 +46,58 @@ section tbody tr:hover { background-color: #e9ecef; }
 
 Al finalizar esta clase, el estudiante será capaz de:
 
-1. **Comprender** la arquitectura de ASP.NET Core
-2. **Diferenciar** entre MVC, Razor Pages y Web API
-3. **Crear** una aplicación web desde cero
-4. **Configurar** el pipeline de middleware
-5. **Implementar** inyección de dependencias básica
-
-**Duración:** 90 minutos
-
----
-
-## Agenda
-
-1. ¿Qué es ASP.NET Core? (15 min)
-2. Arquitectura y componentes (15 min)
-3. Crear primera aplicación (20 min)
-4. Middleware y Pipeline (15 min)
-5. Inyección de dependencias (15 min)
-6. Estructura de proyecto (10 min)
-
----
-### Framework web de Microsoft
-
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   ASP.NET CORE                              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  > Framework open-source para construir aplicaciones web    │
-│    modernas, cloud-ready y multiplataforma                  │
-│                                                             │
-│  CARACTERÍSTICAS PRINCIPALES:                               │
-│                                                             │
-│  🚀 Alto rendimiento     • Más rápido que Node.js, Java    │
-│  🌐 Multiplataforma      • Windows, Linux, macOS           │
-│  📦 Modular              • Solo incluyes lo que necesitas  │
-│  ☁️ Cloud-ready          • Docker, Kubernetes, Azure        │
-│  🔧 Unificado            • MVC, Razor Pages, Web API, gRPC │
-│  📱 Full Stack           • Backend + Frontend integration  │
-│                                                             │
-│  HISTORIA:                                                  │
-│  ASP.NET (2002) → ASP.NET MVC (2009) →                     │
-│  ASP.NET Core (2016) → ASP.NET Core 8 (2024)               │
-│                                                             │
-│  Versión actual: ASP.NET Core 8.0 (LTS)                    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+| # | Objetivo |
+|---|-----------|
+| 1 | **Comprender** la arquitectura de ASP.NET Core |
+| 2 | **Diferenciar** entre MVC, Razor Pages y Web API |
+| 3 | **Crear** una aplicación web desde cero |
+| 4 | **Configurar** el pipeline de middleware |
+| 5 | **Implementar** inyección de dependencias básica |
 
 ---
 
-### Características principales de ASP.NET Core
+## Agenda (90 min)
 
+| Tiempo | Tema |
+|--------|------|
+| 15' | ¿Qué es ASP.NET Core? |
+| 15' | Arquitectura y componentes |
+| 20' | Crear primera aplicación |
+| 15' | Middleware y Pipeline |
+| 15' | Inyección de dependencias |
+| 10' | Estructura de proyecto |
+
+---
+
+## 1. ¿Qué es ASP.NET Core?
+
+### 📖 Definición
+
+> **ASP.NET Core** es un framework open-source para construir aplicaciones web modernas, cloud-ready y multiplataforma, desarrollado por Microsoft.
+
+### 🚀 Características Principales
+
+| Característica | Descripción |
+|----------------|-------------|
+| **Alto rendimiento** | Más rápido que Node.js y Java |
+| **Multiplataforma** | Windows, Linux, macOS |
+| **Modular** | Solo incluyes lo que necesitas |
+| **Cloud-ready** | Docker, Kubernetes, Azure |
+| **Unificado** | MVC, Razor Pages, Web API, gRPC |
+| **Full Stack** | Backend + Frontend integration |
+
+### 📜 Historia
+
+| Versión | Año | Novedad |
+|---------|-----|---------|
+| ASP.NET | 2002 | Framework original |
+| ASP.NET MVC | 2009 | Patrón MVC |
+| ASP.NET Core | 2016 | Multiplataforma |
+| ASP.NET Core 8 | 2024 | LTS actual |
+
+---
+
+## Modelos de Programación ASP.NET Core
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -128,15 +127,15 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## MVC vs Razor Pages
 
-### ¿Cuál elegir?
-
 | Característica | MVC | Razor Pages |
-| ---------------- | ----- | ------------- |
+|----------------|-----|-------------|
 | **Estructura** | Controllers + Views | Páginas con modelo |
 | **URL** | `/Controller/Action` | `/Page/Handler` |
 | **Mejor para** | Apps complejas | Sitios con formularios |
 | **Separación** | Más estricta | Más flexible |
 | **Testing** | Más fácil | Un poco más difícil |
+
+### Estructura de Archivos
 
 ```
 MVC:                              Razor Pages:
@@ -151,12 +150,11 @@ Views/                            ├── Privacy.cshtml
 │       └── @model ViewModel          └── @page
 ```
 
-**En este curso usaremos MVC (más demandado laboralmente)**
+> **En este curso usaremos MVC (más demandado laboralmente)**
 
 ---
 
 ## 2. Arquitectura ASP.NET Core
-Pipeline de peticiones y middleware en ASP.NET Core.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -196,7 +194,6 @@ Pipeline de peticiones y middleware en ASP.NET Core.
 ---
 
 ## Flujo de una Petición HTTP
-### Request → Response pipeline en ASP.NET Core
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -238,16 +235,27 @@ Pipeline de peticiones y middleware en ASP.NET Core.
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
 
-## Estructura de Proyecto MVC
+## 3. Crear Primera Aplicación
 
-### Directorios y archivos creados
+### 📦 Comandos CLI
 
 ```bash
+# Crear nuevo proyecto MVC
 dotnet new mvc -n MiPrimeraWeb
+
+# Navegar al proyecto
 cd MiPrimeraWeb
+
+# Ejecutar la aplicación
+dotnet run
+
+# Abrir navegador en https://localhost:5001
 ```
+
+### 📁 Estructura de Proyecto MVC
 
 ```
 MiPrimeraWeb/
@@ -276,17 +284,15 @@ MiPrimeraWeb/
 ---
 
 ## Program.cs Explicado
----
-### Punto de entrada de la aplicación
 
 ```csharp
 // Program.cs - Configuración de la aplicación
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ╔═══════════════════════════════════════════════════════════════╗
-// ║  SERVICES: Registrar servicios para Inyección de Dependencias ║
-// ╚═══════════════════════════════════════════════════════════════╝
+// ═══════════════════════════════════════════════════════════════
+//  SERVICES: Registrar servicios para Inyección de Dependencias
+// ═══════════════════════════════════════════════════════════════
 
 // Agregar soporte para Controllers y Views (MVC)
 builder.Services.AddControllersWithViews();
@@ -298,9 +304,9 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// ╔═══════════════════════════════════════════════════════════════╗
-// ║  MIDDLEWARE PIPELINE: Configurar el pipeline de procesamiento ║
-// ╚═══════════════════════════════════════════════════════════════╝
+// ═══════════════════════════════════════════════════════════════
+//  MIDDLEWARE PIPELINE: Configurar el pipeline de procesamiento
+// ═══════════════════════════════════════════════════════════════
 
 // Configurar middleware según el ambiente
 if (!app.Environment.IsDevelopment())
@@ -309,15 +315,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();  // HTTP Strict Transport Security
 }
 
----
-### Punto de entrada de la aplicación
-
-
 app.UseHttpsRedirection();    // Redirigir HTTP a HTTPS
 app.UseStaticFiles();         // Servir archivos de wwwroot
 app.UseRouting();             // Habilitar routing
-// app.UseAuthentication();   // Habilitar autenticación
-// app.UseAuthorization();    // Habilitar autorización
 
 // Configurar rutas
 app.MapControllerRoute(
@@ -328,10 +328,10 @@ app.MapControllerRoute(
 
 app.Run();  // Iniciar aplicación
 ```
+
 ---
+
 ## Mi Primer Controller
----
-### HomeController.cs
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
@@ -340,13 +340,11 @@ using System.Diagnostics;
 
 namespace MiPrimeraWeb.Controllers
 {
-    // Controller base proporciona funcionalidad MVC
     public class HomeController : Controller
     {
         // GET: /Home/Index (o simplemente /)
         public IActionResult Index()
         {
-            // View() busca Views/Home/Index.cshtml
             return View();
         }
 
@@ -356,17 +354,11 @@ namespace MiPrimeraWeb.Controllers
             return View();
         }
 
----
-### HomeController.cs
-
-
         // GET: /Home/Saludo?nombre=Juan
         public IActionResult Saludo(string nombre)
         {
-            // Pasar datos a la vista usando ViewBag
             ViewBag.Nombre = nombre ?? "Visitante";
             ViewBag.Hora = DateTime.Now.ToString("HH:mm");
-            
             return View();
         }
 
@@ -374,24 +366,23 @@ namespace MiPrimeraWeb.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel 
-            { 
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier 
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             });
         }
     }
 }
 ```
----
-### Views/Home/Saludo.cshtml
 
+---
+
+## Vista Razor: Saludo.cshtml
 
 ```html
 @* Vista Razor para acción Saludo *@
 @* Modelo no tipado, usamos ViewBag *@
-
 @{
-    // Código C# embebido
     ViewData["Title"] = "Saludo Personalizado";
     var mensaje = DateTime.Now.Hour < 12 ? "Buenos días" : "Buenas tardes";
 }
@@ -399,7 +390,7 @@ namespace MiPrimeraWeb.Controllers
 <div class="text-center">
     <h1 class="display-4">@mensaje, @ViewBag.Nombre!</h1>
     <p class="lead">Son las @ViewBag.Hora</p>
-    
+
     @if (DateTime.Now.Hour < 12)
     {
         <div class="alert alert-info">
@@ -412,23 +403,18 @@ namespace MiPrimeraWeb.Controllers
             ☀️ La tarde avanza, ¡sigue así!
         </div>
     }
-    
----
-### Views/Home/Saludo.cshtml
-
 
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
         Volver al Inicio
     </a>
 </div>
-
-@* Ejecutar: https://localhost:5001/Home/Saludo?nombre=María *@
 ```
 
 ---
+
 ## Sintaxis Razor
----
-### C# en HTML
+
+### 📝 C# en HTML
 
 ```html
 @* RAZOR: Sintaxis para mezclar C# con HTML *@
@@ -457,10 +443,6 @@ else
     <p>Buenas noches</p>
 }
 
----
-### C# en HTML
-
-
 @* 4. Bucles *@
 <ul>
 @foreach (var item in Model.Lista)
@@ -475,9 +457,12 @@ else
 @* 6. Escapar @ *@
 <p>Email: usuario@@dominio.com</p>
 ```
----
-### Configuración del pipeline
 
+---
+
+## 4. Middleware Pipeline
+
+### 🔧 Configuración del Pipeline
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -504,22 +489,21 @@ else
 │                ↓               ↓                           │
 │   RESPONSE ← ... ← Middleware2 ← Middleware1               │
 │                                                             │
-│   (El response pasa por los middleware en orden inverso)   │
-│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### Configuración del pipeline
-Cómo configurar y personalizar el middleware en ASP.NET Core.
+## Middleware Personalizado
+
+```csharp
 public class RequestTimingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<RequestTimingMiddleware> _logger;
 
     public RequestTimingMiddleware(
-        RequestDelegate next, 
+        RequestDelegate next,
         ILogger<RequestTimingMiddleware> logger)
     {
         _next = next;
@@ -530,13 +514,9 @@ public class RequestTimingMiddleware
     {
         var stopwatch = Stopwatch.StartNew();
         _logger.LogInformation(
-            "→ Request {Method} {Path} started", 
+            "→ Request {Method} {Path} started",
             context.Request.Method,
             context.Request.Path);
-
----
-### Logging de peticiones
-
 
         await _next(context);  // Pasar al siguiente middleware
 
@@ -553,9 +533,12 @@ public class RequestTimingMiddleware
 // Registro en Program.cs
 app.UseMiddleware<RequestTimingMiddleware>();
 ```
----
-### Principio fundamental de ASP.NET Core
 
+---
+
+## 5. Inyección de Dependencias
+
+### 🎯 Principio Fundamental
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -563,7 +546,7 @@ app.UseMiddleware<RequestTimingMiddleware>();
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  PROBLEMA: Acoplamiento directo                             │
-│  ─────────────────────────────────                          │
+│  ════════════════════════════                                │
 │  public class PedidoController : Controller                 │
 │  {                                                          │
 │      private PedidoRepository _repo = new PedidoRepository();│
@@ -573,7 +556,7 @@ app.UseMiddleware<RequestTimingMiddleware>();
 │  }                                                          │
 │                                                             │
 │  SOLUCIÓN: Inyección de dependencias                        │
-│  ───────────────────────────────────                        │
+│  ═════════════════════════════════                           │
 │  public class PedidoController : Controller                 │
 │  {                                                          │
 │      private readonly IPedidoRepository _repo;              │
@@ -592,7 +575,7 @@ app.UseMiddleware<RequestTimingMiddleware>();
 
 ---
 
-### Principios de inyección de dependencias
+## Ciclos de Vida DI
 
 ```csharp
 // Registro de servicios en Program.cs
@@ -609,28 +592,26 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 // SINGLETON: Una instancia para toda la aplicación
 // Útil para: Configuración, caché, logging
 builder.Services.AddSingleton<ICacheService, CacheService>();
+```
 
-// EJEMPLO COMPLETO:
+### Ejemplo Completo
+
+```csharp
 public interface IClienteService
 {
     Task<List<Cliente>> ObtenerTodos();
     Task<Cliente> ObtenerPorId(int id);
 }
 
----
-### Scoped, Transient, Singleton
-
-
 public class ClienteService : IClienteService
 {
     private readonly IClienteRepository _repository;
-    
-    // Inyección automática por el constructor
+
     public ClienteService(IClienteRepository repository)
     {
         _repository = repository;
     }
-    
+
     public Task<List<Cliente>> ObtenerTodos() => _repository.GetAll();
     public Task<Cliente> ObtenerPorId(int id) => _repository.GetById(id);
 }
@@ -639,136 +620,91 @@ public class ClienteService : IClienteService
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 ```
+
 ---
 
-## 6. Estructura de Proyecto
-
-### Organización recomendada
+## 6. Estructura de Proyecto Recomendada
 
 ```
 MiAplicacionWeb/
 │
-├── src/
-│   └── MiAplicacionWeb/
-│       ├── Controllers/              ← Controladores MVC
-│       │   ├── HomeController.cs
-│       │   ├── ClientesController.cs
-│       │   └── ProductosController.cs
-│       │
-│       ├── Models/                   ← Modelos de dominio y ViewModels
-│       │   ├── Entities/             ← Entidades del dominio
-│       │   │   ├── Cliente.cs
-│       │   │   └── Producto.cs
-│       │   └── ViewModels/           ← Modelos para vistas
-│       │       ├── ClienteViewModel.cs
-│       │       └── ProductoViewModel.cs
-│       │
-│       ├── Views/                    ← Vistas Razor
-│       │   ├── Clientes/
-│       │   │   ├── Index.cshtml
-│       │   │   ├── Crear.cshtml
-│       │   │   └── Editar.cshtml
-│       │   ├── Productos/
-│       │   └── Shared/
-│       │       └── _Layout.cshtml
-│       │
-│       ├── Services/                 ← Lógica de negocio
-│       │   ├── Interfaces/
-│       │   │   └── IClienteService.cs
-│       │   └── Implementations/
-│       │       └── ClienteService.cs
-│       │
-│       ├── Data/                     ← Acceso a datos
-│       │   ├── AppDbContext.cs
-│       │   └── Repositories/
-│       │
-│       ├── wwwroot/                  ← Archivos estáticos
-│       │   ├── css/
-│       │   ├── js/
-│       │   └── images/
-│       │
-│       ├── Program.cs
-│       └── appsettings.json
+├── Controllers/              ← Controladores MVC
+│   ├── HomeController.cs
+│   ├── ClientesController.cs
+│   └── ProductosController.cs
 │
-└── tests/
-    └── MiAplicacionWeb.Tests/
+├── Models/                   ← Modelos de dominio y ViewModels
+│   ├── Entities/             ← Entidades del dominio
+│   │   ├── Cliente.cs
+│   │   └── Producto.cs
+│   └── ViewModels/           ← Modelos para vistas
+│       ├── ClienteViewModel.cs
+│       └── ProductoViewModel.cs
+│
+├── Views/                    ← Vistas Razor
+│   ├── Clientes/
+│   │   ├── Index.cshtml
+│   │   ├── Crear.cshtml
+│   │   └── Editar.cshtml
+│   ├── Productos/
+│   └── Shared/
+│       └── _Layout.cshtml
+│
+├── Services/                 ← Lógica de negocio
+│   ├── Interfaces/
+│   │   └── IClienteService.cs
+│   └── Implementations/
+│       └── ClienteService.cs
+│
+├── Data/                     ← Acceso a datos
+│   ├── AppDbContext.cs
+│   └── Repositories/
+│
+├── wwwroot/                  ← Archivos estáticos
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── Program.cs
+└── appsettings.json
 ```
+
 ---
 
 ## HTTP Methods y Status Codes
 
-### Comunicación cliente-servidor
+### 📡 Métodos HTTP Principales
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│              MÉTODOS HTTP PRINCIPALES                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   MÉTODO       PROPÓSITO            EJEMPLO                 │
-│   ────────────  ────────────────────  ──────────────────    │
-│                                                             │
-│   GET           Obtener datos        GET /api/productos    │
-│                 (seguro, idempotente) GET /api/clientes/5   │
-│                                                             │
-│   POST          Crear recurso        POST /api/pedidos     │
-│                 (no idempotente)     Body: {datos}         │
-│                                                             │
-│   PUT           Actualizar completo   PUT /api/clientes/5  │
-│                 (idempotente)        Body: {datos completos}│
-│                                                             │
-│   PATCH         Modificación parcial  PATCH /api/clientes/5│
-│                 Body: {campo: valor}                        │
-│                                                             │
-│   DELETE        Eliminar recurso      DELETE /api/pedidos/5 │
-│                 (idempotente)                              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+| Método | Propósito | Ejemplo |
+|--------|-----------|---------|
+| **GET** | Obtener datos (seguro, idempotente) | `GET /api/productos` |
+| **POST** | Crear recurso (no idempotente) | `POST /api/pedidos` |
+| **PUT** | Actualizar completo (idempotente) | `PUT /api/clientes/5` |
+| **PATCH** | Modificación parcial | `PATCH /api/clientes/5` |
+| **DELETE** | Eliminar recurso (idempotente) | `DELETE /api/pedidos/5` |
 
----
+### 📊 Códigos de Estado HTTP
 
-## Códigos de Estado HTTP
-
-### Respuestas del servidor
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│            CÓDIGOS DE ESTADO HTTP                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   2xx - EXITOSO                                             │
-│   ─────────────────────────────────                         │
-│   200 OK        Petición exitosa                            │
-│   201 Created  Recurso creado                               │
-│   204 No Cont  Sin contenido (DELETE exitoso)              │
-│                                                             │
-│   3xx - REDIRECCIÓN                                         │
-│   ───────────────────────────────────                       │
-│   301 Moved    Redirección permanente                      │
-│   302 Found    Redirección temporal                        │
-│   304 Not Mod  Recurso no modificado (cache)               │
-│                                                             │
-│   4xx - ERROR CLIENTE                                       │
-│   ─────────────────────────────────                         │
-│   400 Bad Req  Petición mal formada                         │
-│   401 Unauth  No autenticado                                │
-│   403 Forbidden Autenticado pero sin permiso               │
-│   404 Not Found Recurso no encontrado                       │
-│                                                             │
-│   5xx - ERROR SERVIDOR                                      │
-│   ─────────────────────────────────                         │
-│   500 Error   Error interno del servidor                   │
-│   502 Bad Gtw  Gateway no disponible                       │
-│   503 Unavail Servicio no disponible (mantenimiento)       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+| Código | Significado |
+|--------|-------------|
+| **2xx - Éxito** | |
+| 200 OK | Petición exitosa |
+| 201 Created | Recurso creado |
+| 204 No Content | Sin contenido (DELETE exitoso) |
+| **3xx - Redirección** | |
+| 301 Moved | Redirección permanente |
+| 302 Found | Redirección temporal |
+| **4xx - Error Cliente** | |
+| 400 Bad Request | Petición mal formada |
+| 401 Unauthorized | No autenticado |
+| 403 Forbidden | Autenticado pero sin permiso |
+| 404 Not Found | Recurso no encontrado |
+| **5xx - Error Servidor** | |
+| 500 Error | Error interno del servidor |
 
 ---
 
 ## Tipos de Action Results
-
-### Retornos desde Controllers
 
 ```csharp
 public class ProductosController : Controller
@@ -777,55 +713,53 @@ public class ProductosController : Controller
     public IActionResult Index()
     {
         var productos = _servicio.ObtenerTodos();
-        return View(productos);  // Busca Views/Productos/Index.cshtml
+        return View(productos);
     }
 
-    // 2. RedirectToActionResult - Redirección a otra acción
+    // 2. RedirectToActionResult - Redirección
     [HttpPost]
     public IActionResult Crear(ProductoViewModel model)
     {
         if (!ModelState.IsValid)
-            return View(model);  // Si hay errores, volver a mostrar
+            return View(model);
 
         _servicio.Crear(model);
-        return RedirectToAction("Index");  // Redirigir a Index
+        return RedirectToAction("Index");
     }
 
-    // 3. JsonResult - Retorna datos JSON (para APIs)
+    // 3. JsonResult - Retorna JSON (para APIs)
     [HttpGet("api/productos")]
     public IActionResult ObtenerJson()
     {
-        var productos = _servicio.ObtenerTodos();
-        return Json(productos);  // Retorna JSON
+        return Json(_servicio.ObtenerTodos());
     }
 
-    // 4. ContentResult - Retorna texto plano u otro contenido
+    // 4. ContentResult - Texto plano
     public IActionResult Texto()
     {
         return Content("Hola desde el servidor", "text/plain");
     }
 
-    // 5. FileResult - Retorna archivo para descarga
+    // 5. FileResult - Descarga de archivo
     public IActionResult Descargar()
     {
         byte[] fileBytes = System.IO.File.ReadAllBytes(@"ruta\archivo.pdf");
         return File(fileBytes, "application/pdf", "reporte.pdf");
     }
 
-    // 6. NotFoundResult - Recurso no encontrado (404)
+    // 6. NotFoundResult - 404
     public IActionResult Detalle(int id)
     {
         var producto = _servicio.ObtenerPorId(id);
         if (producto == null)
-            return NotFound();  // 404
-
+            return NotFound();
         return View(producto);
     }
 
     // 7. StatusCodeResult - Código personalizado
     public IActionResult NoAutorizado()
     {
-        return StatusCode(403);  // Forbidden
+        return StatusCode(403);
     }
 }
 ```
@@ -834,84 +768,34 @@ public class ProductosController : Controller
 
 ## Tag Helpers
 
-### HTML con inteligencia de Razor
+### 🏷️ HTML con Inteligencia de Razor
 
 ```html
 @* Tag Helpers: atributos especiales que se procesan en el servidor *@
-@* Requiere: @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
 
-@* 1. ANCHOR TAG HELPER - Genera enlaces correctos *@
+@* 1. ANCHOR TAG HELPER *@
 <a asp-controller="Productos" asp-action="Detalle" asp-route-id="5">
     Ver producto
 </a>
-<!-- Genera: <a href="/Productos/Detalle/5">Ver producto</a> -->
 
-@* 2. FORM TAG HELPER - Genera formulario con acción correcta *@
+@* 2. FORM TAG HELPER *@
 <form asp-controller="Productos" asp-action="Crear" method="post">
-    <!-- Contenido del formulario -->
 </form>
-<!-- Genera: <form action="/Productos/Crear" method="post"> -->
 
-@* 3. INPUT TAG HELPER - Vincula a propiedades del modelo *@
+@* 3. INPUT TAG HELPER *@
 <input asp-for="Nombre" class="form-control" />
-<!-- Vincula a la propiedad "Nombre" del modelo -->
-<!-- Genera: <input type="text" id="Nombre" name="Nombre" ... /> -->
 
-@* 4. LABEL TAG HELPER - Etiqueta asociada *@
+@* 4. LABEL TAG HELPER *@
 <label asp-for="Nombre"></label>
-<!-- Genera: <label for="Nombre">Nombre</label> -->
 
-@* 5. VALIDATION MESSAGE TAG HELPER - Mensajes de error *@
+@* 5. VALIDATION MESSAGE *@
 <span asp-validation-for="Nombre" class="text-danger"></span>
-<!-- Muestra errores de validación para la propiedad Nombre -->
 
-@* 6. SELECT TAG HELPER - Dropdown list *@
+@* 6. SELECT TAG HELPER *@
 <select asp-for="CategoriaId" asp-items="Model.Categorias"></select>
 
-@* 7. TEXTAREA TAG HELPER - Área de texto multiline *@
+@* 7. TEXTAREA TAG HELPER *@
 <textarea asp-for="Descripcion" rows="4"></textarea>
-```
-
----
-
-## Launch Settings
-
-### Configuración de desarrollo
-
-```json
-// Properties/launchSettings.json
-{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "",
-      "applicationUrl": "http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "https": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
-}
 ```
 
 ---
@@ -919,7 +803,7 @@ public class ProductosController : Controller
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-| ---------- | ------------- |
+|----------|-------------|
 | **ASP.NET Core** | Framework web multiplataforma de Microsoft |
 | **MVC** | Model-View-Controller, patrón de diseño |
 | **Controller** | Recibe peticiones, orquesta lógica |
@@ -932,23 +816,21 @@ public class ProductosController : Controller
 | **HTTP Methods** | GET, POST, PUT, PATCH, DELETE |
 | **Status Codes** | 2xx (éxito), 3xx (redirección), 4xx (cliente), 5xx (servidor) |
 | **Tag Helpers** | Atributos Razor que generan HTML dinámico |
-| **Action Results** | View, Redirect, Json, File, NotFound, etc. |
 
 ---
 
 ## Ejercicio Práctico
 
-### Crear página de información
+### 📋 Crear página de información
 
-```
-EJERCICIO EN CLASE:
+**Tareas:**
 
 1. Crear nuevo Controller "InformacionController"
    - Acción "HoraActual" que muestre hora del servidor
-   - Accion "DatosServidor" que muestre:
-     * Nombre del servidor
-     * Framework (.NET 8)
-     * Ambiente (Development/Production)
+   - Acción "DatosServidor" que muestre:
+     - Nombre del servidor
+     - Framework (.NET 8)
+     - Ambiente (Development/Production)
 
 2. Crear las vistas correspondientes
    - Usar Razor para mostrar datos dinámicos
@@ -962,35 +844,18 @@ EJERCICIO EN CLASE:
    - Crear interfaz IServicioHora
    - Implementar ServicioHoraReal
    - Inyectar en el controller
-```
 
 ---
 
-## Próxima Clase
+## 🚀 Próxima Clase: HTML5 y Bootstrap
 
-### Clase 9: HTML5 y Bootstrap
-
-```
-CONTENIDO PRÓXIMA CLASE:
-
-• HTML5 semántico
-  - Estructura: header, nav, main, section, footer
-  - Formularios modernos
-  
-• Bootstrap 5
-  - Sistema de grillas (Grid)
-  - Componentes: navbar, cards, modals
-  - Utilidades: spacing, colors, display
-  
-• Responsive Design
-  - Mobile-first
-  - Breakpoints
-  
-• Integración ASP.NET + Bootstrap
-  - Layouts compartidos
-  - Partial views
-  - Tag Helpers de Bootstrap
-```
+| Tema | Descripción |
+|------|-------------|
+| **HTML5 semántico** | Estructura: header, nav, main, section, footer |
+| **Formularios modernos** | Inputs, validación HTML5 |
+| **Bootstrap 5** | Grid, componentes, utilidades |
+| **Responsive Design** | Mobile-first, breakpoints |
+| **Layouts** | Shared layouts, partial views |
 
 ---
 
@@ -1000,4 +865,3 @@ CONTENIDO PRÓXIMA CLASE:
 **"ASP.NET Core: Un framework, infinitas posibilidades"**
 
 **UNAULA - Ingeniería Informática - 2026-I**
-

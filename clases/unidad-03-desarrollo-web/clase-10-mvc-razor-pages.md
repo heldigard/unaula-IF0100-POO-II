@@ -4,41 +4,41 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.8em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; }
-section h2 { font-size: 1.4em; }
-section h3 { font-size: 1.2em; }
-section ul, section ol { font-size: 0.9em; margin-left: 1em; }
-section li { margin-bottom: 0.3em; }
-section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
-section code { font-size: 0.85em; }
-section p { margin: 0.5em 0; }
-section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
-section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-</style>
+<!-- _class: lead -->
 
----
 # MVC y Razor Pages
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
+
+**Duración:** 90 minutos
 
 ---
 
@@ -46,28 +46,31 @@ section tbody tr:hover { background-color: #e9ecef; }
 
 Al finalizar esta clase, el estudiante será capaz de:
 
-1. **Comprender** el patrón MVC en detalle
-2. **Implementar** Routing personalizado
-3. **Aplicar** Model Binding y Validación
-4. **Crear** Razor Pages para casos específicos
-5. **Utilizar** Tag Helpers eficientemente
-
-**Duración:** 90 minutos
+| # | Objetivo |
+|---|-----------|
+| 1 | **Comprender** el patrón MVC en detalle |
+| 2 | **Implementar** Routing personalizado |
+| 3 | **Aplicar** Model Binding y Validación |
+| 4 | **Crear** Razor Pages para casos específicos |
+| 5 | **Utilizar** Tag Helpers eficientemente |
 
 ---
 
 ## Agenda
 
-1. Patrón MVC en profundidad (15 min)
-2. Routing avanzado (15 min)
-3. Model Binding (15 min)
-4. Razor Pages (15 min)
-5. Tag Helpers (15 min)
-6. ViewComponents y Partial Views (15 min)
+| Tiempo | Tema |
+|--------|------|
+| 15' | Patrón MVC en profundidad |
+| 15' | Routing avanzado |
+| 15' | Model Binding |
+| 15' | Razor Pages |
+| 15' | Tag Helpers |
+| 15' | ViewComponents y Partial Views |
 
 ---
 
 ## 1. Patrón MVC en Profundidad
+
 ### Separación de responsabilidades
 
 ```
@@ -108,9 +111,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
+
 ## Flujo MVC Detallado
----
+
 ### Ejemplo: Crear Estudiante
 
 ```
@@ -155,9 +160,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
+
 ## Controller Completo
----
+
 ### CRUD de Estudiantes
 
 ```csharp
@@ -182,23 +189,20 @@ public class EstudiantesController : Controller
     public async Task<IActionResult> Index(string busqueda, int? pagina)
     {
         _logger.LogInformation("Accediendo a lista de estudiantes");
-        
----
-
         var estudiantes = await _service.ObtenerTodosAsync();
-        
+
         // Filtrar si hay búsqueda
         if (!string.IsNullOrEmpty(busqueda))
         {
-            estudiantes = estudiantes.Where(e => 
-| e.Nombre.Contains(busqueda) |  |  |
+            estudiantes = estudiantes.Where(e =>
+                e.Nombre.Contains(busqueda) ||
                 e.Codigo.Contains(busqueda));
         }
-        
+
         // Paginación
         int tamanoPagina = 10;
         int numeroPagina = pagina ?? 1;
-        
+
         return View(await estudiantes
             .ToPagedListAsync(numeroPagina, tamanoPagina));
     }
@@ -208,15 +212,12 @@ public class EstudiantesController : Controller
     {
         if (id == null)
             return BadRequest("ID requerido");
-        
----
-
 
         var estudiante = await _service.ObtenerPorIdAsync(id.Value);
-        
+
         if (estudiante == null)
             return NotFound();  // 404
-        
+
         return View(estudiante);
     }
 }
@@ -239,7 +240,7 @@ public class EstudiantesController : Controller
             Carreras = await _carreraService.ObtenerSelectListAsync(),
             FechaIngreso = DateTime.Today
         };
-        
+
         return View(viewModel);
     }
 
@@ -255,16 +256,12 @@ public class EstudiantesController : Controller
             viewModel.Carreras = await _carreraService.ObtenerSelectListAsync();
             return View(viewModel);  // Muestra vista con errores
         }
-        
----
-## Controller: Crear y Editar
-
 
         try
         {
             var estudiante = MapearAEntidad(viewModel);
             await _service.CrearAsync(estudiante);
-            
+
             TempData["Mensaje"] = "Estudiante creado exitosamente";
             return RedirectToAction(nameof(Index));
         }
@@ -284,14 +281,10 @@ public class EstudiantesController : Controller
         var estudiante = await _service.ObtenerPorIdAsync(id);
         if (estudiante == null)
             return NotFound();
-        
----
-## Controller: Crear y Editar
-
 
         var viewModel = MapearAViewModel(estudiante);
         viewModel.Carreras = await _carreraService.ObtenerSelectListAsync();
-        
+
         return View(viewModel);
     }
 }
@@ -329,8 +322,8 @@ app.MapControllerRoute(
 ```
 
 ---
-### Route, HttpGet, HttpPost
 
+## Route, HttpGet, HttpPost
 
 ```csharp
 [Route("api/[controller]")]  // Ruta base: /api/Estudiantes
@@ -356,9 +349,6 @@ public class EstudiantesController : Controller
     [HttpPost]
     public async Task<IActionResult> Crear([FromBody] EstudianteDto dto) { }
 
----
-
-
     // PUT: /api/Estudiantes/5
     [HttpPut("{id:int}")]
     public async Task<IActionResult> Actualizar(int id, [FromBody] EstudianteDto dto) { }
@@ -370,8 +360,10 @@ public class EstudiantesController : Controller
 ```
 
 ---
-### Conversión automática de datos
 
+## 3. Model Binding
+
+### Conversión automática de datos
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -401,7 +393,7 @@ public class EstudiantesController : Controller
 
 ---
 
-El model binding convierte automáticamente los datos de entrada a los tipos especificados.
+## Model Binding en Acción
 
 ```csharp
 public class EstudiantesController : Controller
@@ -429,10 +421,6 @@ public class EstudiantesController : Controller
         // a propiedades del ViewModel
     }
 
----
-## Model Binding en Acción
-
-
     // Binding específico con atributos
     public IActionResult Ejemplo(
         [FromQuery] string busqueda,     // Solo desde QueryString
@@ -447,8 +435,9 @@ public class EstudiantesController : Controller
 ```
 
 ---
+
 ## ViewModels
----
+
 ### Separar modelo de dominio de la vista
 
 ```csharp
@@ -470,45 +459,42 @@ public class Estudiante
 public class EstudianteViewModel
 {
     public int? Id { get; set; }  // Nullable para crear
-    
----
-
 
     [Required(ErrorMessage = "El código es obligatorio")]
     [StringLength(10, ErrorMessage = "Máximo 10 caracteres")]
     [Display(Name = "Código Estudiantil")]
     public string Codigo { get; set; }
-    
+
     [Required]
     [Display(Name = "Nombre")]
     public string Nombre { get; set; }
-    
+
     [Required]
     [Display(Name = "Apellido")]
     public string Apellido { get; set; }
-    
+
     [Required]
     [DataType(DataType.Date)]
     [Display(Name = "Fecha de Nacimiento")]
     public DateTime FechaNacimiento { get; set; }
-    
+
     [Required]
     [Display(Name = "Carrera")]
     public int CarreraId { get; set; }
-    
+
     // Propiedad auxiliar para dropdown
     public SelectList Carreras { get; set; }
-    
----
-
 
     // Propiedad calculada para mostrar
     public string NombreCompleto => $"{Nombre} {Apellido}";
 }
 ```
----
-### Alternativa a MVC para páginas simples
 
+---
+
+## 4. Razor Pages
+
+### Alternativa a MVC para páginas simples
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -519,21 +505,21 @@ public class EstudianteViewModel
 │   ─────                                            ─────    │
 │                                                             │
 │   Controllers/                                     Pages/   │
-│   ├── HomeController.cs                            ├── Index.cshtml│
-│   │   └── Action: Index()                          │   └── @page│
-│   └── AccountController.cs                         │   └── @model IndexModel│
-│                                                    │       └── OnGet()│
-│   Views/                                           ├── Privacy.cshtml│
-│   ├── Home/                                        └── Contacto.cshtml│
-│   │   └── Index.cshtml                                      │
-│   └── Account/                                              │
-│       └── Login.cshtml                                      │
+│   ├── HomeController.cs                            ├── Index.cshtml
+│   │   └── Action: Index()                          │   └── @page
+│   └── AccountController.cs                         │   └── @model IndexModel
+│                                                    │       └── OnGet()
+│   Views/                                           ├── Privacy.cshtml
+│   ├── Home/                                        └── Contacto.cshtml
+│   │   └── Index.cshtml
+│   └── Account/
+│       └── Login.cshtml
 │                                                             │
-│   • Separación Controller/View                     • Todo en uno│
-│   • Múltiples acciones por controller              • Una página = un modelo│
-│   • URLs: /Controller/Action                       • URLs: /Page│
-│   • Ideal para aplicaciones complejas              • Ideal para formularios│
-│                                                    • Sitios de contenido│
+│   • Separación Controller/View                     • Todo en uno
+│   • Múltiples acciones por controller              • Una página = un modelo
+│   • URLs: /Controller/Action                       • URLs: /Page
+│   • Ideal para aplicaciones complejas              • Ideal para formularios
+│                                                    • Sitios de contenido
 │                                                             │
 │   EN ASP.NET CORE: Ambos pueden coexistir                   │
 │                                                             │
@@ -560,7 +546,7 @@ public class EstudianteViewModel
         <input asp-for="Estudiante.Nombre" class="form-control" />
         <span asp-validation-for="Estudiante.Nombre" class="text-danger"></span>
     </div>
-    
+
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-page="Index" class="btn btn-secondary">Cancelar</a>
 </form>
@@ -571,8 +557,8 @@ public class EstudianteViewModel
 ```
 
 ---
-### Page + PageModel
 
+## Page + PageModel
 
 ```csharp
 // Pages/Estudiantes/Crear.cshtml.cs
@@ -599,18 +585,17 @@ public class CrearModel : PageModel
     {
         if (!ModelState.IsValid)
             return Page();  // Muestra la misma página con errores
-        
----
-
 
         await _service.CrearAsync(Estudiante);
         return RedirectToPage("Index");
     }
 }
 ```
+
 ---
+
 ## Handlers en Razor Pages
----
+
 ### Múltiples acciones por página
 
 ```csharp
@@ -629,10 +614,10 @@ public class DetallesModel : PageModel
     public async Task<IActionResult> OnGetAsync(int id)
     {
         Estudiante = await _service.ObtenerPorIdAsync(id);
-        
+
         if (Estudiante == null)
             return NotFound();
-        
+
         return Page();
     }
 
@@ -642,9 +627,6 @@ public class DetallesModel : PageModel
         await _service.ActivarAsync(id);
         return RedirectToPage(new { id });
     }
-
----
-
 
     // POST: /Estudiantes/Detalles/5?handler=Desactivar
     public async Task<IActionResult> OnPostDesactivarAsync(int id)
@@ -665,9 +647,11 @@ public class DetallesModel : PageModel
     <button type="submit">Desactivar</button>
 </form>
 ```
+
 ---
+
 ## 5. Tag Helpers
----
+
 ### HTML semántico con funcionalidad ASP.NET
 
 ```
@@ -679,7 +663,7 @@ public class DetallesModel : PageModel
 │   Sintaxis: asp-[atributo]="valor"                         │
 │                                                             │
 │   HTML Helpers (antiguo):            Tag Helpers (nuevo):   │
-│   @Html.ActionLink("Texto", "Action")  <a asp-action="Action">│
+│   @Html.ActionLink("Texto", "Action")  <a asp-action="Action">
 │                                                             │
 │   PRINCIPALES TAG HELPERS:                                  │
 │                                                             │
@@ -710,9 +694,10 @@ public class DetallesModel : PageModel
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
----
-### Ejemplos prácticos
 
+---
+
+## Ejemplos prácticos de Tag Helpers
 
 ```html
 <!-- LABEL -->
@@ -736,12 +721,6 @@ public class DetallesModel : PageModel
 <!-- PARTIAL -->
 <partial name="_ListaEstudiantes" model="Model.Estudiantes" />
 
-<!-- COMPONENT -->
-@await Component.InvokeAsync("MenuCarreras")
-
----
-
-
 <!-- ENVIRONMENT (condicional por ambiente) -->
 <environment include="Development">
     <script src="~/js/debug.js"></script>
@@ -755,8 +734,10 @@ public class DetallesModel : PageModel
 ```
 
 ---
-### Reutilización de UI
 
+## 6. ViewComponents y Partial Views
+
+### Reutilización de UI
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -784,9 +765,9 @@ public class DetallesModel : PageModel
 ```
 
 ---
----
 
 ## ViewComponents
+
 ### Reutilización de UI con componentes
 
 ```csharp
@@ -803,20 +784,16 @@ public class MenuCarrerasViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(int? carreraSeleccionadaId)
     {
         var carreras = await _carreraService.ObtenerTodasAsync();
-        
+
         var viewModel = new MenuCarrerasViewModel
         {
             Carreras = carreras,
             CarreraSeleccionadaId = carreraSeleccionadaId
         };
-        
+
         return View(viewModel);
     }
 }
-
----
-### Componente reutilizable
-
 
 // Vista del componente:
 // Views/Shared/Components/MenuCarreras/Default.cshtml
@@ -826,9 +803,9 @@ public class MenuCarrerasViewComponent : ViewComponent
     @foreach (var carrera in Model.Carreras)
     {
         <li class="nav-item">
-            <a class="nav-link @(carrera.Id == Model.CarreraSeleccionadaId ? "active" : "")" 
-               asp-controller="Carreras" 
-               asp-action="Detalles" 
+            <a class="nav-link @(carrera.Id == Model.CarreraSeleccionadaId ? "active" : "")"
+               asp-controller="Carreras"
+               asp-action="Detalles"
                asp-route-id="@carrera.Id">
                 @carrera.Nombre
             </a>
@@ -836,6 +813,7 @@ public class MenuCarrerasViewComponent : ViewComponent
     }
 </ul>
 ```
+
 ---
 
 ## Areas: Organización Modular
@@ -968,26 +946,10 @@ public class GlobalExceptionFilter : IExceptionFilter
     {
         _logger.LogError(context.Exception, "Excepción no manejada");
 
-        if (_env.IsDevelopment())
+        context.Result = new ViewResult
         {
-            // En desarrollo, mostrar detalles del error
-            context.Result = new ViewResult
-            {
-                ViewName = "Error",
-                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider())
-                {
-                    { "ErrorMessage", context.Exception.Message }
-                }
-            };
-        }
-        else
-        {
-            // En producción, mostrar página genérica
-            context.Result = new ViewResult
-            {
-                ViewName = "Error"
-            };
-        }
+            ViewName = "Error"
+        };
     }
 }
 
@@ -1009,13 +971,6 @@ builder.Services.AddControllersWithViews(options =>
 // VALIDACIÓN PERSONALIZADA: Atributo personalizado
 public class ValidarCodigoUnicoAttribute : ValidationAttribute
 {
-    private readonly IEstudianteService _service;
-
-    public ValidarCodigoUnicoAttribute()
-    {
-        // El servicio se inyecta mediante ValidationContext
-    }
-
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         var servicio = validationContext.GetRequiredService<IEstudianteService>();
@@ -1125,13 +1080,6 @@ public class Estudiante : IValidatableObject
             }
         }
 
-        // Validación de negocio
-        if (Codigo.StartsWith("E") && Nombre.Length < 5)
-        {
-            resultados.Add(new ValidationResult(
-                "Los estudiantes de Educación especial deben tener nombre completo"));
-        }
-
         return resultados;
     }
 }
@@ -1152,7 +1100,7 @@ public IActionResult Crear(Estudiante estudiante)
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-| ---------- | ------------- |
+|----------|-------------|
 | **MVC** | Separación Model-View-Controller |
 | **Routing** | Mapeo URLs a acciones |
 | **Model Binding** | Conversión automática datos HTTP a objetos C# |
@@ -1172,62 +1120,28 @@ public IActionResult Crear(Estudiante estudiante)
 
 ### Implementar CRUD completo
 
-```
-EJERCICIO:
+**EJERCICIO:**
 
 Crear CRUD de "Cursos" con:
 
-1. Controller CursosController con:
-   - Index (lista con paginación y búsqueda)
-   - Detalles (vista individual)
-   - Crear (GET y POST)
-   - Editar (GET y POST)
-   - Eliminar (GET y POST/DELETE)
-
-2. ViewModels:
-   - CursoViewModel para Crear/Editar
-   - CursoListViewModel para Index
-
-3. Vistas con Bootstrap:
-   - Tabla responsiva en Index
-   - Formulario estilizado en Crear/Editar
-   - Modal de confirmación para Eliminar
-
-4. Razor Page alternativa:
-   - Crear versión Razor Page de "Detalles"
-
-5. ViewComponent:
-   - Crear componente "ContadorCursosPorCarrera"
-```
+| # | Requisito |
+|---|-----------|
+| 1 | **Controller CursosController** con: Index (lista con paginación y búsqueda), Detalles (vista individual), Crear (GET y POST), Editar (GET y POST), Eliminar (GET y POST/DELETE) |
+| 2 | **ViewModels**: CursoViewModel para Crear/Editar, CursoListViewModel para Index |
+| 3 | **Vistas con Bootstrap**: Tabla responsiva en Index, Formulario estilizado en Crear/Editar, Modal de confirmación para Eliminar |
+| 4 | **Razor Page alternativa**: Crear versión Razor Page de "Detalles" |
+| 5 | **ViewComponent**: Crear componente "ContadorCursosPorCarrera" |
 
 ---
 
-## Próxima Clase
+## 🚀 Próxima Clase: Formularios, Validación y Sesiones
 
-### Clase 11: Formularios, Validación y Sesiones
-
-```
-CONTENIDO PRÓXIMA CLASE:
-
-• Validación de datos
-  - Data Annotations
-  - Validación cliente y servidor
-  - Validaciones personalizadas
-
-• TempData y ViewBag
-  - Pasar datos entre acciones
-  - Mensajes flash
-
-• Sesiones y Cookies
-  - HttpContext.Session
-  - CookieOptions
-  - Almacenamiento temporal
-
-• Upload de archivos
-  - IFormFile
-  - Validación de archivos
-  - Almacenamiento
-```
+| Tema | Descripción |
+|------|-------------|
+| **Validación de datos** | Data Annotations, Validación cliente y servidor, Validaciones personalizadas |
+| **TempData y ViewBag** | Pasar datos entre acciones, Mensajes flash |
+| **Sesiones y Cookies** | HttpContext.Session, CookieOptions, Almacenamiento temporal |
+| **Upload de archivos** | IFormFile, Validación de archivos, Almacenamiento |
 
 ---
 
@@ -1237,4 +1151,3 @@ CONTENIDO PRÓXIMA CLASE:
 **"MVC: Separación de responsabilidades para código mantenible"**
 
 **UNAULA - Ingeniería Informática - 2026-I**
-

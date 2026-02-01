@@ -4,47 +4,41 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.8em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; }
-section h2 { font-size: 1.4em; }
-section h3 { font-size: 1.2em; }
-section ul, section ol { font-size: 0.9em; margin-left: 1em; }
-section li { margin-bottom: 0.3em; }
-section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
-section code { font-size: 0.85em; }
-section p { margin: 0.5em 0; }
-section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
-section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-</style>
-
----
+<!-- _class: lead -->
 
 # HTML5 y Bootstrap
 
-<!--
-IMÁGENES GENERADAS:
-- clase-09-bootstrap-grid.png: Sistema de cuadrícula Bootstrap 5 con breakpoints responsivos
--->
-
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
+
+**Duración:** 90 minutos | **Unidad 3 - Clase 9**
 
 ---
 
@@ -52,28 +46,32 @@ IMÁGENES GENERADAS:
 
 Al finalizar esta clase, el estudiante será capaz de:
 
-1. **Utilizar** etiquetas semánticas de HTML5
-2. **Crear** formularios web modernos
-3. **Aplicar** el sistema de grillas de Bootstrap
-4. **Utilizar** componentes Bootstrap en vistas ASP.NET
-5. **Desarrollar** interfaces responsivas (mobile-first)
+| # | Objetivo |
+|---|-----------|
+| 1 | **Utilizar** etiquetas semánticas de HTML5 |
+| 2 | **Crear** formularios web modernos |
+| 3 | **Aplicar** el sistema de grillas de Bootstrap |
+| 4 | **Utilizar** componentes Bootstrap en vistas ASP.NET |
+| 5 | **Desarrollar** interfaces responsivas (mobile-first) |
 
-**Duración:** 90 minutos
+---
+
+## Agenda (90 min)
+
+| Tiempo | Tema |
+|--------|------|
+| 15' | HTML5: Estructura semántica |
+| 15' | Formularios HTML5 |
+| 20' | Bootstrap: Introducción y Grid |
+| 20' | Componentes Bootstrap |
+| 15' | Integración ASP.NET + Bootstrap |
+| 5' | Responsive Design |
 
 ---
 
-## Agenda
+## 1. HTML5: Estructura Semántica
 
-1. HTML5: Estructura semántica (15 min)
-2. Formularios HTML5 (15 min)
-3. Bootstrap: Introducción y Grid (20 min)
-4. Componentes Bootstrap (20 min)
-5. Integración ASP.NET + Bootstrap (15 min)
-6. Responsive Design (5 min)
-
----
-### Más allá de `<div>`
-
+### 📝 Más allá de `<div>`
 
 ```html
 <!-- ❌ HTML ANTIGUO (no semántico) -->
@@ -99,51 +97,12 @@ Al finalizar esta clase, el estudiante será capaz de:
     </section>
 </main>
 
----
-### Más allá de `<div>`
-
-
 <footer>...</footer>
 ```
 
 ---
-### Significado y uso
 
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│              ETIQUETAS SEMÁNTICAS HTML5                     │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ESTRUCTURA DE PÁGINA                                       │
-│  ┌─────────┬─────────────────────────────────────────┐     │
-│  │<header> │ Cabecera: logo, título, navegación      │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<nav>    │ Navegación: menú principal              │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<main>   │ Contenido principal (uno por página)    │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<section>│ Sección temática del contenido          │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<article>│ Contenido independiente y autocontenido │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<aside>  │ Contenido relacionado, sidebar          │     │
-│  ├─────────┼─────────────────────────────────────────┤     │
-│  │<footer> │ Pie: copyright, enlaces, contacto       │     │
-│  └─────────┴─────────────────────────────────────────┘     │
-│                                                             │
-│  CONTENIDO                                                  │
-│  • <figure> y <figcaption> - Imágenes con leyenda          │
-│  • <time> - Fechas y horas                                 │
-│  • <mark> - Texto resaltado                                │
-│  • <details> y <summary> - Contenido colapsable            │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Significado y Uso
+## Etiquetas Semánticas HTML5
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -179,8 +138,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 
 ## Ejemplo: Estructura HTML5 Completa
----
-### Página de blog
+
+### 📄 Página de Blog
 
 ```html
 <!DOCTYPE html>
@@ -202,14 +161,10 @@ Al finalizar esta clase, el estudiante será capaz de:
         </nav>
     </header>
 
----
-### Página de blog
-
-
     <main>
         <section>
             <h2>Últimos Artículos</h2>
-            
+
             <article>
                 <header>
                     <h3>Introducción a ASP.NET Core</h3>
@@ -221,16 +176,12 @@ Al finalizar esta clase, el estudiante será capaz de:
                     <a href="/articulos/aspnet">Leer más</a>
                 </footer>
             </article>
-            
+
             <article>
                 <h3>Patrones de Diseño en C#</h3>
                 <p>Los patrones de diseño son soluciones...</p>
             </article>
         </section>
-        
----
-### Página de blog
-
 
         <aside>
             <h3>Categorías</h3>
@@ -248,45 +199,43 @@ Al finalizar esta clase, el estudiante será capaz de:
 </body>
 </html>
 ```
+
 ---
+
 ## 2. Formularios HTML5
----
-### Inputs modernos y validación
+
+### 📋 Inputs Modernos y Validación
 
 ```html
 <form action="/registro" method="post">
-    
+
     <!-- Texto básico -->
     <label for="nombre">Nombre completo:</label>
-    <input type="text" id="nombre" name="nombre" 
+    <input type="text" id="nombre" name="nombre"
            required minlength="3" maxlength="50"
            placeholder="Ej: María López">
-    
+
     <!-- Email con validación automática -->
     <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email" 
+    <input type="email" id="email" name="email"
            required placeholder="maria@ejemplo.com">
-    
+
     <!-- Teléfono -->
     <label for="telefono">Teléfono:</label>
     <input type="tel" id="telefono" name="telefono"
-           pattern="[0-9]{10}" 
+           pattern="[0-9]{10}"
            placeholder="3001234567">
-    
+
     <!-- Números con rango -->
     <label for="edad">Edad:</label>
     <input type="number" id="edad" name="edad"
            min="18" max="100" value="18">
-    
----
-### Inputs modernos y validación
-
 
     <!-- Fecha -->
     <label for="fechaNacimiento">Fecha de nacimiento:</label>
     <input type="date" id="fechaNacimiento" name="fechaNacimiento"
            min="1950-01-01" max="2006-12-31">
-    
+
     <!-- Lista desplegable -->
     <label for="carrera">Carrera:</label>
     <select id="carrera" name="carrera" required>
@@ -295,13 +244,13 @@ Al finalizar esta clase, el estudiante será capaz de:
         <option value="sistemas">Ingeniería de Sistemas</option>
         <option value="software">Ingeniería de Software</option>
     </select>
-    
+
     <!-- Checkbox -->
     <label>
         <input type="checkbox" name="aceptaTerminos" required>
         Acepto los términos y condiciones
     </label>
-    
+
     <!-- Radio buttons -->
     <fieldset>
         <legend>Género:</legend>
@@ -309,18 +258,15 @@ Al finalizar esta clase, el estudiante será capaz de:
         <label><input type="radio" name="genero" value="M"> Masculino</label>
         <label><input type="radio" name="genero" value="O"> Otro</label>
     </fieldset>
-    
----
-### Inputs modernos y validación
-
 
     <button type="submit">Registrarse</button>
     <button type="reset">Limpiar</button>
 </form>
 ```
----
-### Nuevos tipos de input
 
+---
+
+### Nuevos Tipos de Input
 
 ```html
 <!-- URL -->
@@ -350,18 +296,16 @@ Al finalizar esta clase, el estudiante será capaz de:
 <!-- Archivo -->
 <input type="file" accept=".pdf,.doc,.docx">
 
----
-### Nuevos tipos de input
-
-
 <!-- Área de texto -->
 <textarea rows="4" cols="50" maxlength="500"
           placeholder="Escribe tu mensaje..."></textarea>
 ```
 
 ---
-### Framework CSS más popular
 
+## 3. Bootstrap: Introducción
+
+### 🎨 Framework CSS Más Popular
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -380,27 +324,16 @@ Al finalizar esta clase, el estudiante será capaz de:
 │  ✅ Documentación extensa                                  │
 │  ✅ Personalizable                                         │
 │                                                             │
-│  INCLUIR EN PROYECTO:                                       │
-│                                                             │
-│  1. CDN (más fácil):                                       │
-│     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3...">
-│                                                             │
-│  2. NuGet (ASP.NET):                                       │
-│     Install-Package Bootstrap                              │
-│                                                             │
-│  3. Ya incluido en ASP.NET Core templates                  │
-│                                                             │
-│  Versión usada: Bootstrap 5.3                              │
+│  VERSIÓN: Bootstrap 5.3                                      │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Bootstrap 5: Framework CSS
+## Sistema de Grillas Bootstrap
 
-### El framework más popular para desarrollo responsivo
-
+### 📐 El Corazón de Bootstrap
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -410,11 +343,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 │  12 COLUMNAS POR FILA                                       │
 │                                                             │
 │  ├────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┤  │
-│  │ 1  │ 2  │ 3  │ 4  │ 5  │ 6  │ 7  │ 8  │ 9  │ 10 │ 11 │ 12 │  │
+│  │ 1  │ 2  │ 3  │ 4  │ 5  │ 6  │ 7  │ 8  │ 9  │10 │ 11 │ 12 │  │
 │  └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘  │
 │                                                             │
 │  CLASES DE TAMAÑO:                                          │
-│  ┌─────────┬─────────────────────────────────────────────┐  │
+│  ┌─────────┬───────────────────┬──────────────────────────┐  │
 │  │ Clase   │ Breakpoint        │ Típicamente              │  │
 │  ├─────────┼───────────────────┼──────────────────────────┤  │
 │  │ col-    │ Extra small       │ Móviles portrait         │  │
@@ -432,10 +365,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
-## Sistema de Grillas Bootstrap
+## Grid Bootstrap en Práctica
 
-### El corazón de Bootstrap
----
+### 💻 Ejemplos de Uso
 
 ```html
 <!-- ESTRUCTURA BÁSICA -->
@@ -447,50 +379,37 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 
-<!-- TAMAÑOS ESPECÍFICOS -->
+<!-- TAMAÑOS RESPONSIVOS -->
 <div class="container">
     <div class="row">
-        <!-- En móvil: 12 (100%), en tablet: 6 (50%), en desktop: 4 (33%) -->
-        <div class="col-12 col-md-6 col-lg-4">
-            Card 1
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-            Card 2
-        </div>
-        <div class="col-12 col-md-6 col-lg-4">
-            Card 3
-        </div>
+        <!-- Móvil: 100%, Tablet: 50%, Desktop: 33% -->
+        <div class="col-12 col-md-6 col-lg-4">Card 1</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 2</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 3</div>
     </div>
 </div>
-
----
-
 
 <!-- SIDEBAR + CONTENIDO -->
 <div class="container">
     <div class="row">
-        <!-- Sidebar: 25% en desktop, 100% en móvil -->
-        <aside class="col-12 col-md-3">
-            Menú lateral
-        </aside>
-        
-        <!-- Contenido: 75% en desktop, 100% en móvil -->
-        <main class="col-12 col-md-9">
-            Contenido principal
-        </main>
+        <aside class="col-12 col-md-3">Menú lateral</aside>
+        <main class="col-12 col-md-9">Contenido principal</main>
     </div>
 </div>
 
-<!-- OFFSET (margen) -->
+<!-- OFFSET (margen para centrar) -->
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <!-- Centrado: 6 columnas con offset de 3 -->
-        Contenido centrado
+        Contenido centrado (6 columnas + offset de 3)
     </div>
 </div>
 ```
+
 ---
 
+## 4. Componentes Bootstrap
+
+### 🧩 Botones, Alertas, Cards
 
 ```html
 <!-- BOTONES -->
@@ -523,14 +442,11 @@ Al finalizar esta clase, el estudiante será capaz de:
     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 
----
-
-
 <!-- ─────────────────────────────────────────────── -->
 
 <!-- TARJETAS (CARDS) -->
 <div class="card" style="width: 18rem;">
-    <img src="estudiante.jpg" class="card-img-top" alt="Estudiante" style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;">
+    <img src="estudiante.jpg" class="card-img-top" alt="Estudiante">
     <div class="card-body">
         <h5 class="card-title">María López</h5>
         <p class="card-text">Ingeniería Informática - 4° semestre</p>
@@ -540,15 +456,17 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
+
 ## Más Componentes Bootstrap
----
+
+### 🧩 Navbar, Tablas, Formularios
 
 ```html
 <!-- NAVBAR (Menú de navegación) -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="#">UNAULA</a>
-        <button class="navbar-toggler" type="button" 
+        <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -560,18 +478,10 @@ Al finalizar esta clase, el estudiante será capaz de:
                 <li class="nav-item">
                     <a class="nav-link" href="#">Estudiantes</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cursos</a>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
-
----
-
-
-<!-- ─────────────────────────────────────────────── -->
 
 <!-- TABLA ESTILIZADA -->
 <table class="table table-striped table-hover">
@@ -596,11 +506,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     </tbody>
 </table>
 
----
-
-
-<!-- ─────────────────────────────────────────────── -->
-
 <!-- FORMULARIO ESTILIZADO -->
 <form>
     <div class="mb-3">
@@ -614,8 +519,12 @@ Al finalizar esta clase, el estudiante será capaz de:
     <button type="submit" class="btn btn-primary">Ingresar</button>
 </form>
 ```
+
 ---
 
+## Utilidades Bootstrap
+
+### 🛠️ Spacing, Colores, Display
 
 ```html
 <!-- SPACING: m = margin, p = padding -->
@@ -627,8 +536,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 <div class="px-5 py-3">Padding horizontal 5, vertical 3</div>
 <div class="mx-auto">Centrado horizontal (auto)</div>
 
-<!-- ─────────────────────────────────────────────── -->
-
 <!-- COLORES DE TEXTO -->
 <p class="text-primary">Texto primario (azul)</p>
 <p class="text-success">Texto éxito (verde)</p>
@@ -639,80 +546,64 @@ Al finalizar esta clase, el estudiante será capaz de:
 <div class="bg-primary text-white p-3">Fondo azul, texto blanco</div>
 <div class="bg-light p-3">Fondo gris claro</div>
 
-<!-- ─────────────────────────────────────────────── -->
-
----
-
-
 <!-- DISPLAY -->
 <div class="d-none">Oculto (display: none)</div>
 <div class="d-block">Block</div>
-<div class="d-inline">Inline</div>
-<div class="d-inline-block">Inline-block</div>
 <div class="d-flex">Flexbox</div>
 
-<!-- RESPONSIVO: ocultar en móvil, mostrar en desktop -->
+<!-- RESPONSIVO -->
 <div class="d-none d-md-block">Solo visible en tablet+</div>
 <div class="d-block d-md-none">Solo visible en móvil</div>
-
-<!-- ─────────────────────────────────────────────── -->
 
 <!-- TEXTO -->
 <p class="text-center">Centrado</p>
 <p class="text-end">Alineado derecha</p>
 <p class="fw-bold">Negrita</p>
-<p class="fst-italic">Cursiva</p>
 <p class="text-uppercase">mayúsculas</p>
 <p class="fs-1">Tamaño 1 (más grande)</p>
-<p class="fs-6">Tamaño 6 (más pequeño)</p>
 ```
-
----
-
 
 ---
 
 ## 5. Integración ASP.NET + Bootstrap
 
-### En plantillas Razor
+### 🔗 Plantilla Razor (_Layout.cshtml)
 
 ```html
-@* Views/Shared/_Layout.cshtml - Plantilla principal *@
+@* Views/Shared/_Layout.cshtml *@
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - UNAULA</title>
-    
-    @* Bootstrap CSS desde CDN *@
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+
+    @* Bootstrap CSS *@
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet">
-    
+
     @* Estilos personalizados *@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @* Navbar compartido *@
+    @* Navbar *@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     🎓 UNAULA
                 </a>
-                <button class="navbar-toggler" data-bs-toggle="collapse" 
+                <button class="navbar-toggler" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" 
-                               asp-action="Index">Inicio</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Estudiantes" 
-                               asp-action="Index">Estudiantes</a>
+                            <a class="nav-link" asp-controller="Estudiantes" asp-action="Index">Estudiantes</a>
                         </li>
                     </ul>
                 </div>
@@ -720,13 +611,10 @@ Al finalizar esta clase, el estudiante será capaz de:
         </nav>
     </header>
 
----
-
-
-    @* Contenido principal *@
+    @* Contenido *@
     <div class="container mt-4">
         <main role="main">
-            @RenderBody()  @* Aquí se inserta el contenido de cada vista *@
+            @RenderBody()
         </main>
     </div>
 
@@ -744,11 +632,12 @@ Al finalizar esta clase, el estudiante será capaz de:
 </body>
 </html>
 ```
+
 ---
 
 ## Vista con Bootstrap
 
-### CRUD de Estudiantes
+### 📋 CRUD de Estudiantes
 
 ```html
 @* Views/Estudiantes/Index.cshtml *@
@@ -799,11 +688,11 @@ Al finalizar esta clase, el estudiante será capaz de:
                             }
                         </td>
                         <td>
-                            <a asp-action="Editar" asp-route-id="@item.Id" 
+                            <a asp-action="Editar" asp-route-id="@item.Id"
                                class="btn btn-sm btn-warning">✏️ Editar</a>
-                            <a asp-action="Detalles" asp-route-id="@item.Id" 
+                            <a asp-action="Detalles" asp-route-id="@item.Id"
                                class="btn btn-sm btn-info">👁️ Detalles</a>
-                            <a asp-action="Eliminar" asp-route-id="@item.Id" 
+                            <a asp-action="Eliminar" asp-route-id="@item.Id"
                                class="btn btn-sm btn-danger">🗑️ Eliminar</a>
                         </td>
                     </tr>
@@ -813,11 +702,12 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 ```
+
 ---
 
 ## Formulario con Bootstrap
 
-### Crear/Editar estudiante
+### ➕ Crear/Editar Estudiante
 
 ```html
 @* Views/Estudiantes/Crear.cshtml *@
@@ -836,23 +726,20 @@ Al finalizar esta clase, el estudiante será capaz de:
             <div class="card-body">
                 <form asp-action="Crear" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    
+
                     <div class="mb-3">
                         <label asp-for="Codigo" class="form-label"></label>
-                        <input asp-for="Codigo" class="form-control" 
+                        <input asp-for="Codigo" class="form-control"
                                placeholder="Ej: 2024001">
                         <span asp-validation-for="Codigo" class="text-danger"></span>
                     </div>
-                    
----
-
 
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>
                         <input asp-for="Nombre" class="form-control">
                         <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label asp-for="Carrera" class="form-label"></label>
                         <select asp-for="Carrera" class="form-select">
@@ -862,7 +749,7 @@ Al finalizar esta clase, el estudiante será capaz de:
                             <option>Ingeniería de Sistemas</option>
                         </select>
                     </div>
-                    
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-primary">Guardar</button>
@@ -873,15 +760,16 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 
----
-
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 ```
+
 ---
 
+## 6. Responsive Design
+
+### 📱 Mobile-First Approach
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -907,20 +795,14 @@ Al finalizar esta clase, el estudiante será capaz de:
 │    → Desktop: 4/12 = 33%                                   │
 │  </div>                                                      │
 │                                                             │
-│  HERRAMIENTAS DE DESARROLLADOR:                             │
-│  • F12 → Toggle device toolbar (Ctrl+Shift+M)              │
-│  • Seleccionar dispositivo o tamaño personalizado          │
-│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
----
-
 ## Accesibilidad en HTML5
 
-### ARIA Labels para lectores de pantalla
+### ♿ ARIA Labels
 
 ```html
 @* ACCESIBILIDAD: Importante para usuarios con discapacidades *@
@@ -939,7 +821,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 <small id="pwd-help">Mínimo 8 caracteres, una mayúscula y un número</small>
 
 <!-- 4. ARIA-HIDDEN - Ocultar a lectores de pantalla -->
-<span aria-hidden="true">🎓</span>  <!-- El emoji no se lee -->
+<span aria-hidden="true">🎓</span>
 
 <!-- 5. ROLES ARIA - Semántica adicional -->
 <nav role="navigation" aria-label="Menú principal">...</nav>
@@ -958,17 +840,15 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## Más Componentes Bootstrap
 
-### Modals, Collapse, Progress
+### 🧩 Modals, Collapse, Progress
 
 ```html
 <!-- MODAL (Ventana emergente) -->
-<!-- Botón para abrir modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
         data-bs-target="#exampleModal">
     Abrir Modal
 </button>
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -989,10 +869,7 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 
-<!-- ─────────────────────────────────────────────── -->
-
-<!-- COLLAPSE / ACCORDION -->
-<!-- Acordeón de preguntas frecuentes -->
+<!-- ACCORDION -->
 <div class="accordion" id="accordionPreguntas">
     <div class="accordion-item">
         <h2 class="accordion-header">
@@ -1008,88 +885,15 @@ Al finalizar esta clase, el estudiante será capaz de:
             </div>
         </div>
     </div>
-
-    <div class="accordion-item">
-        <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#collapseDos">
-                ¿Qué es MVC?
-            </button>
-        </h2>
-        <div id="collapseDos" class="accordion-collapse collapse"
-             data-bs-parent="#accordionPreguntas">
-            <div class="accordion-body">
-                MVC es un patrón de diseño que separa...
-            </div>
-        </div>
-    </div>
 </div>
 
-<!-- ─────────────────────────────────────────────── -->
-
 <!-- PROGRESS BAR -->
-<h4>Progreso del curso</h4>
 <div class="progress" style="height: 25px;">
     <div class="progress-bar" role="progressbar" style="width: 65%;"
          aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
         65%
     </div>
 </div>
-
-<!-- Progress bar con múltiples barras -->
-<div class="progress mt-3">
-    <div class="progress-bar bg-success" style="width: 40%">Teoría</div>
-    <div class="progress-bar bg-info" style="width: 25%">Lab</div>
-    <div class="progress-bar bg-warning" style="width: 20%">Proyecto</div>
-</div>
-
-<!-- ─────────────────────────────────────────────── -->
-
-<!-- BADGES Y PILLS -->
-<span class="badge bg-primary">Primario</span>
-<span class="badge bg-secondary">Secundario</span>
-<span class="badge bg-success">Activo</span>
-<span class="badge bg-danger">Inactivo</span>
-<span class="badge bg-warning text-dark">Pendiente</span>
-<span class="badge bg-info">Info</span>
-
-<!-- Pills (badges redondeados) -->
-<span class="badge rounded-pill bg-primary">Nuevo</span>
-<span class="badge rounded-pill bg-success">Completado</span>
-
-<!-- Badges dentro de botones -->
-<button class="btn btn-primary">
-    Notificaciones <span class="badge bg-secondary">5</span>
-</button>
-
-<!-- ─────────────────────────────────────────────── -->
-
-<!-- BREADCRUMBS (Migas de pan) -->
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
-        <li class="breadcrumb-item"><a asp-controller="Cursos" asp-action="Index">Cursos</a></li>
-        <li class="breadcrumb-item active" aria-current="page">ASP.NET Core</li>
-    </ol>
-</nav>
-
-<!-- ─────────────────────────────────────────────── -->
-
-<!-- SPINNERS (Indicadores de carga) -->
-<div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Cargando...</span>
-</div>
-
-<!-- Spinner con texto -->
-<div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-    <span class="ms-2">Cargando datos...</span>
-</div>
-
-<!-- Spinner pequeño -->
-<div class="spinner-border spinner-border-sm" role="status"></div>
 ```
 
 ---
@@ -1097,7 +901,7 @@ Al finalizar esta clase, el estudiante será capaz de:
 ## Resumen de la Clase
 
 | Concepto | Descripción |
-| ---------- | ------------- |
+|----------|-------------|
 | **HTML5 semántico** | `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>` |
 | **Formularios HTML5** | Nuevos tipos: email, tel, date, number, range |
 | **Bootstrap Grid** | 12 columnas, clases: `col-`, `col-sm-`, `col-md-`, `col-lg-` |
@@ -1106,82 +910,53 @@ Al finalizar esta clase, el estudiante será capaz de:
 | **Responsive** | Mobile-first, breakpoints |
 | **Tag Helpers** | `asp-controller`, `asp-action`, `asp-for` |
 | **Accesibilidad** | ARIA labels, roles, estados |
-| **Modals** | Ventanas emergentes |
-| **Collapse** | Acordeones y contenido colapsable |
-| **Progress** | Barras de progreso |
-| **Badges** | Etiquetas y contadores |
 
 ---
 
-## Recursos de Bootstrap
+## Recursos Bootstrap
 
-### Documentación y herramientas
+### 📚 Documentación y Herramientas
 
 - **Documentación oficial:** https://getbootstrap.com/docs/5.3/
-- **Iconos (Bootstrap Icons):** https://icons.getbootstrap.com/
+- **Iconos:** https://icons.getbootstrap.com/
 - **Temas:** https://themes.getbootstrap.com/
 - **Builder online:** https://bootstrap.build/
 - **Grid generator:** https://grid.layoutit.com/
-
-### Cheat Sheets
-- Bootstrap 5 Cheat Sheet: https://bootstrap-cheatsheet.themeselection.com/
 
 ---
 
 ## Ejercicio Práctico
 
-### Diseñar página de estudiantes
+### 📋 Diseñar Página de Estudiantes
 
-```
-EJERCICIO:
+**Crear vista "ListaEstudiantes" con:**
 
-Crear vista "ListaEstudiantes" con:
-
-1. Layout responsivo:
+1. **Layout responsivo:**
    - Header con navegación
    - Contenido principal con cards de estudiantes
    - 1 columna en móvil, 2 en tablet, 3 en desktop
 
-2. Card de estudiante con:
+2. **Card de estudiante con:**
    - Foto (placeholder)
    - Nombre
    - Carrera (badge)
    - Promedio (badge color según valor)
    - Botón "Ver detalle"
 
-3. Tabla alternativa para desktop:
-   - Misma información
-   - Fila destacada si promedio > 4.5
+3. **Tabla alternativa para desktop**
 
-4. Formulario de búsqueda arriba
-```
+4. **Formulario de búsqueda arriba**
 
 ---
 
-## Próxima Clase
+## 🚀 Próxima Clase: MVC y Razor Pages
 
-### Clase 10: MVC y Razor Pages
-
-```
-CONTENIDO PRÓXIMA CLASE:
-
-• Model-View-Controller profundo
-  - Routing avanzado
-  - Model Binding
-  - Validación de datos
-  
-• Razor Pages
-  - Page Models
-  - Handlers (OnGet, OnPost)
-  
-• Tag Helpers
-  - Form tag helpers
-  - Anchor tag helpers
-  - Custom tag helpers
-  
-• Partial Views
-  - ViewComponents
-```
+| Tema | Descripción |
+|------|-------------|
+| **MVC profundo** | Routing avanzado, Model Binding, Validación |
+| **Razor Pages** | Page Models, Handlers (OnGet, OnPost) |
+| **Tag Helpers** | Form, Anchor, Custom tag helpers |
+| **Partial Views** | ViewComponents |
 
 ---
 
