@@ -2,15 +2,15 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-## Los pilares de la Programación Orientada a Objetos
+
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -19,89 +19,24 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-## Los pilares de la Programación Orientada a Objetos
 
-*(continuación...)*
-
-
+# Clases, Objetos y Encapsulamiento
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -177,7 +112,6 @@ Persona maria = new Persona("María", 30);
 ---
 ### Programación Orientada a Objetos
 
-*(continuación...)*
 
 ---
 
@@ -273,7 +207,6 @@ namespace Universidad
 ---
 ### Primera versión (campos públicos)
 
-*(continuación...)*
 
 ---
 ### Instanciación con new
@@ -310,7 +243,6 @@ class Program
 ---
 ### Instanciación con new
 
-*(continuación...)*
 
 ---
 
@@ -417,7 +349,6 @@ public class CuentaBancaria
 ---
 ### Campos privados, acceso controlado
 
-*(continuación...)*
 
 ---
 
@@ -476,7 +407,6 @@ public class Producto
 ---
 ### Diferentes configuraciones
 
-*(continuación...)*
 
     // 4. Propiedad AUTOIMPLEMENTADA (sintaxis corta)
     public double Precio { get; set; }
@@ -523,7 +453,6 @@ public class Estudiante
 ---
 ### El poder del encapsulamiento
 
-*(continuación...)*
 
     public double Promedio
     {
@@ -568,7 +497,6 @@ public class Estudiante
 ---
 ### Inicialización en constructores
 
-*(continuación...)*
 
 // Uso
 var est = new Estudiante("2024001");
@@ -605,7 +533,6 @@ public class Estudiante
 ---
 ### Inicialización de objetos
 
-*(continuación...)*
 
     // CONSTRUCTOR CON PARÁMETROS OPCIONALES
     public Estudiante(string nombre, string codigo)
@@ -705,7 +632,6 @@ public class Estudiante
 ---
 ### Versión final con buenas prácticas
 
-*(continuación...)*
 
     // Métodos
     public bool Aprobo()
@@ -757,7 +683,6 @@ class Program
 ---
 ### Ejercicio: Sistema de Gestión Estudiantil
 
-*(continuación...)*
 
         estudiantes.Add(new Estudiante("Ana Martínez", "2024003", 19) 
         { 

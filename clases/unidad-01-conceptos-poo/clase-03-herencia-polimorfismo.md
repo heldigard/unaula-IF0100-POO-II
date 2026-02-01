@@ -2,15 +2,15 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-## Reutilización de código y comportamientos flexibles
+
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -19,88 +19,24 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-## Reutilización de código y comportamientos flexibles
 
-*(continuación...)*
-
+# Herencia y Polimorfismo
 
 <!--
 [2026-01-31] - Clase enriquecida con infografías
@@ -109,7 +45,6 @@ IMÁGENES GENERADAS:
 - clase-03-herencia.png: Diagrama visual de jerarquía de herencia en POO
 - clase-03-polimorfismo.png: Diagrama explicativo de polimorfismo con animales
 -->
-
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -181,7 +116,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Representación ASCII:
 
-*(continuación...)*
 
 ---
 ### La palabra clave `:``
@@ -211,7 +145,6 @@ public class Estudiante : Persona  // Estudiante HEREDA de Persona
 ---
 ### La palabra clave `:``
 
-*(continuación...)*
 
     public void Estudiar()
     {
@@ -312,7 +245,6 @@ public class Estudiante : Persona
 ---
 ### La palabra clave `base`
 
-*(continuación...)*
 
 // Uso
 Estudiante est = new Estudiante("María", 20, "2024001");
@@ -354,7 +286,6 @@ prof.Especialidad = "Programación"; // De Profesor
 ---
 ### Jerarquías más profundas
 
-*(continuación...)*
 
 ---
 
@@ -396,7 +327,6 @@ prof.Especialidad = "Programación"; // De Profesor
 ---
 ### Representación ASCII:
 
-*(continuación...)*
 
 ---
 ## Virtual y Override
@@ -431,7 +361,6 @@ public class Perro : Animal
 ---
 ### Sobrescritura de métodos
 
-*(continuación...)*
 
     public override void Moverse()
     {
@@ -477,7 +406,6 @@ class Program
 ---
 ### Uso con referencias de clase base
 
-*(continuación...)*
 
         foreach (Animal a in animales)
         {
@@ -517,7 +445,6 @@ public class Vendedor : Empleado
 ---
 ### Preservando comportamiento padre
 
-*(continuación...)*
 
     public override decimal CalcularSalario()
     {
@@ -594,7 +521,6 @@ public class Rectangulo : Figura
 ---
 ### Clases concretas que heredan
 
-*(continuación...)*
 
     public override double CalcularArea()
     {
@@ -669,7 +595,6 @@ public class ImpuestosColombia : Impuestos
 ---
 ### Impidiendo la herencia
 
-*(continuación...)*
 
 // public class ImpuestosBogota : ImpuestosColombia
 // {
@@ -767,7 +692,6 @@ public class Circulo : Figura
 ---
 ### Implementación completa
 
-*(continuación...)*
 
     public override double CalcularArea() => Math.PI * Radio * Radio;
     public override double CalcularPerimetro() => 2 * Math.PI * Radio;
@@ -812,7 +736,6 @@ class Program
 ---
 ## Uso del Sistema de Figuras
 
-*(continuación...)*
 
         Console.WriteLine($"\n📊 Área total de todas las figuras: {areaTotal:F2} cm²");
     }

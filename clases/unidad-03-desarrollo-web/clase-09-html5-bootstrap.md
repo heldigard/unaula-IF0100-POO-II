@@ -2,15 +2,15 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 9: HTML5 y Bootstrap
+
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -19,86 +19,24 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 9: HTML5 y Bootstrap
-## Diseño web responsivo y moderno
+
+# HTML5 y Bootstrap
 
 <!--
 IMÁGENES GENERADAS:
@@ -107,8 +45,6 @@ IMÁGENES GENERADAS:
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
-![Bootstrap Grid System](../../assets/infografias/clase-09-bootstrap-grid.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -166,7 +102,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Más allá de `<div>`
 
-*(continuación...)*
 
 <footer>...</footer>
 ```
@@ -209,7 +144,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Significado y uso
 
-*(continuación...)*
 
 ---
 ## Ejemplo: Estructura HTML5 Completa
@@ -241,7 +175,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Página de blog
 
-*(continuación...)*
 
     <main>
         <section>
@@ -268,7 +201,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Página de blog
 
-*(continuación...)*
 
         <aside>
             <h3>Categorías</h3>
@@ -321,7 +253,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Inputs modernos y validación
 
-*(continuación...)*
 
     <!-- Fecha -->
     <label for="fechaNacimiento">Fecha de nacimiento:</label>
@@ -354,7 +285,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Inputs modernos y validación
 
-*(continuación...)*
 
     <button type="submit">Registrarse</button>
     <button type="reset">Limpiar</button>
@@ -395,7 +325,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Nuevos tipos de input
 
-*(continuación...)*
 
 <!-- Área de texto -->
 <textarea rows="4" cols="50" maxlength="500"
@@ -441,7 +370,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Framework CSS más popular
 
-*(continuación...)*
 
 ---
 ### El corazón de Bootstrap
@@ -478,7 +406,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### El corazón de Bootstrap
 
-*(continuación...)*
 
 ---
 ## Ejemplos de Grid
@@ -516,7 +443,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Layouts responsivos
 
-*(continuación...)*
 
 <!-- SIDEBAR + CONTENIDO -->
 <div class="container">
@@ -579,7 +505,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Elementos UI listos para usar
 
-*(continuación...)*
 
 <!-- ─────────────────────────────────────────────── -->
 
@@ -629,7 +554,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Navbar, tablas, formularios
 
-*(continuación...)*
 
 <!-- ─────────────────────────────────────────────── -->
 
@@ -659,7 +583,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Navbar, tablas, formularios
 
-*(continuación...)*
 
 <!-- ─────────────────────────────────────────────── -->
 
@@ -707,7 +630,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Spacing, colors, display
 
-*(continuación...)*
 
 <!-- DISPLAY -->
 <div class="d-none">Oculto (display: none)</div>
@@ -735,7 +657,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Spacing, colors, display
 
-*(continuación...)*
 
 ---
 ## 5. Integración ASP.NET + Bootstrap
@@ -791,7 +712,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### En plantillas Razor
 
-*(continuación...)*
 
     @* Contenido principal *@
     <div class="container mt-4">
@@ -919,7 +839,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Crear/Editar estudiante
 
-*(continuación...)*
 
                     <div class="mb-3">
                         <label asp-for="Nombre" class="form-label"></label>
@@ -950,7 +869,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Crear/Editar estudiante
 
-*(continuación...)*
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -994,7 +912,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Mobile-first con Bootstrap
 
-*(continuación...)*
 
 ---
 

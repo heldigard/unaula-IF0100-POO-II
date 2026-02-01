@@ -1,18 +1,16 @@
 ---
-
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 8: Introducción a ASP.NET Core
+
 <style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -21,103 +19,26 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 8: Introducción a ASP.NET Core
-
-*(continuación...)*
-
-
-
-
-<!--
-IMÁGENES GENERADAS:
-- clase-08-aspnet-core.png: Arquitectura ASP.NET Core con middleware pipeline y MVC
--->
-
----
-## Desarrollo web moderno con C#
+# Introducción a ASP.NET Core
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
-![Arquitectura ASP.NET Core](../../assets/infografias/clase-08-aspnet-core.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -175,12 +96,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Framework web de Microsoft
 
-*(continuación...)*
-
----
-### Diferentes enfoques para diferentes necesidades
+### Características principales de ASP.NET Core
 
 
 ```
@@ -206,11 +123,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-### Diferentes enfoques para diferentes necesidades
-
-*(continuación...)*
 
 ---
 
@@ -242,11 +154,9 @@ Views/                            ├── Privacy.cshtml
 **En este curso usaremos MVC (más demandado laboralmente)**
 
 ---
+
 ## 2. Arquitectura ASP.NET Core
-
-
----
-### Componentes principales
+Pipeline de peticiones y middleware en ASP.NET Core.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -284,17 +194,9 @@ Views/                            ├── Privacy.cshtml
 ```
 
 ---
-### Componentes principales
 
-*(continuación...)*
-
----
 ## Flujo de una Petición HTTP
----
-## Flujo de una Petición HTTP
-### Request → Response
----
-## Flujo de una Petición HTTP (Continuación)
+### Request → Response pipeline en ASP.NET Core
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -371,7 +273,6 @@ MiPrimeraWeb/
 ---
 # Estructura creada:
 
-*(continuación...)*
 
 ---
 ## Program.cs Explicado
@@ -411,7 +312,6 @@ if (!app.Environment.IsDevelopment())
 ---
 ### Punto de entrada de la aplicación
 
-*(continuación...)*
 
 app.UseHttpsRedirection();    // Redirigir HTTP a HTTPS
 app.UseStaticFiles();         // Servir archivos de wwwroot
@@ -459,7 +359,6 @@ namespace MiPrimeraWeb.Controllers
 ---
 ### HomeController.cs
 
-*(continuación...)*
 
         // GET: /Home/Saludo?nombre=Juan
         public IActionResult Saludo(string nombre)
@@ -517,7 +416,6 @@ namespace MiPrimeraWeb.Controllers
 ---
 ### Views/Home/Saludo.cshtml
 
-*(continuación...)*
 
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
         Volver al Inicio
@@ -562,7 +460,6 @@ else
 ---
 ### C# en HTML
 
-*(continuación...)*
 
 @* 4. Bucles *@
 <ul>
@@ -613,17 +510,9 @@ else
 ```
 
 ---
+
 ### Configuración del pipeline
-
-*(continuación...)*
-
----
-## Crear Middleware Personalizado
----
-### Logging de peticiones
-
-```csharp
-// Middleware personalizado
+Cómo configurar y personalizar el middleware en ASP.NET Core.
 public class RequestTimingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -648,7 +537,6 @@ public class RequestTimingMiddleware
 ---
 ### Logging de peticiones
 
-*(continuación...)*
 
         await _next(context);  // Pasar al siguiente middleware
 
@@ -703,14 +591,8 @@ app.UseMiddleware<RequestTimingMiddleware>();
 ```
 
 ---
-### Principio fundamental de ASP.NET Core
 
-*(continuación...)*
-
----
-## Ciclo de Vida de Servicios
----
-### Scoped, Transient, Singleton
+### Principios de inyección de dependencias
 
 ```csharp
 // Registro de servicios en Program.cs
@@ -738,7 +620,6 @@ public interface IClienteService
 ---
 ### Scoped, Transient, Singleton
 
-*(continuación...)*
 
 public class ClienteService : IClienteService
 {
@@ -895,3 +776,4 @@ CONTENIDO PRÓXIMA CLASE:
 **"ASP.NET Core: Un framework, infinitas posibilidades"**
 
 **UNAULA - Ingeniería Informática - 2026-I**
+

@@ -2,15 +2,15 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 11: Formularios, Validación y Sesiones
+
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -19,86 +19,24 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 11: Formularios, Validación y Sesiones
-## Validación de datos y estado en aplicaciones web
+
+# Formularios, Validación y Sesiones
 
 <!--
 IMÁGENES GENERADAS:
@@ -135,9 +73,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 ## 1. Validación con Data Annotations
----
-## 1. Validación con Data Annotations
----
 ### Atributos de validación en .NET
 
 ```csharp
@@ -170,7 +105,6 @@ public class EstudianteViewModel
 ---
 ### Atributos de validación en .NET
 
-*(continuación...)*
 
     // VALIDACIÓN NUMÉRICA
     [Range(18, 100, ErrorMessage = "La edad debe estar entre 18 y 100 años")]
@@ -201,7 +135,6 @@ public class EstudianteViewModel
 ---
 ### Atributos de validación en .NET
 
-*(continuación...)*
 
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
@@ -280,7 +213,6 @@ public class FechaPasadaAttribute : ValidationAttribute
 ---
 ### Crear atributo custom
 
-*(continuación...)*
 
 // Uso
 public class EstudianteViewModel
@@ -311,7 +243,6 @@ public class MayorDeEdadAttribute : ValidationAttribute
 ---
 ### Crear atributo custom
 
-*(continuación...)*
 
             if (edad < _edadMinima)
             {
@@ -351,7 +282,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ---
 ### ModelState.IsValid
 
-*(continuación...)*
 
     // Guardar
     await _service.CrearAsync(model);
@@ -433,7 +363,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ---
 ### jQuery Validation
 
-*(continuación...)*
 
 ```javascript
 // jQuery Validation genera automáticamente:
@@ -474,16 +403,9 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 ```
 
 ---
+
 ### Pasar datos entre acciones
-
-*(continuación...)*
-
----
-## Usando TempData
----
-## Usando TempData
----
-### Mensajes de confirmación
+TempData es ideal para redireccionamientos con datos transitorios.
 
 ```csharp
 [HttpPost]
@@ -519,7 +441,6 @@ public async Task<IActionResult> Eliminar(int id)
 ---
 ### Mensajes de confirmación
 
-*(continuación...)*
 
     return RedirectToAction(nameof(Index));
 }
@@ -602,7 +523,6 @@ public class AccountController : Controller
 ---
 ### Almacenar y recuperar datos
 
-*(continuación...)*
 
         if (usuarioId == null)
         {
@@ -657,7 +577,6 @@ public class PreferenciasController : Controller
 ---
 ### Manipulación directa
 
-*(continuación...)*
 
     // Eliminar cookie
     public IActionResult EliminarTema()
@@ -701,7 +620,6 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
 ---
 ### IFormFile
 
-*(continuación...)*
 
     // Validaciones
     var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
@@ -731,7 +649,6 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
 ---
 ### IFormFile
 
-*(continuación...)*
 
     // Guardar archivo
     using (var stream = new FileStream(rutaCompleta, FileMode.Create))
@@ -778,7 +695,6 @@ public async Task<IActionResult> SubirDocumentos(List<IFormFile> archivos)
 ---
 ### Subir varios archivos
 
-*(continuación...)*
 
     TempData["Mensaje"] = $"{archivos.Count} archivos subidos";
     return RedirectToAction("Index");
@@ -816,7 +732,6 @@ Crear sistema de inscripción de estudiantes con:
 ---
 ### Sistema de registro completo
 
-*(continuación...)*
 
 4. Sesión:
    - Guardar último estudiante registrado
@@ -933,7 +848,6 @@ namespace WebApp.Models
 ---
 ### Parte 1: Modelo de Usuario (15 minutos)
 
-*(continuación...)*
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [StringLength(100, MinimumLength = 2)]
@@ -960,12 +874,9 @@ namespace WebApp.Models
 ```
 
 ---
+
 ### Parte 1: Modelo de Usuario (15 minutos)
-
-*(continuación...)*
-
----
-### Parte 2: Controlador con Sesiones (30 minutos)
+Creación del modelo de usuario para el ejercicio.
 
 ```csharp
 // Controllers/AccountController.cs
@@ -992,7 +903,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 2: Controlador con Sesiones (30 minutos)
 
-*(continuación...)*
 
         [HttpGet]
         public IActionResult Login()
@@ -1020,7 +930,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 2: Controlador con Sesiones (30 minutos)
 
-*(continuación...)*
 
             if (usuario == null)
             {
@@ -1047,7 +956,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 2: Controlador con Sesiones (30 minutos)
 
-*(continuación...)*
 
             TempData["SuccessMessage"] = $"Bienvenido, {usuario.Nombre}!";
             return RedirectToAction("Dashboard");
@@ -1076,7 +984,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 2: Controlador con Sesiones (30 minutos)
 
-*(continuación...)*
 
             return View();
         }
@@ -1104,7 +1011,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 2: Controlador con Sesiones (30 minutos)
 
-*(continuación...)*
 
             // En producción: hashear password con BCrypt o PBKDF2
             model.Id = _usuarios.Max(u => u.Id) + 1;
@@ -1149,7 +1055,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 3: Vista de Login (20 minutos)
 
-*(continuación...)*
 
                     <form asp-action="Login" method="post">
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
@@ -1189,7 +1094,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 3: Vista de Login (20 minutos)
 
-*(continuación...)*
 
                         <div class="mb-3 form-check">
                             <input asp-for="RememberMe" class="form-check-input" />
@@ -1220,7 +1124,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 3: Vista de Login (20 minutos)
 
-*(continuación...)*
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -1249,7 +1152,6 @@ namespace WebApp.Controllers
 ---
 ### Parte 3: Vista de Login (20 minutos)
 
-*(continuación...)*
 
             if (!emailRegex.test(email)) {
                 this.classList.add('is-invalid');
@@ -1292,7 +1194,6 @@ if (!app.Environment.IsDevelopment())
 ---
 ### Parte 4: Configurar Sesiones en Program.cs (10 minutos)
 
-*(continuación...)*
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -1337,7 +1238,6 @@ namespace WebApp.Filters
 ---
 ### Parte 5: Crear Filtro de Autorización Personalizado (15 minutos)
 
-*(continuación...)*
 
 **Uso en controladores:**
 ```csharp

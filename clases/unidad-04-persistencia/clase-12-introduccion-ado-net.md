@@ -2,15 +2,15 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 4'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 12: Introducción a ADO.NET
+
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -19,86 +19,24 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 12: Introducción a ADO.NET
-## Acceso a datos con SQL Server
+
+# Introducción a ADO.NET
 
 <!--
 IMÁGENES GENERADAS:
@@ -107,8 +45,6 @@ IMÁGENES GENERADAS:
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
-![Arquitectura ADO.NET](../../assets/infografias/clase-12-ado-net.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -171,11 +107,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Acceso a datos en .NET
-
-*(continuación...)*
-
----
 ### ¿Cuándo usar cada uno?
 
 
@@ -211,15 +142,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### ¿Cuándo usar cada uno?
 
-*(continuación...)*
+## 2. Arquitectura ADO.NET
 
----
-## 2. Arquitectura ADO.NET
----
-## 2. Arquitectura ADO.NET
----
 ### Componentes principales
 
 ```
@@ -324,17 +249,13 @@ var builder = new SqlConnectionStringBuilder
     ConnectTimeout = 30
 };
 
----
-### Connection String
-
-*(continuación...)*
-
 string connectionString = builder.ConnectionString;
 ```
 
 ---
+
 ## Usando SqlConnection
----
+
 ### Patrón using (siempre)
 
 ```csharp
@@ -375,11 +296,6 @@ public class EstudianteRepository
                 }
             }
             
----
-### Patrón using (siempre)
-
-*(continuación...)*
-
             // La conexión se cierra automáticamente al salir del using
         }
         
@@ -387,6 +303,7 @@ public class EstudianteRepository
     }
 }
 ```
+
 ---
 
 ## SqlDataReader
@@ -445,11 +362,6 @@ public async Task<int> CrearAsync(Estudiante estudiante)
     // ExecuteScalar para retornar un solo valor (el ID)
     var id = Convert.ToInt32(await command.ExecuteScalarAsync());
     
----
-### Create (INSERT)
-
-*(continuación...)*
-
     return id;
 }
 
@@ -463,10 +375,8 @@ var nuevoId = await repo.CrearAsync(new Estudiante
 ```
 
 ---
+
 ## Read (SELECT)
----
-## Read (SELECT)
----
 ### Obtener por ID y listado
 
 ```csharp
@@ -493,11 +403,6 @@ public async Task<Estudiante> ObtenerPorIdAsync(int id)
         };
     }
     
----
-### Obtener por ID y listado
-
-*(continuación...)*
-
     return null;  // No encontrado
 }
 
@@ -524,11 +429,6 @@ public async Task<List<Estudiante>> ObtenerPorNombreAsync(string busqueda)
         estudiantes.Add(MapFromReader(reader));
     }
     
----
-### Obtener por ID y listado
-
-*(continuación...)*
-
     return estudiantes;
 }
 
@@ -545,6 +445,7 @@ private Estudiante MapFromReader(SqlDataReader reader)
     };
 }
 ```
+
 ---
 
 ## Update (UPDATE)
@@ -609,11 +510,6 @@ public async Task<bool> DesactivarAsync(int id)
         SET Activo = 0, FechaEliminacion = @Fecha 
         WHERE Id = @Id";
     
----
-### Eliminar registro
-
-*(continuación...)*
-
     using var command = new SqlCommand(query, connection);
     command.Parameters.AddWithValue("@Id", id);
     command.Parameters.AddWithValue("@Fecha", DateTime.Now);
@@ -623,9 +519,8 @@ public async Task<bool> DesactivarAsync(int id)
 ```
 
 ---
+
 ### Diferencias
-
-
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │              MÉTODOS DE EJECUCIÓN                           │
@@ -658,15 +553,9 @@ public async Task<bool> DesactivarAsync(int id)
 ```
 
 ---
-### Diferencias
 
-*(continuación...)*
+## 5. Manejo de Transacciones
 
----
-## 5. Manejo de Transacciones
----
-## 5. Manejo de Transacciones
----
 ### Consistencia de datos
 
 ```csharp
@@ -695,11 +584,6 @@ public async Task<bool> TransferirEstudianteAsync(
             await cmd1.ExecuteNonQueryAsync();
         }
         
----
-### Consistencia de datos
-
-*(continuación...)*
-
         // 2. Actualizar carrera del estudiante
         var query2 = @"UPDATE Estudiantes 
                        SET CarreraId = @CarreraId 
@@ -725,10 +609,11 @@ public async Task<bool> TransferirEstudianteAsync(
     }
 }
 ```
+
 ---
+
 ## 6. Buenas Prácticas
----
-## 6. Buenas Prácticas
+
 ### Checklist ADO.NET
 
 ```
@@ -812,8 +697,8 @@ public Estudiante BuscarPorCodigo(string codigo)
 | **Transaction** | Consistencia en operaciones múltiples |
 
 ---
-### Implementar Repository
 
+## Ejercicio: Implementar Repository
 
 ```
 EJERCICIO: Repository de Estudiantes
@@ -840,11 +725,6 @@ Crear clase EstudianteRepository con métodos:
 
 6. BuscarPorNombre(string termino) : Task<List<Estudiante>>
    - Búsqueda parcial con LIKE
-
----
-### Implementar Repository
-
-*(continuación...)*
 
 REQUISITOS:
 - Usar parámetros en todas las queries

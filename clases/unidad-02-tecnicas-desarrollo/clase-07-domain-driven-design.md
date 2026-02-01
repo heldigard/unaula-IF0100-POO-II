@@ -1,18 +1,16 @@
 ---
-
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 2'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 7: Domain Driven Design (DDD)
+
 <style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -21,91 +19,23 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 7: Domain Driven Design (DDD)
-## Diseño guiado por el dominio
-
-<!--
-IMÁGENES GENERADAS:
-- clase-07-ddd-arquitectura.png: Arquitectura Domain Driven Design con capas y bloques de construcción
--->
+# DDD - Domain-Driven Design
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
@@ -168,12 +98,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Domain Driven Design
 
-*(continuación...)*
-
----
-### No es para todos los proyectos
+## Domain Driven Design: Fundamentos
 
 
 ```
@@ -209,15 +135,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### No es para todos los proyectos
 
-*(continuación...)*
-
----
-### Bloques de construcción tácticos
-
-
-```
+## Bloques de construcción tácticos
+DDD proporciona patrones fundamentales para modelar el dominio.
 ┌─────────────────────────────────────────────────────────────┐
 │           BLOQUES DE CONSTRUCCIÓN TÁCTICOS DDD              │
 ├─────────────────────────────────────────────────────────────┤
@@ -250,15 +170,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Bloques de construcción tácticos
 
-*(continuación...)*
-
----
-### Lenguaje ubicuo
-
-
-> **Ubiquitous Language** es un lenguaje compartido y estricto entre desarrolladores y expertos del dominio, usado en todo el ciclo de vida del proyecto.
+## Lenguaje ubicuo
+El vocabulario compartido entre desarrolladores y expertos del negocio es fundamental en DDD.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -292,15 +206,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Lenguaje ubicuo
 
-*(continuación...)*
-
----
 ### Tienda en línea
-
-
-```csharp
+Ejemplo práctico de cómo aplicar Ubiquitous Language.
 // ❌ ANTES: Lenguaje técnico
 public class OrderController 
 {
@@ -332,7 +240,6 @@ public class RealizarPedidoHandler
 ---
 ### Tienda en línea
 
-*(continuación...)*
 
 // Lenguaje del negocio en el código:
 // - Cliente (no User)
@@ -341,11 +248,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
-## 3. Entities vs Value Objects
 
-
----
-### Distinguiendo objetos del dominio
+## Entities vs Value Objects
+### Diferenciación de objetos del dominio
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -377,14 +282,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
-### Distinguiendo objetos del dominio
 
-*(continuación...)*
-
----
 ## Entity en C#
----
-### Implementación
+### Distinguiendo objetos del dominio
 
 ```csharp
 // ENTITY: Cliente
@@ -414,7 +314,6 @@ public class Cliente
 ---
 ### Implementación
 
-*(continuación...)*
 
     // Comportamientos del dominio
     public void CambiarEmail(Email nuevoEmail)
@@ -473,7 +372,6 @@ public class Dinero : IEquatable<Dinero>
 ---
 ### Implementación inmutable
 
-*(continuación...)*
 
     public Dinero AplicarDescuento(decimal porcentaje)
     {
@@ -531,7 +429,6 @@ public class Direccion : IEquatable<Direccion>
 ---
 ### Otro ejemplo clásico
 
-*(continuación...)*
 
     public bool Equals(Direccion otro)
     {
@@ -604,10 +501,9 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
+
 ### Invariantes y consistencia
-
-
-```
+Reglas de negocio que deben mantenerse en todo momento.
 ┌─────────────────────────────────────────────────────────────┐
 │           REGLAS DE LOS AGGREGATES                          │
 ├─────────────────────────────────────────────────────────────┤
@@ -640,13 +536,7 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 
 ---
 ### Invariantes y consistencia
-
-*(continuación...)*
-
----
-
----
-## Implementación Aggregate Pedido
+Reglas de negocio que deben mantenerse consistentes en un agregado.
 ---
 ## Implementación Aggregate Pedido (Continuación)
 
@@ -678,7 +568,6 @@ public class Pedido
 ---
 ## Implementación Aggregate Pedido (Continuación)
 
-*(continuación...)*
 
     // Comportamiento del dominio
     public void AgregarProducto(ProductoId productoId, string nombreProducto, 
@@ -705,7 +594,6 @@ public class Pedido
 ---
 ## Implementación Aggregate Pedido (Continuación)
 
-*(continuación...)*
 
     public void Confirmar()
     {
@@ -744,7 +632,6 @@ public class LineaPedido
 ---
 ## LineaPedido (Entity dentro del Aggregate)
 
-*(continuación...)*
 
 public enum EstadoPedido
 {
@@ -758,10 +645,9 @@ public enum EstadoPedido
 ```
 
 ---
+
 ### Persistencia y lógica de dominio
-
-
-```
+Cómo mantener separadas las responsabilidades.
 ┌─────────────────────────────────────────────────────────────┐
 │               REPOSITORIES vs DOMAIN SERVICES               │
 ├─────────────────────────────────────────────────────────────┤
@@ -791,14 +677,9 @@ public enum EstadoPedido
 ```
 
 ---
-### Persistencia y lógica de dominio
 
-*(continuación...)*
-
----
 ## Repository Pattern
----
-### Abstracción de persistencia
+### Persistencia y lógica de dominio
 
 ```csharp
 // INTERFAZ EN DOMAIN (Capa de Dominio)
@@ -828,7 +709,6 @@ public class PedidoRepository : IPedidoRepository
 ---
 ### Abstracción de persistencia
 
-*(continuación...)*
 
     public async Task<Pedido> ObtenerAsync(PedidoId id)
     {
@@ -882,7 +762,6 @@ public class ProcesadorPedidos
 ---
 ### Lógica que cruza aggregates
 
-*(continuación...)*
 
         // 1. Verificar inventario
         foreach (var linea in pedido.Lineas)
@@ -915,7 +794,6 @@ public class ProcesadorPedidos
 ---
 ### Lógica que cruza aggregates
 
-*(continuación...)*
 
         return ResultadoProcesamiento.Exito(pedidoId);
     }
@@ -976,10 +854,9 @@ public class ProcesadorPedidos
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
+
 ### Dependency Rule
-
-
-```
+El flujo de dependencias en una arquitectura limpia.
 ┌─────────────────────────────────────────────────────────────┐
 │              REGLA DE DEPENDENCIA                           │
 ├─────────────────────────────────────────────────────────────┤
@@ -1011,15 +888,9 @@ public class ProcesadorPedidos
 ```
 
 ---
-### Dependency Rule
 
-*(continuación...)*
-
----
 ### Sistema completo: Tienda en Línea
-
-
-```csharp
+Ejemplo integrado de DDD en una arquitectura completa.
 // ==================== DOMAIN ====================
 
 // Value Objects
@@ -1047,7 +918,6 @@ public class Producto
 ---
 ### Sistema completo: Tienda en Línea
 
-*(continuación...)*
 
 // Aggregate Root (visto anteriormente)
 public class Pedido { /* ... */ }
@@ -1061,7 +931,6 @@ public interface IProductoRepository
 
 ---
 
----
 ## Ejemplo: Application Layer
 
 ```csharp
@@ -1090,7 +959,6 @@ public class RealizarPedidoHandler
 ---
 ## Ejemplo: Application Layer
 
-*(continuación...)*
 
     public RealizarPedidoHandler(
         IPedidoRepository pedidoRepo, 
@@ -1116,7 +984,6 @@ public class RealizarPedidoHandler
 ---
 ## Ejemplo: Application Layer
 
-*(continuación...)*
 
         // Agregar productos
         foreach (var item in command.Items)
@@ -1143,7 +1010,6 @@ public class RealizarPedidoHandler
 ---
 ## Ejemplo: Application Layer
 
-*(continuación...)*
 
 ---
 ## Ejemplo: Presentation Layer
@@ -1186,7 +1052,6 @@ public class PedidosController : ControllerBase
 ---
 ## Ejemplo: Presentation Layer
 
-*(continuación...)*
 
         // Ejecutar
         var pedidoId = await _realizarPedidoHandler.Handle(command);
@@ -1287,10 +1152,9 @@ EJEMPLOS:
 - Microsoft: https://docs.microsoft.com/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/
 
 ---
-### TDD, BDD, DDD
 
-
-```
+### Combinación de metodologías
+Cómo usar TDD, BDD y DDD juntos.
 ┌─────────────────────────────────────────────────────────────┐
 │                  RESUMEN UNIDAD 2                           │
 ├─────────────────────────────────────────────────────────────┤
@@ -1320,11 +1184,8 @@ EJEMPLOS:
 ```
 
 ---
-### TDD, BDD, DDD
-
-*(continuación...)*
-
----
+### Combinando TDD, BDD y DDD
+Integración de las tres metodologías en un proyecto real.
 
 ## Evaluación 2 (15%) - Semana 7
 
@@ -1374,3 +1235,4 @@ TECNOLOGÍAS:
 **"El software es una representación del dominio del negocio"**
 
 **UNAULA - Ingeniería Informática - 2026-I**
+

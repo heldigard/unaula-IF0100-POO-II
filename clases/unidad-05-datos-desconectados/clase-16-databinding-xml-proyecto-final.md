@@ -2,10 +2,46 @@
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - POO II | Unidad 5' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 5'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
+<style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
+img {
+  max-width: 70% !important;
+  max-height: 50vh !important;
+  object-fit: contain !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
+</style>
+
+---
+
+# DataBinding, XML y Proyecto Final
+
+**IF0100 - Lenguaje de Programación OO II**
+*4° Semestre - Ingeniería Informática*
+
+---
 
 ## 🎯 Objetivos de Aprendizaje
 
@@ -14,76 +50,16 @@ Al finalizar esta clase, el estudiante será capaz de:
 1. **Implementar** data binding bidireccional en Windows Forms
 2. **Utilizar** archivos XML como fuente de datos
 3. **Integrar** todas las tecnologías del curso en un proyecto final
-4. **Aplicar** buenas prácticas de arquitectura de software (capas, patrones)
-5. **Documentar** y presentar un proyecto completo
+4. **Aplicar** buenas prácticas de arquitectura de software
 
-
----
-# Clase 16: DataBinding, XML y Proyecto Integrador Final
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
-</style>
+**Duración:** 150 minutos
 
 ---
-# Clase 16: DataBinding, XML y Proyecto Integrador Final
 
-*(continuación...)*
-
-<!--
-[2026-01-31] - Clase final del curso
--->
-
-**Curso:** IF0100 - Lenguaje de Programación OO II  
-**Unidad 5:** Arquitectura de Datos Desconectados  
-**Duración:** 150 minutos (Jueves 1h + revisión)  
-**Fecha:** 2026-05-28 (ÚLTIMA CLASE + EXAMEN FINAL)
----
-
-## 🎯 Objetivos de Aprendizaje
-
-Al finalizar esta clase, el estudiante será capaz de:
-1. Enlazar controles visuales con DataSet (DataBinding)
-2. Exportar e importar DataSet a/desde XML
-3. Integrar todos los conocimientos del semestre
-4. Presentar un proyecto completo con persistencia
-
----
 ## 📋 Contenido
+
 ---
+
 ### 1. Data Binding - Enlace de Datos (20 min)
 
 **¿Qué es Data Binding?**
@@ -121,7 +97,6 @@ public class FormEstudiantes : Form
 ---
 ### 1. Data Binding - Enlace de Datos (20 min)
 
-*(continuación...)*
 
         txtNombre = new TextBox { Location = new Point(100, 320), Width = 200 };
         txtApellido = new TextBox { Location = new Point(100, 350), Width = 200 };
@@ -154,7 +129,6 @@ public class FormEstudiantes : Form
 ---
 ### 1. Data Binding - Enlace de Datos (20 min)
 
-*(continuación...)*
 
         // Agregar labels
         Controls.Add(new Label { Text = "Nombre:", Location = new Point(20, 323) });
@@ -190,7 +164,6 @@ public class FormEstudiantes : Form
 ---
 ## 📋 Contenido
 
-*(continuación...)*
 
         // Datos de ejemplo
         dtEstudiantes.Rows.Add(1, "Juan", "Pérez", "juan@unaula.edu.co");
@@ -219,7 +192,6 @@ public class FormEstudiantes : Form
 ---
 ## 📋 Contenido
 
-*(continuación...)*
 
     private void BtnGuardar_Click(object sender, EventArgs e)
     {
@@ -245,7 +217,6 @@ public class FormEstudiantes : Form
 ---
 ## 📋 Contenido
 
-*(continuación...)*
 
 **Ventajas de BindingSource:**
 - ✅ Sincronización automática entre controles
@@ -284,7 +255,6 @@ public class DataSetXmlHelper
 ---
 ### 2. DataSet y XML (20 min)
 
-*(continuación...)*
 
     // Importar desde XML
     public DataSet ImportarDatos(string archivo)
@@ -310,7 +280,6 @@ class Program
 ---
 ### 2. DataSet y XML (20 min)
 
-*(continuación...)*
 
         DataTable dtEstudiantes = new DataTable("Estudiantes");
         dtEstudiantes.Columns.Add("Id", typeof(int));
@@ -371,7 +340,6 @@ class Program
 ---
 
 
-*(continuación...)*
 
 **2.2. Aplicaciones prácticas:**
 - ✅ Backup de datos
@@ -408,7 +376,6 @@ class Program
 ---
 ### 3. Proyecto Integrador - Especificación (15 min)
 
-*(continuación...)*
 
 **3. Préstamos**
 - Registrar préstamo (validar disponibilidad)
@@ -465,7 +432,6 @@ CREATE TABLE Prestamos (
 ---
 
 
-*(continuación...)*
 
 **Entregables:**
 1. Código fuente completo (GitHub)
@@ -511,7 +477,6 @@ public class Prestamo
 ---
 ### 4. Integración de Conocimientos (20 min)
 
-*(continuación...)*
 
             TimeSpan diferencia = DateTime.Now - FechaDevolucionEsperada;
             return diferencia.Days > 0 ? diferencia.Days : 0;
@@ -541,7 +506,6 @@ public class PrestamoRepository
 ---
 ### 4. Integración de Conocimientos (20 min)
 
-*(continuación...)*
 
             using (SqlTransaction trans = conn.BeginTransaction())
             {
@@ -571,7 +535,6 @@ public class PrestamoRepository
 ---
 ### 4. Integración de Conocimientos (20 min)
 
-*(continuación...)*
 
                     using (SqlCommand cmd = new SqlCommand(queryPrestamo, conn, trans))
                     {
@@ -603,7 +566,6 @@ public class PrestamoRepository
 ---
 ### 4. Integración de Conocimientos (20 min)
 
-*(continuación...)*
 
         return prestamoId;
     }
@@ -642,7 +604,6 @@ public class PrestamoRepository
 ---
 
 
-*(continuación...)*
 
                     // 2. Calcular multa si hay atraso
                     decimal multa = 0;
@@ -670,7 +631,6 @@ public class PrestamoRepository
 ---
 
 
-*(continuación...)*
 
                     // 4. Marcar libro como disponible
                     string queryLibro = 
@@ -697,7 +657,6 @@ public class PrestamoRepository
 ---
 
 
-*(continuación...)*
 
 // Pruebas Unitarias (TDD - Unidad 2)
 [TestClass]
@@ -731,7 +690,6 @@ public class PrestamoTests
 ---
 
 
-*(continuación...)*
 
         // Act
         decimal multa = prestamo.CalcularMulta();
@@ -820,7 +778,6 @@ Implementar un mini-sistema con las siguientes características:
 ---
 ## 🎯 Resumen del Semestre
 
-*(continuación...)*
 
 **Unidad 5 - Datos Desconectados:**
 - ✅ DataSet y DataTable
@@ -967,11 +924,8 @@ SistemaAcademico/
 ```
 
 ---
-### Estructura del Proyecto
 
-*(continuación...)*
-
----
+## Estructura del Proyecto
 ### Ejemplo de Código: Data Binding Bidireccional
 
 ```csharp
@@ -1006,7 +960,6 @@ public partial class frmEstudiantes : Form
 ---
 ### Ejemplo de Código: Data Binding Bidireccional
 
-*(continuación...)*
 
         // DataGridView
         dgvEstudiantes.DataSource = bindingSource;
@@ -1045,7 +998,6 @@ public partial class frmEstudiantes : Form
 ---
 ### Ejemplo de Código: Data Binding Bidireccional
 
-*(continuación...)*
 
                 MessageBox.Show("Cambios guardados exitosamente", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1072,7 +1024,6 @@ public partial class frmEstudiantes : Form
 ---
 ### Ejemplo de Código: Data Binding Bidireccional
 
-*(continuación...)*
 
     private void btnExportarXML_Click(object sender, EventArgs e)
     {
@@ -1101,7 +1052,6 @@ public partial class frmEstudiantes : Form
 ---
 ### Ejemplo de Código: Data Binding Bidireccional
 
-*(continuación...)*
 
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
@@ -1134,7 +1084,6 @@ public partial class frmEstudiantes : Form
 ---
 ### Ejemplo de Código: Data Binding Bidireccional
 
-*(continuación...)*
 
     private void btnPrimero_Click(object sender, EventArgs e) => bindingSource.MoveFirst();
     private void btnAnterior_Click(object sender, EventArgs e) => bindingSource.MovePrevious();
@@ -1189,3 +1138,4 @@ public partial class frmEstudiantes : Form
 **¡Éxito en su proyecto final!** 🎓
 
 ---
+

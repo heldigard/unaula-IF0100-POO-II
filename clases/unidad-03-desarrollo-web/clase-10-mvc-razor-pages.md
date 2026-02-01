@@ -1,18 +1,16 @@
 ---
-
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 3'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-# Clase 10: MVC y Razor Pages
+
 <style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -21,96 +19,26 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-# Clase 10: MVC y Razor Pages
-## Patrón Model-View-Controller en profundidad
-
-<!--
-IMÁGENES GENERADAS:
-- clase-10-mvc.png: Patrón Model-View-Controller con flujo de datos
--->
+# MVC y Razor Pages
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
-![Patrón MVC](../../assets/infografias/clase-10-mvc.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
 
 ---
 
@@ -138,12 +66,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. ViewComponents y Partial Views (15 min)
 
 ---
-## 1. Patrón MVC en Profundidad
----
+
 ## 1. Patrón MVC en Profundidad
 ### Separación de responsabilidades
----
-## 1. Patrón MVC en Profundidad (Continuación)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -265,7 +190,6 @@ public class EstudiantesController : Controller
 ---
 ### CRUD de Estudiantes
 
-*(continuación...)*
 
         var estudiantes = await _service.ObtenerTodosAsync();
         
@@ -294,7 +218,6 @@ public class EstudiantesController : Controller
 ---
 ### CRUD de Estudiantes
 
-*(continuación...)*
 
         var estudiante = await _service.ObtenerPorIdAsync(id.Value);
         
@@ -305,9 +228,9 @@ public class EstudiantesController : Controller
     }
 }
 ```
----
 
 ---
+
 ## Controller: Crear y Editar
 
 ```csharp
@@ -343,7 +266,6 @@ public class EstudiantesController : Controller
 ---
 ## Controller: Crear y Editar
 
-*(continuación...)*
 
         try
         {
@@ -373,7 +295,6 @@ public class EstudiantesController : Controller
 ---
 ## Controller: Crear y Editar
 
-*(continuación...)*
 
         var viewModel = MapearAViewModel(estudiante);
         viewModel.Carreras = await _carreraService.ObtenerSelectListAsync();
@@ -445,7 +366,6 @@ public class EstudiantesController : Controller
 ---
 ### Route, HttpGet, HttpPost
 
-*(continuación...)*
 
     // PUT: /api/Estudiantes/5
     [HttpPut("{id:int}")]
@@ -488,12 +408,9 @@ public class EstudiantesController : Controller
 ```
 
 ---
+
 ### Conversión automática de datos
-
-*(continuación...)*
-
----
-## Model Binding en Acción
+El model binding convierte automáticamente los datos de entrada a los tipos especificados.
 
 ```csharp
 public class EstudiantesController : Controller
@@ -524,7 +441,6 @@ public class EstudiantesController : Controller
 ---
 ## Model Binding en Acción
 
-*(continuación...)*
 
     // Binding específico con atributos
     public IActionResult Ejemplo(
@@ -569,7 +485,6 @@ public class EstudianteViewModel
 ---
 ### Separar modelo de dominio de la vista
 
-*(continuación...)*
 
     [Required(ErrorMessage = "El código es obligatorio")]
     [StringLength(10, ErrorMessage = "Máximo 10 caracteres")]
@@ -599,7 +514,6 @@ public class EstudianteViewModel
 ---
 ### Separar modelo de dominio de la vista
 
-*(continuación...)*
 
     // Propiedad calculada para mostrar
     public string NombreCompleto => $"{Nombre} {Apellido}";
@@ -640,16 +554,9 @@ public class EstudianteViewModel
 ```
 
 ---
+
+## Estructura Razor Page
 ### Alternativa a MVC para páginas simples
-
-*(continuación...)*
-
----
-## Estructura Razor Page
----
-## Estructura Razor Page
----
-### Page + PageModel
 
 ```html
 @* Pages/Estudiantes/Crear.cshtml *@
@@ -680,7 +587,6 @@ public class EstudianteViewModel
 ---
 ### Page + PageModel
 
-*(continuación...)*
 
 ```csharp
 // Pages/Estudiantes/Crear.cshtml.cs
@@ -711,7 +617,6 @@ public class CrearModel : PageModel
 ---
 ### Page + PageModel
 
-*(continuación...)*
 
         await _service.CrearAsync(Estudiante);
         return RedirectToPage("Index");
@@ -756,7 +661,6 @@ public class DetallesModel : PageModel
 ---
 ### Múltiples acciones por página
 
-*(continuación...)*
 
     // POST: /Estudiantes/Detalles/5?handler=Desactivar
     public async Task<IActionResult> OnPostDesactivarAsync(int id)
@@ -855,7 +759,6 @@ public class DetallesModel : PageModel
 ---
 ### Ejemplos prácticos
 
-*(continuación...)*
 
 <!-- ENVIRONMENT (condicional por ambiente) -->
 <environment include="Development">
@@ -899,14 +802,10 @@ public class DetallesModel : PageModel
 ```
 
 ---
-### Reutilización de UI
-
-*(continuación...)*
-
 ---
-## Crear ViewComponent
----
-### Componente reutilizable
+
+## ViewComponents
+### Reutilización de UI con componentes
 
 ```csharp
 // ViewComponents/MenuCarrerasViewComponent.cs
@@ -936,7 +835,6 @@ public class MenuCarrerasViewComponent : ViewComponent
 ---
 ### Componente reutilizable
 
-*(continuación...)*
 
 // Vista del componente:
 // Views/Shared/Components/MenuCarreras/Default.cshtml
@@ -1042,3 +940,4 @@ CONTENIDO PRÓXIMA CLASE:
 **"MVC: Separación de responsabilidades para código mantenible"**
 
 **UNAULA - Ingeniería Informática - 2026-I**
+

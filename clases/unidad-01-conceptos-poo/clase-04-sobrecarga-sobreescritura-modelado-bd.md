@@ -1,18 +1,16 @@
 ---
-
 marp: true
 theme: default
 paginate: true
-| header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1' |
+header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
-
-  section {
-    font-size: 24px;
-  }
-
 ---
-## Polimorfismo estático y diseño de datos
+
 <style>
+section {
+  font-size: 20px;
+  overflow: hidden;
+}
 img {
   max-width: 70% !important;
   max-height: 50vh !important;
@@ -21,102 +19,27 @@ img {
   display: block !important;
   margin: 0 auto !important;
 }
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-section h1 {
-  font-size: 1.8em;
-}
-section h2 {
-  font-size: 1.4em;
-}
-section h3 {
-  font-size: 1.2em;
-}
-section ul, section ol {
-  font-size: 0.9em;
-  margin-left: 1em;
-}
-section li {
-  margin-bottom: 0.3em;
-}
-section pre {
-  font-size: 0.7em;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-section code {
-  font-size: 0.85em;
-}
-section p {
-  margin: 0.5em 0;
-}
-/* Estilos para tablas responsivas */
-section table {
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.85em;
-  border-collapse: collapse;
-  margin: 0.5em auto;
-  table-layout: auto;
-}
-section th {
-  background-color: #1e40af;
-  color: white;
-  padding: 0.4em 0.6em;
-  text-align: left;
-  font-size: 0.9em;
-  border: 1px solid #ddd;
-}
-section td {
-  padding: 0.4em 0.6em;
-  border: 1px solid #ddd;
-  vertical-align: top;
-  word-wrap: break-word;
-  font-size: 0.85em;
-}
-section tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-section tbody tr:hover {
-  background-color: #e9ecef;
-}
-/* Asegurar que el contenido no desborde */
-section {
-  padding: 1em 2em;
-  box-sizing: border-box;
-}
-/* Responsividad para tablas anchas */
-@media screen and (max-width: 1280px) {
-  section table {
-    font-size: 0.75em;
-  }
-  section th, section td {
-    padding: 0.3em 0.4em;
-  }
-}
+section h1 { font-size: 1.8em; }
+section h2 { font-size: 1.4em; }
+section h3 { font-size: 1.2em; }
+section ul, section ol { font-size: 0.9em; margin-left: 1em; }
+section li { margin-bottom: 0.3em; }
+section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
+section code { font-size: 0.85em; }
+section p { margin: 0.5em 0; }
+section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
+section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section tbody tr:nth-child(even) { background-color: #f8f9fa; }
+section tbody tr:hover { background-color: #e9ecef; }
 </style>
 
 ---
-## Polimorfismo estático y diseño de datos
 
-*(continuación...)*
-
-
-
-
-<!--
-[2026-01-31] - Clase enriquecida con infografías
-
-IMÁGENES GENERADAS:
-- clase-04-sobrecarga-vs-sobreescritura.png: Comparación visual entre sobrecarga y sobreescritura
--->
-
+# Sobrecarga, Sobreescritura y Modelado de BD
 
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
-
 ---
 
 ## Objetivos de la Clase
@@ -185,7 +108,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Representación ASCII:
 
-*(continuación...)*
 
 ---
 ### Mismo nombre, diferentes parámetros
@@ -218,7 +140,6 @@ public class Calculadora
 ---
 ### Mismo nombre, diferentes parámetros
 
-*(continuación...)*
 
     // SOBRECARGA 4: Array de números (estructura diferente)
     public int Sumar(params int[] numeros)
@@ -294,7 +215,6 @@ public class Estudiante
 ---
 ### Ya lo hemos visto aplicado
 
-*(continuación...)*
 
     // Constructor 3: Cuatro parámetros
     public Estudiante(string nombre, string codigo, int edad, string carrera)
@@ -337,7 +257,6 @@ public class Estudiante
 ---
 ### La palabra clave `this`
 
-*(continuación...)*
 
     // Llama al de 2 parámetros, que a su vez llama al principal
     public Estudiante() 
@@ -383,7 +302,6 @@ public class Fraccion
 ---
 ### Definiendo comportamiento de operadores
 
-*(continuación...)*
 
     // SOBRECARGA DE ToString()
     public override string ToString()
@@ -454,7 +372,6 @@ public class Punto
 ---
 ### Implementando igualdad
 
-*(continuación...)*
 
     // Siempre sobrescribir Equals y GetHashCode junto con ==
     public override bool Equals(object obj)
@@ -560,7 +477,6 @@ public class Punto
 ---
 ### Clasificación de propiedades
 
-*(continuación...)*
 
 ---
 ### Cardinalidad
@@ -596,7 +512,6 @@ public class Punto
 ---
 ### Cardinalidad
 
-*(continuación...)*
 
 ---
 ## Ejemplo: Sistema Universitario
@@ -707,7 +622,6 @@ CREATE TABLE Materias (
 ---
 ## Tablas SQL Equivalentes
 
-*(continuación...)*
 
 CREATE TABLE Inscripciones (
     Id INT PRIMARY KEY IDENTITY(1,1),
@@ -834,7 +748,6 @@ public class Usuario
 ---
 ## Clases C# para Biblioteca (Continuación)
 
-*(continuación...)*
 
     // Relación 1:N
     public List<Prestamo> Prestamos { get; set; }
@@ -943,3 +856,4 @@ UNIDAD 2: TÉCNICAS DE DESARROLLO DE SOFTWARE
 ## ¿Preguntas?
 
 **UNAULA - Ingeniería Informática - 2026-I**
+

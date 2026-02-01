@@ -132,7 +132,6 @@ Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan 
 ---
 ### 2. Componentes Principales (10 min)
 
-*(continuación...)*
 
 **Componentes clave:**
 - **DataSet:** Contenedor de datos en memoria (mini-BD)
@@ -173,7 +172,6 @@ public class EjemploDataSet
 ---
 ### 3. DataSet Básico (15 min)
 
-*(continuación...)*
 
         // 4. Agregar filas
         DataRow fila1 = dtEstudiantes.NewRow();
@@ -225,7 +223,6 @@ if (filaEncontrada != null)
 ---
 
 
-*(continuación...)*
 
 // Filtrar filas
 DataRow[] estudiantesDestacados = dtEstudiantes.Select("Promedio >= 4.0");
@@ -280,7 +277,6 @@ public class EstudianteDataAdapter
 ---
 ### 4. DataAdapter - Puente con la BD (25 min)
 
-*(continuación...)*
 
         Console.WriteLine($"Filas cargadas: {ds.Tables["Estudiantes"].Rows.Count}");
         return ds;
@@ -313,7 +309,6 @@ public int GuardarCambios(DataTable dt)
 ---
 ### 4. DataAdapter - Puente con la BD (25 min)
 
-*(continuación...)*
 
     using (SqlConnection conn = new SqlConnection(connectionString))
     {
@@ -366,7 +361,6 @@ class Program
 ---
 
 
-*(continuación...)*
 
         // Eliminar estudiante
         DataRow filaEliminar = dt.Rows.Find(5);
@@ -398,7 +392,6 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
 ---
 
 
-*(continuación...)*
 
     // INSERT personalizado
     adapter.InsertCommand = new SqlCommand(
@@ -426,7 +419,6 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
 ---
 
 
-*(continuación...)*
 
     adapter.DeleteCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
     
@@ -465,7 +457,6 @@ public void MostrarEstadoFilas(DataTable dt)
 ---
 ### 5. Tracking de Cambios (10 min)
 
-*(continuación...)*
 
 **Versiones de datos:**
 - `Current`: Valor actual
@@ -502,7 +493,6 @@ public DataSet CargarUniversidadCompleta()
 ---
 ### 6. DataSet con Múltiples Tablas (10 min)
 
-*(continuación...)*
 
     // Definir relaciones
     DataColumn pkEstudiante = ds.Tables["Estudiantes"].Columns["Id"];
@@ -532,7 +522,6 @@ public void MostrarMatriculasPorEstudiante(DataSet ds, int estudianteId)
 ---
 ### 6. DataSet con Múltiples Tablas (10 min)
 
-*(continuación...)*
 
         foreach (DataRow mat in matriculas)
         {
@@ -619,7 +608,6 @@ CREATE TABLE Movimientos (
 ---
 ## 🛠️ Ejercicio para Casa (En Parejas)
 
-*(continuación...)*
 
    - Exportar inventario a XML
    - Reporte de productos con bajo stock (< 10)
