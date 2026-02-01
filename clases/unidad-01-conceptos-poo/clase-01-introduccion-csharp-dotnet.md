@@ -56,6 +56,9 @@ style: |
 
 ## 1. ¿Qué es C#?
 
+<div class="columns">
+<div>
+
 ### 🚀 Por qué C# en 2026?
 
 **Aplicaciones:** 🌐 Web APIs | 🖥️ Desktop | 📱 Mobile | ☁️ Cloud | 🎮 Gaming | 🤖 AI/ML
@@ -66,13 +69,6 @@ style: |
 - ✅ Type-safe
 - ✅ Gran demanda laboral
 
----
-
-## 💼 C# en el Mercado
-
-<div class="columns">
-<div>
-
 ### 🏢 Quién usa C#
 
 | Empresa | Uso |
@@ -80,7 +76,6 @@ style: |
 | **Microsoft** | Azure, Office 365 |
 | **Unity** | 2.5M+ juegos |
 | **Stack Overflow** | Backend completo |
-| **Siemens** | Sistemas industriales |
 
 </div>
 <div>
@@ -351,6 +346,12 @@ Console.WriteLine(edad);   // 25 (independiente)
 Console.WriteLine(edad2);  // 30
 ```
 
+### 📦 STACK Visual
+
+```
+Valores independientes → Asignación = copia
+```
+
 </div>
 <div>
 
@@ -371,66 +372,21 @@ Console.WriteLine(nombre);   // "Juan"
 Console.WriteLine(nombre2);  // "Maria"
 ```
 
+### 🔗 HEAP Visual
+
+```
+Referencias a objetos → Asignación = copia ref
+```
+
 </div>
 </div>
 
 ---
 
-## Stack vs Heap: Visualización Comparativa
+## Nullable Types
 
 <div class="columns">
 <div>
-
-### 📦 STACK (Value Types)
-
-```
-┌─────────────────────────────────────────┐
-│  📦 STACK (Value Types)                 │
-│  ┌────┐ ┌────┐ ┌────┐ ┌────┐           │
-│  │edad│ │edad2│ │price│ │active│       │
-│  │ 25 │ │ 30 │ │19.99│ │true │        │
-│  └────┘ └────┘ └────┘ └────┘           │
-│      ↓                              ↑   │
-│   Valores independientes              │   │
-└─────────────────────────────────────────┘
-```
-
-**Características:**
-- Almacena valores directos
-- Cada variable es independiente
-- Asignación = copia del valor
-
-</div>
-<div>
-
-### 🔗 HEAP (Reference Types)
-
-```
-┌─────────────────────────────────────────┐
-│  🔗 HEAP (Reference Types)              │
-│  ┌──────────┐        ┌──────────┐      │
-│  │ "Juan"   │        │ "Maria"  │      │
-│  │ @0x7F3A  │        │ @0x8B2C  │      │
-│  └──────────┘        └──────────┘      │
-│       ↑                    ↑           │
-│  ┌────┴─────┐        ┌────┴─────┐     │
-│  │nombre    │        │nombre2   │     │
-│  │@0x7F3A   │        │@0x8B2C   │     │
-│  └──────────┘        └──────────┘     │
-└─────────────────────────────────────────┘
-```
-
-**Características:**
-- Almacena referencias (direcciones)
-- Múltiples variables pueden apuntar al mismo objeto
-- Asignación = copia de la referencia
-
-</div>
-</div>
-
----
-
-## Nullable Types (1/2)
 
 ### 🤔 ¿Por qué?
 
@@ -452,9 +408,8 @@ bool? activo = null;        // Nullable<bool>
 DateTime? fecha = null;     // Nullable<DateTime>
 ```
 
----
-
-## Nullable Types (2/2)
+</div>
+<div>
 
 ### 🛠️ Operadores
 
@@ -472,49 +427,62 @@ string s = null;
 int? len = s?.Length;      // null (no crash)
 ```
 
+</div>
+</div>
+
 ---
 
-## Strings en C# - Creación
+## Strings en C#
 
-### 📝 Formas de Crear Strings
+<div class="columns">
+<div>
+
+### 📝 Creación
 
 ```csharp
-// 1. Interpolación ⭐ RECOMENDADA
+// 1. Interpolación ⭐
 string nombre = "Juan";
-int edad = 20;
-string saludo = $"Hola {nombre}, tienes {edad} años";
+string saludo = $"Hola {nombre}";
 
-// 2. Concatenación
-string s2 = "Hola " + nombre;
+// 2. Verbatim (@)
+string ruta = @"C:\Docs\file.txt";
 
-// 3. Verbatim (@) - para rutas
-string ruta = @"C:\Documents\archivo.txt";
-
-// 4. Multilínea (C# 11+)
+// 3. Multilínea (C# 11+)
 string texto = """
     Línea 1
     Línea 2
-    Línea 3
 """;
 ```
 
----
+### 🛠️ Métodos Clave
 
-## Strings en C# - Métodos Útiles
+| Método | Resultado |
+|--------|-----------|
+| `Trim()` | `" hola "` → `"hola"` |
+| `ToUpper()` | `"hola"` → `"HOLA"` |
+| `Contains()` | `"hola".Contains("la")` → `true` |
+| `Split()` | `"a,b".Split(',')` → `["a","b"]` |
 
-### 🛠️ Métodos de Manipulación
+</div>
+<div>
 
-| Método | Ejemplo | Resultado |
-|--------|---------|-----------|
-| `Trim()` | `" hola ".Trim()` | `"hola"` |
-| `ToUpper()` | `"hola".ToUpper()` | `"HOLA"` |
-| `ToLower()` | `"HOLA".ToLower()` | `"hola"` |
-| `Contains()` | `"hola".Contains("la")` | `true` |
-| `Split()` | `"a,b,c".Split(',')` | `["a","b","c"]` |
-| `Replace()` | `"hola".Replace("o","0")` | `"h0la"` |
-| `Length` | `"hola".Length` | `4` |
+### ⚠️ INMUTABILIDAD
 
-⚠️ **Strings son INMUTABLES:** `texto.ToUpper()` no modifica, debe reasignar: `texto = texto.ToUpper()`
+```csharp
+string s = "hola";
+s.ToUpper();      // ❌ No modifica
+s = s.ToUpper();  // ✅ Reasigna
+```
+
+### 💡 Conceptos Clave
+
+- **Inmutables:** Cada operación crea un nuevo string
+- **Verbatim (@):** Para rutas Windows
+- **Interpolación ($):** Forma preferida
+- **Multilínea:** C# 11+
+
+</div>
+</div>
 
 ---
 
@@ -728,7 +696,10 @@ namespace CalculadoraArea
 
 ---
 
-## Ejercicio: Sistema de Calificaciones (1/2)
+## Ejercicio: Sistema de Calificaciones
+
+<div class="columns">
+<div>
 
 ### 🎯 Desafío
 
@@ -742,11 +713,11 @@ Crear sistema que calcule promedios con validación
 4. Mostrar APROBADO/REPROBADO
 5. Validar datos de entrada
 
-### 💡 Pistas de implementación
+### 💡 Pistas
 
 ```csharp
 // Parseo
- double n1 = double.Parse(Console.ReadLine());
+double n1 = double.Parse(Console.ReadLine());
 
 // Promedio
 double promedio = (n1 + n2 + n3) / 3;
@@ -763,29 +734,13 @@ string estado = promedio >= 3.0 ?
   SISTEMA DE CALIFICACIONES
 ================================
 Estudiante: María López
-
-Notas:
-  Nota 1: 4.5
-  Nota 2: 3.8
-  Nota 3: 4.2
---------------------------------
 Promedio: 4.17
 Estado: ✅ APROBADO
 ================================
 ```
 
----
-
-## Validación de Entrada
-
-<div class="columns">
+</div>
 <div>
-
-### 🎯 ¿Por qué validar?
-
-- ❌ Letras en lugar de números
-- ❌ Notas fuera de rango
-- ❌ Crashes inesperados
 
 ### 🔑 Conceptos Clave
 
@@ -795,10 +750,7 @@ Estado: ✅ APROBADO
 | `while(true)` | Repite hasta válido |
 | `out nota` | Parámetro salida |
 
-</div>
-<div>
-
-### 📝 Método de Validación
+### 📝 Validación
 
 ```csharp
 static double PedirNota(string etiqueta)

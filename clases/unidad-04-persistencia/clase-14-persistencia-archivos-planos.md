@@ -321,14 +321,14 @@ namespace UniversidadApp.Data
 ```
 
 ---
-### 2️⃣ Repository CSV - Métodos Auxiliares (1/2)
+### 2️⃣ Repository CSV - Métodos Auxiliares
 
 ```csharp
         private string EstudianteACSV(Estudiante e)
         {
             return $"{e.Id}{SEPARADOR}" +
                    $"{e.Codigo}{SEPARADOR}" +
-                   $"\"{e.Nombre}\"{SEPARADOR}" +  // Comillas por si tiene comas
+                   $"\"{e.Nombre}\"{SEPARADOR}" +
                    $"\"{e.Apellido}\"{SEPARADOR}" +
                    $"{e.Email}{SEPARADOR}" +
                    $"{e.FechaNacimiento:yyyy-MM-dd}{SEPARADOR}" +
@@ -338,65 +338,39 @@ namespace UniversidadApp.Data
 
         private Estudiante CSVAEstudiante(string linea)
         {
-            // Separar campos (considerando comillas)
             var campos = SepararCSV(linea);
-
-            if (campos.Length < 8)
-                throw new FormatException("Línea CSV incompleta");
-
+            if (campos.Length < 8) throw new FormatException("Línea CSV incompleta");
             return new Estudiante
             {
-                Id = int.Parse(campos[0]),
-                Codigo = campos[1],
-                Nombre = campos[2].Trim('"'),
-                Apellido = campos[3].Trim('"'),
-                Email = campos[4],
-                FechaNacimiento = DateTime.Parse(campos[5]),
-                Promedio = decimal.Parse(campos[6]),
-                Activo = campos[7] == "1"
+                Id = int.Parse(campos[0]), Codigo = campos[1],
+                Nombre = campos[2].Trim('"'), Apellido = campos[3].Trim('"'),
+                Email = campos[4], FechaNacimiento = DateTime.Parse(campos[5]),
+                Promedio = decimal.Parse(campos[6]), Activo = campos[7] == "1"
             };
         }
-```
 
----
-### 2️⃣ Repository CSV - Métodos Auxiliares (2/2)
-
-```csharp
         private string[] SepararCSV(string linea)
         {
-            // Implementación simple (no maneja todos los casos edge)
             var campos = new List<string>();
             bool dentroComillas = false;
             string campoActual = "";
-
             foreach (char c in linea)
             {
-                if (c == '"')
-                {
-                    dentroComillas = !dentroComillas;
-                }
+                if (c == '"') dentroComillas = !dentroComillas;
                 else if (c == SEPARADOR && !dentroComillas)
                 {
                     campos.Add(campoActual);
                     campoActual = "";
                 }
-                else
-                {
-                    campoActual += c;
-                }
+                else campoActual += c;
             }
-
             campos.Add(campoActual);
             return campos.ToArray();
         }
 
         private void GuardarTodos(List<Estudiante> estudiantes)
         {
-            var lineas = new List<string>
-            {
-                "Id,Codigo,Nombre,Apellido,Email,FechaNacimiento,Promedio,Activo"
-            };
-
+            var lineas = new List<string> { "Id,Codigo,Nombre,Apellido,Email,FechaNacimiento,Promedio,Activo" };
             lineas.AddRange(estudiantes.Select(EstudianteACSV));
             File.WriteAllLines(_filePath, lineas);
         }
@@ -602,7 +576,7 @@ namespace UniversidadApp.Data
 ```
 
 ---
-### 4️⃣ Repository XML - Estructura Base
+### 4️⃣ Repository XML - Estructura y CRUD Completo
 
 ```csharp
 using System;
@@ -623,24 +597,13 @@ namespace UniversidadApp.Data
         {
             _filePath = filePath;
             _serializer = new XmlSerializer(typeof(List<Estudiante>));
-
-            if (!File.Exists(_filePath))
-            {
-                GuardarTodos(new List<Estudiante>());
-            }
+            if (!File.Exists(_filePath)) GuardarTodos(new List<Estudiante>());
         }
-```
 
----
-### 4️⃣ Repository XML - Métodos CRUD
-
-```csharp
         public void Crear(Estudiante estudiante)
         {
             var estudiantes = ObtenerTodos();
-            estudiante.Id = estudiantes.Any() 
-                ? estudiantes.Max(e => e.Id) + 1 
-                : 1;
+            estudiante.Id = estudiantes.Any() ? estudiantes.Max(e => e.Id) + 1 : 1;
             estudiantes.Add(estudiante);
             GuardarTodos(estudiantes);
         }
@@ -658,10 +621,7 @@ namespace UniversidadApp.Data
         {
             var estudiantes = LeerTodos();
             var index = estudiantes.FindIndex(e => e.Id == estudiante.Id);
-
-            if (index == -1)
-                return false;
-
+            if (index == -1) return false;
             estudiantes[index] = estudiante;
             GuardarTodos(estudiantes);
             return true;
@@ -670,32 +630,21 @@ namespace UniversidadApp.Data
         public bool EliminarLogico(int id)
         {
             var estudiante = ObtenerTodos().FirstOrDefault(e => e.Id == id);
-            if (estudiante == null)
-                return false;
-
+            if (estudiante == null) return false;
             estudiante.Activo = false;
             return Actualizar(estudiante);
         }
-```
 
----
-### 4️⃣ Repository XML - Métodos Auxiliares
-
-```csharp
         private List<Estudiante> LeerTodos()
         {
             using (var stream = File.OpenRead(_filePath))
-            {
                 return (List<Estudiante>)_serializer.Deserialize(stream);
-            }
         }
 
         private void GuardarTodos(List<Estudiante> estudiantes)
         {
             using (var stream = File.Create(_filePath))
-            {
                 _serializer.Serialize(stream, estudiantes);
-            }
         }
     }
 }
