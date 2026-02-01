@@ -158,8 +158,65 @@ g1.Diametro = <span class="hljs-number">5.5</span>;
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="8" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="visualizaci%C3%B3n-gr%C3%A1fica">Visualización Gráfica</h3>
-<p><img src="../../assets/infografias/clase-02-clase-vs-objeto.png" alt="Clase vs Objeto" />{: style=&quot;max-width: 50%; max-height: 300px; display: block; margin: 0 auto;&quot;}</p>
-<p><em>Imagen: La clase Galleta actúa como molde para crear múltiples objetos galleta, cada uno con sus propias características (sabor, tamaño, decoración).</em></p>
+<div>
+<div>
+<p><img src="../../assets/infografias/clase-02-clase-vs-objeto.png" alt="Clase vs Objeto" />{: style=&quot;max-width: 100%; max-height: 350px;&quot;}</p>
+</div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Clave del Concepto:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Clase (Molde)</th>
+<th>Objeto (Galleta)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Naturaleza</strong></td>
+<td>Abstracta</td>
+<td>Concreta</td>
+</tr>
+<tr>
+<td><strong>Memoria</strong></td>
+<td>No ocupa memoria</td>
+<td>Ocupa heap</td>
+</tr>
+<tr>
+<td><strong>Cantidad</strong></td>
+<td>Una sola definición</td>
+<td>Muchas instancias</td>
+</tr>
+<tr>
+<td><strong>Valores</strong></td>
+<td>Define estructura</td>
+<td>Tiene datos reales</td>
+</tr>
+<tr>
+<td><strong>Uso</strong></td>
+<td><code>class Galleta</code></td>
+<td><code>new Galleta()</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Analogía extendida:</strong></p>
+<ul>
+<li><strong>Clase</strong> = Receta de galletas (instrucciones)</li>
+<li><strong>Objeto</strong> = Cada galleta horneada (producto real)</li>
+<li><strong>Atributos</strong> = Sabor, tamaño, decoración (varían por galleta)</li>
+<li><strong>Métodos</strong> = Hornear(), decorar() (comportamiento)</li>
+</ul>
+<p><strong><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> En programación:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Clase (plantilla)</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title">Galleta</span> { <span class="hljs-built_in">string</span> Sabor; }
+
+<span class="hljs-comment">// Objetos (instancias)</span>
+Galleta g1 = <span class="hljs-keyword">new</span> Galleta { Sabor = <span class="hljs-string">&quot;Chocolate&quot;</span> };
+Galleta g2 = <span class="hljs-keyword">new</span> Galleta { Sabor = <span class="hljs-string">&quot;Vainilla&quot;</span> };
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="9" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
@@ -351,23 +408,70 @@ g1.Diametro = <span class="hljs-number">5.5</span>;
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="14" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="3-encapsulamiento">3. Encapsulamiento</h2>
-<p><img src="../../assets/infografias/clase-02-encapsulamiento.png" alt="Encapsulamiento" />{: style=&quot;max-width: 80%; max-height: 500px; display: block; margin: 0 auto;&quot;}</p>
-<h3 id="problema-con-campos-p%C3%BAblicos">Problema con campos públicos</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> PROBLEMA: Campos públicos</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CuentaBancaria</span>
-{
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> saldo;  <span class="hljs-comment">// Cualquiera puede modificarlo</span>
-}
-
-<span class="hljs-comment">// En algún lugar del código...</span>
-CuentaBancaria cuenta = <span class="hljs-keyword">new</span> CuentaBancaria();
-cuenta.saldo = <span class="hljs-number">1000000</span>;  <span class="hljs-comment">// ¡Creé dinero de la nada!</span>
-cuenta.saldo = <span class="hljs-number">-5000</span>;    <span class="hljs-comment">// ¡Saldo negativo válido!</span>
+<div>
+<div>
+<p><img src="../../assets/infografias/clase-02-encapsulamiento.png" alt="Encapsulamiento" />{: style=&quot;max-width: 100%; max-height: 400px;&quot;}</p>
+</div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="🔒" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f512.svg" data-marp-twemoji=""/> El Encapsulamiento en 3 niveles:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌────────────────────────────────┐
+│     PÚBLICO (Accesible)        │
+│  ┌──────────────────────────┐  │
+│  │  Propiedades (get/set)   │  │ ← Interface expuesta
+│  │  Métodos públicos        │  │
+│  └──────────────────────────┘  │
+│  ─────────────────────────────  │
+│     PRIVADO (Oculto)           │
+│  ┌──────────────────────────┐  │
+│  │  Campos privados         │  │ ← Implementación oculta
+│  │  Lógica de validación     │  │
+│  │  Estado interno          │  │
+│  └──────────────────────────┘  │
+└────────────────────────────────┘
 </code></pre>
-<p><strong>El encapsulamiento protege la integridad de los datos</strong></p>
+<p><strong><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> ¿Por qué encapsular?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Beneficio</th>
+<th>Explicación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Protección</strong></td>
+<td>Los datos no pueden modificarse directamente</td>
+</tr>
+<tr>
+<td><strong>Validación</strong></td>
+<td>Control sobre qué valores son aceptables</td>
+</tr>
+<tr>
+<td><strong>Flexibilidad</strong></td>
+<td>Cambiar implementación sin afectar código externo</td>
+</tr>
+<tr>
+<td><strong>Mantenimiento</strong></td>
+<td>Menor riesgo de bugs por estado inválido</td>
+</tr>
+</tbody>
+</table>
+<p><strong><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Sin encapsulamiento:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">cuenta.saldo = <span class="hljs-number">-1000</span>;  <span class="hljs-comment">// ¡Saldo negativo válido!</span>
+</code></pre>
+<p><strong><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Con encapsulamiento:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">cuenta.Depositar(<span class="hljs-number">-1000</span>);  <span class="hljs-comment">// Rechazado por validación</span>
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="15" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
+<h3 id="problema-con-campos-p%C3%BAblicos">Problema con campos públicos</h3>
+<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
+</section>
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="16" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="encapsulamiento-soluci%C3%B3n">Encapsulamiento: Solución</h2>
 <h3 id="modificadores-de-acceso">Modificadores de acceso</h3>
@@ -386,7 +490,7 @@ cuenta.saldo = <span class="hljs-number">-5000</span>;    <span class="hljs-comm
 </span></code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="16" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="17" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="campos-privados-acceso-controlado">Campos privados, acceso controlado</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CuentaBancaria</span>
@@ -419,7 +523,7 @@ cuenta.saldo = <span class="hljs-number">-5000</span>;    <span class="hljs-comm
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="17" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="18" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="4-propiedades-en-c">4. Propiedades en C#</h2>
 <h3 id="sintaxis-moderna-de-c">Sintaxis moderna de C#</h3>
@@ -442,7 +546,7 @@ Console.WriteLine(estudiante.Nombre);  <span class="hljs-comment">// get</span>
 <p><strong>Las propiedades parecen campos, pero son métodos disfrazados</strong></p>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="18" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="19" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="diferentes-configuraciones">Diferentes configuraciones</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Producto</span>
@@ -480,7 +584,7 @@ Console.WriteLine(estudiante.Nombre);  <span class="hljs-comment">// get</span>
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="19" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="20" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="cu%C3%A1ndo-usar-cada-tipo-de-propiedad">Cuándo usar cada tipo de propiedad</h3>
 <table>
@@ -521,7 +625,7 @@ Console.WriteLine(estudiante.Nombre);  <span class="hljs-comment">// get</span>
 </table>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="20" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="21" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="propiedades-con-validaci%C3%B3n">Propiedades con Validación</h2>
 <h3 id="el-poder-del-encapsulamiento">El poder del encapsulamiento</h3>
@@ -582,7 +686,7 @@ Las propiedades permiten validar datos antes de asignarlos, garantizando la inte
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="21" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="22" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="ejemplo-de-uso-con-validaci%C3%B3n">Ejemplo de uso con validación</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">var</span> est = <span class="hljs-keyword">new</span> Estudiante();
@@ -602,7 +706,7 @@ est.Promedio = <span class="hljs-number">10.0</span>;       <span class="hljs-co
 </blockquote>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="22" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="23" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="inicializaci%C3%B3n-en-constructores">Inicialización en Constructores</h3>
 <p><strong>Concepto:</strong> Algunas propiedades deben establecerse solo durante la creación del objeto y no cambiar después.</p>
@@ -634,7 +738,7 @@ est.Promedio = <span class="hljs-number">10.0</span>;       <span class="hljs-co
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="23" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="24" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="uso-del-constructor">Uso del constructor</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Crear estudiante - código asignado en constructor</span>
@@ -652,7 +756,7 @@ Console.WriteLine(est.SemestreActual);   <span class="hljs-comment">// 2</span>
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="24" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="25" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h3 id="constructores---m%C3%BAltiples-versiones">Constructores - Múltiples Versiones</h3>
 <p>Una clase puede tener varios constructores (sobrecarga) para diferentes escenarios:</p>
@@ -696,7 +800,7 @@ Console.WriteLine(est.SemestreActual);   <span class="hljs-comment">// 2</span>
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="25" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="26" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="sobrecarga-de-constructores">Sobrecarga de Constructores</h2>
 <h3 id="m%C3%BAltiples-formas-de-crear-objetos">Múltiples formas de crear objetos</h3>
@@ -720,7 +824,7 @@ Estudiante e4 = <span class="hljs-keyword">new</span>();  <span class="hljs-comm
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="26" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="27" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="inicializaci%C3%B3n-de-objetos">Inicialización de Objetos</h2>
 <h3 id="object-initializers-sintaxis-moderna">Object Initializers (Sintaxis moderna)</h3>
@@ -745,7 +849,7 @@ Estudiante est = <span class="hljs-keyword">new</span> Estudiante(<span class="h
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="27" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="28" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="clase-estudiante-completa">Clase Estudiante Completa</h2>
 <h3 id="versi%C3%B3n-final-con-buenas-pr%C3%A1cticas">Versión final con buenas prácticas</h3>
@@ -804,7 +908,7 @@ Estudiante est = <span class="hljs-keyword">new</span> Estudiante(<span class="h
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="28" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="29" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="miembros-est%C3%A1ticos-vs-de-instancia">Miembros Estáticos vs de Instancia</h2>
 <h3 id="comprender-la-diferencia">Comprender la diferencia</h3>
@@ -837,7 +941,7 @@ Console.WriteLine(c2.ContadorInstancia);     <span class="hljs-comment">// 1</sp
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="29" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="29" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="30" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="class-vs-struct-en-c">class vs struct en C#</h2>
 <h3 id="%C2%BFcu%C3%A1ndo-usar-cada-uno">¿Cuándo usar cada uno?</h3>
@@ -868,7 +972,7 @@ pt2.X = <span class="hljs-number">50</span>;          <span class="hljs-comment"
 <strong>USAR STRUCT PARA:</strong> Datos pequeños, inmutables, mejor rendimiento</p>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="30" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="31" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="6-pr%C3%A1ctica-en-clase">6. Práctica en Clase</h2>
 <h3 id="ejercicio-sistema-de-gesti%C3%B3n-estudiantil">Ejercicio: Sistema de Gestión Estudiantil</h3>
@@ -937,7 +1041,10 @@ pt2.X = <span class="hljs-number">50</span>;          <span class="hljs-comment"
 </div>
 </div>
 ---
-<h2 id="resumen-de-la-clase">Resumen de la Clase</h2>
+<h2 id="resumen-y-ejercicios">Resumen y Ejercicios</h2>
+<div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="📚" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4da.svg" data-marp-twemoji=""/> Conceptos Aprendidos:</strong></p>
 <table>
 <thead>
 <tr>
@@ -948,7 +1055,7 @@ pt2.X = <span class="hljs-number">50</span>;          <span class="hljs-comment"
 <tbody>
 <tr>
 <td><strong>Clase</strong></td>
-<td>Plantilla/blueprint para crear objetos</td>
+<td>Plantilla/blueprint para objetos</td>
 </tr>
 <tr>
 <td><strong>Objeto</strong></td>
@@ -964,72 +1071,93 @@ pt2.X = <span class="hljs-number">50</span>;          <span class="hljs-comment"
 </tr>
 <tr>
 <td><strong>Método</strong></td>
-<td>Comportamiento/acción del objeto</td>
+<td>Comportamiento del objeto</td>
 </tr>
 <tr>
 <td><strong>Constructor</strong></td>
-<td>Método especial para inicializar objetos</td>
+<td>Inicialización de objetos</td>
 </tr>
 <tr>
 <td><strong>Encapsulamiento</strong></td>
-<td>Ocultar implementación, exponer interfaz</td>
+<td>Ocultar implementación</td>
 </tr>
 </tbody>
 </table>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="31" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="31" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="ejercicios-propuestos">Ejercicios Propuestos</h2>
-<h3 id="para-practicar-en-casa">Para practicar en casa</h3>
-<p><strong>Ejercicio 1: Clase Producto</strong><br />
-Crear una clase <code>Producto</code> con:</p>
+<p><strong><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Habilidades:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Definir clases con sintaxis C#
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Crear objetos con new
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Aplicar encapsulamiento
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Usar propiedades con validación
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Implementar constructores
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Entender referencia vs valor
+</code></pre>
+</div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="📝" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4dd.svg" data-marp-twemoji=""/> Ejercicios Propuestos:</strong></p>
+<p><strong>1. Clase Producto</strong></p>
 <ul>
-<li>Código (solo lectura, asignado en constructor)</li>
-<li>Nombre (propiedad con validación: no vacío)</li>
-<li>Precio (propiedad con validación: &gt; 0)</li>
-<li>Cantidad en stock (&gt;= 0)</li>
-<li>Método <code>CalcularValorInventario()</code> que retorne Precio * Stock</li>
+<li>Código (solo lectura), Nombre (no vacío)</li>
+<li>Precio (&gt; 0), Stock (&gt;= 0)</li>
+<li>Método <code>CalcularValorInventario()</code></li>
 </ul>
-<p><strong>Ejercicio 2: Clase CuentaBancaria</strong><br />
-Crear una clase con:</p>
+<p><strong>2. Clase CuentaBancaria</strong></p>
 <ul>
-<li>Número de cuenta (solo lectura)</li>
-<li>Saldo (privado, acceso solo mediante métodos)</li>
-<li>Métodos: Depositar(), Retirar(), ConsultarSaldo()</li>
-<li>Validar que no se pueda retirar más del saldo disponible</li>
-</ul>
-<p><strong>Ejercicio 3: Clase con Miembros Estáticos</strong><br />
-Crear una clase <code>Tienda</code> con:</p>
+<li>Saldo privado con métodos:
 <ul>
-<li>Campo estático para contar productos creados</li>
-<li>Propiedad estática de solo lectura para obtener el total</li>
-<li>Constructor que incremente el contador</li>
-<li>Método estático para mostrar estadísticas</li>
+<li><code>Depositar()</code>, <code>Retirar()</code>, <code>ConsultarSaldo()</code></li>
 </ul>
-<p><strong>Ejercicio 4: Sistema de Biblioteca (Avanzado)</strong><br />
-Modelar las siguientes clases:</p>
+</li>
+<li>Validar saldo negativo</li>
+</ul>
+<p><strong>3. Miembros Estáticos</strong></p>
 <ul>
-<li><code>Libro</code>: ISBN, título, autor, año, cantidad disponible</li>
-<li><code>Usuario</code>: código, nombre, email, tipo (estudiante/profesor)</li>
-<li><code>Prestamo</code>: fecha préstamo, fecha devolución, estado</li>
-<li>Implementar propiedades con validación</li>
-<li>Agregar métodos para calcular fechas de devolución según tipo de usuario</li>
+<li>Clase <code>Tienda</code> con contador estático</li>
+<li>Propiedad estática de total productos</li>
 </ul>
+<p><strong>4. <img class="emoji" draggable="false" alt="🌟" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f31f.svg" data-marp-twemoji=""/> Biblioteca (Avanzado)</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Libro: ISBN, título, autor, stock
+Usuario: código, nombre, tipo
+Prestamo: fechas, estado
+→ Implementar validaciones completas
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="32" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="pr%C3%B3xima-clase">Próxima Clase</h2>
-<h3 id="clase-3-herencia-y-polimorfismo">Clase 3: Herencia y Polimorfismo</h3>
+<h2 id="pr%C3%B3xima-clase-herencia-y-polimorfismo">Próxima Clase: Herencia y Polimorfismo</h2>
+<div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Temas de la Clase 3:</strong></p>
 <ul>
-<li>Herencia: clase base y clase derivada</li>
-<li>Palabra clave <code>base</code></li>
-<li>Polimorfismo: virtual, override, abstract</li>
-<li>Clases y métodos abstractos</li>
-<li>Principio de sustitución de Liskov</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> <strong>Herencia:</strong> Clase base y clase derivada</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> <strong>Palabra clave <code>base</code></strong></li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> <strong>Polimorfismo:</strong> virtual, override</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> <strong>Clases y métodos abstractos</strong></li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> <strong>Principio de sustitución de Liskov</strong></li>
 </ul>
-<p><strong>¡Nos vemos!</strong></p>
+<p><strong><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Objetivo:</strong><br />
+Reutilizar código mediante herencia y lograr comportamiento polimórfico.</p>
+</div>
+<div>
+<p><strong><img class="emoji" draggable="false" alt="📖" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d6.svg" data-marp-twemoji=""/> Preparación:</strong></p>
+<ol>
+<li><strong>Repasar</strong> conceptos de POO básicos</li>
+<li><strong>Practicar</strong> ejercicios propuestos</li>
+<li><strong>Pensar</strong> en ejemplos del mundo real:
+<ul>
+<li>Vehículo → Carro, Moto, Bus</li>
+<li>Animal → Perro, Gato, Pájaro</li>
+<li>Figura → Círculo, Rectángulo</li>
+</ul>
+</li>
+</ol>
+<p><strong><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Pregunta reflexiva:</strong><br />
+¿Cómo harías para que diferentes tipos de vehículos tengan un método <code>Mover()</code> que se comporte diferente?</p>
+<p><strong>¡Nos vemos en la próxima clase!</strong></p>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="33" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
