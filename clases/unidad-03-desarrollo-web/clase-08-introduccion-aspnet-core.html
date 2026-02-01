@@ -528,7 +528,7 @@ else
 public class RequestTimingMiddleware<br />
 {<br />
 private readonly RequestDelegate _next;<br />
-private readonly ILogger&lt;RequestTimingMiddleware&gt; _logger;</p>
+private readonly ILogger<RequestTimingMiddleware> _logger;</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>public RequestTimingMiddleware(
     RequestDelegate next, 
     ILogger&lt;RequestTimingMiddleware&gt; logger)
@@ -563,7 +563,7 @@ public async Task InvokeAsync(HttpContext context)
 </code></pre>
 <p>}</p>
 <p>// Registro en Program.cs<br />
-app.UseMiddleware&lt;RequestTimingMiddleware&gt;();</p>
+app.UseMiddleware<RequestTimingMiddleware>();</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>---
 ### Principio fundamental de ASP.NET Core
 
