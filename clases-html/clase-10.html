@@ -176,7 +176,7 @@ public IActionResult Detalles(int id) { }</code></pre>
       <pre><code class="language-csharp">public class EstudianteViewModel
 {
     [Required]
-    [Display(Name = "Codigo")]
+    [Display(Name = "Código")]
     public string Codigo { get; set; }
 
     [Required]
@@ -199,7 +199,7 @@ public IActionResult Detalles(int id) { }</code></pre>
       <h3>Infografía: MVC</h3>
       <figure>
         <img src="../assets/infografias/clase-10-mvc.png" alt="Infografía patrón MVC" />
-        <figcaption>Relación entre Controller, Model y View y flujo de request/response.</figcaption>
+        <figcaption>El patrón Model-View-Controller (MVC) separa la aplicación en tres componentes con responsabilidades claras: el Controller recibe las solicitudes HTTP y coordina el flujo, el Model contiene la lógica de negocio y los datos, y la View genera la presentación HTML; las flechas muestran el flujo circular donde el usuario interactúa con la Vista, el Controlador procesa las acciones y actualiza el Modelo, y la Vista se actualiza y refleja los cambios del Modelo.</figcaption>
       </figure>
 
       <h3>Controller CRUD (fragmento)</h3>

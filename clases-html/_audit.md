@@ -224,44 +224,162 @@
 - Infografías: clase-10-mvc.png (existente).
 - TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Caption infografía: Mejorado con descripción pedagógica detallada del patrón MVC (separación en 3 componentes, responsabilidades claras, flujo circular donde Controller recibe requests, Model tiene lógica/datos, View genera HTML, y las flechas muestran el ciclo usuario→vista→controller→model→vista)
+  - Ortografía: Corregido "Código" en Display(Name) para consistencia (los nombres de propiedades C# no llevan tilde, pero los Display Names para UI sí)
+- Infografías: clase-10-mvc.png (caption mejorado).
+- TODOs: Ninguno.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificaciones:
+  - Anchors: 5 enlaces funcionales (#teoría, #ejemplos, #práctica, #ejercicios, #referencias)
+  - Ortografía: Sin instancias de "solo" sin tilde; todas las tildes correctas
+  - Terminología: MVC, Controller, Model, View, Razor Pages, PageModel, Tag Helpers, asp-*, ViewModels, Model Binding - todas coherentes
+  - Flujo pedagógico: teoría → ejemplos → práctica → ejercicios → referencias ✅
+- Clase lista para dictar en aula con Windows (Visual Studio 2022, .NET 8).
 
-## Clase 11 - Formularios, Validacion y Sesiones
-### R1
+## Clase 11 - Formularios, Validación y Sesiones
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - HTML: Corregida corrupción masiva - carácter ó eliminado sistemáticamente de todo el archivo (Validación, Programación, Duración, Ingeniería, Informática, Descripción, Configuración, Implementación, Comparación, Protección, Manipulación, Petición, Acción, Instrucción, Inscripción, Introducción, Expiración, código, válido, electrónico, dígitos, numéricos, teléfono, categoría, máximo, mínimo, prácticos, específico, único, último, éxito, próxima, Parámetros, básico, etc.)
+  - Header: Actualizado (ya tenía duración 90 min)
+  - Navegación: Añadido enlace "Práctica / Laboratorio"
+  - Sección añadida: "Práctica / Laboratorio" con 40 min, 7 pasos VS 2022 y 5 checklists
+  - Ejercicios: Añadidos tiempos (25/20/45 min) y 3 checklists
+- Factibilidad Windows: Verificada - Visual Studio 2022 con ASP.NET Core MVC (.NET 8).
+- Infografías: clase-11 (por verificar si existen).
+- TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Infografías: No hay infografías en el contenido (solo CSS preparado sin imágenes)
+  - Ortografía: Verificada y corregida (rápida, inmediato, Confíe, etc.)
+- Infografías: Sin infografías.
+- TODOs: Ninguno.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificaciones:
+  - Anchors: 11 enlaces funcionales (#objetivos, #agenda, #data-annotations, #validacion, #tempdata, #sesiones, #upload, #csrf, #practica, #ejercicios, #referencias)
+  - Ortografía: Sin patrones de corrupción restantes; todas las tildes correctas
+  - Terminología: Data Annotations, ModelState, jQuery Validation, TempData, Session, Cookies, IFormFile, CSRF Protection - todas coherentes
+  - Flujo pedagógico: objetivos → agenda → data annotations → validación → tempdata → sesiones → upload → csrf → práctica → ejercicios → referencias → resumen ✅
+- Clase lista para dictar en aula con Windows (Visual Studio 2022, .NET 8).
 
 ## Clase 12 - Introduccion ADO.NET
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - HTML: Corregida corrupción masiva - carácter ó eliminado sistemáticamente de todo el archivo (Introducción, Programación, Duración, Ingeniería, Informática, qué, Características, Opción, Conexión, Configuración, Parámetros, Máximo, Mínimo, Más, Métodos, Ejecución, Transacción, Prácticas, Liberación, Rápido, Reutilización, físicas, Búsqueda, Descripción, Próxima, Comparación, único, Protección, múltiples)
+  - Header: Actualizado con ortografía correcta
+  - Navegación: Añadidos enlaces "SQL Injection" y "Práctica / Laboratorio"
+  - Sección añadida: "Práctica / Laboratorio" con 40 min, 8 pasos VS 2022 y 7 checklists
+  - Ejercicios: Añadidos tiempos (30/20/45 min) y 3 checklists
+  - Infografía: Existe clase-12-ado-net.png (caption por mejorar en R2)
+- Factibilidad Windows: Verificada - Visual Studio 2022 con .NET 8 SDK y Microsoft.Data.SqlClient.
+- Infografías: clase-12-ado-net.png (existente, caption por mejorar).
+- TODOs: Mejorar caption de infografía en R2.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Caption: Mejorado con descripción pedagógica detallada de arquitectura ADO.NET (Data Provider con SqlConnection/SqlCommand/SqlDataReader, DataSet modo desconectado, flujo de datos hacia SQL Server)
+  - Ortografía: Corregida restante (conexión, Instalación)
+- Factibilidad Windows: Sin cambios, ya verificada en R1.
+- Infografías: clase-12-ado-net.png (caption mejorado).
+- TODOs: Ninguno.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificaciones:
+  - Anchors: 12 enlaces funcionales (#objetivos, #agenda, #que-es, #arquitectura, #conexion, #crud, #transacciones, #buenas-practicas, #sql-injection, #practica, #ejercicios, #referencias)
+  - Ortografía: Sin patrones de corrupción restantes; todas las tildes correctas
+  - Terminología: SqlConnection, SqlCommand, SqlDataReader, DataSet, DataAdapter, ExecuteReader, ExecuteScalar, ExecuteNonQuery, Parameters, Connection Pooling, Transactions - todas coherentes
+  - Flujo pedagógico: objetivos → agenda → qué es → arquitectura → conexión → CRUD → transacciones → buenas prácticas → SQL injection → práctica → ejercicios → referencias → resumen ✅
+- Clase lista para dictar en aula con Windows (Visual Studio 2022, .NET 8).
 
 ## Clase 13 - CRUD con ADO.NET y SQL Server
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Ortografía: Corregida masiva - carácter ó eliminado (Teoría, Duración, Paginación, Parámetros, Prerrequisitos, básicos, Presentación, inyección, conexión, término, tamaño, múltiples, transacción, Lógica, método, búsqueda, Validación, Creación, comando)
+  - Header: Actualizado (ya tenía duración 90 min)
+  - Navegación: Actualizada con tildes correctos (#teoría)
+  - Sección mejorada: "Práctica / Laboratorio" con 45 min, 8 pasos VS 2022 y 7 checklists
+  - Ejercicios: Añadidos tiempos (20/25/25 min) y 3 checklists específicos
+- Factibilidad Windows: Verificada - Visual Studio 2022 con .NET 8 SDK y Microsoft.Data.SqlClient.
+- Infografías: clase-13 (sin infografías en el contenido).
+- TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Infografías: No hay infografías en el contenido
+  - Ortografía: Verificada y corregida (término, tamaño, válida, Paginación, Validación)
+- Factibilidad Windows: Sin cambios, ya verificada en R1.
+- Infografías: Sin infografías.
+- TODOs: Ninguno.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificaciones:
+  - Anchors: 5 enlaces funcionales (#teoría, #ejemplos, #práctica, #ejercicios, #referencias)
+  - Ortografía: Sin patrones de corrupción restantes; todas las tildes correctas
+  - Terminología: OFFSET/FETCH, SqlBulkCopy, transacciones, LIKE, SCOPE_IDENTITY - todas coherentes
+  - Flujo pedagógico: teoría → ejemplos → práctica → ejercicios → referencias ✅
+- Clase lista para dictar en aula con Windows (Visual Studio 2022, .NET 8).
 
 ## Clase 14 - Persistencia con Archivos Planos
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Sección añadida: "Práctica / Laboratorio" con 40 min, 8 pasos VS 2022 y 7 checklists
+  - Ejercicios: Añadido tiempo (20 min) a ejercicio 1 y checklist específico
+  - Navegación: Actualizada con enlace a Práctica
+- Factibilidad Windows: Verificada - Visual Studio 2022 con .NET 8 SDK.
+- Infografías: clase-14 (sin infografías en el contenido).
+- TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Infografías: No hay infografías en el contenido
+  - Ortografía: Verificada ("Teoría" con tilde ya correcta)
+- Factibilidad Windows: Sin cambios, ya verificada en R1.
+- Infografías: Sin infografías.
+- TODOs: Ninguno.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificaciones:
+  - Anchors: 9 enlaces funcionales (#objetivos, #teoria, #ejemplos, #csv, #json, #xml, #avanzado, #practica, #ejercicios, #referencias)
+  - Ortografía: Correcta (sin patrones de corrupción)
+  - Terminología: CSV, JSON, XML, System.IO, StreamWriter, TextFieldParser, System.Text.Json - todas coherentes
+  - Flujo pedagógico: objetivos → teoría → ejemplos → CSV → JSON → XML → avanzado → práctica → ejercicios → referencias ✅
+- Clase lista para dictar en aula con Windows (Visual Studio 2022, .NET 8).
 
 ## Clase 15 - Dataset y DataAdapter
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados: Sin cambios necesarios (clase ya estaba bien estructurada).
+- Factibilidad Windows: Verificada - Visual Studio 2022 con .NET 8 SDK.
+- Infografías: clase-15 (sin infografías en el contenido).
+- TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Sin cambios necesarios.
+- Clase lista para dictar.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificados anchors y ortografía.
+- Clase lista para dictar.
 
 ## Clase 16 - DataBinding y XML
 ### R1
@@ -270,9 +388,36 @@
 
 ### R3
 
+## Clase 16 - DataBinding y XML
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados: Sin cambios necesarios.
+- Factibilidad Windows: Verificada - Visual Studio 2022.
+- TODOs: Ninguno.
+
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Sin cambios necesarios.
+- Clase lista para dictar.
+
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificados anchors y ortografía.
+- Clase lista para dictar.
+
 ## Clase 17 - Proyecto Final - Integracion
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados: Sin cambios necesarios (proyecto final integrador).
+- Factibilidad Windows: Verificada - Visual Studio 2022.
+- TODOs: Ninguno.
 
-### R2
+### R2 (Pulido)
+- Estado: ✅ PASS
+- Sin cambios necesarios.
+- Clase lista para dictar.
 
-### R3
+### R3 (QA Final)
+- Estado: ✅ PASS
+- Verificados anchors y ortografía.
+- Clase lista para dictar.

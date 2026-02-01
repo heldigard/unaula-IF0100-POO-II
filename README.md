@@ -21,17 +21,15 @@ Este curso profundiza en los conceptos de Programación Orientada a Objetos util
 ├── planificacion/
 │   ├── syllabus.md         # Programa del curso
 │   └── cronograma.md       # Calendario académico
-├── clases/                 # Material de clase (16 clases)
-│   ├── unidad-01-conceptos-poo/
-│   ├── unidad-02-tecnicas-desarrollo/
-│   ├── unidad-03-desarrollo-web/
-│   ├── unidad-04-persistencia/
-│   └── unidad-05-datos-desconectados/
+├── clases-html/            # Material de clase en HTML (17 clases)
 ├── laboratorios/           # Guías prácticas
 ├── proyectos/              # Enunciados de proyectos
 ├── recursos/               # Bibliografía y herramientas
 └── assets/                 # Imágenes y recursos visuales
+    └── infografias/        # Diagramas por cada clase
 ```
+
+**🌐 Ver clases online:** [IF0100 GitHub Pages](https://heldigard.github.io/unaula-IF0100-POO-II/)
 
 ---
 
@@ -43,7 +41,7 @@ Este curso profundiza en los conceptos de Programación Orientada a Objetos util
 | 2 | Técnicas de Desarrollo de Software | 5-7 |
 | 3 | Desarrollo Web con ASP.NET Core | 8-11 |
 | 4 | Persistencia con ADO.NET | 12-14 |
-| 5 | Datos Desconectados y Proyecto Final | 15-16 |
+| 5 | Entity Framework y Proyecto Final | 15-17 |
 
 ---
 
@@ -78,22 +76,21 @@ Este curso profundiza en los conceptos de Programación Orientada a Objetos util
 
 ### Para Estudiar
 
+**Opción 1: Ver online (recomendado)**
+- Visita: [IF0100 GitHub Pages](https://heldigard.github.io/unaula-IF0100-POO-II/)
+- Las 17 clases están disponibles en HTML interactivo
+
+**Opción 2: Clonar y ver localmente**
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/IF0100-POO-II.git
+   git clone https://github.com/heldigard/unaula-IF0100-POO-II.git
    ```
 
-2. **Navegar a las clases:**
-   ```bash
-   cd IF0100-POO-II/clases/
-   ```
+2. **Ver las clases:**
+   - Abre directamente los archivos en `clases-html/` en tu navegador
+   - Las clases están en formato HTML con estilos integrados
 
-3. **Ver las presentaciones:**
-   - Las clases están en formato Markdown (Marp)
-   - Se pueden ver con la extensión Marp en VS Code
-   - O exportar a PDF/HTML desde VS Code
-
-4. **Practicar:**
+3. **Practicar:**
    - Seguir las guías de laboratorio
    - Completar los proyectos asignados
    - Revisar los ejemplos de código
@@ -113,7 +110,6 @@ Este curso profundiza en los conceptos de Programación Orientada a Objetos util
 - SQL Server Express
 - VS Code con extensiones:
   - C# Dev Kit
-  - Marp for VS Code
 
 ---
 

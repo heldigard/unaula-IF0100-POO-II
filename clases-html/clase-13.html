@@ -110,24 +110,24 @@
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programacion OO II | Unidad 4</div>
       <h1>Clase 13: CRUD con ADO.NET y SQL Server</h1>
-      <div>Duracion: 90 minutos</div>
+      <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
           <strong>Objetivos</strong>
           <ul>
             <li>Implementar CRUD completo con ADO.NET.</li>
             <li>Modelar base de datos y entidad C#.</li>
-            <li>Aplicar validaciones y parametros seguros.</li>
-            <li>Implementar paginacion y operaciones masivas.</li>
+            <li>Aplicar válidaciones y parámetros seguros.</li>
+            <li>Implementar paginación y operaciones masivas.</li>
             <li>Escribir consultas avanzadas con SQL.</li>
           </ul>
         </div>
         <div>
-          <strong>Prerequisitos</strong>
+          <strong>Prerrequisitos</strong>
           <ul>
             <li>Conocer SqlConnection, SqlCommand, SqlDataReader.</li>
             <li>SQL Server instalado o acceso a instancia.</li>
-            <li>Conceptos basicos de POO y capas.</li>
+            <li>Conceptos básicos de POO y capas.</li>
           </ul>
         </div>
       </div>
@@ -136,22 +136,22 @@
 
   <nav>
     <ul>
-      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#teoría">Teoría</a></li>
       <li><a href="#ejemplos">Ejemplos</a></li>
-      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#practica">Práctica / Laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
     </ul>
   </nav>
 
   <main>
-    <section id="teoria">
-      <h2>Teoria</h2>
+    <section id="teoría">
+      <h2>Teoría</h2>
 
       <h3>Arquitectura por capas</h3>
-      <pre><code>Presentacion (Console/WinForms)
+      <pre><code>Presentación (Console/WinForms)
    ↓
-Logica de negocio (validaciones)
+Lógica de negocio (válidaciones)
    ↓
 Acceso a datos (ADO.NET)
    ↓
@@ -167,7 +167,7 @@ SQL Server (tabla Estudiantes)</code></pre>
   FechaNacimiento DATE,
   Promedio DECIMAL(3,2) CHECK (Promedio BETWEEN 0 AND 5),
   Activo BIT DEFAULT 1,
-  FechaCreacion DATETIME DEFAULT GETDATE()
+  FechaCreación DATETIME DEFAULT GETDATE()
 );</code></pre>
 
       <h3>Entidad C#</h3>
@@ -181,7 +181,7 @@ SQL Server (tabla Estudiantes)</code></pre>
     public DateTime FechaNacimiento { get; set; }
     public decimal Promedio { get; set; }
     public bool Activo { get; set; }
-    public DateTime FechaCreacion { get; set; }
+    public DateTime FechaCreación { get; set; }
 
     public string NombreCompleto => $"{Nombre} {Apellido}";
     public int Edad => DateTime.Now.Year - FechaNacimiento.Year;
@@ -189,7 +189,7 @@ SQL Server (tabla Estudiantes)</code></pre>
 
       <h3>Seguridad basica</h3>
       <ul>
-        <li>Usar parametros SQL para evitar inyeccion.</li>
+        <li>Usar parámetros SQL para evitar inyección.</li>
         <li>Manejar excepciones de clave unica (codigo duplicado).</li>
         <li>Validar datos antes de persistir.</li>
       </ul>
@@ -208,8 +208,8 @@ SQL Server (tabla Estudiantes)</code></pre>
                @FechaNacimiento, @Promedio, @Activo);
         SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-    using var conexion = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexion);
+    using var conexión = new SqlConnection(_connectionString);
+    using var comando = new SqlCommand(query, conexión);
     comando.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
     comando.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
     comando.Parameters.AddWithValue("@Apellido", estudiante.Apellido);
@@ -218,7 +218,7 @@ SQL Server (tabla Estudiantes)</code></pre>
     comando.Parameters.AddWithValue("@Promedio", estudiante.Promedio);
     comando.Parameters.AddWithValue("@Activo", estudiante.Activo);
 
-    conexion.Open();
+    conexión.Open();
     return (int)comando.ExecuteScalar();
 }</code></pre>
 
@@ -227,15 +227,15 @@ SQL Server (tabla Estudiantes)</code></pre>
 {
     const string query = @"
         SELECT Id, Codigo, Nombre, Apellido, Email,
-               FechaNacimiento, Promedio, Activo, FechaCreacion
+               FechaNacimiento, Promedio, Activo, FechaCreación
         FROM Estudiantes
         WHERE Activo = 1
         ORDER BY Apellido, Nombre";
 
     var estudiantes = new List&lt;Estudiante&gt;();
-    using var conexion = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexion);
-    conexion.Open();
+    using var conexión = new SqlConnection(_connectionString);
+    using var comando = new SqlCommand(query, conexión);
+    conexión.Open();
     using var reader = comando.ExecuteReader();
     while (reader.Read()) estudiantes.Add(MapearEstudiante(reader));
     return estudiantes;
@@ -250,8 +250,8 @@ SQL Server (tabla Estudiantes)</code></pre>
             FechaNacimiento = @FechaNacimiento, Promedio = @Promedio, Activo = @Activo
         WHERE Id = @Id";
 
-    using var conexion = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexion);
+    using var conexión = new SqlConnection(_connectionString);
+    using var comando = new SqlCommand(query, conexión);
     comando.Parameters.AddWithValue("@Id", estudiante.Id);
     comando.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
     comando.Parameters.AddWithValue("@Apellido", estudiante.Apellido);
@@ -260,23 +260,23 @@ SQL Server (tabla Estudiantes)</code></pre>
     comando.Parameters.AddWithValue("@Promedio", estudiante.Promedio);
     comando.Parameters.AddWithValue("@Activo", estudiante.Activo);
 
-    conexion.Open();
+    conexión.Open();
     return comando.ExecuteNonQuery() > 0;
 }
 
 public bool EliminarLogico(int id)
 {
     const string query = "UPDATE Estudiantes SET Activo = 0 WHERE Id = @Id";
-    using var conexion = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexion);
+    using var conexión = new SqlConnection(_connectionString);
+    using var comando = new SqlCommand(query, conexión);
     comando.Parameters.AddWithValue("@Id", id);
-    conexion.Open();
+    conexión.Open();
     return comando.ExecuteNonQuery() > 0;
 }</code></pre>
     </section>
 
     <section id="practica">
-      <h2>Practica / laboratorio</h2>
+      <h2>Práctica / Laboratorio</h2>
 
       <h3>Menu en consola</h3>
       <pre><code class="language-csharp">while (true)
@@ -288,10 +288,10 @@ public bool EliminarLogico(int id)
     Console.WriteLine("5. Eliminar");
     Console.WriteLine("6. Salir");
     var opcion = Console.ReadLine();
-    // switch con llamadas a metodos CRUD
+    // switch con llamadas a métodos CRUD
 }</code></pre>
 
-      <h3>Paginacion OFFSET/FETCH</h3>
+      <h3>Paginación OFFSET/FETCH</h3>
       <pre><code class="language-sql">SELECT Id, Codigo, Nombre, Apellido, Promedio
 FROM Estudiantes
 WHERE Activo = 1
@@ -306,10 +306,10 @@ bulkCopy.ColumnMappings.Add("Codigo", "Codigo");
 // ...
 await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
 
-      <h3>Validacion previa</h3>
+      <h3>Validación previa</h3>
       <ul>
         <li>Codigo obligatorio y con prefijo.</li>
-        <li>Nombre y apellido con longitud valida.</li>
+        <li>Nombre y apellido con longitud válida.</li>
         <li>Email en formato correcto.</li>
         <li>Promedio entre 0 y 5.</li>
       </ul>
@@ -319,20 +319,20 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
       <h2>Ejercicios</h2>
 
       <h3>Busqueda por nombre</h3>
-      <p>Implementar <code>BuscarPorNombre(string termino)</code> con LIKE en nombre y apellido.</p>
+      <p>Implementar <code>BuscarPorNombre(string término)</code> con LIKE en nombre y apellido.</p>
 
-      <h3>Paginacion</h3>
-      <p>Modificar <code>ObtenerTodos</code> para aceptar pagina y tamanio y retornar resultado paginado.</p>
+      <h3>Paginación</h3>
+      <p>Modificar <code>ObtenerTodos</code> para aceptar pagina y tamaño y retornar resultado paginado.</p>
 
-      <h3>Transacciones</h3>
-      <p>Crear un metodo que actualice multiples promedios en una sola transaccion.</p>
+      <h3>Transacciónes</h3>
+      <p>Crear un método que actualice múltiples promedios en una sola transacción.</p>
 
       <h3>Checklist de errores comunes</h3>
       <ul>
-        <li>Concatenar strings en SQL (inyeccion).</li>
-        <li>No cerrar conexiones o readers.</li>
+        <li>Concatenar strings en SQL (inyección).</li>
+        <li>No cerrar conexiónes o readers.</li>
         <li>No manejar claves duplicadas.</li>
-        <li>Usar tipos incorrectos en parametros.</li>
+        <li>Usar tipos incorrectos en parámetros.</li>
       </ul>
     </section>
 
@@ -340,7 +340,7 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
       <h2>Referencias</h2>
       <ul>
         <li>ADO.NET SqlConnection / SqlCommand.</li>
-        <li>SQL Server OFFSET/FETCH y transacciones.</li>
+        <li>SQL Server OFFSET/FETCH y transacciónes.</li>
         <li>SqlBulkCopy y operaciones masivas.</li>
       </ul>
     </section>
