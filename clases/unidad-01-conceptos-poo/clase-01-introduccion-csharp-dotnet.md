@@ -66,7 +66,9 @@ style: |
 - ✅ Type-safe
 - ✅ Gran demanda laboral
 
-### 💼 Quién usa C#
+---
+
+## 💼 Quién usa C#
 
 | Empresa | Uso |
 |---------|-----|
@@ -270,6 +272,9 @@ int valor = nums[0]; // ✅ sin cast
 
 ## Estructura Programa C#
 
+<div class="columns">
+<div>
+
 ### 📋 Partes Esenciales
 
 | # | Elemento | Propósito |
@@ -279,6 +284,9 @@ int valor = nums[0]; // ✅ sin cast
 | 3️⃣ | `class` | Contenedor de código |
 | 4️⃣ | `Main` | Punto de entrada |
 | 5️⃣ | Código | Lógica ejecutable |
+
+</div>
+<div>
 
 ### 💻 Estructura Básica
 
@@ -296,6 +304,9 @@ namespace MiApp
     }
 }
 ```
+
+</div>
+</div>
 
 ---
 
@@ -319,7 +330,7 @@ System                    ← Raíz
 
 ---
 
-## Value Types vs Reference Types
+## Value Types vs Reference Types (1/2)
 
 ### 📦 VALUE TYPES (Stack)
 
@@ -338,6 +349,10 @@ edad2 = 30;
 Console.WriteLine(edad);   // 25 (independiente)
 Console.WriteLine(edad2);  // 30
 ```
+
+---
+
+## Value Types vs Reference Types (2/2)
 
 ### 🔗 REFERENCE TYPES (Heap)
 
@@ -359,7 +374,7 @@ Console.WriteLine(nombre2);  // "Maria"
 
 ---
 
-## Stack vs Heap: Visualización
+## Stack vs Heap: Visualización (1/2) - STACK
 
 ```
 ┌─────────────────────────────────────────┐
@@ -371,7 +386,18 @@ Console.WriteLine(nombre2);  // "Maria"
 │      ↓                              ↑   │
 │   Valores independientes              │   │
 └─────────────────────────────────────────┘
+```
 
+**Características:**
+- Almacena valores directos
+- Cada variable es independiente
+- Asignación = copia del valor
+
+---
+
+## Stack vs Heap: Visualización (2/2) - HEAP
+
+```
 ┌─────────────────────────────────────────┐
 │  🔗 HEAP (Reference Types)              │
 │  ┌──────────┐        ┌──────────┐      │
@@ -386,9 +412,14 @@ Console.WriteLine(nombre2);  // "Maria"
 └─────────────────────────────────────────┘
 ```
 
+**Características:**
+- Almacena referencias (direcciones)
+- Múltiples variables pueden apuntar al mismo objeto
+- Asignación = copia de la referencia
+
 ---
 
-## Nullable Types
+## Nullable Types (1/2)
 
 ### 🤔 ¿Por qué?
 
@@ -410,6 +441,10 @@ bool? activo = null;        // Nullable<bool>
 DateTime? fecha = null;     // Nullable<DateTime>
 ```
 
+---
+
+## Nullable Types (2/2)
+
 ### 🛠️ Operadores
 
 | Operador | Sintaxis | Descripción |
@@ -428,9 +463,9 @@ int? len = s?.Length;      // null (no crash)
 
 ---
 
-## Strings en C#
+## Strings en C# - Creación
 
-### 📝 Creación
+### 📝 Formas de Crear Strings
 
 ```csharp
 // 1. Interpolación ⭐ RECOMENDADA
@@ -452,7 +487,11 @@ string texto = """
 """;
 ```
 
-### 🛠️ Métodos Útiles
+---
+
+## Strings en C# - Métodos Útiles
+
+### 🛠️ Métodos de Manipulación
 
 | Método | Ejemplo | Resultado |
 |--------|---------|-----------|
@@ -468,7 +507,7 @@ string texto = """
 
 ---
 
-## C# 12: Primary Constructors
+## C# 12: Primary Constructors (1/2)
 
 ### ❌ ANTES (Verboso - 16 líneas)
 
@@ -488,6 +527,10 @@ public class Persona
     public int Edad => _edad;
 }
 ```
+
+---
+
+## C# 12: Primary Constructors (2/2)
 
 ### ✅ AHORA (Conciso - 8 líneas)
 
@@ -510,7 +553,7 @@ p.Saludar();  // "Hola Ana"
 
 ---
 
-## C# 12: Collection Expressions
+## C# 12: Collection Expressions (1/2)
 
 ### ❌ ANTES (Sintaxis verbosa)
 
@@ -529,6 +572,10 @@ var dict = new Dictionary<string,int>
 };
 ```
 
+---
+
+## C# 12: Collection Expressions (2/2)
+
 ### ✅ AHORA (Sintaxis concisa con `[ ]`)
 
 ```csharp
@@ -546,7 +593,7 @@ int[] all = [..pares, ..impares];  // [2,4,6,1,3,5]
 
 ---
 
-## Pattern Matching (C# 8+)
+## Pattern Matching (C# 8+) - Rangos
 
 ### 🔢 Rangos con `switch`
 
@@ -568,6 +615,10 @@ string nota = promedio switch
 };
 ```
 
+---
+
+## Pattern Matching - Por Tipo
+
 ### 🎯 Por tipo
 
 ```csharp
@@ -580,6 +631,10 @@ string desc = obj switch
     _ => "Otro tipo"
 };
 ```
+
+---
+
+## Pattern Matching - List Patterns
 
 ### 📋 List Patterns (C# 11+)
 
@@ -596,7 +651,7 @@ string patron = nums switch
 
 ---
 
-## Ejercicio: Calculadora de Área
+## Ejercicio: Calculadora de Área (1/2)
 
 ### 🎯 Objetivo
 
@@ -611,6 +666,10 @@ Crear app de consola que calcule área de rectángulo
 | 3 | Parseo de strings |
 | 4 | Interpolación de strings |
 | 5 | Estructura básica C# |
+
+---
+
+## Ejercicio: Calculadora de Área (2/2)
 
 ### 💻 Código base
 
@@ -643,7 +702,7 @@ namespace CalculadoraArea
 
 ---
 
-## Ejercicio: Sistema de Calificaciones
+## Ejercicio: Sistema de Calificaciones (1/2)
 
 ### 🎯 Desafío
 
@@ -671,6 +730,10 @@ string estado = promedio >= 3.0 ?
     "APROBADO" : "REPROBADO";
 ```
 
+---
+
+## Ejercicio: Sistema de Calificaciones (2/2)
+
 ### 📊 Salida Esperada
 
 ```
@@ -691,7 +754,7 @@ Estado: ✅ APROBADO
 
 ---
 
-## Validación de Entrada
+## Validación de Entrada (1/2)
 
 ### 🎯 ¿Por qué validar?
 
@@ -706,6 +769,10 @@ Estado: ✅ APROBADO
 | `TryParse()` | Convierte sin lanzar excepción |
 | `while(true)` | Repite hasta obtener valor válido |
 | `out nota` | Parámetro de salida |
+
+---
+
+## Validación de Entrada (2/2)
 
 ### 📝 Método de Validación
 
@@ -745,48 +812,63 @@ double n3 = PedirNota("Nota 3");
 
 ## Atajos Visual Studio
 
+<div class="columns">
+<div>
+
 ### 🎯 Debugging
 
 | Atajo | Acción |
 |-------|--------|
 | **F5** | Iniciar debug |
 | **F9** | Toggle breakpoint |
-| **F10** | Step Over (siguiente línea) |
-| **F11** | Step Into (entrar a método) |
-| **Shift+F11** | Step Out (salir de método) |
+| **F10** | Step Over |
+| **F11** | Step Into |
+| **Shift+F11** | Step Out |
 | **Ctrl+.** | Quick Actions |
+
+</div>
+<div>
 
 ### 🛠️ Edición
 
 | Atajo | Acción |
 |-------|--------|
-| **Ctrl+K,C** | Comentar selección |
-| **Ctrl+K,U** | Descomentar selección |
+| **Ctrl+K,C** | Comentar |
+| **Ctrl+K,U** | Descomentar |
 | **Ctrl+Space** | IntelliSense |
 | **F12** | Ir a definición |
-| **Ctrl+R,R** | Renombrar símbolo |
+| **Ctrl+R,R** | Renombrar |
 | **Ctrl+-** | Navegar atrás |
+
+</div>
+</div>
 
 ---
 
 ## C# vs Otros Lenguajes (2026)
 
-### 🏆 Rendimiento Comparativo
+<div class="columns">
+<div>
+
+### 🏆 Rendimiento
 
 | Operación | C# | Java | Python |
 |-----------|-----|------|--------|
-| Loop 1M iteraciones | 15ms | 18ms | 980ms |
+| Loop 1M | 15ms | 18ms | 980ms |
 | Parse JSON | 90ms | 100ms | 150ms |
-| Uso de Memoria | 25MB | 40MB | 15MB |
+| Memoria | 25MB | 40MB | 15MB |
 
-### 🌟 Casos de Uso por Lenguaje
+### 🌟 Casos de Uso
 
 | Lenguaje | Mejor para |
 |----------|-----------|
-| **C#** | Empresas, Windows, Azure, Gaming |
-| **Java** | Legacy, Android, Grandes empresas |
-| **Python** | Data Science, IA, Scripting |
-| **JavaScript** | Frontend, Node.js, Full-stack |
+| **C#** | Empresas, Azure, Gaming |
+| **Java** | Android, Grandes empresas |
+| **Python** | Data Science, IA |
+| **JS** | Frontend, Full-stack |
+
+</div>
+<div>
 
 ### 💼 Mercado Laboral Colombia 2026
 
@@ -796,6 +878,9 @@ double n3 = PedirNota("Nota 3");
 | Java | ⭐⭐⭐⭐⭐ | $3M - $5M COP |
 | Python | ⭐⭐⭐⭐⭐ | $3.5M - $6M COP |
 | JavaScript | ⭐⭐⭐⭐⭐ | $3M - $5M COP |
+
+</div>
+</div>
 
 ---
 
@@ -830,7 +915,7 @@ double n3 = PedirNota("Nota 3");
 
 ---
 
-## Convenciones de Código
+## Convenciones de Código (1/2)
 
 ### ✅ Nomenclatura
 
@@ -849,7 +934,11 @@ double n3 = PedirNota("Nota 3");
 2. **Sin abreviaturas:** `customer` mejor que `cust`
 3. **Líneas ≤ 100 caracteres**
 4. **Un archivo por clase**
-5. **Espacios consistentes:** 4 espacios para indentación
+5. **Espacios consistentes:** 4 espacios
+
+---
+
+## Convenciones de Código (2/2)
 
 ### 💻 Ejemplo Correcto
 
@@ -942,7 +1031,7 @@ dotnet restore
 
 ---
 
-## Tarea para Casa
+## Tarea para Casa (1/2)
 
 ### 🖥️ Instalación Obligatoria
 
@@ -962,6 +1051,10 @@ dotnet restore
 - Calcule el promedio
 - Muestre estado: APROBADO (≥3.0) o REPROBADO
 - Tenga validación de datos
+
+---
+
+## Tarea para Casa (2/2)
 
 ### 📋 Checklist de Entrega
 
