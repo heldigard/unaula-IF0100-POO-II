@@ -647,7 +647,7 @@ SalarioBase (2000)
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
         =&gt; Math.PI * Radio * Radio;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerim</span>()</span>
         =&gt; <span class="hljs-number">2</span> * Math.PI * Radio;
 }
 </code></pre>
@@ -660,7 +660,7 @@ SalarioBase (2000)
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
         =&gt; Base * Altura;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerim</span>()</span>
         =&gt; <span class="hljs-number">2</span> * (Base + Altura);
 }
 </code></pre>
@@ -814,9 +814,8 @@ r.SetAlto(<span class="hljs-number">10</span>);
 <div>
 <h3 id="%F0%9F%8E%AF-objetivo"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Objetivo</h3>
 <p>Sistema polimórfico de figuras geométricas.</p>
-<h3 id="%F0%9F%93%8B-implementaci%C3%B3n"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Implementación</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// CLASE ABSTRACTA</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
+<h3 id="%F0%9F%93%8B-clase-abstracta"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Abstracta</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
 {
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Color { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
@@ -826,12 +825,9 @@ r.SetAlto(<span class="hljs-number">10</span>);
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MostrarInfo</span>()</span>
     {
-        Console.WriteLine(
-            <span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> <span class="hljs-subst">{Nombre}</span> (<span class="hljs-subst">{Color}</span>)&quot;</span>);
-        Console.WriteLine(
-            <span class="hljs-string">$&quot;   Área: <span class="hljs-subst">{CalcArea():F2}</span> cm²&quot;</span>);
-        Console.WriteLine(
-            <span class="hljs-string">$&quot;   Perím: <span class="hljs-subst">{CalcPerim():F2}</span> cm&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> <span class="hljs-subst">{Nombre}</span> (<span class="hljs-subst">{Color}</span>)&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;   Área: <span class="hljs-subst">{CalcArea():F2}</span> cm²&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;   Perím: <span class="hljs-subst">{CalcPerim():F2}</span> cm&quot;</span>);
     }
 }
 </code></pre>
@@ -850,6 +846,17 @@ r.SetAlto(<span class="hljs-number">10</span>);
 }
 Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: <span class="hljs-subst">{total:F2}</span> cm²&quot;</span>);
 </code></pre>
+<h3 id="%F0%9F%8E%A8-salida-esperada"><img class="emoji" draggable="false" alt="🎨" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3a8.svg" data-marp-twemoji=""/> Salida Esperada</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> C1 (Rojo)
+   Área: 78.54 cm²
+   Perím: 31.42 cm
+
+<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> R1 (Azul)
+   Área: 24.00 cm²
+   Perím: 20.00 cm
+
+<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: 102.54 cm²
+</code></pre>
 </div>
 <div>
 <h3 id="%F0%9F%93%8A-clases-concretas"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Clases Concretas</h3>
@@ -860,7 +867,7 @@ Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggabl
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
         =&gt; Math.PI * Radio * Radio;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerim</span>()</span>
         =&gt; <span class="hljs-number">2</span> * Math.PI * Radio;
 }
 
@@ -872,10 +879,17 @@ Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggabl
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
         =&gt; Base * Altura;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerim</span>()</span>
         =&gt; <span class="hljs-number">2</span> * (Base + Altura);
 }
 </code></pre>
+<h3 id="%E2%9C%85-ventajas-del-sistema"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas del Sistema</h3>
+<ul>
+<li>Código polimórfico</li>
+<li>Fácil agregar figuras</li>
+<li>Cálculo uniforme</li>
+<li>Extensible</li>
+</ul>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
