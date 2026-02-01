@@ -46,6 +46,7 @@
 | IF0100 | clase-09 | R2 | Supervisor-03 | DONE | 2026-02-01 | 2026-02-01 | 45min | Completado R2 - caption mejorado, ortografía corregida (código, Sistema, breakpoints, Corazón, diseño) |
 | IF0100 | clase-09 | R3 | Supervisor-03 | DONE | 2026-02-01 | 2026-02-01 | 45min | QA final aprobado - clase lista para dictar |
 | IF0100 | clase-10 | R1 | Supervisor-03 | DONE | 2026-02-01 | 2026-02-01 | 45min | Completado R1 - ortografía corregida, práctica mejorada con pasos VS 2022, tiempos/checklists agregados |
+| IF0100 | clase-10 | R2 | Supervisor-03 | IN_PROGRESS | 2026-02-01 | 2026-02-01 | 45min | Mejorando caption de infografía, verificando ortografía restante |
 
 ## Backlog por prioridad
 ### P0 (mañana)
