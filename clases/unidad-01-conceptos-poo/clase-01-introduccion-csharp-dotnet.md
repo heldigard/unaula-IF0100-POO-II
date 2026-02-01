@@ -507,9 +507,12 @@ string texto = """
 
 ---
 
-## C# 12: Primary Constructors (1/2)
+## C# 12: Primary Constructors
 
-### ❌ ANTES (Verboso - 16 líneas)
+<div class="columns">
+<div>
+
+### ❌ ANTES (Verboso)
 
 ```csharp
 public class Persona
@@ -528,11 +531,10 @@ public class Persona
 }
 ```
 
----
+</div>
+<div>
 
-## C# 12: Primary Constructors (2/2)
-
-### ✅ AHORA (Conciso - 8 líneas)
+### ✅ AHORA (Conciso)
 
 ```csharp
 public class Persona(string nombre, int edad)
@@ -549,13 +551,19 @@ var p = new Persona("Ana", 25);
 p.Saludar();  // "Hola Ana"
 ```
 
-**50% menos código** • Parámetros directos • Más legible
+**50% menos código** • Más legible
+
+</div>
+</div>
 
 ---
 
-## C# 12: Collection Expressions (1/2)
+## C# 12: Collection Expressions
 
-### ❌ ANTES (Sintaxis verbosa)
+<div class="columns">
+<div>
+
+### ❌ ANTES (Verboso)
 
 ```csharp
 // Array
@@ -572,11 +580,10 @@ var dict = new Dictionary<string,int>
 };
 ```
 
----
+</div>
+<div>
 
-## C# 12: Collection Expressions (2/2)
-
-### ✅ AHORA (Sintaxis concisa con `[ ]`)
+### ✅ AHORA (Sintaxis `[ ]`)
 
 ```csharp
 // Array
@@ -585,15 +592,21 @@ int[] nums = [1, 2, 3];
 // List
 List<string> names = ["Ana", "Juan"];
 
-// Spread operator (combinar colecciones)
+// Spread operator
 int[] pares = [2, 4, 6];
 int[] impares = [1, 3, 5];
-int[] all = [..pares, ..impares];  // [2,4,6,1,3,5]
+int[] all = [..pares, ..impares];
 ```
+
+</div>
+</div>
 
 ---
 
-## Pattern Matching (C# 8+) - Rangos
+## Pattern Matching (C# 8+)
+
+<div class="columns">
+<div>
 
 ### 🔢 Rangos con `switch`
 
@@ -608,18 +621,14 @@ string categoria = edad switch
 
 string nota = promedio switch
 {
-    >= 4.5 => "Excelente ⭐",
-    >= 3.5 => "Bueno 👍",
+    >= 4.5 => "Excelente",
+    >= 3.5 => "Bueno",
     >= 3.0 => "Aceptable",
-    _ => "Reprobado ❌"
+    _ => "Reprobado"
 };
 ```
 
----
-
-## Pattern Matching - Por Tipo
-
-### 🎯 Por tipo
+### 🎯 Por Tipo
 
 ```csharp
 string desc = obj switch
@@ -632,9 +641,8 @@ string desc = obj switch
 };
 ```
 
----
-
-## Pattern Matching - List Patterns
+</div>
+<div>
 
 ### 📋 List Patterns (C# 11+)
 
@@ -648,6 +656,14 @@ string patron = nums switch
     _ => "Otro patrón"
 };
 ```
+
+**Beneficios:**
+- ✅ Código más limpio
+- ✅ Menos `if-else` anidados
+- ✅ Expresivo y legible
+
+</div>
+</div>
 
 ---
 
@@ -754,25 +770,27 @@ Estado: ✅ APROBADO
 
 ---
 
-## Validación de Entrada (1/2)
+## Validación de Entrada
+
+<div class="columns">
+<div>
 
 ### 🎯 ¿Por qué validar?
 
-- ❌ El usuario puede ingresar letras en lugar de números
-- ❌ Notas fuera del rango permitido
-- ❌ Crashes inesperados que afectan UX
+- ❌ Letras en lugar de números
+- ❌ Notas fuera de rango
+- ❌ Crashes inesperados
 
 ### 🔑 Conceptos Clave
 
 | Método | Propósito |
 |--------|-----------|
-| `TryParse()` | Convierte sin lanzar excepción |
-| `while(true)` | Repite hasta obtener valor válido |
-| `out nota` | Parámetro de salida |
+| `TryParse()` | Sin excepciones |
+| `while(true)` | Repite hasta válido |
+| `out nota` | Parámetro salida |
 
----
-
-## Validación de Entrada (2/2)
+</div>
+<div>
 
 ### 📝 Método de Validación
 
@@ -791,22 +809,16 @@ static double PedirNota(string etiqueta)
         }
         else
         {
-            Console.WriteLine("⚠️ No es un número válido");
+            Console.WriteLine("⚠️ No válido");
         }
     }
 }
-
-// Uso
-double n1 = PedirNota("Nota 1");
-double n2 = PedirNota("Nota 2");
-double n3 = PedirNota("Nota 3");
 ```
 
-### ✅ Ventajas
+**✅ Ventajas:** Previene crashes • Mejora UX • Código robusto
 
-- Previene crashes del programa
-- Mejora experiencia de usuario
-- Código más robusto y profesional
+</div>
+</div>
 
 ---
 
@@ -915,30 +927,30 @@ double n3 = PedirNota("Nota 3");
 
 ---
 
-## Convenciones de Código (1/2)
+## Convenciones de Código
+
+<div class="columns">
+<div>
 
 ### ✅ Nomenclatura
 
-| Elemento | Estilo | Ejemplo | ❌ Incorrecto |
-|----------|--------|---------|---------------|
-| Clases | PascalCase | `StudentManager` | `studentManager` |
-| Métodos | PascalCase | `GetStudent()` | `getStudent()` |
-| Propiedades | PascalCase | `Name { get; }` | `name { get; }` |
-| Campos privados | _camelCase | `_count` | `count` |
-| Variables locales | camelCase | `studentName` | `StudentName` |
-| Constantes | UPPER_SNAKE | `MAX_SIZE` | `maxSize` |
+| Elemento | Estilo | Ejemplo |
+|----------|--------|---------|
+| Clases | PascalCase | `StudentManager` |
+| Métodos | PascalCase | `GetStudent()` |
+| Propiedades | PascalCase | `Name { get; }` |
+| Campos privados | _camelCase | `_count` |
+| Variables | camelCase | `studentName` |
+| Constantes | UPPER_SNAKE | `MAX_SIZE` |
 
 ### 📜 Reglas de Oro
 
-1. **Nombres descriptivos:** `CalculateTotal()` mejor que `Calc()`
-2. **Sin abreviaturas:** `customer` mejor que `cust`
-3. **Líneas ≤ 100 caracteres**
-4. **Un archivo por clase**
-5. **Espacios consistentes:** 4 espacios
+- Nombres descriptivos (`CalculateTotal` > `Calc`)
+- Sin abreviaturas (`customer` > `cust`)
+- 4 espacios indentación
 
----
-
-## Convenciones de Código (2/2)
+</div>
+<div>
 
 ### 💻 Ejemplo Correcto
 
@@ -959,6 +971,9 @@ public class StudentManager
     }
 }
 ```
+
+</div>
+</div>
 
 ---
 
@@ -1031,73 +1046,82 @@ dotnet restore
 
 ---
 
-## Tarea para Casa (1/2)
+## Tarea para Casa
+
+<div class="columns">
+<div>
 
 ### 🖥️ Instalación Obligatoria
 
 1. Descargar **Visual Studio Community 2022**
 2. Seleccionar Workloads:
    - ☑️ ASP.NET y desarrollo web
-   - ☑️ Almacenamiento y procesamiento de datos
-3. Incluir componentes:
+   - ☑️ Almacenamiento de datos
+3. Incluir:
    - ☑️ .NET 8 SDK
    - ☑️ Git para Windows
 
 ### 💻 Proyecto: Calculadora de Promedios
 
-**Descripción:** Crear aplicación de consola que:
-- Solicite nombre del estudiante
-- Solicite 3 notas (validar rango 0.0 - 5.0)
-- Calcule el promedio
-- Muestre estado: APROBADO (≥3.0) o REPROBADO
-- Tenga validación de datos
+Crear aplicación de consola que:
+- Solicite nombre y 3 notas
+- Valide rango (0.0 - 5.0)
+- Calcule promedio
+- Muestre APROBADO/REPROBADO
 
----
-
-## Tarea para Casa (2/2)
+</div>
+<div>
 
 ### 📋 Checklist de Entrega
 
 - [ ] Código funcional sin errores
-- [ ] Validación de datos de entrada
+- [ ] Validación de datos
 - [ ] Formato de salida claro
 - [ ] README.md con instrucciones
 - [ ] Repositorio público en GitHub
+
+</div>
+</div>
 
 ---
 
 ## 🎓 Próxima Clase: Clases y Objetos
 
+<div class="columns">
+<div>
+
 ### 📚 Temas a ver
 
-- Programación Orientada a Objetos en C#
-- Definición de clases y creación de objetos
+- Programación Orientada a Objetos
+- Definición de clases y objetos
 - Atributos y métodos
-- Encapsulamiento (private, public)
+- Encapsulamiento
 - Constructores y propiedades
 
-### 📝 Requisitos para la próxima clase
+### 📝 Requisitos
 
-- ✅ VS 2022 instalado y funcionando
+- ✅ VS 2022 instalado
 - ✅ Tarea completada
 - ✅ Cuenta GitHub creada
-- ✅ Repositorio configurado
 
-### 🔗 Conceptos Clave a Recordar
+</div>
+<div>
+
+### 🔗 Conceptos Clave
 
 | Concepto | Definición |
 |----------|------------|
-| **Clase** | Plantilla/Modelo de un objeto |
-| **Objeto** | Instancia concreta de una clase |
-| **Atributo** | Características/Propiedades |
-| **Método** | Comportamientos/Acciones |
+| **Clase** | Plantilla de objeto |
+| **Objeto** | Instancia de clase |
+| **Atributo** | Características |
+| **Método** | Comportamientos |
 
 ### 💡 Preparación
 
-Repasar conceptos básicos de POO antes de la próxima clase:
-- ¿Qué es una clase?
-- ¿Qué es un objeto?
-- ¿Qué es el encapsulamiento?
+Repasar: ¿Qué es una clase? ¿Qué es un objeto? ¿Qué es encapsulamiento?
+
+</div>
+</div>
 
 ---
 
