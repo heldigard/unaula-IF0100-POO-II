@@ -490,7 +490,6 @@ Console.WriteLine(estudiante.Nombre);  // get
 ---
 ### Diferentes configuraciones
 
-
 ```csharp
 public class Producto
 {
@@ -515,10 +514,6 @@ public class Producto
         set { clave = value; }
     }
     
----
-### Diferentes configuraciones
-
-
     // 4. Propiedad AUTOIMPLEMENTADA (sintaxis corta)
     public double Precio { get; set; }
     

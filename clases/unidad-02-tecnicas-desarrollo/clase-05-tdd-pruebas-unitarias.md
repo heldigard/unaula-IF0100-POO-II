@@ -103,10 +103,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### El problema del desarrollo tradicional
-
-
----
 
 ## Costo de los Errores
 

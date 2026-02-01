@@ -203,7 +203,6 @@ Living Documentation
 ---
 ### Origen y evolución
 
-
 **Dan North:** "BDD is using examples at multiple levels to create a shared understanding and surface uncertainty to deliver software that matters."
 
 ---

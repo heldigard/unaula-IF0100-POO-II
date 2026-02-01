@@ -339,9 +339,7 @@ public class Cliente
 ```
 ---
 ## Value Object en C#
----
-## Value Object en C#
----
+
 ### Implementación inmutable
 
 ```csharp
@@ -369,10 +367,6 @@ public class Dinero : IEquatable<Dinero>
         return new Dinero(Monto + otro.Monto, Moneda);
     }
     
----
-### Implementación inmutable
-
-
     public Dinero AplicarDescuento(decimal porcentaje)
     {
         var descuento = Monto * (porcentaje / 100);
@@ -400,7 +394,7 @@ var descuento = precio.AplicarDescuento(10);  // 45000 COP
 ```
 ---
 ## Value Object: Dirección
----
+
 ### Otro ejemplo clásico
 
 ```csharp

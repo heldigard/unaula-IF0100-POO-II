@@ -184,7 +184,7 @@ public class EstudianteViewModel
 ```
 ---
 ## Validación Personalizada
----
+
 ### Crear atributo custom
 
 ```csharp
