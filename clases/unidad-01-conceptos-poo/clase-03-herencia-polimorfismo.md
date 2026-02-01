@@ -651,44 +651,71 @@ public abstract class Figura
 
 ## Implementando Clases Abstractas
 
+<div class="two-col">
+
+<div>
+
+### 📊 CÍRCULO
+
 ```csharp
-// CÍRCULO
 public class Circulo : Figura
 {
     public double Radio { get; set; }
 
-    public override double CalcularArea()
-    {
-        return Math.PI * Radio * Radio;
-    }
+    public override double CalcArea()
+        => Math.PI * Radio * Radio;
 
-    public override double CalcularPerimetro()
-    {
-        return 2 * Math.PI * Radio;
-    }
+    public override double CalcPerimetro()
+        => 2 * Math.PI * Radio;
 }
+```
 
-// RECTÁNGULO
+### 📐 RECTÁNGULO
+
+```csharp
 public class Rectangulo : Figura
 {
     public double Base { get; set; }
     public double Altura { get; set; }
 
-    public override double CalcularArea()
-    {
-        return Base * Altura;
-    }
+    public override double CalcArea()
+        => Base * Altura;
 
-    public override double CalcularPerimetro()
-    {
-        return 2 * (Base + Altura);
-    }
+    public override double CalcPerimetro()
+        => 2 * (Base + Altura);
 }
-
-// Uso
-Figura f = new Circulo { Radio = 5 };  // ✅
-// Figura f = new Figura();  // ❌ Error: abstracta
 ```
+
+</div>
+
+<div>
+
+### 💻 Uso
+
+```csharp
+// ✅ Ref. base, objeto concreto
+Figura f1 = new Circulo { Radio = 5 };
+Figura f2 = new Rectangulo { Base=4, Altura=6 };
+
+f1.MostrarInfo();  // Área: 78.54 cm²
+f2.MostrarInfo();  // Área: 24.00 cm²
+
+// ❌ Error: no se puede instanciar
+// Figura f = new Figura();
+```
+
+### 🎯 Reglas
+
+| Aspecto | Regla |
+|---------|-------|
+| Instanciar | ❌ NO |
+| Heredar | ✅ Sí |
+| Métodos abstractos | DEBEN implementarse |
+| Métodos concretos | Se heredan |
+
+</div>
+
+</div>
 
 ---
 
