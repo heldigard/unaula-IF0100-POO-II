@@ -78,9 +78,43 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## 1. TDD vs BDD
 
-### Dos enfoques complementarios
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
-![TDD vs BDD](../../assets/infografias/clase-06-tdd-vs-bdd.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+![TDD vs BDD](../../assets/infografias/clase-06-tdd-vs-bdd.png)
+
+</div>
+<div style="flex: 1;">
+
+**🔍 TDD vs BDD:**
+
+**TDD (Test Driven)**
+- Enfoque: TÉCNICO
+- Audiencia: Desarrolladores
+- Lenguaje: Código (C#)
+- Prueba: Unidades pequeñas
+- Pregunta: "¿Funciona?"
+```csharp
+[Fact]
+public void Sumar_RetornaResultado() {
+    Assert.Equal(5, calc.Sumar(2,3));
+}
+```
+
+**BDD (Behavior Driven)**
+- Enfoque: NEGOCIO
+- Audiencia: Todos (devs, QA, clientes)
+- Lenguaje: Natural (español/inglés)
+- Prueba: Comportamiento del sistema
+- Pregunta: "¿Hace lo que el usuario espera?"
+```gherkin
+Dado que ingreso 2 y 3
+Cuando solicito la suma
+Entonces el resultado debe ser 5
+```
+
+</div>
+</div>
 
 ---
 ```
@@ -158,15 +192,33 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## Los Tres Amigos
 
-### Colaboración clave en BDD
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
-![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+![The Three Amigos](../../assets/infografias/clase-06-three-amigos.png)
+
+</div>
+<div style="flex: 1;">
+
+**👥 The Three Amigos:**
 
 | Rol | Perspectiva | Pregunta clave |
 | ----- | ------------- | ---------------- |
 | **Negocio (PO)** | Valor | ¿Qué problema resolvemos? |
 | **Desarrollador** | Solución | ¿Cómo lo construimos? |
 | **Tester (QA)** | Calidad | ¿Qué podría fallar? |
+
+**💡 Valor de la Colaboración:**
+- Comprensión compartida del requisito
+- Ejemplos concretos desde el inicio
+- Incertidumbre resuelta antes de codificar
+- Menos retrabajo en desarrollo
+
+**🎯 Práctica:**
+Reunión de "Three Amigos" antes de cada historia para definir escenarios BDD juntos.
+
+</div>
+</div>
 
 ---
 ### Origen y evolución
@@ -259,7 +311,42 @@ El triángulo de los tres amigos facilita la comunicación entre QA, desarrollo 
 
 ## Formato Given-When-Then Visual
 
-![Given When Then](../../assets/infografias/clase-06-bdd-given-when-then.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
+
+![Given When Then](../../assets/infografias/clase-06-bdd-given-when-then.png)
+
+</div>
+<div style="flex: 1;">
+
+**📝 Estructura Gherkin:**
+
+**GIVEN (Dado/Antecedentes)**
+- Precondiciones del escenario
+- Estado inicial del sistema
+- Contexto necesario
+```gherkin
+Dado que tengo una cuenta con saldo de $1000
+Y mi tarjeta está activa
+```
+
+**WHEN (Cuando)**
+- Acción principal del usuario
+- Evento que dispara el comportamiento
+```gherkin
+Cuando intento retirar $200
+```
+
+**THEN (Entonces)**
+- Resultado esperado
+- Verificación del comportamiento
+```gherkin
+Entonces el cajero debe entregarme $200
+Y el saldo de mi cuenta debe ser $800
+```
+
+</div>
+</div>
 
 ---
 # language: es
@@ -892,21 +979,54 @@ Escenario: Autenticación fallida con credenciales inválidas
 
 ---
 
-## Resumen de la Clase
+## Resumen y Próxima Clase
 
-| Concepto | Descripción |
-| ---------- | ------------- |
-| **BDD** | Desarrollo guiado por comportamiento de negocio |
-| **Gherkin** | Lenguaje estructurado para especificaciones |
-| **Given-When-Then** | Dado-Cuando-Entonces (formato escenarios) |
-| **SpecFlow** | Implementación BDD para .NET |
-| **Feature** | Archivo .feature con escenarios |
-| **Step Definitions** | C# que implementa pasos Gherkin |
-| **Living Documentation** | Documentación auto-actualizable |
+<div style="display: flex; gap: 30px;">
+<div style="flex: 1;">
+
+**📚 Resumen de la Clase:**
+- **BDD:** Comportamiento de negocio
+- **Gherkin:** Lenguaje de especificaciones
+- **Given-When-Then:** Dado-Cuando-Entonces
+- **SpecFlow:** Implementación BDD para .NET
+- **Feature:** Archivo .feature
+- **Step Definitions:** C# que implementa pasos
+- **Living Documentation:** Docs auto-actualizables
+
+**🎯 Conceptos Clave:**
+- Lenguaje ubicuo (compartido)
+- Three Amigos (Dev + QA + Negocio)
+- Escenarios independientes y legibles
+- Tags para organización (@smoke, @critical)
+
+</div>
+<div style="flex: 1;">
+
+**🚀 Próxima Clase: DDD**
+- Dominio vs Infraestructura
+- Entities y Value Objects
+- Aggregates y Aggregate Roots
+- Repositories
+- Services de Dominio
+- Ubiquitous Language
+- Bounded Contexts
+
+**💡 TDD + BDD Juntos:**
+- BDD nivel macro (comportamiento)
+- TDD nivel micro (implementación)
+- Complementarios, no excluyentes
+- Recomendado usar ambos
+
+**📖 Recursos:**
+- SpecFlow.org - Documentación oficial
+- Cucumber.io - Guía Gherkin
+- "BDD in Action" - John Ferguson Smart
+
+</div>
+</div>
 
 ---
-
-## Ejercicio Práctico
+### ¿Cuándo usar cada metodología?
 
 ### Taller: BDD para Biblioteca
 
@@ -1075,24 +1195,6 @@ Comparación entre TDD y BDD para elegir la metodología adecuada.
 │  • TDD para implementar detalles internos                  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Próxima Clase
-
-### Domain Driven Design (DDD)
-
-```
-CLASE 7: DOMAIN DRIVEN DESIGN
-
-• Dominio vs Infraestructura
-• Entities y Value Objects
-• Aggregates y Aggregate Roots
-• Repositories
-• Services de Dominio
-• Ubiquitous Language
-• Bounded Contexts
 ```
 
 ---

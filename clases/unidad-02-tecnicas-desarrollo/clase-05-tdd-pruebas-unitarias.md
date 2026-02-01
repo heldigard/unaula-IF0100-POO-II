@@ -172,19 +172,79 @@ Los estudios de IBM/NIST muestran que corregir un error en producción cuesta **
 
 ## Tipos de Pruebas
 
-### Pirámide de pruebas
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
-![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png)
+
+</div>
+<div style="flex: 1;">
+
+**🔺 Pirámide de Pruebas:**
+
+**Unit Tests (70%) - Base**
+- Prueban clases/métodos individuales
+- Rápidas (milisegundos)
+- Aisladas (sin BD, red)
+- Escribibles con TDD
+
+**Integration Tests (20%)**
+- Prueban interacción entre componentes
+- Más lentas (requieren BD/API)
+- Verifican integración real
+
+**E2E Tests (10%) - Cima**
+- Prueban flujo completo del usuario
+- Lentas y frágiles
+- Solo flujos críticos
+
+**💡 Estrategia Óptima:**
+- Muchas unit tests rápidas
+- Pocos E2E lentos
+- Cobertura: 80% unit, 20% integración/E2E
+
+</div>
+</div>
 
 ---
 
 ## 2. Fundamentos de TDD
 
-### Test Driven Development
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
-> **TDD** es una metodología de desarrollo donde se escriben las pruebas ANTES de escribir el código de producción.
+![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png)
 
-![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+</div>
+<div style="flex: 1;">
+
+**🔄 Ciclo Red-Green-Refactor:**
+
+**🔴 RED**
+- Escribir prueba que falle
+- La prueba NO existe aún
+- Código NO existe aún
+- Objetivo: Definir comportamiento
+
+**🟢 GREEN**
+- Escribir código MÍNIMO
+- Solo para pasar la prueba
+- Puede ser hardcoded
+- Objetivo: Hacerla pasar
+
+**🔵 REFACTOR**
+- Mejorar el código
+- Mantener tests verdes
+- Eliminar duplicación
+- Objetivo: Código limpio
+
+**🔁 REPEAT**
+- Siguiente prueba
+- Ciclo continúa
+- Pequeños incrementos
+
+</div>
+</div>
 
 ---
 ### Representación ASCII del ciclo:
@@ -830,22 +890,51 @@ dotnet test --parallel
 
 ---
 
-## Resumen de la Clase
+## Resumen, Recursos y Próxima Clase
 
-| Concepto | Descripción |
-| ---------- | ------------- |
-| **TDD** | Escribir pruebas ANTES del código |
-| **Red-Green-Refactor** | Ciclo: prueba falla → pasa → mejora |
-| **xUnit** | Framework de pruebas para .NET |
-| **[Fact]** | Prueba sin parámetros |
-| **[Theory]** | Prueba parametrizada |
-| **AAA** | Arrange, Act, Assert |
-| **Assert** | Verificaciones de resultado |
-| **Cobertura** | Porcentaje de código probado |
+<div style="display: flex; gap: 30px;">
+<div style="flex: 1;">
+
+**📚 Resumen de la Clase:**
+- **TDD:** Pruebas ANTES del código
+- **Red-Green-Refactor:** Ciclo iterativo
+- **xUnit:** Framework de pruebas .NET
+- **[Fact]:** Prueba sin parámetros
+- **[Theory]:** Prueba parametrizada
+- **AAA:** Arrange, Act, Assert
+- **Cobertura:** % de código probado
+
+**🔗 Recursos:**
+- xUnit.net - Documentación oficial
+- Kent Beck - "TDD: By Example"
+- `dotnet new xunit` - Crear pruebas
+- `dotnet test` - Ejecutar pruebas
+
+</div>
+<div style="flex: 1;">
+
+**🚀 Próxima Clase: BDD**
+- Historias de usuario
+- Lenguaje Gherkin (Given-When-Then)
+- SpecFlow para .NET
+- Pruebas de comportamiento
+
+**Instalar:**
+```bash
+dotnet add package SpecFlow.xUnit
+dotnet add package SpecFlow.Tools.MsBuild.Generation
+```
+
+**💡 Anti-Patrones a Evitar:**
+- ❌ The Giant (Arrange demasiado grande)
+- ❌ The Sleeper (Thread.Sleep en pruebas)
+- ❌ The Mockery (Demasiados mocks)
+- ❌ The Sequencer (Pruebas dependientes)
+
+</div>
+</div>
 
 ---
-
-## Test Doubles: Objetos de Prueba
 
 ### Tipos de dobles para pruebas
 
@@ -1138,46 +1227,6 @@ public class Billetera
         _saldo -= monto;
     }
 }
-```
-
----
-
-## Preparación Próxima Clase
-
-### Behavior Driven Development (BDD)
-
-```
-PRÓXIMA CLASE: BDD
-
-• Historias de usuario
-• Lenguaje Gherkin (Given-When-Then)
-• SpecFlow para .NET
-• Pruebas de comportamiento vs pruebas unitarias
-
-INSTALAR:
-- Extensión SpecFlow para Visual Studio
-  (o usar NuGet: SpecFlow.xUnit)
-```
-
----
-
-## Recursos Adicionales
-
-### Documentación y libros
-
-- **xUnit Documentation:** https://xunit.net/
-- **Microsoft Testing:** https://docs.microsoft.com/dotnet/core/testing/
-- **Libro:** "Test Driven Development: By Example" - Kent Beck
-- **Libro:** "Unit Testing Principles, Practices, and Patterns" - Vladimir Khorikov
-
-### Comandos útiles
-
-```bash
-# Crear proyecto de pruebas
-dotnet new xunit -n MiApp.Tests
-dotnet add reference ../MiApp/MiApp.csproj
-dotnet add package FluentAssertions  # Assertions más legibles
-dotnet add package NSubstitute       # Mocks
 ```
 
 ---
