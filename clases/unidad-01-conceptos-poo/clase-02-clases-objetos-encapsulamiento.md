@@ -4,102 +4,57 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.85em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 16px;
-  overflow: hidden;
-}
-img {
-  max-width: 60% !important;
-  max-height: 40vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; color: #1e40af; }
-section h2 { font-size: 1.2em; color: #1e3a8a; }
-section h3 { font-size: 1em; color: #3b82f6; }
-section ul, section ol { font-size: 0.8em; margin-left: 0.5em; }
-section li { margin-bottom: 0.2em; }
-section pre { font-size: 0.55em; max-height: 50vh; overflow-y: auto; }
-section code { font-size: 0.7em; }
-section p { margin: 0.3em 0; }
-section table { width: 100%; font-size: 0.75em; border-collapse: collapse; margin: 0.2em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.25em 0.4em; text-align: left; font-size: 0.75em; border: 1px solid #ddd; }
-section td { padding: 0.25em 0.4em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.7em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-.highlight-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.8em; border-radius: 6px; margin: 0.3em 0; font-size: 0.85em; }
-.info-box { background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.warning-box { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.success-box { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
-.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; }
-.col-card { background: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.6em; font-size: 0.85em; }
-.compact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.85em; }
-</style>
-
----
+<!-- _class: lead -->
 
 # Clases, Objetos y Encapsulamiento
 
-<div class="info-box" style="text-align: center;">
-
-**IF0100 - Lenguaje de Programación OO II**
-
+**IF0100 - Lenguaje de Programación OO II**  
 *4° Semestre - Ingeniería Informática*
 
-**Duración:** 90 minutos | **Unidad 1 - Clase 2*
-
-</div>
+**Duración:** 90 minutos | **Unidad 1 - Clase 2**
 
 ---
 
 ## Objetivos y Agenda
 
-<div class="two-col">
-
-<div>
-
-### 🎯 Objetivos
-
-| # | Meta |
-|---|------|
-| 1 | Definir clases y objetos |
-| 2 | Aplicar encapsulamiento |
-| 3 | Usar propiedades get/set |
-| 4 | Implementar constructores |
-| 5 | Campos vs Propiedades |
-
-</div>
-
-<div>
-
-### 📋 Agenda (90 min)
-
-| Tiempo | Tema |
-|--------|------|
-| 10' | Repaso POO |
-| 20' | Clases y Objetos |
-| 20' | Encapsulamiento |
-| 20' | Propiedades |
-| 15' | Constructores |
-| 5' | Práctica |
-
-</div>
-
-</div>
+| 🎯 Objetivos | 📋 Agenda (90 min) |
+|-------------|-------------------|
+| 1. Definir clases y objetos | 10' Repaso POO |
+| 2. Aplicar encapsulamiento | 20' Clases y Objetos |
+| 3. Usar propiedades get/set | 20' Encapsulamiento |
+| 4. Implementar constructores | 20' Propiedades |
+| 5. Campos vs Propiedades | 15' Constructores + 5' Práctica |
 
 ---
 
 ## 1. Repaso: Programación Orientada a Objetos
-
-<div class="two-col">
-
-<div>
 
 ### 📜 Procedural vs 🎯 POO
 
@@ -111,16 +66,14 @@ section tbody tr:hover { background-color: #e9ecef; }
 
 ### 💡 Ventajas POO
 
-- Código modular
-- Reutilizable
-- Fácil mantenimiento
-- Modela mundo real
+- ✅ Código modular
+- ✅ Reutilizable
+- ✅ Fácil mantenimiento
+- ✅ Modela mundo real
 
-</div>
+---
 
-<div>
-
-### 🏛️ Tres Pilares POO
+## Los Tres Pilares de la POO
 
 ```
 ┌────────────────────────────────┐
@@ -135,17 +88,11 @@ section tbody tr:hover { background-color: #e9ecef; }
 └────────┴───────────┴─────────────┘
 ```
 
-</div>
-
-</div>
+**Hoy:** Encapsulamiento | **Próxima clase:** Herencia y Polimorfismo
 
 ---
 
 ## Clase vs Objeto: Analogía
-
-<div class="two-col">
-
-<div>
 
 ### 🎨 CLASE = Molde/Plantilla
 
@@ -163,10 +110,6 @@ class Galleta {
 }
 ```
 
-</div>
-
-<div>
-
 ### 🍪 OBJETO = Instancia
 
 - Creado de una clase
@@ -181,10 +124,6 @@ g1.Diametro = 5.5;
 g1.Hornear();
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Clase vs Objeto: Comparativa
@@ -197,11 +136,7 @@ g1.Hornear();
 | **Valores** | Define qué tendrá | Tiene valores |
 | **Declaración** | `class Galleta` | `new Galleta()` |
 
-<div class="info-box">
-
 **💡 Analogía:** Clase = Receta | Objeto = Galleta horneada
-
-</div>
 
 ---
 
@@ -225,17 +160,13 @@ g1.Hornear();
 │ └──────────────┘  │  └─────────────────────────────┘        │
 │                   │                                         │
 │ Variables =       │ Objetos = datos reales en heap          │
-│ direcciones (4-8B)│                                         │
+│ direcciones       │                                         │
 └───────────────────┴──────────────────────────────────────────┘
 ```
 
 ---
 
 ## 2. Clases en C#: Estructura
-
-<div class="two-col">
-
-<div>
 
 ### 📋 Anatomía de Clase
 
@@ -252,10 +183,6 @@ g1.Hornear();
 - `public` - Accesible desde fuera
 - `private` - Solo interno
 - `static` - Compartido por todos
-
-</div>
-
-<div>
 
 ### 💻 Plantilla General
 
@@ -279,17 +206,9 @@ public class NombreClase
 }
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Ejemplo: Clase Estudiante
-
-<div class="two-col">
-
-<div>
 
 ### 📋 Código C#
 
@@ -321,34 +240,11 @@ public class Estudiante
 | `string nombre` | Campo público |
 | `void` | Sin retorno |
 
-</div>
-
-<div>
-
-<div class="warning-box">
-
-**⚠️ Campos públicos = mala práctica**
+### ⚠️ Problema: Campos públicos = mala práctica
 
 - Sin validación
 - Cualquiera modifica
 - Difícil mantener
-
-</div>
-
-### 💻 Uso
-
-```csharp
-Estudiante est1 = new Estudiante();
-est1.nombre = "María López";
-est1.codigo = "2024001";
-est1.edad = 20;
-est1.promedio = 4.2;
-est1.MostrarInfo();
-```
-
-</div>
-
-</div>
 
 ---
 
@@ -377,10 +273,6 @@ est2.MostrarInfo();
 
 ## 3. Encapsulamiento
 
-<div class="two-col">
-
-<div>
-
 ### 🔒 ¿Qué es?
 
 Ocultar datos internos y exponer solo lo necesario.
@@ -406,21 +298,23 @@ Ocultar datos internos y exponer solo lo necesario.
 | Flexibilidad | Cambiar impl. interna |
 | Abstracción | Usuario no sabe cómo |
 
-</div>
+---
 
-<div>
+## Sin vs Con Encapsulamiento
 
-### ❌ Sin vs ✅ Con Encapsulamiento
+### ❌ SIN (Frágil)
 
 ```csharp
-// ❌ SIN (Frágil)
 public class Cuenta
 {
     public double saldo;  // ¡Peligroso!
 }
 cuenta.saldo = -1000;     // Válido
+```
 
-// ✅ CON (Robusto)
+### ✅ CON (Robusto)
+
+```csharp
 public class Cuenta
 {
     private double _saldo;
@@ -436,10 +330,6 @@ public class Cuenta
 cuenta.Depositar(-1000);  // Excepción
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Modificadores de Acceso
@@ -451,21 +341,13 @@ cuenta.Depositar(-1000);  // Excepción
 | **protected** | Clase + hijas | Herencia |
 | **internal** | Mismo proyecto | Clases internas |
 
-<div class="info-box">
-
 **💡 Por defecto:** Campos son `private`, clases son `internal`
-
-</div>
 
 ---
 
 ## 4. Propiedades en C#
 
-<div class="two-col">
-
-<div>
-
-### ❌ TRADICIONAL (Java)
+### ❌ TRADICIONAL (Java-style)
 
 ```csharp
 private string nombre;
@@ -484,15 +366,10 @@ public void SetNombre(string v)
 p.SetNombre("María");
 ```
 
-### ❌ Problemas
-
+**Problemas:**
 - Sintaxis verbosa
 - Rompe fluidez
 - Paréntesis everywhere
-
-</div>
-
-<div>
 
 ### ✅ MODERNO C#
 
@@ -509,16 +386,11 @@ public string Nombre
 p.Nombre = "María";
 ```
 
-### ✅ Ventajas
-
+**Ventajas:**
 - Sintaxis limpia
 - Mantiene encapsulamiento
 - Parece campo, es método
 - Permite lógica
-
-</div>
-
-</div>
 
 ---
 
@@ -542,19 +414,11 @@ p.Nombre = "María";
 └─────────────────────────────────────────────────────────┘
 ```
 
-<div class="info-box">
-
-**💡 Las propiedades son sintactic sugar para encapsulamiento**
-
-</div>
+**💡 Las propiedades son syntactic sugar para encapsulamiento**
 
 ---
 
 ## Tipos de Propiedades
-
-<div class="two-col">
-
-<div>
 
 ### 📝 Tipos de Propiedades
 
@@ -580,10 +444,6 @@ public double PrecioFinal
 // 3. Con default
 public double IVA { get; set; } = 0.19;
 ```
-
-</div>
-
-<div>
 
 ### ✅ Con Validación
 
@@ -618,17 +478,9 @@ public int Edad
 }
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## 5. Constructores
-
-<div class="two-col">
-
-<div>
 
 ### 🎯 ¿Qué es?
 
@@ -660,10 +512,6 @@ public Estudiante(string n, int e)
 }
 ```
 
-</div>
-
-<div>
-
 ### 🔧 Uso
 
 ```csharp
@@ -694,17 +542,9 @@ public Estudiante(string cod)
 // e.Codigo = "otro";  // ❌ Error
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Clase Completa: Estudiante
-
-<div class="two-col">
-
-<div>
 
 ### 📋 Propiedades
 
@@ -739,10 +579,6 @@ public class Estudiante
     }
 ```
 
-</div>
-
-<div>
-
 ### 💡 Métodos de Negocio
 
 ```csharp
@@ -771,17 +607,9 @@ est.Promedio = 4.2;
 est.MostrarInfo();
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Static vs Instance
-
-<div class="two-col">
-
-<div>
 
 ### 🔄 STATIC (Compartido)
 
@@ -803,10 +631,6 @@ public class Contador
 }
 ```
 
-</div>
-
-<div>
-
 ### 💻 Uso
 
 ```csharp
@@ -822,12 +646,8 @@ Console.WriteLine(c1.Instancia);   // 1
 Console.WriteLine(c2.Instancia);   // 1
 ```
 
-**Static:** contador global<br>
+**Static:** contador global  
 **Instance:** valor único por objeto
-
-</div>
-
-</div>
 
 ---
 
@@ -857,10 +677,6 @@ pt2.X = 50;          // pt1.X sigue siendo 10
 
 ## 6. Práctica: Sistema Estudiantil
 
-<div class="two-col">
-
-<div>
-
 ### 🎯 Objetivo
 
 App que gestione estudiantes con POO.
@@ -880,10 +696,6 @@ App que gestione estudiantes con POO.
 | M. López | 2024001 | 20 | 4.2 |
 | C. Ruiz | 2024002 | 22 | 2.8 |
 | A. Mart. | 2024003 | 19 | 3.5 |
-
-</div>
-
-<div>
 
 ### 💻 Código Main
 
@@ -927,42 +739,30 @@ class Program
    Est: APROBADO
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Resumen de la Clase
-
-<div class="two-col">
-
-<div>
 
 ### 📚 Conceptos Clave
 
 | Tema | Descripción |
 |------|-------------|
-| **Clase** | Plantilla |
-| **Objeto** | Instancia |
-| **Campo** | Dato interno |
-| **Propiedad** | Encapsulamiento |
-| **Constructor** | Inicialización |
-| **Encapsulamiento** | Ocultar datos |
+| **Clase** | Plantilla de objetos |
+| **Objeto** | Instancia concreta |
+| **Campo** | Dato interno (privado) |
+| **Propiedad** | Encapsulamiento (get/set) |
+| **Constructor** | Inicialización de objetos |
+| **Encapsulamiento** | Ocultar datos, exponer comportamiento |
 
-### 🎯 Habilidades
+### 🎯 Habilidades Adquiridas
 
-✅ Definir clases C#
-✅ Crear objetos con new
-✅ Aplicar encapsulamiento
-✅ Usar propiedades
-✅ Implementar constructores
+- ✅ Definir clases C#
+- ✅ Crear objetos con new
+- ✅ Aplicar encapsulamiento
+- ✅ Usar propiedades
+- ✅ Implementar constructores
 
-</div>
-
-<div>
-
-### 📝 Ejercicios
+### 📝 Ejercicios Propuestos
 
 **1. Producto**
 - Código (solo lectura)
@@ -973,19 +773,13 @@ class Program
 **2. CuentaBancaria**
 - Saldo privado
 - `Depositar()`, `Retirar()`
-- Validar negativo
+- Validar negativos
 
-**3. 🌟 Biblioteca**
-```
-Libro: ISBN, título, autor
-Usuario: código, nombre
-Prestamo: fechas, estado
+**3. 🌟 Biblioteca**  
+Libro: ISBN, título, autor  
+Usuario: código, nombre  
+Prestamo: fechas, estado  
 → Validaciones completas
-```
-
-</div>
-
-</div>
 
 ---
 
@@ -993,15 +787,17 @@ Prestamo: fechas, estado
 
 ### Temas Clase 3
 
-- ✅ Herencia: Base y derivada
-- ✅ Palabra `base`
+- ✅ Herencia: Clases base y derivadas
+- ✅ Palabra clave `base`
 - ✅ Polimorfismo: virtual/override
 - ✅ Clases/métodos abstractos
-- ✅ Principio Liskov
+- ✅ Principio de Liskov
 
 ### 📖 Preparación
 
-**Repasa conceptos POO**
+**Repasa conceptos POO:**
+- ¿Qué es la herencia?
+- ¿Qué es el polimorfismo?
 
 **Piensa en ejemplos:**
 - Vehículo → Carro, Moto, Bus
@@ -1012,11 +808,9 @@ Prestamo: fechas, estado
 
 ---
 
+<!-- _class: lead -->
+
 # ¡Gracias!
 ## ¿Preguntas?
 
-<div class="info-box" style="text-align: center;">
-
 **UNAULA - Ingeniería Informática - 2026-I**
-
-</div>

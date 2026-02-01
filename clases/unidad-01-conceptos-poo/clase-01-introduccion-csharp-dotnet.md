@@ -4,121 +4,67 @@ theme: default
 paginate: true
 header: 'IF0100 - Lenguaje de Programación OO II | Unidad 1'
 footer: 'UNAULA - Ingeniería Informática - 2026-I'
+style: |
+  section {
+    font-size: 22px;
+  }
+  h1 {
+    color: #1e40af;
+    font-size: 2em;
+  }
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.5em;
+  }
+  h3 {
+    color: #3b82f6;
+    font-size: 1.2em;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  code {
+    font-size: 0.8em;
+  }
+  pre {
+    font-size: 0.7em;
+  }
 ---
 
-<style>
-section {
-  font-size: 16px;
-  overflow: hidden;
-}
-img {
-  max-width: 60% !important;
-  max-height: 40vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; color: #1e40af; }
-section h2 { font-size: 1.2em; color: #1e3a8a; }
-section h3 { font-size: 1em; color: #3b82f6; }
-section ul, section ol { font-size: 0.8em; margin-left: 0.5em; }
-section li { margin-bottom: 0.2em; }
-section pre { font-size: 0.55em; max-height: 50vh; overflow-y: auto; }
-section code { font-size: 0.7em; }
-section p { margin: 0.3em 0; }
-section table { width: 100%; font-size: 0.75em; border-collapse: collapse; margin: 0.2em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.25em 0.4em; text-align: left; font-size: 0.75em; border: 1px solid #ddd; }
-section td { padding: 0.25em 0.4em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.7em; }
-section tbody tr:nth-child(even) { background-color: #f8f9fa; }
-section tbody tr:hover { background-color: #e9ecef; }
-.highlight-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.8em; border-radius: 6px; margin: 0.3em 0; font-size: 0.85em; }
-.info-box { background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.warning-box { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.success-box { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.6em; margin: 0.3em 0; font-size: 0.85em; }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
-.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; }
-.col-card { background: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.6em; font-size: 0.85em; }
-.compact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.85em; }
-</style>
-
----
+<!-- _class: lead -->
 
 # Introducción a C# y .NET
 
-<div class="info-box" style="text-align: center;">
-
-**IF0100 - Lenguaje de Programación OO II**
-
+**IF0100 - Lenguaje de Programación OO II**  
 *4° Semestre - Ingeniería Informática*
 
 **Duración:** 90 minutos | **Fecha:** Semana 1
-
-</div>
 
 ---
 
 ## Objetivos y Agenda
 
-<div class="two-col">
-
-<div>
-
-### 🎯 Objetivos
-
-| # | Meta |
-|---|------|
-| 1 | Historia de C# y .NET |
-| 2 | Diferenciar .NET Framework/Core/8 |
-| 3 | Configurar Visual Studio |
-| 4 | Crear primera app C# |
-| 5 | Estructura de programa |
-
-</div>
-
-<div>
-
-### 📋 Agenda (90 min)
-
-| Tiempo | Tema |
-|--------|------|
-| 15' | ¿Qué es C#? |
-| 15' | Ecosistema .NET |
-| 10' | Instalación VS |
-| 25' | Estructura C# |
-| 25' | Práctica |
-
-</div>
-
-</div>
+| 🎯 Objetivos | 📋 Agenda (90 min) |
+|-------------|-------------------|
+| 1. Historia de C# y .NET | 15' ¿Qué es C#? |
+| 2. Diferenciar .NET Framework/Core/8 | 15' Ecosistema .NET |
+| 3. Configurar Visual Studio | 10' Instalación VS |
+| 4. Crear primera app C# | 25' Estructura C# |
+| 5. Estructura de programa | 25' Práctica |
 
 ---
 
 ## 1. ¿Qué es C#?
 
-<div class="two-col">
-
-<div>
-
 ### 🚀 Por qué C# en 2026?
 
-```
-┌─────────────────────────────┐
-│  🌐 Web      │  ☁️ Cloud   │
-│  🖥️ Desktop  │  🎮 Gaming  │
-│  📱 Mobile   │  🤖 AI/ML   │
-└─────────────────────────────┘
-```
+**Aplicaciones:** 🌐 Web APIs | 🖥️ Desktop | 📱 Mobile | ☁️ Cloud | 🎮 Gaming | 🤖 AI/ML
 
 **Ventajas:**
 - ✅ Multiplataforma (Win/Linux/Mac)
 - ✅ Alto rendimiento
 - ✅ Type-safe
 - ✅ Gran demanda laboral
-
-</div>
-
-<div>
 
 ### 💼 Quién usa C#
 
@@ -129,70 +75,17 @@ section tbody tr:hover { background-color: #e9ecef; }
 | **Stack Overflow** | Backend completo |
 | **Siemens** | Sistemas industriales |
 
-<div class="highlight-box" style="text-align: center; font-size: 0.9em;">
-
-**C# = C Sharp**<br>
-Lenguaje moderno, POO, type-safe
-
-</div>
-
-</div>
-
-</div>
-
 ---
 
 ## C# vs Java vs Python
 
-<div class="three-col">
-
-<div class="col-card">
-
-### 🟢 C# (2000)
-
-```csharp
-string nombre = "Juan";
-int edad = 20;
-Console.WriteLine($"Hola {nombre}, tienes {edad}");
-```
-
-**✅ Type-safe**<br>
-**✅ LINQ nativo**<br>
-**✅ async/await**
-
-</div>
-
-<div class="col-card">
-
-### 🟠 Java (1995)
-
-```java
-String nombre = "Juan";
-int edad = 20;
-System.out.println("Hola " + nombre);
-```
-
-**✅ JVM portable**<br>
-**✅ Ecosistema grande**
-
-</div>
-
-<div class="col-card">
-
-### 🔵 Python (1991)
-
-```python
-nombre = "Juan"
-edad = 20
-print(f"Hola {nombre}, tienes {edad}")
-```
-
-**✅ Sintaxis simple**<br>
-**✅ Líder en Data**
-
-</div>
-
-</div>
+| 🟢 C# (2000) | 🟠 Java (1995) | 🔵 Python (1991) |
+|-------------|---------------|------------------|
+| `string nombre = "Juan";` | `String nombre = "Juan";` | `nombre = "Juan"` |
+| `Console.WriteLine($"Hola");` | `System.out.println("Hola");` | `print(f"Hola {nombre}")` |
+| **✅ Type-safe** | **✅ JVM portable** | **✅ Sintaxis simple** |
+| **✅ LINQ nativo** | **✅ Ecosistema grande** | **✅ Líder en Data** |
+| **✅ async/await** | | |
 
 ---
 
@@ -218,11 +111,7 @@ NACE       GENERICS   ASYNC/     .NET      .NET 8
 
 ---
 
-## Genéricos: La Revolución de Type-Safety
-
-<div class="two-col">
-
-<div>
+## Genéricos: Type-Safety
 
 ### ❌ ANTES: ArrayList
 
@@ -230,19 +119,11 @@ NACE       GENERICS   ASYNC/     .NET      .NET 8
 ArrayList lista = new ArrayList();
 lista.Add(42);        // ⚠️ boxing
 lista.Add("hola");    // ⚠️ mezclado
-lista.Add(3.14);
 
 int valor = (int)lista[0]; // ⚠️ crash posible
 ```
 
-**Problemas:**
-- Sin verificación de tipos
-- Boxing/unboxing lento
-- Errores en runtime
-
-</div>
-
-<div>
+**Problemas:** Sin verificación de tipos | Boxing/unboxing lento | Errores en runtime
 
 ### ✅ DESPUÉS: List&lt;T&gt;
 
@@ -254,22 +135,11 @@ nums.Add(42);    // ✅ type-safe
 int valor = nums[0]; // ✅ sin cast
 ```
 
-**Ventajas:**
-- Verificación en compilación
-- Sin boxing overhead
-- Código más rápido y seguro
-
-</div>
-
-</div>
+**Ventajas:** Verificación en compilación | Sin boxing overhead | Código más rápido
 
 ---
 
 ## Anders Hejlsberg: El Arquitecto
-
-<div class="two-col">
-
-<div>
 
 ### 👤 Perfil
 
@@ -288,30 +158,11 @@ int valor = nums[0]; // ✅ sin cast
 | 2002 | .NET |
 | 2012 | TypeScript |
 
-</div>
-
-<div>
-
-### 💡 Filosofía
-
-> *"C# combina potencia de C++ con productividad de VB"*
-
-### 🎯 Principios
-
-| Principio | Ejemplo |
-|-----------|---------|
-| Productividad | `var`, `=>` |
-| Type Safety | Generics |
-| POO Pura | LINQ |
-| Evolución | 24 años compatible |
-
-</div>
-
-</div>
+> 💡 *"C# combina potencia de C++ con productividad de VB"*
 
 ---
 
-## Ecosistema .NET: Todo en Uno Plataforma
+## Ecosistema .NET: Todo en Uno
 
 ```
 ┌─────────────────────────────────────────────────┐
@@ -332,11 +183,7 @@ int valor = nums[0]; // ✅ sin cast
 
 ---
 
-## Evolución .NET: De la Fragmentación a la Unificación
-
-<div class="two-col">
-
-<div>
+## Evolución .NET: Fragmentación → Unificación
 
 ### 🔴 ANTES (hasta 2016)
 
@@ -352,10 +199,6 @@ int valor = nums[0]; // ✅ sin cast
 
 **Problema:** Código NO compartible
 
-</div>
-
-<div>
-
 ### 🟢 AHORA (.NET 8)
 
 ```
@@ -370,10 +213,6 @@ int valor = nums[0]; // ✅ sin cast
 ```
 
 **Ventaja:** 100% código compartible
-
-</div>
-
-</div>
 
 ---
 
@@ -401,10 +240,6 @@ int valor = nums[0]; // ✅ sin cast
 
 ## Visual Studio 2022
 
-<div class="two-col">
-
-<div>
-
 ### 🛠️ Ediciones
 
 | Edición | Precio | Uso |
@@ -413,17 +248,9 @@ int valor = nums[0]; // ✅ sin cast
 | **Professional** | $$ | Equipos |
 | **Enterprise** | $$$ | Empresas |
 
-<div class="success-box" style="text-align: center;">
+**✅ Usaremos Community (GRATIS)**
 
-**Usaremos Community** (GRATIS)
-
-</div>
-
-</div>
-
-<div>
-
-### 📦 Workloads
+### 📦 Workloads necesarios
 
 ```
 ☑️ ASP.NET y desarrollo web
@@ -439,17 +266,9 @@ int valor = nums[0]; // ✅ sin cast
 
 **Descarga:** visualstudio.microsoft.com
 
-</div>
-
-</div>
-
 ---
 
-## Estructura Programa C#: Anatomía
-
-<div class="two-col">
-
-<div>
+## Estructura Programa C#
 
 ### 📋 Partes Esenciales
 
@@ -460,10 +279,6 @@ int valor = nums[0]; // ✅ sin cast
 | 3️⃣ | `class` | Contenedor de código |
 | 4️⃣ | `Main` | Punto de entrada |
 | 5️⃣ | Código | Lógica ejecutable |
-
-</div>
-
-<div>
 
 ### 💻 Estructura Básica
 
@@ -481,10 +296,6 @@ namespace MiApp
     }
 }
 ```
-
-</div>
-
-</div>
 
 ---
 
@@ -504,21 +315,13 @@ System                    ← Raíz
     └── SqlClient    → SQL Server
 ```
 
-<div class="info-box">
-
 **💡 Tip:** `using System;` evita escribir `System.Console` cada vez
-
-</div>
 
 ---
 
 ## Value Types vs Reference Types
 
-<div class="two-col">
-
-<div>
-
-### 📦 VALUE TYPES
+### 📦 VALUE TYPES (Stack)
 
 | Característica | Valor |
 |----------------|-------|
@@ -532,15 +335,11 @@ int edad = 25;
 int edad2 = edad;   // Copia
 edad2 = 30;
 
-Console.WriteLine(edad);   // 25
+Console.WriteLine(edad);   // 25 (independiente)
 Console.WriteLine(edad2);  // 30
 ```
 
-</div>
-
-<div>
-
-### 🔗 REFERENCE TYPES
+### 🔗 REFERENCE TYPES (Heap)
 
 | Característica | Valor |
 |----------------|-------|
@@ -557,10 +356,6 @@ nombre2 = "Maria";        // Nuevo obj
 Console.WriteLine(nombre);   // "Juan"
 Console.WriteLine(nombre2);  // "Maria"
 ```
-
-</div>
-
-</div>
 
 ---
 
@@ -595,120 +390,87 @@ Console.WriteLine(nombre2);  // "Maria"
 
 ## Nullable Types
 
-<div class="two-col">
-
-<div>
-
 ### 🤔 ¿Por qué?
 
 ```csharp
-int edad = null;  // ❌ Error
+int edad = null;  // ❌ Error! Value types no aceptan null
 ```
 
 **Cuándo se necesita:**
-- Bases de datos (NULL)
-- Formularios (opcionales)
-- Configuraciones (sin valor)
+- Bases de datos (campos NULL)
+- Formularios opcionales
+- Configuraciones sin valor
 
-### ✅ Solución
+### ✅ Solución: Nullable&lt;T&gt;
 
 ```csharp
-int? edad = null;        // Nullable<int>
-double? precio = null;
-bool? activo = null;
-DateTime? fecha = null;
+int? edad = null;           // Nullable<int>
+double? precio = null;      // Nullable<double>
+bool? activo = null;        // Nullable<bool>
+DateTime? fecha = null;     // Nullable<DateTime>
 ```
-
-</div>
-
-<div>
 
 ### 🛠️ Operadores
 
-| Op | Sintaxis | Descripción |
-|----|----------|-------------|
+| Operador | Sintaxis | Descripción |
+|----------|----------|-------------|
 | **??** | `a ?? b` | Usa `b` si `a` es null |
-| **??=** | `a ??= b` | Asigna si null |
-| **?.** | `a?.Prop` | Acceso seguro |
+| **??=** | `a ??= b` | Asigna `b` si `a` es null |
+| **?.** | `a?.Prop` | Acceso seguro (no crash) |
 
 ```csharp
 int? num = null;
-int edad = num ?? 18;  // valor default
+int edad = num ?? 18;      // 18 (valor default)
 
 string s = null;
-int? len = s?.Length;  // null (no crash)
+int? len = s?.Length;      // null (no crash)
 ```
-
-</div>
-
-</div>
 
 ---
 
 ## Strings en C#
 
-<div class="two-col">
-
-<div>
-
 ### 📝 Creación
 
 ```csharp
-// Interpolación ⭐
-string saludo = $"Hola {nombre}";
+// 1. Interpolación ⭐ RECOMENDADA
+string nombre = "Juan";
+int edad = 20;
+string saludo = $"Hola {nombre}, tienes {edad} años";
 
-// Concatenación
+// 2. Concatenación
 string s2 = "Hola " + nombre;
 
-// Verbatim
-string ruta = @"C:\Docs\archivo.txt";
+// 3. Verbatim (@) - para rutas
+string ruta = @"C:\Documents\archivo.txt";
 
-// Multilínea (C# 11+)
+// 4. Multilínea (C# 11+)
 string texto = """
     Línea 1
     Línea 2
+    Línea 3
 """;
 ```
 
-</div>
-
-<div>
-
 ### 🛠️ Métodos Útiles
 
-| Método | Resultado |
-|--------|-----------|
-| `Trim()` | `" hola "` → `"hola"` |
-| `ToUpper()` | `"hola"` → `"HOLA"` |
-| `Contains()` | Busca texto |
-| `Split()` | Divide en array |
-| `Replace()` | Reemplaza |
-| `Length` | Longitud |
+| Método | Ejemplo | Resultado |
+|--------|---------|-----------|
+| `Trim()` | `" hola ".Trim()` | `"hola"` |
+| `ToUpper()` | `"hola".ToUpper()` | `"HOLA"` |
+| `ToLower()` | `"HOLA".ToLower()` | `"hola"` |
+| `Contains()` | `"hola".Contains("la")` | `true` |
+| `Split()` | `"a,b,c".Split(',')` | `["a","b","c"]` |
+| `Replace()` | `"hola".Replace("o","0")` | `"h0la"` |
+| `Length` | `"hola".Length` | `4` |
 
-<div class="warning-box">
-
-**⚠️ Strings son INMUTABLES**
-
-```csharp
-texto.ToUpper();      // ❌ No modifica
-texto = texto.ToUpper(); // ✅ Reasigna
-```
-
-</div>
-
-</div>
-
-</div>
+⚠️ **Strings son INMUTABLES:** `texto.ToUpper()` no modifica, debe reasignar: `texto = texto.ToUpper()`
 
 ---
 
 ## C# 12: Primary Constructors
 
-<div class="two-col">
-
-<div>
-
-### ❌ ANTES (Verboso)
+### ❌ ANTES (Verboso - 16 líneas)
 
 ```csharp
 public class Persona
@@ -727,13 +489,7 @@ public class Persona
 }
 ```
 
-**16 líneas** • Campos privados • Constructor explícito
-
-</div>
-
-<div>
-
-### ✅ AHORA (Conciso)
+### ✅ AHORA (Conciso - 8 líneas)
 
 ```csharp
 public class Persona(string nombre, int edad)
@@ -747,31 +503,23 @@ public class Persona(string nombre, int edad)
 
 // Uso
 var p = new Persona("Ana", 25);
-p.Saludar();  // "Hola, Ana"
+p.Saludar();  // "Hola Ana"
 ```
 
-**8 líneas** • 50% menos código • Parámetros directos
-
-</div>
-
-</div>
+**50% menos código** • Parámetros directos • Más legible
 
 ---
 
 ## C# 12: Collection Expressions
 
-<div class="two-col">
-
-<div>
-
-### ❌ ANTES
+### ❌ ANTES (Sintaxis verbosa)
 
 ```csharp
 // Array
-int[] nums = new int[] {1,2,3};
+int[] nums = new int[] {1, 2, 3};
 
 // List
-var list = new List<int> {1,2,3};
+var list = new List<int> {1, 2, 3};
 
 // Dictionary
 var dict = new Dictionary<string,int>
@@ -781,43 +529,26 @@ var dict = new Dictionary<string,int>
 };
 ```
 
-</div>
-
-<div>
-
-### ✅ AHORA
+### ✅ AHORA (Sintaxis concisa con `[ ]`)
 
 ```csharp
 // Array
 int[] nums = [1, 2, 3];
 
 // List
-List<string> names = ["Ana","Juan"];
+List<string> names = ["Ana", "Juan"];
 
-// Dictionary
-var dict = new Dictionary<string,int>()
-{
-    ["Ana"] = 25,
-    ["Juan"] = 30
-};
-
-// Spread
-int[] all = [..pares, ..impares];
+// Spread operator (combinar colecciones)
+int[] pares = [2, 4, 6];
+int[] impares = [1, 3, 5];
+int[] all = [..pares, ..impares];  // [2,4,6,1,3,5]
 ```
-
-</div>
-
-</div>
 
 ---
 
-## Pattern Matching
+## Pattern Matching (C# 8+)
 
-<div class="two-col">
-
-<div>
-
-### 🔢 Rangos
+### 🔢 Rangos con `switch`
 
 ```csharp
 string categoria = edad switch
@@ -837,24 +568,20 @@ string nota = promedio switch
 };
 ```
 
-### 🎯 Tipos
+### 🎯 Por tipo
 
 ```csharp
 string desc = obj switch
 {
     int i when i > 0 => $"Positivo: {i}",
     int i when i < 0 => $"Negativo: {i}",
-    string s => $"Texto ({s.Length})",
+    string s => $"Texto ({s.Length} chars)",
     null => "Sin valor",
-    _ => "Otro"
+    _ => "Otro tipo"
 };
 ```
 
-</div>
-
-<div>
-
-### 📋 List Patterns
+### 📋 List Patterns (C# 11+)
 
 ```csharp
 int[] nums = [1, 2, 3];
@@ -862,52 +589,30 @@ string patron = nums switch
 {
     [1, 2, 3] => "Exacto",
     [1, _, _] => "Empieza con 1",
-    _ => "Otro"
+    [_, _, 5] => "Termina con 5",
+    _ => "Otro patrón"
 };
 ```
-
-### 💡 Ventajas
-
-- ✅ Código más legible
-- ✅ Menos `if/else`
-- ✅ Verificación exhaustiva
-- ✅ Type-safe
-
-</div>
-
-</div>
 
 ---
 
 ## Ejercicio: Calculadora de Área
 
-<div class="two-col">
-
-<div>
-
 ### 🎯 Objetivo
 
-App de consola: área de rectángulo
+Crear app de consola que calcule área de rectángulo
 
-### ✅ Conceptos
+### ✅ Conceptos a practicar
 
 | # | Tema |
 |---|------|
-| 1 | Console I/O |
+| 1 | Console I/O (ReadLine/WriteLine) |
 | 2 | Variables double |
-| 3 | Parseo strings |
-| 4 | Interpolación |
-| 5 | Estructura C# |
+| 3 | Parseo de strings |
+| 4 | Interpolación de strings |
+| 5 | Estructura básica C# |
 
-### 🚀 Reto
-
-Validar no negativos • Agregar círculo/triángulo • Usar métodos
-
-</div>
-
-<div>
-
-### 💻 Código
+### 💻 Código base
 
 ```csharp
 using System;
@@ -930,48 +635,39 @@ namespace CalculadoraArea
 }
 ```
 
-</div>
+### 🚀 Retos adicionales
 
-</div>
+- Validar que no sean negativos
+- Agregar círculo y triángulo
+- Usar métodos reutilizables
 
 ---
 
 ## Ejercicio: Sistema de Calificaciones
 
-<div class="two-col">
-
-<div>
-
 ### 🎯 Desafío
 
-Sistema que calcule promedios
+Crear sistema que calcule promedios con validación
 
 ### 📋 Requisitos
 
-1. Nombre estudiante
-2. 3 notas (0.0-5.0)
+1. Solicitar nombre del estudiante
+2. Solicitar 3 notas (rango 0.0 - 5.0)
 3. Calcular promedio
-4. APROBADO/REPROBADO
-5. Validar datos
+4. Mostrar APROBADO/REPROBADO
+5. Validar datos de entrada
 
-### 🚀 Niveles
-
-| Nivel | Requisito |
-|-------|-----------|
-| Básico | Calcular promedio |
-| Intermedio | Validar 0-5 |
-| Avanzado | Método reutilizable |
-
-</div>
-
-<div>
-
-### 💡 Pistas
+### 💡 Pistas de implementación
 
 ```csharp
-double n1 = double.Parse(Console.ReadLine());
+// Parseo
+ double n1 = double.Parse(Console.ReadLine());
+
+// Promedio
 double promedio = (n1 + n2 + n3) / 3;
-string estado = promedio >= 3.0 ?
+
+// Condicional
+string estado = promedio >= 3.0 ? 
     "APROBADO" : "REPROBADO";
 ```
 
@@ -993,43 +689,23 @@ Estado: ✅ APROBADO
 ================================
 ```
 
-</div>
-
-</div>
-
 ---
 
 ## Validación de Entrada
 
-<div class="two-col">
+### 🎯 ¿Por qué validar?
 
-<div>
-
-### 🎯 Por qué validar
-
-- ❌ Letras en lugar de números
-- ❌ Notas fuera de rango
-- ❌ Crashes inesperados
+- ❌ El usuario puede ingresar letras en lugar de números
+- ❌ Notas fuera del rango permitido
+- ❌ Crashes inesperados que afectan UX
 
 ### 🔑 Conceptos Clave
 
 | Método | Propósito |
 |--------|-----------|
-| `TryParse()` | Convierte sin excepción |
-| `while(true)` | Repite hasta válido |
-| `out nota` | Parámetro salida |
-
-### 💻 Uso
-
-```csharp
-double n1 = PedirNota("Nota 1");
-double n2 = PedirNota("Nota 2");
-double n3 = PedirNota("Nota 3");
-```
-
-</div>
-
-<div>
+| `TryParse()` | Convierte sin lanzar excepción |
+| `while(true)` | Repite hasta obtener valor válido |
+| `out nota` | Parámetro de salida |
 
 ### 📝 Método de Validación
 
@@ -1040,8 +716,7 @@ static double PedirNota(string etiqueta)
     while (true)
     {
         Console.Write($"{etiqueta} (0-5): ");
-        if (double.TryParse(
-            Console.ReadLine(), out nota))
+        if (double.TryParse(Console.ReadLine(), out nota))
         {
             if (nota >= 0 && nota <= 5)
                 return nota;
@@ -1049,107 +724,78 @@ static double PedirNota(string etiqueta)
         }
         else
         {
-            Console.WriteLine("⚠️ No es número");
+            Console.WriteLine("⚠️ No es un número válido");
         }
     }
 }
+
+// Uso
+double n1 = PedirNota("Nota 1");
+double n2 = PedirNota("Nota 2");
+double n3 = PedirNota("Nota 3");
 ```
 
 ### ✅ Ventajas
 
-- Previene crashes
-- Experiencia de usuario mejor
-- Código robusto
-
-</div>
-
-</div>
+- Previene crashes del programa
+- Mejora experiencia de usuario
+- Código más robusto y profesional
 
 ---
 
 ## Atajos Visual Studio
 
-<div class="two-col">
-
-<div>
-
 ### 🎯 Debugging
 
 | Atajo | Acción |
 |-------|--------|
-| F5 | Iniciar debug |
-| F9 | Toggle breakpoint |
-| F10 | Step Over |
-| F11 | Step Into |
-| Shift+F11 | Step Out |
-| Ctrl+. | Quick Actions |
-
-</div>
-
-<div>
+| **F5** | Iniciar debug |
+| **F9** | Toggle breakpoint |
+| **F10** | Step Over (siguiente línea) |
+| **F11** | Step Into (entrar a método) |
+| **Shift+F11** | Step Out (salir de método) |
+| **Ctrl+.** | Quick Actions |
 
 ### 🛠️ Edición
 
 | Atajo | Acción |
 |-------|--------|
-| Ctrl+K,C | Comentar |
-| Ctrl+K,U | Descomentar |
-| Ctrl+Space | IntelliSense |
-| F12 | Ir a definición |
-| Ctrl+R,R | Renombrar |
-| Ctrl+- | Navegar atrás |
-
-</div>
-
-</div>
+| **Ctrl+K,C** | Comentar selección |
+| **Ctrl+K,U** | Descomentar selección |
+| **Ctrl+Space** | IntelliSense |
+| **F12** | Ir a definición |
+| **Ctrl+R,R** | Renombrar símbolo |
+| **Ctrl+-** | Navegar atrás |
 
 ---
 
-## C# vs Otros Lenguajes (2024)
+## C# vs Otros Lenguajes (2026)
 
-<div class="two-col">
-
-<div>
-
-### 🏆 Rendimiento
+### 🏆 Rendimiento Comparativo
 
 | Operación | C# | Java | Python |
 |-----------|-----|------|--------|
-| Loop 1M | 15ms | 18ms | 980ms |
-| JSON | 90ms | 100ms | 150ms |
-| Memoria | 25MB | 40MB | 15MB |
+| Loop 1M iteraciones | 15ms | 18ms | 980ms |
+| Parse JSON | 90ms | 100ms | 150ms |
+| Uso de Memoria | 25MB | 40MB | 15MB |
 
-### 🌟 Casos de Uso
+### 🌟 Casos de Uso por Lenguaje
 
-```
-C#     → Empresas, Windows, Azure
-Java   → Legacy, Android
-Python → Data Science, IA
-JS     → Frontend, Node.js
-```
+| Lenguaje | Mejor para |
+|----------|-----------|
+| **C#** | Empresas, Windows, Azure, Gaming |
+| **Java** | Legacy, Android, Grandes empresas |
+| **Python** | Data Science, IA, Scripting |
+| **JavaScript** | Frontend, Node.js, Full-stack |
 
-</div>
+### 💼 Mercado Laboral Colombia 2026
 
-<div>
-
-### 💼 Mercado Colombia 2026
-
-| Tecnología | Demanda |
-|------------|---------|
-| C#/.NET | ⭐⭐⭐⭐⭐ |
-| Java | ⭐⭐⭐⭐⭐ (legacy) |
-| Python | ⭐⭐⭐⭐⭐ (Data/AI) |
-| JavaScript | ⭐⭐⭐⭐⭐ |
-
-### ✅ Fortalezas C#
-
-- Rendimiento ≈ C++
-- Menor memoria que Java
-- Tipado estático (errores compile)
-
-</div>
-
-</div>
+| Tecnología | Demanda | Salario Junior |
+|------------|---------|----------------|
+| C#/.NET | ⭐⭐⭐⭐⭐ | $3M - $5M COP |
+| Java | ⭐⭐⭐⭐⭐ | $3M - $5M COP |
+| Python | ⭐⭐⭐⭐⭐ | $3.5M - $6M COP |
+| JavaScript | ⭐⭐⭐⭐⭐ | $3M - $5M COP |
 
 ---
 
@@ -1178,34 +824,32 @@ JS     → Frontend, Node.js
            └─────────────────────────┘
 ```
 
+**IL** = Intermediate Language (MSIL)  
+**JIT** = Just-In-Time Compiler  
+**CLR** = Common Language Runtime
+
 ---
 
 ## Convenciones de Código
 
-<div class="two-col">
-
-<div>
-
 ### ✅ Nomenclatura
 
-| Elemento | Estilo | Ejemplo |
-|----------|--------|---------|
-| Clases | PascalCase | `StudentManager` |
-| Métodos | PascalCase | `GetStudent()` |
-| Propiedades | PascalCase | `Name { get; }` |
-| Campos priv. | _camelCase | `_count` |
-| Variables | camelCase | `studentName` |
+| Elemento | Estilo | Ejemplo | ❌ Incorrecto |
+|----------|--------|---------|---------------|
+| Clases | PascalCase | `StudentManager` | `studentManager` |
+| Métodos | PascalCase | `GetStudent()` | `getStudent()` |
+| Propiedades | PascalCase | `Name { get; }` | `name { get; }` |
+| Campos privados | _camelCase | `_count` | `count` |
+| Variables locales | camelCase | `studentName` | `StudentName` |
+| Constantes | UPPER_SNAKE | `MAX_SIZE` | `maxSize` |
 
 ### 📜 Reglas de Oro
 
-- Nombres descriptivos
-- Sin abreviaturas
-- Líneas ≤ 100 chars
-- Un archivo por clase
-
-</div>
-
-<div>
+1. **Nombres descriptivos:** `CalculateTotal()` mejor que `Calc()`
+2. **Sin abreviaturas:** `customer` mejor que `cust`
+3. **Líneas ≤ 100 caracteres**
+4. **Un archivo por clase**
+5. **Espacios consistentes:** 4 espacios para indentación
 
 ### 💻 Ejemplo Correcto
 
@@ -1213,219 +857,163 @@ JS     → Frontend, Node.js
 public class StudentManager
 {
     private int _studentCount;
+    private const int MAX_STUDENTS = 100;
+    
     public string Name { get; set; }
 
-    public void AddStudent()
+    public void AddStudent(string studentName)
     {
-        int localVar = 10;
+        if (_studentCount < MAX_STUDENTS)
+        {
+            _studentCount++;
+        }
     }
 }
 ```
-
-### 🚀 Herramientas
-
-- **StyleCop** - Reglas estilo
-- **Resharper** - Refactoring
-- **Formatter** - Ctrl+K,D
-
-</div>
-
-</div>
 
 ---
 
 ## NuGet: Gestor de Paquetes
 
-<div class="two-col">
+### 📚 ¿Qué es NuGet?
 
-<div>
+Repositorio de librerías para .NET (similar a npm para Node.js o pip para Python)
 
-### 📚 ¿Qué es?
-
-Similar a npm o pip para .NET
-
-### 💻 CLI
+### 💻 Comandos CLI
 
 ```bash
+# Agregar paquete
 dotnet add package Newtonsoft.Json
+
+# Agregar versión específica
 dotnet add package Dapper --version 2.1.28
+
+# Listar paquetes instalados
 dotnet list package
+
+# Restaurar paquetes
+dotnet restore
 ```
 
-### 🖥️ Visual Studio
-
-Click derecho → Manage NuGet Packages → Install
-
-</div>
-
-<div>
-
-### 🔥 Paquetes Populares
+### 🔥 Paquetes Populares 2026
 
 | Paquete | Uso | Descargas |
 |---------|-----|-----------|
-| Newtonsoft.Json | JSON | 2.5B+ |
-| Dapper | Micro ORM | 500M+ |
-| Serilog | Logging | 300M+ |
-| xUnit | Testing | 150M+ |
+| **Newtonsoft.Json** | Serialización JSON | 2.5B+ |
+| **Dapper** | Micro ORM para BD | 500M+ |
+| **Serilog** | Logging estructurado | 300M+ |
+| **xUnit** | Testing unitario | 150M+ |
+| **AutoMapper** | Mapeo de objetos | 400M+ |
 
-### 🔗 Recurso
+### 🔗 Recursos
 
-**https://www.nuget.org/**
-
-</div>
-
-</div>
+- **Portal:** https://www.nuget.org/
+- **En VS:** Click derecho proyecto → Manage NuGet Packages
 
 ---
 
 ## Resumen de la Clase
 
-<div class="two-col">
-
-<div>
-
-### 📚 Conceptos Clave
+### 📚 Conceptos Clave Aprendidos
 
 | Tema | Descripción |
 |------|-------------|
-| **C#** | Lenguaje moderno, POO |
-| **.NET 8** | Plataforma unificada |
-| **CLR** | Máquina virtual |
-| **Value Types** | Stack, valor |
-| **Ref. Types** | Heap, referencias |
+| **C#** | Lenguaje moderno, orientado a objetos, type-safe |
+| **.NET 8** | Plataforma unificada multiplataforma |
+| **CLR** | Máquina virtual que ejecuta código IL |
+| **Value Types** | Stack, almacenan valor directo (`int`, `double`) |
+| **Reference Types** | Heap, almacenan referencia (`string`, clases) |
+| **Nullable** | `int?` permite null en value types |
+| **C# 12** | Primary constructors, collection expressions |
 
 ### 🎯 Habilidades Adquiridas
 
-✅ Instalar VS 2022
-✅ Crear app consola
-✅ Variables y tipos
-✅ I/O con Console
-✅ Depurar código
-
-</div>
-
-<div>
+- ✅ Instalar Visual Studio 2022
+- ✅ Crear aplicación de consola
+- ✅ Declarar variables y usar tipos
+- ✅ Entrada/salida con Console
+- ✅ Depurar código con breakpoints
 
 ### 🚀 Próximos Pasos
 
-- **Clase 2:** Clases y Objetos
-- Practicar ejercicios
-- Completar tarea
-
-### 💡 Recurso Recomendado
-
-[Microsoft Learn C#](https://learn.microsoft.com/es-es/dotnet/csharp/)
-
-</div>
-
-</div>
+- **Clase 2:** Clases y Objetos en C#
+- Completar ejercicios de práctica
+- Realizar tarea asignada
 
 ---
 
 ## Tarea para Casa
 
-<div class="two-col">
+### 🖥️ Instalación Obligatoria
 
-<div>
+1. Descargar **Visual Studio Community 2022**
+2. Seleccionar Workloads:
+   - ☑️ ASP.NET y desarrollo web
+   - ☑️ Almacenamiento y procesamiento de datos
+3. Incluir componentes:
+   - ☑️ .NET 8 SDK
+   - ☑️ Git para Windows
 
-### 🖥️ Instalación
+### 💻 Proyecto: Calculadora de Promedios
 
-1. Descargar VS Community
-2. Workloads: ASP.NET web, Datos
-3. Componentes: .NET 8 SDK, Git
-
-### 💻 Proyecto
-
-**Calculadora de Promedios**
-
-1. Nombre estudiante
-2. 3 notas (0.0-5.0)
-3. Calcular promedio
-4. APROBADO/REPROBADO
-5. Validar datos
-
-### 📦 Entrega
-
-Subir a GitHub
-
-</div>
-
-<div>
+**Descripción:** Crear aplicación de consola que:
+- Solicite nombre del estudiante
+- Solicite 3 notas (validar rango 0.0 - 5.0)
+- Calcule el promedio
+- Muestre estado: APROBADO (≥3.0) o REPROBADO
+- Tenga validación de datos
 
 ### 📋 Checklist de Entrega
 
-- ✅ Código funcional
-- ✅ Validación de datos
-- ✅ Formato de salida
-- ✅ README con instrucciones
-- ✅ Repository público
-
-### 🎓 Preparación Próxima Clase
-
-- **Clase** = Plantilla
-- **Objeto** = Instancia
-- **Atributo** = Propiedad
-- **Método** = Comportamiento
-
-</div>
-
-</div>
+- [ ] Código funcional sin errores
+- [ ] Validación de datos de entrada
+- [ ] Formato de salida claro
+- [ ] README.md con instrucciones
+- [ ] Repositorio público en GitHub
 
 ---
 
 ## 🎓 Próxima Clase: Clases y Objetos
 
-<div class="two-col">
+### 📚 Temas a ver
 
-<div>
-
-### 📚 Temas
-
-- POO en C#
-- Clases y objetos
+- Programación Orientada a Objetos en C#
+- Definición de clases y creación de objetos
 - Atributos y métodos
-- Encapsulamiento
-- Constructores
+- Encapsulamiento (private, public)
+- Constructores y propiedades
 
-### 📝 Requisitos
+### 📝 Requisitos para la próxima clase
 
-- ✅ VS 2022 instalado
+- ✅ VS 2022 instalado y funcionando
 - ✅ Tarea completada
-- ✅ Repo Git creado
+- ✅ Cuenta GitHub creada
+- ✅ Repositorio configurado
 
-</div>
-
-<div>
-
-### 🔗 Conceptos Clave
+### 🔗 Conceptos Clave a Recordar
 
 | Concepto | Definición |
 |----------|------------|
-| **Clase** | Plantilla |
-| **Objeto** | Instancia |
-| **Atributo** | Propiedad |
-| **Método** | Comportamiento |
+| **Clase** | Plantilla/Modelo de un objeto |
+| **Objeto** | Instancia concreta de una clase |
+| **Atributo** | Características/Propiedades |
+| **Método** | Comportamientos/Acciones |
 
 ### 💡 Preparación
 
-Repasar conceptos básicos de POO antes de la próxima clase.
-
-</div>
-
-</div>
+Repasar conceptos básicos de POO antes de la próxima clase:
+- ¿Qué es una clase?
+- ¿Qué es un objeto?
+- ¿Qué es el encapsulamiento?
 
 ---
+
+<!-- _class: lead -->
 
 # ¡Gracias!
 ## ¿Preguntas?
 
-<div class="info-box" style="text-align: center;">
-
-**Contacto:** [Tu correo]
-
-**Repositorio:** [Enlace]
-
 **UNAULA - Ingeniería Informática - 2026-I**
 
-</div>
+📧 Contacto: [correo del docente]  
+🔗 Repositorio: [enlace del curso]
