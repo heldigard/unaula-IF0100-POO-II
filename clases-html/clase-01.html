@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 01 - Introduccion a C# y .NET | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul {
+      margin: 8px 0 0 18px;
+    }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main {
+      max-width: 1100px;
+      margin: 18px auto 60px;
+      padding: 0 20px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 {
+      margin-top: 0;
+      color: var(--brand);
+      font-size: 1.6rem;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 6px;
+    }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 1</div>
+      <h1>Clase 01: Introduccion a C# y .NET</h1>
+      <div>Duracion: 90 minutos | Semana 1</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Comprender la historia y el contexto de C# y .NET.</li>
+            <li>Diferenciar .NET Framework, .NET Core y .NET 8.</li>
+            <li>Configurar Visual Studio Community 2022.</li>
+            <li>Crear la primera aplicacion de consola en C#.</li>
+            <li>Reconocer la estructura basica de un programa C#.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>Conocimientos basicos de programacion.</li>
+            <li>Equipo con Windows/macOS/Linux con acceso a internet.</li>
+            <li>Cuenta GitHub (recomendada).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>Que es C# y por que usarlo</h3>
+      <div class="grid-2">
+        <div>
+          <p>C# es un lenguaje moderno, orientado a objetos y type-safe. Se utiliza para crear aplicaciones web, escritorio, servicios en la nube, videojuegos y sistemas empresariales.</p>
+          <h4>Ventajas clave</h4>
+          <ul>
+            <li>Multiplataforma (Windows, Linux, macOS).</li>
+            <li>Alto rendimiento y compilacion con JIT.</li>
+            <li>Ecosistema .NET amplio y estable.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Historia (resumen)</h4>
+          <table>
+            <thead>
+              <tr><th>Version</th><th>Anio</th><th>Hito</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>C# 1.0</td><td>2000</td><td>Nace .NET Framework</td></tr>
+              <tr><td>C# 2.0</td><td>2005</td><td>Generics (List&lt;T&gt;)</td></tr>
+              <tr><td>C# 5.0</td><td>2012</td><td>async/await</td></tr>
+              <tr><td>C# 9.0</td><td>2020</td><td>.NET 5 open-source</td></tr>
+              <tr><td>C# 12</td><td>2024</td><td>Primary constructors</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Ecosistema .NET y arquitectura</h3>
+      <p>.NET 8 unifica el runtime para web, desktop, mobile, cloud y gaming. Antes existian plataformas separadas (Framework/Core/Xamarin), ahora se comparte el mismo runtime y librerias base.</p>
+      <pre><code>┌─────────────────────────────────────────┐
+│            TU APLICACION C#             │
+├─────────────────────────────────────────┤
+│     BCL (Base Class Library)            │
+│   System.String, Collections, IO, Data  │
+├─────────────────────────────────────────┤
+│     CLR (Common Language Runtime)       │
+│  JIT | GC | Type Safety | Exceptions    │
+├─────────────────────────────────────────┤
+│        Windows / Linux / macOS          │
+└─────────────────────────────────────────┘</code></pre>
+
+      <h3>Estructura basica de un programa C#</h3>
+      <div class="grid-2">
+        <div>
+          <p>Los elementos esenciales son <code>using</code>, <code>namespace</code>, <code>class</code> y el metodo <code>Main</code> como punto de entrada.</p>
+          <pre><code class="language-csharp">using System;
+
+namespace MiApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hola, C#");
+        }
+    }
+}</code></pre>
+        </div>
+        <div>
+          <h4>Namespaces comunes</h4>
+          <pre><code>System
+├── Console
+├── String
+├── Math
+├── Collections
+│   └── Generic (List&lt;T&gt;)
+├── IO (File, Directory)
+└── Data (SqlClient)</code></pre>
+        </div>
+      </div>
+
+      <h3>Tipos de datos: value vs reference</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Value types (stack)</h4>
+          <pre><code class="language-csharp">int edad = 25;
+int edad2 = edad;
+edad2 = 30;
+Console.WriteLine(edad);  // 25</code></pre>
+        </div>
+        <div>
+          <h4>Reference types (heap)</h4>
+          <pre><code class="language-csharp">string nombre = "Juan";
+string nombre2 = nombre;
+nombre2 = "Maria";
+Console.WriteLine(nombre); // Juan</code></pre>
+        </div>
+      </div>
+
+      <h3>Nullable, strings y patrones</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Nullable</h4>
+          <pre><code class="language-csharp">int? edad = null;
+int edadDefault = edad ?? 18;</code></pre>
+        </div>
+        <div>
+          <h4>Pattern matching</h4>
+          <pre><code class="language-csharp">string categoria = edadDefault switch
+{
+    &lt; 13 => "Nino",
+    &lt; 20 => "Adolescente",
+    &lt; 65 => "Adulto",
+    _ => "Mayor"
+};</code></pre>
+        </div>
+      </div>
+
+      <h3>Convenciones de codigo y buenas practicas</h3>
+      <table>
+        <thead>
+          <tr><th>Elemento</th><th>Estilo</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Clases</td><td>PascalCase</td><td>StudentManager</td></tr>
+          <tr><td>Metodos</td><td>PascalCase</td><td>GetStudent</td></tr>
+          <tr><td>Campos privados</td><td>_camelCase</td><td>_count</td></tr>
+          <tr><td>Constantes</td><td>UPPER_SNAKE</td><td>MAX_SIZE</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Checklist rapido: nombres descriptivos, sangria de 4 espacios, evitar abreviaturas y validar entradas.</div>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografias</h2>
+
+      <h3>Generics: de ArrayList a List&lt;T&gt;</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Antes (ArrayList)</h4>
+          <pre><code class="language-csharp">ArrayList lista = new ArrayList();
+lista.Add(42);
+lista.Add("hola");
+int valor = (int)lista[0]; // riesgo</code></pre>
+        </div>
+        <div>
+          <h4>Ahora (List&lt;T&gt;)</h4>
+          <pre><code class="language-csharp">List&lt;int&gt; nums = new List&lt;int&gt;();
+nums.Add(42);
+// nums.Add("hola"); // error</code></pre>
+        </div>
+      </div>
+
+      <h3>Infografia: ecosistema .NET</h3>
+      <figure>
+        <img src="../assets/infografias/clase-01-ecosistema-dotnet.png" alt="Infografia ecosistema .NET 8" />
+        <figcaption>Transicion de plataformas separadas a un runtime unificado (.NET 8) para web, desktop, mobile y cloud.</figcaption>
+      </figure>
+
+      <h3>Novedades de C# 12</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Primary constructors</h4>
+          <pre><code class="language-csharp">public class Persona(string nombre, int edad)
+{
+    public string Info => $"{nombre} ({edad} anos)";
+}</code></pre>
+        </div>
+        <div>
+          <h4>Collection expressions</h4>
+          <pre><code class="language-csharp">int[] pares = [2, 4, 6];
+int[] impares = [1, 3, 5];
+int[] all = [..pares, ..impares];</code></pre>
+        </div>
+      </div>
+
+      <h3>Ciclo de ejecucion en C#</h3>
+      <pre><code>1) Codigo C# (.cs)
+2) Compilacion -> IL (.dll/.exe)
+3) CLR (JIT) -> codigo maquina
+4) Ejecucion en Windows/Linux/macOS</code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Instalacion y configuracion de Visual Studio 2022</h3>
+      <ul>
+        <li>Instalar Visual Studio Community 2022.</li>
+        <li>Workloads: ASP.NET y desarrollo web, Almacenamiento de datos.</li>
+        <li>Componentes: .NET 8 SDK y Git para Windows.</li>
+      </ul>
+
+      <h3>Primera aplicacion de consola</h3>
+      <ol>
+        <li>Crear proyecto: Aplicacion de consola (.NET).</li>
+        <li>Revisar <code>Program.cs</code>.</li>
+        <li>Ejecutar con F5 y observar salida.</li>
+      </ol>
+      <pre><code class="language-csharp">using System;
+
+namespace HolaMundo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hola Mundo");
+        }
+    }
+}</code></pre>
+
+      <h3>Depuracion basica</h3>
+      <table>
+        <thead>
+          <tr><th>Atajo</th><th>Accion</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>F5</td><td>Iniciar debug</td></tr>
+          <tr><td>F9</td><td>Breakpoint</td></tr>
+          <tr><td>F10</td><td>Step Over</td></tr>
+          <tr><td>F11</td><td>Step Into</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Errores comunes y checklist</h3>
+      <ul>
+        <li>Olvidar <code>using System;</code> cuando se usa <code>Console</code>.</li>
+        <li>No validar entradas de usuario antes de convertir a numerico.</li>
+        <li>No configurar workloads correctos en Visual Studio.</li>
+        <li>Confundir value types con reference types al asignar.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>Ejercicio 1: Calculadora de area</h3>
+      <p>Crear una app de consola que calcule el area de un rectangulo a partir de base y altura.</p>
+      <pre><code class="language-csharp">using System;
+
+namespace CalculadoraArea
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== CALCULADORA ===");
+            Console.Write("Base: ");
+            double b = double.Parse(Console.ReadLine());
+            Console.Write("Altura: ");
+            double h = double.Parse(Console.ReadLine());
+            double area = b * h;
+            Console.WriteLine($"Area: {area:F2}");
+        }
+    }
+}</code></pre>
+
+      <h3>Ejercicio 2: Sistema de calificaciones</h3>
+      <p>Solicitar nombre y tres notas (0.0 - 5.0), calcular promedio y mostrar APROBADO/REPROBADO con validacion.</p>
+      <pre><code class="language-csharp">static double PedirNota(string etiqueta)
+{
+    double nota;
+    while (true)
+    {
+        Console.Write($"{etiqueta} (0-5): ");
+        if (double.TryParse(Console.ReadLine(), out nota))
+        {
+            if (nota >= 0 && nota <= 5) return nota;
+            Console.WriteLine("Fuera de rango");
+        }
+        else
+        {
+            Console.WriteLine("No valido");
+        }
+    }
+}</code></pre>
+
+      <h3>Tarea para casa</h3>
+      <ul>
+        <li>Instalar Visual Studio 2022 con workloads indicados.</li>
+        <li>Proyecto: calculadora de promedios con validacion.</li>
+        <li>Entregar repositorio en GitHub con README.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Documentacion oficial .NET</li>
+        <li>Visual Studio Community 2022</li>
+        <li>NuGet Package Manager</li>
+        <li>Guia de convenciones C# (Microsoft)</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

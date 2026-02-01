@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 05 - TDD y Pruebas Unitarias | IF0100 - POO II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        header .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h2 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        nav .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #e0e7ff;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e40af;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        h3 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #3b82f6;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            color: inherit;
+        }
+
+        p code, li code {
+            background: #e0e7ff;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .diagram {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+        }
+
+        figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        figcaption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-table > div {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table h4 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1e40af;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TDD y Pruebas Unitarias</h1>
+        <div class="subtitle">IF0100 - Lenguaje de Programacion OO II | 4 Semestre - Ingenieria Informatica</div>
+        <div class="meta">Duracion: 90 minutos | Fecha: Semana 5</div>
+    </header>
+
+    <div class="container">
+        <nav id="inicio">
+            <h2>Tabla de Contenidos</h2>
+            <div class="toc-grid">
+                <a href="#objetivos">Objetivos y Agenda</a>
+                <a href="#que-es-tdd">Que es TDD?</a>
+                <a href="#ciclo-tdd">Ciclo Red-Green-Refactor</a>
+                <a href="#xunit">xUnit Framework</a>
+                <a href="#patron-aaa">Patron AAA</a>
+                <a href="#test-doubles">Test Doubles</a>
+                <a href="#ejemplos">Ejemplos Completos</a>
+                <a href="#ejercicios">Ejercicios Practicos</a>
+                <a href="#resumen">Resumen</a>
+            </div>
+        </nav>
+
+        <section id="objetivos">
+            <h2>Objetivos y Agenda</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objetivos</th>
+                        <th>Agenda (90 min)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1. Entender TDD</td><td>20' Que es TDD?</td></tr>
+                    <tr><td>2. Usar xUnit</td><td>25' xUnit Framework</td></tr>
+                    <tr><td>3. Aplicar patron AAA</td><td>20' Patron AAA</td></tr>
+                    <tr><td>4. Conocer Test Doubles</td><td>15' Test Doubles</td></tr>
+                    <tr><td>5. Practicar con ejemplos</td><td>10' Ejercicios</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="que-es-tdd">
+            <h2>1. Que es TDD?</h2>
+
+            <h3>Test-Driven Development (TDD)</h3>
+            <p><strong>TDD</strong> es una practica de desarrollo donde se escriben las pruebas <strong>ANTES</strong> del codigo de produccion.</p>
+
+            <figure>
+                <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor">
+                <figcaption>Figura 1: Ciclo de TDD - Red (prueba falla), Green (codigo pasa), Refactor (mejorar).</figcaption>
+            </figure>
+
+            <h3>Por que TDD?</h3>
+            <div class="success-box">
+                <h4>Beneficios:</h4>
+                <ul>
+                    <li><strong>Codigo mas confiable:</strong> Las pruebas garantizan funcionalidad</li>
+                    <li><strong>Diseño mejor:</strong> Pensar en pruebas primero mejora el diseño</li>
+                    <li><strong>Refactorizacion segura:</strong> Las pruebas protegen contra regresiones</li>
+                    <li><strong>Documentacion viva:</strong> Las pruebas documentan el comportamiento</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="ciclo-tdd">
+            <h2>2. Ciclo Red-Green-Refactor</h2>
+
+            <h3>El Ciclo de TDD</h3>
+            <div class="diagram">
+<pre>
+🔴 RED    → Escribir prueba que falla
+             (El codigo aun no existe)
+
+🟢 GREEN  → Codigo minimo para pasar
+             (Implementacion basica)
+
+🔵 REFACTOR → Eliminar duplicacion
+             (Mejorar diseno)
+
+🔁 REPEAT → Siguiente prueba
+             (Continuar ciclo...)
+</pre>
+            </div>
+
+            <h3>Las Tres Leyes de TDD (Uncle Bob Martin)</h3>
+            <div class="highlight-box">
+                <ol>
+                    <li><strong>No escribiras codigo de produccion</strong> hasta haber escrito una prueba que falle</li>
+                    <li><strong>No escribiras mas de una prueba</strong> suficiente para fallar (y compilar)</li>
+                    <li><strong>No escribiras mas codigo</strong> del necesario para pasar la prueba</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="xunit">
+            <h2>3. xUnit Framework</h2>
+
+            <h3>Que es xUnit?</h3>
+            <p><strong>xUnit</strong> es un framework de pruebas unitarias para .NET. Es open source y ampliamente utilizado en la comunidad .NET.</p>
+
+            <h3>Atributos Principales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Atributo</th>
+                        <th>Uso</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>[Fact]</code></td><td>Prueba sin parametros</td><td>Un caso de prueba especifico</td></tr>
+                    <tr><td><code>[Theory]</code></td><td>Prueba parametrizada</td><td>Multiple casos con datos diferentes</td></tr>
+                    <tr><td><code>[InlineData(...)]</code></td><td>Datos para [Theory]</td><td>Proporciona valores para los parametros</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Instalacion</h3>
+            <pre><code class="language-bash"># Crear proyecto de pruebas
+dotnet new xunit -n MiProyecto.Tests
+
+# Agregar referencia al proyecto principal
+cd MiProyecto.Tests
+dotnet add reference ../MiProyecto/MiProyecto.csproj
+
+# Ejecutar pruebas
+dotnet test</code></pre>
+
+            <figure>
+                <img src="../assets/infografias/clase-05-testing-pyramid.png" alt="Testing Pyramid - Unit, Integration, E2E Tests">
+                <figcaption>Figura 2: Piramide de Testing - Mas pruebas unitarias en la base, menos pruebas de integracion y E2E en la cima.</figcaption>
+            </figure>
+        </section>
+
+        <section id="patron-aaa">
+            <h2>4. Patron AAA (Arrange-Act-Assert)</h2>
+
+            <h3>Que es el Patron AAA?</h3>
+            <p>Es un patron estandar para escribir pruebas unitarias organizadas en tres secciones claras.</p>
+
+            <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────┐
+│           PATRON AAA (Arrange-Act-Assert)        │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
+│  │ ARRANGE     │  │ ACT         │  │ ASSERT  │ │
+│  │ (Configurar)│  │ (Ejecutar)  │  │(Verificar)│ │
+│  └─────────────┘  └─────────────┘  └─────────┘ │
+│         │               │              │         │
+│         ▼               ▼              ▼         │
+│  Crear objetos   Llamar metodo   Comprobar     │
+│  Inicializar     a probar       resultado      │
+│  variables                                  │
+│                                                 │
+└─────────────────────────────────────────────────┘
+</pre>
+            </div>
+
+            <h3>Ejemplo Completo</h3>
+            <pre><code class="language-csharp">[Fact]
+public void Sumar_DosNumeros_RetornaSuma()
+{
+    // Arrange - Configurar
+    var calc = new Calculadora();
+    int esperado = 8;
+
+    // Act - Ejecutar
+    int resultado = calc.Sumar(5, 3);
+
+    // Assert - Verificar
+    Assert.Equal(esperado, resultado);
+}</code></pre>
+
+            <h3>Metodos Assert Comunes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metodo</th>
+                        <th>Uso</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>Equal()</code></td><td>Compara igualdad</td><td><code>Assert.Equal(8, resultado)</code></td></tr>
+                    <tr><td><code>True()/False()</code></td><td>Booleano</td><td><code>Assert.True(condicion)</code></td></tr>
+                    <tr><td><code>NotNull()</code></td><td>No es null</td><td><code>Assert.NotNull(obj)</code></td></tr>
+                    <tr><td><code>Throws()</code></td><td>Excepcion esperada</td><td><code>Assert.Throws&lt;Exception&gt;(() => metodo())</code></td></tr>
+                    <tr><td><code>Contains()</code></td><td>Coleccion contiene</td><td><code>Assert.Contains(lista, valor)</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="test-doubles">
+            <h2>5. Test Doubles</h2>
+
+            <h3>Que son los Test Doubles?</h3>
+            <p>Son objetos sustitutos usados en pruebas para simular dependencias externas o complejas.</p>
+
+            <h3>Tipos de Test Doubles</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Proposito</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dummy</strong></td>
+                        <>Llena parametros, sin uso real</td>
+                        <td>Objeto vacio para cumplir firma</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stub</strong></td>
+                        <td>Respuestas predefinidas</td>
+                        <td>Siempre retorna "hola"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fake</strong></td>
+                        <td>Implementacion simplificada</td>
+                        <td>Repository con lista en memoria</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mock</strong></td>
+                        <td>Verifica comportamiento</td>
+                        <td>Confirma que se llamo al metodo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Cuando usar cada uno?</h3>
+            <div class="comparison-table">
+                <div>
+                    <h4>Dummy</h4>
+                    <pre><code class="language-csharp">// Solo para llenar parametros
+public void Probar(DummyServicio servicio) {
+    // El servicio no se usa
+}</code></pre>
+                    <p><em>Usar cuando no necesitas interactuar con el objeto.</em></p>
+                </div>
+                <div>
+                    <h4>Stub</h4>
+                    <pre><code class="language-csharp">// Respuestas predefinidas
+var stub = new StubRepo();
+stub.Obtener(1).Returns(new Estudiante());
+
+// Test usa el stub
+var estudiante = repo.Obtener(1);</code></pre>
+                    <p><em>Usar cuando necesitas respuestas controladas.</em></p>
+                </div>
+            </div>
+
+            <div class="comparison-table">
+                <div>
+                    <h4>Fake</h4>
+                    <pre><code class="language-csharp">// Implementacion simplificada
+public class FakeRepo : IRepositorio {
+    private List _datos = new();
+    public void Guardar(Estudiante e) => _datos.Add(e);
+    public Estudiante Obtener(int id) => _datos.FirstOrDefault();
+}</code></pre>
+                    <p><em>Usar cuando necesitas logica real pero simple.</em></p>
+                </div>
+                <div>
+                    <h4>Mock</h4>
+                    <pre><code class="language-csharp">// Verifica comportamiento
+var mock = new Mock&lt;IRepositorio&gt;();
+mock.Setup(x => x.Guardar(It.IsAny()))
+    .Verifiable();
+
+// Test ejecuta...
+mock.Verify(); // Confirma llamada</code></pre>
+                    <p><em>Usar cuando necesitas verificar interacciones.</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ejemplos">
+            <h2>6. Ejemplos Completos</h2>
+
+            <h3>Ejemplo 1: Calculadora con TDD</h3>
+
+            <h4>1. Escribir la Prueba (RED)</h4>
+            <pre><code class="language-csharp">[Fact]
+public void Sumar_DosNumeros_RetornaSuma()
+{
+    // Arrange
+    var calc = new Calculadora();
+
+    // Act
+    int resultado = calc.Sumar(5, 3);
+
+    // Assert
+    Assert.Equal(8, resultado);
+}</code></pre>
+
+            <h4>2. Codigo Minimo (GREEN)</h4>
+            <pre><code class="language-csharp">public class Calculadora
+{
+    public int Sumar(int a, int b) => a + b; // Minimo para pasar
+}</code></pre>
+
+            <h4>3. Refactor (si es necesario)</h4>
+            <pre><code class="language-csharp">// El codigo ya es simple, no hay refactor necesario</code></pre>
+
+            <h3>Ejemplo 2: Billetera con Validaciones</h3>
+
+            <h4>Clase Billetera</h4>
+            <pre><code class="language-csharp">public class Billetera
+{
+    private decimal _saldo;
+
+    public decimal Saldo => _saldo;
+
+    public void Agregar(decimal monto)
+    {
+        if (monto <= 0)
+            throw new ArgumentException("Monto debe ser positivo");
+        _saldo += monto;
+    }
+
+    public void Retirar(decimal monto)
+    {
+        if (monto <= 0)
+            throw new ArgumentException("Monto debe ser positivo");
+        if (monto > _saldo)
+            throw new InvalidOperationException("Saldo insuficiente");
+        _saldo -= monto;
+    }
+}</code></pre>
+
+            <h4>Tests Completos</h4>
+            <pre><code class="language-csharp">public class BilleteraTests
+{
+    [Fact]
+    public void Saldo_Inicialmente_EsCero()
+    {
+        var billetera = new Billetera();
+        Assert.Equal(0, billetera.Saldo);
+    }
+
+    [Fact]
+    public void Agregar_MontoPosicional_IncrementaSaldo()
+    {
+        var billetera = new Billetera();
+        billetera.Agregar(100);
+        Assert.Equal(100, billetera.Saldo);
+    }
+
+    [Fact]
+    public void Retirar_SaldoSuficiente_DecrementaSaldo()
+    {
+        var billetera = new Billetera();
+        billetera.Agregar(100);
+        billetera.Retirar(30);
+        Assert.Equal(70, billetera.Saldo);
+    }
+
+    [Fact]
+    public void Retirar_SaldoInsuficiente_LanzaExcepcion()
+    {
+        var billetera = new Billetera();
+        billetera.Agregar(50);
+        Assert.Throws&lt;InvalidOperationException&gt;(
+            () => billetera.Retirar(100)
+        );
+    }
+}</code></pre>
+
+            <h3>Ejemplo 3: Parametrizacion con [Theory]</h3>
+            <pre><code class="language-csharp">[Theory]
+[InlineData(1, 1, 2)]
+[InlineData(5, 3, 8)]
+[InlineData(-1, 1, 0)]
+[InlineData(0, 0, 0)]
+[InlineData(-5, -3, -8)]
+public void Sumar_VariosNumeros_RetornaSuma(
+    int a, int b, int esperado)
+{
+    // Arrange
+    var calc = new Calculadora();
+
+    // Act
+    int resultado = calc.Sumar(a, b);
+
+    // Assert
+    Assert.Equal(esperado, resultado);
+}</code></pre>
+        </section>
+
+        <section id="ejercicios">
+            <h2>7. Ejercicios Practicos</h2>
+
+            <h3>Ejercicio 1: Calculadora TDD Completa</h3>
+            <p>Implementar una calculadora siguiendo TDD:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operacion</th>
+                        <th>Casos de Prueba</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Suma</td><td>2+3=5, -1+1=0, 0+0=0</td></tr>
+                    <tr><td>Resta</td><td>5-3=2, 3-5=-2</td></tr>
+                    <tr><td>Multiplicacion</td><td>3*4=12, -2*3=-6</td></tr>
+                    <tr><td>Division</td><td>10/2=5, /0 lanza excepcion</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejercicio 2: Validador de Contrasenas</h3>
+            <pre><code class="language-csharp">public class ValidadorContrasenas
+{
+    public void Validar(string contrasena)
+    {
+        if (contrasena.Length < 8)
+            throw new ArgumentException("Minimo 8 caracteres");
+        if (!contrasena.Any(char.IsUpper))
+            throw new ArgumentException("Al menos una mayuscula");
+        if (!contrasena.Any(char.IsDigit))
+            throw new ArgumentException("Al menos un numero");
+    }
+}</code></pre>
+
+            <p><strong>Requisitos:</strong></p>
+            <ul>
+                <li>Minimo 8 caracteres</li>
+                <li>Al menos una mayuscula</li>
+                <li>Al menos un numero</li>
+                <li>Debe lanzar excepcion si no cumple</li>
+            </ul>
+
+            <h3>Ejercicio 3: Carrito de Compras</h3>
+            <p><strong>Funcionalidades a probar:</strong></p>
+            <ul>
+                <li>Agregar producto al carrito</li>
+                <li>Calcular total del carrito</li>
+                <li>Aplicar descuento porcentual</li>
+                <li>Validar stock antes de agregar</li>
+            </ul>
+        </section>
+
+        <section id="resumen">
+            <h2>Resumen de la Clase</h2>
+
+            <h3>Conceptos Clave Aprendidos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>TDD</strong></td><td>Escribir pruebas antes del codigo (Red-Green-Refactor)</td></tr>
+                    <tr><td><strong>xUnit</strong></td><td>Framework de pruebas para .NET ([Fact], [Theory])</td></tr>
+                    <tr><td><strong>AAA</strong></td><td>Patron Arrange-Act-Assert para pruebas</td></tr>
+                    <tr><td><strong>Test Doubles</strong></td><td>Dummy, Stub, Fake, Mock para aislar pruebas</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Habilidades Adquiridas</h3>
+            <ul>
+                <li>Crear proyecto de pruebas xUnit</li>
+                <li>Escribir pruebas usando [Fact] y [Theory]</li>
+                <li>Aplicar patron AAA</li>
+                <li>Usar Assert para verificar resultados</li>
+                <li>Probar excepciones con Assert.Throws</li>
+            </ul>
+
+            <h3>Proximos Pasos</h3>
+            <ul>
+                <li><strong>Clase 6:</strong> BDD (Behavior-Driven Development)</li>
+                <li>Practicar TDD en proyectos reales</li>
+                <li>Explorar Moq para mocks avanzados</li>
+            </ul>
+        </section>
+    </div>
+
+    <a href="#inicio" class="back-to-top">&uarr;</a>
+
+    <footer>
+        <p><strong>IF0100 - Lenguaje de Programacion OO II</strong></p>
+        <p>UNAULA - Ingenieria Informatica - 2026-I</p>
+        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+            Contacto: [correo del docente] | Repositorio: [enlace del curso]
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 06 - BDD Behavior-Driven Development | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 6px; }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 2</div>
+      <h1>Clase 06: BDD - Behavior-Driven Development</h1>
+      <div>Duracion: 90 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Distinguir entre TDD y BDD.</li>
+            <li>Escribir escenarios en lenguaje Gherkin.</li>
+            <li>Implementar pruebas de comportamiento con SpecFlow.</li>
+            <li>Aplicar el formato Given-When-Then.</li>
+            <li>Comunicar requisitos de forma comprensible para todos.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>Conocer conceptos basicos de pruebas unitarias.</li>
+            <li>Entender historias de usuario y requisitos.</li>
+            <li>Herramienta .NET SDK instalada.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>TDD vs BDD</h3>
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>TDD</th><th>BDD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Enfoque</td><td>Tecnico</td><td>Negocio / comportamiento</td></tr>
+          <tr><td>Audiencia</td><td>Desarrolladores</td><td>Devs, QA, clientes</td></tr>
+          <tr><td>Lenguaje</td><td>Codigo</td><td>Natural (Gherkin)</td></tr>
+          <tr><td>Unidad</td><td>Unidades pequenas</td><td>Comportamientos</td></tr>
+          <tr><td>Pregunta</td><td>Funciona el codigo?</td><td>Hace lo que el usuario espera?</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Principios de BDD</h3>
+      <ul>
+        <li>Lenguaje ubicuo entre negocio y equipo tecnico.</li>
+        <li>Especificaciones ejecutables como pruebas automatizadas.</li>
+        <li>Comportamiento antes que implementacion.</li>
+        <li>Colaboracion (Three Amigos: Dev + QA + Business).</li>
+        <li>Documentacion viva y actualizada.</li>
+      </ul>
+
+      <h3>Gherkin y Given-When-Then</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Vocabulario basico</h4>
+          <table>
+            <thead>
+              <tr><th>Espanol</th><th>Ingles</th><th>Uso</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Caracteristica</td><td>Feature</td><td>Agrupa escenarios</td></tr>
+              <tr><td>Antecedentes</td><td>Background</td><td>Pasos comunes</td></tr>
+              <tr><td>Escenario</td><td>Scenario</td><td>Caso especifico</td></tr>
+              <tr><td>Dado</td><td>Given</td><td>Precondiciones</td></tr>
+              <tr><td>Cuando</td><td>When</td><td>Accion principal</td></tr>
+              <tr><td>Entonces</td><td>Then</td><td>Resultado esperado</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>Estructura Given-When-Then</h4>
+          <pre><code>GIVEN: contexto y estado inicial
+WHEN: accion del usuario
+THEN: resultado esperado</code></pre>
+          <div class="note">Un escenario debe describir un solo comportamiento y ser legible para negocio.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografias</h2>
+
+      <h3>Infografia: TDD vs BDD</h3>
+      <figure>
+        <img src="../assets/infografias/clase-06-tdd-vs-bdd.png" alt="Infografia comparacion TDD vs BDD" />
+        <figcaption>Comparacion de enfoque, audiencia y lenguaje entre TDD y BDD.</figcaption>
+      </figure>
+
+      <h3>Infografia: Given-When-Then</h3>
+      <figure>
+        <img src="../assets/infografias/clase-06-bdd-given-when-then.png" alt="Infografia formato Given-When-Then" />
+        <figcaption>Estructura del escenario: contexto, accion principal y resultado esperado.</figcaption>
+      </figure>
+
+      <h3>Infografia: Three Amigos</h3>
+      <figure>
+        <img src="../assets/infografias/clase-06-three-amigos.png" alt="Infografia de los tres amigos en BDD" />
+        <figcaption>Colaboracion entre negocio, desarrollo y QA para clarificar requisitos.</figcaption>
+      </figure>
+
+      <h3>Ejemplo de escenario Gherkin</h3>
+      <pre><code class="language-gherkin"># language: es
+Caracteristica: Retiro de dinero desde cajero
+  Como cliente del banco
+  Quiero retirar dinero
+  Para tener efectivo disponible
+
+  Escenario: Retiro exitoso
+    Dado que tengo una cuenta con saldo de $1000
+    Y mi tarjeta esta activa
+    Cuando intento retirar $200
+    Entonces el cajero debe entregarme $200
+    Y el saldo debe ser $800</code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Instalacion y estructura SpecFlow</h3>
+      <pre><code class="language-bash">dotnet new specflowproject -n MiApp.Specs --framework xunit
+# o manual
+
+dotnet new classlib -n MiApp.Specs
+dotnet add package SpecFlow.xUnit
+dotnet add package SpecFlow.Tools.MsBuild.Generation
+dotnet add package FluentAssertions
+dotnet add package xunit</code></pre>
+
+      <h3>Estructura de proyecto</h3>
+      <pre><code>MiApp.Specs/
+├── Features/        (*.feature)
+├── StepDefinitions/ (C# steps)
+├── Hooks/
+└── Drivers/</code></pre>
+
+      <h3>Step Definitions basicos</h3>
+      <pre><code class="language-csharp">[Binding]
+public class CalificacionesSteps
+{
+    private Estudiante _estudiante;
+    private double _promedio;
+
+    [Given(@"el estudiante con codigo \"([^\"]*)\"")]
+    public void DadoElEstudianteConCodigo(string codigo)
+    {
+        _estudiante = new Estudiante { Codigo = codigo };
+    }
+
+    [When(@"registro las notas:")]
+    public void CuandoRegistroLasNotas(Table tabla)
+    {
+        foreach (var fila in tabla.Rows)
+        {
+            int parcial = int.Parse(fila["Parcial"]);
+            double nota = double.Parse(fila["Nota"]);
+            _estudiante.RegistrarNota(parcial, nota);
+        }
+        _promedio = _estudiante.CalcularPromedio();
+    }
+
+    [Then(@"el promedio debe ser (.*)")]
+    public void EntoncesElPromedioDebeSer(double esperado)
+    {
+        _promedio.Should().BeApproximately(esperado, 0.01);
+    }
+}</code></pre>
+
+      <h3>Buenas practicas</h3>
+      <ul>
+        <li>Escribir escenarios con lenguaje del dominio.</li>
+        <li>Un escenario = un comportamiento.</li>
+        <li>Evitar pasos demasiado tecnicos.</li>
+        <li>Datos realistas y verificables.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>Ejercicio 1: Sistema de biblioteca</h3>
+      <p>Crear la feature "Prestamo de libros" con 3 escenarios: exito, fallo y multa por retraso.</p>
+
+      <h3>Ejercicio 2: Descuentos por categoria</h3>
+      <p>Escribir un esquema de escenario con ejemplos para categorias normal, frecuente y vip.</p>
+
+      <h3>Checklist de errores comunes</h3>
+      <ul>
+        <li>Escenarios demasiado tecnicos o centrados en UI.</li>
+        <li>Pasos sin datos concretos.</li>
+        <li>Duplicar pasos que deberian ir en Background.</li>
+        <li>No alinear pasos con lenguaje del negocio.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>SpecFlow (documentacion oficial).</li>
+        <li>Gherkin Reference (Cucumber).</li>
+        <li>Practicas BDD y Three Amigos.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 10 - MVC y Razor Pages | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 6px; }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 3</div>
+      <h1>Clase 10: MVC y Razor Pages</h1>
+      <div>Duracion: 90 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Comprender el patron MVC en detalle.</li>
+            <li>Implementar routing personalizado.</li>
+            <li>Aplicar model binding y validacion.</li>
+            <li>Crear Razor Pages para casos especificos.</li>
+            <li>Utilizar Tag Helpers eficientemente.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>ASP.NET Core basico.</li>
+            <li>Conocimiento de C# y POO.</li>
+            <li>HTML/CSS fundamentals.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>Patron MVC y responsabilidades</h3>
+      <p>El controlador orquesta el flujo, el modelo contiene reglas y datos, y la vista presenta HTML. La separacion evita mezclar UI con logica de negocio.</p>
+      <pre><code>Controller: recibe request, valida, decide flujo
+Model: entidades, reglas, acceso a datos
+View: presentacion HTML/CSS (Razor)</code></pre>
+
+      <h3>Routing y atributos HTTP</h3>
+      <pre><code class="language-csharp">app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+[HttpGet("{id:int}")]
+public IActionResult Detalles(int id) { }</code></pre>
+
+      <h3>Model Binding y ViewModels</h3>
+      <p>ASP.NET Core mapea datos HTTP a objetos C#. Los ViewModels separan el modelo de dominio de la UI e incluyen validaciones.</p>
+      <pre><code class="language-csharp">public class EstudianteViewModel
+{
+    [Required]
+    [Display(Name = "Codigo")]
+    public string Codigo { get; set; }
+
+    [Required]
+    public string Nombre { get; set; }
+
+    public SelectList Carreras { get; set; }
+}</code></pre>
+
+      <h3>Razor Pages y Tag Helpers</h3>
+      <ul>
+        <li>Razor Pages simplifica paginas con PageModel + .cshtml.</li>
+        <li>Tag Helpers generan HTML dinamico con atributos asp-*.</li>
+        <li>Ideal para formularios simples o paginas de contenido.</li>
+      </ul>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografias</h2>
+
+      <h3>Infografia: MVC</h3>
+      <figure>
+        <img src="../assets/infografias/clase-10-mvc.png" alt="Infografia patron MVC" />
+        <figcaption>Relacion entre Controller, Model y View y flujo de request/response.</figcaption>
+      </figure>
+
+      <h3>Controller CRUD (fragmento)</h3>
+      <pre><code class="language-csharp">public class EstudiantesController : Controller
+{
+    public async Task&lt;IActionResult&gt; Index(string busqueda)
+    {
+        var estudiantes = await _service.ObtenerTodosAsync();
+        if (!string.IsNullOrEmpty(busqueda))
+            estudiantes = estudiantes.Where(e => e.Nombre.Contains(busqueda));
+        return View(estudiantes);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel vm)
+    {
+        if (!ModelState.IsValid) return View(vm);
+        await _service.CrearAsync(Mapear(vm));
+        return RedirectToAction(nameof(Index));
+    }
+}</code></pre>
+
+      <h3>Razor Page basica</h3>
+      <pre><code class="language-html">@page
+@model CrearModel
+
+<form method="post">
+  <input asp-for="Estudiante.Nombre" class="form-control" />
+  <span asp-validation-for="Estudiante.Nombre"></span>
+  <button type="submit">Guardar</button>
+</form></code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Routing personalizado</h3>
+      <pre><code class="language-csharp">app.MapControllerRoute(
+    name: "busqueda",
+    pattern: "buscar/{termino}",
+    defaults: new { controller = "Estudiantes", action = "Buscar" });</code></pre>
+
+      <h3>Tag Helpers esenciales</h3>
+      <pre><code class="language-html"><label asp-for="Nombre"></label>
+<input asp-for="Nombre" class="form-control" />
+<span asp-validation-for="Nombre" class="text-danger"></span>
+<select asp-for="CarreraId" asp-items="Model.Carreras"></select></code></pre>
+
+      <h3>ViewComponents y Partial Views</h3>
+      <ul>
+        <li>Partial: vista reutilizable sin logica.</li>
+        <li>ViewComponent: componente UI con logica y datos propios.</li>
+        <li>Usar para menus, widgets y paneles repetidos.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>CRUD de Cursos</h3>
+      <p>Implementar CRUD completo con paginacion y busqueda, usando Bootstrap en vistas.</p>
+
+      <h3>Razor Page alternativa</h3>
+      <p>Crear Razor Page para la vista Detalles de un curso.</p>
+
+      <h3>Checklist de errores comunes</h3>
+      <ul>
+        <li>Colocar HTML en el controller.</li>
+        <li>Usar el modelo de dominio directamente en la vista.</li>
+        <li>Olvidar validacion de ModelState.</li>
+        <li>No proteger formularios con anti-forgery.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Documentacion ASP.NET Core MVC.</li>
+        <li>Razor Pages (Microsoft).</li>
+        <li>Tag Helpers Reference.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 02 - Clases, Objetos y Encapsulamiento | IF0100 - POO II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        header .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h2 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        nav .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #e0e7ff;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e40af;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        h3 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #3b82f6;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            color: inherit;
+        }
+
+        p code, li code {
+            background: #e0e7ff;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .diagram {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+        }
+
+        figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        figcaption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-table > div {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table h4 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1e40af;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Clases, Objetos y Encapsulamiento</h1>
+        <div class="subtitle">IF0100 - Lenguaje de Programacion OO II | 4 Semestre - Ingenieria Informatica</div>
+        <div class="meta">Duracion: 90 minutos | Fecha: Semana 2</div>
+    </header>
+
+    <div class="container">
+        <nav id="inicio">
+            <h2>Tabla de Contenidos</h2>
+            <div class="toc-grid">
+                <a href="#objetivos">Objetivos y Agenda</a>
+                <a href="#poo">Programacion Orientada a Objetos</a>
+                <a href="#pilares">Tres Pilares de la POO</a>
+                <a href="#clase-vs-objeto">Clase vs Objeto</a>
+                <a href="#memoria">Representacion en Memoria</a>
+                <a href="#encapsulamiento">Encapsulamiento</a>
+                <a href="#modificadores">Modificadores de Acceso</a>
+                <a href="#propiedades">Propiedades</a>
+                <a href="#constructores">Constructores</a>
+                <a href="#static">Static vs Instance</a>
+                <a href="#class-vs-struct">class vs struct</a>
+                <a href="#resumen">Resumen</a>
+            </div>
+        </nav>
+
+        <section id="objetivos">
+            <h2>Objetivos y Agenda</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objetivos</th>
+                        <th>Agenda (90 min)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1. Entender paradigma POO</td><td>15' Que es POO?</td></tr>
+                    <tr><td>2. Diferenciar clase vs objeto</td><td>20' Clase vs Objeto</td></tr>
+                    <tr><td>3. Aplicar encapsulamiento</td><td>25' Encapsulamiento</td></tr>
+                    <tr><td>4. Usar propiedades y constructores</td><td>20' Propiedades y Constructores</td></tr>
+                    <tr><td>5. Comprender static vs instance</td><td>10' Static y Diferencias class/struct</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="poo">
+            <h2>1. Programacion Orientada a Objetos</h2>
+
+            <h3>Que es la POO?</h3>
+            <p>La <strong>Programacion Orientada a Objetos (POO)</strong> es un paradigma de programacion que se basa en el concepto de "objetos", que pueden contener datos y codigo:</p>
+            <ul>
+                <li><strong>Datos:</strong> Atributos o propiedades (campos)</li>
+                <li><strong>Codigo:</strong> Comportamientos o metodos (funciones)</li>
+            </ul>
+
+            <h3>Procedural vs POO</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Programacion Procedural</th>
+                        <th>Programacion Orientada a Objetos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Unidad basica</strong></td><td>Funciones/procedimientos</td><td>Clases/objetos</td></tr>
+                    <tr><td><strong>Datos</strong></td><td>Separados de funciones</td><td>Unidos con metodos</td></tr>
+                    <tr><td><strong>Organizacion</strong></td><td>Procedimientos que actuan sobre datos</td><td>Objetos que encapsulan datos y comportamiento</td></tr>
+                    <tr><td><strong>Mantenimiento</strong></td><td>Dificil (codigo acoplado)</td><td>Modular (codigo desacoplado)</td></tr>
+                    <tr><td><strong>Escalabilidad</strong></td><td>Limitada</td><td>Facil de extender</td></tr>
+                    <tr><td><strong>Reutilizacion</strong></td><td>Baja</td><td>Alta (herencia, composicion)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Comparativo</h3>
+            <div class="comparison-table">
+                <div>
+                    <h4>Enfoque Procedural (C)</h4>
+                    <pre><code class="language-c">// Datos separados
+struct Estudiante {
+    char nombre[100];
+    int edad;
+    double promedio;
+};
+
+// Funciones separadas
+void imprimir_estudiante(struct Estudiante* e) {
+    printf("Nombre: %s\n", e->nombre);
+}
+
+double calcular_promedio(struct Estudiante* e) {
+    return e->promedio;
+}</code></pre>
+                </div>
+                <div>
+                    <h4>Enfoque POO (C#)</h4>
+                    <pre><code class="language-csharp">// Datos y comportamiento UNIDOS
+public class Estudiante
+{
+    // Datos (propiedades)
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+    public double Promedio { get; set; }
+
+    // Comportamiento (metodos)
+    public void Imprimir() =>
+        Console.WriteLine($"Nombre: {Nombre}");
+
+    public bool Aprobado() =>
+        Promedio >= 3.0;
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h4>Ventajas de POO</h4>
+                <ul>
+                    <li><strong>Modularidad:</strong> Codigo organizado en unidades logicas (clases)</li>
+                    <li><strong>Reutilizacion:</strong> Codigo reutilizable mediante herencia y composicion</li>
+                    <li><strong>Mantenibilidad:</strong> Cambios localizados en clases especificas</li>
+                    <li><strong>Extensibilidad:</strong> Facil agregar nuevas funcionalidades</li>
+                    <li><strong>Abstraccion:</strong> Oculta complejidad, expone solo lo necesario</li>
+                    <li><strong>Modelado del mundo real:</strong> Objetos representan entidades del dominio</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="pilares">
+            <h2>Los Tres Pilares de la POO</h2>
+
+            <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────┐
+│          PILARES DE LA PROGRAMACIN ORIENTADA    │
+│                  A OBJETOS (POO)                  │
+├─────────────┬───────────────┬───────────────────┤
+│  1         │  2            │  3                │
+│ ENCAPSULA   │  HERENCIA     │   POLIMORFISMO     │
+│ MIENTO      │               │                   │
+├─────────────┼───────────────┼───────────────────┤
+│ Ocultar     │ Reutilizar    │ Una interfaz,     │
+│ datos       │ codigo        │ multiples formas  │
+│ internos    │               │                   │
+│             │               │                   │
+│ Exponer     │ Crear         │ Misma llamada,    │
+│ compor-     │ jerarquas     │ diferente         │
+│ tamiento    │               │ comportamiento   │
+│ publico     │               │                   │
+│             │               │                   │
+│ **HOY**     │ **CLASE 03**  │ **CLASE 03**      │
+└─────────────┴───────────────┴───────────────────┘
+</pre>
+            </div>
+
+            <div class="highlight-box">
+                <h4>1. Encapsulamiento (Clase 2 - Hoy)</h4>
+                <p>Ocultar los detalles internos de un objeto y exponer solo lo necesario a traves de una interfaz publica.</p>
+                <p><strong>Beneficios:</strong> Proteccion de datos, control de modificaciones, flexibilidad interna.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>2. Herencia (Clase 3 - Proxima)</h4>
+                <p>Crear nuevas clases basadas en clases existentes, reutilizando codigo y extendiendo funcionalidad.</p>
+                <p><strong>Beneficios:</strong> Reutilizacion de codigo, jerarquias logicas, extensibilidad.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>3. Polimorfismo (Clase 3 - Proxima)</h4>
+                <p>Capacidad de objetos de diferentes tipos responder al mismo mensaje de diferentes formas.</p>
+                <p><strong>Beneficios:</strong> Codigo flexible, tratamiento uniforme, facil agregar nuevos tipos.</p>
+            </div>
+        </section>
+
+        <section id="clase-vs-objeto">
+            <h2>Clase vs Objeto</h2>
+
+            <figure>
+                <img src="../assets/infografias/clase-02-clase-vs-objeto.png" alt="Infografia: Clase vs Objeto - La diferencia entre plantilla y instancia">
+                <figcaption>Figura 1: Una clase es el molde o plantilla, mientras que un objeto es una instancia concreta creada a partir de esa clase.</figcaption>
+            </figure>
+
+            <h3>CLASE = Molde / Plantilla / Definicion</h3>
+            <p>Una clase es una <strong>definicion</strong> o <strong>plantilla</strong> para crear objetos. Es abstracta y no ocupa memoria por si misma.</p>
+            <ul>
+                <li>Define estructura (que datos tendra)</li>
+                <li>Especifica comportamiento (que podra hacer)</li>
+                <li>NO ocupa memoria en tiempo de ejecucion</li>
+                <li>Es el "tipo" o "categoria"</li>
+                <li>Escrita una vez, usada muchas veces</li>
+            </ul>
+
+            <h3>OBJETO = Instancia / Ejemplar / Creacion Concreta</h3>
+            <p>Un objeto es una <strong>instancia concreta</strong> de una clase. Ocupa memoria y tiene valores especificos.</p>
+            <ul>
+                <li>Creado a partir de una clase con <code>new</code></li>
+                <li>Ocupa memoria (heap para reference types)</li>
+                <li>Tiene valores especificos para sus atributos</li>
+                <li>Puede ejecutar sus metodos</li>
+                <li>Cada objeto es independiente</li>
+            </ul>
+
+            <h3>Comparativa Detallada</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Clase (Molde)</th>
+                        <th>Objeto (Instancia)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Naturaleza</strong></td><td>Abstracta (definicion)</td><td>Concreta (ejecucion)</td></tr>
+                    <tr><td><strong>Memoria</strong></td><td>NO ocupa (metadata)</td><td>SI ocupa (heap)</td></tr>
+                    <tr><td><strong>Cantidad</strong></td><td>Una definicion</td><td>Multiples instancias</td></tr>
+                    <tr><td><strong>Valores</strong></td><td>Define QUE atributos tendra</td><td>TIENE valores especificos</td></tr>
+                    <tr><td><strong>Declaracion</strong></td><td><code>class Galleta { ... }</code></td><td><code>new Galleta()</code></td></tr>
+                    <tr><td><strong>Relacion</strong></td><td>Es un "tipo de dato"</td><td>Es una "variable" de ese tipo</td></tr>
+                    <tr><td><strong>Analogia</strong></td><td>Receta de cocina</td><td>Galleta horneada</td></tr>
+                    <tr><td><strong>Analogia</strong></td><td>Plano de arquitectura</td><td>Casa construida</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Analogia: Galletas</h3>
+            <div class="comparison-table">
+                <div>
+                    <h4>CLASE = Receta de galletas</h4>
+                    <ul>
+                        <li>Define ingredientes: harina, azucar, chocolate</li>
+                        <li>Define procedimiento: mezclar, hornear, enfriar</li>
+                        <li>NO se puede comer (es abstracta)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>OBJETO = Galleta horneada</h4>
+                    <ul>
+                        <li>Tiene cantidades especificas de ingredientes</li>
+                        <li>Se puede comer (es concreta)</li>
+                        <li>Cada galleta es unica pero sigue la receta</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Ejemplo de Codigo</h3>
+            <pre><code class="language-csharp">// ============================================
+// CLASE: Definicion (plantilla)
+// ============================================
+public class Estudiante
+{
+    // Campos (atributos)
+    public string Nombre;
+    public string Codigo;
+    public int Edad;
+    public double Promedio;
+
+    // Metodos (comportamiento)
+    public void MostrarInfo()
+    {
+        Console.WriteLine($"Nombre: {Nombre}");
+        Console.WriteLine($"Codigo: {Codigo}");
+        Console.WriteLine($"Edad: {Edad}");
+        Console.WriteLine($"Promedio: {Promedio}");
+    }
+
+    public bool Aprobado() => Promedio >= 3.0;
+}
+
+// ============================================
+// OBJETOS: Instancias (creaciones concretas)
+// ============================================
+class Program
+{
+    static void Main()
+    {
+        // Crear PRIMER objeto (instancia)
+        Estudiante est1 = new Estudiante();
+        est1.Nombre = "Maria Lopez";
+        est1.Codigo = "2024001";
+        est1.Edad = 20;
+        est1.Promedio = 4.2;
+
+        // Crear SEGUNDO objeto (independiente)
+        Estudiante est2 = new Estudiante();
+        est2.Nombre = "Carlos Ruiz";
+        est2.Codigo = "2024002";
+        est2.Edad = 22;
+        est2.Promedio = 2.8;
+
+        // Cada objeto es independiente
+        est1.MostrarInfo();
+        Console.WriteLine();
+        est2.MostrarInfo();
+    }
+}</code></pre>
+        </section>
+
+        <section id="memoria">
+            <h2>Representacion en Memoria</h2>
+
+            <h3>STACK vs HEAP</h3>
+            <p>En C#, los objetos (reference types) se almacenan en dos areas de memoria:</p>
+
+            <h4>STACK (Pila)</h4>
+            <ul>
+                <li>Almacena <strong>variables locales</strong> y <strong>referencias</strong> a objetos</li>
+                <li>Crecce y decrece rapidamente (LIFO - Last In, First Out)</li>
+                <li>Limpieza automatica al salir del metodo</li>
+                <li>Cada hilo tiene su propio stack</li>
+                <li>Almacena directamente los <strong>value types</strong> (int, double, bool, struct)</li>
+            </ul>
+
+            <h4>HEAP (Monticulo)</h4>
+            <ul>
+                <li>Almacena <strong>objetos reales</strong> (instancias de clases)</li>
+                <li>Memoria mas grande pero mas lenta de gestionar</li>
+                <li>Limpieza automatica por el <strong>Garbage Collector (GC)</strong></li>
+                <li>Compartido por todos los hilos</li>
+                <li>Almacena los <strong>reference types</strong> (class, string, array)</li>
+            </ul>
+
+            <h3>Visualizacion de Memoria</h3>
+            <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────┐
+│                    MEMORIA EN EJECUCION                     │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌────────────────────┐      ┌──────────────────────────┐ │
+│  │      STACK         │      │         HEAP              │ │
+│  │  (Referencias)     │      │    (Objetos Reales)       │ │
+│  ├────────────────────┤      ├──────────────────────────┤ │
+│  │                    │      │                          │ │
+│  │  ┌──────────────┐  │      │  ┌────────────────────┐ │ │
+│  │  │ est1         │──┼─────┼─→│ Objeto Estudiante   │ │ │
+│  │  │ 0x7F3A...B4  │  │      │  │ ┌────────────────┐ │ │ │
+│  │  └──────────────┘  │      │  │ │ Nombre: "Maria" │ │ │ │
+│  │                    │      │  │ │ Codigo: "2024.."│ │ │ │
+│  │  ┌──────────────┐  │      │  │ │ Edad: 20        │ │ │ │
+│  │  │ est2         │──┼─────┼─→│ │ Promedio: 4.2   │ │ │ │
+│  │  │ 0x8B2C...F8  │  │      │  │ └────────────────┘ │ │ │
+│  │  └──────────────┘  │      │  └────────────────────┘ │ │
+│  │                    │      │                          │ │
+│  └────────────────────┘      └──────────────────────────┘ │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+
+            <h3>Flujo de Creacion de un Objeto</h3>
+            <pre><code class="language-csharp">// Paso 1: Declaracion (stack - variable de referencia)
+Estudiante est1;  // stack: est1 = null
+
+// Paso 2: Instanciacion (heap - objeto creado)
+est1 = new Estudiante();  // heap: new Estudiante object
+
+// Paso 3: Asignacion de valores
+est1.Nombre = "Maria";  // heap: Nombre = "Maria"
+est1.Edad = 20;         // heap: Edad = 20</code></pre>
+
+            <div class="warning-box">
+                <h4>Puntos Clave</h4>
+                <ul>
+                    <li>La variable en el STACK contiene una <strong>direccion de memoria</strong> (referencia) al objeto en el HEAP</li>
+                    <li><strong>Multiples variables pueden referenciar el mismo objeto</strong>:
+                        <pre><code class="language-csharp">Estudiante est1 = new Estudiante { Nombre = "Maria" };
+Estudiante est2 = est1;  // Ambos referencian el MISMO objeto
+est2.Nombre = "Carlos";   // est1.Nombre tambien cambia</code></pre>
+                    </li>
+                    <li>Cuando una variable sale del scope, la referencia en el stack se elimina, pero el objeto en el heap permanece hasta que el GC lo reclama</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="encapsulamiento">
+            <h2>Encapsulamiento</h2>
+
+            <figure>
+                <img src="../assets/infografias/clase-02-encapsulamiento.png" alt="Infografia: Encapsulamiento - Proteccion de datos y exposicion de comportamiento">
+                <figcaption>Figura 2: El encapsulamiento oculta los detalles internos y expone solo una interfaz publica controlada.</figcaption>
+            </figure>
+
+            <h3>Que es Encapsulamiento?</h3>
+            <p><strong>Encapsulamiento</strong> es el principio de ocultar los detalles internos de implementacion de un objeto y exponer solo lo necesario a traves de una interfaz publica.</p>
+            <p><em>Metáfora: Un coche tiene un encapsulamiento - tu solo interactuas con el volante, pedales y botones. No necesitas saber como funciona el motor internamente.</em></p>
+
+            <h3>Por que es IMPORTANTE?</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problema sin encapsulamiento</th>
+                        <th>Solucion con encapsulamiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Datos expuestos pueden modificarse a valores invalidos</td><td>Validacion controlada</td></tr>
+                    <tr><td>Dificil mantener (cambios afectan a todos)</td><td>Cambios localizados</td></tr>
+                    <tr><td>Acoplamiento alto (dependencias ocultas)</td><td>Bajo acoplamiento</td></tr>
+                    <tr><td>Codigo fragil (se rompe facil)</td><td>Codigo robusto</td></tr>
+                </tbody>
+            </table>
+
+            <h3>SIN Encapsulamiento (Frágil)</h3>
+            <pre><code class="language-csharp">public class CuentaBancaria
+{
+    // Campos PUBLICOS = peligro
+    public double saldo;
+    public string titular;
+}
+
+// Uso problematico
+var cuenta = new CuentaBancaria();
+cuenta.saldo = -1000;  // Valido pero INCORRECTO
+cuenta.titular = "";   // Nombre vacio permitido</code></pre>
+
+            <div class="warning-box">
+                <h4>Problemas sin encapsulamiento:</h4>
+                <ul>
+                    <li>Sin validacion de datos</li>
+                    <li>Cualquiera puede modificar</li>
+                    <li>Dificil rastrear quien modifico</li>
+                    <li>No se pueden agregar reglas de negocio</li>
+                </ul>
+            </div>
+
+            <h3>CON Encapsulamiento (Robusto)</h3>
+            <pre><code class="language-csharp">public class CuentaBancaria
+{
+    // Campos PRIVADOS = protegidos
+    private double _saldo;
+    private string _titular;
+
+    // Propiedad con validacion
+    public string Titular
+    {
+        get => _titular;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("El titular no puede estar vacio");
+            _titular = value;
+        }
+    }
+
+    // Metodos controlados
+    public void Depositar(double monto)
+    {
+        if (monto <= 0)
+            throw new ArgumentException("El monto debe ser positivo");
+        _saldo += monto;
+    }
+
+    public void Retirar(double monto)
+    {
+        if (monto <= 0)
+            throw new ArgumentException("El monto debe ser positivo");
+        if (monto > _saldo)
+            throw new InvalidOperationException("Saldo insuficiente");
+        _saldo -= monto;
+    }
+
+    public double Saldo => _saldo;  // Solo lectura
+}</code></pre>
+
+            <div class="success-box">
+                <h4>Beneficios con encapsulamiento:</h4>
+                <ul>
+                    <li>Validacion de datos en entrada</li>
+                    <li>Control sobre modificaciones</li>
+                    <li>Facil agregar logica de negocio</li>
+                    <li>Proteccion del estado interno</li>
+                </ul>
+            </div>
+
+            <h3>Principio de Minima Exposicion</h3>
+            <div class="highlight-box">
+                <h4>Regla de Oro</h4>
+                <p><strong>Expón solo lo que es necesario para usar la clase. Oculta todo lo demás.</strong></p>
+                <pre><code class="language-csharp">public class Estudiante
+{
+    // PUBLICO: Parte de la API externa
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+
+    // PRIVADO: Implementacion interna
+    private double _promedioInterno;
+    private void _calcularPromedioInterno() { ... }
+
+    // PUBLICO: Expone resultado calculado (no los detalles)
+    public double Promedio => _promedioInterno;
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="modificadores">
+            <h2>Modificadores de Acceso</h2>
+
+            <h3>Tabla de Modificadores en C#</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modificador</th>
+                        <th>Quien accede?</th>
+                        <th>Descripcion</th>
+                        <th>Uso tipico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>public</code></td><td>TODOS</td><td>Accesible desde cualquier lugar</td><td>API publica de la clase</td></tr>
+                    <tr><td><code>private</code></td><td>Solo la clase</td><td>Solo accesible dentro de la clase</td><td>Campos internos, metodos auxiliares</td></tr>
+                    <tr><td><code>protected</code></td><td>Clase + hijas</td><td>Accesible en la clase y sus derivadas</td><td>Miembros para herencia</td></tr>
+                    <tr><td><code>internal</code></td><td>Mismo proyecto</td><td>Accesible solo en el mismo assembly</td><td>Clases auxiliares del proyecto</td></tr>
+                    <tr><td><code>protected internal</code></td><td>Misma clase + hijas + mismo proyecto</td><td>Combinacion de protected y internal</td><td>Miembros especializados</td></tr>
+                    <tr><td><code>private protected</code></td><td>Clase + hijas (mismo proyecto)</td><td>Solo hijas en el mismo proyecto</td><td>Herencia interna</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Reglas de Oro</h3>
+            <ol>
+                <li><strong>Campos SIEMPRE privados</strong> (convencion <code>_camelCase</code>)</li>
+                <li><strong>Propiedades publicas</strong> para acceso controlado</li>
+                <li><strong>Metodos privados</strong> para logica interna</li>
+                <li><strong>Minimizar <code>public</code></strong> - expón solo lo necesario</li>
+            </ol>
+
+            <h3>Ejemplo Completo</h3>
+            <pre><code class="language-csharp">public class CuentaBancaria
+{
+    // PRIVADOS: Solo uso interno
+    private double _saldo;
+    private readonly string _numeroCuenta;
+
+    // PUBLICOS: API externa
+    public string Titular { get; set; }
+
+    // SOLO LECTURA: No se puede modificar despues de crear
+    public string NumeroCuenta => _numeroCuenta;
+
+    // PROPORCIONAL: Saldo expuesto pero sin modificacion directa
+    public double Saldo => _saldo;
+
+    // Constructor
+    public CuentaBancaria(string titular, string numeroCuenta, double saldoInicial)
+    {
+        Titular = titular;
+        _numeroCuenta = numeroCuenta;
+        _saldo = saldoInicial;
+    }
+
+    // PUBLICO: Comportamiento controlado
+    public void Depositar(double monto)
+    {
+        _validarMontoPositivo(monto);
+        _saldo += monto;
+    }
+
+    // PRIVADO: Validacion interna (reutilizable)
+    private void _validarMontoPositivo(double monto)
+    {
+        if (monto <= 0)
+            throw new ArgumentException("El monto debe ser positivo");
+    }
+}</code></pre>
+        </section>
+
+        <section id="propiedades">
+            <h2>Propiedades</h2>
+
+            <h3>Que son las Propiedades?</h3>
+            <p>Las propiedades son <strong>syntactic sugar</strong> para encapsulamiento. Parecen campos pero son metodos (<code>get</code> y <code>set</code>) disfrazados.</p>
+
+            <h3>TRADICIONAL (Java-style) - Verboso</h3>
+            <pre><code class="language-csharp">public class Persona
+{
+    private string _nombre;
+
+    // Metodo getter
+    public string GetNombre()
+    {
+        return _nombre;
+    }
+
+    // Metodo setter
+    public void SetNombre(string valor)
+    {
+        _nombre = valor;
+    }
+}
+
+// Uso verboso
+var p = new Persona();
+p.SetNombre("Maria");
+string n = p.GetNombre();</code></pre>
+
+            <h3>MODERNO C# - Propiedades</h3>
+            <pre><code class="language-csharp">public class Persona
+{
+    private string _nombre;
+
+    // Propiedad con get y set
+    public string Nombre
+    {
+        get { return _nombre; }
+        set { _nombre = value; }
+    }
+}
+
+// Uso natural
+var p = new Persona();
+p.Nombre = "Maria";      // Usa 'set'
+string n = p.Nombre;     // Usa 'get'</code></pre>
+
+            <h3>Tipos de Propiedades</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Sintaxis</th>
+                        <th>Cuando usar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Autoimplementada</td><td><code>{ get; set; }</code></td><td>Sin validacion, simple</td></tr>
+                    <tr><td>Con backing field</td><td>get/set con logica</td><td>Con validacion</td></tr>
+                    <tr><td>Solo lectura</td><td><code>{ get; }</code></td><td>Calculado o inmutable</td></tr>
+                    <tr><td>Init-only</td><td><code>{ get; init; }</code></td><td>Solo en constructor</td></tr>
+                    <tr><td>Expresion bodied</td><td><code>=> valor</code></td><td>Propiedades calculadas</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplos Completos</h3>
+            <pre><code class="language-csharp">public class Estudiante
+{
+    // 1. AUTOIMPLEMENTADA (sin validacion)
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+
+    // 2. CON VALIDACION (usa backing field)
+    private double _promedio;
+    public double Promedio
+    {
+        get => _promedio;
+        set
+        {
+            if (value < 0.0 || value > 5.0)
+                throw new ArgumentOutOfRangeException("Promedio", "Debe estar entre 0 y 5");
+            _promedio = value;
+        }
+    }
+
+    // 3. SOLO LECTURA (calculada)
+    public bool Aprobado => Promedio >= 3.0;
+
+    // 4. INIT-ONLY (solo se asigna en constructor o inicializador)
+    public string Matricula { get; init; }
+
+    // 5. CON VALOR DEFAULT
+    public string Carrera { get; set; } = "Sin carrera";
+
+    // 6. EXPRESION BODIED (C# 7+)
+    public string InfoCompleta => $"{Nombre} ({Edad} anos) - {Carrera}";
+}</code></pre>
+        </section>
+
+        <section id="constructores">
+            <h2>Constructores</h2>
+
+            <h3>Que es un Constructor?</h3>
+            <p>Un constructor es un <strong>metodo especial</strong> que se ejecuta automaticamente al crear una instancia de una clase con <code>new</code>.</p>
+
+            <p><strong>Proposito:</strong></p>
+            <ul>
+                <li>Inicializar valores predeterminados</li>
+                <li>Recibir parametros obligatorios</li>
+                <li>Validar estado inicial</li>
+                <li>Establecer invariantes de clase</li>
+            </ul>
+
+            <h3>Tipos de Constructores</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Sintaxis</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Default</td><td>sin parametros</td><td><code>new Estudiante()</code></td></tr>
+                    <tr><td>Parametrizado</td><td>con parametros</td><td><code>new Estudiante("Maria", 20)</code></td></tr>
+                    <tr><td>Object Initializer</td><td>sintaxis <code>{ }</code></td><td><code>new Estudiante { Nombre = "Maria" }</code></td></tr>
+                    <tr><td>Primary (C# 12)</td><td>parametros en clase</td><td><code>public class Estudiante(string nombre)</code></td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Completo</h3>
+            <pre><code class="language-csharp">public class Estudiante
+{
+    public string Nombre { get; set; }
+    public string Codigo { get; set; }
+    public int Edad { get; set; }
+    public double Promedio { get; set; }
+
+    // 1. CONSTRUCTOR DEFAULT
+    public Estudiante()
+    {
+        Nombre = "Sin nombre";
+        Codigo = "0000000";
+        Edad = 18;
+        Promedio = 0.0;
+    }
+
+    // 2. CONSTRUCTOR PARAMETRIZADO
+    public Estudiante(string nombre, string codigo, int edad)
+    {
+        if (string.IsNullOrWhiteSpace(nombre))
+            throw new ArgumentException("Nombre requerido");
+        if (edad < 16 || edad > 100)
+            throw new ArgumentOutOfRangeException("Edad");
+
+        Nombre = nombre;
+        Codigo = codigo;
+        Edad = edad;
+        Promedio = 0.0;
+    }
+
+    // 3. CONSTRUCTOR CON ENCADENAMIENTO (this)
+    public Estudiante(string nombre, string codigo)
+        : this(nombre, codigo, 18)  // Llama al constructor de 3 params
+    {
+        // Edad ya se inicializo en 18
+    }
+}
+
+// USO
+var e1 = new Estudiante();                              // Default
+var e2 = new Estudiante("Maria", "2024001", 20);       // Parametrizado
+var e3 = new Estudiante("Carlos", "2024002");          // Encadenado (edad=18)</code></pre>
+
+            <h3>Orden de Ejecucion con <code>this</code></h3>
+            <div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────────┐
+│         ENCADENAMIENTO DE CONSTRUCTORES                │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  new Estudiante("Carlos", "2024002")                   │
+│       │                                                 │
+│       ▼                                                 │
+│  ┌─────────────────────────────────────────┐           │
+│  │ Estudiante(string, string)             │           │
+│  │     : this(n, c, 18)  ────────────────┐ │           │
+│  └────────────────────────────────────────┘           │
+│       │                                             │    │
+│       │ Llama                                       │    │
+│       ▼                                             │    │
+│  ┌─────────────────────────────────────────┐           │    │
+│  │ Estudiante(string, string, int)        │           │    │
+│  │     - Validaciones                     │ ◄────────┘    │
+│  │     - Asignaciones                     │                │
+│  └─────────────────────────────────────────┘                │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+</pre>
+            </div>
+        </section>
+
+        <section id="static">
+            <h2>Static vs Instance</h2>
+
+            <h3>STATIC (Compartido)</h3>
+            <p>Los miembros <code>static</code> son <strong>compartidos por TODAS</strong> las instancias de una clase. No requieren un objeto para ser accedidos.</p>
+            <ul>
+                <li>Una sola copia en memoria (compartida)</li>
+                <li>Acceso desde la clase (no desde el objeto)</li>
+                <li>Usan la palabra clave <code>static</code></li>
+                <li>Viven durante toda la vida del programa</li>
+            </ul>
+
+            <h3>Instance (Normal)</h3>
+            <p>Los miembros de instancia son <strong>unicos para cada objeto</strong>.</p>
+            <ul>
+                <li>Una copia por cada objeto</li>
+                <li>Acceso desde el objeto</li>
+                <li>Viven mientras el objeto exista</li>
+            </ul>
+
+            <h3>Ejemplo Visual</h3>
+            <pre><code class="language-csharp">public class Contador
+{
+    // STATIC: Compartido por todos
+    public static int Global = 0;
+
+    // INSTANCE: Unico por objeto
+    public int Instancia = 0;
+
+    public Contador()
+    {
+        Global++;     // Incrementa el contador compartido
+        Instancia++; // Incrementa el contador de este objeto
+    }
+}
+
+// Uso
+var c1 = new Contador(); // Global=1, Instancia=1
+var c2 = new Contador(); // Global=2, Instancia=1
+var c3 = new Contador(); // Global=3, Instancia=1
+
+// Static: desde la clase
+Console.WriteLine(Contador.Global); // 3
+
+// Instance: desde el objeto
+Console.WriteLine(c1.Instancia);   // 1
+Console.WriteLine(c2.Instancia);   // 1
+Console.WriteLine(c3.Instancia);   // 1</code></pre>
+
+            <h3>Cuando Usar Static</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usa static para</th>
+                        <th>NO uses static para</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Constantes (<code>Math.PI</code>)</td><td>Datos que varian por objeto</td></tr>
+                    <tr><td>Utilidades (<code>Console.WriteLine</code>)</td><td>Estado del objeto</td></tr>
+                    <tr><td>Configuraciones globales</td><td>Metodos que usan estado de instancia</td></tr>
+                    <tr><td>Contadores compartidos</td><td>Propiedades del objeto</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="class-vs-struct">
+            <h2>class vs struct</h2>
+
+            <h3>Diferencias Fundamentales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>class</th>
+                        <th>struct</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Tipo</strong></td><td>Reference type</td><td>Value type</td></tr>
+                    <tr><td><strong>Ubicacion</strong></td><td>Heap</td><td>Stack</td></tr>
+                    <tr><td><strong>Asignacion</strong></td><td>Copia referencia</td><td>Copia valor completo</td></tr>
+                    <tr><td><strong>Herencia</strong></td><td>Soporta herencia</td><td>No soporta herencia (solo interfaces)</td></tr>
+                    <tr><td><strong>NULL</strong></td><td>Puede ser <code>null</code></td><td>No puede ser <code>null</code></td></tr>
+                    <tr><td><strong>Constructor</strong></td><td>Sin constructor default</td><td>Siempre tiene constructor default</td></tr>
+                    <tr><td><strong>Uso tipico</strong></td><td>Objetos grandes, complejos</td><td>Datos pequenos, inmutables</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Comparativo</h3>
+            <pre><code class="language-csharp">// CLASS (Reference Type)
+public class PersonaClass
+{
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+}
+
+// STRUCT (Value Type)
+public struct PersonaStruct
+{
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+}
+
+// Uso
+var pc1 = new PersonaClass { Nombre = "Juan", Edad = 25 };
+var pc2 = pc1;              // Copia REFERENCIA
+pc2.Nombre = "Maria";
+Console.WriteLine(pc1.Nombre); // "Maria" (!!) - ambos referencian el mismo objeto
+
+var ps1 = new PersonaStruct { Nombre = "Juan", Edad = 25 };
+var ps2 = ps1;              // Copia VALOR completo
+ps2.Nombre = "Maria";
+Console.WriteLine(ps1.Nombre); // "Juan" - independientes</code></pre>
+
+            <div class="highlight-box">
+                <h4>Cuando Usar struct</h4>
+                <p>Usa <code>struct</code> cuando:</p>
+                <ul>
+                    <li>El tipo es <strong>pequeno</strong> (menos de 16 bytes)</li>
+                    <li>Es <strong>inmutable</strong> (no cambia despues de crear)</li>
+                    <li>Representa <strong>un solo valor</strong> (como un primitivo)</li>
+                    <li>No necesitas <strong>herencia</strong></li>
+                </ul>
+                <p><strong>Ejemplos:</strong> <code>Point</code>, <code>Size</code>, <code>Color</code>, <code>DateTime</code> (partial)</p>
+            </div>
+        </section>
+
+        <section id="resumen">
+            <h2>Resumen de la Clase</h2>
+
+            <h3>Conceptos Clave Aprendidos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>POO</strong></td><td>Paradigma basado en objetos que unen datos y comportamiento</td></tr>
+                    <tr><td><strong>Clase</strong></td><td>Plantilla o definicion abstracta para crear objetos</td></tr>
+                    <tr><td><strong>Objeto</strong></td><td>Instancia concreta de una clase que ocupa memoria</td></tr>
+                    <tr><td><strong>Encapsulamiento</strong></td><td>Ocultar detalles internos, exponer interfaz controlada</td></tr>
+                    <tr><td><strong>Propiedades</strong></td><td>Syntactic sugar para getters/setters con validacion</td></tr>
+                    <tr><td><strong>Constructores</strong></td><td>Metodos especiales para inicializar objetos</td></tr>
+                    <tr><td><strong>static</strong></td><td>Miembros compartidos por todas las instancias</td></tr>
+                    <tr><td><strong>class vs struct</strong></td><td>Reference type (heap) vs Value type (stack)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Habilidades Adquiridas</h3>
+            <ul>
+                <li>Definir clases con propiedades y metodos</li>
+                <li>Crear objetos usando <code>new</code></li>
+                <li>Aplicar encapsulamiento con modificadores de acceso</li>
+                <li>Usar propiedades para acceso controlado a datos</li>
+                <li>Implementar constructores con encadenamiento</li>
+                <li>Diferenciar entre static y instance members</li>
+            </ul>
+
+            <h3>Proximos Pasos</h3>
+            <ul>
+                <li><strong>Clase 3:</strong> Herencia y Polimorfismo</li>
+                <li>Practicar creando clases del dominio</li>
+                <li>Aplicar encapsulamiento en todos los proyectos</li>
+            </ul>
+        </section>
+    </div>
+
+    <a href="#inicio" class="back-to-top">&uarr;</a>
+
+    <footer>
+        <p><strong>IF0100 - Lenguaje de Programacion OO II</strong></p>
+        <p>UNAULA - Ingenieria Informatica - 2026-I</p>
+        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+            Contacto: [correo del docente] | Repositorio: [enlace del curso]
+        </p>
+    </footer>
+</body>
+</html>

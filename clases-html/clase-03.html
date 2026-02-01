@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clase 03 — Herencia y Polimorfismo (POO II)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;margin:0;padding:0;color:#111}
+    header{background:#0b5; padding:20px;color:#012}
+    header h1{margin:0 0 8px 0}
+    nav{background:#eee;padding:12px}
+    nav a{display:block;color:#036;text-decoration:none;margin:4px 0}
+    main{padding:20px}
+    section{margin-bottom:28px}
+    pre{background:#f5f5f5;padding:12px;overflow:auto}
+    figure{margin:12px 0}
+    img{max-width:100%;height:auto;border:1px solid #ddd}
+    .checklist{background:#fffbe6;padding:10px;border-left:4px solid #f0c040}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IF0100 — Programación Orientada a Objetos II</h1>
+    <p>Clase 03 — Herencia y Polimorfismo</p>
+    <ul>
+      <li>Objetivos: entender herencia, subclases, sobrescritura y polimorfismo en C#</li>
+      <li>Prerrequisitos: clase-02 (Clases, objetos, encapsulamiento)</li>
+    </ul>
+  </header>
+  <nav>
+    <strong>Índice</strong>
+    <a href="#teoria">Teoría</a>
+    <a href="#ejemplos">Ejemplos</a>
+    <a href="#practica">Práctica / Laboratorio</a>
+    <a href="#ejercicios">Ejercicios</a>
+    <a href="#referencias">Referencias</a>
+  </nav>
+  <main>
+    <section id="teoria">
+      <h2>Teoría: ¿Qué es la herencia?</h2>
+      <p>La herencia permite definir una clase (subclase) que reutiliza y extiende la funcionalidad de otra (superclase).
+      Es útil para modelar relaciones "es-un" y promover reutilización y extensibilidad.</p>
+      <h3>Motivación</h3>
+      <p>Evitar duplicación y agrupar comportamiento común en una superclase. Facilita polimorfismo y diseño basado en interfaces.</p>
+      <h3>Conceptos clave</h3>
+      <ul>
+        <li>Superclase / clase base</li>
+        <li>Subclase / derivada</li>
+        <li>Sobrescritura (override) vs sobrecarga</li>
+        <li>Polimorfismo en tiempo de ejecución</li>
+      </ul>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos</h2>
+      <p>Ejemplo en C# que muestra herencia simple y polimorfismo por sustitución:</p>
+      <pre><code>// Clase base
+public class Animal
+{
+    public virtual void Speak()
+    {
+        Console.WriteLine("El animal hace un sonido");
+    }
+}
+
+// Subclase
+public class Perro : Animal
+{
+    public override void Speak()
+    {
+        Console.WriteLine("Guau!");
+    }
+}
+
+// Uso polimórfico
+public static void Main()
+{
+    Animal a = new Perro();
+    a.Speak(); // Guau! (polimorfismo)
+}
+</code></pre>
+
+      <figure>
+        <img src="../assets/infografias/clase-03-herencia.png" alt="Infografía: herencia" />
+        <figcaption>Figura: jerarquía simple — herencia (archivo: assets/infografias/clase-03-herencia.png)</figcaption>
+      </figure>
+
+      <figure>
+        <img src="../assets/infografias/clase-03-polimorfismo.png" alt="Infografía: polimorfismo" />
+        <figcaption>Figura: polimorfismo (archivo: assets/infografias/clase-03-polimorfismo.png)</figcaption>
+      </figure>
+
+      <div class="checklist">
+        <strong>Errores comunes</strong>
+        <ul>
+          <li>No marcar métodos virtual/override correctamente</li>
+          <li>Usar herencia donde la composición sería mejor</li>
+          <li>Romper encapsulamiento exponiendo detalles de implementación</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="practica">
+      <h2>Práctica / Laboratorio</h2>
+      <p>Laboratorio sugerido: crear una jerarquía de figuras geométricas (Figura -> Rectangulo, Circulo) con cálculos de área y polimorfismo.</p>
+      <pre><code>public abstract class Figura
+{
+    public abstract double Area();
+}
+
+public class Rectangulo : Figura
+{
+    public double Ancho { get; set; }
+    public double Alto { get; set; }
+    public override double Area() => Ancho * Alto;
+}
+
+public class Circulo : Figura
+{
+    public double Radio { get; set; }
+    public override double Area() => Math.PI * Radio * Radio;
+}
+
+// En Main
+var figuras = new List<Figura> { new Rectangulo { Ancho = 3, Alto = 4 }, new Circulo { Radio = 2 } };
+foreach(var f in figuras) Console.WriteLine(f.Area());
+</code></pre>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+      <ol>
+        <li>Implementar jerarquía Animal con al menos 3 subclases y un método adicional en cada una.</li>
+        <li>Modificar laboratorio para añadir interfaz IPrintable y mostrar datos.</li>
+        <li>Detectar y corregir un caso donde se debe usar composición en lugar de herencia.</li>
+      </ol>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Documentación oficial de C# — Herencia y tipos</li>
+        <li>Material de curso IF0100</li>
+      </ul>
+    </section>
+
+  </main>
+  <footer style="padding:12px;background:#f0f0f0;text-align:center">Generado por Copilot-CLI — clase-03</footer>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 07 - DDD Domain-Driven Design | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 6px; }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 2</div>
+      <h1>Clase 07: DDD - Domain-Driven Design</h1>
+      <div>Duracion: 90 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Comprender fundamentos de DDD.</li>
+            <li>Distinguir Entities, Value Objects y Aggregates.</li>
+            <li>Aplicar el patron Repository.</li>
+            <li>Identificar Bounded Contexts.</li>
+            <li>Implementar arquitectura en capas.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>Conocer conceptos de POO y capas.</li>
+            <li>Experiencia basica con C# y UML.</li>
+            <li>Comprension de necesidades de negocio.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>Que es DDD y cuando usarlo</h3>
+      <p>Domain-Driven Design modela el software segun el dominio del negocio, usando un lenguaje ubicuo compartido entre expertos y equipo tecnico.</p>
+      <div class="grid-2">
+        <div>
+          <h4>Usar DDD cuando</h4>
+          <ul>
+            <li>Reglas de negocio complejas.</li>
+            <li>Dominio cambiante.</li>
+            <li>Proyecto estrategico y de larga duracion.</li>
+            <li>Hay expertos de dominio disponibles.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar DDD cuando</h4>
+          <ul>
+            <li>CRUD simple sin reglas.</li>
+            <li>Proyectos cortos o MVP.</li>
+            <li>No hay expertos de dominio.</li>
+            <li>Se requiere velocidad sobre precision.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Lenguaje ubicuo</h3>
+      <table>
+        <thead>
+          <tr><th>Concepto</th><th>Termino correcto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cliente</td><td>Cliente (no User)</td></tr>
+          <tr><td>Pedido</td><td>RealizarPedido</td></tr>
+          <tr><td>Estado</td><td>PedidoPendiente</td></tr>
+          <tr><td>Pago</td><td>ConfirmarPago</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Entities vs Value Objects</h3>
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Entity</th><th>Value Object</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Definida por</td><td>Identidad</td><td>Atributos</td></tr>
+          <tr><td>ID unico</td><td>Si</td><td>No</td></tr>
+          <tr><td>Mutabilidad</td><td>Mutable</td><td>Inmutable</td></tr>
+          <tr><td>Comparacion</td><td>Por identidad</td><td>Por valor</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Aggregates y reglas</h3>
+      <ul>
+        <li>El Aggregate Root es el unico punto de entrada.</li>
+        <li>Referencias entre aggregates por ID, no por objetos completos.</li>
+        <li>Una transaccion modifica un solo aggregate.</li>
+      </ul>
+
+      <h3>Repository y Domain Services</h3>
+      <p>Repository abstrae la persistencia; Domain Service encapsula logica de negocio que cruza aggregates.</p>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografias</h2>
+
+      <h3>Infografia: Arquitectura DDD</h3>
+      <figure>
+        <img src="../assets/infografias/clase-07-ddd-arquitectura.png" alt="Infografia arquitectura DDD" />
+        <figcaption>Capas Presentation, Application, Domain e Infrastructure con dependencia hacia el centro.</figcaption>
+      </figure>
+
+      <h3>Entity en C# (Cliente)</h3>
+      <pre><code class="language-csharp">public class Cliente
+{
+    public ClienteId Id { get; private set; }
+    public string Nombre { get; private set; }
+    public Email Email { get; private set; }
+
+    public Cliente(ClienteId id, string nombre, Email email)
+    {
+        Id = id;
+        Nombre = nombre;
+        Email = email;
+    }
+
+    public void CambiarEmail(Email nuevoEmail) => Email = nuevoEmail;
+}</code></pre>
+
+      <h3>Value Object en C# (Dinero)</h3>
+      <pre><code class="language-csharp">public class Dinero : IEquatable&lt;Dinero&gt;
+{
+    public decimal Monto { get; }
+    public string Moneda { get; }
+
+    public Dinero(decimal monto, string moneda)
+    {
+        if (monto &lt; 0) throw new ArgumentException();
+        Monto = monto;
+        Moneda = moneda;
+    }
+
+    public Dinero Sumar(Dinero otro)
+    {
+        if (Moneda != otro.Moneda) throw new InvalidOperationException();
+        return new Dinero(Monto + otro.Monto, Moneda);
+    }
+}</code></pre>
+
+      <h3>Aggregate Root: Pedido</h3>
+      <pre><code class="language-csharp">public class Pedido
+{
+    public PedidoId Id { get; private set; }
+    public ClienteId ClienteId { get; private set; }
+    private readonly List&lt;LineaPedido&gt; _lineas = new();
+
+    public void AgregarProducto(ProductoId productoId, int cantidad, Dinero precio)
+    {
+        if (cantidad &lt;= 0) throw new ArgumentException();
+        _lineas.Add(new LineaPedido(productoId, cantidad, precio));
+    }
+}</code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Repository pattern (interface + implementacion)</h3>
+      <pre><code class="language-csharp">public interface IPedidoRepository
+{
+    Task&lt;Pedido&gt; ObtenerAsync(PedidoId id);
+    Task GuardarAsync(Pedido pedido);
+}
+
+public class PedidoRepository : IPedidoRepository
+{
+    private readonly AppDbContext _context;
+    public PedidoRepository(AppDbContext context) => _context = context;
+
+    public Task&lt;Pedido&gt; ObtenerAsync(PedidoId id)
+        => _context.Pedidos.FirstOrDefaultAsync(p => p.Id == id);
+
+    public async Task GuardarAsync(Pedido pedido)
+    {
+        _context.Pedidos.Update(pedido);
+        await _context.SaveChangesAsync();
+    }
+}</code></pre>
+
+      <h3>Bounded Contexts</h3>
+      <ul>
+        <li>Separar Ventas, Inventario y Envios como contextos diferentes.</li>
+        <li>El termino "Producto" cambia significado segun el contexto.</li>
+        <li>Definir integraciones explicitas entre contextos.</li>
+      </ul>
+
+      <h3>Checklist de consistencia</h3>
+      <ul>
+        <li>Dominio no depende de infraestructura.</li>
+        <li>Interfaces en Domain, implementaciones en Infrastructure.</li>
+        <li>Aggregate Root controla invariantes.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>Ejercicio: Biblioteca</h3>
+      <p>Identificar Entities, Value Objects, Aggregates y Services para un sistema de prestamos.</p>
+
+      <h3>Ejercicio: Bounded Contexts</h3>
+      <p>Dividir una tienda online en contextos (Ventas, Inventario, Envios, Facturacion) e indicar integraciones.</p>
+
+      <h3>Errores comunes</h3>
+      <ul>
+        <li>Crear Entities para todo sin necesidad de identidad.</li>
+        <li>Permitir acceso directo a entidades internas del aggregate.</li>
+        <li>Acoplar Domain con EF Core o frameworks.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Eric Evans, Domain-Driven Design (2003).</li>
+        <li>Vaughn Vernon, Implementing Domain-Driven Design.</li>
+        <li>Patrones Repository y Domain Services.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

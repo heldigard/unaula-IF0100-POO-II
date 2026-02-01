@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 04 - Sobrecarga, Sobreescritura y Modelado BD | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 6px; }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 1</div>
+      <h1>Clase 04: Sobrecarga, Sobreescritura y Modelado BD</h1>
+      <div>Duracion: 90 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Diferenciar sobrecarga y sobreescritura.</li>
+            <li>Implementar sobrecarga de metodos y constructores.</li>
+            <li>Sobrecargar operadores en C# con buenas practicas.</li>
+            <li>Modelar una base de datos con diagramas ER.</li>
+            <li>Identificar relaciones 1-1, 1-N y N-M.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>Conceptos de clases, objetos y herencia.</li>
+            <li>Conocimientos basicos de C# (metodos, clases).</li>
+            <li>Herramienta de diagramacion (opcional).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>Sobrecarga vs sobreescritura</h3>
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Sobrecarga</th><th>Sobreescritura</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ubicacion</td><td>Misma clase</td><td>Padre -> hija</td></tr>
+          <tr><td>Parametros</td><td>Diferentes</td><td>Iguales</td></tr>
+          <tr><td>Palabras clave</td><td>Ninguna</td><td>virtual / override</td></tr>
+          <tr><td>Polimorfismo</td><td>Estatico (compilacion)</td><td>Dinamico (ejecucion)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Reglas de sobrecarga</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Valido</h4>
+          <ul>
+            <li>Diferente cantidad de parametros.</li>
+            <li>Diferentes tipos de parametros.</li>
+            <li>Diferente orden de parametros.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>No valido</h4>
+          <ul>
+            <li>Solo cambiar el tipo de retorno.</li>
+            <li>Solo cambiar nombres de parametros.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Modelamiento de bases de datos</h3>
+      <p>El modelado ER traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foraneas.</p>
+      <pre><code>Entidad (POO)  -> Tabla (BD)
+Atributo       -> Columna
+Objeto         -> Registro
+PK             -> Id unico
+FK             -> Referencia</code></pre>
+
+      <h3>Cardinalidad</h3>
+      <pre><code>1:1 Persona - Pasaporte
+1:N Carrera - Estudiante
+N:M Estudiante - Materia</code></pre>
+      <div class="note">La cardinalidad define como se conectan las entidades en el modelo ER y determina el diseno fisico de tablas.</div>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografias</h2>
+
+      <h3>Ejemplos de sobrecarga y sobreescritura</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Sobrecarga</h4>
+          <pre><code class="language-csharp">class Calculadora
+{
+    int Sumar(int a, int b) => a + b;
+    double Sumar(double a, double b) => a + b;
+}</code></pre>
+        </div>
+        <div>
+          <h4>Sobreescritura</h4>
+          <pre><code class="language-csharp">class Animal
+{
+    public virtual void Hablar() { }
+}
+class Perro : Animal
+{
+    public override void Hablar() { }
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>Infografia: sobrecarga vs sobreescritura</h3>
+      <figure>
+        <img src="../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png" alt="Infografia sobrecarga vs sobreescritura" />
+        <figcaption>Comparacion visual de reglas, ubicacion y resolucion en sobrecarga y sobreescritura.</figcaption>
+      </figure>
+
+      <h3>Sobrecarga de operadores</h3>
+      <pre><code class="language-csharp">public class Fraccion
+{
+    public int Numerador { get; set; }
+    public int Denominador { get; set; }
+
+    public Fraccion(int n, int d)
+    {
+        Numerador = n;
+        Denominador = d != 0 ? d : 1;
+    }
+
+    public static Fraccion operator +(Fraccion a, Fraccion b)
+    {
+        int num = a.Numerador * b.Denominador + b.Numerador * a.Denominador;
+        int den = a.Denominador * b.Denominador;
+        return new Fraccion(num, den);
+    }
+}</code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Uso de sobrecarga en una calculadora</h3>
+      <pre><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        Calculadora calc = new();
+        int r1 = calc.Sumar(5, 3);
+        int r2 = calc.Sumar(5, 3, 2);
+        double r3 = calc.Sumar(5.5, 3.2);
+        int r4 = calc.Sumar(1, 2, 3, 4);
+        Console.WriteLine($"Resultados: {r1}, {r2}, {r3}, {r4}");
+    }
+}</code></pre>
+
+      <h3>Encadenamiento de constructores</h3>
+      <pre><code class="language-csharp">public class Estudiante
+{
+    public string Nombre { get; set; }
+    public string Codigo { get; set; }
+    public int Edad { get; set; }
+    public string Carrera { get; set; }
+
+    public Estudiante(string n, string c, int e, string ca)
+    {
+        Nombre = n; Codigo = c; Edad = e; Carrera = ca;
+    }
+
+    public Estudiante(string n, string c) : this(n, c, 18, "Sin carrera") { }
+    public Estudiante() : this("Sin nombre", "0000000") { }
+}</code></pre>
+
+      <h3>Modelamiento ER rapido</h3>
+      <ol>
+        <li>Identificar entidades y atributos.</li>
+        <li>Definir PK y FK.</li>
+        <li>Determinar cardinalidad.</li>
+        <li>Validar normalizacion (3FN).</li>
+      </ol>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>Ejercicio 1: Clase Complejo</h3>
+      <p>Crear una clase <code>Complejo</code> con sobrecarga de operadores <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> y pruebas de igualdad.</p>
+
+      <h3>Ejercicio 2: Tienda Online (ER)</h3>
+      <p>Modelar un ER con las entidades Cliente, Producto y Orden. Definir PK, FK y relaciones.</p>
+
+      <h3>Ejercicio 3: Sistema de Reservas</h3>
+      <p>Modelar entidades Habitacion, Cliente y Reserva. Indicar cardinalidades y atributos clave.</p>
+
+      <h3>Checklist de errores comunes</h3>
+      <ul>
+        <li>Confundir sobrecarga (firma distinta) con sobreescritura (misma firma).</li>
+        <li>Olvidar <code>override</code> y <code>virtual</code> en metodos polimorficos.</li>
+        <li>No sobrecargar operadores en pares (<code>==</code> con <code>!=</code>).</li>
+        <li>Definir relaciones N:M sin tabla intermedia.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Documentacion oficial de C# (sobrecarga y sobreescritura).</li>
+        <li>Guia de modelado ER y normalizacion (3FN).</li>
+        <li>Material de clase IF0100 - Unidad 1.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
