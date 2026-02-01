@@ -850,6 +850,317 @@ public class MenuCarrerasViewComponent : ViewComponent
 ```
 ---
 
+## Areas: Organización Modular
+
+### Dividir aplicación en módulos
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    AREAS EN ASP.NET CORE                     │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Las Areas permiten organizar una aplicación grande en      │
+│   módulos funcionales, cada uno con sus propios Controllers │
+│   y Views                                                   │
+│                                                             │
+│   MiProyectoWeb/                                             │
+│   ├── Controllers/                                         │
+│   │   ├── HomeController.cs                               │
+│   │   └── AccountController.cs                             │
+│   ├── Areas/                                               │
+│   │   ├── Administracion/              (Area 1)              │
+│   │   │   ├── Controllers/                              │
+│   │   │   │   ├── UsersController.cs                  │
+│   │   │   │   └── RolesController.cs                  │
+│   │   │   └── Views/                                    │
+│   │   │       └── Usuarios/                              │
+│   │   │           └── Index.cshtml                       │
+│   │   │                                                      │
+│   │   ├── Estudiantes/                 (Area 2)              │
+│   │   │   ├── Controllers/                              │
+│   │   │   │   ├── InscripcionesController.cs           │
+│   │   │   │   └── NotasController.cs                   │
+│   │   │   └── Views/                                    │
+│   │   └── Profesores/                   (Area 3)              │
+│                                                             │
+│   URL: /Administracion/Usuarios/Index                      │
+│   URL: /Estudiantes/Inscripciones/Crear                    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Configuración de Areas
+
+### Program.cs para soportar Areas
+
+```csharp
+// Program.cs - Configurar routing con Areas
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.EnableEndpointRouting = false;  // Usar routing tradicional
+});
+
+var app = builder.Build();
+
+app.UseStaticFiles();
+
+// Configurar Areas DESPUÉS de UseRouting
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    // Ruta de área por defecto
+    endpoints.MapAreaControllerRoute(
+        name: "areas",
+        areaName: "{area}",
+        pattern: "{area}/{controller=Home}/{action=Index}/{id?}");
+
+    // Rutas específicas de áreas
+    endpoints.MapAreaControllerRoute(
+        name: "administracion",
+        areaName: "Administracion",
+        pattern: "Administracion/{controller=Home}/{action=Index}/{id?}");
+});
+```
+
+---
+
+## Filtros en MVC
+
+### Action Filters y Exception Filters
+
+```csharp
+// FILTRO DE ACCIÓN: Se ejecuta antes/después de la acción
+public class LogActionFilter : ActionFilterAttribute
+{
+    private readonly ILogger<LogActionFilter> _logger;
+
+    public LogActionFilter(ILogger<LogActionFilter> logger)
+    {
+        _logger = logger;
+    }
+
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        var controller = context.RouteData.Values["controller"];
+        var action = context.RouteData.Values["action"];
+        _logger.LogInformation("→ Ejecutando {Controller}.{Action}", controller, action);
+    }
+
+    public override void OnActionExecuted(ActionExecutedContext context)
+    {
+        var controller = context.RouteData.Values["controller"];
+        var action = context.RouteData.Values["action"];
+        var status = context.HttpContext.Response.StatusCode;
+        _logger.LogInformation("← {Controller}.{Action} - Status: {StatusCode}",
+            controller, action, status);
+    }
+}
+
+// FILTRO DE EXCEPCIÓN: Manejo global de errores
+public class GlobalExceptionFilter : IExceptionFilter
+{
+    private readonly ILogger<GlobalExceptionFilter> _logger;
+    private readonly IHostEnvironment _env;
+
+    public GlobalExceptionFilter(
+        ILogger<GlobalExceptionFilter> logger,
+        IHostEnvironment env)
+    {
+        _logger = logger;
+        _env = env;
+    }
+
+    public void OnException(ExceptionContext context)
+    {
+        _logger.LogError(context.Exception, "Excepción no manejada");
+
+        if (_env.IsDevelopment())
+        {
+            // En desarrollo, mostrar detalles del error
+            context.Result = new ViewResult
+            {
+                ViewName = "Error",
+                ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider())
+                {
+                    { "ErrorMessage", context.Exception.Message }
+                }
+            };
+        }
+        else
+        {
+            // En producción, mostrar página genérica
+            context.Result = new ViewResult
+            {
+                ViewName = "Error"
+            };
+        }
+    }
+}
+
+// Registro en Program.cs
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<LogActionFilter>();
+    options.Filters.Add<GlobalExceptionFilter>();
+});
+```
+
+---
+
+## Validación Personalizada
+
+### Atributos de validación custom
+
+```csharp
+// VALIDACIÓN PERSONALIZADA: Atributo personalizado
+public class ValidarCodigoUnicoAttribute : ValidationAttribute
+{
+    private readonly IEstudianteService _service;
+
+    public ValidarCodigoUnicoAttribute()
+    {
+        // El servicio se inyecta mediante ValidationContext
+    }
+
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        var servicio = validationContext.GetRequiredService<IEstudianteService>();
+
+        if (value is string codigo)
+        {
+            // Verificar si el código ya existe
+            if (servicio.CodigoExiste(codigo))
+            {
+                return new ValidationResult(
+                    $"El código {codigo} ya está en uso");
+            }
+        }
+
+        return ValidationResult.Success;
+    }
+}
+
+// USO en ViewModel
+public class EstudianteViewModel
+{
+    [ValidarCodigoUnico]
+    [Required]
+    public string Codigo { get; set; }
+}
+
+// VALIDACIÓN CON PARÁMETROS
+public class MayorDeEdadAttribute : ValidationAttribute
+{
+    private readonly int _edadMinima;
+
+    public MayorDeEdadAttribute(int edadMinima)
+    {
+        _edadMinima = edadMinima;
+    }
+
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        if (value is DateTime fechaNacimiento)
+        {
+            var edad = DateTime.Today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento > DateTime.Today.AddYears(-edad))
+                edad--;
+
+            if (edad < _edadMinima)
+            {
+                return new ValidationResult(
+                    $"El estudiante debe tener al menos {_edadMinima} años");
+            }
+        }
+
+        return ValidationResult.Success;
+    }
+}
+
+// USO
+[MayorDeEdad(18)]
+public DateTime FechaNacimiento { get; set; }
+```
+
+---
+
+## IValidatableObject
+
+### Validación programática
+
+```csharp
+// Validación en el modelo (sin Data Annotations)
+public class Estudiante : IValidatableObject
+{
+    public int Id { get; set; }
+    public string Codigo { get; set; }
+    public string Nombre { get; set; }
+    public string Email { get; set; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        var resultados = new List<ValidationResult>();
+
+        // Validación del código
+        if (string.IsNullOrWhiteSpace(Codigo))
+        {
+            resultados.Add(new ValidationResult(
+                "El código es obligatorio"));
+        }
+        else if (Codigo.Length > 10)
+        {
+            resultados.Add(new ValidationResult(
+                "El código no puede exceder 10 caracteres"));
+        }
+
+        // Validación del nombre
+        if (string.IsNullOrWhiteSpace(Nombre))
+        {
+            resultados.Add(new ValidationResult(
+                "El nombre es obligatorio"));
+        }
+
+        // Validación del email
+        if (!string.IsNullOrWhiteSpace(Email))
+        {
+            var regex = new Regex(@"^[^@]+@[^@]+\.[^@]+$");
+            if (!regex.IsMatch(Email))
+            {
+                resultados.Add(new ValidationResult(
+                    "Formato de email inválido"));
+            }
+        }
+
+        // Validación de negocio
+        if (Codigo.StartsWith("E") && Nombre.Length < 5)
+        {
+            resultados.Add(new ValidationResult(
+                "Los estudiantes de Educación especial deben tener nombre completo"));
+        }
+
+        return resultados;
+    }
+}
+
+// En el Controller, ModelState.IsValid llama automáticamente a Validate()
+[HttpPost]
+public IActionResult Crear(Estudiante estudiante)
+{
+    if (!ModelState.IsValid)  // Incluye IValidatableObject.Validate()
+        return View(estudiante);
+
+    // ...
+}
+```
+
+---
+
 ## Resumen de la Clase
 
 | Concepto | Descripción |
@@ -862,6 +1173,10 @@ public class MenuCarrerasViewComponent : ViewComponent
 | **Tag Helpers** | Atributos asp-* para generar HTML dinámico |
 | **ViewComponent** | Componente UI con lógica propia |
 | **Partial View** | Vista reutilizable sin lógica |
+| **Areas** | Organización modular de la aplicación |
+| **Action Filters** | Ejecutar código antes/después de acciones |
+| **Exception Filters** | Manejo global de excepciones |
+| **Validación Custom** | Atributos personalizados, IValidatableObject |
 
 ---
 

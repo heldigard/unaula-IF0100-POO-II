@@ -736,6 +736,233 @@ Crear sistema de inscripción de estudiantes con:
 
 ---
 
+## Validación Remota (AJAX)
+
+### Validación en tiempo real
+
+```javascript
+// Validación remota del email (disponible en servidor)
+$('#Email').on('blur', function() {
+    const email = $(this).val();
+
+    $.ajax({
+        url: '/Account/VerificarEmail',
+        type: 'GET',
+        data: { email: email },
+        success: function(response) {
+            if (response.existe) {
+                // Mostrar error
+                $('#Email').addClass('is-invalid');
+                $('#Email-error').text('Este email ya está registrado');
+            } else {
+                // Limpiar error
+                $('#Email').removeClass('is-invalid');
+                $('#Email-error').text('');
+            }
+        }
+    });
+});
+
+// En el Controller
+[AcceptVerbs]
+public class AccountController : Controller
+{
+    [HttpGet]
+    public IActionResult VerificarEmail(string email)
+    {
+        var existe = _service.EmailExiste(email);
+        return Json(new { existe });
+    }
+}
+```
+
+---
+
+## Protección CSRF
+
+### Seguridad contra ataques
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              PROTECCIÓN CSRF EN ASP.NET CORE                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  CSRF = Cross-Site Request Forgery                             │
+│  Ataque: Sitio malicioso envía formulario con credenciales │
+│  del usuario autenticado a su servidor                            │
+│                                                             │
+│  SOLUCIÓN: Token antifals                                    │
+│  • Servidor genera token único                                │
+│  • Cliente debe enviar token con cada POST                       │
+│  • Servidor valida que el token sea correcto                    │
+│                                                             │
+│  IMPLEMENTACIÓN AUTOMÁTICA:                                  │
+│  • [ValidateAntiForgeryToken] en Controller                      │
+│  • @Html.AntiForgeryToken() en form                        │
+│  • Token generado automáticamente y válido por sesión           │
+│                                                             │
+│  EN FORMULARIO:                                               │
+│  <form method="post">                                       │
+│      @Html.AntiForgeryToken()  ← Token oculto           │
+│      <input name="_codigo" />                               │
+│  </form>                                                     │
+│                                                             │
+│  EN AJAX:                                                     │
+│  $.ajax({                                                   │
+│      url: '/estudiantes/eliminar',                            │
+│      type: 'POST',                                         │
+│      headers: {                                             │
+│          "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()│
+│      }                                                       │
+│  })                                                           │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Tipos de Almacenamiento de Sesión
+
+### Configuración para diferentes escalas
+
+```csharp
+// Program.cs - Diferentes opciones de almacenamiento
+
+// 1. EN MEMORIA (Development - default)
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+// 2. SQL SERVER (Production - escalable)
+builder.Services.AddDistributedSqlServerCache(options =>
+{
+    options.ConnectionString = Configuration.GetConnectionString("SessionCache");
+    options.SchemaName = "dbo";
+    options.TableName = "SessionData";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+});
+
+// 3. REDIS (Production - distribuido)
+builder.Services.AddStackExchangeRedis(options =>
+{
+    options.Configuration = Configuration.GetConnectionString("Redis");
+    options.InstanceName = "MiApp_Session";
+});
+
+// 4. NCache (Enterprise - caching distribuido)
+builder.Services.AddNCacheDistributedCache(options =>
+{
+    options.CacheName = "demoCache";
+    options.ApplicationID = "MiApp";
+    options.ReloadConfigOnExpire = true;
+});
+```
+
+---
+
+## Upload con ProgressBar
+
+### Visualización de progreso
+
+```html
+<!-- Vista con upload de archivos con progreso -->
+<form id="uploadForm" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Seleccionar archivos</label>
+        <input type="file" id="archivos" name="archivos"
+               multiple class="form-control"
+               accept=".jpg,.jpeg,.png,.pdf" />
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progress mb-3" id="uploadProgress" style="display: none;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated"
+             role="progressbar" style="width: 0%">
+            0%
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        <span id="uploadText">Subir</span>
+        <span id="uploadSpinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></span>
+    </button>
+</form>
+
+<div id="resultados"></div>
+```
+
+```javascript
+// JavaScript: Upload con AJAX y barra de progreso
+$('#uploadForm').on('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+    var archivos = $('#archivos')[0].files;
+
+    if (archivos.length === 0) {
+        mostrarError('Seleccione al menos un archivo');
+        return;
+    }
+
+    // Agregar cada archivo al formData
+    for (var i = 0; i < archivos.length; i++) {
+        formData.append('archivos', archivos[i]);
+    }
+
+    $('#uploadProgress').show();
+    $('#uploadText').text('Subiendo...');
+    $('#uploadSpinner').show();
+    $('button[type="submit"]').prop('disabled', true);
+
+    $.ajax({
+        url: '/Documentos/SubirArchivos',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+
+            // Evento de progreso
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    var porcentaje = Math.ceil((e.loaded / e.total) * 100);
+                    $('#uploadProgress .progress-bar')
+                        .css('width', porcentaje + '%')
+                        .text(porcentaje + '%');
+                }
+            });
+
+            return xhr;
+        },
+        success: function(response) {
+            $('#resultados').html(
+                '<div class="alert alert-success">' +
+                '<i class="fas fa-check-circle"></i> ' + response.mensaje +
+                '</div>'
+            );
+        },
+        error: function(xhr, status, error) {
+            mostrarError('Error al subir archivos: ' + error);
+        },
+        complete: function() {
+            $('#uploadProgress').delay(2000).fadeOut();
+            $('#uploadText').text('Subir');
+            $('#uploadSpinner').hide();
+            $('button[type="submit"]').prop('disabled', false);
+            $('#uploadForm')[0].reset();
+        }
+    });
+});
+
+function mostrarError(mensaje) {
+    $('#resultados').html(
+        '<div class="alert alert-danger">' + mensaje + '</div>'
+    );
+}
+```
+
+---
+
 ## Resumen de la Clase
 
 | Concepto | Descripción |
@@ -747,6 +974,9 @@ Crear sistema de inscripción de estudiantes con:
 | **Session** | Datos persistentes durante sesión de usuario |
 | **Cookies** | Almacenamiento en navegador |
 | **IFormFile** | Manejo de archivos subidos |
+| **Remote Validation** | Validación AJAX en tiempo real |
+| **CSRF Protection** | Token antifals para seguridad |
+| **Distributed Cache** | Sesión escalable (Redis, SQL Server) |
 
 ---
 
