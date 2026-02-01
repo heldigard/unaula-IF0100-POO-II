@@ -56,7 +56,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 
 <h1 id="herencia-y-polimorfismo">Herencia y Polimorfismo</h1>
@@ -113,7 +113,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="objetivos-y-agenda">Objetivos y Agenda</h2>
 <table>
@@ -200,7 +200,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="1-herencia-conceptos-fundamentales">1. Herencia: Conceptos Fundamentales</h2>
 <table>
@@ -313,26 +313,53 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="jerarqu%C3%ADa-visual-de-herencia">Jerarquía Visual de Herencia</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────────┐
-│        PERSONA (Base)           │
-│  - Nombre                        │
-│  - Edad                          │
-│  - Saludar()                     │
-└────────────┬────────────────────┘
-             │
-     ┌───────┴────────┐
-     ▼                ▼
-┌─────────┐    ┌──────────────┐
-│Estudiante│    │Administrativo│
-│- Carrera │    │- Departamento│
-└─────────┘    └──────────────┘
+<h2 id="jerarqu%C3%ADa-y-sintaxis-de-herencia">Jerarquía y Sintaxis de Herencia</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%8C%B3-jerarqu%C3%ADa-visual"><img class="emoji" draggable="false" alt="🌳" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f333.svg" data-marp-twemoji=""/> Jerarquía Visual</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────┐
+│      PERSONA (Base)         │
+│  - Nombre                   │
+│  - Edad                     │
+│  - Saludar()                │
+└───────────┬─────────────────┘
+            │
+    ┌───────┴────────┐
+    ▼                ▼
+┌──────────┐   ┌──────────────┐
+│Estudiante│   │Administrativo│
+│- Carrera │   │- Departamento│
+└──────────┘   └──────────────┘
 </code></pre>
-<h3 id="%F0%9F%92%A1-herencia-transitiva"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Herencia Transitiva</h3>
-<p>Si <code>Profesor</code> hereda de <code>Empleado</code> y <code>Empleado</code> hereda de <code>Persona</code>:<br />
+<p><strong><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Herencia Transitiva:</strong> <code>Profesor</code> → <code>Empleado</code> → <code>Persona</code><br />
 → <code>Profesor</code> tiene TODO de <code>Persona</code> + <code>Empleado</code></p>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-sintaxis-en-c"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Sintaxis en C#</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Clase Base</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Edad { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Saludar</span>()</span> =&gt;
+        Console.WriteLine(<span class="hljs-string">$&quot;Hola, soy <span class="hljs-subst">{Nombre}</span>&quot;</span>);
+}
+
+<span class="hljs-comment">// Clase Derivada</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Estudiante</span> : <span class="hljs-title">Persona</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Codigo { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Carrera { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Estudiar</span>()</span> =&gt;
+        Console.WriteLine(<span class="hljs-string">$&quot;<span class="hljs-subst">{Nombre}</span> estudia <span class="hljs-subst">{Carrera}</span>&quot;</span>);
+}
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -383,23 +410,71 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="sintaxis-de-herencia-en-c">Sintaxis de Herencia en C#</h2>
+<h2 id="uso-y-modificadores-de-acceso">Uso y Modificadores de Acceso</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%92%BB-uso-de-clases-derivadas"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso de Clases Derivadas</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">Estudiante est = <span class="hljs-keyword">new</span> Estudiante();
+
+<span class="hljs-comment">// Miembros HEREDADOS de Persona</span>
+est.Nombre = <span class="hljs-string">&quot;María López&quot;</span>;  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+est.Edad = <span class="hljs-number">20</span>;                <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+est.Saludar();                 <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+
+<span class="hljs-comment">// Miembros PROPIOS de Estudiante</span>
+est.Codigo = <span class="hljs-string">&quot;2024001&quot;</span>;       <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+est.Carrera = <span class="hljs-string">&quot;Ingeniería&quot;</span>;     <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+est.Estudiar();                <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+</code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%94%92-modificadores-de-acceso"><img class="emoji" draggable="false" alt="🔒" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f512.svg" data-marp-twemoji=""/> Modificadores de Acceso</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }     <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Todos</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> password;               <span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Solo clase</span>
+    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">double</span> salario;              <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Clase + hijas</span>
+    <span class="hljs-keyword">internal</span> <span class="hljs-built_in">string</span> direccion;             <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Proyecto</span>
+}
+</code></pre>
 <table>
 <thead>
 <tr>
-<th><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Base</th>
-<th><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Derivada</th>
+<th>Modificador</th>
+<th>Clase Base</th>
+<th>Derivada</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>csharp&lt;br&gt;public class Persona&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Nombre { get; set; }&lt;br&gt;&amp;nbsp;&amp;nbsp;public int Edad { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public void Saludar()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$&quot;Hola, soy {Nombre}&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public class Estudiante : Persona&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;// Atributos propios&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Codigo { get; set; }&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Carrera { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;// Método propio&lt;br&gt;&amp;nbsp;&amp;nbsp;public void Estudiar()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;$&quot;{Nombre} estudia {Carrera}&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
+<td><strong>public</strong></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+</tr>
+<tr>
+<td><strong>protected</strong></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+</tr>
+<tr>
+<td><strong>internal</strong></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>*</td>
+</tr>
+<tr>
+<td><strong>private</strong></td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
+<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<h3 id="%E2%9A%A0%EF%B8%8F-qu%C3%A9-no-se-hereda"><img class="emoji" draggable="false" alt="⚠️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" data-marp-twemoji=""/> Qué NO se hereda</h3>
+<p><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Constructores | <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Miembros <code>private</code><br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Métodos públicos | <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Miembros <code>protected</code></p>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -450,44 +525,40 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="uso-de-clases-derivadas">Uso de Clases Derivadas</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">Estudiante est = <span class="hljs-keyword">new</span> Estudiante();
-
-<span class="hljs-comment">// Miembros HEREDADOS de Persona</span>
-est.Nombre = <span class="hljs-string">&quot;María López&quot;</span>;  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-est.Edad = <span class="hljs-number">20</span>;                <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-est.Saludar();                 <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-
-<span class="hljs-comment">// Miembros PROPIOS de Estudiante</span>
-est.Codigo = <span class="hljs-string">&quot;2024001&quot;</span>;       <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-est.Carrera = <span class="hljs-string">&quot;Ingeniería&quot;</span>;     <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-est.Estudiar();                <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
+<h2 id="palabra-clave-base">Palabra clave <code>base</code></h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%8E%AF-%C2%BFpara-qu%C3%A9-sirve"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> ¿Para qué sirve?</h3>
+<p>Acceder a miembros de la clase padre:</p>
+<ul>
+<li>Llamar constructores base</li>
+<li>Extender métodos padre</li>
+<li>Reutilizar código</li>
+</ul>
+<h3 id="%E2%9A%A1-orden-de-ejecuci%C3%B3n"><img class="emoji" draggable="false" alt="⚡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a1.svg" data-marp-twemoji=""/> Orden de Ejecución</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Constructor base (Persona)
+2. Constructor derivada (Estudiante)
+3. Resto del código
 </code></pre>
-<h3 id="%E2%9A%A0%EF%B8%8F-qu%C3%A9-no-se-hereda"><img class="emoji" draggable="false" alt="⚠️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" data-marp-twemoji=""/> Qué NO se hereda</h3>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO se hereda</th>
-<th><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Sí se hereda</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Constructores</td>
-<td>Métodos públicos</td>
-</tr>
-<tr>
-<td>Miembros <code>private</code></td>
-<td>Métodos <code>protected</code></td>
-</tr>
-<tr>
-<td></td>
-<td>Propiedades públicas/protected</td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-sintaxis-constructor"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Sintaxis Constructor</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Estudiante</span> : <span class="hljs-title">Persona</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Codigo { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-comment">// Constructor llama a base</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Estudiante</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> n, <span class="hljs-built_in">int</span> e, <span class="hljs-built_in">string</span> c</span>)
+        : <span class="hljs-title">base</span>(<span class="hljs-params">n, e</span>)  <span class="hljs-comment">// ← Primero padre</span></span>
+    {
+        Codigo = c;   <span class="hljs-comment">// Luego propio</span>
+    }
+}
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -538,48 +609,43 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="modificadores-de-acceso-en-herencia">Modificadores de Acceso en Herencia</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>
+<h2 id="otros-usos-de-base-y-jerarqu%C3%ADas">Otros Usos de <code>base</code> y Jerarquías</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%94%84-extender-m%C3%A9todo"><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Extender Método</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Saludar</span>()</span>
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }        <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Todos</span>
-    <span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> password;                  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Solo esta clase</span>
-    <span class="hljs-keyword">protected</span> <span class="hljs-built_in">double</span> salario;                 <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Clase + hijas</span>
-    <span class="hljs-keyword">internal</span> <span class="hljs-built_in">string</span> direccion;                <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Mismo proyecto</span>
+    <span class="hljs-keyword">base</span>.Saludar();  <span class="hljs-comment">// Llama padre</span>
+    Console.WriteLine(<span class="hljs-string">&quot;Soy estudiante&quot;</span>);
 }
 </code></pre>
-<table>
-<thead>
-<tr>
-<th>Modificador</th>
-<th>Clase Base</th>
-<th>Clase Derivada</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>public</strong></td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-</tr>
-<tr>
-<td><strong>protected</strong></td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-</tr>
-<tr>
-<td><strong>internal</strong></td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> (si mismo proyecto)</td>
-</tr>
-<tr>
-<td><strong>private</strong></td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Acceso</td>
-<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO acceso</td>
-</tr>
-</tbody>
-</table>
+<h3 id="%E2%9C%85-ventajas"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Reutiliza código padre</li>
+<li>Mantiene consistencia</li>
+<li>Evita duplicación</li>
+</ul>
+</div>
+<div>
+<h3 id="%F0%9F%8C%B3-jerarqu%C3%ADas-profundas"><img class="emoji" draggable="false" alt="🌳" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f333.svg" data-marp-twemoji=""/> Jerarquías Profundas</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>NIVEL 1: Persona (abuelo)
+├─ Nombre, Documento
+
+NIVEL 2: Empleado (padre)
+├─ CódigoEmpleado
+├─ FechaContratación
+└─ SalarioBase
+
+NIVEL 3: Profesor (hijo)
+├─ Especialidad
+├─ Materias[]
+└─ TítuloPostgrado
+</code></pre>
+<p><strong><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Herencia Transitiva:</strong> <code>Profesor</code> → <code>Empleado</code> → <code>Persona</code></p>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -630,28 +696,68 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="palabra-clave-base">Palabra clave <code>base</code></h2>
+<h2 id="2-polimorfismo-un-nombre-m%C3%BAltiples-formas">2. Polimorfismo: Un Nombre, Múltiples Formas</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%8E%AD-concepto"><img class="emoji" draggable="false" alt="🎭" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3ad.svg" data-marp-twemoji=""/> Concepto</h3>
+<blockquote>
+<p>Mismo mensaje, diferentes comportamientos según el objeto.</p>
+</blockquote>
+<h3 id="%F0%9F%94%91-palabras-clave"><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> Palabras Clave</h3>
 <table>
 <thead>
 <tr>
-<th><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> ¿Para qué sirve?</th>
-<th><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Sintaxis Constructor</th>
+<th>Palabra</th>
+<th>Propósito</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Acceder a miembros de la clase padre</td>
-<td><code>csharp&lt;br&gt;public class Estudiante : Persona&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Codigo { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;// Constructor llama a base&lt;br&gt;&amp;nbsp;&amp;nbsp;public Estudiante(string n, int e, string c)&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: base(n, e)  // ← Llama Persona() primero&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Codigo = c;  // Luego inicia propio&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
+<td><code>virtual</code></td>
+<td>PUEDE sobrescribirse</td>
+</tr>
+<tr>
+<td><code>override</code></td>
+<td>Sobrescribe virtual/abstract</td>
+</tr>
+<tr>
+<td><code>abstract</code></td>
+<td>Obliga implementación</td>
 </tr>
 </tbody>
 </table>
-<h3 id="%E2%9A%A1-orden-de-ejecuci%C3%B3n"><img class="emoji" draggable="false" alt="⚡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a1.svg" data-marp-twemoji=""/> Orden de Ejecución</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Constructor base (Persona)
-2. Constructor derivada (Estudiante)
-3. Resto del código derivada
+<h3 id="%F0%9F%92%A1-analog%C3%ADa"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Analogía</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Mensaje: &quot;¡Muévete!&quot;
+  <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/> Perro → Corre
+  <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/> Gato → Salta
+  <img class="emoji" draggable="false" alt="🐟" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f41f.svg" data-marp-twemoji=""/> Pez → Nada
+  <img class="emoji" draggable="false" alt="🦅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f985.svg" data-marp-twemoji=""/> Águila → Vuela
 </code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%8E%A8-polimorfismo-visual"><img class="emoji" draggable="false" alt="🎨" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3a8.svg" data-marp-twemoji=""/> Polimorfismo Visual</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────────┐
+│    MÉTODO: CalcularArea()       │
+├─────────────────────────────────┤
+│                                 │
+│  ┌─────────┐  ┌──────────┐      │
+│  │Círculo  │  │Rectángulo│      │
+│  │  π×r²   │  │  b×h     │      │
+│  └─────────┘  └──────────┘      │
+│                                 │
+│  Cada uno implementa distinto   │
+└─────────────────────────────────┘
+</code></pre>
+<h3 id="%E2%9C%85-ventajas-1"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Código flexible</li>
+<li>Tratamiento uniforme</li>
+<li>Fácil extender</li>
+</ul>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -702,46 +808,78 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="otros-usos-de-base">Otros Usos de <code>base</code></h2>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Extender método</th>
-<th><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso práctico</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;public override void Saludar()&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;base.Saludar();  // Llama método padre&lt;br&gt;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;Soy estudiante&quot;);&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public override decimal CalcSalario()&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;// base + comisión&lt;br&gt;&amp;nbsp;&amp;nbsp;return base.CalcSalario() + Comision;&lt;br&gt;}&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="%E2%9C%85-ventajas-de-usar-base"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas de usar <code>base</code></h3>
-<table>
-<thead>
-<tr>
-<th>Ventaja</th>
-<th>Descripción</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/></td>
-<td>Reutiliza código padre</td>
-</tr>
-<tr>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></td>
-<td>Mantiene consistencia</td>
-</tr>
-<tr>
-<td><img class="emoji" draggable="false" alt="📉" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4c9.svg" data-marp-twemoji=""/></td>
-<td>Evita duplicación</td>
-</tr>
-</tbody>
-</table>
+<h2 id="virtual-y-override-en-acci%C3%B3n">Virtual y Override en Acción</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%93%8B-clase-base"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Base</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-comment">// VIRTUAL: puede sobrescribirse</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HacerSonido</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">&quot;Sonido genérico&quot;</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Moverse</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">&quot;Se mueve&quot;</span>);
+    }
+}
+</code></pre>
+<h3 id="%F0%9F%8E%AD-uso-polim%C3%B3rfico"><img class="emoji" draggable="false" alt="🎭" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3ad.svg" data-marp-twemoji=""/> Uso Polimórfico</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">Animal a1 = <span class="hljs-keyword">new</span> Perro() { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> };
+Animal a2 = <span class="hljs-keyword">new</span> Gato() { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> };
+
+a1.HacerSonido();  <span class="hljs-comment">// &quot;¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/>&quot;</span>
+a2.HacerSonido();  <span class="hljs-comment">// &quot;¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/>&quot;</span>
+</code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%93%8B-clases-derivadas"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clases Derivadas</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Perro</span> : <span class="hljs-title">Animal</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HacerSonido</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">&quot;¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/>&quot;</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Moverse</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">&quot;Corre en 4 patas <img class="emoji" draggable="false" alt="🐾" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f43e.svg" data-marp-twemoji=""/>&quot;</span>);
+    }
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Gato</span> : <span class="hljs-title">Animal</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HacerSonido</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">&quot;¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/>&quot;</span>);
+    }
+}
+</code></pre>
+</div>
+</div>
+<h3 id="%F0%9F%94%84-colecci%C3%B3n-polim%C3%B3rfica"><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Colección Polimórfica</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span>()
+{
+    <span class="hljs-keyword">new</span> Perro { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> },
+    <span class="hljs-keyword">new</span> Gato { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> },
+    <span class="hljs-keyword">new</span> Perro { Nombre = <span class="hljs-string">&quot;Toby&quot;</span> },
+    <span class="hljs-keyword">new</span> Gato { Nombre = <span class="hljs-string">&quot;Luna&quot;</span> }
+};
+
+<span class="hljs-keyword">foreach</span> (Animal a <span class="hljs-keyword">in</span> animales)
+{
+    Console.Write(<span class="hljs-string">$&quot;<span class="hljs-subst">{a.Nombre}</span>: &quot;</span>);
+    a.HacerSonido();
+}
+<span class="hljs-comment">// Rex: ¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/></span>
+<span class="hljs-comment">// Michi: ¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/></span>
+</code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -792,25 +930,55 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="jerarqu%C3%ADas-profundas">Jerarquías Profundas</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>NIVEL 1: Persona (abuelo)
-├─ Nombre, Documento
+<h2 id="llamando-a-basemetodo">Llamando a <code>base.Metodo()</code></h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%94%84-extender-no-reemplazar"><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Extender, No Reemplazar</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Empleado</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-built_in">decimal</span> <span class="hljs-title">CalcSalario</span>()</span>
+    {
+        <span class="hljs-keyword">return</span> SalarioBase;
+    }
+}
 
-NIVEL 2: Empleado (padre) : Persona
-├─ CódigoEmpleado
-├─ FechaContratación
-└─ SalarioBase
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Vendedor</span> : <span class="hljs-title">Empleado</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">decimal</span> Comision { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-NIVEL 3: Profesor (hijo) : Empleado
-├─ Especialidad
-├─ Materias[]
-└─ TítuloPostgrado
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">decimal</span> <span class="hljs-title">CalcSalario</span>()</span>
+    {
+        <span class="hljs-comment">// Llama base + agrega propio</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">base</span>.CalcSalario() + Comision;
+    }
+}
 </code></pre>
-<blockquote>
-<p><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> <strong>Herencia Transitiva:</strong> <code>Profesor</code> hereda de <code>Empleado</code> que hereda de <code>Persona</code></p>
-</blockquote>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-uso-pr%C3%A1ctico"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso Práctico</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">Vendedor v = <span class="hljs-keyword">new</span> Vendedor
+{
+    Nombre = <span class="hljs-string">&quot;Carlos&quot;</span>,
+    SalarioBase = <span class="hljs-number">2000</span>,
+    Comision = <span class="hljs-number">1500</span>
+};
+
+Console.WriteLine(v.CalcSalario());
+<span class="hljs-comment">// 3500 (base + comisión)</span>
+</code></pre>
+<h3 id="%F0%9F%93%8A-flujo"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Flujo</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>CalcSalario() [Vendedor]
+    ↓
+base.CalcSalario() = 2000
+    ↓
++ Comision (1500)
+    ↓
+= 3500
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -861,43 +1029,65 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="2-polimorfismo-un-nombre-m%C3%BAltiples-formas">2. Polimorfismo: Un Nombre, Múltiples Formas</h2>
-<h3 id="%F0%9F%8E%AD-concepto"><img class="emoji" draggable="false" alt="🎭" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3ad.svg" data-marp-twemoji=""/> Concepto</h3>
-<blockquote>
-<p>Mismo mensaje, diferentes comportamientos según el objeto.</p>
-</blockquote>
-<h3 id="%F0%9F%94%91-palabras-clave"><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> Palabras Clave</h3>
+<h2 id="3-clases-y-m%C3%A9todos-abstractos">3. Clases y Métodos Abstractos</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%93%8A-virtual-vs-abstract"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> <code>virtual</code> vs <code>abstract</code></h3>
 <table>
 <thead>
 <tr>
-<th>Palabra</th>
-<th>Propósito</th>
+<th>Característica</th>
+<th><code>virtual</code></th>
+<th><code>abstract</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>virtual</code></td>
-<td>Método que PUEDE sobrescribirse</td>
+<td>Implementación</td>
+<td>Tiene default</td>
+<td>Sin código</td>
 </tr>
 <tr>
-<td><code>override</code></td>
-<td>Sobrescribe método virtual/abstract</td>
+<td>Obligatoriedad</td>
+<td>Hijas PUEDEN</td>
+<td>Hijas DEBEN</td>
 </tr>
 <tr>
-<td><code>abstract</code></td>
-<td>Sin implementación (obliga a hijos)</td>
+<td>Instanciación</td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Sí</td>
+<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO</td>
 </tr>
 </tbody>
 </table>
-<h3 id="%F0%9F%92%A1-analog%C3%ADa"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Analogía</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Mensaje: &quot;¡Muévete!&quot;
-  <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/> Perro → Corre en 4 patas
-  <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/> Gato → Salta sigilosamente
-  <img class="emoji" draggable="false" alt="🐟" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f41f.svg" data-marp-twemoji=""/> Pez → Nada en agua
-  <img class="emoji" draggable="false" alt="🦅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f985.svg" data-marp-twemoji=""/> Águila → Vuela
+<h3 id="%F0%9F%8E%AF-cu%C3%A1ndo-usar-abstract"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Cuándo Usar Abstract</h3>
+<p><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Hay comportamiento común pero implementación diferente<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Quieres forzar diseño en hijas<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> La clase base es solo un &quot;contrato&quot;</p>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-clase-abstracta-ejemplo"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Clase Abstracta Ejemplo</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// ABSTRACTA: No instanciable</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Color { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-comment">// ABSTRACTO: Hijas DEBEN implementar</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>;
+
+    <span class="hljs-comment">// CONCRETO: Hijas heredan</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MostrarInfo</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">$&quot;Figura: <span class="hljs-subst">{Nombre}</span>&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;Área: <span class="hljs-subst">{CalcularArea():F2}</span>&quot;</span>);
+    }
+}
 </code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -948,44 +1138,51 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="polimorfismo-visual">Polimorfismo Visual</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────────┐
-│      MÉTODO: CalcularArea()       │
-├─────────────────────────────────┤
-│                                 │
-│  ┌─────────┐  ┌──────────┐       │
-│  │Círculo  │  │Rectángulo │       │
-│  │  π×r²   │  │  b×h      │       │
-│  └─────────┘  └──────────┘       │
-│                                 │
-│  Cada uno implementa a su manera  │
-└─────────────────────────────────┘
+<h2 id="implementando-clases-abstractas">Implementando Clases Abstractas</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%93%8A-c%C3%ADrculo"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Círculo</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Circulo</span> : <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Radio { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span> =&gt;
+        Math.PI * Radio * Radio;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span> =&gt;
+        <span class="hljs-number">2</span> * Math.PI * Radio;
+}
 </code></pre>
-<h3 id="%E2%9C%85-ventajas-del-polimorfismo"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas del Polimorfismo</h3>
-<table>
-<thead>
-<tr>
-<th>Ventaja</th>
-<th>Descripción</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/></td>
-<td>Código flexible y extensible</td>
-</tr>
-<tr>
-<td><img class="emoji" draggable="false" alt="📦" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4e6.svg" data-marp-twemoji=""/></td>
-<td>Tratamiento uniforme</td>
-</tr>
-<tr>
-<td><img class="emoji" draggable="false" alt="➕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2795.svg" data-marp-twemoji=""/></td>
-<td>Fácil agregar nuevos tipos</td>
-</tr>
-</tbody>
-</table>
+</div>
+<div>
+<h3 id="%F0%9F%93%90-rect%C3%A1ngulo"><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> Rectángulo</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Rectangulo</span> : <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Base { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Altura { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span> =&gt;
+        Base * Altura;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span> =&gt;
+        <span class="hljs-number">2</span> * (Base + Altura);
+}
+</code></pre>
+</div>
+</div>
+<h3 id="%F0%9F%92%BB-uso-polim%C3%B3rfico"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso Polimórfico</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ref. base, objeto concreto</span>
+Figura f1 = <span class="hljs-keyword">new</span> Circulo { Radio = <span class="hljs-number">5</span> };
+Figura f2 = <span class="hljs-keyword">new</span> Rectangulo { Base = <span class="hljs-number">4</span>, Altura = <span class="hljs-number">6</span> };
+
+f1.MostrarInfo();  <span class="hljs-comment">// Área: 78.54 cm²</span>
+f2.MostrarInfo();  <span class="hljs-comment">// Área: 24.00 cm²</span>
+
+<span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error: no se puede instanciar</span>
+<span class="hljs-comment">// Figura f = new Figura();</span>
+</code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -1036,23 +1233,79 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="virtual-y-override">Virtual y Override</h2>
+<h2 id="4-reglas-y-palabra-clave-sealed">4. Reglas y Palabra clave <code>sealed</code></h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%93%8B-reglas-de-abstractas"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Reglas de Abstractas</h3>
 <table>
 <thead>
 <tr>
-<th><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Base</th>
-<th><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clases Derivadas</th>
+<th>Aspecto</th>
+<th>Regla</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>csharp&lt;br&gt;public class Animal&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Nombre { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;// VIRTUAL: puede sobrescribirse&lt;br&gt;&amp;nbsp;&amp;nbsp;public virtual void HacerSonido()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;Sonido genérico&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public virtual void Moverse()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;Se mueve&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public class Perro : Animal&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public override void HacerSonido()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/>&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override void Moverse()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;Corre en 4 patas <img class="emoji" draggable="false" alt="🐾" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f43e.svg" data-marp-twemoji=""/>&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;&lt;br&gt;public class Gato : Animal&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public override void HacerSonido()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Console.WriteLine(&quot;¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/>&quot;);&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
+<td>Instanciar</td>
+<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO</td>
+</tr>
+<tr>
+<td>Heredar</td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Sí</td>
+</tr>
+<tr>
+<td>Métodos abstractos</td>
+<td>DEBEN implementarse</td>
+</tr>
+<tr>
+<td>Métodos concretos</td>
+<td>Se heredan</td>
 </tr>
 </tbody>
 </table>
+<h3 id="%F0%9F%8E%AF-cu%C3%A1ndo-usar-abstract-1"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Cuándo Usar Abstract</h3>
+<p><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Comportamiento común, implementación diferente<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Quieres forzar diseño en hijas<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Clase base como &quot;contrato&quot;</p>
+</div>
+<div>
+<h3 id="%F0%9F%94%92-palabra-sealed"><img class="emoji" draggable="false" alt="🔒" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f512.svg" data-marp-twemoji=""/> Palabra <code>sealed</code></h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// sealed: Nadie puede heredar</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SeguridadSocial</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Numero { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">decimal</span> Saldo { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+}
+
+<span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error</span>
+<span class="hljs-comment">// public class HackeoSS : SeguridadSocial { }</span>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Usar <code>sealed</code></th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No diseñada para heredar</td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td>Proteger lógica crítica</td>
+<td>Seguridad</td>
+</tr>
+<tr>
+<td>Finalizar cadena override</td>
+<td>Impuestos</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -1103,39 +1356,60 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="polimorfismo-en-acci%C3%B3n">Polimorfismo en Acción</h2>
-<h3 id="%F0%9F%8E%AD-referencia-base"><img class="emoji" draggable="false" alt="🎭" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3ad.svg" data-marp-twemoji=""/> Referencia Base</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Ref. base, objetos específicos</span>
-Animal a1 = <span class="hljs-keyword">new</span> Perro() { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> };
-Animal a2 = <span class="hljs-keyword">new</span> Gato() { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> };
-Animal a3 = <span class="hljs-keyword">new</span> Animal() { Nombre = <span class="hljs-string">&quot;Genérico&quot;</span> };
-
-<span class="hljs-comment">// Mismo método, diferente comportamiento</span>
-a1.HacerSonido();  <span class="hljs-comment">// &quot;¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/>&quot;</span>
-a2.HacerSonido();  <span class="hljs-comment">// &quot;¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/>&quot;</span>
-a3.HacerSonido();  <span class="hljs-comment">// &quot;Sonido genérico&quot;</span>
+<h2 id="5-principio-de-liskov-lsp">5. Principio de Liskov (LSP)</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%93%90-principio"><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> Principio</h3>
+<blockquote>
+<p><strong>Clase hija debe sustituir a padre sin alterar comportamiento.</strong></p>
+</blockquote>
+<h3 id="%E2%9C%85-buena-herencia"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Buena Herencia</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Estudiante → Persona <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
+Perro → Animal <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
+Círculo → Figura <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
 </code></pre>
-<h3 id="%F0%9F%94%84-colecci%C3%B3n-polim%C3%B3rfica"><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Colección Polimórfica</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span>()
-{
-    <span class="hljs-keyword">new</span> Perro { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> },
-    <span class="hljs-keyword">new</span> Gato { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> },
-    <span class="hljs-keyword">new</span> Perro { Nombre = <span class="hljs-string">&quot;Toby&quot;</span> },
-    <span class="hljs-keyword">new</span> Gato { Nombre = <span class="hljs-string">&quot;Luna&quot;</span> }
-};
+<h3 id="%E2%9D%8C-mala-herencia"><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Mala Herencia</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>Avión → Vehículo (?)  
+# Tiene motor, pero vuela
 
-<span class="hljs-keyword">foreach</span> (Animal a <span class="hljs-keyword">in</span> animales)
+Reloj → Círculo (?)   
+# Forma ≠ concepto
+</code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%92%A1-ejemplo-problema"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Ejemplo Problema</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Rectangulo</span>
 {
-    Console.Write(<span class="hljs-string">$&quot;<span class="hljs-subst">{a.Nombre}</span>: &quot;</span>);
-    a.HacerSonido();
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetAncho</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> w</span>)</span> { ... }
 }
-<span class="hljs-comment">// Rex: ¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/></span>
-<span class="hljs-comment">// Michi: ¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/></span>
-<span class="hljs-comment">// Toby: ¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/></span>
-<span class="hljs-comment">// Luna: ¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/></span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title">Cuadrado</span> : <span class="hljs-title">Rectangulo</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">SetAncho</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> w</span>)</span>
+    {
+        ancho = alto = w;  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="⚠" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" data-marp-twemoji=""/></span>
+    }
+}
+
+<span class="hljs-comment">// Uso</span>
+Rectangulo r = <span class="hljs-keyword">new</span> Cuadrado();
+r.SetAncho(<span class="hljs-number">5</span>);
+r.SetAlto(<span class="hljs-number">10</span>);
+<span class="hljs-comment">// Esperaba área 50, es 100</span>
 </code></pre>
+<h3 id="%F0%9F%8E%AF-pregunta-clave"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Pregunta Clave</h3>
+<p>¿<code>Cuadrado</code> ES UN <code>Rectángulo</code>?</p>
+<ul>
+<li>Matemáticamente: <strong>SÍ</strong></li>
+<li>En POO: <strong>NO</strong> (cambia comportamiento)</li>
+</ul>
+<blockquote>
+<p><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> LSP = <strong>comportamiento</strong>, no taxonomía</p>
+</blockquote>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -1186,34 +1460,54 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="llamando-a-basemetodo">Llamando a <code>base.Metodo()</code></h2>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Extender, No Reemplazar</th>
-<th><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso Práctico</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;public class Empleado&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public virtual decimal CalcSalario()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return SalarioBase;&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;&lt;br&gt;public class Vendedor : Empleado&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public decimal Comision { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override decimal CalcSalario()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;// Llama base + agrega propio&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return base.CalcSalario() + Comision;&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;Vendedor v = new Vendedor&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;Nombre = &quot;Carlos&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;SalarioBase = 2000,&lt;br&gt;&amp;nbsp;&amp;nbsp;Comision = 1500&lt;br&gt;};&lt;br&gt;&lt;br&gt;Console.WriteLine(v.CalcSalario());&lt;br&gt;// 3500 (base + comisión)&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="%F0%9F%93%8A-flujo-de-ejecuci%C3%B3n"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Flujo de Ejecución</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>CalcSalario() [Vendedor]
-    ↓
-base.CalcSalario() [Empleado]
-    ↓
-SalarioBase (2000)
-    ↑
-+ Comision (1500)
-    ↓
-= 3500
+<h2 id="6-ejemplo-pr%C3%A1ctico-sistema-de-figuras">6. Ejemplo Práctico: Sistema de Figuras</h2>
+<div class="columns">
+<div>
+<h3 id="%F0%9F%8E%AF-objetivo"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Objetivo</h3>
+<p>Sistema polimórfico de figuras geométricas.</p>
+<h3 id="%F0%9F%93%8B-clase-abstracta"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Abstracta</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Color { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MostrarInfo</span>()</span>
+    {
+        Console.WriteLine(<span class="hljs-string">$&quot;<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> <span class="hljs-subst">{Nombre}</span> (<span class="hljs-subst">{Color}</span>)&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;   Área: <span class="hljs-subst">{CalcularArea():F2}</span> cm²&quot;</span>);
+        Console.WriteLine(<span class="hljs-string">$&quot;   Per: <span class="hljs-subst">{CalcularPerimetro():F2}</span> cm&quot;</span>);
+    }
+}
 </code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%93%8A-implementaciones"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Implementaciones</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Circulo</span> : <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Radio { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span> =&gt;
+        Math.PI * Radio * Radio;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span> =&gt;
+        <span class="hljs-number">2</span> * Math.PI * Radio;
+}
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Rectangulo</span> : <span class="hljs-title">Figura</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Base { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Altura { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span> =&gt;
+        Base * Altura;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span> =&gt;
+        <span class="hljs-number">2</span> * (Base + Altura);
+}
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
@@ -1264,53 +1558,33 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="3-clases-y-m%C3%A9todos-abstractos">3. Clases y Métodos Abstractos</h2>
-<h3 id="forzando-implementaci%C3%B3n-en-hijas">Forzando Implementación en Hijas</h3>
-<table>
-<thead>
-<tr>
-<th>Característica</th>
-<th><code>virtual</code></th>
-<th><code>abstract</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Implementación</td>
-<td>Tiene default</td>
-<td>Sin implementación</td>
-</tr>
-<tr>
-<td>Obligatoriedad</td>
-<td>Hijas PUEDEN</td>
-<td>Hijas DEBEN</td>
-</tr>
-<tr>
-<td>Instanciación</td>
-<td>Sí se puede</td>
-<td>NO se puede</td>
-</tr>
-</tbody>
-</table>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// CLASE ABSTRACTA: No instanciable</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
+<h2 id="uso-del-sistema-de-figuras">Uso del Sistema de Figuras</h2>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Figura&gt; figuras = <span class="hljs-keyword">new</span>()
 {
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Color { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
+    <span class="hljs-keyword">new</span> Circulo { Nombre=<span class="hljs-string">&quot;C1&quot;</span>, Color=<span class="hljs-string">&quot;Rojo&quot;</span>, Radio=<span class="hljs-number">5</span> },
+    <span class="hljs-keyword">new</span> Rectangulo { Nombre=<span class="hljs-string">&quot;R1&quot;</span>, Color=<span class="hljs-string">&quot;Azul&quot;</span>, Base=<span class="hljs-number">4</span>, Altura=<span class="hljs-number">6</span> }
+};
 
-    <span class="hljs-comment">// ABSTRACTO: Hijas DEBEN implementar</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>;
-
-    <span class="hljs-comment">// CONCRETO: Hijas heredan tal cual</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MostrarInfo</span>()</span>
-    {
-        Console.WriteLine(<span class="hljs-string">$&quot;Figura: <span class="hljs-subst">{Nombre}</span>&quot;</span>);
-        Console.WriteLine(<span class="hljs-string">$&quot;Área: <span class="hljs-subst">{CalcularArea():F2}</span>&quot;</span>);
-    }
+<span class="hljs-built_in">double</span> total = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> f <span class="hljs-keyword">in</span> figuras)
+{
+    f.MostrarInfo();
+    total += f.CalcularArea();
 }
+Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: <span class="hljs-subst">{total:F2}</span> cm²&quot;</span>);
+</code></pre>
+<h3 id="%F0%9F%8E%A8-salida-esperada"><img class="emoji" draggable="false" alt="🎨" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3a8.svg" data-marp-twemoji=""/> Salida Esperada</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> C1 (Rojo)
+   Área: 78.54 cm²
+   Per: 31.42 cm
+
+<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> R1 (Azul)
+   Área: 24.00 cm²
+   Per: 20.00 cm
+
+<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: 102.54 cm²
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
@@ -1362,636 +1636,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="implementando-clases-abstractas">Implementando Clases Abstractas</h2>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> CÍRCULO</th>
-<th><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> RECTÁNGULO</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;public class Circulo : Figura&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Radio { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularArea()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ Math.PI * Radio * Radio;&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularPerimetro()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ 2 * Math.PI * Radio;&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public class Rectangulo : Figura&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Base { get; set; }&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Altura { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularArea()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ Base * Altura;&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularPerimetro()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ 2 * (Base + Altura);&lt;br&gt;}&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="%F0%9F%92%BB-uso-de-clases-abstractas"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso de Clases Abstractas</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ref. base, objeto concreto</span>
-Figura f1 = <span class="hljs-keyword">new</span> Circulo { Radio = <span class="hljs-number">5</span> };
-Figura f2 = <span class="hljs-keyword">new</span> Rectangulo { Base=<span class="hljs-number">4</span>, Altura=<span class="hljs-number">6</span> };
-
-f1.MostrarInfo();  <span class="hljs-comment">// Área: 78.54 cm²</span>
-f2.MostrarInfo();  <span class="hljs-comment">// Área: 24.00 cm²</span>
-
-<span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error: no se puede instanciar</span>
-<span class="hljs-comment">// Figura f = new Figura();</span>
-</code></pre>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="18" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="reglas-de-clases-abstractas">Reglas de Clases Abstractas</h2>
-<table>
-<thead>
-<tr>
-<th>Aspecto</th>
-<th>Regla</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Instanciar</td>
-<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO</td>
-</tr>
-<tr>
-<td>Heredar</td>
-<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Sí</td>
-</tr>
-<tr>
-<td>Métodos abstractos</td>
-<td>DEBEN implementarse</td>
-</tr>
-<tr>
-<td>Métodos concretos</td>
-<td>Se heredan</td>
-</tr>
-</tbody>
-</table>
-<h3 id="%F0%9F%8E%AF-cu%C3%A1ndo-usar"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Cuándo Usar</h3>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Usa abstract cuando...</th>
-<th><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO uses cuando...</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Hay comportamiento común pero implementación diferente</td>
-<td>Solo hay una clase concreta</td>
-</tr>
-<tr>
-<td>Quieres forzar diseño en hijas</td>
-<td>No necesitas polimorfismo</td>
-</tr>
-<tr>
-<td>La clase base es solo un &quot;contrato&quot;</td>
-<td>La clase se va a instanciar</td>
-</tr>
-</tbody>
-</table>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="19" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="4-palabra-clave-sealed">4. Palabra clave <code>sealed</code></h2>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="🔒" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f512.svg" data-marp-twemoji=""/> Impedir Herencia</th>
-<th><img class="emoji" draggable="false" alt="🔒" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f512.svg" data-marp-twemoji=""/> Impedir Sobrescritura</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;// sealed: Nadie puede heredar&lt;br&gt;public sealed class SeguridadSocial&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public string Numero { get; set; }&lt;br&gt;&amp;nbsp;&amp;nbsp;public decimal Saldo { get; set; }&lt;br&gt;}&lt;br&gt;&lt;br&gt;// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error&lt;br&gt;// public class HackeoSS : SeguridadSocial { }&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public class Impuestos&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public virtual decimal Calc()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return 0;&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;&lt;br&gt;public class ImpuestosCol : Impuestos&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;// sealed: Ya no se puede sobrescribir&lt;br&gt;&amp;nbsp;&amp;nbsp;public sealed override decimal Calc()&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;return base.Calc() + 0.19m;&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="%F0%9F%8E%AF-cu%C3%A1ndo-usar-sealed"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Cuándo Usar <code>sealed</code></h3>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Usa sealed cuando...</th>
-<th>Ejemplo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>La clase NO está diseñada para heredar</td>
-<td><code>String</code>, <code>DateTime</code></td>
-</tr>
-<tr>
-<td>Quieres proteger lógica crítica</td>
-<td>Seguridad, encriptación</td>
-</tr>
-<tr>
-<td>El método override finaliza una cadena</td>
-<td>Cálculos de impuestos</td>
-</tr>
-</tbody>
-</table>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="20" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="5-principio-de-liskov-lsp">5. Principio de Liskov (LSP)</h2>
-<h3 id="%F0%9F%93%90-principio"><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> Principio</h3>
-<blockquote>
-<p><strong>Clase hija debe sustituir a padre sin alterar comportamiento.</strong></p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Correcto</th>
-<th><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Incorrecto</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;Animal a = new Perro();&lt;br&gt;a.HacerSonido();  // <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Funciona&lt;br&gt;&lt;br&gt;// Perro ES UN Animal&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;class Rectangulo&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;virtual void SetAncho(int w) { ... }&lt;br&gt;}&lt;br&gt;&lt;br&gt;class Cuadrado : Rectangulo&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;override void SetAncho(int w)&lt;br&gt;&amp;nbsp;&amp;nbsp;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ancho = alto = w;  // <img class="emoji" draggable="false" alt="⚠" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a0.svg" data-marp-twemoji=""/> Cambia alto!&lt;br&gt;&amp;nbsp;&amp;nbsp;}&lt;br&gt;}&lt;br&gt;&lt;br&gt;Rectangulo r = new Cuadrado();&lt;br&gt;r.SetAncho(5);&lt;br&gt;r.SetAlto(10);&lt;br&gt;// Esperaba área 50, es 100&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="21" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="reglas-de-buen-dise%C3%B1o-lsp">Reglas de Buen Diseño LSP</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> BUENA HERENCIA:
-  Estudiante → Persona <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
-  Perro → Animal <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
-  Círculo → Figura <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/>
-
-<img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> MALA HERENCIA:
-  Avión → Vehículo (?)  # Tiene motor, pero vuela
-  Reloj → Círculo (?)   # Forma física ≠ concepto
-</code></pre>
-<h3 id="%F0%9F%8E%AF-pregunta-lsp"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Pregunta LSP</h3>
-<p>¿<code>Cuadrado</code> ES UN <code>Rectángulo</code>?</p>
-<ul>
-<li>Matemáticamente: <strong>SÍ</strong></li>
-<li>Orientación a Objetos: <strong>NO</strong> (cambia comportamiento)</li>
-</ul>
-<blockquote>
-<p><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> El LSP se trata de <strong>comportamiento</strong>, no de taxonomía</p>
-</blockquote>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="22" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="6-ejemplo-pr%C3%A1ctico-sistema-de-figuras">6. Ejemplo Práctico: Sistema de Figuras</h2>
-<h3 id="%F0%9F%8E%AF-objetivo"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Objetivo</h3>
-<p>Sistema polimórfico de figuras geométricas.</p>
-<h3 id="%F0%9F%93%8B-clase-abstracta"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Clase Abstracta</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Figura</span>
-{
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Color { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>;
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>;
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MostrarInfo</span>()</span>
-    {
-        Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> <span class="hljs-subst">{Nombre}</span> (<span class="hljs-subst">{Color}</span>)&quot;</span>);
-        Console.WriteLine(<span class="hljs-string">$&quot;   Área: <span class="hljs-subst">{CalcularArea():F2}</span> cm²&quot;</span>);
-        Console.WriteLine(<span class="hljs-string">$&quot;   Perím: <span class="hljs-subst">{CalcularPerimetro():F2}</span> cm&quot;</span>);
-    }
-}
-</code></pre>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="23" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="23" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="clases-concretas-del-sistema">Clases Concretas del Sistema</h2>
-<table>
-<thead>
-<tr>
-<th><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> CÍRCULO</th>
-<th><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> RECTÁNGULO</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>csharp&lt;br&gt;public class Circulo : Figura&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Radio { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularArea()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ Math.PI * Radio * Radio;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularPerimetro()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ 2 * Math.PI * Radio;&lt;br&gt;}&lt;br&gt;</code></td>
-<td><code>csharp&lt;br&gt;public class Rectangulo : Figura&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Base { get; set; }&lt;br&gt;&amp;nbsp;&amp;nbsp;public double Altura { get; set; }&lt;br&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularArea()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ Base * Altura;&lt;br&gt;&amp;nbsp;&amp;nbsp;public override double CalcularPerimetro()&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;⇒ 2 * (Base + Altura);&lt;br&gt;}&lt;br&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="24" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="24" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
-<header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h2 id="uso-del-sistema-de-figuras">Uso del Sistema de Figuras</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Figura&gt; figuras = <span class="hljs-keyword">new</span>()
-{
-    <span class="hljs-keyword">new</span> Circulo { Nombre=<span class="hljs-string">&quot;C1&quot;</span>, Color=<span class="hljs-string">&quot;Rojo&quot;</span>, Radio=<span class="hljs-number">5</span> },
-    <span class="hljs-keyword">new</span> Rectangulo { Nombre=<span class="hljs-string">&quot;R1&quot;</span>, Color=<span class="hljs-string">&quot;Azul&quot;</span>, Base=<span class="hljs-number">4</span>, Altura=<span class="hljs-number">6</span> }
-};
-
-<span class="hljs-built_in">double</span> total = <span class="hljs-number">0</span>;
-<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> f <span class="hljs-keyword">in</span> figuras)
-{
-    f.MostrarInfo();
-    total += f.CalcularArea();
-}
-Console.WriteLine(<span class="hljs-string">$&quot;\n<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: <span class="hljs-subst">{total:F2}</span> cm²&quot;</span>);
-</code></pre>
-<h3 id="%F0%9F%8E%A8-salida-esperada"><img class="emoji" draggable="false" alt="🎨" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3a8.svg" data-marp-twemoji=""/> Salida Esperada</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> C1 (Rojo)
-   Área: 78.54 cm²
-   Perím: 31.42 cm
-
-<img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> R1 (Azul)
-   Área: 24.00 cm²
-   Perím: 20.00 cm
-
-<img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Total: 102.54 cm²
-</code></pre>
-<footer>UNAULA - Ingeniería Informática - 2026-I</footer>
-</section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="25" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-" lang="C" data-marpit-pagination="25" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
-  font-size: 22px;
-}
-h1 {
-  color: #1e40af;
-  font-size: 2em;
-}
-h2 {
-  color: #1e3a8a;
-  font-size: 1.5em;
-}
-h3 {
-  color: #3b82f6;
-  font-size: 1.2em;
-}
-table {
-  font-size: 0.85em;
-}
-code {
-  font-size: 0.8em;
-}
-pre {
-  font-size: 0.7em;
-}
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="resumen-de-la-clase">Resumen de la Clase</h2>
 <h3 id="%F0%9F%93%9A-conceptos-clave"><img class="emoji" draggable="false" alt="📚" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4da.svg" data-marp-twemoji=""/> Conceptos Clave</h3>
@@ -2070,7 +1715,7 @@ pre {
 </table>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="26" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
   font-size: 22px;
 }
 h1 {
@@ -2094,7 +1739,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-" lang="C" data-marpit-pagination="26" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
+" lang="C" data-marpit-pagination="18" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
   font-size: 22px;
 }
 h1 {
@@ -2118,7 +1763,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="%F0%9F%93%9D-ejercicios-pr%C3%A1cticos"><img class="emoji" draggable="false" alt="📝" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4dd.svg" data-marp-twemoji=""/> Ejercicios Prácticos</h2>
 <h3 id="1-banco-abstracta">1. Banco (Abstracta)</h3>
@@ -2152,7 +1797,7 @@ pre {
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="27" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="19" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
   font-size: 22px;
 }
 h1 {
@@ -2176,7 +1821,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-" lang="C" data-marpit-pagination="27" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
+" lang="C" data-marpit-pagination="19" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
   font-size: 22px;
 }
 h1 {
@@ -2200,7 +1845,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="%F0%9F%8E%93-pr%C3%B3xima-clase-sobrecarga-y-modelado-bd"><img class="emoji" draggable="false" alt="🎓" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f393.svg" data-marp-twemoji=""/> Próxima Clase: Sobrecarga y Modelado BD</h2>
 <h3 id="temas-clase-4">Temas Clase 4</h3>
@@ -2247,7 +1892,7 @@ pre {
 </blockquote>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
-</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="28" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
+</foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" data-style="section {
   font-size: 22px;
 }
 h1 {
@@ -2271,7 +1916,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-" lang="C" data-marpit-pagination="28" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
+" lang="C" data-marpit-pagination="20" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;--style:section {
   font-size: 22px;
 }
 h1 {
@@ -2295,7 +1940,7 @@ code {
 pre {
   font-size: 0.7em;
 }
-;" data-marpit-pagination-total="28">
+;" data-marpit-pagination-total="20">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h1 id="%C2%A1gracias">¡Gracias!</h1>
 <h2 id="%C2%BFpreguntas">¿Preguntas?</h2>
