@@ -213,7 +213,16 @@
 ### R3
 
 ## Clase 10 - MVC y Razor Pages
-### R1
+### R1 (Corrección mayor)
+- Estado: ✅ PASS
+- Cambios aplicados:
+  - Ortografía: Corregidas múltiples palabras sin tilde (Duración, Prerrequisitos, patrón, validación, específicos, básico, fundamentales, teoría, infografías, práctica, presentación, validaciones, páginas, Infografía, Relación, lógica, menús, Documentación)
+  - Header: Actualizados prerrequisitos (ya tenían "ASP.NET Core básico", "Conocimiento de C# y POO", "HTML/CSS fundamentales")
+  - Sección mejorada: "Práctica / Laboratorio" - añadidos duración (35 min), objetivo, pasos VS 2022 (7 pasos detallados) y 5 checklists de verificación
+  - Ejercicios: Añadidos tiempos (30/20/15 min) y 3 checklists específicos; añadido 5to ítem al checklist de errores comunes
+- Factibilidad Windows: Verificada - Visual Studio 2022 con ASP.NET Core MVC (.NET 8).
+- Infografías: clase-10-mvc.png (existente).
+- TODOs: Ninguno.
 
 ### R2
 
