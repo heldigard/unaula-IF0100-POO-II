@@ -809,6 +809,208 @@ dotnet test --parallel
 
 ---
 
+## Test Doubles: Objetos de Prueba
+
+### Tipos de dobles para pruebas
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  TEST DOUBLES - TIPOLOGÍA                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Cuando una clase tiene dependencias (BD, API, Servicio),   │
+│  usamos "dobles" para aislar la prueba                      │
+│                                                             │
+│  ┌────────┐    ┌────────┐    ┌────────┐    ┌────────┐      │
+│  │  DUMMY │    │  STUB  │    │  FAKE  │    │  MOCK  │      │
+│  │        │    │        │    │        │    │        │      │
+│  │ Solo   │    │ Resp.  │    │ Impl.  │    │ Verif. │      │
+│  │ llena  │    │ prede- │    │ simpl. │    │ compor-│      │
+│  │ parám. │    │ finida │    │ real   │    │ tamiento│      │
+│  └────────┘    └────────┘    └────────┘    └────────┘      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Ejemplo: Stub vs Mock
+
+```csharp
+// STUB: Proporciona respuestas predefinidas
+public class StubRepository : IUsuarioRepository
+{
+    public Usuario GetById(int id)
+    {
+        return new Usuario { Id = id, Nombre = "Test" };
+    }
+}
+
+[Fact]
+public void Autenticar_UsuarioValido_RetornaTrue()
+{
+    // Arrange
+    var stubRepo = new StubRepository();
+    var auth = new Autenticador(stubRepo);
+
+    // Act
+    bool resultado = auth.Autenticar(1, "password");
+
+    // Assert
+    Assert.True(resultado);
+}
+
+// MOCK: Verifica comportamiento (interacciones)
+[Fact]
+public void Autenticar_UsuarioInvalido_LlamaRepositorio()
+{
+    // Arrange
+    var mockRepo = new Mock<IUsuarioRepository>();
+    mockRepo.Setup(r => r.GetById(1)).Returns((Usuario)null);
+    var auth = new Autenticador(mockRepo.Object);
+
+    // Act
+    auth.Autenticar(1, "password");
+
+    // Assert - Verifica que se llamó al método
+    mockRepo.Verify(r => r.GetById(1), Times.Once);
+}
+```
+
+---
+
+## Anti-Patrones de Pruebas
+
+### Qué NO hacer al escribir pruebas
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              ANTI-PATRONES DE PRUEBAS                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ❌ THE LOADER                                              │
+│     "Prueba que carga TODO el sistema"                     │
+│     • Prueba de integración disfrazada de unitaria          │
+│     • Lenta, frágil, difícil de debuggear                   │
+│                                                             │
+│  ❌ THE GIANT                                               │
+│     "Prueba de 200 líneas con Arrange gigante"              │
+│     • Difícil de entender qué se prueba                     │
+│     • Muchas cosas pueden fallar                            │
+│                                                             │
+│  ❌ THE MOCKERY                                             │
+│     "Demasiados mocks, 0 código real probado"               │
+│     • Pruebas que solo prueban los mocks                    │
+│     • Frágiles a cambios internos                           │
+│                                                             │
+│  ❌ THE SLEEPER                                             │
+│     "Thread.Sleep(5000) en la prueba"                       │
+│     • Pruebas lentas que dependen del tiempo                │
+│                                                             │
+│  ❌ THE SEQUENCER                                           │
+│     "Pruebas que deben ejecutarse en orden"                 │
+│     • Comparten estado entre pruebas                        │
+│     • Fallan si se ejecutan sola                            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Ejemplos de anti-patrones
+
+```csharp
+// ❌ THE GIANT: Arrange demasiado grande
+[Fact]
+public void ProcesarPedido_TodoElFlujo_Funciona()
+{
+    // 100 líneas de setup...
+    var cliente = new Cliente { /* 20 propiedades */ };
+    var producto1 = new Producto { /* 15 propiedades */ };
+    var producto2 = new Producto { /* 15 propiedades */ };
+    var direccion = new Direccion { /* 10 propiedades */ };
+    var metodoPago = new TarjetaCredito { /* 10 propiedades */ };
+    var descuento = new Descuento { /* 10 propiedades */ };
+    // ... más setup
+    // ¡Difícil saber qué se está probando realmente!
+}
+
+// ✅ Mejor: Pruebas pequeñas y específicas
+[Fact]
+public void ProcesarPedido_SinStock_LanzaExcepcion()
+{
+    var pedido = new Pedido();
+    Assert.Throws<SinStockException>(() => pedido.Procesar());
+}
+
+// ❌ THE SLEEPER
+[Fact]
+public async Task AsyncOperation_Completa_ReturnsTrue()
+{
+    var service = new Service();
+    await service.Start();
+    Thread.Sleep(5000);  // ❌ Demasiado lento
+    Assert.True(service.IsCompleted);
+}
+
+// ✅ Mejor: Usar TimeProvider o mocks
+[Fact]
+public async Task AsyncOperation_Completa_ReturnsTrue()
+{
+    var mockTimer = new Mock<ITimer>();
+    var service = new Service(mockTimer.Object);
+    mockTimer.Raise(t => t.Elapsed += null, EventArgs.Empty);
+    Assert.True(service.IsCompleted);
+}
+```
+
+---
+
+## Pruebas Asíncronas en C#
+
+### Patrones para async/await
+
+```csharp
+// Prueba de método asíncrono
+[Fact]
+public async Task ObtenerUsuario_UsuarioExiste_RetornaUsuario()
+{
+    // Arrange
+    var repo = new UsuarioRepository();
+    int usuarioId = 1;
+
+    // Act
+    Usuario? usuario = await repo.ObtenerUsuarioAsync(usuarioId);
+
+    // Assert
+    Assert.NotNull(usuario);
+    Assert.Equal(usuarioId, usuario.Id);
+}
+
+// Verificar excepciones asíncronas
+[Fact]
+public async Task EliminarUsuario_UsuarioNoExiste_LanzaExcepcion()
+{
+    // Arrange
+    var repo = new UsuarioRepository();
+
+    // Act & Assert
+    await Assert.ThrowsAsync<KeyNotFoundException>(
+        () => repo.EliminarUsuarioAsync(999)
+    );
+}
+
+// Timeout para pruebas asíncronas
+[Fact(Timeout = 5000)]  // 5 segundos máximo
+public async Task OperacionLenta_CompletaATiempo()
+{
+    var servicio = new ServicioExterno();
+    await servicio.ProcesarAsync();
+}
+```
+
+---
+
 ## Ejercicio Práctico
 
 ### Taller: Desarrollar con TDD
@@ -822,17 +1024,84 @@ Requisitos:
 3. Puede retirar dinero si hay saldo suficiente
 4. No permite retirar más del saldo disponible
 5. Puede consultar el saldo actual
+```
 
-Ciclo TDD:
-1. Escribir prueba para SaldoInicial_EsCero
-2. Implementar código mínimo
-3. Escribir prueba para AgregarDinero_AumentaSaldo
-4. Implementar
-5. Escribir prueba para RetirarDinero_DisminuyeSaldo
-6. Implementar
-7. Escribir prueba para Retirar_MasDelSaldo_LanzaExcepcion
-8. Implementar
-9. Refactorizar si es necesario
+**SOLUCIÓN GUIADA:**
+
+```csharp
+// PASO 1: RED - Escribir prueba para saldo inicial
+[Fact]
+public void Saldo_Inicialmente_EsCero()
+{
+    // Arrange
+    var billetera = new Billetera();
+
+    // Act
+    decimal saldo = billetera.Saldo;
+
+    // Assert
+    Assert.Equal(0, saldo);
+}
+
+// PASO 1: GREEN - Implementación mínima
+public class Billetera
+{
+    public decimal Saldo => 0;
+}
+
+// PASO 2: RED - Prueba para agregar dinero
+[Fact]
+public void Agregar_MontoPos_AumentaSaldo()
+{
+    var billetera = new Billetera();
+    billetera.Agregar(100);
+    Assert.Equal(100, billetera.Saldo);
+}
+
+// PASO 2: GREEN - Implementar
+public class Billetera
+{
+    private decimal _saldo;
+    public decimal Saldo => _saldo;
+
+    public void Agregar(decimal monto)
+    {
+        _saldo = monto;  // Hardcoded para pasar
+    }
+}
+
+// PASO 3: REFACTOR - Con más tests, implementación real
+[Theory]
+[InlineData(100)]
+[InlineData(50)]
+[InlineData(200)]
+public void Agregar_VariosMontos_AumentaSaldo(decimal monto)
+{
+    var billetera = new Billetera();
+    billetera.Agregar(monto);
+    Assert.Equal(monto, billetera.Saldo);
+}
+
+// Implementación final
+public class Billetera
+{
+    private decimal _saldo;
+    public decimal Saldo => _saldo;
+
+    public void Agregar(decimal monto)
+    {
+        if (monto <= 0)
+            throw ArgumentException("Monto debe ser positivo");
+        _saldo += monto;
+    }
+
+    public void Retirar(decimal monto)
+    {
+        if (monto > _saldo)
+            throw InvalidOperationException("Saldo insuficiente");
+        _saldo -= monto;
+    }
+}
 ```
 
 ---

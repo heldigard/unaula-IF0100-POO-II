@@ -624,6 +624,110 @@ public void EntoncesDebeMostrarElError(string mensajeEsperado)
 ```
 
 ---
+## Tags en SpecFlow
+
+### Organización y ejecución selectiva
+
+```gherkin
+# language: es
+@integration
+@database
+Característica: Gestión de pedidos
+  Como cliente
+  Quiero realizar pedidos
+  Para recibir productos
+
+  @smoke @critical
+  Escenario: Crear pedido exitosamente
+    Dado que estoy autenticado como cliente
+    Cuando creo un pedido con 3 productos
+    Entonces el pedido debe guardarse en BD
+    Y debo recibir confirmación
+
+  @ui
+  Escenario: Validar carrito vacío
+    Dado que no tengo productos en el carrito
+    Cuando intento finalizar compra
+    Entonces debo ver mensaje "Carrito vacío"
+
+  @slow
+  Escenario: Procesamiento de pago externo
+    Dado que tengo un pedido pendiente
+    Cuando proceso el pago
+    Entonces el pago debe confirmarse
+```
+
+```bash
+# Ejecutar por tags
+dotnet test --filter "@smoke"
+dotnet test --filter "@critical"
+dotnet test --filter "@integration and @database"
+dotnet test --filter "@ui"
+dotnet test --filter "not @slow"
+
+# En Visual Studio: Test Explorer → Traits
+```
+
+---
+
+## ScenarioContext
+
+### Compartir datos entre pasos
+
+```csharp
+[Binding]
+public class PedidoSteps
+{
+    private readonly ScenarioContext _context;
+
+    public PedidoSteps(ScenarioContext context)
+    {
+        _context = context;
+    }
+
+    [Given(@"que tengo (.*) productos en el carrito")]
+    public void DadoQueTengoProductosEnElCarrito(int cantidad)
+    {
+        var carrito = new CarritoDeCompras();
+        for (int i = 0; i < cantidad; i++)
+        {
+            carrito.AgregarProducto(new Producto { Precio = 100 });
+        }
+
+        // Guardar en contexto para usar en otros pasos
+        _context["carrito"] = carrito;
+        _context["cantidad_productos"] = cantidad;
+    }
+
+    [When(@"finalizo la compra")]
+    public void CuandoFinalizoLaCompra()
+    {
+        // Recuperar del contexto
+        var carrito = _context.Get<CarritoDeCompras>("carrito");
+        var pedido = carrito.FinalizarCompra();
+
+        // Guardar resultado para verificación
+        _context["pedido"] = pedido;
+    }
+
+    [Then(@"el total debe ser (.*)")]
+    public void EntoncesElTotalDebeSer(decimal totalEsperado)
+    {
+        var pedido = _context.Get<Pedido>("pedido");
+        pedido.Total.Should().Be(totalEsperado);
+    }
+
+    [Then(@"el número de items debe ser (.*)")]
+    public void EntoncesElNumeroDeItemsDebeSer(int itemsEsperados)
+    {
+        var cantidad = _context.Get<int>("cantidad_productos");
+        cantidad.Should().Be(itemsEsperados);
+    }
+}
+```
+
+---
+
 ## Hooks en SpecFlow
 ---
 ### Configuración global
@@ -824,6 +928,119 @@ Tareas:
    c. Devolución con retraso (multa)
 3. Implementar Step Definitions
 4. Ejecutar y verificar
+```
+
+**SOLUCIÓN COMPLETA:**
+
+```gherkin
+# language: es
+Característica: Préstamo de libros
+  Como usuario de la biblioteca
+  Quiero solicitar libros prestados
+  Para poder leerlos en casa
+
+  Antecedentes:
+    Dado que soy un usuario registrado
+    Y mi estado es "Activo"
+
+  @smoke
+  Escenario: Préstamo exitoso dentro del límite
+    Dado que tengo 2 libros prestados actualmente
+    Y el límite de préstamos es 5 libros
+    Cuando solicito el préstamo del libro "C# 10 en profundidad"
+    Entonces el préstamo debe ser aprobado
+    Y el libro debe agregarse a mis préstamos activos
+    Y la fecha de devolución debe ser dentro de 14 días
+
+  Escenario: Préstamo fallido por límite alcanzado
+    Dado que tengo 5 libros prestados actualmente
+    Y el límite de préstamos es 5 libros
+    Cuando solicito el préstamo del libro "Clean Code"
+    Entonces el préstamo debe ser rechazado
+    Y debo ver el mensaje "Has alcanzado el límite de préstamos"
+
+  Escenario: Devolución con retraso genera multa
+    Dado que tengo prestado el libro "Domain-Driven Design"
+    Y la fecha de devolución fue hace 5 días
+    Y la multa diaria es de $500
+    Cuando devuelvo el libro hoy
+    Entonces debo pagar una multa de $2500
+    Y el libro debe marcarse como disponible
+```
+
+**STEP DEFINITIONS:**
+
+```csharp
+[Binding]
+public class BibliotecaSteps
+{
+    private Usuario _usuario;
+    private Libro _libro;
+    private Prestamo _prestamo;
+    private decimal _multaCalculada;
+    private string _mensajeError;
+
+    [Given(@"que soy un usuario registrado")]
+    public void DadoQueSoyUnUsuarioRegistrado()
+    {
+        _usuario = new Usuario { Estado = "Activo" };
+    }
+
+    [Given(@"mi estado es ""([^""]*)""")]
+    public void DadoMiEstadoEs(string estado)
+    {
+        _usuario.Estado = estado;
+    }
+
+    [Given(@"que tengo (.*) libros prestados actualmente")]
+    public void DadoQueTengoLibrosPrestadosActualmente(int cantidad)
+    {
+        for (int i = 0; i < cantidad; i++)
+        {
+            _usuario.AgregarPrestamo(new Prestamo());
+        }
+    }
+
+    [Given(@"el límite de préstamos es (.*) libros")]
+    public void DadoElLimiteDePrestamosEs(int limite)
+    {
+        _usuario.LimitePrestamos = limite;
+    }
+
+    [When(@"solicito el préstamo del libro ""([^""]*)""")]
+    public void CuandoSolicitoElPrestamoDelLibro(string tituloLibro)
+    {
+        _libro = new Libro { Titulo = tituloLibro, Disponible = true };
+
+        try
+        {
+            _prestamo = _usuario.SolicitarPrestamo(_libro);
+        }
+        catch (InvalidOperationException ex)
+        {
+            _mensajeError = ex.Message;
+        }
+    }
+
+    [Then(@"el préstamo debe ser aprobado")]
+    public void EntoncesElPrestamoDebeSerAprobado()
+    {
+        _prestamo.Should().NotBeNull();
+        _prestamo.Estado.Should().Be("Activo");
+    }
+
+    [Then(@"el préstamo debe ser rechazado")]
+    public void EntoncesElPrestamoDebeSerRechazado()
+    {
+        _prestamo.Should().BeNull();
+    }
+
+    [Then(@"debo ver el mensaje ""([^""]*)""")]
+    public void EntoncesDeboVerElMensaje(string mensaje)
+    {
+        _mensajeError.Should().Contain(mensaje);
+    }
+}
 ```
 
 ---

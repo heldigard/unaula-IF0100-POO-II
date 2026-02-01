@@ -696,6 +696,227 @@ MiAplicacionWeb/
 ```
 ---
 
+## HTTP Methods y Status Codes
+
+### Comunicación cliente-servidor
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              MÉTODOS HTTP PRINCIPALES                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   MÉTODO       PROPÓSITO            EJEMPLO                 │
+│   ────────────  ────────────────────  ──────────────────    │
+│                                                             │
+│   GET           Obtener datos        GET /api/productos    │
+│                 (seguro, idempotente) GET /api/clientes/5   │
+│                                                             │
+│   POST          Crear recurso        POST /api/pedidos     │
+│                 (no idempotente)     Body: {datos}         │
+│                                                             │
+│   PUT           Actualizar completo   PUT /api/clientes/5  │
+│                 (idempotente)        Body: {datos completos}│
+│                                                             │
+│   PATCH         Modificación parcial  PATCH /api/clientes/5│
+│                 Body: {campo: valor}                        │
+│                                                             │
+│   DELETE        Eliminar recurso      DELETE /api/pedidos/5 │
+│                 (idempotente)                              │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Códigos de Estado HTTP
+
+### Respuestas del servidor
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│            CÓDIGOS DE ESTADO HTTP                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   2xx - EXITOSO                                             │
+│   ─────────────────────────────────                         │
+│   200 OK        Petición exitosa                            │
+│   201 Created  Recurso creado                               │
+│   204 No Cont  Sin contenido (DELETE exitoso)              │
+│                                                             │
+│   3xx - REDIRECCIÓN                                         │
+│   ───────────────────────────────────                       │
+│   301 Moved    Redirección permanente                      │
+│   302 Found    Redirección temporal                        │
+│   304 Not Mod  Recurso no modificado (cache)               │
+│                                                             │
+│   4xx - ERROR CLIENTE                                       │
+│   ─────────────────────────────────                         │
+│   400 Bad Req  Petición mal formada                         │
+│   401 Unauth  No autenticado                                │
+│   403 Forbidden Autenticado pero sin permiso               │
+│   404 Not Found Recurso no encontrado                       │
+│                                                             │
+│   5xx - ERROR SERVIDOR                                      │
+│   ─────────────────────────────────                         │
+│   500 Error   Error interno del servidor                   │
+│   502 Bad Gtw  Gateway no disponible                       │
+│   503 Unavail Servicio no disponible (mantenimiento)       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Tipos de Action Results
+
+### Retornos desde Controllers
+
+```csharp
+public class ProductosController : Controller
+{
+    // 1. ViewResult - Renderiza vista HTML
+    public IActionResult Index()
+    {
+        var productos = _servicio.ObtenerTodos();
+        return View(productos);  // Busca Views/Productos/Index.cshtml
+    }
+
+    // 2. RedirectToActionResult - Redirección a otra acción
+    [HttpPost]
+    public IActionResult Crear(ProductoViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);  // Si hay errores, volver a mostrar
+
+        _servicio.Crear(model);
+        return RedirectToAction("Index");  // Redirigir a Index
+    }
+
+    // 3. JsonResult - Retorna datos JSON (para APIs)
+    [HttpGet("api/productos")]
+    public IActionResult ObtenerJson()
+    {
+        var productos = _servicio.ObtenerTodos();
+        return Json(productos);  // Retorna JSON
+    }
+
+    // 4. ContentResult - Retorna texto plano u otro contenido
+    public IActionResult Texto()
+    {
+        return Content("Hola desde el servidor", "text/plain");
+    }
+
+    // 5. FileResult - Retorna archivo para descarga
+    public IActionResult Descargar()
+    {
+        byte[] fileBytes = System.IO.File.ReadAllBytes(@"ruta\archivo.pdf");
+        return File(fileBytes, "application/pdf", "reporte.pdf");
+    }
+
+    // 6. NotFoundResult - Recurso no encontrado (404)
+    public IActionResult Detalle(int id)
+    {
+        var producto = _servicio.ObtenerPorId(id);
+        if (producto == null)
+            return NotFound();  // 404
+
+        return View(producto);
+    }
+
+    // 7. StatusCodeResult - Código personalizado
+    public IActionResult NoAutorizado()
+    {
+        return StatusCode(403);  // Forbidden
+    }
+}
+```
+
+---
+
+## Tag Helpers
+
+### HTML con inteligencia de Razor
+
+```html
+@* Tag Helpers: atributos especiales que se procesan en el servidor *@
+@* Requiere: @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
+
+@* 1. ANCHOR TAG HELPER - Genera enlaces correctos *@
+<a asp-controller="Productos" asp-action="Detalle" asp-route-id="5">
+    Ver producto
+</a>
+<!-- Genera: <a href="/Productos/Detalle/5">Ver producto</a> -->
+
+@* 2. FORM TAG HELPER - Genera formulario con acción correcta *@
+<form asp-controller="Productos" asp-action="Crear" method="post">
+    <!-- Contenido del formulario -->
+</form>
+<!-- Genera: <form action="/Productos/Crear" method="post"> -->
+
+@* 3. INPUT TAG HELPER - Vincula a propiedades del modelo *@
+<input asp-for="Nombre" class="form-control" />
+<!-- Vincula a la propiedad "Nombre" del modelo -->
+<!-- Genera: <input type="text" id="Nombre" name="Nombre" ... /> -->
+
+@* 4. LABEL TAG HELPER - Etiqueta asociada *@
+<label asp-for="Nombre"></label>
+<!-- Genera: <label for="Nombre">Nombre</label> -->
+
+@* 5. VALIDATION MESSAGE TAG HELPER - Mensajes de error *@
+<span asp-validation-for="Nombre" class="text-danger"></span>
+<!-- Muestra errores de validación para la propiedad Nombre -->
+
+@* 6. SELECT TAG HELPER - Dropdown list *@
+<select asp-for="CategoriaId" asp-items="Model.Categorias"></select>
+
+@* 7. TEXTAREA TAG HELPER - Área de texto multiline *@
+<textarea asp-for="Descripcion" rows="4"></textarea>
+```
+
+---
+
+## Launch Settings
+
+### Configuración de desarrollo
+
+```json
+// Properties/launchSettings.json
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+```
+
+---
+
 ## Resumen de la Clase
 
 | Concepto | Descripción |
@@ -709,6 +930,10 @@ MiAplicacionWeb/
 | **Transient** | Nueva instancia cada vez |
 | **Scoped** | Una instancia por petición HTTP |
 | **Singleton** | Una instancia global |
+| **HTTP Methods** | GET, POST, PUT, PATCH, DELETE |
+| **Status Codes** | 2xx (éxito), 3xx (redirección), 4xx (cliente), 5xx (servidor) |
+| **Tag Helpers** | Atributos Razor que generan HTML dinámico |
+| **Action Results** | View, Redirect, Json, File, NotFound, etc. |
 
 ---
 

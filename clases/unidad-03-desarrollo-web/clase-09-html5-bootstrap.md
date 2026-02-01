@@ -899,6 +899,182 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
+## Accesibilidad en HTML5
+
+### ARIA Labels para lectores de pantalla
+
+```html
+@* ACCESIBILIDAD: Importante para usuarios con discapacidades *@
+@* ARIA = Accessible Rich Internet Applications *@
+
+<!-- 1. ARIA-LABEL - Descripción para elementos sin texto -->
+<input type="search" aria-label="Buscar estudiantes">
+<button aria-label="Cerrar ventana">&times;</button>
+
+<!-- 2. ARIA-LABELEDBY - Relacionar con otro elemento -->
+<input type="text" id="nombre" aria-labelledby="lbl-nombre">
+<label id="lbl-nombre">Nombre completo:</label>
+
+<!-- 3. ARIA-DESCRIBEDBY - Descripción adicional -->
+<input type="password" aria-describedby="pwd-help">
+<small id="pwd-help">Mínimo 8 caracteres, una mayúscula y un número</small>
+
+<!-- 4. ARIA-HIDDEN - Ocultar a lectores de pantalla -->
+<span aria-hidden="true">🎓</span>  <!-- El emoji no se lee -->
+
+<!-- 5. ROLES ARIA - Semántica adicional -->
+<nav role="navigation" aria-label="Menú principal">...</nav>
+<main role="main">...</main>
+<div role="alert" class="alert alert-danger">
+    Operación fallida
+</div>
+
+<!-- 6. ESTADOS ARIA -->
+<button aria-pressed="false">Me gusta</button>
+<input aria-invalid="true" aria-describedby="error-msg">
+<div id="error-msg" role="alert">El email es inválido</div>
+```
+
+---
+
+## Más Componentes Bootstrap
+
+### Modals, Collapse, Progress
+
+```html
+<!-- MODAL (Ventana emergente) -->
+<!-- Botón para abrir modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+    Abrir Modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar este estudiante?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+
+<!-- COLLAPSE / ACCORDION -->
+<!-- Acordeón de preguntas frecuentes -->
+<div class="accordion" id="accordionPreguntas">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseUno">
+                ¿Qué es ASP.NET Core?
+            </button>
+        </h2>
+        <div id="collapseUno" class="accordion-collapse collapse show"
+             data-bs-parent="#accordionPreguntas">
+            <div class="accordion-body">
+                ASP.NET Core es un framework web de código abierto...
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapseDos">
+                ¿Qué es MVC?
+            </button>
+        </h2>
+        <div id="collapseDos" class="accordion-collapse collapse"
+             data-bs-parent="#accordionPreguntas">
+            <div class="accordion-body">
+                MVC es un patrón de diseño que separa...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+
+<!-- PROGRESS BAR -->
+<h4>Progreso del curso</h4>
+<div class="progress" style="height: 25px;">
+    <div class="progress-bar" role="progressbar" style="width: 65%;"
+         aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+        65%
+    </div>
+</div>
+
+<!-- Progress bar con múltiples barras -->
+<div class="progress mt-3">
+    <div class="progress-bar bg-success" style="width: 40%">Teoría</div>
+    <div class="progress-bar bg-info" style="width: 25%">Lab</div>
+    <div class="progress-bar bg-warning" style="width: 20%">Proyecto</div>
+</div>
+
+<!-- ─────────────────────────────────────────────── -->
+
+<!-- BADGES Y PILLS -->
+<span class="badge bg-primary">Primario</span>
+<span class="badge bg-secondary">Secundario</span>
+<span class="badge bg-success">Activo</span>
+<span class="badge bg-danger">Inactivo</span>
+<span class="badge bg-warning text-dark">Pendiente</span>
+<span class="badge bg-info">Info</span>
+
+<!-- Pills (badges redondeados) -->
+<span class="badge rounded-pill bg-primary">Nuevo</span>
+<span class="badge rounded-pill bg-success">Completado</span>
+
+<!-- Badges dentro de botones -->
+<button class="btn btn-primary">
+    Notificaciones <span class="badge bg-secondary">5</span>
+</button>
+
+<!-- ─────────────────────────────────────────────── -->
+
+<!-- BREADCRUMBS (Migas de pan) -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Inicio</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Cursos" asp-action="Index">Cursos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">ASP.NET Core</li>
+    </ol>
+</nav>
+
+<!-- ─────────────────────────────────────────────── -->
+
+<!-- SPINNERS (Indicadores de carga) -->
+<div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+</div>
+
+<!-- Spinner con texto -->
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <span class="ms-2">Cargando datos...</span>
+</div>
+
+<!-- Spinner pequeño -->
+<div class="spinner-border spinner-border-sm" role="status"></div>
+```
+
+---
+
 ## Resumen de la Clase
 
 | Concepto | Descripción |
@@ -906,10 +1082,15 @@ Al finalizar esta clase, el estudiante será capaz de:
 | **HTML5 semántico** | `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>` |
 | **Formularios HTML5** | Nuevos tipos: email, tel, date, number, range |
 | **Bootstrap Grid** | 12 columnas, clases: `col-`, `col-sm-`, `col-md-`, `col-lg-` |
-| **Componentes** | Botones, alertas, cards, navbar, tablas, formularios |
+| **Componentes** | Botones, alertas, cards, navbar, tablas, formularios, modals |
 | **Utilidades** | Spacing (`m-`, `p-`), colores (`text-`, `bg-`), display |
 | **Responsive** | Mobile-first, breakpoints |
 | **Tag Helpers** | `asp-controller`, `asp-action`, `asp-for` |
+| **Accesibilidad** | ARIA labels, roles, estados |
+| **Modals** | Ventanas emergentes |
+| **Collapse** | Acordeones y contenido colapsable |
+| **Progress** | Barras de progreso |
+| **Badges** | Etiquetas y contadores |
 
 ---
 

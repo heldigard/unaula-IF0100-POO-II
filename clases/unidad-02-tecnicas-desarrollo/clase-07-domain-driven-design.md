@@ -1063,6 +1063,226 @@ public class PedidosController : ControllerBase
 
 ---
 
+## Bounded Contexts
+
+### Límites del dominio
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  BOUNDED CONTEXTS                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Un Bounded Context es un límite conceptual y técnico      │
+│   donde un modelo de dominio es válido y aplicable          │
+│                                                             │
+│   EJEMPLO: Tienda en línea                                  │
+│   ┌─────────────────────────────────────────────────────┐   │
+│   │                                                     │   │
+│   │  ┌─────────────┐  ┌─────────────┐  ┌───────────┐  │   │
+│   │  │   VENTAS    │  │  INVENTARIO │  │  ENVÍOS   │  │   │
+│   │  │             │  │             │  │           │  │   │
+│   │  │ • Pedido    │  │ • Stock     │  │ • Envío   │  │   │
+│   │  │ • Cliente   │  │ • Producto  │  │ • Tracking│  │   │
+│   │  │ • Factura   │  │ • Almacén   │  │ • Courier │  │   │
+│   │  │             │  │             │  │           │  │   │
+│   │  │ Context:    │  │ Context:    │  │ Context:  │  │   │
+│   │  │ "Ventas"    │  │ "Stock"     │  │ "Logística"│  │   │
+│   │  └─────────────┘  └─────────────┘  └───────────┘  │   │
+│   │                                                     │   │
+│   │  Nota: "Producto" significa cosas diferentes        │   │
+│   │  en cada contexto (en Ventas: precio+descripcion,  │   │
+│   │  en Inventario: stock+ubicación)                   │   │
+│   │                                                     │   │
+│   └─────────────────────────────────────────────────────┘   │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Domain Events
+
+### Comunicación dentro del dominio
+
+```csharp
+// DOMINIO: Eventos que representan hechos ocurridos
+// Los eventos son INMUTABLES y representan algo que ya pasó
+
+public abstract record DomainEvent
+{
+    public DateTime OccurredOn { get; } = DateTime.UtcNow;
+}
+
+// Eventos específicos del dominio
+public record PedidoCreadoEvent(PedidoId PedidoId, ClienteId ClienteId, DateTime Fecha)
+    : DomainEvent;
+
+public record PagadoEvent(PedidoId PedidoId, Dinero Monto, DateTime FechaPago)
+    : DomainEvent;
+
+public record EnviadoEvent(PedidoId PedidoId, string NumeroGuia, DateTime FechaEnvio)
+    : DomainEvent;
+
+// AGGREGATE ROOT con soporte de eventos
+public abstract class AggregateRoot<TId>
+{
+    private readonly List<DomainEvent> _domainEvents = new();
+    public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+    protected void RaiseEvent(DomainEvent domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
+    }
+
+    public void ClearDomainEvents() => _domainEvents.Clear();
+}
+
+// Pedido con eventos
+public class Pedido : AggregateRoot<PedidoId>
+{
+    public void Confirmar()
+    {
+        if (_lineas.Count == 0)
+            throw new InvalidOperationException("No se puede confirmar pedido vacío");
+
+        Estado = EstadoPedido.Confirmado;
+
+        // Publicar evento de dominio
+        RaiseEvent(new PedidoConfirmadoEvent(Id, ClienteId, DateTime.UtcNow));
+    }
+}
+```
+
+---
+
+## CQRS with DDD
+
+### Command Query Responsibility Segregation
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    CQRS + DDD                               │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   CQRS: Separar operaciones de lectura (Query)              │
+│   de operaciones de escritura (Command)                     │
+│                                                             │
+│   ┌────────────────────────────────────────────────────┐    │
+│   │                    CLIENT                           │    │
+│   └───────────────────┬────────────────────────────────┘    │
+│                       │                                     │
+│           ┌───────────┴───────────┐                         │
+│           │                       │                         │
+│           ▼                       ▼                         │
+│   ┌───────────────┐       ┌───────────────┐                │
+│   │   COMMANDS    │       │    QUERIES    │                │
+│   │  (Escribir)   │       │   (Leer)     │                │
+│   │               │       │               │                │
+│   │ CrearPedido   │       │ ObtenerPedido │                │
+│   │ ConfirmarPago │       │ ListarPedidos │                │
+│   │ CancelarPedido│       │ BuscarPorEstado│                │
+│   └───────┬───────┘       └───────┬───────┘                │
+│           │                       │                         │
+│           ▼                       ▼                         │
+│   ┌───────────────┐       ┌───────────────┐                │
+│   │  WRITE MODEL  │       │  READ MODEL   │                │
+│   │   (Domain)    │       │ (Proyecciones)│                │
+│   │               │       │               │                │
+│   │ DDD Aggregates│       │ DTOs planos   │                │
+│   │ Entities      │       │ Optimizados   │                │
+│   │ Value Objects │       │ para queries  │                │
+│   │               │       │               │                │
+│   │ DB Principal  │       │ DB Lectura    │                │
+│   │ (Normalizada) │       │ (Denormalizada)│                │
+│   └───────────────┘       └───────────────┘                │
+│                                                             │
+│   Ventajas:                                                 │
+│   • Modelo de escritura optimizado para validaciones        │
+│   • Modelo de lectura optimizado para presentación          │
+│   • Escalabilidad independiente (lectura >> escritura)      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Implementación CQRS
+
+### Commands y Queries separados
+
+```csharp
+// COMMAND SIDE (Escritura) - Usa DDD
+
+// Command: Representa una intención
+public record CrearPedidoCommand(
+    ClienteId ClienteId,
+    List<ItemPedidoCommand> Items,
+    DireccionCommand Direccion
+);
+
+// Command Handler: Ejecuta la lógica de dominio
+public class CrearPedidoHandler
+{
+    private readonly IPedidoRepository _pedidoRepo;
+
+    public async Task<PedidoId> Handle(CrearPedidoCommand command)
+    {
+        // Lógica de dominio con aggregates
+        var pedido = new Pedido(
+            new PedidoId(Guid.NewGuid()),
+            command.ClienteId,
+            MapearDireccion(command.Direccion)
+        );
+
+        foreach (var item in command.Items)
+        {
+            pedido.AgregarProducto(item.ProductoId, item.Cantidad);
+        }
+
+        await _pedidoRepo.GuardarAsync(pedido);
+        return pedido.Id;
+    }
+}
+
+// QUERY SIDE (Lectura) - DTOs simples
+
+// Query: Representa una consulta
+public record ObtenerPedidosQuery(ClienteId ClienteId);
+
+// Query Handler: Retorna DTOs optimizados
+public record PedidoDto(
+    Guid Id,
+    string ClienteNombre,
+    DateTime Fecha,
+    string Estado,
+    decimal Total,
+    int ItemsCount
+);
+
+public class ObtenerPedidosHandler
+{
+    private readonly AppDbContext _context;
+
+    public async Task<List<PedidoDto>> Handle(ObtenerPedidosQuery query)
+    {
+        // SQL directo o EF con proyección
+        return await _context.Pedidos
+            .Where(p => p.ClienteId == query.ClienteId)
+            .Select(p => new PedidoDto(
+                p.Id,
+                p.Cliente.Nombre,
+                p.Fecha,
+                p.Estado.ToString(),
+                p.Total,
+                p.Items.Count
+            ))
+            .ToListAsync();
+    }
+}
+```
+
+---
+
 ## Resumen de DDD
 
 | Concepto | Descripción |
@@ -1075,6 +1295,8 @@ public class PedidosController : ControllerBase
 | **Repository** | Abstracción de persistencia |
 | **Domain Service** | Lógica de negocio que cruza aggregates |
 | **Bounded Context** | Límite del dominio (un microservicio, un módulo) |
+| **Domain Events** | Eventos que representan hechos ocurridos |
+| **CQRS** | Separación de lecturas y escrituras |
 
 ---
 
