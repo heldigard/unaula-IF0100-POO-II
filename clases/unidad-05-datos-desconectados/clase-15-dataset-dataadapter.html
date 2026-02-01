@@ -149,7 +149,6 @@
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 5" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="7" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 5;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 5</header>
 <h3 id="2-componentes-principales-10-min-1">2. Componentes Principales (10 min)</h3>
-<p><em>(continuación...)</em></p>
 <p><strong>Componentes clave:</strong></p>
 <ul>
 <li><strong>DataSet:</strong> Contenedor de datos en memoria (mini-BD)</li>
@@ -190,7 +189,6 @@
 ---
 <span class="hljs-meta">### 3. DataSet Básico (15 min)</span>
 
-*(continuación...)*
 
         <span class="hljs-comment">// 4. Agregar filas</span>
         DataRow fila1 = dtEstudiantes.NewRow();
@@ -239,7 +237,6 @@ DataRow filaEncontrada = dtEstudiantes.Rows.Find(<span class="hljs-number">2</sp
 ---
 
 
-*(continuación...)*
 
 <span class="hljs-comment">// Filtrar filas</span>
 DataRow[] estudiantesDestacados = dtEstudiantes.Select(<span class="hljs-string">&quot;Promedio &gt;= 4.0&quot;</span>);
@@ -294,7 +291,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 <span class="hljs-meta">### 4. DataAdapter - Puente con la BD (25 min)</span>
 
-*(continuación...)*
 
         Console.WriteLine(<span class="hljs-string">$&quot;Filas cargadas: <span class="hljs-subst">{ds.Tables[<span class="hljs-string">&quot;Estudiantes&quot;</span>].Rows.Count}</span>&quot;</span>);
         <span class="hljs-keyword">return</span> ds;
@@ -324,7 +320,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 <span class="hljs-meta">### 4. DataAdapter - Puente con la BD (25 min)</span>
 
-*(continuación...)*
 
     <span class="hljs-keyword">using</span> (SqlConnection conn = <span class="hljs-keyword">new</span> SqlConnection(connectionString))
     {
@@ -374,7 +369,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 
 
-*(continuación...)*
 
         <span class="hljs-comment">// Eliminar estudiante</span>
         DataRow filaEliminar = dt.Rows.Find(<span class="hljs-number">5</span>);
@@ -402,7 +396,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 
 
-*(continuación...)*
 
     <span class="hljs-comment">// INSERT personalizado</span>
     adapter.InsertCommand = <span class="hljs-keyword">new</span> SqlCommand(
@@ -430,7 +423,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 
 
-*(continuación...)*
 
     adapter.DeleteCommand.Parameters.Add(<span class="hljs-string">&quot;@Id&quot;</span>, SqlDbType.Int, <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Id&quot;</span>);
     
@@ -471,7 +463,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 5" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="11" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 5;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 5</header>
 <h3 id="5-tracking-de-cambios-10-min-1">5. Tracking de Cambios (10 min)</h3>
-<p><em>(continuación...)</em></p>
 <p><strong>Versiones de datos:</strong></p>
 <ul>
 <li><code>Current</code>: Valor actual</li>
@@ -509,7 +500,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 <span class="hljs-meta">### 6. DataSet con Múltiples Tablas (10 min)</span>
 
-*(continuación...)*
 
     <span class="hljs-comment">// Definir relaciones</span>
     DataColumn pkEstudiante = ds.Tables[<span class="hljs-string">&quot;Estudiantes&quot;</span>].Columns[<span class="hljs-string">&quot;Id&quot;</span>];
@@ -539,7 +529,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 ---
 <span class="hljs-meta">### 6. DataSet con Múltiples Tablas (10 min)</span>
 
-*(continuación...)*
 
         <span class="hljs-keyword">foreach</span> (DataRow mat <span class="hljs-keyword">in</span> matriculas)
         {
@@ -689,7 +678,6 @@ dtEstudiantes.AcceptChanges(); <span class="hljs-comment">// Confirma cambios</s
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 5" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="16" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 5;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 5</header>
 <h2 id="%F0%9F%9B%A0%EF%B8%8F-ejercicio-para-casa-en-parejas-2"><img class="emoji" draggable="false" alt="🛠️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f6e0.svg" data-marp-twemoji=""/> Ejercicio para Casa (En Parejas)</h2>
-<p><em>(continuación...)</em></p>
 <ul>
 <li>Exportar inventario a XML</li>
 <li>Reporte de productos con bajo stock (&lt; 10)</li>
