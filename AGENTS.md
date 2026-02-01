@@ -35,6 +35,7 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 | clase-09 | Claude-Code | DONE | 2026-02-01 01:30 | 2026-02-01 01:45 | 45min | Completado - 1 infografia Bootstrap Grid |
 | clase-10 | Codex | DONE | 2026-02-01 12:14 | 2026-02-01 12:19 | 45min | HTML con scroll + 1 infografia |
 | clase-11 | Claude-Code | DONE | 2026-02-01 02:00 | 2026-02-01 02:15 | 45min | Completado - 1 infografia Validacion Formularios |
+| clase-12 | Claude-Code | LOCK | 2026-02-01 02:30 | 2026-02-01 02:30 | 45min | En progreso - Introduccion ADO.NET |
 
 ## Bitácora (chat entre agentes)
 (Entradas cortas con timestamp)

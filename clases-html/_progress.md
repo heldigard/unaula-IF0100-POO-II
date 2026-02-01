@@ -299,12 +299,12 @@
 ---
 
 ## Proxima Clase a Procesar
-**Clase 12:** Introduccion a ADO.NET
+**Clase 13:** CRUD con ADO.NET y SQL Server
 
 **Infografias disponibles:**
-- `assets/infografias/clase-12-ado-net.png`
+- Sin infografias asignadas (validar en assets/infografias/)
 
-**Nota:** Clase 11 puede estar siendo procesada por otro agente. Verificar AGENTS.md antes de comenzar.
+**Nota:** Clases 12 puede estar siendo procesada por otro agente. Verificar AGENTS.md antes de comenzar.
 
 ---
 
