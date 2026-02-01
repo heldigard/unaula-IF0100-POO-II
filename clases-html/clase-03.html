@@ -24,7 +24,7 @@
     <p>Clase 03 — Herencia y Polimorfismo</p>
     <ul>
       <li>Objetivos: entender herencia, subclases, sobrescritura y polimorfismo en C#</li>
-      <li>Prerrequisitos: clase-02 (Clases, objetos, encapsulamiento)</li>
+      <li>Prerrequisitos: clase-02 (Clases, objetos, encapsulamiento); Windows 10/11 con Visual Studio instalado</li>
     </ul>
   </header>
   <nav>
@@ -41,7 +41,7 @@
       <p>La herencia permite definir una clase (subclase) que reutiliza y extiende la funcionalidad de otra (superclase).
       Es útil para modelar relaciones "es-un" y promover reutilización y extensibilidad.</p>
       <h3>Motivación</h3>
-      <p>Evitar duplicación y agrupar comportamiento común en una superclase. Facilita polimorfismo y diseño basado en interfaces.</p>
+      <p>Evitar duplicación y agrupar comportamiento común en una superclase. Facilita polimorfismo y diseño basado en interfaces. Por ejemplo, en un sistema de empleados, una clase base Empleado puede tener propiedades comunes, y subclases Gerente o Desarrollador pueden añadir comportamientos específicos, permitiendo tratarlos polimórficamente en listas o métodos.</p>
       <h3>Conceptos clave</h3>
       <ul>
         <li>Superclase / clase base</li>
@@ -82,13 +82,30 @@ public static void Main()
 
       <figure>
         <img src="../assets/infografias/clase-03-herencia.png" alt="Infografía: herencia" />
-        <figcaption>Figura: jerarquía simple — herencia (archivo: assets/infografias/clase-03-herencia.png)</figcaption>
+        <figcaption>Diagrama de herencia simple mostrando la relación 'es-un' entre clases base y derivadas, con ejemplos de propiedades y métodos heredados en C#.</figcaption>
       </figure>
 
       <figure>
         <img src="../assets/infografias/clase-03-polimorfismo.png" alt="Infografía: polimorfismo" />
-        <figcaption>Figura: polimorfismo (archivo: assets/infografias/clase-03-polimorfismo.png)</figcaption>
+        <figcaption>Ilustración del polimorfismo en tiempo de ejecución en C#, donde objetos de diferentes subclases responden al mismo método virtual de forma específica.</figcaption>
       </figure>
+
+      <h3>Ejemplo: Herencia con Interfaces (Polimorfismo Múltiple)</h3>
+      <p>C# no soporta herencia múltiple de clases, pero sí de interfaces para lograr polimorfismo múltiple.</p>
+      <pre><code>interface IVolador { void Volar(); }
+interface INadador { void Nadar(); }
+
+public class Pato : Animal, IVolador, INadador
+{
+    public override void Speak() => Console.WriteLine("Cuac!");
+    public void Volar() => Console.WriteLine("Pato volando");
+    public void Nadar() => Console.WriteLine("Pato nadando");
+}
+
+// Uso polimórfico
+IVolador volador = new Pato();
+volador.Volar(); // Pato volando
+</code></pre>
 
       <div class="checklist">
         <strong>Errores comunes</strong>
@@ -102,7 +119,24 @@ public static void Main()
 
     <section id="practica">
       <h2>Práctica / Laboratorio</h2>
-      <p>Laboratorio sugerido: crear una jerarquía de figuras geométricas (Figura -> Rectangulo, Circulo) con cálculos de área y polimorfismo.</p>
+      <p>Laboratorio sugerido: crear una jerarquía de figuras geométricas (Figura -> Rectangulo, Circulo) con cálculos de área y polimorfismo. <strong>Tiempo estimado: 30 minutos.</strong></p>
+      <div class="checklist">
+        <strong>Checklist de implementación:</strong>
+        <ul>
+          <li>Crear proyecto de consola en Visual Studio (Windows).</li>
+          <li>Definir clase abstracta Figura con método Area().</li>
+          <li>Implementar Rectangulo y Circulo heredando de Figura.</li>
+          <li>Crear lista de Figura y usar polimorfismo para calcular áreas.</li>
+          <li>Compilar y ejecutar sin errores.</li>
+        </ul>
+      </div>
+      <p><strong>Pasos en Windows:</strong></p>
+      <ol>
+        <li>Abre Visual Studio (versión 2022 o superior).</li>
+        <li>Crea un nuevo proyecto: "Aplicación de consola" (.NET Core).</li>
+        <li>Copia el código proporcionado en Program.cs.</li>
+        <li>Ejecuta con F5 o Ctrl+F5.</li>
+      </ol>
       <pre><code>public abstract class Figura
 {
     public abstract double Area();
@@ -130,9 +164,9 @@ foreach(var f in figuras) Console.WriteLine(f.Area());
     <section id="ejercicios">
       <h2>Ejercicios</h2>
       <ol>
-        <li>Implementar jerarquía Animal con al menos 3 subclases y un método adicional en cada una.</li>
-        <li>Modificar laboratorio para añadir interfaz IPrintable y mostrar datos.</li>
-        <li>Detectar y corregir un caso donde se debe usar composición en lugar de herencia.</li>
+        <li><strong>Jerarquía Animal (20 min):</strong> Implementar jerarquía Animal con al menos 3 subclases y un método adicional en cada una. <em>Checklist: clase base abstracta, subclases con override, método adicional único, polimorfismo demostrado.</em></li>
+        <li><strong>Interfaz IPrintable (30 min):</strong> Modificar laboratorio para añadir interfaz IPrintable y mostrar datos. <em>Checklist: interfaz definida, implementación en subclases, método polimórfico para imprimir.</em></li>
+        <li><strong>Composición vs Herencia (40 min):</strong> Detectar y corregir un caso donde se debe usar composición en lugar de herencia. <em>Checklist: identificar problema de herencia, refactorizar a composición, validar funcionalidad.</em></li>
       </ol>
     </section>
 

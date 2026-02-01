@@ -270,7 +270,7 @@ Console.WriteLine(nombre); // Juan</code></pre>
       </div>
       <figure>
         <img src="../assets/infografias/clase-01-value-vs-reference.png" alt="Infografia value types vs reference types en C#" />
-        <figcaption>Diferencias entre tipos de valor (almacenados en stack) y tipos de referencia (almacenados en heap) en C#.</figcaption>
+        <figcaption>Ilustración de las diferencias entre tipos de valor (almacenados en stack, copia directa) y tipos de referencia (almacenados en heap, referencia compartida) en C#. Los value types incluyen int, double, struct; reference types incluyen class, string, array.</figcaption>
       </figure>
 
       <h3>Nullable, strings y patrones</h3>
@@ -330,7 +330,7 @@ nums.Add(42);
       <h3>Infografía: ecosistema .NET</h3>
       <figure>
         <img src="../assets/infografias/clase-01-ecosistema-dotnet.png" alt="Infografia ecosistema .NET 8" />
-        <figcaption>Transicion de plataformas separadas a un runtime unificado (.NET 8) para web, desktop, mobile y cloud.</figcaption>
+        <figcaption>Evolución del ecosistema .NET: de plataformas separadas (.NET Framework para Windows, .NET Core multiplataforma, Xamarin para mobile) a un runtime unificado en .NET 8 que soporta web, desktop, mobile, cloud y gaming con un solo SDK.</figcaption>
       </figure>
 
       <h3>Novedades de C# 12</h3>
@@ -339,7 +339,7 @@ nums.Add(42);
           <h4>Primary constructors</h4>
           <pre><code class="language-csharp">public class Persona(string nombre, int edad)
 {
-    public string Info => $"{nombre} ({edad} anos)";
+    public string Info => $"{nombre} ({edad} años)";
 }</code></pre>
         </div>
         <div>
@@ -347,6 +347,26 @@ nums.Add(42);
           <pre><code class="language-csharp">int[] pares = [2, 4, 6];
 int[] impares = [1, 3, 5];
 int[] all = [..pares, ..impares];</code></pre>
+        </div>
+      </div>
+
+      <h3>Ejemplo: LINQ para consultas funcionales</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Filtrar y transformar lista</h4>
+          <pre><code class="language-csharp">List<int> nums = new() { 1, 2, 3, 4, 5 };
+var pares = nums.Where(n => n % 2 == 0)
+                .Select(n => n * 2)
+                .ToList();
+// Resultado: [4, 8]</code></pre>
+        </div>
+        <div>
+          <h4>Beneficios</h4>
+          <ul>
+            <li>Código declarativo y legible.</li>
+            <li>Integrado en el lenguaje.</li>
+            <li>Optimizado por el compilador.</li>
+          </ul>
         </div>
       </div>
 
@@ -417,6 +437,9 @@ namespace HolaMundo
 
       <h3>Ejercicio 1: Calculadora de área (20 min)</h3>
       <p>Crear una app de consola que calcule el área de un rectángulo a partir de base y altura.</p>
+      <ul>
+        <li><strong>Checklist:</strong> proyecto creado, entrada validada, cálculo correcto, salida formateada.</li>
+      </ul>
       <pre><code class="language-csharp">using System;
 
 namespace CalculadoraArea
@@ -438,6 +461,9 @@ namespace CalculadoraArea
 
       <h3>Ejercicio 2: Sistema de calificaciones (30 min)</h3>
       <p>Solicitar nombre y tres notas (0.0 - 5.0), calcular promedio y mostrar APROBADO/REPROBADO con validación.</p>
+      <ul>
+        <li><strong>Checklist:</strong> validación de entrada, cálculo de promedio, condición de aprobación (>=3.0), manejo de errores.</li>
+      </ul>
       <pre><code class="language-csharp">static double PedirNota(string etiqueta)
 {
     double nota;
@@ -461,6 +487,7 @@ namespace CalculadoraArea
         <li>Instalar Visual Studio 2022 con workloads indicados.</li>
         <li>Proyecto: calculadora de promedios con validación.</li>
         <li>Entregar repositorio en GitHub con README.</li>
+        <li><strong>Checklist:</strong> VS instalado, proyecto funcional, validaciones implementadas, repo creado y README descriptivo.</li>
       </ul>
     </section>
 
