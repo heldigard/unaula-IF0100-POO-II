@@ -78,40 +78,70 @@ style: |
 
 ---
 
-## Jerarquía Visual de Herencia
+## Jerarquía y Sintaxis de Herencia
+
+<div class="columns">
+<div>
+
+### 🌳 Jerarquía Visual
 
 ```
-┌─────────────────────────────────┐
-│        PERSONA (Base)           │
-│  - Nombre                        │
-│  - Edad                          │
-│  - Saludar()                     │
-└────────────┬────────────────────┘
-             │
-     ┌───────┴────────┐
-     ▼                ▼
-┌─────────┐    ┌──────────────┐
-│Estudiante│    │Administrativo│
-│- Carrera │    │- Departamento│
-└─────────┘    └──────────────┘
+┌─────────────────────────────┐
+│      PERSONA (Base)         │
+│  - Nombre                   │
+│  - Edad                     │
+│  - Saludar()                │
+└───────────┬─────────────────┘
+            │
+    ┌───────┴────────┐
+    ▼                ▼
+┌──────────┐   ┌──────────────┐
+│Estudiante│   │Administrativo│
+│- Carrera │   │- Departamento│
+└──────────┘   └──────────────┘
 ```
 
-### 💡 Herencia Transitiva
-
-Si `Profesor` hereda de `Empleado` y `Empleado` hereda de `Persona`:
+**💡 Herencia Transitiva:** `Profesor` → `Empleado` → `Persona`  
 → `Profesor` tiene TODO de `Persona` + `Empleado`
 
+</div>
+<div>
+
+### 💻 Sintaxis en C#
+
+```csharp
+// Clase Base
+public class Persona
+{
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+
+    public void Saludar() =>
+        Console.WriteLine($"Hola, soy {Nombre}");
+}
+
+// Clase Derivada
+public class Estudiante : Persona
+{
+    public string Codigo { get; set; }
+    public string Carrera { get; set; }
+
+    public void Estudiar() =>
+        Console.WriteLine($"{Nombre} estudia {Carrera}");
+}
+```
+
+</div>
+</div>
+
 ---
 
-## Sintaxis de Herencia en C#
+## Uso y Modificadores de Acceso
 
-| 📋 Clase Base | 📋 Clase Derivada |
-|--------------|------------------|
-| ```csharp<br>public class Persona<br>{<br>&nbsp;&nbsp;public string Nombre { get; set; }<br>&nbsp;&nbsp;public int Edad { get; set; }<br><br>&nbsp;&nbsp;public void Saludar()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$"Hola, soy {Nombre}");<br>&nbsp;&nbsp;}<br>}<br>``` | ```csharp<br>public class Estudiante : Persona<br>{<br>&nbsp;&nbsp;// Atributos propios<br>&nbsp;&nbsp;public string Codigo { get; set; }<br>&nbsp;&nbsp;public string Carrera { get; set; }<br><br>&nbsp;&nbsp;// Método propio<br>&nbsp;&nbsp;public void Estudiar()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$"{Nombre} estudia {Carrera}");<br>&nbsp;&nbsp;}<br>}<br>``` |
+<div class="columns">
+<div>
 
----
-
-## Uso de Clases Derivadas
+### 💻 Uso de Clases Derivadas
 
 ```csharp
 Estudiante est = new Estudiante();
@@ -127,91 +157,134 @@ est.Carrera = "Ingeniería";     // ✅
 est.Estudiar();                // ✅
 ```
 
-### ⚠️ Qué NO se hereda
+</div>
+<div>
 
-| ❌ NO se hereda | ✅ Sí se hereda |
-|-----------------|----------------|
-| Constructores | Métodos públicos |
-| Miembros `private` | Métodos `protected` |
-| | Propiedades públicas/protected |
-
----
-
-## Modificadores de Acceso en Herencia
+### 🔒 Modificadores de Acceso
 
 ```csharp
 public class Persona
 {
-    public string Nombre { get; set; }        // ✅ Todos
-    private string password;                  // ❌ Solo esta clase
-    protected double salario;                 // ✅ Clase + hijas
-    internal string direccion;                // ✅ Mismo proyecto
+    public string Nombre { get; set; }     // ✅ Todos
+    private string password;               // ❌ Solo clase
+    protected double salario;              // ✅ Clase + hijas
+    internal string direccion;             // ✅ Proyecto
 }
 ```
 
-| Modificador | Clase Base | Clase Derivada |
-|-------------|-----------|----------------|
-| **public** | ✅ Acceso | ✅ Acceso |
-| **protected** | ✅ Acceso | ✅ Acceso |
-| **internal** | ✅ Acceso | ✅ (si mismo proyecto) |
-| **private** | ✅ Acceso | ❌ NO acceso |
+| Modificador | Clase Base | Derivada |
+|-------------|-----------|----------|
+| **public** | ✅ | ✅ |
+| **protected** | ✅ | ✅ |
+| **internal** | ✅ | ✅* |
+| **private** | ✅ | ❌ |
+
+</div>
+</div>
+
+### ⚠️ Qué NO se hereda
+
+❌ Constructores | ❌ Miembros `private`  
+✅ Métodos públicos | ✅ Miembros `protected`
 
 ---
 
 ## Palabra clave `base`
 
-| 🎯 ¿Para qué sirve? | 📋 Sintaxis Constructor |
-|---------------------|----------------------|
-| Acceder a miembros de la clase padre | ```csharp<br>public class Estudiante : Persona<br>{<br>&nbsp;&nbsp;public string Codigo { get; set; }<br><br>&nbsp;&nbsp;// Constructor llama a base<br>&nbsp;&nbsp;public Estudiante(string n, int e, string c)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: base(n, e)  // ← Llama Persona() primero<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Codigo = c;  // Luego inicia propio<br>&nbsp;&nbsp;}<br>}<br>``` |
+<div class="columns">
+<div>
+
+### 🎯 ¿Para qué sirve?
+
+Acceder a miembros de la clase padre:
+- Llamar constructores base
+- Extender métodos padre
+- Reutilizar código
 
 ### ⚡ Orden de Ejecución
 
 ```
 1. Constructor base (Persona)
 2. Constructor derivada (Estudiante)
-3. Resto del código derivada
+3. Resto del código
 ```
 
+</div>
+<div>
+
+### 💻 Sintaxis Constructor
+
+```csharp
+public class Estudiante : Persona
+{
+    public string Codigo { get; set; }
+
+    // Constructor llama a base
+    public Estudiante(string n, int e, string c)
+        : base(n, e)  // ← Primero padre
+    {
+        Codigo = c;   // Luego propio
+    }
+}
+```
+
+</div>
+</div>
+
 ---
 
-## Otros Usos de `base`
+## Otros Usos de `base` y Jerarquías
 
-| 🔄 Extender método | 💻 Uso práctico |
-|-------------------|----------------|
-| ```csharp<br>public override void Saludar()<br>{<br>&nbsp;&nbsp;base.Saludar();  // Llama método padre<br>&nbsp;&nbsp;Console.WriteLine("Soy estudiante");<br>}<br>``` | ```csharp<br>public override decimal CalcSalario()<br>{<br>&nbsp;&nbsp;// base + comisión<br>&nbsp;&nbsp;return base.CalcSalario() + Comision;<br>}<br>``` |
+<div class="columns">
+<div>
 
-### ✅ Ventajas de usar `base`
+### 🔄 Extender Método
 
-| Ventaja | Descripción |
-|---------|-------------|
-| 🔄 | Reutiliza código padre |
-| ✅ | Mantiene consistencia |
-| 📉 | Evita duplicación |
+```csharp
+public override void Saludar()
+{
+    base.Saludar();  // Llama padre
+    Console.WriteLine("Soy estudiante");
+}
+```
 
----
+### ✅ Ventajas
 
-## Jerarquías Profundas
+- Reutiliza código padre
+- Mantiene consistencia
+- Evita duplicación
+
+</div>
+<div>
+
+### 🌳 Jerarquías Profundas
 
 ```
 NIVEL 1: Persona (abuelo)
 ├─ Nombre, Documento
 
-NIVEL 2: Empleado (padre) : Persona
+NIVEL 2: Empleado (padre)
 ├─ CódigoEmpleado
 ├─ FechaContratación
 └─ SalarioBase
 
-NIVEL 3: Profesor (hijo) : Empleado
+NIVEL 3: Profesor (hijo)
 ├─ Especialidad
 ├─ Materias[]
 └─ TítuloPostgrado
 ```
 
-> 💡 **Herencia Transitiva:** `Profesor` hereda de `Empleado` que hereda de `Persona`
+**💡 Herencia Transitiva:** `Profesor` → `Empleado` → `Persona`
+
+</div>
+</div>
 
 ---
 
 ## 2. Polimorfismo: Un Nombre, Múltiples Formas
+
+<div class="columns">
+<div>
 
 ### 🎭 Concepto
 
@@ -221,71 +294,115 @@ NIVEL 3: Profesor (hijo) : Empleado
 
 | Palabra | Propósito |
 |---------|-----------|
-| `virtual` | Método que PUEDE sobrescribirse |
-| `override` | Sobrescribe método virtual/abstract |
-| `abstract` | Sin implementación (obliga a hijos) |
+| `virtual` | PUEDE sobrescribirse |
+| `override` | Sobrescribe virtual/abstract |
+| `abstract` | Obliga implementación |
 
 ### 💡 Analogía
 
 ```
 Mensaje: "¡Muévete!"
-  🐕 Perro → Corre en 4 patas
-  🐈 Gato → Salta sigilosamente
-  🐟 Pez → Nada en agua
+  🐕 Perro → Corre
+  🐈 Gato → Salta
+  🐟 Pez → Nada
   🦅 Águila → Vuela
 ```
 
----
+</div>
+<div>
 
-## Polimorfismo Visual
+### 🎨 Polimorfismo Visual
 
 ```
 ┌─────────────────────────────────┐
-│      MÉTODO: CalcularArea()       │
+│    MÉTODO: CalcularArea()       │
 ├─────────────────────────────────┤
 │                                 │
-│  ┌─────────┐  ┌──────────┐       │
-│  │Círculo  │  │Rectángulo │       │
-│  │  π×r²   │  │  b×h      │       │
-│  └─────────┘  └──────────┘       │
+│  ┌─────────┐  ┌──────────┐      │
+│  │Círculo  │  │Rectángulo│      │
+│  │  π×r²   │  │  b×h     │      │
+│  └─────────┘  └──────────┘      │
 │                                 │
-│  Cada uno implementa a su manera  │
+│  Cada uno implementa distinto   │
 └─────────────────────────────────┘
 ```
 
-### ✅ Ventajas del Polimorfismo
+### ✅ Ventajas
 
-| Ventaja | Descripción |
-|---------|-------------|
-| 🔄 | Código flexible y extensible |
-| 📦 | Tratamiento uniforme |
-| ➕ | Fácil agregar nuevos tipos |
+- Código flexible
+- Tratamiento uniforme
+- Fácil extender
 
----
-
-## Virtual y Override
-
-| 📋 Clase Base | 📋 Clases Derivadas |
-|--------------|-------------------|
-| ```csharp<br>public class Animal<br>{<br>&nbsp;&nbsp;public string Nombre { get; set; }<br><br>&nbsp;&nbsp;// VIRTUAL: puede sobrescribirse<br>&nbsp;&nbsp;public virtual void HacerSonido()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("Sonido genérico");<br>&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;public virtual void Moverse()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("Se mueve");<br>&nbsp;&nbsp;}<br>}<br>``` | ```csharp<br>public class Perro : Animal<br>{<br>&nbsp;&nbsp;public override void HacerSonido()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("¡Guau guau! 🐕");<br>&nbsp;&nbsp;}<br><br>&nbsp;&nbsp;public override void Moverse()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("Corre en 4 patas 🐾");<br>&nbsp;&nbsp;}<br>}<br><br>public class Gato : Animal<br>{<br>&nbsp;&nbsp;public override void HacerSonido()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("¡Miau miau! 🐈");<br>&nbsp;&nbsp;}<br>}<br>``` |
+</div>
+</div>
 
 ---
 
-## Polimorfismo en Acción
+## Virtual y Override en Acción
 
-### 🎭 Referencia Base
+<div class="columns">
+<div>
+
+### 📋 Clase Base
 
 ```csharp
-// Ref. base, objetos específicos
+public class Animal
+{
+    public string Nombre { get; set; }
+
+    // VIRTUAL: puede sobrescribirse
+    public virtual void HacerSonido()
+    {
+        Console.WriteLine("Sonido genérico");
+    }
+
+    public virtual void Moverse()
+    {
+        Console.WriteLine("Se mueve");
+    }
+}
+```
+
+### 🎭 Uso Polimórfico
+
+```csharp
 Animal a1 = new Perro() { Nombre = "Rex" };
 Animal a2 = new Gato() { Nombre = "Michi" };
-Animal a3 = new Animal() { Nombre = "Genérico" };
 
-// Mismo método, diferente comportamiento
 a1.HacerSonido();  // "¡Guau guau! 🐕"
 a2.HacerSonido();  // "¡Miau miau! 🐈"
-a3.HacerSonido();  // "Sonido genérico"
 ```
+
+</div>
+<div>
+
+### 📋 Clases Derivadas
+
+```csharp
+public class Perro : Animal
+{
+    public override void HacerSonido()
+    {
+        Console.WriteLine("¡Guau guau! 🐕");
+    }
+
+    public override void Moverse()
+    {
+        Console.WriteLine("Corre en 4 patas 🐾");
+    }
+}
+
+public class Gato : Animal
+{
+    public override void HacerSonido()
+    {
+        Console.WriteLine("¡Miau miau! 🐈");
+    }
+}
+```
+
+</div>
+</div>
 
 ### 🔄 Colección Polimórfica
 
@@ -305,46 +422,98 @@ foreach (Animal a in animales)
 }
 // Rex: ¡Guau guau! 🐕
 // Michi: ¡Miau miau! 🐈
-// Toby: ¡Guau guau! 🐕
-// Luna: ¡Miau miau! 🐈
 ```
 
 ---
 
 ## Llamando a `base.Metodo()`
 
-| 🔄 Extender, No Reemplazar | 💻 Uso Práctico |
-|---------------------------|----------------|
-| ```csharp<br>public class Empleado<br>{<br>&nbsp;&nbsp;public virtual decimal CalcSalario()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;return SalarioBase;<br>&nbsp;&nbsp;}<br>}<br><br>public class Vendedor : Empleado<br>{<br>&nbsp;&nbsp;public decimal Comision { get; set; }<br><br>&nbsp;&nbsp;public override decimal CalcSalario()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;// Llama base + agrega propio<br>&nbsp;&nbsp;&nbsp;&nbsp;return base.CalcSalario() + Comision;<br>&nbsp;&nbsp;}<br>}<br>``` | ```csharp<br>Vendedor v = new Vendedor<br>{<br>&nbsp;&nbsp;Nombre = "Carlos",<br>&nbsp;&nbsp;SalarioBase = 2000,<br>&nbsp;&nbsp;Comision = 1500<br>};<br><br>Console.WriteLine(v.CalcSalario());<br>// 3500 (base + comisión)<br>``` |
+<div class="columns">
+<div>
 
-### 📊 Flujo de Ejecución
+### 🔄 Extender, No Reemplazar
+
+```csharp
+public class Empleado
+{
+    public virtual decimal CalcSalario()
+    {
+        return SalarioBase;
+    }
+}
+
+public class Vendedor : Empleado
+{
+    public decimal Comision { get; set; }
+
+    public override decimal CalcSalario()
+    {
+        // Llama base + agrega propio
+        return base.CalcSalario() + Comision;
+    }
+}
+```
+
+</div>
+<div>
+
+### 💻 Uso Práctico
+
+```csharp
+Vendedor v = new Vendedor
+{
+    Nombre = "Carlos",
+    SalarioBase = 2000,
+    Comision = 1500
+};
+
+Console.WriteLine(v.CalcSalario());
+// 3500 (base + comisión)
+```
+
+### 📊 Flujo
 
 ```
 CalcSalario() [Vendedor]
     ↓
-base.CalcSalario() [Empleado]
+base.CalcSalario() = 2000
     ↓
-SalarioBase (2000)
-    ↑
 + Comision (1500)
     ↓
 = 3500
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Clases y Métodos Abstractos
 
-### Forzando Implementación en Hijas
+<div class="columns">
+<div>
+
+### 📊 `virtual` vs `abstract`
 
 | Característica | `virtual` | `abstract` |
 |----------------|-----------|------------|
-| Implementación | Tiene default | Sin implementación |
+| Implementación | Tiene default | Sin código |
 | Obligatoriedad | Hijas PUEDEN | Hijas DEBEN |
-| Instanciación | Sí se puede | NO se puede |
+| Instanciación | ✅ Sí | ❌ NO |
+
+### 🎯 Cuándo Usar Abstract
+
+✅ Hay comportamiento común pero implementación diferente  
+✅ Quieres forzar diseño en hijas  
+✅ La clase base es solo un "contrato"
+
+</div>
+<div>
+
+### 💻 Clase Abstracta Ejemplo
 
 ```csharp
-// CLASE ABSTRACTA: No instanciable
+// ABSTRACTA: No instanciable
 public abstract class Figura
 {
     public string Nombre { get; set; }
@@ -354,7 +523,7 @@ public abstract class Figura
     public abstract double CalcularArea();
     public abstract double CalcularPerimetro();
 
-    // CONCRETO: Hijas heredan tal cual
+    // CONCRETO: Hijas heredan
     public void MostrarInfo()
     {
         Console.WriteLine($"Figura: {Nombre}");
@@ -363,20 +532,59 @@ public abstract class Figura
 }
 ```
 
+</div>
+</div>
+
 ---
 
 ## Implementando Clases Abstractas
 
-| 📊 CÍRCULO | 📐 RECTÁNGULO |
-|-----------|--------------|
-| ```csharp<br>public class Circulo : Figura<br>{<br>&nbsp;&nbsp;public double Radio { get; set; }<br><br>&nbsp;&nbsp;public override double CalcularArea()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ Math.PI * Radio * Radio;<br><br>&nbsp;&nbsp;public override double CalcularPerimetro()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ 2 * Math.PI * Radio;<br>}<br>``` | ```csharp<br>public class Rectangulo : Figura<br>{<br>&nbsp;&nbsp;public double Base { get; set; }<br>&nbsp;&nbsp;public double Altura { get; set; }<br><br>&nbsp;&nbsp;public override double CalcularArea()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ Base * Altura;<br><br>&nbsp;&nbsp;public override double CalcularPerimetro()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ 2 * (Base + Altura);<br>}<br>``` |
+<div class="columns">
+<div>
 
-### 💻 Uso de Clases Abstractas
+### 📊 Círculo
+
+```csharp
+public class Circulo : Figura
+{
+    public double Radio { get; set; }
+
+    public override double CalcularArea() =>
+        Math.PI * Radio * Radio;
+
+    public override double CalcularPerimetro() =>
+        2 * Math.PI * Radio;
+}
+```
+
+</div>
+<div>
+
+### 📐 Rectángulo
+
+```csharp
+public class Rectangulo : Figura
+{
+    public double Base { get; set; }
+    public double Altura { get; set; }
+
+    public override double CalcularArea() =>
+        Base * Altura;
+
+    public override double CalcularPerimetro() =>
+        2 * (Base + Altura);
+}
+```
+
+</div>
+</div>
+
+### 💻 Uso Polimórfico
 
 ```csharp
 // ✅ Ref. base, objeto concreto
 Figura f1 = new Circulo { Radio = 5 };
-Figura f2 = new Rectangulo { Base=4, Altura=6 };
+Figura f2 = new Rectangulo { Base = 4, Altura = 6 };
 
 f1.MostrarInfo();  // Área: 78.54 cm²
 f2.MostrarInfo();  // Área: 24.00 cm²
@@ -387,7 +595,12 @@ f2.MostrarInfo();  // Área: 24.00 cm²
 
 ---
 
-## Reglas de Clases Abstractas
+## 4. Reglas y Palabra clave `sealed`
+
+<div class="columns">
+<div>
+
+### 📋 Reglas de Abstractas
 
 | Aspecto | Regla |
 |---------|-------|
@@ -396,68 +609,110 @@ f2.MostrarInfo();  // Área: 24.00 cm²
 | Métodos abstractos | DEBEN implementarse |
 | Métodos concretos | Se heredan |
 
-### 🎯 Cuándo Usar
+### 🎯 Cuándo Usar Abstract
 
-| ✅ Usa abstract cuando... | ❌ NO uses cuando... |
-|--------------------------|---------------------|
-| Hay comportamiento común pero implementación diferente | Solo hay una clase concreta |
-| Quieres forzar diseño en hijas | No necesitas polimorfismo |
-| La clase base es solo un "contrato" | La clase se va a instanciar |
+✅ Comportamiento común, implementación diferente  
+✅ Quieres forzar diseño en hijas  
+✅ Clase base como "contrato"
 
----
+</div>
+<div>
 
-## 4. Palabra clave `sealed`
+### 🔒 Palabra `sealed`
 
-| 🔒 Impedir Herencia | 🔒 Impedir Sobrescritura |
-|-------------------|------------------------|
-| ```csharp<br>// sealed: Nadie puede heredar<br>public sealed class SeguridadSocial<br>{<br>&nbsp;&nbsp;public string Numero { get; set; }<br>&nbsp;&nbsp;public decimal Saldo { get; set; }<br>}<br><br>// ❌ Error<br>// public class HackeoSS : SeguridadSocial { }<br>``` | ```csharp<br>public class Impuestos<br>{<br>&nbsp;&nbsp;public virtual decimal Calc()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>&nbsp;&nbsp;}<br>}<br><br>public class ImpuestosCol : Impuestos<br>{<br>&nbsp;&nbsp;// sealed: Ya no se puede sobrescribir<br>&nbsp;&nbsp;public sealed override decimal Calc()<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;return base.Calc() + 0.19m;<br>&nbsp;&nbsp;}<br>}<br>``` |
+```csharp
+// sealed: Nadie puede heredar
+public sealed class SeguridadSocial
+{
+    public string Numero { get; set; }
+    public decimal Saldo { get; set; }
+}
 
-### 🎯 Cuándo Usar `sealed`
+// ❌ Error
+// public class HackeoSS : SeguridadSocial { }
+```
 
-| ✅ Usa sealed cuando... | Ejemplo |
-|------------------------|---------|
-| La clase NO está diseñada para heredar | `String`, `DateTime` |
-| Quieres proteger lógica crítica | Seguridad, encriptación |
-| El método override finaliza una cadena | Cálculos de impuestos |
+| ✅ Usar `sealed` | Ejemplo |
+|-----------------|---------|
+| No diseñada para heredar | `String` |
+| Proteger lógica crítica | Seguridad |
+| Finalizar cadena override | Impuestos |
+
+</div>
+</div>
 
 ---
 
 ## 5. Principio de Liskov (LSP)
 
+<div class="columns">
+<div>
+
 ### 📐 Principio
 
 > **Clase hija debe sustituir a padre sin alterar comportamiento.**
 
-| ✅ Correcto | ❌ Incorrecto |
-|------------|--------------|
-| ```csharp<br>Animal a = new Perro();<br>a.HacerSonido();  // ✅ Funciona<br><br>// Perro ES UN Animal<br>``` | ```csharp<br>class Rectangulo<br>{<br>&nbsp;&nbsp;virtual void SetAncho(int w) { ... }<br>}<br><br>class Cuadrado : Rectangulo<br>{<br>&nbsp;&nbsp;override void SetAncho(int w)<br>&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;ancho = alto = w;  // ⚠️ Cambia alto!<br>&nbsp;&nbsp;}<br>}<br><br>Rectangulo r = new Cuadrado();<br>r.SetAncho(5);<br>r.SetAlto(10);<br>// Esperaba área 50, es 100<br>``` |
-
----
-
-## Reglas de Buen Diseño LSP
+### ✅ Buena Herencia
 
 ```
-✅ BUENA HERENCIA:
-  Estudiante → Persona ✅
-  Perro → Animal ✅
-  Círculo → Figura ✅
-
-❌ MALA HERENCIA:
-  Avión → Vehículo (?)  # Tiene motor, pero vuela
-  Reloj → Círculo (?)   # Forma física ≠ concepto
+Estudiante → Persona ✅
+Perro → Animal ✅
+Círculo → Figura ✅
 ```
 
-### 🎯 Pregunta LSP
+### ❌ Mala Herencia
+
+```
+Avión → Vehículo (?)  
+# Tiene motor, pero vuela
+
+Reloj → Círculo (?)   
+# Forma ≠ concepto
+```
+
+</div>
+<div>
+
+### 💡 Ejemplo Problema
+
+```csharp
+class Rectangulo
+{
+    virtual void SetAncho(int w) { ... }
+}
+
+class Cuadrado : Rectangulo
+{
+    override void SetAncho(int w)
+    {
+        ancho = alto = w;  // ⚠️
+    }
+}
+
+// Uso
+Rectangulo r = new Cuadrado();
+r.SetAncho(5);
+r.SetAlto(10);
+// Esperaba área 50, es 100
+```
+
+### 🎯 Pregunta Clave
 
 ¿`Cuadrado` ES UN `Rectángulo`?
 - Matemáticamente: **SÍ**
-- Orientación a Objetos: **NO** (cambia comportamiento)
+- En POO: **NO** (cambia comportamiento)
 
-> 💡 El LSP se trata de **comportamiento**, no de taxonomía
+> 💡 LSP = **comportamiento**, no taxonomía
+
+</div>
+</div>
 
 ---
 
 ## 6. Ejemplo Práctico: Sistema de Figuras
+
+<div class="columns">
+<div>
 
 ### 🎯 Objetivo
 
@@ -476,20 +731,41 @@ public abstract class Figura
 
     public virtual void MostrarInfo()
     {
-        Console.WriteLine($"\n📐 {Nombre} ({Color})");
+        Console.WriteLine($"📐 {Nombre} ({Color})");
         Console.WriteLine($"   Área: {CalcularArea():F2} cm²");
-        Console.WriteLine($"   Perím: {CalcularPerimetro():F2} cm");
+        Console.WriteLine($"   Per: {CalcularPerimetro():F2} cm");
     }
 }
 ```
 
----
+</div>
+<div>
 
-## Clases Concretas del Sistema
+### 📊 Implementaciones
 
-| 📊 CÍRCULO | 📐 RECTÁNGULO |
-|-----------|--------------|
-| ```csharp<br>public class Circulo : Figura<br>{<br>&nbsp;&nbsp;public double Radio { get; set; }<br><br>&nbsp;&nbsp;public override double CalcularArea()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ Math.PI * Radio * Radio;<br>&nbsp;&nbsp;public override double CalcularPerimetro()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ 2 * Math.PI * Radio;<br>}<br>``` | ```csharp<br>public class Rectangulo : Figura<br>{<br>&nbsp;&nbsp;public double Base { get; set; }<br>&nbsp;&nbsp;public double Altura { get; set; }<br><br>&nbsp;&nbsp;public override double CalcularArea()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ Base * Altura;<br>&nbsp;&nbsp;public override double CalcularPerimetro()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ 2 * (Base + Altura);<br>}<br>``` |
+```csharp
+public class Circulo : Figura
+{
+    public double Radio { get; set; }
+    public override double CalcularArea() =>
+        Math.PI * Radio * Radio;
+    public override double CalcularPerimetro() =>
+        2 * Math.PI * Radio;
+}
+
+public class Rectangulo : Figura
+{
+    public double Base { get; set; }
+    public double Altura { get; set; }
+    public override double CalcularArea() =>
+        Base * Altura;
+    public override double CalcularPerimetro() =>
+        2 * (Base + Altura);
+}
+```
+
+</div>
+</div>
 
 ---
 
@@ -516,11 +792,11 @@ Console.WriteLine($"\n📊 Total: {total:F2} cm²");
 ```
 📐 C1 (Rojo)
    Área: 78.54 cm²
-   Perím: 31.42 cm
+   Per: 31.42 cm
 
 📐 R1 (Azul)
    Área: 24.00 cm²
-   Perím: 20.00 cm
+   Per: 20.00 cm
 
 📊 Total: 102.54 cm²
 ```
