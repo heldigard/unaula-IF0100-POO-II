@@ -56,6 +56,9 @@ style: |
 
 ## 1. Repaso: Programación Orientada a Objetos
 
+<div class="columns">
+<div>
+
 ### 📜 Procedural vs 🎯 POO
 
 | Aspecto | Procedural | POO |
@@ -71,28 +74,36 @@ style: |
 - ✅ Fácil mantenimiento
 - ✅ Modela mundo real
 
----
+</div>
+<div>
 
-## Los Tres Pilares de la POO
+### Los Tres Pilares
 
 ```
 ┌────────────────────────────────┐
-│   PILARES DE LA POO             │
-├────────┬───────────┬─────────────┤
-│ ENCAPS │ HERENCIA  │ POLIMORFISMO│
-│ (Hoy)  │ (Clase 3) │ (Clase 3)   │
-├────────┼───────────┼─────────────┤
+│   PILARES DE LA POO            │
+├────────┬───────────┬───────────┤
+│ ENCAPS │ HERENCIA  │ POLIMORF  │
+│ (Hoy)  │ (Clase 3) │ (Clase 3) │
+├────────┼───────────┼───────────┤
 │ Ocultar│ Reutilizar│ Una interfaz│
-│ datos  │ código    │ múltiples   │
-│        │           │ formas      │
-└────────┴───────────┴─────────────┘
+│ datos  │ código    │ múltiples │
+│        │           │ formas    │
+└────────┴───────────┴───────────┘
 ```
 
-**Hoy:** Encapsulamiento | **Próxima clase:** Herencia y Polimorfismo
+**Hoy:** Encapsulamiento  
+**Próxima clase:** Herencia y Polimorfismo
+
+</div>
+</div>
 
 ---
 
-## Clase vs Objeto: Analogía
+## Clase vs Objeto
+
+<div class="columns">
+<div>
 
 ### 🎨 CLASE = Molde/Plantilla
 
@@ -110,6 +121,9 @@ class Galleta {
 }
 ```
 
+</div>
+<div>
+
 ### 🍪 OBJETO = Instancia
 
 - Creado de una clase
@@ -124,9 +138,10 @@ g1.Diametro = 5.5;
 g1.Hornear();
 ```
 
----
+</div>
+</div>
 
-## Clase vs Objeto: Comparativa
+### 📊 Comparativa
 
 | Aspecto | Clase (Molde) | Objeto (Instancia) |
 |---------|---------------|-------------------|
@@ -142,27 +157,47 @@ g1.Hornear();
 
 ## Representación en Memoria
 
+<div class="columns">
+<div>
+
+### 📚 STACK (Referencias)
+
+- Almacena variables locales
+- Contiene direcciones de memoria
+- Limpieza automática al salir del método
+- Tipo valor: datos directos
+
+### 🏠 HEAP (Objetos)
+
+- Almacena objetos reales
+- Datos accedidos mediante referencias
+- Garbage Collector limpia
+- Tipo referencia: objetos complejos
+
+</div>
+<div>
+
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    MEMORIA                                  │
-├───────────────────┬──────────────────────────────────────────┤
-│      STACK        │              HEAP                        │
-│  (Referencias)    │         (Objetos reales)                 │
-├───────────────────┼──────────────────────────────────────────┤
-│ ┌──────────────┐  │  ┌─────────────────────────────┐        │
-│ │   est1       │──┼─→│      Objeto Estudiante      │        │
-│ │   0x7F3A...  │  │  │  ┌─────────────────────┐    │        │
-│ └──────────────┘  │  │  │ Nombre: "María"     │    │        │
-│                   │  │  │ Código: "2024001"   │    │        │
-│ ┌──────────────┐  │  │  │ Edad: 20            │    │        │
-│ │   est2       │──┼─→│  │ Promedio: 4.2       │    │        │
-│ │   0x8B2C...  │  │  │  └─────────────────────┘    │        │
-│ └──────────────┘  │  └─────────────────────────────┘        │
-│                   │                                         │
-│ Variables =       │ Objetos = datos reales en heap          │
-│ direcciones       │                                         │
-└───────────────────┴──────────────────────────────────────────┘
+┌─────────────────┬─────────────────────────┐
+│     STACK       │         HEAP            │
+│  (Referencias)  │    (Objetos reales)     │
+├─────────────────┼─────────────────────────┤
+│  ┌───────────┐  │  ┌─────────────────┐   │
+│  │  est1     │──┼─→│ Obj Estudiante  │   │
+│  │ 0x7F3A... │  │  │ ┌─────────────┐ │   │
+│  └───────────┘  │  │ │Nombre:"María│ │   │
+│  ┌───────────┐  │  │ │Cód:"2024001"│ │   │
+│  │  est2     │──┼─→│ │Edad: 20     │ │   │
+│  │ 0x8B2C... │  │  │ │Prom: 4.2    │ │   │
+│  └───────────┘  │  │ └─────────────┘ │   │
+│                 │  └─────────────────┘   │
+└─────────────────┴─────────────────────────┘
 ```
+
+**💡 Las variables en stack son referencias a objetos en heap**
+
+</div>
+</div>
 
 ---
 
@@ -208,9 +243,12 @@ public class NombreClase
 
 ---
 
-## Ejemplo: Clase Estudiante
+## Ejemplo: Clase Estudiante e Instanciación
 
-### 📋 Código C#
+<div class="columns">
+<div>
+
+### 📋 Definición de Clase
 
 ```csharp
 public class Estudiante
@@ -232,23 +270,12 @@ public class Estudiante
 }
 ```
 
-### 🔍 Análisis
+⚠️ **Problema:** Campos públicos = mala práctica (sin validación)
 
-| Elemento | Descripción |
-|----------|-------------|
-| `public class` | Clase accesible |
-| `string nombre` | Campo público |
-| `void` | Sin retorno |
+</div>
+<div>
 
-### ⚠️ Problema: Campos públicos = mala práctica
-
-- Sin validación
-- Cualquiera modifica
-- Difícil mantener
-
----
-
-## Instanciación con new
+### 🚀 Instanciación con `new`
 
 ```csharp
 // CREAR OBJETO
@@ -269,50 +296,41 @@ est2.nombre = "Carlos Ruiz";
 est2.MostrarInfo();
 ```
 
+</div>
+</div>
+
 ---
 
 ## 3. Encapsulamiento
 
 ### 🔒 ¿Qué es?
 
-Ocultar datos internos y exponer solo lo necesario.
+Ocultar datos internos y exponer solo lo necesario a través de una interfaz pública.
 
-```
-┌─────────────────────────────┐
-│   INTERFAZ PÚBLICA          │
-│  ✅ Propiedades (get/set)   │
-│  ✅ Métodos públicos        │
-│  ══════════════════════════ │
-│   IMPLEMENTACIÓN PRIVADA    │
-│  🔒 Campos privados         │
-│  🔒 Lógica de validación    │
-└─────────────────────────────┘
-```
+<div class="columns">
+<div>
 
-### 💡 Beneficios
-
-| Beneficio | Descripción |
-|-----------|-------------|
-| Protección | Datos no modificables |
-| Validación | Control de valores |
-| Flexibilidad | Cambiar impl. interna |
-| Abstracción | Usuario no sabe cómo |
-
----
-
-## Sin vs Con Encapsulamiento
-
-### ❌ SIN (Frágil)
+### ❌ SIN Encapsulamiento (Frágil)
 
 ```csharp
 public class Cuenta
 {
     public double saldo;  // ¡Peligroso!
 }
-cuenta.saldo = -1000;     // Válido
+
+// Uso
+cuenta.saldo = -1000;     // ⚠️ Válido pero incorrecto
 ```
 
-### ✅ CON (Robusto)
+**Problemas:**
+- Sin validación
+- Cualquiera modifica
+- Difícil mantener
+
+</div>
+<div>
+
+### ✅ CON Encapsulamiento (Robusto)
 
 ```csharp
 public class Cuenta
@@ -327,8 +345,18 @@ public class Cuenta
         _saldo += monto;
     }
 }
-cuenta.Depositar(-1000);  // Excepción
+
+// Uso
+cuenta.Depositar(-1000);  // ❌ Excepción controlada
 ```
+
+**Beneficios:**
+- Validación de datos
+- Protección interna
+- Flexibilidad de implementación
+
+</div>
+</div>
 
 ---
 
@@ -346,6 +374,9 @@ cuenta.Depositar(-1000);  // Excepción
 ---
 
 ## 4. Propiedades en C#
+
+<div class="columns">
+<div>
 
 ### ❌ TRADICIONAL (Java-style)
 
@@ -366,10 +397,7 @@ public void SetNombre(string v)
 p.SetNombre("María");
 ```
 
-**Problemas:**
-- Sintaxis verbosa
-- Rompe fluidez
-- Paréntesis everywhere
+**Problemas:** Sintaxis verbosa, rompe fluidez
 
 ### ✅ MODERNO C#
 
@@ -386,35 +414,34 @@ public string Nombre
 p.Nombre = "María";
 ```
 
-**Ventajas:**
-- Sintaxis limpia
-- Mantiene encapsulamiento
-- Parece campo, es método
-- Permite lógica
+**Ventajas:** Sintaxis limpia, mantiene encapsulamiento
 
----
+</div>
+<div>
 
-## Anatomía de una Propiedad
+### 🏗️ Anatomía de una Propiedad
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│          ANATOMÍA DE UNA PROPIEDAD                      │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│   backing field      propiedad      uso                  │
-│   ┌──────────┐      ┌──────────┐      ┌──────────┐    │
-│   │ private   │      │ public   │      │ obj.Nom  │    │
-│   │ string    │←────→│ string   │←────→│ = "Ana"  │    │
-│   │ _nombre   │      │ Nombre   │      └──────────┘    │
-│   └──────────┘      │ { get;   │      Console.WriteLine│
-│         ↑          │   set; } │      (obj.Nombre);    │
-│    Almacena         └──────────┘                       │
-│                                                         │
-│   value = palabra clave con el valor a asignar         │
-└─────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────┐
+│     ANATOMÍA DE PROPIEDAD           │
+├─────────────────────────────────────┤
+│                                     │
+│  backing field    propiedad   uso   │
+│  ┌──────────┐    ┌──────────┐ ┌───┐ │
+│  │ private  │    │ public   │←│obj│ │
+│  │ _nombre  │←──→│ Nombre   │ │.N │ │
+│  └──────────┘    │ {get;set}│ └───┘ │
+│       ↑          └──────────┘       │
+│   Almacena                          │
+│                                     │
+│   `value` = valor a asignar         │
+└─────────────────────────────────────┘
 ```
 
-**💡 Las propiedades son syntactic sugar para encapsulamiento**
+**💡 Las propiedades son *syntactic sugar* para encapsulamiento**
+
+</div>
+</div>
 
 ---
 
@@ -480,86 +507,31 @@ public int Edad
 
 ---
 
-## 5. Constructores
+## 5. Constructores y Clase Completa
 
-### 🎯 ¿Qué es?
+### 🎯 ¿Qué es un Constructor?
 
 Método especial que se ejecuta al crear un objeto.
 
-### 📋 Tipos
-
-| Tipo | Descripción |
-|------|-------------|
-| **Default** | Sin parámetros |
-| **Parametrizado** | Con parámetros |
-| **Cadena** | Llama a otro |
-
-### 💻 Definición
-
-```csharp
-// Constructor default
-public Estudiante()
-{
-    Nombre = "Sin nombre";
-    Edad = 18;
-}
-
-// Constructor parametrizado
-public Estudiante(string n, int e)
-{
-    Nombre = n;
-    Edad = e;
-}
-```
-
-### 🔧 Uso
-
-```csharp
-// Default
-Estudiante e1 = new Estudiante();
-
-// Parametrizado
-Estudiante e2 = new Estudiante("María", 20);
-
-// Object initializer
-Estudiante e3 = new Estudiante
-{
-    Nombre = "Carlos",
-    Edad = 22,
-    Promedio = 4.5
-};
-```
-
-### 🔒 Solo Lectura
-
-```csharp
-public string Codigo { get; }
-
-public Estudiante(string cod)
-{
-    Codigo = cod;  // Solo en constructor
-}
-// e.Codigo = "otro";  // ❌ Error
-```
+| Tipo | Descripción | Ejemplo |
+|------|-------------|---------|
+| **Default** | Sin parámetros | `new Estudiante()` |
+| **Parametrizado** | Con parámetros | `new Estudiante("Ana", 20)` |
+| **Object Initializer** | Sintaxis `{ }` | `new Estudiante { Nombre = "Ana" }` |
 
 ---
 
 ## Clase Completa: Estudiante
 
-### 📋 Propiedades
-
 ```csharp
 public class Estudiante
 {
+    // Propiedades autoimplementadas
     public string Nombre { get; set; }
     public string Codigo { get; set; }
     public int Edad { get; set; }
     public double Promedio { get; set; }
-```
 
-### 🔧 Constructores
-
-```csharp
     // Constructor default
     public Estudiante()
     {
@@ -577,24 +549,17 @@ public class Estudiante
         Edad = e;
         Promedio = 0.0;
     }
-```
 
-### 💡 Métodos de Negocio
-
-```csharp
-    // Métodos
-    public bool Aprobo() =>
-        Promedio >= 3.0;
-
-    public string Estado() =>
-        Aprobo() ? "APROBADO" : "REPROBADO";
+    // Métodos de negocio
+    public bool Aprobo() => Promedio >= 3.0;
+    
+    public string Estado() => Aprobo() ? "APROBADO" : "REPROBADO";
 
     public void MostrarInfo()
     {
-        Console.WriteLine($"📚 {Nombre}");
-        Console.WriteLine($"   Edad: {Edad}");
-        Console.WriteLine($"   Prom: {Promedio:F2}");
-        Console.WriteLine($"   Est: {Estado()}");
+        Console.WriteLine($"📚 {Nombre} ({Codigo})");
+        Console.WriteLine($"   Edad: {Edad} | Prom: {Promedio:F2}");
+        Console.WriteLine($"   Estado: {Estado()}");
     }
 }
 ```
@@ -677,6 +642,9 @@ pt2.X = 50;          // pt1.X sigue siendo 10
 
 ## 6. Práctica: Sistema Estudiantil
 
+<div class="columns">
+<div>
+
 ### 🎯 Objetivo
 
 App que gestione estudiantes con POO.
@@ -697,6 +665,9 @@ App que gestione estudiantes con POO.
 | C. Ruiz | 2024002 | 22 | 2.8 |
 | A. Mart. | 2024003 | 19 | 3.5 |
 
+</div>
+<div>
+
 ### 💻 Código Main
 
 ```csharp
@@ -707,8 +678,7 @@ class Program
 {
     static void Main()
     {
-        List<Estudiante> estudiantes
-            = new List<Estudiante>();
+        var estudiantes = new List<Estudiante>();
 
         estudiantes.Add(
             new Estudiante("María", "2024001", 20)
@@ -729,15 +699,17 @@ class Program
 }
 ```
 
-### 🎨 Salida
+### 🎨 Salida Esperada
 
 ```
 === ESTUDIANTES ===
 📚 María (2024001)
-   Edad: 20
-   Prom: 4.20
-   Est: APROBADO
+   Edad: 20 | Prom: 4.20
+   Estado: APROBADO
 ```
+
+</div>
+</div>
 
 ---
 
