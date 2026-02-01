@@ -78,7 +78,6 @@
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Email { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
     
 ---
-<span class="hljs-meta">### Atributos de validación en .NET</span>
 
 
     <span class="hljs-comment">// VALIDACIÓN NUMÉRICA</span>
@@ -108,7 +107,6 @@
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Password { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
     
 ---
-<span class="hljs-meta">### Atributos de validación en .NET</span>
 
 
     [<span class="hljs-meta">DataType(DataType.Password)</span>]
@@ -182,7 +180,6 @@
 }
 
 ---
-<span class="hljs-meta">### Crear atributo custom</span>
 
 
 <span class="hljs-comment">// Uso</span>
@@ -212,7 +209,6 @@
                 edad--;
             
 ---
-<span class="hljs-meta">### Crear atributo custom</span>
 
 
             <span class="hljs-keyword">if</span> (edad &lt; _edadMinima)
@@ -251,7 +247,6 @@
     }
     
 ---
-<span class="hljs-meta">### ModelState.IsValid</span>
 
 
     <span class="hljs-comment">// Guardar</span>
@@ -372,7 +367,6 @@
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 3" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="13" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 3;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="39">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 3</header>
-<h3 id="pasar-datos-entre-acciones-1">Pasar datos entre acciones</h3>
 <p>TempData es ideal para redireccionamientos con datos transitorios.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">HttpPost</span>]
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;IActionResult&gt; <span class="hljs-title">Crear</span>(<span class="hljs-params">EstudianteViewModel model</span>)</span>
@@ -487,7 +481,6 @@ app.MapControllers();
         <span class="hljs-keyword">var</span> usuarioNombre = HttpContext.Session.GetString(<span class="hljs-string">&quot;UsuarioNombre&quot;</span>);
         
 ---
-<span class="hljs-meta">### Almacenar y recuperar datos</span>
 
 
         <span class="hljs-keyword">if</span> (usuarioId == <span class="hljs-literal">null</span>)
@@ -541,7 +534,6 @@ app.MapControllers();
     }
     
 ---
-<span class="hljs-meta">### Manipulación directa</span>
 
 
     <span class="hljs-comment">// Eliminar cookie</span>
@@ -583,7 +575,6 @@ app.MapControllers();
     }
     
 ---
-<span class="hljs-meta">### IFormFile</span>
 
 
     <span class="hljs-comment">// Validaciones</span>
@@ -612,7 +603,6 @@ app.MapControllers();
         Directory.CreateDirectory(rutaCarpeta);
     
 ---
-<span class="hljs-meta">### IFormFile</span>
 
 
     <span class="hljs-comment">// Guardar archivo</span>
@@ -656,7 +646,6 @@ app.MapControllers();
     }
     
 ---
-<span class="hljs-meta">### Subir varios archivos</span>
 
 
     TempData[<span class="hljs-string">&quot;Mensaje&quot;</span>] = <span class="hljs-string">$&quot;<span class="hljs-subst">{archivos.Count}</span> archivos subidos&quot;</span>;
@@ -692,7 +681,6 @@ Crear sistema de inscripción de estudiantes con:
    - Mensajes de error específicos por campo
 
 ---
-### Sistema de registro completo
 
 
 4. Sesión:
@@ -1059,7 +1047,6 @@ Clase 11: Formularios, Validación y Sesiones
         <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Password { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
 ---
-<span class="hljs-meta">### Parte 1: Modelo de Usuario (15 minutos)</span>
 
 
         [<span class="hljs-meta">Required(ErrorMessage = <span class="hljs-string">&quot;El nombre es obligatorio&quot;</span>)</span>]
@@ -1089,7 +1076,6 @@ Clase 11: Formularios, Validación y Sesiones
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 3" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="32" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 3;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="39">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 3</header>
-<h3 id="parte-1-modelo-de-usuario-15-minutos-1">Parte 1: Modelo de Usuario (15 minutos)</h3>
 <p>Creación del modelo de usuario para el ejercicio.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Controllers/AccountController.cs</span>
 <span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;
@@ -1140,7 +1126,6 @@ Clase 11: Formularios, Validación y Sesiones
                 u.EstaActivo);
 
 ---
-<span class="hljs-meta">### Parte 2: Controlador con Sesiones (30 minutos)</span>
 
 
             <span class="hljs-keyword">if</span> (usuario == <span class="hljs-literal">null</span>)
@@ -1166,7 +1151,6 @@ Clase 11: Formularios, Validación y Sesiones
             }
 
 ---
-<span class="hljs-meta">### Parte 2: Controlador con Sesiones (30 minutos)</span>
 
 
             TempData[<span class="hljs-string">&quot;SuccessMessage&quot;</span>] = <span class="hljs-string">$&quot;Bienvenido, <span class="hljs-subst">{usuario.Nombre}</span>!&quot;</span>;
@@ -1194,7 +1178,6 @@ Clase 11: Formularios, Validación y Sesiones
             ViewBag.UserEmail = HttpContext.Session.GetString(<span class="hljs-string">&quot;UserEmail&quot;</span>);
 
 ---
-<span class="hljs-meta">### Parte 2: Controlador con Sesiones (30 minutos)</span>
 
 
             <span class="hljs-keyword">return</span> View();
@@ -1221,7 +1204,6 @@ Clase 11: Formularios, Validación y Sesiones
             }
 
 ---
-<span class="hljs-meta">### Parte 2: Controlador con Sesiones (30 minutos)</span>
 
 
             <span class="hljs-comment">// En producción: hashear password con BCrypt o PBKDF2</span>
@@ -1265,7 +1247,6 @@ Clase 11: Formularios, Validación y Sesiones
                     }
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
                     <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">asp-action</span>=<span class="hljs-string">&quot;Login&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span>
@@ -1304,7 +1285,6 @@ Clase 11: Formularios, Validación y Sesiones
                         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
                         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mb-3 form-check&quot;</span>&gt;</span>
@@ -1334,45 +1314,43 @@ Clase 11: Formularios, Validación y Sesiones
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
 @section Scripts {
     <span class="hljs-tag">&lt;<span class="hljs-name">partial</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;_ValidationScriptsPartial&quot;</span> /&gt;</span>
     
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>
-        function togglePassword() {
-            const passwordInput = document.querySelector(&#x27;input[name=&quot;Password&quot;]&#x27;);
-            const toggleIcon = document.getElementById(&#x27;toggleIcon&#x27;);
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+        <span class="hljs-keyword">function</span> <span class="hljs-title function_">togglePassword</span>(<span class="hljs-params"></span>) {
+            <span class="hljs-keyword">const</span> passwordInput = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input[name=&quot;Password&quot;]&#x27;</span>);
+            <span class="hljs-keyword">const</span> toggleIcon = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;toggleIcon&#x27;</span>);
             
-            if (passwordInput.type === &#x27;password&#x27;) {
-                passwordInput.type = &#x27;text&#x27;;
-                toggleIcon.classList.remove(&#x27;fa-eye&#x27;);
-                toggleIcon.classList.add(&#x27;fa-eye-slash&#x27;);
-            } else {
-                passwordInput.type = &#x27;password&#x27;;
-                toggleIcon.classList.remove(&#x27;fa-eye-slash&#x27;);
-                toggleIcon.classList.add(&#x27;fa-eye&#x27;);
+            <span class="hljs-keyword">if</span> (passwordInput.<span class="hljs-property">type</span> === <span class="hljs-string">&#x27;password&#x27;</span>) {
+                passwordInput.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;text&#x27;</span>;
+                toggleIcon.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;fa-eye&#x27;</span>);
+                toggleIcon.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;fa-eye-slash&#x27;</span>);
+            } <span class="hljs-keyword">else</span> {
+                passwordInput.<span class="hljs-property">type</span> = <span class="hljs-string">&#x27;password&#x27;</span>;
+                toggleIcon.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;fa-eye-slash&#x27;</span>);
+                toggleIcon.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;fa-eye&#x27;</span>);
             }
         }
 
-        // Validación en tiempo real
-        document.querySelector(&#x27;input[name=&quot;Email&quot;]&#x27;).addEventListener(&#x27;blur&#x27;, function() {
-            const email = this.value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        <span class="hljs-comment">// Validación en tiempo real</span>
+        <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelector</span>(<span class="hljs-string">&#x27;input[name=&quot;Email&quot;]&#x27;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;blur&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+            <span class="hljs-keyword">const</span> email = <span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>;
+            <span class="hljs-keyword">const</span> emailRegex = <span class="hljs-regexp">/^[^\s@]+@[^\s@]+\.[^\s@]+$/</span>;
             
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
-            if (!emailRegex.test(email)) {
-                this.classList.add(&#x27;is-invalid&#x27;);
-            } else {
-                this.classList.remove(&#x27;is-invalid&#x27;);
-                this.classList.add(&#x27;is-valid&#x27;);
+            <span class="hljs-keyword">if</span> (!emailRegex.<span class="hljs-title function_">test</span>(email)) {
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;is-invalid&#x27;</span>);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">remove</span>(<span class="hljs-string">&#x27;is-invalid&#x27;</span>);
+                <span class="hljs-variable language_">this</span>.<span class="hljs-property">classList</span>.<span class="hljs-title function_">add</span>(<span class="hljs-string">&#x27;is-valid&#x27;</span>);
             }
         });
-    <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
 }
 </code></pre>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -1404,7 +1382,6 @@ builder.Services.AddControllersWithViews();
 }
 
 ---
-<span class="hljs-meta">### Parte 4: Configurar Sesiones en Program.cs (10 minutos)</span>
 
 
 app.UseHttpsRedirection();
@@ -1450,7 +1427,6 @@ app.Run();
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="36" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 3" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="36" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 3;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="39">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 3</header>
-<h3 id="parte-5-crear-filtro-de-autorizaci%C3%B3n-personalizado-15-minutos-1">Parte 5: Crear Filtro de Autorización Personalizado (15 minutos)</h3>
 <p><strong>Uso en controladores:</strong></p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">[<span class="hljs-meta">SessionAuthorizationFilter</span>]
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AdminController</span> : <span class="hljs-title">Controller</span>
