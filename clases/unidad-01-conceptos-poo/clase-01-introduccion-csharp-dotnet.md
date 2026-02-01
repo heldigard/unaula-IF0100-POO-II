@@ -471,7 +471,14 @@ namespace CalculadoraArea
             // Salida
             Console.WriteLine($"El área es: {area:F2}");
             
+            Console.ReadKey();
+        }
+    }
+}
+```
+
 ---
+
 ## Ejercicios Prácticos Adicionales
 
 ### Ejercicio 1: Calculadora Simple
@@ -553,13 +560,6 @@ namespace Temperatura
                 Console.WriteLine("→ El agua está en estado LÍQUIDO");
             
             Console.ReadKey();
-        }
-    }
-}
-```
-
----
-### Ejercicio en clase (25 min)
         }
     }
 }

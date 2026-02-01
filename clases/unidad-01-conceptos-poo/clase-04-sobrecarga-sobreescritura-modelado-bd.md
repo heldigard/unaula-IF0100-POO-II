@@ -656,27 +656,37 @@ CREATE TABLE Inscripciones (
 
 ## 6. Ejercicio Práctico
 
-   - ISBN (único)
-   - Título
-   - Autor
-   - Año de publicación
-   - Cantidad de ejemplares
-   - Una categoría tiene muchos libros
-   - Nombre de categoría
-   - Código de usuario
-   - Nombre
-   - Email
----
+### Sistema de Biblioteca Universitaria
 
-## 6. Ejercicio Práctico (Continuación) (2/2)
+**Objetivo:** Diseñar el modelo de datos para un sistema de biblioteca con las siguientes entidades:
 
-   - Tipo (estudiante, profesor, externo)
-   - Un usuario puede tener varios préstamos
-   - Un libro puede estar en varios préstamos (en el tiempo)
-   - Fecha de préstamo
-   - Fecha de devolución esperada
-   - Fecha de devolución real
-   - Estado (activo, devuelto, vencido)
+**Entidad: Libro**
+- ISBN (único, identificador)
+- Título
+- Autor
+- Año de publicación
+- Cantidad de ejemplares disponibles
+
+**Entidad: Categoría**
+- ID (autoincremental)
+- Nombre de categoría (Ficción, Ciencia, Tecnología, etc.)
+- *Relación: Una categoría tiene muchos libros*
+
+**Entidad: Usuario**
+- Código de usuario (único)
+- Nombre completo
+- Email
+- Tipo (estudiante, profesor, externo)
+- *Relación: Un usuario puede tener varios préstamos*
+
+**Entidad: Préstamo**
+- ID (autoincremental)
+- Fecha de préstamo
+- Fecha de devolución esperada
+- Fecha de devolución real (nullable)
+- Estado (activo, devuelto, vencido)
+- *Relación: Un préstamo involucra un libro y un usuario*
+- *Relación: Un libro puede estar en varios préstamos (en diferentes momentos)*
 ---
 
 ## Solución Ejercicio Biblioteca
@@ -745,14 +755,15 @@ public class Usuario
     public string Email { get; set; }
     public string Tipo { get; set; } // Estudiante, Profesor, Externo
     
----
-## Clases C# para Biblioteca (Continuación)
-
-
     // Relación 1:N
     public List<Prestamo> Prestamos { get; set; }
 }
 
+---
+
+## Clases C# para Biblioteca (Continuación)
+
+```csharp
 public class Prestamo
 {
     public int Id { get; set; }
