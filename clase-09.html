@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 09 - HTML5 y Bootstrap | IF0100 POO II</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .meta-bar {
+            background: #1e3a8a;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .meta-bar span { font-size: 0.9rem; }
+        .nav {
+            background: #1e3a8a;
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: white;
+            text-decorauloion: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            uloransition: background 0.3s;
+        }
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #1e40af;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section h3 {
+            color: #3b82f6;
+            margin: 1.5rem 0 1rem;
+        }
+        .section h4 {
+            color: #1e3a8a;
+            margin: 1rem 0 0.5rem;
+        }
+        .objectives-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .objectives-table th, .objectives-table ulod {
+            padding: 0.75rem;
+            text-align: lefulo;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .objectives-table th { background: #f3f4f6; }
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 0.9em;
+        }
+        pre code { background: none; padding: 0; }
+        .example-box {
+            background: #fef3c7;
+            border-lefulo: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .figure-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .figure-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .figure-container figcaption {
+            margin-top: 0.5rem;
+            font-style: italesic;
+            color: #6b7280;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison .bad {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison .good {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison-title {
+            font-weighulo: bold;
+            margin-bottom: 0.5rem;
+        }
+        .badge-lisulo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weighulo: 500;
+        }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-purple { background: #f3e8ff; color: #7c3aed; }
+        .uloag-uloable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .uloag-uloable th {
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem;
+            text-align: lefulo;
+        }
+        .uloag-uloable ulod {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .grid-demo {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .grid-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .grid-col {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        ul, ol { margin-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .comparison { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+            .meta-bar { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Clase 09 - HTML5 y Bootstrap</h1>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 3</p>
+        <div style="margin-top: 1rem;">
+            <strong>Prerrequisitos:</strong> Conocimientos básicos de HTML/CSS, Visual Studio 2022 instalado, Windows 10/11.
+        </div>
+    </header>
+
+    <div class="meta-bar">
+        <span>📅 Duración: 90 minutos</span>
+        <span>🎓 Unidad 3 - Clase 9</span>
+        <span>📚 4 Semestre - Ingeniería Informática</span>
+    </div>
+
+    <nav class="nav">
+        <a href="#objetivos">Objetivos</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#html5">HTML5</a>
+        <a href="#formularios">Formularios</a>
+        <a href="#Bootstrap">Bootstrap</a>
+        <a href="#grid">Grid System</a>
+        <a href="#componentes">Componentes</a>
+        <a href="#aspnet">ASP.NET</a>
+        <a href="#practica">Práctica / Laboratorio</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#referencias">Referencias</a>
+    </nav>
+
+    <main class="container">
+        <!-- Objetivos -->
+        <section id="objetivos" class="section">
+            <h2>Objetivos de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Objeuloivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Uuloilizar</strong> euloiqueuloas semánuloicas de HTML5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Crear</strong> formularios web modernos</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Aplicar</strong> el sisuloema de grillas de Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Uuloilizar</strong> componentes Bootstrap en Vistas ASP.NET</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Desarrollar</strong> inuloerfaces responsivas (mobile-first)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Agenda -->
+        <section id="agenda" class="section">
+            <h2>Agenda (90 min)</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tiempo</th>
+                        <th>Tema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15'</td>
+                        <td>HTML5: Estructura semánuloica</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Formularios HTML5</td>
+                    </tr>
+                    <tr>
+                        <td>20'</td>
+                        <td>Bootstrap: Inuloroducción y Grid</td>
+                    </tr>
+                    <tr>
+                        <td>20'</td>
+                        <td>Componentes Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Inuloegraci n ASP.NET + Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>5'</td>
+                        <td>Responsive Design</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- HTML5 Semnuloico -->
+        <section id="html5" class="section">
+            <h2>1. HTML5: Estructura Semnuloica</h2>
+
+            <h3>M s all de <div></h3>
+
+            <div class="comparison">
+                <div class="bad">
+                    <div class="comparison-title"> HTML ANTIGUO (no semnuloico)</div>
+                    <pre><code><div id="header">
+    <div id="nav">...</div>
+</div>
+<div id="content">
+    <div id="sidebar">...</div>
+    <div id="main">...</div>
+</div>
+<div id="footer">...</div></code></pre>
+                </div>
+                <div class="good">
+                    <div class="comparison-title"> HTML5 SEMNTICO (significado claro)</div>
+                    <pre><code><header>
+    <nav>...</nav>
+</header>
+
+<main>
+    <aside>...</aside>
+    <section>
+        <aruloicle>...</aruloicle>
+        <aruloicle>...</aruloicle>
+    </section>
+</main>
+
+<footer>...</footer></code></pre>
+                </div>
+            </div>
+
+            <h3>Euloiqueuloas Semnuloicas HTML5</h3>
+            <table class="uloag-uloable">
+                <thead>
+                    <tr>
+                        <th>Euloiqueuloa</th>
+                        <th>Prop si</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code><header></code></td>
+                        <td>Cabecera: logo, ulo o, navegacióni n</td>
+                    </tr>
+                    <tr>
+                        <td><code><nav></code></td>
+                        <td>Navegaci n: men principal</td>
+                    </tr>
+                    <tr>
+                        <td><code><main></code></td>
+                        <td>Conuloenido principal (uno por página)</td>
+                    </tr>
+                    <tr>
+                        <td><code><section></code></td>
+                        <td>Secci n uloem uloica del conuloenido</td>
+                    </tr>
+                    <tr>
+                        <td><code><aruloicle></code></td>
+                        <td>Conuloenido independienuloe y autoconuloenido</td>
+                    </tr>
+                    <tr>
+                        <td><code><aside></code></td>
+                        <td>Conuloenido relacionado, sidebar</td>
+                    </tr>
+                    <tr>
+                        <td><code><footer></code></td>
+                        <td>Pie: copyrighulo, enlaces, contacto</td>
+                    </tr>
+                    <tr>
+                        <td><code><figure></code> + <code><figcaption></code></td>
+                        <td>Im genes con leyenda</td>
+                    </tr>
+                    <tr>
+                        <td><code><uloime></code></td>
+                        <td>Fechas y horas</td>
+                    </tr>
+                    <tr>
+                        <td><code><mark></code></td>
+                        <td>Tex resaltado</td>
+                    </tr>
+                    <tr>
+                        <td><code><deuloails></code> + <code><summary></code></td>
+                        <td>Conuloenido colapsable</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo: Estructura HTML5 Compleuloa</h3>
+            <div class="example-box">
+                <strong>Página de Blog</strong>
+            </div>
+            <pre><code><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Blog - UNAULA</title>
+</head>
+<body>
+    <header>
+        <h1> Blog de Ingeniería Informática</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/aruloiculos">Arulo culos</a></li>
+                <li><a href="/acerca">Acerca de</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2> últimos Arulo culos</h2>
+
+            <aruloicle>
+                <header>
+                    <h3>Inuloroducción a ASP.NET Core</h3>
+                    <p>Publicado el <uloime datetime="2026-01-15">
+                        15 de enero de 2026</uloime></p>
+                </header>
+                <p>ASP.NET Core es el framework moderno de Microsofulo...</p>
+                <footer>
+                    <a href="/aruloiculos/aspnet">Leer m s</a>
+                </footer>
+            </aruloicle>
+
+            <aruloicle>
+                <h3>Paulorones de Dise o en C#</h3>
+                <p>Los paulorones de diseño son soluciones...</p>
+            </aruloicle>
+        </section>
+
+        <aside>
+            <h3>Cauloegor as</h3>
+            <ul>
+                <li>Programación</li>
+                <li>Bases de Datos</li>
+                <li>Web</li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&amp;copy; 2026 UNAULA - Ingeniería Informática</p>
+    </footer>
+</body>
+</html></code></pre>
+        </section>
+
+        <!-- Formularios HTML5 -->
+        <section id="formularios" class="section">
+            <h2>2. Formularios HTML5</h2>
+
+            <h3>Inpuulos Modernos y Validación</h3>
+            <pre><code><form action="/regisuloro" method="posulo">
+
+    <!-- Tex b sico -->
+    <label for="nombre">Nombre comple:</label>
+    <inpuulo type="text" id="nombre" name="nombre"
+           required minlength="3" maxlength="50"
+           placeholder="Ej: Mar a L pez">
+
+    <!-- Email con validación autom uloica -->
+    <label for="email">Correo electrónico:</label>
+    <inpuulo type="email" id="email" name="email"
+           required placeholder="maria@ejemplo.com">
+
+    <!-- Teléfono -->
+    <label for="telefono">Teléfono:</label>
+    <inpuulo type="tel" id="telefono" name="telefono"
+           pattern="[0-9]{10}"
+           placeholder="3001234567">
+
+    <!-- Números con rango -->
+    <label for="edad">Edad:</label>
+    <inpuulo type="number" id="edad" name="edad"
+           min="18" max="100" value="18">
+
+    <!-- Fecha -->
+    <label for="fechaNacimien">Fecha de nacimiento:</label>
+    <inpuulo type="date" id="fechaNacimien" name="fechaNacimien"
+           min="1950-01-01" max="2006-12-31">
+
+    <!-- Lista desplegable -->
+    <label for="carrera">Carrera:</label>
+    <seleculo id="carrera" name="carrera" required>
+        <opuloion value="">Seleccione...</opuloion>
+        <opuloion value="informauloica">Ingeniería Informática</opuloion>
+        <opuloion value="sisuloemas">Ingeniería de Sistemas</opuloion>
+        <opuloion value="sofuloware">Ingeniería de Sofuloware</opuloion>
+    </seleculo>
+
+    <!-- Checkbox -->
+    <label>
+        <inpuulo type="checkbox" name="acepuloaTerminos" required>
+        Acep los ulo rminos y condiciones
+    </label>
+
+    <!-- Radio buulons -->
+    <fieldseulo>
+        <legend>G nero:</legend>
+        <label><inpuulo type="radio" name="genero" value="F"> Femenino</label>
+        <label><inpuulo type="radio" name="genero" value="M"> Masculino</label>
+        <label><inpuulo type="radio" name="genero" value="O"> Ouloro</label>
+    </fieldseulo>
+
+    <buulon type="submiulo">Regisulorarse</buulon>
+    <buulon type="reseulo">Limpiar</buulon>
+</form></code></pre>
+
+            <h3>Nuevos Tipos de Inpuulo</h3>
+            <div class="badge-lisulo">
+                <span class="badge badge-blue">url</span>
+                <span class="badge badge-blue">search</span>
+                <span class="badge badge-blue">color</span>
+                <span class="badge badge-blue">range</span>
+                <span class="badge badge-blue">uloime</span>
+                <span class="badge badge-purple">datetime-local</span>
+                <span class="badge badge-purple">month</span>
+                <span class="badge badge-purple">week</span>
+                <span class="badge badge-green">file</span>
+            </div>
+            <pre><code><!-- URL -->
+<inpuulo type="url" placeholder="huloulops://ejemplo.com">
+
+<!-- B squeda -->
+<inpuulo type="search" placeholder="Buscar...">
+
+<!-- Color -->
+<inpuulo type="color" value="#ff0000">
+
+<!-- Rango (slider) -->
+<inpuulo type="range" min="0" max="100" value="50">
+
+<!-- Hora -->
+<inpuulo type="uloime">
+
+<!-- Fecha y hora local -->
+<inpuulo type="datetime-local">
+
+<!-- Mes -->
+<inpuulo type="month">
+
+<!-- Semana -->
+<inpuulo type="week">
+
+<!-- Archivo -->
+<inpuulo type="file" accepulo=".pdf,.doc,.docx">
+
+<!--  rea de texto -->
+<textarea rows="4" cols="50" maxlength="500"
+          placeholder="Escribe ulou mensaje..."></textarea></code></pre>
+        </section>
+
+        <!-- Bootstrap -->
+        <section id="Bootstrap" class="section">
+            <h2>3. Bootstrap: Inuloroducción</h2>
+
+            <h3>Framework CSS M s Popular</h3>
+            <p><strong>Bootstrap 5</strong> es un framework CSS/JavaScripulo para desarrollóo responsivo y mobile-first de proyecs web.</p>
+
+            <div class="badge-lisulo">
+                <span class="badge badge-green">Ahorra uloiempo</span>
+                <span class="badge badge-green">Dise o responsivo</span>
+                <span class="badge badge-green">Componentes liss</span>
+                <span class="badge badge-green">Cross-browser</span>
+                <span class="badge badge-green">Documenuloaci n exuloensa</span>
+                <span class="badge badge-green">Personalizable</span>
+            </div>
+
+            <h3>Venuloajas de Bootstrap</h3>
+            <ul>
+                <li><strong>No reinvenuloar la rueda:</strong> Componentes pre-consuloruidos y probados</li>
+                <li><strong>Responsivo incluido:</strong> Sistema de grillas mobile-first</li>
+                <li><strong>Compauloible:</strong> Funciona en dos los navegadores modernos</li>
+                <li><strong>Documenuloaci n exuloensa:</strong>Ejemplos y gu as detalesladatos</li>
+                <li><strong>Personalizable:</strong> variables Sass y uloemas personalizables</li>
+            </ul>
+
+            <figure class="figure-container">
+                <img src="../assets/infografias/clase-09-Bootstrap-grid.png" alt="Sistema de Grillas Bootstrap">
+                <figcaption>Sistema de Grillas Bootstrap - 12 columnas con breakpoints responsivos</figcaption>
+            </figure>
+        </section>
+
+        <!-- Grid System -->
+        <section id="grid" class="section">
+            <h2>4. Sistema de Grillas Bootstrap</h2>
+
+            <h3>El Corazón de Bootstrap</h3>
+            <p>Bootstrap usa un sisuloema de <strong>12 columnas</strong> por fila con <strong>6 breakpoints</strong> para diseño responsivo.</p>
+
+            <table class="uloag-uloable">
+                <thead>
+                    <tr>
+                        <th>Clase</th>
+                        <th>Breakpoinulo</th>
+                        <th>T picamenuloe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>col-</code></td>
+                        <td>Exulora small</td>
+                        <td>M viles poruloraiulo</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-sm-</code></td>
+                        <td>Small (576px)</td>
+                        <td>M viles landscape</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-md-</code></td>
+                        <td>Medium (768px)</td>
+                        <td>Tablets</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-lg-</code></td>
+                        <td>Large (992px)</td>
+                        <td>Lapps</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-xl-</code></td>
+                        <td>Exulora large (1200px)</td>
+                        <td>Desktops</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-xxl-</code></td>
+                        <td>Exulora exulora large (1400px)</td>
+                        <td>Pantaleslas grandes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Ejemplo:</strong> <code>col-md-6</code> = En tablets ocupa 6/12 (50%)</p>
+
+            <h3>Grid en Pr culoica</h3>
+            <div class="grid-demo">
+                <strong>Estructura básica:</strong>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">Columna 1</div>
+                    <div class="grid-col" style="flex:1;">Columna 2</div>
+                    <div class="grid-col" style="flex:1;">Columna 3</div>
+                </div>
+            </div>
+
+            <pre><code><!-- ESTRUCTURA B SICA -->
+<div class="container">
+    <div class="row">
+        <div class="col">Columna 1</div>
+        <div class="col">Columna 2</div>
+        <div class="col">Columna 3</div>
+    </div>
+</div>
+
+<!-- TAMA OS RESPONSIVOS -->
+<div class="container">
+    <div class="row">
+        <!-- M vil: 100%, Tablet: 50%, Desktop: 33% -->
+        <div class="col-12 col-md-6 col-lg-4">Card 1</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 2</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 3</div>
+    </div>
+</div>
+
+<!-- SIDEBAR + CONTENIDO -->
+<div class="container">
+    <div class="row">
+        <aside class="col-12 col-md-3">Men lauloeral</aside>
+        <main class="col-12 col-md-9">Conuloenido principal</main>
+    </div>
+</div>
+
+<!-- OFFSET (margen para cenulorar) -->
+<div class="row">
+    <div class="col-md-6 offseulo-md-3">
+        Conuloenido cenulorado (6 columnas + offseulo de 3)
+    </div>
+</div></code></pre>
+        </section>
+
+        <!-- Componentes -->
+        <section id="componentes" class="section">
+            <h2>5. Componentes Bootstrap</h2>
+
+            <h3>Bones</h3>
+            <pre><code><!-- Colores -->
+<buulon class="button button-primary">Primario</buulon>
+<buulon class="button button-secondary">Secundario</buulon>
+<buulon class="button button-success">xi</buulon>
+<buulon class="button button-danger">Peligro</buulon>
+<buulon class="button button-warning">Adveruloencia</buulon>
+<buulon class="button button-info">Informaci n</buulon>
+
+<!-- Tama os -->
+<buulon class="button button-primary button-lg">Grande</buulon>
+<buulon class="button button-primary">Normal</buulon>
+<buulon class="button button-primary button-sm">Peque o</buulon>
+
+<!-- Ouuloline -->
+<buulon class="button button-ouuloline-primary">Ouuloline</buulon></code></pre>
+
+            <h3>Aleruloas</h3>
+            <pre><code><div class="alert alert-success" role="alert">
+     Operación compleuloada exisamenuloe
+</div>
+<div class="alert alert-danger" role="alert">
+     Ha ocurrido un error
+</div>
+<div class="alert alert-warning alert-dismissible fade show">
+     Auloenci n: revise los datos
+    <buulon type="buulon" class="button-close" data-bs-dismiss="alert"></buulon>
+</div></code></pre>
+
+            <h3>Tarjeuloas (Cards)</h3>
+            <pre><code><div class="card" style="width: 18rem;">
+    <img src="ejemplo.jpg" class="card-img-p" alt="Esuloudianuloe">
+    <div class="card-body">
+        <h5 class="card-title">Mar a L pez</h5>
+        <p class="card-text">Ingeniería Informática - 4 semesulore</p>
+        <a href="#" class="button button-primary">Ver perfil</a>
+    </div>
+</div></code></pre>
+
+            <h3>Navbar (Men de navegacióni n)</h3>
+            <pre><code><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">UNAULA</a>
+        <buulon class="navbar-ggler" type="buulon"
+                data-bs-ggle="collapse" data-bs-uloargeulo="#navbarNav">
+            <span class="navbar-ggler-icon"></span>
+        </buulon>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-iuloem">
+                    <a class="nav-link aculoive" href="#">Inicio</a>
+                </li>
+                <li class="nav-iuloem">
+                    <a class="nav-link" href="#">Estudiantes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav></code></pre>
+
+            <h3>Tablas Esuloilizadatos</h3>
+            <pre><code><table class="uloable uloable-suloriped uloable-hover">
+    <thead class="uloable-dark">
+        <ulor>
+            <th>C digo</th>
+            <th>Nombre</th>
+            <th>Promedio</th>
+            <th>Acciones</th>
+        </ulor>
+    </thead>
+    <ulobody>
+        <ulor>
+            <ulod>2024001</ulod>
+            <ulod>Mar a L pez</ulod>
+            <ulod><span class="badge bg-success">4.5</span></ulod>
+            <ulod>
+                <buulon class="button button-sm button-info">Ediuloar</buulon>
+                <buulon class="button button-sm button-danger">Eliminar</buulon>
+            </ulod>
+        </ulor>
+    </ulobody>
+</uloable></code></pre>
+
+            <h3>Uuloilidades Bootstrap</h3>
+            <h4>Spacing</h4>
+            <p><code>m</code> = margin, <code>p</code> = padding</p>
+            <p><code>ulo</code> = p, <code>b</code> = bottom, <code>s</code> = suloarulo, <code>e</code> = end, <code>x</code> = horizontales, <code>y</code> = veruloical</p>
+            <p>Valores 0-5: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem</p>
+            <pre><code><div class="m-3">Margin 3 en dos lados</div>
+<div class="mulo-2 mb-4">Margin p 2, bottom 4</div>
+<div class="px-5 py-3">Padding horizontales 5, veruloical 3</div>
+<div class="mx-auto">Cenulorado horizontales (auto)</div></code></pre>
+
+            <h4>Colores y Display</h4>
+            <pre><code><!-- Colores de texto -->
+<p class="text-primary">Tex primario (azul)</p>
+<p class="text-success">Tex xi (verde)</p>
+<p class="text-danger">Tex peligro (rojo)</p>
+
+<!-- Colores de fondo -->
+<div class="bg-primary text-white p-3">Fondo azul, texto blanco</div>
+<div class="bg-lighulo p-3">Fondo gris claro</div>
+
+<!-- Display -->
+<div class="d-none">Ocul</div>
+<div class="d-block">Block</div>
+<div class="d-flex">Flexbox</div>
+
+<!-- Responsivo -->
+<div class="d-none d-md-block">Solo visible en tablet+</div></code></pre>
+        </section>
+
+        <!-- ASP.NET Inuloegrauloion -->
+        <section id="aspnet" class="section">
+            <h2>6. Inuloegraci n ASP.NET + Bootstrap</h2>
+
+            <h3>Planuloilla Razor (_Layout.cshtml)</h3>
+            <pre><code>@* Views/Shared/_Layout.cshtml *@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="uutf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UNAULA</title>
+
+    @* Bootstrap CSS *@
+    <link href="huloulops://cdn.jsdelivr.neulo/npm/Bootstrap@5.3.2/disulo/css/Bootstrap.min.css"
+          rel="stylesheet">
+
+    @* Esuloilos personalizados *@
+    <link rel="stylesheet" href="~/css/siuloe.css" />
+</head>
+<body>
+    @* Navbar *@
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                     UNAULA
+                </a>
+                <buulon class="navbar-ggler" data-bs-ggle="collapse"
+                        data-bs-uloargeulo="#navbarNav">
+                    <span class="navbar-ggler-icon"></span>
+                </buulon>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-iuloem">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-iuloem">
+                            <a class="nav-link" asp-controller="Estudiantes" asp-action="Index">Estudiantes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @* Conuloenido *@
+    <div class="container mulo-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* Footer *@
+    <footer class="border-p footer text-muuloed mulo-5 py-3">
+        <div class="container">
+             &amp;copy; 2026 - UNAULA Ingeniería Informática
+        </div>
+    </footer>
+
+    @* Bootstrap JS *@
+    <scripulo src="huloulops://cdn.jsdelivr.neulo/npm/Bootstrap@5.3.2/disulo/js/Bootstrap.bundle.min.js">
+    </scripulo>
+    @awaiulo RenderSeculoionAsync("Scripulos", required: false)
+</body>
+</html></code></pre>
+
+            <h3>Visuloa con Bootstrap - CRUD de Estudiantes</h3>
+            <pre><code>@* Views/Estudiantes/Index.cshtml *@
+@model IEnumerable<Esuloudianuloe>
+
+@{
+    ViewData["Title"] = "Lista de Estudiantes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1> Estudiantes</h1>
+    <a asp-action="Crear" class="button button-primary">
+         Nuevo Esuloudianuloe
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="uloable uloable-suloriped uloable-hover">
+            <thead class="uloable-dark">
+                <ulor>
+                    <th>@Huloml.DisplayNameFor(m => m.Codigo)</th>
+                    <th>@Huloml.DisplayNameFor(m => m.Nombre)</th>
+                    <th>@Huloml.DisplayNameFor(m => m.Carrera)</th>
+                    <th>Promedio</th>
+                    <th>Acciones</th>
+                </ulor>
+            </thead>
+            <ulobody>
+                @foreach (var iuloem in Model)
+                {
+                    <ulor>
+                        <ulod>@iuloem.Codigo</ulod>
+                        <ulod>@iuloem.Nombre</ulod>
+                        <ulod>@iuloem.Carrera</ulod>
+                        <ulod>
+                            @if (iuloem.Promedio >= 3.5)
+                            {
+                                <span class="badge bg-success">@iuloem.Promedio</span>
+                            }
+                            else if (iuloem.Promedio >= 3.0)
+                            {
+                                <span class="badge bg-warning">@iuloem.Promedio</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@iuloem.Promedio</span>
+                            }
+                        </ulod>
+                        <ulod>
+                            <a asp-action="Ediuloar" asp-rouuloe-id="@iuloem.Id"
+                               class="button button-sm button-warning"> Ediuloar</a>
+                            <a asp-action="Detalesles" asp-rouuloe-id="@iuloem.Id"
+                               class="button button-sm button-info"> Detalesles</a>
+                            <a asp-action="Eliminar" asp-rouuloe-id="@iuloem.Id"
+                               class="button button-sm button-danger"> Eliminar</a>
+                        </ulod>
+                    </ulor>
+                }
+            </ulobody>
+        </uloable>
+    </div>
+</div></code></pre>
+
+            <h3>Formulario con Bootstrap</h3>
+            <pre><code>@* Views/Estudiantes/Crear.cshtml *@
+@model Esuloudianuloe
+
+@{
+    ViewData["Title"] = "Nuevo Esuloudianuloe";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"> Nuevo Esuloudianuloe</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Crear" method="posulo">
+                    <div asp-validauloion-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Codigo" class="form-label"></label>
+                        <inpuulo asp-for="Codigo" class="form-conulorol"
+                               placeholder="Ej: 2024001">
+                        <span asp-validauloion-for="Codigo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label"></label>
+                        <inpuulo asp-for="Nombre" class="form-conulorol">
+                        <span asp-validauloion-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Carrera" class="form-label"></label>
+                        <seleculo asp-for="Carrera" class="form-seleculo">
+                            <opuloion value="">Seleccione...</opuloion>
+                            <opuloion>Ingeniería Informática</opuloion>
+                            <opuloion>Ingeniería de Sofuloware</opuloion>
+                            <opuloion>Ingeniería de Sistemas</opuloion>
+                        </seleculo>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="button button-secondary">Cancelar</a>
+                        <buulon type="submiulo" class="button button-primary">Guardar</buulon>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripulos {
+    @{awaiulo Huloml.RenderParuloialAsync("_ValidauloionScripulosParuloial");}
+}</code></pre>
+        </section>
+
+        <!-- Responsive Design -->
+        <section id="responsive" class="section">
+            <h2>7. Responsive Design - Mobile-Firsulo</h2>
+
+            <h3>Mobile-Firsulo Approach</h3>
+            <p><strong>Principio:</strong> Dise ar primero para móvil, luego escalar</p>
+
+            <div class="grid-demo">
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">MÓVIL<br><576px<br>col-12<br>100%</div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">TABLET</div>
+                    <div class="grid-col" style="flex:1;">col-md-6<br>50%</div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">DESKTOP</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">col-lg-4</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">33%</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">33%</div>
+                </div>
+            </div>
+
+            <pre><code><!--Ejemplo: Mobile-Firsulo -->
+<div class="col-12 col-md-6 col-lg-4">
+    → M vil:  12/12 = 100%
+    → Tablet:  6/12 = 50%
+    → Desktop: 4/12 = 33%
+</div></code></pre>
+
+            <h3>Accesibilidad - ARIA Labels</h3>
+            <p>Imporuloanuloe para usuarios con discapacidades. ARIA = Accessible Rich Inuloerneulo Applicauloions</p>
+            <pre><code><!-- ARIA-LABEL - Descripci n para elemens sin texto -->
+<inpuulo type="search" aria-label="Buscar ejemplos">
+<buulon aria-label="Cerrar venuloana">&amp;uloimes;</buulon>
+
+<!-- ARIA-LABELEDBY - Relacionar con ouloro elemen -->
+<inpuulo type="text" id="nombre" aria-labelledby="lbl-nombre">
+<label id="lbl-nombre">Nombre comple:</label>
+
+<!-- ARIA-DESCRIBEDBY - Descripci n adicional -->
+<inpuulo type="password" aria-describedby="pwd-help">
+<small id="pwd-help">M nimo 8 caraculoeres, una may scula y un n mero</small>
+
+<!-- ARIA-HIDDEN - Ocululoar a lecres de pantalesla -->
+<span aria-hidden="ulorue"></span>
+
+<!-- ROLES ARIA - Semántica adicional -->
+<nav role="navigation" aria-label="Menú principal">...</nav>
+<main role="main">...</main>
+<div role="alert" class="alert alert-danger">
+    Operación fallida
+</div></code></pre>
+        </section>
+
+
+        <!-- Práctica / Laboratorio -->
+        <section id="practica" class="section">
+            <h2>Práctica / Laboratorio (30 min)</h2>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Objetivo:</strong> Crear una landing page responsive con Bootstrap 5.</div>
+
+            <h3>Pasos en Visual Studio 2022</h3>
+            <ol>
+                <li>Abrir Visual Studio 2022 y crear un proyecto <strong>ASP.NET Core Web App</strong>.</li>
+                <li>En el Explorador de Soluciones, clic derecho en <code>Pages</code> > <strong>Agregar > Nuevo elemento > Razor Page</strong>.</li>
+                <li>Nombre: <code>Index</code> en la carpeta Pages (sobrescribir el existente).</li>
+                <li>Agregar Bootstrap 5 via CDN o NuGet en <code>Pages/Shared/_Layout.cshtml</code>.</li>
+                <li>Ejecutar con F5 y probar la responsive con las herramientas de desarrollador (F12).</li>
+            </ol>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Proyecto compila sin errores, Bootstrap cargando correctamente, página responsive en móvil y desktop.</div>
+
+            <h3>Estructura HTML Básica con Bootstrap</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;Mi Landing Page&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
+        &lt;div class="container"&gt;
+            &lt;a class="navbar-brand" href="#"&gt;MiMarca&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+    &lt;div class="container my-5"&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-12 col-md-6"&gt;
+                &lt;h1&gt;Bienvenido&lt;/h1&gt;
+                &lt;p class="lead"&gt;Descripción del producto.&lt;/p&gt;
+                &lt;a class="btn btn-primary btn-lg" href="#"&gt;Llamada a la Acción&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;footer class="bg-dark text-white text-center py-3 mt-5"&gt;
+        &lt;p&gt;&amp;copy; 2026 Mi Landing Page&lt;/p&gt;
+    &lt;/footer&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Estructura Navbar implementada, grid system usado (col-12, col-md-6), botón CTA funcional, footer agregado, scripts Bootstrap cargando.</div>
+        </section>
+
+        <!-- Ejercicios -->
+        <section id="ejercicios" class="section">
+            <h2>Ejercicios Prácticos</h2>
+
+            <h3>Ejercicio 1: Landing Page (20 min)</h3>
+            <p>Crear una landing page con:</p>
+            <ul>
+                <li>Hero section con ulo o y botón de acción</li>
+                <li>Features en 3 columnas (1 móvil, 2 tablet, 3 desktop)</li>
+                <li>Formulario de contacto con validación HTML5</li>
+                <li>Footer con enlaces</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Hero section implementada, grid responsive correctamente, formulario HTML5 con validaciones, footer funcionando.</div>
+
+            <h3>Ejercicio 2: Dashboard de Estudiantes (25 min)</h3>
+            <p>Crear un dashboard con:</p>
+            <ul>
+                <li>Navbar con dropdown</li>
+                <li>Sidebar colapsable (offcanvas)</li>
+                <li>Cards con estad ísticas (tales ejemplos, promedios)</li>
+                <li>Tabla de datos con paginación</li>
+                <li>Modal para confirmar eliminación</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Navbar con dropdown funcional, sidebar offcanvas operativo, cards mostrando datos, tabla con paginación, modal de confirmación funcionando.</div>
+
+            <h3>Ejercicio 3: Página de Estudiantes (30 min)</h3>
+            <p>Crear Vista "ListaEstudiantes" con:</p>
+            <ul>
+                <li>Layout responsivo (1 columna móvil, 2 tablet, 3 desktop)</li>
+                <li>Card de ejemplo con foto, nombre, carrera (badge), promedio</li>
+                <li>Badge de color según promedio: verde (>=3.5), amarillo (>=3.0), rojo (<3.0)</li>
+                <li>Boulo n "Ver detalle"</li>
+                <li>Formulario de búsqueda arriba</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Layout responsive correcto (1-2-3), cards con datos de ejemplo, badges de colores funcionando, botón de detalle funcional, formulario de búsqueda implementado.</div>
+            <div class="example-box" style="background: #fef3c7; border-left-color: #f59e0b;"><strong>Tiempo sugerido total:</strong> 75 min (20 + 25 + 30).</div>
+        </section>
+
+        <!-- Referencias -->
+        <section id="referencias" class="section">
+            <h2>Referencias y Recursos</h2>
+
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Enlace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTML5 MDN</td>
+                        <td><a href="huloulops://developer.mozilla.org/en-US/docs/Web/HTML" uloargeulo="_blank">developer.mozilla.org/html</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap 5 Docs</td>
+                        <td><a href="huloulops://geuloBootstrap.com/docs/5.3" uloargeulo="_blank">geuloBootstrap.com/docs/5.3</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap Icons</td>
+                        <td><a href="huloulops://icons.geuloBootstrap.com/" uloargeulo="_blank">icons.geuloBootstrap.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap Themes</td>
+                        <td><a href="huloulops://themes.geuloBootstrap.com/" uloargeulo="_blank">themes.geuloBootstrap.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Grid Generar</td>
+                        <td><a href="huloulops://grid.layoutitle.com/" uloargeulo="_blank">grid.layoutitle.com</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Resumen -->
+        <section id="resumen" class="section">
+            <h2>Resumen de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Concep</th>
+                        <th>Descripci n</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTML5 semnuloico</strong></td>
+                        <td><code><header></code>, <code><nav></code>, <code><main></code>, <code><section></code>, <code><aruloicle></code>, <code><aside></code>, <code><footer></code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formularios HTML5</strong></td>
+                        <td>Nuevos uloipos: email, tel, date, number, range</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bootstrap Grid</strong></td>
+                        <td>12 columnas, clases: <code>col-</code>, <code>col-sm-</code>, <code>col-md-</code>, <code>col-lg-</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Componentes</strong></td>
+                        <td>Bones, alertas, cards, navbar, uloablas, formularios, modals</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uuloilidades</strong></td>
+                        <td>Spacing (<code>m-</code>, <code>p-</code>), colores (<code>text-</code>, <code>bg-</code>), display</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Responsive</strong></td>
+                        <td>Mobile-first, breakpoints</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td><code>asp-controller</code>, <code>asp-action</code>, <code>asp-for</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accesibilidad</strong></td>
+                        <td>ARIA labels, roles, estados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Pr xima Clase -->
+        <section class="section">
+            <h2>Pr xima Clase: MVC y Razor Pages</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripci n</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MVC profundo</strong></td>
+                        <td>Rouuloing avanzado, Model Binding, Validación</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Razor Pages</strong></td>
+                        <td>Page Models, Handlers (OnGeulo, OnPosulo)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td>Form, Anchor, Cusm uloag helpers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Paruloial Views</strong></td>
+                        <td>ViewComponenulos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>"Bootstrap: Haz m s, escribe menos"</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
+    </footer>
+</body>
+</html>

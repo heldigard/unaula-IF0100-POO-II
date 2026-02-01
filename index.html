@@ -1,36 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>IF0100 - POO II</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IF0100 - POO II | Clases</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
-    h1 { color: #333; }
-    .slide-link { display: block; padding: 10px; margin: 5px 0; text-decoration: none; color: #0066cc; border-left: 3px solid #0066cc; padding-left: 10px; }
-    .slide-link:hover { background: #f5f5f5; }
-    .unit { margin-top: 30px; font-weight: bold; color: #666; }
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .subtitle {
+      opacity: 0.9;
+      margin-top: 8px;
+    }
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .class-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .class-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-color: var(--accent);
+    }
+    .class-number {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .class-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand);
+      margin: 8px 0 6px;
+    }
+    .class-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .unit-section {
+      margin-bottom: 32px;
+    }
+    .unit-title {
+      font-size: 1.4rem;
+      color: var(--brand);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
   </style>
 </head>
 <body>
-  <h1>IF0100 - POO II</h1>
-  <p>UNAULA - Ingeniería Informática - 2026-I</p>
-  <h2>Clases</h2>
-<a href="clases/unidad-01-conceptos-poo/clase-01-introduccion-csharp-dotnet.html" class="slide-link">Clase 01 Introduccion Csharp Dotnet</a>
-<a href="clases/unidad-01-conceptos-poo/clase-02-clases-objetos-encapsulamiento.html" class="slide-link">Clase 02 Clases Objetos Encapsulamiento</a>
-<a href="clases/unidad-01-conceptos-poo/clase-03-herencia-polimorfismo.html" class="slide-link">Clase 03 Herencia Polimorfismo</a>
-<a href="clases/unidad-01-conceptos-poo/clase-04-sobrecarga-sobreescritura-modelado-bd.html" class="slide-link">Clase 04 Sobrecarga Sobreescritura Modelado Bd</a>
-<a href="clases/unidad-02-tecnicas-desarrollo/clase-05-tdd-pruebas-unitarias.html" class="slide-link">Clase 05 Tdd Pruebas Unitarias</a>
-<a href="clases/unidad-02-tecnicas-desarrollo/clase-06-bdd-behavior-driven-development.html" class="slide-link">Clase 06 Bdd Behavior Driven Development</a>
-<a href="clases/unidad-02-tecnicas-desarrollo/clase-07-domain-driven-design.html" class="slide-link">Clase 07 Domain Driven Design</a>
-<a href="clases/unidad-03-desarrollo-web/clase-08-introduccion-aspnet-core.html" class="slide-link">Clase 08 Introduccion Aspnet Core</a>
-<a href="clases/unidad-03-desarrollo-web/clase-09-html5-bootstrap.html" class="slide-link">Clase 09 Html5 Bootstrap</a>
-<a href="clases/unidad-03-desarrollo-web/clase-10-mvc-razor-pages.html" class="slide-link">Clase 10 Mvc Razor Pages</a>
-<a href="clases/unidad-03-desarrollo-web/clase-11-formularios-validacion-sesiones.html" class="slide-link">Clase 11 Formularios Validacion Sesiones</a>
-<a href="clases/unidad-04-persistencia/clase-12-introduccion-ado-net.html" class="slide-link">Clase 12 Introduccion Ado Net</a>
-<a href="clases/unidad-04-persistencia/clase-13-crud-ado-net-sqlserver.html" class="slide-link">Clase 13 Crud Ado Net Sqlserver</a>
-<a href="clases/unidad-04-persistencia/clase-14-persistencia-archivos-planos.html" class="slide-link">Clase 14 Persistencia Archivos Planos</a>
-<a href="clases/unidad-05-datos-desconectados/clase-15-dataset-dataadapter.html" class="slide-link">Clase 15 Dataset Dataadapter</a>
-<a href="clases/unidad-05-datos-desconectados/clase-16-databinding-xml.html" class="slide-link">Clase 16 Databinding Xml</a>
-<a href="clases/unidad-05-datos-desconectados/clase-17-proyecto-final-integracion.html" class="slide-link">Clase 17 Proyecto Final Integracion</a>
+  <div class="container">
+    <header>
+      <h1>IF0100 - POO II</h1>
+      <p class="subtitle">Lenguaje de Programación Orientada a Objetos II | UNAULA - 2026-I</p>
+    </header>
+
+    <div class="unit-section">
+      <h2 class="unit-title">📚 Clases</h2>
+      <div class="classes-grid">
+        <a href="clase-01.html" class="class-card">
+          <span class="class-number">Clase 01</span>
+          <span class="class-title">Introducción a C# y .NET</span>
+          <span class="class-desc">Historia, ecosistema y estructura de programas</span>
+        </a>
+        <a href="clase-02.html" class="class-card">
+          <span class="class-number">Clase 02</span>
+          <span class="class-title">Clases y Objetos</span>
+          <span class="class-desc">Miembros, encapsulamiento y propiedades</span>
+        </a>
+        <a href="clase-03.html" class="class-card">
+          <span class="class-number">Clase 03</span>
+          <span class="class-title">Herencia</span>
+          <span class="class-desc">Relación es-un, base y derivada</span>
+        </a>
+        <a href="clase-04.html" class="class-card">
+          <span class="class-number">Clase 04</span>
+          <span class="class-title">Polimorfismo</span>
+          <span class="class-desc">Sobrecarga, sobreescritura y virtual</span>
+        </a>
+        <a href="clase-05.html" class="class-card">
+          <span class="class-number">Clase 05</span>
+          <span class="class-title">TDD - Desarrollo Guiado por Pruebas</span>
+          <span class="class-desc">Ciclo rojo-verde-refactor, pyramid testing</span>
+        </a>
+        <a href="clase-06.html" class="class-card">
+          <span class="class-number">Clase 06</span>
+          <span class="class-title">BDD - Desarrollo Guiado por Comportamiento</span>
+          <span class="class-desc">Given-When-Then, especificaciones</span>
+        </a>
+        <a href="clase-07.html" class="class-card">
+          <span class="class-number">Clase 07</span>
+          <span class="class-title">DDD - Diseño Guiado por Dominio</span>
+          <span class="class-desc">Ubicuos language, bounded contexts</span>
+        </a>
+        <a href="clase-08.html" class="class-card">
+          <span class="class-number">Clase 08</span>
+          <span class="class-title">Introducción a ASP.NET Core</span>
+          <span class="class-desc">Middleware, pipeline, request/response</span>
+        </a>
+        <a href="clase-09.html" class="class-card">
+          <span class="class-number">Clase 09</span>
+          <span class="class-title">Razor Pages</span>
+          <span class="class-desc">Pages, ViewModels, Tag Helpers</span>
+        </a>
+        <a href="clase-10.html" class="class-card">
+          <span class="class-number">Clase 10</span>
+          <span class="class-title">ASP.NET Core MVC</span>
+          <span class="class-desc">Controllers, Views, Models</span>
+        </a>
+        <a href="clase-11.html" class="class-card">
+          <span class="class-number">Clase 11</span>
+          <span class="class-title">Validación y Helpers</span>
+          <span class="class-desc">Data Annotations, validación modelo</span>
+        </a>
+        <a href="clase-12.html" class="class-card">
+          <span class="class-number">Clase 12</span>
+          <span class="class-title">ADO.NET - Conectado</span>
+          <span class="class-desc">Connection, Command, DataReader</span>
+        </a>
+        <a href="clase-13.html" class="class-card">
+          <span class="class-number">Clase 13</span>
+          <span class="class-title">ADO.NET - Desconectado</span>
+          <span class="class-desc">DataSet, DataTable,DataAdapter</span>
+        </a>
+        <a href="clase-14.html" class="class-card">
+          <span class="class-number">Clase 14</span>
+          <span class="class-title">Entity Framework Core</span>
+          <span class="class-desc">ORM, DbContext, LINQ to Entities</span>
+        </a>
+        <a href="clase-15.html" class="class-card">
+          <span class="class-number">Clase 15</span>
+          <span class="class-title">Proyecto Final - Parte 1</span>
+          <span class="class-desc">Integración, arquitectura y diseño</span>
+        </a>
+        <a href="clase-16.html" class="class-card">
+          <span class="class-number">Clase 16</span>
+          <span class="class-title">Proyecto Final - Parte 2</span>
+          <span class="class-desc">Conclusiones y presentaciones</span>
+        </a>
+        <a href="clase-17.html" class="class-card">
+          <span class="class-number">Clase 17</span>
+          <span class="class-title">Evaluación Final</span>
+          <span class="class-desc">Sustentaciones y cierre</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

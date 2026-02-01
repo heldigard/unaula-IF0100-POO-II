@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 08 - Introducción a ASP.NET Core | IF0100 - POO II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        header .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h2 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        nav .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #e0e7ff;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e40af;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        h3 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #3b82f6;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            color: inherit;
+        }
+
+        p code, li code {
+            background: #e0e7ff;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .diagram {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+        }
+
+        figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        figcaption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1e40af;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Introducción a ASP.NET Core</h1>
+        <div class="subtitle">IF0100 - Lenguaje de Programación OO II | Unidad 3</div>
+        <div class="meta">Duración: 90 minutos</div>
+        <div class="meta" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 18px; background: rgba(255,255,255,0.12); padding: 16px; border-radius: 12px;">
+            <div>
+                <strong>Objetivos</strong>
+                <ul style="margin: 8px 0 0 18px;">
+                    <li>Entender qué es ASP.NET Core.</li>
+                    <li>Conocer la arquitectura y middleware pipeline.</li>
+                    <li>Crear un primer proyecto web.</li>
+                    <li>Implementar Razor Pages básicas.</li>
+                    <li>Escribir middleware personalizado.</li>
+                </ul>
+            </div>
+            <div>
+                <strong>Prerrequisitos</strong>
+                <ul style="margin: 8px 0 0 18px;">
+                    <li>Conocimientos básicos de C# y POO.</li>
+                    <li>Comprensión de HTTP (GET, POST, Headers).</li>
+                    <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK.</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav id="inicio">
+            <h2>Tabla de Contenidos</h2>
+            <div class="toc-grid">
+                <a href="#objetivos">Objetivos y Agenda</a>
+                <a href="#que-es">Qué es ASP.NET Core?</a>
+                <a href="#arquitectura">Arquitectura</a>
+                <a href="#middleware">Middleware Pipeline</a>
+                <a href="#crear-proyecto">Crear Proyecto</a>
+                <a href="#razor-pages">Razor Pages</a>
+                <a href="#middleware-custom">Middleware Personalizado</a>
+                <a href="#practica">Práctica / Laboratorio</a>
+                <a href="#ejercicios">Ejercicios</a>
+                <a href="#resumen">Resumen</a>
+            </div>
+        </nav>
+
+        <section id="objetivos">
+            <h2>Objetivos y Agenda</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objetivos</th>
+                        <th>Agenda (90 min)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1. Entender ASP.NET Core</td><td>15' Qué es ASP.NET Core?</td></tr>
+                    <tr><td>2. Conocer arquitectura</td><td>20' Arquitectura y Middleware</td></tr>
+                    <tr><td>3. Crear primer proyecto</td><td>25' Crear Proyecto</td></tr>
+                    <tr><td>4. Razor Pages básico</td><td>20' Razor Pages</td></tr>
+                    <tr><td>5. Middleware personalizado</td><td>10' Middleware Custom</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="que-es">
+            <h2>1. Qué es ASP.NET Core?</h2>
+
+            <h3>Definición</h3>
+            <p><strong>ASP.NET Core</strong> es un framework web <strong>cross-platform</strong>, moderno y de alto rendimiento para construir aplicaciónes web en la nube.</p>
+
+            <div class="success-box">
+                <h4>Características Principales:</h4>
+                <ul>
+                    <li><strong>Cross-platform:</strong> Windows, Linux, macOS</li>
+                    <li><strong>Open Source:</strong> Código disponible en GitHub</li>
+                    <li><strong>Alto rendimiento:</strong> Uno de los frameworks más rápidos</li>
+                    <li><strong>Unificado:</strong> MVC, Web API, Razor Pages, Blazor</li>
+                    <li><strong>Moderno:</strong> Soporta async/await, DI integrado</li>
+                </ul>
+            </div>
+
+            <figure>
+                <img src="../assets/infografias/clase-08-aspnet-core.png" alt="Infografia ASP.NET Core - Arquitectura y componentes">
+                <figcaption>Figura 1: Arquitectura de ASP.NET Core - El Middleware Pipeline procesa solicitudes HTTP en secuencia (Exception Handler → HTTPS Redirection → Static Files → Routing → Authentication → Authorization → Endpoints), Kestrel es el servidor web multiplataforma incorporado, y el framework ofrece múltiples opciones de desarrollo (Razor Pages, MVC, Web API, Blazor) para diferentes tipos de aplicaciones.</figcaption>
+            </figure>
+        </section>
+
+        <section id="arquitectura">
+            <h2>2. Arquitectura</h2>
+
+            <h3>Vista General</h3>
+            <div class="diagram">
+<pre>
+┌─────────────────────────────────┐
+│       ASP.NET CORE APP          │
+├─────────────────────────────────┤
+│  MIDDLEWARE PIPELINE            │
+│  ┌─────────────────────────────┐│
+│  │ Exception Handler           ││
+│  │ HTTPS Redirection           ││
+│  │ Static Files                ││
+│  │ Routing                     ││
+│  │ Authentication              ││
+│  │ Authorization               ││
+│  │ Custom Middleware           ││
+│  │ Endpoints (MVC/Razor/API)   ││
+│  └─────────────────────────────┘│
+├─────────────────────────────────┤
+│  KESTREL WEB SERVER            │
+└─────────────────────────────────┘
+</pre>
+            </div>
+
+            <h3>Componentes Clave</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Componente</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Kestrel</strong></td><td>Servidor web multiplataforma incorporado</td></tr>
+                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes</td></tr>
+                    <tr><td><strong>Dependency Injection</strong></td><td>Contenedor de DI integrado</td></tr>
+                    <tr><td><strong>Configuration</strong></td><td>Sistema de configuración flexible</td></tr>
+                    <tr><td><strong>Logging</strong></td><td>Sistema de logging incorporado</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="middleware">
+            <h2>3. Middleware Pipeline</h2>
+
+            <h3>Que es el Middleware Pipeline?</h3>
+            <p>El Middleware Pipeline es una secuencia de componentes que procesan las solicitudes HTTP entrantes y las respuestas HTTP salientes.</p>
+
+            <h3>Orden Tipico de Middleware</h3>
+            <pre><code class="language-csharp">var app = builder.Build();
+
+// 1. Exception Handler (primero en ejecutar, ultimo en respuesta)
+app.UseExceptionHandler("/Error");
+
+// 2. HTTPS Redirection (en desarrollo)
+app.UseHsts();
+app.UseHttpsRedirection();
+
+// 3. Static Files (archivos CSS, JS, imagenes)
+app.UseStaticFiles();
+
+// 4. Routing (direccionamiento de URLs)
+app.UseRouting();
+
+// 5. Authentication (autenticacion)
+app.UseAuthentication();
+
+// 6. Authorization (autorizacion)
+app.UseAuthorization();
+
+// 7. Custom Middleware (middleware personalizado)
+// app.UseMiddleware&lt;TimingMiddleware&gt;();
+
+// 8. Endpoints (terminales)
+app.MapRazorPages();
+// app.MapControllerRoute(...);  // Para MVC
+// app.MapControllers();           // Para Web API
+
+app.Run();</code></pre>
+
+            <div class="highlight-box">
+                <h4>Flujo de Solicitud</h4>
+                <ol>
+                    <li><strong>Request entra:</strong> Exception Handler → HTTPS Redirection → Static Files...</li>
+                    <li><strong><strong>Endpoint</strong>: La solicitud llega al endpoint (Razor Page/MVC/WebAPI)</li>
+                    <li><strong>Response sale:</strong> Endpoint → ... → Static Files → Exception Handler</li>
+                </ol>
+            </div>
+
+            <h3>Middleware Personalizado</h3>
+            <p>Puedes crear tu propio middleware para procesamiento personalizado de solicitudes.</p>
+        </section>
+
+        <section id="crear-proyecto">
+            <h2>4. Crear Proyecto</h2>
+
+            <h3>Comandos CLI</h3>
+            <pre><code class="language-bash"># Razor Pages (recomendado para principiantes)
+dotnet new webapp -n MiAppWeb
+
+# MVC (Model-View-Controller)
+dotnet new mvc -n MiMvcApp
+
+# Web API (para servicios REST)
+dotnet new webapi -n MiApi
+
+# Ejecutar proyecto
+cd MiAppWeb
+dotnet watch run
+
+# Abrir navegador en
+# http://localhost:5000</code></pre>
+
+            <h3>Tipos de Proyecto</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Uso Recomendado</th>
+                        <th>Características</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Razor Pages</strong></td><td>Sitios web tradicionales</td><td>Pages + PageModel, simple</td></tr>
+                    <tr><td><strong>MVC</strong></td><td>Aplicaciones complejas</td><td>Controllers + Views, separacion</td></tr>
+                    <tr><td><strong>Web API</strong></td><td>Servicios REST</td><td>Controllers, JSON, no vistas</td></tr>
+                    <tr><td><strong>Blazor</strong></td><td>SPA con C#</td><td>WebAssembly en cliente</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="razor-pages">
+            <h2>5. Razor Pages</h2>
+
+            <h3>Que son Razor Pages?</h3>
+            <p><strong>Razor Pages</strong> es un modelo de programacion orientado a páginas que facilita la creacion de interfaces web.</p>
+
+            <h3>PageModel (Backend)</h3>
+            <pre><code class="language-csharp">public class IndexModel : PageModel
+{
+    private readonly ILogger&lt;IndexModel&gt; _logger;
+
+    // Constructor con inyeccion de dependencias
+    public IndexModel(ILogger&lt;IndexModel&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    // Propiedad que se muestra en la vista
+    public string Mensaje { get; set; } = "Hola ASP.NET Core!";
+
+    // Handler GET (cuando se carga la página)
+    public void OnGet()
+    {
+        _logger.LogInformation("Cargando página Index");
+    }
+
+    // Handler POST (cuando se envia formulario)
+    public IActionResult OnPost()
+    {
+        string nombre = Request.Form["nombre"];
+        Mensaje = $"Formulario enviado: {nombre}";
+        return Page(); // Retornar la misma página
+    }
+}</code></pre>
+
+            <h3>Razor View (Frontend)</h3>
+            <pre><code class="language-html">@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+&lt;h1&gt;@Model.Mensaje&lt;/h1&gt;
+
+&lt;form method="post"&gt;
+    &lt;input name="nombre" placeholder="Tu nombre" /&gt;
+    &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;
+
+@section Scripts {
+    @{await RenderPartialAsync("_ValidationScriptsPartial");}
+}</code></pre>
+
+            <h3>Convenciones Razor Pages</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Convencion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Archivo PageModel</strong></td><td><code>Nombre.cshtml.cs</code></td></tr>
+                    <tr><td><strong>Archivo View</strong></td><td><code>Nombre.cshtml</code></td></tr>
+                    <tr><td><strong>Handler GET</strong></td><td><code>OnGet()</code></td></tr>
+                    <tr><td><strong>Handler POST</strong></td><td><code>OnPost()</code></td></tr>
+                    <tr><td><strong>Handler Async</strong></td><td><code>OnPostAsync()</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="middleware-custom">
+            <h2>6. Middleware Personalizado</h2>
+
+            <h3>Estructura Básica</h3>
+            <pre><code class="language-csharp">public class TimingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger&lt;TimingMiddleware&gt; _logger;
+
+    public TimingMiddleware(
+        RequestDelegate next,
+        ILogger&lt;TimingMiddleware&gt; logger)
+    {
+        _next = next;       // Siguiente middleware en pipeline
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        try
+        {
+            // Pasar al siguiente middleware
+            await _next(context);
+        }
+        finally
+        {
+            stopwatch.Stop();
+
+            // Log del tiempo de respuesta
+            _logger.LogInformation(
+                "Request: {Path} - Tiempo: {ElapsedMs}ms - Status: {StatusCode}",
+                context.Request.Path,
+                stopwatch.ElapsedMilliseconds,
+                context.Response.StatusCode
+            );
+        }
+    }
+}</code></pre>
+
+            <h3>Registro en Program.cs</h3>
+            <pre><code class="language-csharp">// Registrar middleware custom
+app.UseMiddleware&lt;TimingMiddleware&gt;();
+
+// O como método de extensión
+// app.UseTiming();</code></pre>
+
+            <h3>Middleware con Condicion</h3>
+            <pre><code class="language-csharp">public class AdminOnlyMiddleware
+{
+    private readonly RequestDelegate _next;
+
+    public AdminOnlyMiddleware(RequestDelegate next)
+    {
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        // Verificar si el usuario es admin
+        if (!context.User.IsInRole("Admin"))
+        {
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync("Acceso denegado");
+            return; // Cortar el pipeline
+        }
+
+        await _next(context);
+    }
+}</code></pre>
+        </section>
+
+        <section id="practica">
+            <h2>Práctica / Laboratorio (35 min)</h2>
+            <div class="success-box">Objetivo: Crear una aplicación web ASP.NET Core con Razor Pages y middleware personalizado.</div>
+
+            <h3>Pasos en Windows (Visual Studio 2022)</h3>
+            <ol>
+                <li>Abrir Visual Studio 2022 y crear un nuevo proyecto.</li>
+                <li>Buscar y seleccionar <strong>"ASP.NET Core Web App"</strong> (Razor Pages).</li>
+                <li>Nombre del proyecto: <code>MiPracticaWeb</code>.</li>
+                <li>Framework: <strong>.NET 8.0</strong> (o la versión más reciente).</li>
+                <li>Click en <strong>Crear</strong>.</li>
+                <li>Explorar la estructura del proyecto (Pages, Program.cs, wwwroot).</li>
+                <li>Ejecutar con F5 o <strong>Debug > Iniciar Depuración</strong>.</li>
+            </ol>
+            <div class="success-box">Checklist: Solución compila sin errores, aplicación se ejecuta en navegador, navegador muestra http://localhost:5000 o similar.</div>
+
+            <h3>Crear una Razor Page con Formulario</h3>
+            <ol>
+                <li>En la carpeta <code>Pages</code>, clic derecho > <strong>Agregar > Nueva Carpeta</strong> llamada <code>Calculadora</code>.</li>
+                <li>Clic derecho sobre carpeta Calculadora > <strong>Agregar > Razor Page</strong>.</li>
+                <li>Nombre: <code>Index</code>, seleccionar "Generar PageModel class".</li>
+                <li>En <code>Calculadora/Index.cshtml.cs</code>, agregar propiedades para los números y resultado.</li>
+                <li>En <code>Calculadora/Index.cshtml</code>, crear el formulario HTML.</li>
+                <li>Ejecutar y probar la calculadora.</li>
+            </ol>
+
+            <h3>Crear Middleware Personalizado</h3>
+            <pre><code class="language-csharp">// Agregar al proyecto: TimingMiddleware.cs
+public class TimingMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger&lt;TimingMiddleware&gt; _logger;
+
+    public TimingMiddleware(RequestDelegate next, ILogger&lt;TimingMiddleware&gt; logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        await _next(context);
+        watch.Stop();
+        _logger.LogInformation($"Request: {context.Request.Path} tomó {watch.ElapsedMilliseconds}ms");
+    }
+}</code></pre>
+            <ol>
+                <li>En <code>Program.cs</code>, registrar el middleware antes de <code>app.Run()</code>.</li>
+                <li>Ejecutar y verificar los logs en la ventana de Output.</li>
+            </ol>
+            <div class="success-box">Checklist: Middleware registrado correctamente, logs muestran tiempo de respuesta, no hay errores de compilación.</div>
+        </section>
+
+        <section id="ejercicios">
+            <h2>8. Ejercicios Prácticos</h2>
+
+            <h3>Ejercicio 1: Página de Calculadora (20 min)</h3>
+            <p><strong>Objetivo:</strong> Crear una Razor Page con calculadora básica.</p>
+            <ul>
+                <li>Formulario con dos inputs numéricos</li>
+                <li>Botones para Sumar, Restar, Multiplicar, Dividir</li>
+                <li>Manejar GET (mostrar) y POST (calcular)</li>
+                <li>Validar división por cero</li>
+            </ul>
+            <div class="success-box">Checklist: Razor Page creada, formulario funcional, operaciones correctas, válidación de división por cero implementada.</div>
+
+            <h3>Ejercicio 2: Middleware de Timing (15 min)</h3>
+            <p><strong>Objetivo:</strong> Middleware que mide tiempo de respuesta.</p>
+            <ul>
+                <li>Cronometrar cada solicitud</li>
+                <li>Mostrar tiempo en header de respuesta</li>
+                <li>Log de solicitudes lentas (>1 segundo)</li>
+            </ul>
+            <div class="success-box">Checklist: Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output.</div>
+
+            <h3>Ejercicio 3: Página con Validación (25 min)</h3>
+            <p><strong>Objetivo:</strong> Formulario con válidaciónes.</p>
+            <ul>
+                <li>Nombre requerido</li>
+                <li>Email formato válido</li>
+                <li>Edad entre 18 y 100</li>
+                <li>Mensajes de error en pantalla</li>
+            </ul>
+            <div class="success-box">Checklist: Validaciones implementadas, mensajes de error visibles, formulario rechaza datos inválidos.</div>
+            <div class="success-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left-color: #f59e0b;">Tiempo sugerido total: 60 min (20 + 15 + 25).</div>
+        </section>
+
+        <section id="resumen">
+            <h2>Resumen de la Clase</h2>
+
+            <h3>Conceptos Clave Aprendidos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>ASP.NET Core</strong></td><td>Framework web cross-platform moderno</td></tr>
+                    <tr><td><strong>Kestrel</strong></td><td>Servidor web incorporado</td></tr>
+                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tuberia de procesamiento de solicitudes</td></tr>
+                    <tr><td><strong>Razor Pages</strong></td><td>Modelo de páginas simple</td></tr>
+                    <tr><td><strong>PageModel</strong></td><td>Backend con handlers OnGet/OnPost</td></tr>
+                    <tr><td><strong>Dependency Injection</strong></td><td>Contenedor DI integrado</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Habilidades Adquiridas</h3>
+            <ul>
+                <li>Crear proyecto ASP.NET Core</li>
+                <li>Configurar Middleware Pipeline</li>
+                <li>Crear Razor Pages con handlers</li>
+                <li>Implementar middleware personalizado</li>
+                <li>Usar inyeccion de dependencias</li>
+            </ul>
+
+            <h3>Proximos Pasos</h3>
+            <ul>
+                <li><strong>Clase 9:</strong> HTML5 y Bootstrap</li>
+                <li>Practicar creando proyectos reales</li>
+                <li>Explorar MVC vs Razor Pages</li>
+            </ul>
+        </section>
+    </div>
+
+    <a href="#inicio" class="back-to-top">&uarr;</a>
+
+    <footer>
+        <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+            Contacto: [correo del docente] | Repositorio: [enlace del curso]
+        </p>
+    </footer>
+</body>
+</html>

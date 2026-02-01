@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 12 - Introducción a ADO.NET | IF0100 POO II</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .meta-bar {
+            background: #1e3a8a;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .meta-bar span { font-size: 0.9rem; }
+        .nav {
+            background: #1e3a8a;
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #1e40af;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section h3 {
+            color: #3b82f6;
+            margin: 1.5rem 0 1rem;
+        }
+        .section h4 {
+            color: #1e3a8a;
+            margin: 1rem 0 0.5rem;
+        }
+        .objectives-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .objectives-table th, .objectives-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .objectives-table th { background: #f3f4f6; }
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 0.9em;
+        }
+        pre code { background: none; padding: 0; }
+        .example-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .figure-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .figure-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .figure-container figcaption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #6b7280;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison .bad {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison .good {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-purple { background: #f3e8ff; color: #7c3aed; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        .tag-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .tag-table th {
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .tag-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        ul, ol { margin-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .note-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .note-box strong { color: #92400e; }
+        .warning-box {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .warning-box strong { color: #991b1b; }
+        .checklist-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .checklist-box strong { color: #166534; }
+        @media (max-width: 768px) {
+            .comparison { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+            .meta-bar { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Clase 12 - Introducción a ADO.NET</h1>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 4 - Persistencia de Datos</p>
+    </header>
+
+    <div class="meta-bar">
+        <span> Duración: 90 minutos</span>
+        <span> Unidad 4 - Persistencia de Datos</span>
+        <span> 4 Semestre - Ingeniería Informática</span>
+    </div>
+
+    <nav class="nav">
+        <a href="#objetivos">Objetivos</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#que-es">Qué es ADO.NET</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="#conexion">Conexión</a>
+        <a href="#crud">Operaciones CRUD</a>
+        <a href="#transacciones">Transacciones</a>
+        <a href="#buenas-practicas">Buenas Prácticas</a>
+        <a href="#sql-injection">SQL Injection</a>
+        <a href="#practica">Práctica / Laboratorio</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#referencias">Referencias</a>
+    </nav>
+
+    <main class="container">
+        <!-- Objetivos -->
+        <section id="objetivos" class="section">
+            <h2>Objetivos de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Comprender</strong> la arquitectura de ADO.NET</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Configurar</strong> la cadena de conexión a SQL Server</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Implementar</strong> operaciones CRUD con ADO.NET</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Utilizar</strong> SqlConnection, SqlCommand y SqlDataReader</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Aplicar</strong> buenas pr cticas de manejo de conexiones</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Agenda -->
+        <section id="agenda" class="section">
+            <h2>Agenda (90 min)</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tiempo</th>
+                        <th>Tema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10'</td>
+                        <td> Qué es ADO.NET?</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Arquitectura y componentes</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Conexión a SQL Server</td>
+                    </tr>
+                    <tr>
+                        <td>25'</td>
+                        <td>Operaciones CRUD</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Manejo de transacciones</td>
+                    </tr>
+                    <tr>
+                        <td>10'</td>
+                        <td>Buenas pr cticas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Que es ADO.NET -->
+        <section id="que-es" class="section">
+            <h2>1. Qué es ADO.NET?</h2>
+
+            <h3>Acceso a datos en .NET</h3>
+            <p><strong>ADO.NET</strong> es un conjunto de clases que permite a las aplicaciones .NET acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
+
+            <h4>Características principales:</h4>
+            <div class="badge-list">
+                <span class="badge badge-blue">DataReader (modo conectado)</span>
+                <span class="badge badge-green">DataSet (modo desconectado)</span>
+                <span class="badge badge-purple">Proveedores de datos</span>
+                <span class="badge badge-red">Alto rendimiento</span>
+            </div>
+
+            <h4>Proveedores de datos (Data Providers):</h4>
+            <ul>
+                <li><strong>SqlClient:</strong> SQL Server</li>
+                <li><strong>OracleClient:</strong> Oracle</li>
+                <li><strong>MySql.Data:</strong> MySQL</li>
+                <li><strong>Npgsql:</strong> PostgreSQL</li>
+            </ul>
+
+            <h3>ADO.NET vs Entity Framework</h3>
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Caracter stica</th>
+                        <th>ADO.NET</th>
+                        <th>EF Core</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nivel</td>
+                        <td>Bajo nivel</td>
+                        <td>Alto nivel</td>
+                    </tr>
+                    <tr>
+                        <td>Cuando usar</td>
+                        <td>Queries complejas, Stored procedures, Control total del SQL</td>
+                        <td>CRUD est ndar, Mapeo O/R simple, Productividad</td>
+                    </tr>
+                    <tr>
+                        <td>Ventajas</td>
+                        <td>Máximo control, Máximo rendimiento, Flexibilidad SQL</td>
+                        <td>Menos c digo, Más mantenible, Strong typing</td>
+                    </tr>
+                    <tr>
+                        <td>Desventajas</td>
+                        <td>Más c digo, Más propenso a errores</td>
+                        <td>Menos control, Overhead</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><em>En este curso: Ambos (ADO.NET primero, luego EF)</em></p>
+        </section>
+
+        <!-- Arquitectura -->
+        <section id="arquitectura" class="section">
+            <h2>2. Arquitectura ADO.NET</h2>
+
+            <h3>Componentes principales</h3>
+            <figure class="figure-container">
+                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET">
+                <figcaption>Arquitectura ADO.NET: El Data Provider (System.Data.SqlClient) contiene SqlConnection para gestionar conexiones, SqlCommand para ejecutar queries con parámetros seguros, y SqlDataReader para lectura eficiente forward-only; el DataSet ofrece modo desconectado con DataTables para escenarios donde se requiere desconexión de la base de datos; las flechas muestran el flujo de datos desde la aplicación a través del proveedor hasta la fuente de datos SQL Server.</figcaption>
+            </figure>
+
+            <h4>Proveedor de datos (System.Data.SqlClient)</h4>
+            <ul>
+                <li><strong>SqlConnection:</strong> Abrir/Cerrar conexión, Connection String</li>
+                <li><strong>SqlCommand:</strong> Execute, Parameters, CommandType</li>
+            </ul>
+
+            <h4>Objetos de datos</h4>
+            <ul>
+                <li><strong>SqlDataReader:</strong> Read(), GetString(), GetInt32() (forward-only)</li>
+                <li><strong>DataSet:</strong> Tables, Relations, Fill() (disconnected)</li>
+            </ul>
+
+            <h3>Namespaces y Paquetes</h3>
+            <pre><code>// Instalación
+dotnet add package System.Data.SqlClient
+// O para SQL Server (recomendado)
+dotnet add package Microsoft.Data.SqlClient
+
+// Namespaces necesarios
+using System.Data;           // Tipos gen ricos: DataTable, DataSet
+using System.Data.SqlClient; // Proveedor SQL Server espec fico
+using Microsoft.Data.SqlClient; // Nuevo paquete (m s actualizado)</code></pre>
+        </section>
+
+        <!-- Conexion -->
+        <section id="conexion" class="section">
+            <h2>3. Connection String</h2>
+
+            <h3>Configuración de conexión</h3>
+            <pre><code>// Opción 1: En appsettings.json (RECOMENDADO)
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=UniversidadDB;Trusted_Connection=True;MultipleActiveResultSets=true",
+    "Produccion": "Server=mi-servidor.database.windows.net;Database=UniversidadDB;User Id=usuario;Password=password;"
+  }
+}
+
+// Leer en Program.cs
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection");
+
+builder.Services.AddSingleton(connectionString);
+
+// ─────────────────────────────────────────────────────────────
+
+// Opción 2: Connection String Builder (m s seguro)
+var builder = new SqlConnectionStringBuilder
+{
+    DataSource = @"(localdb)\mssqllocaldb",
+    InitialCatalog = "UniversidadDB",
+    IntegratedSecurity = true,
+    MultipleActiveResultSets = true,
+    ConnectTimeout = 30
+};
+
+string connectionString = builder.ConnectionString;</code></pre>
+
+            <h3>Usando SqlConnection</h3>
+            <p><strong>IMPORTANTE:</strong> SIEMPRE usar 'using' para garantizar cierre de conexión</p>
+            <pre><code>public class EstudianteRepository
+{
+    private readonly string _connectionString;
+
+    public EstudianteRepository(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+
+    public List&lt;Estudiante&gt; ObtenerTodos()
+    {
+        var estudiantes = new List&lt;Estudiante&gt;();
+
+        // SIEMPRE usar 'using' para garantizar cierre de conexión
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            connection.Open();
+
+            var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes";
+
+            using (var command = new SqlCommand(query, connection))
+            {
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        estudiantes.Add(new Estudiante
+                        {
+                            Id = reader.GetInt32(0),
+                            Codigo = reader.GetString(1),
+                            Nombre = reader.GetString(2),
+                            Email = reader.IsDBNull(3) ? null : reader.GetString(3)
+                        });
+                    }
+                }
+            }
+
+            // La conexión se cierra automáticamente al salir del using
+        }
+
+        return estudiantes;
+    }
+}</code></pre>
+
+            <h3>SqlDataReader - Lectura de datos</h3>
+            <pre><code>// Métodos del SqlDataReader
+
+// Por ndice (posici n)
+int id = reader.GetInt32(0);
+string nombre = reader.GetString(1);
+
+// Por nombre de columna
+string email = reader.GetString(reader.GetOrdinal("Email"));
+
+// Verificar NULL
+if (!reader.IsDBNull(3))
+{
+    email = reader.GetString(3);
+}
+
+// Cast gen rico (m s lento pero flexible)
+int id = (int)reader["Id"];
+string nombre = reader["Nombre"].ToString();
+
+// Tipos disponibles:
+// GetInt32(), GetInt64(), GetString(), GetDateTime()
+// GetDecimal(), GetDouble(), GetBoolean(), GetByte()</code></pre>
+        </section>
+
+        <!-- CRUD -->
+        <section id="crud" class="section">
+            <h2>4. Operaciones CRUD</h2>
+
+            <h3>Create (INSERT)</h3>
+            <pre><code>public async Task&lt;int&gt; CrearAsync(Estudiante estudiante)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    var query = @"
+        INSERT INTO Estudiantes (Codigo, Nombre, Email, FechaRegistro)
+        VALUES (@Codigo, @Nombre, @Email, @FechaRegistro);
+        SELECT SCOPE_IDENTITY();";  // Retorna el ID generado
+
+    using var command = new SqlCommand(query, connection);
+
+    // Agregar parámetros (EVITA SQL INJECTION)
+    command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+    command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+    command.Parameters.AddWithValue("@Email",
+        (object)estudiante.Email ?? DBNull.Value);
+    command.Parameters.AddWithValue("@FechaRegistro", DateTime.Now);
+
+    // ExecuteScalar para retornar un solo valor (el ID)
+    var id = Convert.ToInt32(await command.ExecuteScalarAsync());
+
+    return id;
+}</code></pre>
+
+            <h3>Read (SELECT)</h3>
+            <pre><code>public async Task&lt;Estudiante&gt; ObtenerPorIdAsync(int id)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = @Id";
+
+    using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@Id", id);
+
+    using var reader = await command.ExecuteReaderAsync();
+
+    if (await reader.ReadAsync())
+    {
+        return new Estudiante
+        {
+            Id = reader.GetInt32(0),
+            Codigo = reader.GetString(1),
+            Nombre = reader.GetString(2),
+            Email = reader.IsDBNull(3) ? null : reader.GetString(3)
+        };
+    }
+
+    return null;  // No encontrado
+}
+
+private Estudiante MapFromReader(SqlDataReader reader)
+{
+    return new Estudiante
+    {
+        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+        Codigo = reader.GetString(reader.GetOrdinal("Codigo")),
+        Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
+        Email = reader.IsDBNull(reader.GetOrdinal("Email"))
+            ? null
+            : reader.GetString(reader.GetOrdinal("Email"))
+    };
+}</code></pre>
+
+            <h3>Update (UPDATE)</h3>
+            <pre><code>public async Task&lt;bool&gt; ActualizarAsync(Estudiante estudiante)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    var query = @"
+        UPDATE Estudiantes
+        SET Codigo = @Codigo,
+            Nombre = @Nombre,
+            Email = @Email
+        WHERE Id = @Id";
+
+    using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@Id", estudiante.Id);
+    command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+    command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+    command.Parameters.AddWithValue("@Email",
+        (object)estudiante.Email ?? DBNull.Value);
+
+    // ExecuteNonQuery retorna n mero de filas afectadas
+    int filasAfectadas = await command.ExecuteNonQueryAsync();
+
+    return filasAfectadas &gt; 0;  // True si se actualiz
+}</code></pre>
+
+            <h3>Delete (DELETE)</h3>
+            <pre><code>public async Task&lt;bool&gt; EliminarAsync(int id)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    var query = "DELETE FROM Estudiantes WHERE Id = @Id";
+
+    using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@Id", id);
+
+    int filasAfectadas = await command.ExecuteNonQueryAsync();
+
+    return filasAfectadas &gt; 0;
+}
+
+// Alternativa: Eliminaci n l gica (m s segura)
+public async Task&lt;bool&gt; DesactivarAsync(int id)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    var query = @"
+        UPDATE Estudiantes
+        SET Activo = 0, FechaEliminacion = @Fecha
+        WHERE Id = @Id";
+
+    using var command = new SqlCommand(query, connection);
+    command.Parameters.AddWithValue("@Id", id);
+    command.Parameters.AddWithValue("@Fecha", DateTime.Now);
+
+    return await command.ExecuteNonQueryAsync() &gt; 0;
+}</code></pre>
+
+            <h3>Métodos de Ejecución</h3>
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Retorna</th>
+                        <th>Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ExecuteReader()</strong></td>
+                        <td>SqlDataReader</td>
+                        <td>SELECT (múltiples filas)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecuteScalar()</strong></td>
+                        <td>object</td>
+                        <td>SELECT COUNT(*), SUM(), MAX(), SCOPE_IDENTITY()</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecuteNonQuery()</strong></td>
+                        <td>int</td>
+                        <td>INSERT, UPDATE, DELETE, CREATE TABLE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Transacciones -->
+        <section id="transacciones" class="section">
+            <h2>5. Manejo de Transacciones</h2>
+
+            <h3>Consistencia de datos</h3>
+            <pre><code>public async Task&lt;bool&gt; TransferirEstudianteAsync(
+    int estudianteId, int carreraOrigenId, int carreraDestinoId)
+{
+    using var connection = new SqlConnection(_connectionString);
+    await connection.OpenAsync();
+
+    // Iniciar transacción
+    using var transaction = connection.BeginTransaction();
+
+    try
+    {
+        // 1. Registrar historial de transferencia
+        var query1 = @"INSERT INTO HistorialTransferencias
+                       (EstudianteId, CarreraOrigenId, CarreraDestinoId, Fecha)
+                       VALUES (@EstId, @OrigId, @DestId, @Fecha)";
+
+        using (var cmd1 = new SqlCommand(query1, connection, transaction))
+        {
+            cmd1.Parameters.AddWithValue("@EstId", estudianteId);
+            cmd1.Parameters.AddWithValue("@OrigId", carreraOrigenId);
+            cmd1.Parameters.AddWithValue("@DestId", carreraDestinoId);
+            cmd1.Parameters.AddWithValue("@Fecha", DateTime.Now);
+            await cmd1.ExecuteNonQueryAsync();
+        }
+
+        // 2. Actualizar carrera del estudiante
+        var query2 = @"UPDATE Estudiantes
+                       SET CarreraId = @CarreraId
+                       WHERE Id = @Id";
+
+        using (var cmd2 = new SqlCommand(query2, connection, transaction))
+        {
+            cmd2.Parameters.AddWithValue("@CarreraId", carreraDestinoId);
+            cmd2.Parameters.AddWithValue("@Id", estudianteId);
+            await cmd2.ExecuteNonQueryAsync();
+        }
+
+        // Si todo va bien, confirmar transacción
+        transaction.Commit();
+        return true;
+    }
+    catch (Exception ex)
+    {
+        // Si hay error, deshacer todo
+        transaction.Rollback();
+        _logger.LogError(ex, "Error en transferencia");
+        return false;
+    }
+}</code></pre>
+        </section>
+
+        <!-- Buenas Practicas -->
+        <section id="buenas-practicas" class="section">
+            <h2>6. Buenas Prácticas</h2>
+
+            <div class="checklist-box">
+                <strong>✅ SIEMPRE USAR USING</strong>
+                <ul>
+                    <li>SqlConnection, SqlCommand, SqlDataReader</li>
+                    <li>Garantiza liberaci n de recursos</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ NUNCA concatenar strings para SQL</strong>
+                <pre><code>// VULNERABLE A SQL INJECTION
+var sql = $"SELECT * FROM Users WHERE Id = {id}";
+
+// SEGURO CON PAR METROS
+command.Parameters.AddWithValue("@Id", id);</code></pre>
+            </div>
+
+            <div class="checklist-box">
+                <strong>✅ CERRAR CONEXIONES R PIDO</strong>
+                <ul>
+                    <li>Abrir justo antes de usar</li>
+                    <li>Cerrar inmediatamente despu s</li>
+                    <li>NO mantener conexiones abiertas</li>
+                </ul>
+            </div>
+
+            <div class="checklist-box">
+                <strong>✅ USAR ASYNC/AWAIT</strong>
+                <ul>
+                    <li>ExecuteReaderAsync(), ExecuteNonQueryAsync()</li>
+                    <li>Mejor rendimiento en aplicaciones web</li>
+                </ul>
+            </div>
+
+            <div class="checklist-box">
+                <strong>✅ MANEJAR NULLS</strong>
+                <ul>
+                    <li>Usar DBNull.Value para valores nulos</li>
+                    <li>Verificar IsDBNull() al leer</li>
+                </ul>
+            </div>
+
+            <div class="checklist-box">
+                <strong>✅ USAR TRANSACCIONES</strong>
+                <ul>
+                    <li>Para operaciones múltiples relacionadas</li>
+                    <li>Mantiene consistencia de datos</li>
+                </ul>
+            </div>
+
+            <h3>Connection Pooling</h3>
+            <p>Reutilización autom tica de conexiones físicas para mejorar rendimiento.</p>
+            <pre><code>// Connection Pool est activado por defecto
+// Configuración en connection string:
+
+"Server=localhost;Database=UniversidadDB;Integrated Security=true;
+Connection Lifetime=60;              // Tiempo vida conexión (seg)
+Max Pool Size=100;                   // Máximo conexiones
+Min Pool Size=5;                     // Mínimo conexiones
+Pooling=true;                        // Activar (default)
+Connection Reset=true;               // Reset al devolver al pool
+Connection Timeout=15;"              // Timeout conexión (seg)</code></pre>
+        </section>
+
+        <!-- SQL Injection -->
+        <section id="sql-injection" class="section">
+            <h2>7. SQL Injection</h2>
+
+            <h3>El peligro de concatenar strings</h3>
+            <div class="warning-box">
+                <strong>⚠️ VULNERABLE A SQL INJECTION</strong>
+                <pre><code>var query = $"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'";
+// Si codigo = "'; DROP TABLE Estudiantes; --"
+// Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';
+//                    DROP TABLE Estudiantes; --'
+//  DESASTRE!</code></pre>
+            </div>
+
+            <div class="checklist-box">
+                <strong>✅ SEGURO CON PARÁMETROS</strong>
+                <pre><code>var query = "SELECT * FROM Estudiantes WHERE Codigo = @Codigo";
+command.Parameters.AddWithValue("@Codigo", codigo);
+// El parámetro se escapa automáticamente</code></pre>
+            </div>
+        </section>
+
+        <!-- Práctica / Laboratorio -->
+        <section id="practica" class="section">
+            <h2>Práctica / Laboratorio</h2>
+            <p><strong>Duración estimada:</strong> 40 minutos</p>
+            <p><strong>Objetivo:</strong> Implementar un repositorio ADO.NET completo con operaciones CRUD para Estudiantes.</p>
+
+            <h3>Pasos en Visual Studio 2022</h3>
+            <ol>
+                <li>Abre Visual Studio 2022 y crea un nuevo proyecto <strong>Console App</strong> con .NET 8</li>
+                <li>Instala el paquete NuGet: <code>Microsoft.Data.SqlClient</code></li>
+                <li>En <code>appsettings.json</code>, configura la connection string para LocalDB</li>
+                <li>Crea la base de datos con el script SQL provisto por el docente</li>
+                <li>Implementa la clase <code>EstudianteRepository</code> con todos los métodos CRUD</li>
+                <li>Usa <code>using</code> statements para SqlConnection, SqlCommand y SqlDataReader</li>
+                <li>Usa parámetros en todas las queries para evitar SQL Injection</li>
+                <li>Prueba cada método con datos de prueba en el Main</li>
+            </ol>
+
+            <h3>Checklist de verificación</h3>
+            <ul>
+                <li>✅ El proyecto compila sin errores</li>
+                <li>✅ La connection string está configurada correctamente en appsettings.json</li>
+                <li>✅ Todos los métodos usan <code>using</code> para SqlConnection y SqlCommand</li>
+                <li>✅ Todas las queries usan parámetros (@Nombre, @Codigo, etc.)</li>
+                <li>✅ El método Crear retorna el ID generado con SCOPE_IDENTITY()</li>
+                <li>✅ El método ObtenerPorId retorna null cuando no encuentra registros</li>
+                <li>✅ Los métodos UPDATE y DELETE verifican filas afectadas (> 0)</li>
+            </ul>
+
+            <h3>Ejemplo de implementación</h3>
+            <pre><code>public class EstudianteRepository
+{
+    private readonly string _connectionString;
+
+    public EstudianteRepository(string connectionString)
+    {
+        _connectionString = connectionString;
+    }
+
+    public async Task&lt;int&gt; CrearAsync(Estudiante estudiante)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync();
+
+        var query = @"
+            INSERT INTO Estudiantes (Codigo, Nombre, Email)
+            VALUES (@Codigo, @Nombre, @Email);
+            SELECT SCOPE_IDENTITY();";
+
+        using var command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+        command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+        command.Parameters.AddWithValue("@Email",
+            (object)estudiante.Email ?? DBNull.Value);
+
+        var id = Convert.ToInt32(await command.ExecuteScalarAsync());
+        return id;
+    }
+}</code></pre>
+
+            <h3>Errores comunes a evitar</h3>
+            <ul>
+                <li>❌ No usar <code>using</code> para SqlConnection (connection leaks)</li>
+                <li>❌ Concatenar strings para armar queries (SQL Injection)</li>
+                <li>❌ Olvidar llamar a Open() antes de ejecutar comandos</li>
+                <li>❌ No usar async/await en aplicaciones web/consola modernas</li>
+                <li>❌ No verificar DBNull cuando leemos valores NULL de la DB</li>
+            </ul>
+        </section>
+
+        <!-- Ejercicios -->
+        <section id="ejercicios" class="section">
+            <h2>Ejercicios Prácticos</h2>
+
+            <h3>Ejercicio 1: CRUD Completo</h3>
+            <p><strong>Duración estimada:</strong> 30 minutos</p>
+            <p>Implementar las 4 operaciones CRUD para la entidad Estudiante.</p>
+            <h4>Checklist:</h4>
+            <ul>
+                <li>✅ Create con parámetros y SCOPE_IDENTITY()</li>
+                <li>✅ Read con SqlDataReader y using statements</li>
+                <li>✅ Update verificando filas afectadas</li>
+                <li>✅ Delete con parámetro @Id</li>
+            </ul>
+
+            <h3>Ejercicio 2: Transacciones</h3>
+            <p><strong>Duración estimada:</strong> 20 minutos</p>
+            <p>Implementar una transacción para transferir estudiante entre carreras.</p>
+            <h4>Checklist:</h4>
+            <ul>
+                <li>✅ Usar BeginTransaction() antes de las operaciones</li>
+                <li>✅ Commit() si todas las operaciones tienen éxito</li>
+                <li>✅ Rollback() en el bloque catch si hay error</li>
+                <li>✅ Pasar el objeto transaction a cada SqlCommand</li>
+            </ul>
+
+            <h3>Ejercicio Integrador: Repository de Estudiantes</h3>
+            <p><strong>Duración estimada:</strong> 45 minutos</p>
+            <p>Crear clase EstudianteRepository con métodos:</p>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Método</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><code>Crear(Estudiante estudiante) : Task&lt;int&gt;</code> - Insertar nuevo estudiante, retornar ID generado</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><code>ObtenerPorId(int id) : Task&lt;Estudiante&gt;</code> - Buscar por ID, retornar null si no existe</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><code>ObtenerTodos() : Task&lt;List&lt;Estudiante&gt;&gt;</code> - Lista completa ordenada por nombre</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><code>Actualizar(Estudiante estudiante) : Task&lt;bool&gt;;</code> - Actualizar datos, retornar true si se actualiz</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><code>Eliminar(int id) : Task&lt;bool&gt;;</code> - Eliminar físicamente</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><code>BuscarPorNombre(string término) : Task&lt;List&lt;Estudiante&gt;&gt;;</code> - Búsqueda parcial con LIKE</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>REQUISITOS:</h4>
+            <h4>Checklist:</h4>
+            <ul>
+                <li>✅ Usar parámetros en todas las queries</li>
+                <li>✅ Usar async/await</li>
+                <li>✅ Usar transacción en método CrearConMateriasIniciales</li>
+            </ul>
+        </section>
+
+        <!-- Referencias -->
+        <section id="referencias" class="section">
+            <h2>Referencias y Recursos</h2>
+
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Enlace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ADO.NET Docs</td>
+                        <td><a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/index" target="_blank">docs.microsoft.com/dotnet/framework/data/adonet</a></td>
+                    </tr>
+                    <tr>
+                        <td>SqlConnection API</td>
+                        <td><a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient" target="_blank">docs.microsoft.com/dotnet/api/system.data.sqlclient</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Resumen -->
+        <section id="resumen" class="section">
+            <h2>Resumen de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SqlConnection</strong></td>
+                        <td>Conexión a base de datos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SqlCommand</strong></td>
+                        <td>Ejecutar SQL</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SqlDataReader</strong></td>
+                        <td>Leer resultados (forward-only)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecuteReader</strong></td>
+                        <td>Para SELECT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecuteScalar</strong></td>
+                        <td>Para valor único (COUNT, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExecuteNonQuery</strong></td>
+                        <td>Para INSERT, UPDATE, DELETE</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parameters</strong></td>
+                        <td>Protección contra SQL Injection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transaction</strong></td>
+                        <td>Consistencia en operaciones múltiples</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Connection Pooling</strong></td>
+                        <td>Reutilización de conexiones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SqlDataAdapter</strong></td>
+                        <td>Modo desconectado (DataTable)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stored Procedures</strong></td>
+                        <td>Procedimientos en SQL</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exception Handling</strong></td>
+                        <td>Manejo de errores SQL</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Proxima Clase -->
+        <section class="section">
+            <h2>Próxima Clase: Entity Framework Core</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>EF Core</strong></td>
+                        <td>DbContext y DbSet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code First</strong></td>
+                        <td>Migrations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LINQ to Entities</strong></td>
+                        <td>Consultas LINQ, Eager Loading (Include)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relaciones</strong></td>
+                        <td>One-to-Many, Many-to-Many</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comparación</strong></td>
+                        <td>ADO.NET vs EF Core</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>"ADO.NET: Control total sobre tus datos"</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
+    </footer>
+</body>
+</html>
