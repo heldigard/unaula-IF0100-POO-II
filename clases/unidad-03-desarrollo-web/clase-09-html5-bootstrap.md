@@ -142,9 +142,42 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Significado y uso
+
+## Significado y Uso
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              ETIQUETAS SEMÁNTICAS HTML5                     │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ESTRUCTURA DE PÁGINA                                       │
+│  ┌─────────┬─────────────────────────────────────────┐     │
+│  │<header> │ Cabecera: logo, título, navegación      │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<nav>    │ Navegación: menú principal              │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<main>   │ Contenido principal (uno por página)    │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<section>│ Sección temática del contenido          │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<article>│ Contenido independiente y autocontenido │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<aside>  │ Contenido relacionado, sidebar          │     │
+│  ├─────────┼─────────────────────────────────────────┤     │
+│  │<footer> │ Pie: copyright, enlaces, contacto       │     │
+│  └─────────┴─────────────────────────────────────────┘     │
+│                                                             │
+│  CONTENIDO                                                  │
+│  • <figure> y <figcaption> - Imágenes con leyenda          │
+│  • <time> - Fechas y horas                                 │
+│  • <mark> - Texto resaltado                                │
+│  • <details> y <summary> - Contenido colapsable            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
+
 ## Ejemplo: Estructura HTML5 Completa
 ---
 ### Página de blog
@@ -363,10 +396,10 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Framework CSS más popular
 
----
-### El corazón de Bootstrap
+## Bootstrap 5: Framework CSS
+
+### El framework más popular para desarrollo responsivo
 
 
 ```
@@ -398,12 +431,11 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### El corazón de Bootstrap
 
+## Sistema de Grillas Bootstrap
+
+### El corazón de Bootstrap
 ---
-## Ejemplos de Grid
----
-### Layouts responsivos
 
 ```html
 <!-- ESTRUCTURA BÁSICA -->
@@ -432,7 +464,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 
 ---
-### Layouts responsivos
 
 
 <!-- SIDEBAR + CONTENIDO -->
@@ -459,7 +490,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 ```
 ---
-### Elementos UI listos para usar
 
 
 ```html
@@ -494,7 +524,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 
 ---
-### Elementos UI listos para usar
 
 
 <!-- ─────────────────────────────────────────────── -->
@@ -513,7 +542,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ## Más Componentes Bootstrap
 ---
-### Navbar, tablas, formularios
 
 ```html
 <!-- NAVBAR (Menú de navegación) -->
@@ -541,7 +569,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </nav>
 
 ---
-### Navbar, tablas, formularios
 
 
 <!-- ─────────────────────────────────────────────── -->
@@ -570,7 +597,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </table>
 
 ---
-### Navbar, tablas, formularios
 
 
 <!-- ─────────────────────────────────────────────── -->
@@ -589,7 +615,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </form>
 ```
 ---
-### Spacing, colors, display
 
 
 ```html
@@ -617,7 +642,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 <!-- ─────────────────────────────────────────────── -->
 
 ---
-### Spacing, colors, display
 
 
 <!-- DISPLAY -->
@@ -644,14 +668,12 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Spacing, colors, display
 
 
 ---
+
 ## 5. Integración ASP.NET + Bootstrap
----
-## 5. Integración ASP.NET + Bootstrap
----
+
 ### En plantillas Razor
 
 ```html
@@ -699,7 +721,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     </header>
 
 ---
-### En plantillas Razor
 
 
     @* Contenido principal *@
@@ -724,8 +745,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 </html>
 ```
 ---
+
 ## Vista con Bootstrap
----
+
 ### CRUD de Estudiantes
 
 ```html
@@ -792,8 +814,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 ```
 ---
+
 ## Formulario con Bootstrap
----
+
 ### Crear/Editar estudiante
 
 ```html
@@ -822,7 +845,6 @@ Al finalizar esta clase, el estudiante será capaz de:
                     </div>
                     
 ---
-### Crear/Editar estudiante
 
 
                     <div class="mb-3">
@@ -852,7 +874,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 
 ---
-### Crear/Editar estudiante
 
 
 @section Scripts {
@@ -860,7 +881,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 }
 ```
 ---
-### Mobile-first con Bootstrap
 
 
 ```
@@ -895,7 +915,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Mobile-first con Bootstrap
 
 ---
 

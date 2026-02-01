@@ -239,14 +239,17 @@ Pipeline de peticiones y middleware en ASP.NET Core.
 └─────────────────────────────────────────────────────────────┘
 ```
 ---
-# Estructura creada:
 
+## Estructura de Proyecto MVC
+
+### Directorios y archivos creados
 
 ```bash
 dotnet new mvc -n MiPrimeraWeb
 cd MiPrimeraWeb
+```
 
-
+```
 MiPrimeraWeb/
 ├── Controllers/           ← Controladores
 │   └── HomeController.cs
@@ -271,10 +274,7 @@ MiPrimeraWeb/
 ```
 
 ---
-# Estructura creada:
 
-
----
 ## Program.cs Explicado
 ---
 ### Punto de entrada de la aplicación
@@ -640,10 +640,9 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 ```
 ---
+
 ## 6. Estructura de Proyecto
----
-## 6. Estructura de Proyecto
----
+
 ### Organización recomendada
 
 ```

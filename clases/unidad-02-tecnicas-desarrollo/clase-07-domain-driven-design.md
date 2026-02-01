@@ -447,10 +447,9 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 // No importa si son instancias diferentes
 ```
 ---
+
 ## 4. Aggregates y Aggregate Roots
----
-## 4. Aggregates y Aggregate Roots
----
+
 ### Agrupación coherente de objetos
 
 ```
@@ -497,7 +496,10 @@ Console.WriteLine(direccion1 == direccion2);  // True (mismo valor)
 ---
 
 ### Invariantes y consistencia
+
 Reglas de negocio que deben mantenerse en todo momento.
+
+```
 ┌─────────────────────────────────────────────────────────────┐
 │           REGLAS DE LOS AGGREGATES                          │
 ├─────────────────────────────────────────────────────────────┤
@@ -507,7 +509,7 @@ Reglas de negocio que deben mantenerse en todo momento.
 │     // ✅ Correcto
 │     var pedido = repositorio.Obtener(pedidoId);
 │     pedido.AgregarProducto(producto, cantidad);
-│     
+│
 │     // ❌ Incorrecto (rompe encapsulamiento)
 │     var linea = pedido.Lineas[0];  // Acceso directo
 │     linea.Cantidad = 100;          // Modificación externa
@@ -529,9 +531,7 @@ Reglas de negocio que deben mantenerse en todo momento.
 ```
 
 ---
-### Invariantes y consistencia
-Reglas de negocio que deben mantenerse consistentes en un agregado.
----
+
 ## Implementación Aggregate Pedido (Continuación)
 
 ```csharp
@@ -721,10 +721,9 @@ public class PedidoRepository : IPedidoRepository
 }
 ```
 ---
+
 ## Domain Service
----
-## Domain Service
----
+
 ### Lógica que cruza aggregates
 
 ```csharp
@@ -794,10 +793,9 @@ public class ProcesadorPedidos
 }
 ```
 ---
+
 ## 6. Arquitectura en Capas
----
-## 6. Arquitectura en Capas
----
+
 ### Capas de DDD
 
 ![Arquitectura DDD](../../assets/infografias/clase-07-ddd-arquitectura.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}

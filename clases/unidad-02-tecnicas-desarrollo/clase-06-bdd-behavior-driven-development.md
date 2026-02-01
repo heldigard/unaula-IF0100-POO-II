@@ -486,25 +486,47 @@ Característica: Cálculo de descuento
     No usar "if", "for", variables
 ```
 
----
-# O manualmente
+## Instalación de SpecFlow
 
+<div class="two-col">
+
+**Opción 1: Plantilla**
 
 ```bash
 dotnet new specflowproject -n MiApp.Specs --framework xunit
+```
 
+**Opción 2: Manual**
+
+```bash
+# Crear proyecto de pruebas
 dotnet new classlib -n MiApp.Specs
+
+# Instalar paquetes NuGet
 dotnet add package SpecFlow.xUnit
 dotnet add package SpecFlow.Tools.MsBuild.Generation
 dotnet add package FluentAssertions
+dotnet add package xunit
+
+# Referenciar proyecto principal
 dotnet add reference ../MiApp/MiApp.csproj
 ```
 
+</div>
+
+---
+
+## Configuración del Proyecto
+
+<div class="two-col">
+
+**Estructura del .csproj**
+
 ```xml
-<!-- MiApp.Specs.csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -514,15 +536,21 @@ dotnet add reference ../MiApp/MiApp.csproj
     <PackageReference Include="xunit" Version="2.6.2" />
   </ItemGroup>
 
----
-# O manualmente
-
-
   <ItemGroup>
     <ProjectReference Include="..\MiApp\MiApp.csproj" />
   </ItemGroup>
 </Project>
 ```
+
+**Paquetes clave**
+
+| Paquete | Versión | Propósito |
+|---------|---------|-----------|
+| SpecFlow.xUnit | 3.9.74 | Integración con xUnit |
+| SpecFlow.Tools.MsBuild.Generation | 3.9.74 | Genera código C# desde .feature |
+| FluentAssertions | 6.12.0 | Assertions fluidas y legibles |
+
+</div>
 
 ---
 
@@ -1026,30 +1054,28 @@ Escenario: Autenticación fallida con credenciales inválidas
 </div>
 
 ---
-### ¿Cuándo usar cada metodología?
 
-### Taller: BDD para Biblioteca
+## Taller: BDD para Biblioteca
 
-```gherkin
-Ejercicio: Crear escenarios BDD para sistema de biblioteca
+**📚 Ejercicio Práctico**
 
-Contexto:
+Crear escenarios BDD para sistema de préstamo de libros
+
+**Contexto del dominio:**
 - Usuarios pueden pedir libros prestados
-- Cada libro tiene un plazo de devolución
-- Hay multas por retraso
-- Usuarios tienen un límite de libros simultáneos
+- Cada libro tiene un plazo de devolución (14 días)
+- Hay multas por retraso ($500/día)
+- Límite de 5 libros simultáneos por usuario
 
-Tareas:
-1. Escribir feature "Préstamo de libros"
-2. Crear 3 escenarios:
-   a. Préstamo exitoso
-   b. Préstamo fallido por límite alcanzado
-   c. Devolución con retraso (multa)
-3. Implementar Step Definitions
-4. Ejecutar y verificar
-```
+**Tareas:**
+1. ✅ Escribir feature "Préstamo de libros"
+2. ✅ Crear 3 escenarios (éxito, fallo, multa)
+3. ✅ Implementar Step Definitions
+4. ✅ Ejecutar y verificar
 
-**SOLUCIÓN COMPLETA:**
+---
+
+## Solución: Feature File
 
 ```gherkin
 # language: es
@@ -1087,7 +1113,9 @@ Característica: Préstamo de libros
     Y el libro debe marcarse como disponible
 ```
 
-**STEP DEFINITIONS:**
+---
+
+## Solución: Step Definitions (Parte 1)
 
 ```csharp
 [Binding]
@@ -1096,7 +1124,6 @@ public class BibliotecaSteps
     private Usuario _usuario;
     private Libro _libro;
     private Prestamo _prestamo;
-    private decimal _multaCalculada;
     private string _mensajeError;
 
     [Given(@"que soy un usuario registrado")]
@@ -1125,7 +1152,13 @@ public class BibliotecaSteps
     {
         _usuario.LimitePrestamos = limite;
     }
+```
 
+---
+
+## Solución: Step Definitions (Parte 2)
+
+```csharp
     [When(@"solicito el préstamo del libro ""([^""]*)""")]
     public void CuandoSolicitoElPrestamoDelLibro(string tituloLibro)
     {
@@ -1163,7 +1196,9 @@ public class BibliotecaSteps
 ```
 
 ---
-### ¿Cuándo usar cada metodología?
+
+## ¿Cuándo usar cada metodología?
+
 Comparación entre TDD y BDD para elegir la metodología adecuada.
 ┌─────────────────────────────────────────────────────────────┐
 │                    TDD vs BDD: RESUMEN                      │

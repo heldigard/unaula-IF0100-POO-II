@@ -665,7 +665,7 @@ public class Circulo : Figura
     public override double CalcArea()
         => Math.PI * Radio * Radio;
 
-    public override double CalcPerimetro()
+    public override double CalcPerim()
         => 2 * Math.PI * Radio;
 }
 ```
@@ -681,7 +681,7 @@ public class Rectangulo : Figura
     public override double CalcArea()
         => Base * Altura;
 
-    public override double CalcPerimetro()
+    public override double CalcPerim()
         => 2 * (Base + Altura);
 }
 ```
@@ -854,10 +854,9 @@ r.SetAlto(10);
 
 Sistema polimórfico de figuras geométricas.
 
-### 📋 Implementación
+### 📋 Clase Abstracta
 
 ```csharp
-// CLASE ABSTRACTA
 public abstract class Figura
 {
     public string Nombre { get; set; }
@@ -868,12 +867,9 @@ public abstract class Figura
 
     public virtual void MostrarInfo()
     {
-        Console.WriteLine(
-            $"\n📐 {Nombre} ({Color})");
-        Console.WriteLine(
-            $"   Área: {CalcArea():F2} cm²");
-        Console.WriteLine(
-            $"   Perím: {CalcPerim():F2} cm");
+        Console.WriteLine($"\n📐 {Nombre} ({Color})");
+        Console.WriteLine($"   Área: {CalcArea():F2} cm²");
+        Console.WriteLine($"   Perím: {CalcPerim():F2} cm");
     }
 }
 ```
@@ -896,6 +892,20 @@ foreach (var f in figuras)
 Console.WriteLine($"\n📊 Total: {total:F2} cm²");
 ```
 
+### 🎨 Salida Esperada
+
+```
+📐 C1 (Rojo)
+   Área: 78.54 cm²
+   Perím: 31.42 cm
+
+📐 R1 (Azul)
+   Área: 24.00 cm²
+   Perím: 20.00 cm
+
+📊 Total: 102.54 cm²
+```
+
 </div>
 
 <div>
@@ -910,7 +920,7 @@ public class Circulo : Figura
 
     public override double CalcArea()
         => Math.PI * Radio * Radio;
-    public override double CalcPerimetro()
+    public override double CalcPerim()
         => 2 * Math.PI * Radio;
 }
 
@@ -922,10 +932,17 @@ public class Rectangulo : Figura
 
     public override double CalcArea()
         => Base * Altura;
-    public override double CalcPerimetro()
+    public override double CalcPerim()
         => 2 * (Base + Altura);
 }
 ```
+
+### ✅ Ventajas del Sistema
+
+- Código polimórfico
+- Fácil agregar figuras
+- Cálculo uniforme
+- Extensible
 
 </div>
 

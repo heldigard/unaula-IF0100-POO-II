@@ -29,6 +29,10 @@ section tbody tr:hover { background-color: #e9ecef; }
 .info-box { background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 0.6em 0.8em; margin: 0.4em 0; }
 .warning-box { background: #fefce8; border-left: 3px solid #eab308; padding: 0.6em 0.8em; margin: 0.4em 0; }
 .success-box { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.6em 0.8em; margin: 0.4em 0; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; }
+.col-card { background: white; border: 1px solid #e5e7eb; border-radius: 6px; padding: 0.6em; font-size: 0.85em; }
+.compact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; font-size: 0.85em; }
 </style>
 
 ---
@@ -708,6 +712,15 @@ public class Carrera {
 }
 ```
 
+### 💡 Conceptos Clave
+
+| Concepto | Descripción |
+|----------|-------------|
+| **FK** | `CarreraId` en BD |
+| **Navigación** | `Carrera` en C# |
+| **Colección** | `List<Inscripcion>` |
+| **Relación** | 1:N bidireccional |
+
 </div>
 
 <div>
@@ -718,15 +731,12 @@ public class Carrera {
 -- MODELO RELACIONAL
 CREATE TABLE Carreras (
   Id INT PRIMARY KEY IDENTITY(1,1),
-  Nombre VARCHAR(100) NOT NULL,
-  Duracion INT,
-  Facultad VARCHAR(100)
+  Nombre VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Estudiantes (
   Codigo VARCHAR(20) PRIMARY KEY,
   Nombre VARCHAR(100) NOT NULL,
-  Email VARCHAR(100) UNIQUE,
   CarreraId INT,
   FOREIGN KEY (CarreraId)
     REFERENCES Carreras(Id)
@@ -735,13 +745,21 @@ CREATE TABLE Estudiantes (
 CREATE TABLE Inscripciones (
   Id INT PRIMARY KEY IDENTITY,
   EstudianteCodigo VARCHAR(20),
-  MateriaId INT,
   Semestre VARCHAR(10),
-  NotaFinal DECIMAL(3,2),
   FOREIGN KEY (EstudianteCodigo)
     REFERENCES Estudiantes(Codigo)
 );
 ```
+
+### 🎯 Mapeo de Tipos
+
+| C# | SQL Server |
+|----|------------|
+| `int` | `INT` |
+| `string` | `VARCHAR(n)` |
+| `decimal` | `DECIMAL(p,s)` |
+| `bool` | `BIT` |
+| `DateTime` | `DATETIME2` |
 
 </div>
 
@@ -905,6 +923,8 @@ CREATE TABLE Estudiantes (
 
 <div>
 
+### 📊 Entidades Principales
+
 ```csharp
 public class Categoria {
   public int Id { get; set; }
@@ -916,7 +936,6 @@ public class Libro {
   public string ISBN { get; set; }
   public string Titulo { get; set; }
   public string Autor { get; set; }
-  public int Anio { get; set; }
   public int Cantidad { get; set; }
 
   public int CategoriaId { get; set; }
@@ -928,7 +947,6 @@ public class Usuario {
   public string Codigo { get; set; }
   public string Nombre { get; set; }
   public string Email { get; set; }
-  public string Tipo { get; set; }
 
   public List<Prestamo> Prestamos { get; set; }
 }
@@ -938,14 +956,16 @@ public class Usuario {
 
 <div>
 
+### 🔄 Prestamo (N:M)
+
 ```csharp
 public class Prestamo {
   public int Id { get; set; }
   public DateTime FechaPrestamo { get; set; }
-  public DateTime FechaDevolucionEsperada { get; set; }
   public DateTime? FechaDevolucionReal { get; set; }
   public string Estado { get; set; }
 
+  // FKs
   public string LibroISBN { get; set; }
   public Libro Libro { get; set; }
 
@@ -959,7 +979,7 @@ public class Prestamo {
 **Lazy Loading:**
 ```csharp
 var est = ctx.Estudiantes.First(id);
-string carrera = est.Carrera.Nombre; // Se carga aquí
+string carrera = est.Carrera.Nombre;
 ```
 
 **Eager Loading:**
@@ -979,17 +999,17 @@ var est = ctx.Estudiantes
 
 ### Patrones de Diseño en Modelado BD
 
-<div class="info-box">
+<div class="two-col">
 
-**🏗️ Repository Pattern**
+<div>
+
+### 🏗️ Repository Pattern
 
 ```csharp
 public interface IEstudianteRepository {
   Estudiante ObtenerPorCodigo(string codigo);
   IEnumerable<Estudiante> ObtenerTodos();
   void Agregar(Estudiante estudiante);
-  void Actualizar(Estudiante estudiante);
-  void Eliminar(string codigo);
 }
 
 public class EstudianteRepository
@@ -1002,17 +1022,23 @@ public class EstudianteRepository
 }
 ```
 
+### 💡 Ventajas
+
+- Desacopla lógica de BD
+- Facilita testing
+- Centraliza consultas
+- Reutilizable
+
 </div>
 
-<div class="info-box">
+<div>
 
-**📦 Unit of Work Pattern**
+### 📦 Unit of Work Pattern
 
 ```csharp
-public interface IUnitOfWork : IDisposable {
+public interface IUnitOfWork {
   IEstudianteRepository Estudiantes { get; }
   ICarreraRepository Carreras { get; }
-  IMateriaRepository Materias { get; }
   int GuardarCambios();
 }
 
@@ -1026,6 +1052,21 @@ public class UnitOfWork : IUnitOfWork {
     => _context.SaveChanges();
 }
 ```
+
+### 🎯 Beneficios
+
+- Transaccionabilidad
+- Consistencia de datos
+- Manejo de concurrencia
+- Testeabilidad
+
+### 📚 Otros Patrones
+
+- **Factory**: Crear objetos
+- **Singleton**: Una instancia
+- **Strategy**: Algoritmos intercambiables
+
+</div>
 
 </div>
 
