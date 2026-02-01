@@ -52,6 +52,7 @@
 
 **Infografias integradas:**
 - `assets/infografias/clase-01-ecosistema-dotnet.png`
+- `assets/infografias/clase-01-value-vs-reference.png` (agregada en R1)
 
 **Secciones incluidas:**
 - Header con objetivos y prerequisitos
@@ -63,6 +64,8 @@
 
 **TODOs:**
 - Ninguno
+
+**R1 Revision (2026-02-01):** Agregada infografía clase-01-value-vs-reference.png; tiempos estimados y checklist en práctica/ejercicios; prerrequisitos ajustados a Windows 10/11 con alternativa ligera; correcciones de redacción.
 
 ---
 

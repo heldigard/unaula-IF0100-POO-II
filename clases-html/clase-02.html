@@ -307,6 +307,8 @@
                 <a href="#constructores">Constructores</a>
                 <a href="#static">Static vs Instance</a>
                 <a href="#class-vs-struct">class vs struct</a>
+                <a href="#practica">Practica / Laboratorio</a>
+                <a href="#ejercicios">Ejercicios</a>
                 <a href="#resumen">Resumen</a>
             </div>
         </nav>
@@ -1175,6 +1177,258 @@ Console.WriteLine(ps1.Nombre); // "Juan" - independientes</code></pre>
                     <li>No necesitas <strong>herencia</strong></li>
                 </ul>
                 <p><strong>Ejemplos:</strong> <code>Point</code>, <code>Size</code>, <code>Color</code>, <code>DateTime</code> (partial)</p>
+            </div>
+        </section>
+
+        <section id="practica">
+            <h2>Practica / Laboratorio</h2>
+
+            <h3>Ejercicio Guiado: Sistema de Biblioteca</h3>
+            <p><strong>Objetivo:</strong> Implementar una clase <code>Libro</code> con encapsulamiento adecuado, propiedades y constructores.</p>
+            <p><strong>Duracion:</strong> 30 minutos</p>
+
+            <h4>Requisitos</h4>
+            <ul>
+                <li>Campos privados para titulo, autor, anio y numero de paginas</li>
+                <li>Propiedades publicas con validacion</li>
+                <li>Constructor parametrizado</li>
+                <li>Metodo <code>EstaAntiguo()</code> que retorne true si el libro es de hace mas de 20 anos</li>
+                <li>Constructor con encadenamiento (usando <code>this</code>)</li>
+            </ul>
+
+            <h4>Checklist de Implementacion</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paso</th>
+                        <th>Actividad</th>
+                        <th>Tiempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Crear proyecto de consola en Visual Studio</td><td>3 min</td></tr>
+                    <tr><td>2</td><td>Definir clase <code>Libro</code> con campos privados</td><td>5 min</td></tr>
+                    <tr><td>3</td><td>Implementar propiedades con validacion</td><td>8 min</td></tr>
+                    <tr><td>4</td><td>Crear constructor parametrizado</td><td>5 min</td></tr>
+                    <tr><td>5</td><td>Implementar constructor con encadenamiento</td><td>4 min</td></tr>
+                    <tr><td>6</td><td>Implementar metodo <code>EstaAntiguo()</code></td><td>3 min</td></tr>
+                    <tr><td>7</td><td>Probar en Main con varios libros</td><td>2 min</td></tr>
+                </tbody>
+            </table>
+
+            <h4>Solucion de Referencia</h4>
+            <pre><code class="language-csharp">public class Libro
+{
+    // Campos privados (convencion _camelCase)
+    private string _titulo;
+    private string _autor;
+    private int _anio;
+    private int _numeroPaginas;
+
+    // Propiedades con validacion
+    public string Titulo
+    {
+        get => _titulo;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("El titulo no puede estar vacio");
+            _titulo = value;
+        }
+    }
+
+    public string Autor
+    {
+        get => _autor;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("El autor no puede estar vacio");
+            _autor = value;
+        }
+    }
+
+    public int Anio
+    {
+        get => _anio;
+        set
+        {
+            if (value < 1000 || value > DateTime.Now.Year + 1)
+                throw new ArgumentOutOfRangeException("Anio", "Anio invalido");
+            _anio = value;
+        }
+    }
+
+    public int NumeroPaginas
+    {
+        get => _numeroPaginas;
+        set
+        {
+            if (value <= 0)
+                throw new ArgumentException("El numero de paginas debe ser positivo");
+            _numeroPaginas = value;
+        }
+    }
+
+    // Constructor completo
+    public Libro(string titulo, string autor, int anio, int numeroPaginas)
+    {
+        Titulo = titulo;
+        Autor = autor;
+        Anio = anio;
+        NumeroPaginas = numeroPaginas;
+    }
+
+    // Constructor con encadenamiento (this)
+    public Libro(string titulo, string autor, int anio)
+        : this(titulo, autor, anio, 0)  // 0 paginas por defecto
+    {
+    }
+
+    // Metodo de instancia
+    public bool EstaAntiguo()
+    {
+        int anioActual = DateTime.Now.Year;
+        return (anioActual - _anio) > 20;
+    }
+
+    // Propiedad calculada
+    public string InfoCorta => $"{_titulo} ({_autor})";
+}
+
+// Uso en Main
+class Program
+{
+    static void Main()
+    {
+        var libro1 = new Libro("Cien Anos de Soledad", "Gabriel Garcia Marquez", 1967, 417);
+        var libro2 = new Libro("Don Quijote", "Miguel de Cervantes", 1605);
+
+        Console.WriteLine(libro1.InfoCorta);
+        Console.WriteLine($"Es antiguo? {libro1.EstaAntiguo()}");  // True
+
+        Console.WriteLine(libro2.InfoCorta);
+        Console.WriteLine($"Es antiguo? {libro2.EstaAntiguo()}");  // True
+    }
+}</code></pre>
+
+            <h3>Errores Comunes y Como Evitarlos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Causa</th>
+                        <th>Solucion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>ArgumentException</td><td>Titulo o autor vacio</td><td>Validar con <code>IsNullOrWhiteSpace</code></td></tr>
+                    <tr><td>ArgumentOutOfRangeException</td><td>Anio fuera de rango</td><td>Validar rango 1000 - anio actual + 1</td></tr>
+                    <tr><td>Logica incorrecta</td><td>No usar <code>DateTime.Now.Year</code></td><td>Obtener anio actual dinamicamente</td></tr>
+                    <tr><td>Encadenamiento roto</td><td>Olvidar usar <code>this</code></td><td>Siempre llamar a <code>: this(...)</code></td></tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>Consejo Pro</h4>
+                <p>Usa <strong>propiedades autoimplementadas</strong> cuando no necesites validacion. Solo usa backing fields (<code>_campo</code>) cuando requieras logica en get/set.</p>
+            </div>
+        </section>
+
+        <section id="ejercicios">
+            <h2>Ejercicios</h2>
+
+            <h3>Ejercicio 1: Cuenta de Ahorros</h3>
+            <p><strong>Nivel:</strong> Basico | <strong>Duracion:</strong> 20 minutos</p>
+            <p>Implementar una clase <code>CuentaAhorros</code> con:</p>
+            <ul>
+                <li>Saldo inicial obligatorio (minimo $100,000)</li>
+                <li>Tasa de interes anual (por defecto 5%)</li>
+                <li>Metodos <code>Depositar</code> y <code>Retirar</code> con validacion</li>
+                <li>Metodo <code>CalcularInteresMensual()</code> que retorne el interes del mes</li>
+                <li>Propiedad <code>Saldo</code> solo lectura</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Constructor valida saldo minimo</li>
+                    <li>[ ] Depositar rechaza montos negativos o cero</li>
+                    <li>[ ] Retirar rechaza si saldo insuficiente</li>
+                    <li>[ ] Calculo de interes es correcto (tasa / 12)</li>
+                    <li>[ ] Propiedad Saldo no tiene set</li>
+                </ul>
+            </div>
+
+            <h3>Ejercicio 2: Sistema de Estudiantes</h3>
+            <p><strong>Nivel:</strong> Intermedio | <strong>Duracion:</strong> 30 minutos</p>
+            <p>Implementar una clase <code>Estudiante</code> con:</p>
+            <ul>
+                <li>Propiedades: Nombre, Codigo, Carrera (con valores por defecto)</li>
+                <li>Lista privada de notas (0.0 a 5.0)</li>
+                <li>Metodo <code>AgregarNota(double nota)</code> con validacion de rango</li>
+                <li>Propiedad calculada <code>Promedio</code></li>
+                <li>Propiedad calculada <code>Estado</code> que retorne "APROBADO" o "REPROBADO"</li>
+                <li>Constructor que reciba nombre y codigo (carrera por defecto "Sin definir")</li>
+                <li>Contador static <code>TotalEstudiantes</code> que se incremente en cada constructor</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Notas se validan entre 0.0 y 5.0</li>
+                    <li>[ ] Promedio se calcula correctamente (suma / cantidad)</li>
+                    <li>[ ] Estado usa Promedio >= 3.0 como umbral</li>
+                    <li>[ ] Constructor usa <code>: this()</code> para encadenamiento</li>
+                    <li>[ ] Contador static se incrementa automaticamente</li>
+                </ul>
+            </div>
+
+            <h3>Ejercicio 3: Producto con Inventario</h3>
+            <p><strong>Nivel:</strong> Avanzado | <strong>Duracion:</strong> 40 minutos</p>
+            <p>Implementar una clase <code>Producto</code> para un sistema de inventario:</p>
+            <ul>
+                <li>Codigo (string, inmutable despues de crear)</li>
+                <li>Nombre, Descripcion, Precio, Stock</li>
+                <li>Propiedad <code>Precio</code> no permite valores negativos</li>
+                <li>Metodo <code>ActualizarStock(int cantidad)</code> que suma o resta</li>
+                <li>Metodo <code>HayStock()</code> retorne true si stock > 0</li>
+                <li>Propiedad calculada <code>ValorInventario</code> = Precio * Stock</li>
+                <li>Constructor con encadenamiento multiple</li>
+                <li>Validar que el codigo no sea vacio y tenga formato especifico (ej: "PROD-XXX")</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Codigo usa <code>{ get; init; }</code> para inmutabilidad</li>
+                    <li>[ ] Codigo valida formato con Regex o string operations</li>
+                    <li>[ ] Precio lanza excepcion si es negativo</li>
+                    <li>[ ] ActualizarStock acepta valores positivos y negativos</li>
+                    <li>[ ] ValorInventario es calculado (sin backing field)</li>
+                    <li>[ ] Dos constructores encadenados con <code>this</code></li>
+                </ul>
+            </div>
+
+            <h3>Tarea para Casa</h3>
+            <div class="warning-box">
+                <h4>Entregable: Clase <code>Pelicula</code></h4>
+                <p><strong>Fecha limite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
+                <p>Crear una clase <code>Pelicula</code> que modele una pelicula con:</p>
+                <ul>
+                    <li>Titulo, Director, Anio, Genero, Duracion (minutos)</li>
+                    <li>Lista de actores (array o List&lt;string&gt;)</li>
+                    <li>Constructor completo + constructor con encadenamiento</li>
+                    <li>Metodo <code>EsClasica()</code> (anio < 1990)</li>
+                    <li>Metodo <code>AgregarActor(string actor)</code></li>
+                    <li>Propiedad calculada <code>InfoBreve</code> = "Titulo (Director, Anio)"</li>
+                    <li>Validaciones apropiadas en todas las propiedades</li>
+                    <li>Contador static de peliculas creadas</li>
+                </ul>
+                <p><strong>Requisitos de entrega:</strong></p>
+                <ul>
+                    <li>Repositorio en GitHub con README.md</li>
+                    <li>Codigo fuente en C# con comentarios</li>
+                    <li>Programa Main que demuestre todas las funcionalidades</li>
+                    <li>Capturas de pantalla de la ejecucion</li>
+                </ul>
             </div>
         </section>
 
