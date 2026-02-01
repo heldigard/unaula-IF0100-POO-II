@@ -1008,11 +1008,9 @@ public class RealizarPedidoHandler
 ```
 
 ---
+
 ## Ejemplo: Application Layer
-
-
----
-## Ejemplo: Presentation Layer
+La capa de aplicación coordina el flujo entre presentación y dominio.
 
 ```csharp
 // ==================== PRESENTATION ====================

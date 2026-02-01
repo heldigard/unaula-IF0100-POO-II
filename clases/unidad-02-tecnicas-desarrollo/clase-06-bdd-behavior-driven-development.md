@@ -124,9 +124,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
+## BDD: Concepto Fundamental
 
-
----
 ### Definición
 
 
