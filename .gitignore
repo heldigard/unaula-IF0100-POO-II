@@ -54,3 +54,7 @@ venv/
 
 # Carpeta temporal para previsualización de slides
 .temp-preview/
+temp-html/
+.temp-html/
+.playwright-mcp/
+temp*

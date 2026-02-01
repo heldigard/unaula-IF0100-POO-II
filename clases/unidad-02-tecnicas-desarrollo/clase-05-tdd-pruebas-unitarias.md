@@ -7,81 +7,86 @@ footer: 'UNAULA - Ingeniería Informática - 2026-I'
 ---
 
 <style>
-section {
-  font-size: 20px;
-  overflow: hidden;
-}
-img {
-  max-width: 70% !important;
-  max-height: 50vh !important;
-  object-fit: contain !important;
-  height: auto !important;
-  display: block !important;
-  margin: 0 auto !important;
-}
-section h1 { font-size: 1.8em; }
-section h2 { font-size: 1.4em; }
-section h3 { font-size: 1.2em; }
-section ul, section ol { font-size: 0.9em; margin-left: 1em; }
-section li { margin-bottom: 0.3em; }
-section pre { font-size: 0.7em; max-height: 60vh; overflow-y: auto; }
-section code { font-size: 0.85em; }
-section p { margin: 0.5em 0; }
-section table { width: 100%; font-size: 0.85em; border-collapse: collapse; margin: 0.5em auto; }
-section th { background-color: #1e40af; color: white; padding: 0.4em 0.6em; text-align: left; font-size: 0.9em; border: 1px solid #ddd; }
-section td { padding: 0.4em 0.6em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.85em; }
+section { font-size: 16px; overflow: hidden; }
+img { max-width: 70% !important; max-height: 45vh !important; object-fit: contain !important; height: auto !important; display: block !important; margin: 0 auto !important; }
+section h1 { font-size: 1.8em; color: #1e40af; }
+section h2 { font-size: 1.2em; color: #1e3a8a; margin-top: 0.5em; }
+section h3 { font-size: 1.05em; color: #1e3a8a; }
+section ul, section ol { font-size: 0.85em; margin-left: 1em; }
+section li { margin-bottom: 0.25em; }
+section pre { font-size: 0.55em; max-height: 50vh; overflow-y: auto; background: #1e293b; color: #e2e8f0; padding: 0.8em; border-radius: 6px; }
+section code { font-size: 0.8em; background: #f1f5f9; padding: 0.1em 0.3em; border-radius: 3px; }
+section p { margin: 0.4em 0; font-size: 0.9em; }
+section table { width: 100%; font-size: 0.75em; border-collapse: collapse; margin: 0.5em auto; }
+section th { background-color: #1e40af; color: white; padding: 0.3em 0.5em; text-align: left; font-size: 0.85em; border: 1px solid #ddd; }
+section td { padding: 0.3em 0.5em; border: 1px solid #ddd; vertical-align: top; word-wrap: break-word; font-size: 0.8em; }
 section tbody tr:nth-child(even) { background-color: #f8f9fa; }
 section tbody tr:hover { background-color: #e9ecef; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8em; }
+.highlight-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.8em 1em; border-radius: 8px; margin: 0.5em 0; }
+.info-box { background: #f0f9ff; border-left: 3px solid #3b82f6; padding: 0.6em 0.8em; margin: 0.4em 0; }
+.warning-box { background: #fefce8; border-left: 3px solid #eab308; padding: 0.6em 0.8em; margin: 0.4em 0; }
+.success-box { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.6em 0.8em; margin: 0.4em 0; }
+.error-box { background: #fef2f2; border-left: 3px solid #ef4444; padding: 0.6em 0.8em; margin: 0.4em 0; }
 </style>
 
 ---
 
 # TDD - Test-Driven Development
 
-<!--
-[2026-01-31] - Clase enriquecida con infografías
-
-IMÁGENES GENERADAS:
-- clase-05-tdd-ciclo.png: Diagrama del ciclo Red-Green-Refactor de TDD
--->
-
 **IF0100 - Lenguaje de Programación OO II**
 *4° Semestre - Ingeniería Informática*
 
 ---
 
-## Objetivos de la Clase
+## Objetivos y Agenda
 
-Al finalizar esta clase, el estudiante será capaz de:
+<div class="two-col">
 
-1. **Comprender** la filosofía y ciclo de TDD
-2. **Escribir** pruebas unitarias con xUnit en C#
-3. **Aplicar** el ciclo Red-Green-Refactor
-4. **Identificar** casos de prueba efectivos
-5. **Medir** cobertura de código con herramientas
+<div>
 
-**Duración:** 90 minutos
+### 🎯 Objetivos
+
+| # | Meta |
+|---|------|
+| 1 | Comprender filosofía y ciclo TDD |
+| 2 | Escribir pruebas con xUnit |
+| 3 | Aplicar Red-Green-Refactor |
+| 4 | Identificar casos de prueba |
+| 5 | Medir cobertura de código |
+
+</div>
+
+<div>
+
+### 📋 Agenda (90 min)
+
+| Tiempo | Tema |
+|--------|------|
+| 10' | ¿Por qué probar? |
+| 15' | Fundamentos TDD |
+| 15' | xUnit Framework |
+| 15' | Estructura de pruebas |
+| 20' | Ciclo Red-Green-Refactor |
+| 15' | Buenas prácticas |
+
+</div>
+
+</div>
 
 ---
 
-## Agenda
+## 1. ¿Por Qué Probar el Código?
 
-1. ¿Por qué probar el código? (10 min)
-2. Fundamentos de TDD (15 min)
-3. xUnit: Framework de pruebas para .NET (15 min)
-4. Estructura de pruebas unitarias (15 min)
-5. Ciclo Red-Green-Refactor en práctica (20 min)
-6. Buenas prácticas y casos de prueba (15 min)
+<div class="two-col">
 
----
-### El problema del desarrollo tradicional
+<div>
 
-<div style="display: flex; gap: 30px;">
-<div style="flex: 1;">
+### ❌ Desarrollo Sin TDD
 
 ```
-DESARROLLO SIN TDD:
-
 1. Escribir código
 2. Más código...
 3. Probar manual
@@ -91,282 +96,187 @@ DESARROLLO SIN TDD:
 7. Hotfix 3AM
 ```
 
-</div>
-<div style="flex: 1;">
-
-**❌ Problemas del Desarrollo Tradicional:**
+### Problemas
 
 **Pruebas Tardías**
-- Bugs se encuentran en producción
-- Costo de corrección 100x mayor
-- Estrés de hotfixes urgentes
+- Bugs en producción
+- Costo 100x mayor
+- Hotfixes urgentes
 
-**Falta de Confianza**
+**Sin Confianza**
 - Miedo a refactorizar
-- "Si funciona, no lo toques"
-- Código frágil que se rompe fácil
-
-**Pruebas Manuales**
-- Repetitivas y propensas a errores
-- Difíciles de mantener
-- No escalables con el crecimiento
-
-**💡 TDD resuelve:**
-- Pruebas automatizadas desde el inicio
-- Feedback inmediato
-- Código siempre probado
-- Refactorización segura
+- Código frágil
 
 </div>
+
+<div>
+
+### ✅ Beneficios TDD
+
+**Seguridad**
+- Cambios sin miedo
+- Refactorización segura
+- Detección temprana
+
+**Diseño**
+- Código modular
+- Bajo acoplamiento
+- APIs usables
+
+**Documentación Viva**
+- Pruebas documentan comportamiento
+- Ejemplos reales
+- Siempre actualizada
+
+**Menos Debugging**
+- Problemas inmediatos
+- Flujo continuo
+
+</div>
+
 </div>
 
 ---
 
-## Costo de los Errores
-
-<div style="display: flex; gap: 30px;">
-<div style="flex: 1;">
+## Costo Exponencial de Errores
 
 ```
-COSTO POR FASE:
-
 $1      $10     $100    $1,000   $10,000
  │       │       │        │         │
  ▼       ▼       ▼        ▼         ▼
 Diseño  Código  Test   Integración  Producción
 ```
 
-</div>
-<div style="flex: 1;">
+| Fase | Costo | Impacto |
+|------|-------|---------|
+| **Diseño** | $1 | Documentos |
+| **Código** | $10 | Una clase |
+| **Test** | $100 | Rompe otras pruebas |
+| **Integración** | $1,000 | Múltiples módulos |
+| **Producción** | $10,000+ | Daño reputacional |
 
-**📈 Costo Exponencial de Errores:**
+<div class="error-box">
 
-**Diseño ($1)**
-- Fácil de corregir
-- Solo afecta documentos
+**⚠️ Conclusión IBM/NIST:** Corregir un error en producción cuesta **100x más** que en desarrollo.
 
-**Código ($10)**
-- Requiere refactorización
-- Afecta una clase/módulo
-
-**Test ($100)**
-- Rompe otras pruebas
-- Requiere actualización
-
-**Integración ($1,000)**
-- Afecta múltiples módulos
-- Rompe integración
-
-**Producción ($10,000+)**
-- Daño reputacional
-- Pérdida de clientes
-- Hotfixes urgentes
-
-**💡 Conclusión:**
-Los estudios de IBM/NIST muestran que corregir un error en producción cuesta **100x más** que en desarrollo.
-
-</div>
 </div>
 
 ---
 
-## Tipos de Pruebas
+## Pirámide de Pruebas
 
-<div style="display: flex; gap: 30px; align-items: center;">
-<div style="flex: 1;">
+```
+           ▲
+          ╱ ╲
+         ╱E2E╲         10% - Flujos completos
+        ╱─────╲        Lentas, frágiles
+       ╱       ╲
+      ╱ INTEG. ╲      20% - Interacción componentes
+     ╱──────────╲     Más lentas (BD/API)
+    ╱            ╲
+   ╱▆▆▆▆▆▆▆▆▆▆▆▆▆╲  70% - Unit Tests
+  ╱  UNIT TESTS   ╲ Rápidas (ms), aisladas
+ ╱─────────────────╲ Escribibles con TDD
+```
 
-![Pirámide de Pruebas](../../assets/infografias/clase-05-testing-pyramid.png)
+<div class="two-col">
 
-</div>
-<div style="flex: 1;">
+<div>
 
-**🔺 Pirámide de Pruebas:**
-
-**Unit Tests (70%) - Base**
-- Prueban clases/métodos individuales
+**Unit Tests (70%)**
+- Prueban clases/métodos
 - Rápidas (milisegundos)
-- Aisladas (sin BD, red)
+- Aisladas (sin BD/red)
 - Escribibles con TDD
 
-**Integration Tests (20%)**
-- Prueban interacción entre componentes
-- Más lentas (requieren BD/API)
-- Verifican integración real
+</div>
 
-**E2E Tests (10%) - Cima**
-- Prueban flujo completo del usuario
+<div>
+
+**Integration (20%)**
+- Interacción componentes
+- Requieren BD/API
+- Verifican integración
+
+**E2E (10%)**
+- Flujo completo usuario
 - Lentas y frágiles
 - Solo flujos críticos
 
-**💡 Estrategia Óptima:**
-- Muchas unit tests rápidas
-- Pocos E2E lentos
-- Cobertura: 80% unit, 20% integración/E2E
-
 </div>
+
 </div>
 
 ---
 
 ## 2. Fundamentos de TDD
 
-<div style="display: flex; gap: 30px; align-items: center;">
-<div style="flex: 1;">
+### Ciclo Red-Green-Refactor
 
-![Ciclo TDD Red-Green-Refactor](../../assets/infografias/clase-05-tdd-ciclo.png)
-
-</div>
-<div style="flex: 1;">
-
-**🔄 Ciclo Red-Green-Refactor:**
-
-**🔴 RED**
-- Escribir prueba que falle
-- La prueba NO existe aún
-- Código NO existe aún
-- Objetivo: Definir comportamiento
-
-**🟢 GREEN**
-- Escribir código MÍNIMO
-- Solo para pasar la prueba
-- Puede ser hardcoded
-- Objetivo: Hacerla pasar
-
-**🔵 REFACTOR**
-- Mejorar el código
-- Mantener tests verdes
-- Eliminar duplicación
-- Objetivo: Código limpio
-
-**🔁 REPEAT**
-- Siguiente prueba
-- Ciclo continúa
-- Pequeños incrementos
-
-</div>
-</div>
-
----
-### Representación ASCII del ciclo:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                  CICLO TDD (MANTRA)                         │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │              ┌─────────────┐                                │
-│              │    RED      │                                │
-│              │  (falla)    │                                │
+│              │    RED     │ Escribir prueba que falle      │
+│              │  (falla)   │ NO existe código aún            │
 │              └──────┬──────┘                                │
 │                     │                                       │
-│         ┌───────────┘                                       │
-│         │                                                   │
-│         ▼                                                   │
-│  ┌─────────────┐    Escribe    ┌─────────────┐             │
-│  │   GREEN     │ ←── prueba ───│ Escribe     │             │
-│  │  (pasa)     │    mínima     │ código      │             │
-│  └──────┬──────┘    para pasar │ mínimo      │             │
-│         │                       └─────────────┘             │
-│         │                                                   │
-│         │ Mejora                                            │
-│         │ código                                            │
-│         ▼                                                   │
+│                     ▼                                       │
+│  ┌─────────────┐    Código     ┌─────────────┐             │
+│  │   GREEN    │ ←── mínimo ───│ Escribe     │             │
+│  │  (pasa)    │    para pasar │ prueba      │             │
+│  └──────┬──────┘               └─────────────┘             │
+│         │                                                       │
+│         │ Mejora código                                       │
+│         ▼                                                     │
 │  ┌─────────────┐                                            │
-│  │  REFACTOR   │                                            │
-│  │ (mejora)    │                                            │
+│  │  REFACTOR  │ Eliminar duplicación                        │
+│  │ (mejora)   │ Mantener tests verdes                       │
 │  └──────┬──────┘                                            │
 │         │                                                   │
 │         └───────────────────────────────────┐               │
 │                                             │               │
 │                                             ▼               │
 │              ┌─────────────┐                                │
-│              │   REPEAT    │                                │
-│              │  (siguiente │                                │
-│              │   prueba)   │                                │
+│              │   REPEAT   │ Siguiente prueba                │
+│              │  (ciclo)   │ Pequeños incrementos            │
 │              └─────────────┘                                │
 │                                                             │
 │         RED → GREEN → REFACTOR → REPEAT                    │
-│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
-### Representación ASCII del ciclo:
 
+### Las Tres Leyes de TDD (Uncle Bob)
 
----
-### Por Robert C. Martin (Uncle Bob)
+<div class="highlight-box">
 
+**1️⃣ Primera Ley**
+> "No escribirás código de producción hasta haber escrito una prueba unitaria que falle"
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│               LAS TRES LEYES DE TDD                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  1️⃣ PRIMERA LEY                                             │
-│     "No escribirás código de producción hasta haber         │
-│      escrito una prueba unitaria que falle"                 │
-│                                                             │
-│  2️⃣ SEGUNDA LEY                                             │
-│     "No escribirás más de una prueba unitaria suficiente    │
-│      para fallar, y no compilar es fallar"                  │
-│                                                             │
-│  3️⃣ TERCERA LEY                                             │
-│     "No escribirás más código de producción del            │
-│      necesario para pasar la prueba actual"                 │
-│                                                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Resultado: Pruebas muy pequeñas, incrementos pequeños,     │
-│  código siempre probado, diseño emergente                   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+**2️⃣ Segunda Ley**
+> "No escribirás más de una prueba unitaria suficiente para fallar, y no compilar es fallar"
 
----
-### Por Robert C. Martin (Uncle Bob)
+**3️⃣ Tercera Ley**
+> "No escribirás más código de producción del necesario para pasar la prueba actual"
 
+</div>
 
----
-### ¿Por qué usarlo?
+### Resultado
 
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│               BENEFICIOS DE TDD                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ✅ SEGURIDAD                                               │
-│     • Cambios sin miedo                                     │
-│     • Refactorización segura                                │
-│     • Detección temprana de errores                         │
-│                                                             │
-│  ✅ DISEÑO                                                  │
-│     • Código más modular                                    │
-│     • Bajo acoplamiento, alta cohesión                      │
-│     • APIs más usables                                      │
-│                                                             │
-│  ✅ DOCUMENTACIÓN VIVA                                      │
-│     • Las pruebas documentan el comportamiento              │
-│     • Ejemplos de uso reales                                │
-│     • Siempre actualizada                                   │
-│                                                             │
-│  ✅ MENOS DEBUGGING                                         │
-│     • Problemas detectados inmediatamente                   │
-│     • Menos tiempo en debugger                              │
-│     • Flujo de trabajo continuo                             │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-### ¿Por qué usarlo?
-
+✅ Pruebas muy pequeñas
+✅ Incrementos pequeños
+✅ Código siempre probado
+✅ Diseño emergente
 
 ---
 
-## 3. xUnit: Framework de Pruebas
+## 3. xUnit: Framework para .NET
 
-### El estándar para .NET
+### Comparativa de Frameworks
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -374,18 +284,17 @@ Los estudios de IBM/NIST muestran que corregir un error en producción cuesta **
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │    MSTest   │  │    NUnit    │  │    xUnit    │         │
-│  │  (Microsoft)│  │  (Clásico)  │  │  (Moderno)  │         │
+│  │   MSTest   │  │    NUnit   │  │    xUnit   │         │
+│  │(Microsoft) │  │ (Clásico)  │  │ (Moderno)  │         │
 │  └─────────────┘  └─────────────┘  └──────┬──────┘         │
 │                                           │                 │
 │                                           ▼                 │
-│  USAREMOS: xUnit (más moderno, flexible, usado por .NET)   │
+│              USAREMOS: xUnit                                       │
 │                                                             │
-│  Características xUnit:                                     │
 │  • Atributos [Fact] y [Theory]                              │
 │  • Inyección de dependencias nativa                         │
 │  • Paralelismo por defecto                                  │
-│  • Sin atributos [Setup]/[Teardown] (usa constructor)       │
+│  • Constructor para setup (sin [Setup])                     │
 │  • Extensible con fixtures                                  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
@@ -395,22 +304,43 @@ Los estudios de IBM/NIST muestran que corregir un error en producción cuesta **
 
 ## Configuración de xUnit
 
-### Crear proyecto de pruebas
+### Crear Proyecto de Pruebas
+
+<div class="two-col">
+
+<div>
 
 ```bash
-# Opción 1: CLI de .NET
+# CLI de .NET
 dotnet new xunit -n MiProyecto.Tests
-dotnet add reference ../MiProyecto/MiProyecto.csproj
+cd MiProyecto.Tests
+dotnet add reference \
+  ../MiProyecto/MiProyecto.csproj
 
-# Opción 2: Visual Studio
-# 1. Click derecho en solución → Agregar → Nuevo proyecto
-# 2. Seleccionar "xUnit Test Project"
-# 3. Nombrar: NombreProyecto.Tests
-# 4. Framework: .NET 8.0
+# Visual Studio:
+# 1. Solución → Agregar → Nuevo
+# 2. "xUnit Test Project"
+# 3. Framework: .NET 8.0
 ```
 
+### Estructura
+
+```
+MiProyecto/
+├── src/
+│   └── Calculadora/
+│       └── Calculadora.cs
+└── tests/
+    └── Calculadora.Tests/
+        └── CalculadoraTests.cs
+```
+
+</div>
+
+<div>
+
 ```xml
-<!-- Estructura del csproj -->
+<!-- .csproj -->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -418,159 +348,123 @@ dotnet add reference ../MiProyecto/MiProyecto.csproj
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4" />
-    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="xunit"
+      Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio"
+      Version="2.5.4" />
+    <PackageReference Include="coverlet.collector"
+      Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MiProyecto\MiProyecto.csproj" />
+    <ProjectReference Include="..\..\src\Proyecto\Proyecto.csproj" />
   </ItemGroup>
 </Project>
 ```
 
----
-## Estructura de Pruebas xUnit
----
-### Convenciones y organización
+</div>
 
-```
-MiProyecto/
-├── src/
-│   └── Calculadora/
-│       ├── Calculadora.csproj
-│       └── Calculadora.cs       ← Código de producción
-└── tests/
-    └── Calculadora.Tests/
-        ├── Calculadora.Tests.csproj
-        └── CalculadoraTests.cs  ← Pruebas unitarias
-```
+</div>
+
+---
+
+## 4. Estructura de Pruebas xUnit
+
+### Patrón AAA: Arrange, Act, Assert
 
 ```csharp
-// Archivo: CalculadoraTests.cs
-using Xunit;           // Framework xUnit
-using Calculadora;     // Referencia al proyecto
+using Xunit;
 
-namespace Calculadora.Tests
+public class CalculadoraTests
 {
-    public class CalculadoraTests
+    [Fact]
+    public void Sumar_DosNumeros_RetornaSuma()
     {
-        // [Fact] indica un test sin parámetros
-        [Fact]
-        public void Sumar_DosNumeros_RetornaSuma()
-        {
-            // Arrange (Preparar)
-            var calc = new Calculadora();
-            int a = 5;
-            int b = 3;
+        // ╔══════════════════════════════════════╗
+        // ║ ARRANGE - Configurar escenario       ║
+        // ╚══════════════════════════════════════╝
+        var calc = new Calculadora();
+        int a = 5, b = 3;
 
----
-### Convenciones y organización
+        // ╔══════════════════════════════════════╗
+        // ║ ACT - Ejecutar acción               ║
+        // ╚══════════════════════════════════════╝
+        int resultado = calc.Sumar(a, b);
 
-
-            // Act (Actuar)
-            int resultado = calc.Sumar(a, b);
-
-            // Assert (Verificar)
-            Assert.Equal(8, resultado);
-        }
+        // ╔══════════════════════════════════════╗
+        // ║ ASSERT - Verificar resultado        ║
+        // ╚══════════════════════════════════════╝
+        Assert.Equal(8, resultado);
     }
 }
 ```
----
-### Patrón AAA: Arrange, Act, Assert
-
-
-```csharp
-[Fact]
-public void Dividir_DivisorCero_LanzaExcepcion()
-{
-    // ╔═══════════════════════════════════════════════════════╗
-    // ║  ARRANGE - Configurar el escenario                    ║
-    // ║  Preparar datos, instanciar objetos, configurar Mocks ║
-    // ╚═══════════════════════════════════════════════════════╝
-    var calc = new Calculadora();
-    int dividendo = 10;
-    int divisor = 0;
-
-    // ╔═══════════════════════════════════════════════════════╗
-    // ║  ACT - Ejecutar la acción a probar                    ║
-    // ║  Llamar al método, realizar la operación              ║
-    // ╚═══════════════════════════════════════════════════════╝
-    Action accion = () => calc.Dividir(dividendo, divisor);
-
-    // ╔═══════════════════════════════════════════════════════╗
-    // ║  ASSERT - Verificar el resultado                      ║
-    // ║  Comprobar que el resultado es el esperado            ║
-    // ╚═══════════════════════════════════════════════════════╝
-    Assert.Throws<DivideByZeroException>(accion);
-}
-```
 
 ---
-### Patrón AAA: Arrange, Act, Assert
 
+### Verificaciones Fundamentales
 
----
-### Verificaciones fundamentales
+<div class="two-col">
 
+<div>
 
 ```csharp
 // IGUALDAD
-Assert.Equal(expected, actual);           // Son iguales?
-Assert.NotEqual(unexpected, actual);      // Son diferentes?
+Assert.Equal(expected, actual);
+Assert.NotEqual(unexpected, actual);
 
 // BOOLEANOS
-Assert.True(condicion);                   // Es verdadero?
-Assert.False(condicion);                  // Es falso?
+Assert.True(condicion);
+Assert.False(condicion);
 
 // NULOS
-Assert.Null(objeto);                      // Es null?
-Assert.NotNull(objeto);                   // No es null?
+Assert.Null(objeto);
+Assert.NotNull(objeto);
 
 // EXCEPCIONES
-Assert.Throws<TipoExcepcion>(() => codigo);  // Lanza excepción?
+Assert.Throws<TipoException>(() => codigo);
+```
 
+</div>
+
+<div>
+
+```csharp
 // COLECCIONES
-Assert.Contains(elemento, coleccion);     // Contiene elemento?
-Assert.DoesNotContain(elemento, coleccion); // No contiene?
-Assert.Empty(coleccion);                  // Está vacía?
-Assert.NotEmpty(coleccion);               // No está vacía?
+Assert.Contains(elemento, coleccion);
+Assert.Empty(coleccion);
+Assert.NotEmpty(coleccion);
 
 // TIPOS
-Assert.IsType<TipoEsperado>(objeto);      // Es de tipo específico?
-Assert.IsAssignableFrom<TipoBase>(objeto); // Hereda de tipo?
-
----
-### Verificaciones fundamentales
-
+Assert.IsType<Tipo>(objeto);
+Assert.IsAssignableFrom<Base>(objeto);
 
 // RANGOS
-Assert.InRange(valor, min, max);          // Dentro de rango?
-Assert.NotInRange(valor, min, max);       // Fuera de rango?
+Assert.InRange(valor, min, max);
 
 // STRINGS
 Assert.StartsWith("inicio", texto);
 Assert.EndsWith("fin", texto);
-Assert.Contains("subcadena", texto);
 Assert.Matches(@"regex", texto);
 ```
+
+</div>
+
+</div>
 
 ---
 
 ## Pruebas Parametrizadas
 
-### [Theory] para múltiples casos
+### [Theory] para Múltiples Casos
 
 ```csharp
-// [Theory] ejecuta el test con diferentes datos
 [Theory]
 [InlineData(1, 1, 2)]      // a=1, b=1, esperado=2
 [InlineData(5, 3, 8)]      // a=5, b=3, esperado=8
 [InlineData(-1, 1, 0)]     // a=-1, b=1, esperado=0
 [InlineData(0, 0, 0)]      // a=0, b=0, esperado=0
-public void Sumar_VariosNumeros_RetornaSumaCorrecta(int a, int b, int esperado)
+public void Sumar_VariosNumeros_RetornaSuma(
+    int a, int b, int esperado)
 {
     // Arrange
     var calc = new Calculadora();
@@ -582,164 +476,153 @@ public void Sumar_VariosNumeros_RetornaSumaCorrecta(int a, int b, int esperado)
     Assert.Equal(esperado, resultado);
 }
 
-// También se puede usar [ClassData] o [MemberData] para datos complejos
+// [ClassData] o [MemberData] para datos complejos
 ```
 
 ---
 
-## 5. Ciclo Red-Green-Refactor
+## 5. Ciclo Red-Green-Refactor en Práctica
 
-### Ejemplo práctico paso a paso
+### Ejemplo: Calculadora
 
-```
-REQUISITO: Crear una calculadora que sume dos números
-```
+<div class="two-col">
 
-**PASO 1: RED (Escribir prueba que falle)**
+<div>
+
+**🔴 PASO 1: RED**
 
 ```csharp
 [Fact]
 public void Sumar_DosNumeros_RetornaSuma()
 {
-    // Arrange
-    var calc = new Calculadora();  // ← No existe aún
-    
-    // Act
-    int resultado = calc.Sumar(2, 3);  // ← No existe aún
-    
-    // Assert
+    var calc = new Calculadora();
+    int resultado = calc.Sumar(2, 3);
     Assert.Equal(5, resultado);
 }
 
-// Resultado: ❌ ERROR DE COMPILACIÓN
-// La clase Calculadora no existe
+// ❌ ERROR: No existe Calculadora
 ```
 
----
+</div>
 
-## Ciclo Red-Green-Refactor (2)
+<div>
 
-**PASO 2: GREEN (Código mínimo para pasar)**
+**🟢 PASO 2: GREEN**
 
 ```csharp
-// Crear clase mínima (sin preocuparse por diseño perfecto)
 public class Calculadora
 {
     public int Sumar(int a, int b)
     {
-        return 5;  // ← Hardcoded para pasar el test
+        return 5; // Hardcoded
     }
 }
 
-// Resultado: ✅ TEST PASA
-// Pero es código feo, solo queremos que pase
+// ✅ TEST PASA
 ```
 
----
-
-## Ciclo Red-Green-Refactor (3)
-
-**PASO 3: REFACTOR (Mejorar código manteniendo tests verdes)**
+**🔵 PASO 3: REFACTOR**
 
 ```csharp
-// Agregar más tests para forzar implementación real
 [Theory]
 [InlineData(2, 3, 5)]
 [InlineData(5, 5, 10)]
-[InlineData(0, 0, 0)]
-public void Sumar_DosNumeros_RetornaSuma(int a, int b, int esperado)
+public void Sumar_Varios(int a, int b, int e)
 {
-    var calc = new Calculadora();
-    Assert.Equal(esperado, calc.Sumar(a, b));
+    Assert.Equal(e, calc.Sumar(a, b));
 }
 
-// Ahora implementar correctamente
 public class Calculadora
 {
     public int Sumar(int a, int b)
-    {
-        return a + b;  // ← Implementación real
-    }
+        => a + b; // Implementación real
 }
-
-// Resultado: ✅ TODOS LOS TESTS PASAN
 ```
+
+</div>
+
+</div>
 
 ---
 
-## Ejemplo Completo: Clase Estudiante
+## Ejemplo Completo: Estudiante
 
-### Desarrollo con TDD
+<div class="two-col">
+
+<div>
+
+### Prueba 1: Aprobado
 
 ```csharp
-// PRUEBA 1: El estudiante debe aprobar con promedio >= 3.0
 [Fact]
-public void Aprobo_PromedioMayorIgual3_RetornaTrue()
+public void Aprobo_PromedioMayor3_RetornaTrue()
 {
-    // Arrange
-    var estudiante = new Estudiante { Promedio = 3.5 };
-    
-    // Act
-    bool aprobo = estudiante.Aprobo();
-    
-    // Assert
+    var est = new Estudiante
+        { Promedio = 3.5 };
+    bool aprobo = est.Aprobo();
     Assert.True(aprobo);
 }
-```
 
-```csharp
-// Código mínimo para pasar
+// Código mínimo
 public class Estudiante
 {
     public double Promedio { get; set; }
-    
-    public bool Aprobo()
-    {
-        return true;  // Hardcoded
-    }
+    public bool Aprobo() => true;
 }
 ```
 
----
-
-## Ejemplo Completo (2)
-
-### Segunda prueba para forzar implementación
+### Prueba 2: Reprobado
 
 ```csharp
-// PRUEBA 2: El estudiante debe reprobar con promedio < 3.0
 [Fact]
 public void Aprobo_PromedioMenor3_RetornaFalse()
 {
-    var estudiante = new Estudiante { Promedio = 2.5 };
-    
-    bool aprobo = estudiante.Aprobo();
-    
-    Assert.False(aprobo);
+    var est = new Estudiante
+        { Promedio = 2.5 };
+    Assert.False(est.Aprobo());
 }
 
-// Resultado: ❌ FALLA (siempre retorna true)
-// Ahora debemos implementar correctamente
+// ❌ FALLA (siempre true)
 ```
 
+</div>
+
+<div>
+
+### Implementación Real
+
 ```csharp
-// REFACTOR: Implementación correcta
 public class Estudiante
 {
     public double Promedio { get; set; }
-    
+
     public bool Aprobo()
-    {
-        return Promedio >= 3.0;  // Lógica real
-    }
+        => Promedio >= 3.0;
 }
 
-// Resultado: ✅ AMBOS TESTS PASAN
+// ✅ AMBOS TESTS PASAN
 ```
 
----
-### Reglas para pruebas efectivas
+### Convención de Nombres
 
+```
+Metodo_Escenario_Resultado
+
+✅ Sumar_DosNumerosPositivos_RetornaSuma
+✅ Dividir_DivisorCero_LanzaExcepcion
+✅ Constructor_SinParametros_InicializaDefault
+
+❌ Test1
+❌ CalculadoraPrueba
+```
+
+</div>
+
+</div>
+
+---
+
+## Buenas Prácticas de Pruebas
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -747,18 +630,18 @@ public class Estudiante
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  📋 INDEPENDIENTES                                          │
-│     • Cada prueba debe poder ejecutarse sola                │
-│     • No depender del orden de ejecución                    │
-│     • No compartir estado entre pruebas                     │
+│     • Cada prueba ejecuta sola                              │
+│     • Sin dependencia del orden                             │
+│     • Sin estado compartido                                 │
 │                                                             │
 │  ⚡ RÁPIDAS                                                 │
-│     • Deben ejecutarse en milisegundos                      │
-│     • Sin acceso a BD, red, archivo                         │
-│     • Usar mocks para dependencias                          │
+│     • Milisegundos, no segundos                             │
+│     • Sin BD, red, archivos                                 │
+│     • Usar mocks/stubs                                      │
 │                                                             │
 │  🎯 FOCUSDAS                                                │
 │     • Una prueba = un concepto                              │
-│     • Nombre descriptivo: Metodo_Escenario_Resultado        │
+│     • Nombre: Metodo_Escenario_Resultado                    │
 │                                                             │
 │  🔁 REPETIBLES                                              │
 │     • Mismo resultado siempre                               │
@@ -766,184 +649,23 @@ public class Estudiante
 │     • Sin dependencia de fecha/hora                         │
 │                                                             │
 │  📖 LEGIBLES                                                │
-│     • Arrange-Act-Assert claro                              │
+│     • AAA claro                                             │
 │     • Sin lógica compleja                                   │
-│     • Datos en línea (inline)                               │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-### Reglas para pruebas efectivas
-
-
----
-### Convención: Metodo_Escenario_Resultado
-
-
-```csharp
-// ❌ Nombres malos
-[Fact]
-public void Test1() { }
-
-[Fact]
-public void CalculadoraPrueba() { }
-
-// ✅ Nombres buenos
-[Fact]
-public void Sumar_DosNumerosPositivos_RetornaSuma()
-{
-    // Method: Sumar
-    // Scenario: Dos numeros positivos
-    // Result: Retorna suma
-}
-
-[Fact]
-public void Dividir_DivisorCero_LanzaDivideByZeroException()
-{
-    // Method: Dividir
-    // Scenario: Divisor es cero
-    // Result: Lanza DivideByZeroException
-}
-
----
-### Convención: Metodo_Escenario_Resultado
-
-
-[Fact]
-public void Constructor_SinParametros_InicializaValoresPorDefecto()
-{
-    // Method: Constructor
-    // Scenario: Sin parametros
-    // Result: Inicializa valores por defecto
-}
-```
-
----
-
-## Cobertura de Código
-
-### Herramientas y métricas
-
-```bash
-# Instalar herramienta de cobertura
-dotnet tool install -g dotnet-reportgenerator-globaltool
-
-# Ejecutar pruebas con cobertura
-dotnet test --collect:"XPlat Code Coverage"
-
-# Generar reporte HTML
-reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coveragereport"
-```
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  MÉTRICAS DE COBERTURA                      │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Cobertura de Líneas: 85%   ████████████████████░░         │
-│  Cobertura de Ramas:  70%   ██████████████░░░░░░░░         │
-│  Cobertura de Métodos: 90%  ███████████████████░░░         │
-│                                                             │
-│  Meta recomendada: > 80% de cobertura de líneas            │
-│                                                             │
-│  ⚠️  100% de cobertura ≠ código sin bugs                   │
-│  ⚠️  Cobertura mide QUÉ se ejecuta, no QUÉ se prueba       │
-│                                                             │
-│  Es mejor: 80% con buenas aserciones                       │
-│  Que: 100% con pruebas sin sentido                         │
+│     • Datos inline                                          │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Ejecutar Pruebas
-
-### En Visual Studio y CLI
-
-```bash
-# Ejecutar todas las pruebas
-dotnet test
-
-# Ejecutar con verbosidad detallada
-dotnet test --verbosity normal
-
-# Ejecutar pruebas específicas por nombre
-dotnet test --filter "FullyQualifiedName~Calculadora"
-
-# Ejecutar pruebas por categoría (usando traits)
-dotnet test --filter "Category=Unit"
-
-# Ejecutar hasta que falle una
-dotnet test --stop-on-failure
-
-# Ejecutar en paralelo (por defecto en xUnit)
-dotnet test --parallel
-```
-
-```csharp
-// En Visual Studio:
-// Test → Run All Tests (Ctrl+R, A)
-// Test → Test Explorer (Ctrl+E, T)
-```
-
----
-
-## Resumen, Recursos y Próxima Clase
-
-<div style="display: flex; gap: 30px;">
-<div style="flex: 1;">
-
-**📚 Resumen de la Clase:**
-- **TDD:** Pruebas ANTES del código
-- **Red-Green-Refactor:** Ciclo iterativo
-- **xUnit:** Framework de pruebas .NET
-- **[Fact]:** Prueba sin parámetros
-- **[Theory]:** Prueba parametrizada
-- **AAA:** Arrange, Act, Assert
-- **Cobertura:** % de código probado
-
-**🔗 Recursos:**
-- xUnit.net - Documentación oficial
-- Kent Beck - "TDD: By Example"
-- `dotnet new xunit` - Crear pruebas
-- `dotnet test` - Ejecutar pruebas
-
-</div>
-<div style="flex: 1;">
-
-**🚀 Próxima Clase: BDD**
-- Historias de usuario
-- Lenguaje Gherkin (Given-When-Then)
-- SpecFlow para .NET
-- Pruebas de comportamiento
-
-**Instalar:**
-```bash
-dotnet add package SpecFlow.xUnit
-dotnet add package SpecFlow.Tools.MsBuild.Generation
-```
-
-**💡 Anti-Patrones a Evitar:**
-- ❌ The Giant (Arrange demasiado grande)
-- ❌ The Sleeper (Thread.Sleep en pruebas)
-- ❌ The Mockery (Demasiados mocks)
-- ❌ The Sequencer (Pruebas dependientes)
-
-</div>
-</div>
-
----
-
-### Tipos de dobles para pruebas
+## Test Doubles: Tipología
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                  TEST DOUBLES - TIPOLOGÍA                   │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  Cuando una clase tiene dependencias (BD, API, Servicio),   │
+│  Cuando una clase tiene dependencias (BD, API),             │
 │  usamos "dobles" para aislar la prueba                      │
 │                                                             │
 │  ┌────────┐    ┌────────┐    ┌────────┐    ┌────────┐      │
@@ -957,56 +679,59 @@ dotnet add package SpecFlow.Tools.MsBuild.Generation
 └─────────────────────────────────────────────────────────────┘
 ```
 
----
-
 ### Ejemplo: Stub vs Mock
 
+<div class="two-col">
+
+<div>
+
 ```csharp
-// STUB: Proporciona respuestas predefinidas
-public class StubRepository : IUsuarioRepository
+// STUB: Respuestas predefinidas
+public class StubRepo
+    : IUsuarioRepository
 {
     public Usuario GetById(int id)
-    {
-        return new Usuario { Id = id, Nombre = "Test" };
-    }
+        => new Usuario { Id = id };
 }
 
 [Fact]
-public void Autenticar_UsuarioValido_RetornaTrue()
+public void Auth_Valid_ReturnsTrue()
 {
-    // Arrange
-    var stubRepo = new StubRepository();
-    var auth = new Autenticador(stubRepo);
-
-    // Act
-    bool resultado = auth.Autenticar(1, "password");
-
-    // Assert
-    Assert.True(resultado);
-}
-
-// MOCK: Verifica comportamiento (interacciones)
-[Fact]
-public void Autenticar_UsuarioInvalido_LlamaRepositorio()
-{
-    // Arrange
-    var mockRepo = new Mock<IUsuarioRepository>();
-    mockRepo.Setup(r => r.GetById(1)).Returns((Usuario)null);
-    var auth = new Autenticador(mockRepo.Object);
-
-    // Act
-    auth.Autenticar(1, "password");
-
-    // Assert - Verifica que se llamó al método
-    mockRepo.Verify(r => r.GetById(1), Times.Once);
+    var stub = new StubRepo();
+    var auth = new Autenticador(stub);
+    Assert.True(auth.Autenticar(1));
 }
 ```
+
+</div>
+
+<div>
+
+```csharp
+// MOCK: Verifica interacciones
+[Fact]
+public void Auth_Invalid_CallsRepo()
+{
+    var mock = new Mock<IUsuarioRepo>();
+    mock.Setup(r => r.GetById(1))
+        .Returns((Usuario)null);
+    var auth = new Autenticador(mock.Object);
+
+    auth.Autenticar(1, "pass");
+
+    // Verify: Verifica llamada
+    mock.Verify(r => r.GetById(1),
+        Times.Once);
+}
+```
+
+</div>
+
+</div>
 
 ---
 
 ## Anti-Patrones de Pruebas
-
-### Qué NO hacer al escribir pruebas
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -1015,119 +740,62 @@ public void Autenticar_UsuarioInvalido_LlamaRepositorio()
 │                                                             │
 │  ❌ THE LOADER                                              │
 │     "Prueba que carga TODO el sistema"                     │
-│     • Prueba de integración disfrazada de unitaria          │
-│     • Lenta, frágil, difícil de debuggear                   │
+│     • Integración disfrazada de unitaria                    │
+│     • Lenta, frágil, difícil de debug                       │
 │                                                             │
 │  ❌ THE GIANT                                               │
 │     "Prueba de 200 líneas con Arrange gigante"              │
-│     • Difícil de entender qué se prueba                     │
+│     • Difícil saber qué se prueba                           │
 │     • Muchas cosas pueden fallar                            │
 │                                                             │
 │  ❌ THE MOCKERY                                             │
-│     "Demasiados mocks, 0 código real probado"               │
-│     • Pruebas que solo prueban los mocks                    │
-│     • Frágiles a cambios internos                           │
+│     "Demasiados mocks, 0 código real"                      │
+│     • Prueba que solo prueba los mocks                      │
 │                                                             │
 │  ❌ THE SLEEPER                                             │
 │     "Thread.Sleep(5000) en la prueba"                       │
-│     • Pruebas lentas que dependen del tiempo                │
+│     • Pruebas lentas, dependen del tiempo                   │
 │                                                             │
 │  ❌ THE SEQUENCER                                           │
-│     "Pruebas que deben ejecutarse en orden"                 │
+│     "Pruebas con orden de ejecución"                        │
 │     • Comparten estado entre pruebas                        │
-│     • Fallan si se ejecutan sola                            │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### Ejemplos de anti-patrones
+## Pruebas Asíncronas
 
 ```csharp
-// ❌ THE GIANT: Arrange demasiado grande
+// Prueba de método async
 [Fact]
-public void ProcesarPedido_TodoElFlujo_Funciona()
+public async Task ObtenerUsuario_Existe_ReturnsUsuario()
 {
-    // 100 líneas de setup...
-    var cliente = new Cliente { /* 20 propiedades */ };
-    var producto1 = new Producto { /* 15 propiedades */ };
-    var producto2 = new Producto { /* 15 propiedades */ };
-    var direccion = new Direccion { /* 10 propiedades */ };
-    var metodoPago = new TarjetaCredito { /* 10 propiedades */ };
-    var descuento = new Descuento { /* 10 propiedades */ };
-    // ... más setup
-    // ¡Difícil saber qué se está probando realmente!
-}
-
-// ✅ Mejor: Pruebas pequeñas y específicas
-[Fact]
-public void ProcesarPedido_SinStock_LanzaExcepcion()
-{
-    var pedido = new Pedido();
-    Assert.Throws<SinStockException>(() => pedido.Procesar());
-}
-
-// ❌ THE SLEEPER
-[Fact]
-public async Task AsyncOperation_Completa_ReturnsTrue()
-{
-    var service = new Service();
-    await service.Start();
-    Thread.Sleep(5000);  // ❌ Demasiado lento
-    Assert.True(service.IsCompleted);
-}
-
-// ✅ Mejor: Usar TimeProvider o mocks
-[Fact]
-public async Task AsyncOperation_Completa_ReturnsTrue()
-{
-    var mockTimer = new Mock<ITimer>();
-    var service = new Service(mockTimer.Object);
-    mockTimer.Raise(t => t.Elapsed += null, EventArgs.Empty);
-    Assert.True(service.IsCompleted);
-}
-```
-
----
-
-## Pruebas Asíncronas en C#
-
-### Patrones para async/await
-
-```csharp
-// Prueba de método asíncrono
-[Fact]
-public async Task ObtenerUsuario_UsuarioExiste_RetornaUsuario()
-{
-    // Arrange
     var repo = new UsuarioRepository();
     int usuarioId = 1;
 
-    // Act
-    Usuario? usuario = await repo.ObtenerUsuarioAsync(usuarioId);
+    Usuario? usuario =
+        await repo.ObtenerUsuarioAsync(usuarioId);
 
-    // Assert
     Assert.NotNull(usuario);
     Assert.Equal(usuarioId, usuario.Id);
 }
 
-// Verificar excepciones asíncronas
+// Excepciones async
 [Fact]
-public async Task EliminarUsuario_UsuarioNoExiste_LanzaExcepcion()
+public async Task Eliminar_NoExist_LanzaExcepcion()
 {
-    // Arrange
     var repo = new UsuarioRepository();
 
-    // Act & Assert
     await Assert.ThrowsAsync<KeyNotFoundException>(
         () => repo.EliminarUsuarioAsync(999)
     );
 }
 
-// Timeout para pruebas asíncronas
-[Fact(Timeout = 5000)]  // 5 segundos máximo
-public async Task OperacionLenta_CompletaATiempo()
+// Timeout
+[Fact(Timeout = 5000)]
+public async Task OperLenta_CompletaATiempo()
 {
     var servicio = new ServicioExterno();
     await servicio.ProcesarAsync();
@@ -1136,104 +804,225 @@ public async Task OperacionLenta_CompletaATiempo()
 
 ---
 
-## Ejercicio Práctico
+## Cobertura de Código
 
-### Taller: Desarrollar con TDD
+<div class="two-col">
 
-**Ejercicio:** Crear una clase `Billetera` con TDD
+<div>
+
+```bash
+# Instalar herramienta
+dotnet tool install -g \
+  dotnet-reportgenerator-globaltool
+
+# Ejecutar con cobertura
+dotnet test --collect:"XPlat Code Coverage"
+
+# Generar reporte HTML
+reportgenerator \
+  -reports:"**/coverage.cobertura.xml" \
+  -targetdir:"coveragereport"
+```
+
+</div>
+
+<div>
+
+### Métricas de Cobertura
 
 ```
-Requisitos:
-1. La billetera tiene un saldo inicial de 0
-2. Puede agregar dinero (monto positivo)
-3. Puede retirar dinero si hay saldo suficiente
-4. No permite retirar más del saldo disponible
-5. Puede consultar el saldo actual
+Líneas:  85% ███████████████░░
+Ramas:   70% ███████████░░░░░░
+Métodos: 90% ███████████████░░
+
+Meta: > 80% líneas
+
+⚠️ 100% ≠ código sin bugs
+⚠️ Cobertura mide QUÉ se ejecuta,
+   no QUÉ se prueba
 ```
 
-**SOLUCIÓN GUIADA:**
+### Ejecutar Pruebas
+
+```bash
+dotnet test                           # Todas
+dotnet test --verbosity normal       # Detallado
+dotnet test --filter "Calculadora"   # Por nombre
+dotnet test --stop-on-failure        # Hasta fallo
+dotnet test --parallel               # Paralelo
+```
+
+</div>
+
+</div>
+
+---
+
+## Ejercicio Práctico: Billetera TDD
+
+<div class="two-col">
+
+<div>
+
+### Requisitos
+
+1. Saldo inicial: 0
+2. Agregar dinero (+)
+3. Retirar si hay saldo
+4. No retirar más del saldo
+5. Consultar saldo
+
+### RED: Prueba 1
 
 ```csharp
-// PASO 1: RED - Escribir prueba para saldo inicial
 [Fact]
 public void Saldo_Inicialmente_EsCero()
 {
-    // Arrange
     var billetera = new Billetera();
-
-    // Act
-    decimal saldo = billetera.Saldo;
-
-    // Assert
-    Assert.Equal(0, saldo);
+    Assert.Equal(0, billetera.Saldo);
 }
 
-// PASO 1: GREEN - Implementación mínima
+// GREEN
 public class Billetera
 {
     public decimal Saldo => 0;
 }
+```
 
-// PASO 2: RED - Prueba para agregar dinero
+### RED: Prueba 2
+
+```csharp
 [Fact]
-public void Agregar_MontoPos_AumentaSaldo()
+public void Agregar_Pos_AumentaSaldo()
 {
-    var billetera = new Billetera();
-    billetera.Agregar(100);
-    Assert.Equal(100, billetera.Saldo);
+    var b = new Billetera();
+    b.Agregar(100);
+    Assert.Equal(100, b.Saldo);
 }
+```
 
-// PASO 2: GREEN - Implementar
+</div>
+
+<div>
+
+### GREEN: Implementación
+
+```csharp
 public class Billetera
 {
     private decimal _saldo;
     public decimal Saldo => _saldo;
 
-    public void Agregar(decimal monto)
+    public void Agregar(decimal m)
     {
-        _saldo = monto;  // Hardcoded para pasar
-    }
-}
-
-// PASO 3: REFACTOR - Con más tests, implementación real
-[Theory]
-[InlineData(100)]
-[InlineData(50)]
-[InlineData(200)]
-public void Agregar_VariosMontos_AumentaSaldo(decimal monto)
-{
-    var billetera = new Billetera();
-    billetera.Agregar(monto);
-    Assert.Equal(monto, billetera.Saldo);
-}
-
-// Implementación final
-public class Billetera
-{
-    private decimal _saldo;
-    public decimal Saldo => _saldo;
-
-    public void Agregar(decimal monto)
-    {
-        if (monto <= 0)
-            throw ArgumentException("Monto debe ser positivo");
-        _saldo += monto;
+        if (m <= 0)
+            throw new ArgumentException();
+        _saldo += m;
     }
 
-    public void Retirar(decimal monto)
+    public void Retirar(decimal m)
     {
-        if (monto > _saldo)
-            throw InvalidOperationException("Saldo insuficiente");
-        _saldo -= monto;
+        if (m > _saldo)
+            throw new InvalidOperationException();
+        _saldo -= m;
     }
 }
 ```
 
+### REFACTOR: Tests completos
+
+```csharp
+[Theory]
+[InlineData(100)]
+[InlineData(50)]
+public void Agregar_Varios_AumentaSaldo(decimal m)
+{
+    var b = new Billetera();
+    b.Agregar(m);
+    Assert.Equal(m, b.Saldo);
+}
+
+[Fact]
+public void Retirar_Suficiente_DescuentaSaldo()
+{
+    var b = new Billetera();
+    b.Agregar(100);
+    b.Retirar(30);
+    Assert.Equal(70, b.Saldo);
+}
+```
+
+</div>
+
+</div>
+
+---
+
+## Resumen y Próxima Clase
+
+<div class="two-col">
+
+<div>
+
+### 📚 Resumen
+
+| Concepto | Descripción |
+|----------|-------------|
+| **TDD** | Pruebas ANTES del código |
+| **R-G-R** | Red-Green-Refactor |
+| **xUnit** | Framework .NET |
+| **[Fact]** | Prueba sin params |
+| **[Theory]** | Prueba parametrizada |
+| **AAA** | Arrange-Act-Assert |
+
+### 🔗 Recursos
+
+- xUnit.net - Doc oficial
+- Kent Beck - "TDD: By Example"
+- `dotnet new xunit`
+- `dotnet test`
+
+### ⚠️ Anti-Patrones
+
+- ❌ The Giant (Arrange grande)
+- ❌ The Sleeper (Thread.Sleep)
+- ❌ The Mockery (Demasiados mocks)
+- ❌ The Sequencer (Dependientes)
+
+</div>
+
+<div>
+
+### 🚀 Próxima Clase: BDD
+
+- Historias de usuario
+- Lenguaje Gherkin
+- Given-When-Then
+- SpecFlow para .NET
+- Pruebas de comportamiento
+
+```bash
+dotnet add package SpecFlow.xUnit
+dotnet add package SpecFlow.Tools.MsBuild.Generation
+```
+
+### 💡 Mantra TDD
+
+> **"Si no está probado, no funciona"**
+
+### 📝 Próxima Evaluación
+
+- **Semana 4:** Quiz + Práctico
+- **Tema:** POO completo + TDD
+
+</div>
+
+</div>
+
 ---
 
 # ¡Gracias!
-## ¿Preguntas?
 
-**Recuerda:** "Si no está probado, no funciona"
+## ¿Preguntas?
 
 **UNAULA - Ingeniería Informática - 2026-I**
