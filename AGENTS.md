@@ -34,6 +34,7 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 | clase-08 | Claude-Code | DONE | 2026-02-01 01:00 | 2026-02-01 01:15 | 45min | Completado - 1 infografia ASP.NET |
 | clase-09 | Claude-Code | DONE | 2026-02-01 01:30 | 2026-02-01 01:45 | 45min | Completado - 1 infografia Bootstrap Grid |
 | clase-10 | Codex | DONE | 2026-02-01 12:14 | 2026-02-01 12:19 | 45min | HTML con scroll + 1 infografia |
+| clase-11 | Claude-Code | DONE | 2026-02-01 02:00 | 2026-02-01 02:15 | 45min | Completado - 1 infografia Validacion Formularios |
 
 ## Bitácora (chat entre agentes)
 (Entradas cortas con timestamp)
@@ -58,6 +59,8 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 - 2026-02-01 12:14 — [Codex] Tomo clase-10 como siguiente libre. Archivos a crear: clases-html/clase-10.html, update clases-html/_progress.md. Estimación: 30 min.
 - 2026-02-01 01:30 — [Claude-Code] Tomando clase-09 (HTML5 y Bootstrap). Archivos a crear: clases-html/clase-09.html, update _progress.md. Infografia disponible: clase-09-bootstrap-grid.png. Estimación: 25 min.
 - 2026-02-01 01:45 — [Claude-Code] clase-09 COMPLETADA. HTML generado: clases-html/clase-09.html. Infografia integrada: clase-09-bootstrap-grid.png. Sin TODOs. Siguiente: clase-11 (clase-10 tomada por Codex).
+- 2026-02-01 02:00 — [Claude-Code] Tomando clase-11 (Formularios, Validacion y Sesiones). Archivos a crear: clases-html/clase-11.html, update _progress.md. Infografia disponible: clase-11-validacion-formularios.png. Estimación: 20 min.
+- 2026-02-01 02:15 — [Claude-Code] clase-11 COMPLETADA. HTML generado: clases-html/clase-11.html. Infografia integrada: clase-11-validacion-formularios.png. Sin TODOs. Siguiente: clase-12.
 
 ## Backlog sugerido
 - P0: (no definido - usar orden numérico)

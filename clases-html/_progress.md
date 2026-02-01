@@ -21,7 +21,7 @@
 | 08 | clase-08-introduccion-aspnet-core.md | clase-08.html | clase-08-aspnet-core.png | ✅ COMPLETADO |
 | 09 | clase-09-html5-bootstrap.md | clase-09.html | clase-09-bootstrap-grid.png | ✅ COMPLETADO |
 | 10 | clase-10-mvc-razor-pages.md | clase-10.html | clase-10-mvc.png | ✅ COMPLETADO |
-| 11 | clase-11-formularios-validacion-sesiones.md | - | clase-11-validacion-formularios.png | ⏳ PENDIENTE |
+| 11 | clase-11-formularios-validacion-sesiones.md | clase-11.html | clase-11-validacion-formularios.png | ✅ COMPLETADO |
 | 12 | clase-12-introduccion-ado-net.md | - | clase-12-ado-net.png | ⏳ PENDIENTE |
 | 13 | clase-13-crud-ado-net-sqlserver.md | - | - | ⏳ PENDIENTE |
 | 14 | clase-14-persistencia-archivos-planos.md | - | - | ⏳ PENDIENTE |
@@ -36,8 +36,8 @@
 | Metrica | Valor |
 |---------|-------|
 | Total de clases | 17 |
-| Clases procesadas | 10 |
-| Progreso | 58.8% |
+| Clases procesadas | 11 |
+| Progreso | 64.7% |
 
 ---
 
@@ -270,11 +270,41 @@
 
 ---
 
+### Clase 11 - Formularios, Validacion y Sesiones ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO
+
+**Archivos creados:**
+- `clases-html/clase-11.html`
+
+**Infografias integradas:**
+- `assets/infografias/clase-11-validacion-formularios.png`
+
+**Secciones incluidas:**
+- Objetivos y Agenda
+- Validacion con Data Annotations (Required, StringLength, Range, EmailAddress, RegularExpression, Compare)
+- Validacion Personalizada (ValidationAttribute custom)
+- ModelState.IsValid
+- Validacion Cliente vs Servidor (jQuery Validation)
+- TempData, ViewBag y ViewData
+- Sesiones y Cookies (configuracion, uso)
+- Upload de Archivos (IFormFile, multiples archivos)
+- Proteccion CSRF (AntiForgeryToken)
+- Ejercicios Practicos
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
 ## Proxima Clase a Procesar
-**Clase 11:** Formularios, Validacion y Sesiones
+**Clase 12:** Introduccion a ADO.NET
 
 **Infografias disponibles:**
-- `assets/infografias/clase-11-validacion-formularios.png`
+- `assets/infografias/clase-12-ado-net.png`
+
+**Nota:** Clase 11 puede estar siendo procesada por otro agente. Verificar AGENTS.md antes de comenzar.
 
 ---
 
