@@ -99,6 +99,32 @@
 
 ---
 
+### Clase 03 - Herencia y Polimorfismo ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO
+
+**Archivos creados:**
+- `clases-html/clase-03.html`
+
+**Infografias integradas:**
+- `assets/infografias/clase-03-herencia.png`
+- `assets/infografias/clase-03-polimorfismo.png`
+
+**Secciones incluidas:**
+- Header con objetivos y prerrequisitos
+- Teoría (definición, motivación, conceptos clave)
+- Ejemplos con herencia, override e interfaces
+- Práctica / laboratorio con checklist y pasos Windows
+- Ejercicios con tiempos y checklist
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+**R3 Revision (2026-02-01):** QA final: "sobreescritura" en objetivos; actualizado ".NET" en pasos de laboratorio; anchors verificados.
+
+---
+
 ### Clase 04 - Sobrecarga, Sobreescritura y Modelado BD ✅
 **Fecha:** 2026-02-01
 **Estado:** COMPLETADO (HTML con scroll y secciones obligatorias)
@@ -135,16 +161,19 @@
 
 **Secciones incluidas:**
 - Objetivos y Agenda
-- Que es TDD? (Ciclo Red-Green-Refactor)
+- Qué es TDD? (Ciclo Red-Green-Refactor)
 - Tres Leyes de TDD (Uncle Bob)
 - xUnit Framework ([Fact], [Theory])
-- Patron AAA (Arrange-Act-Assert)
+- Patrón AAA (Arrange-Act-Assert)
 - Test Doubles (Dummy, Stub, Fake, Mock)
 - Ejemplos Completos (Calculadora, Billetera)
-- Ejercicios Practicos
+- Práctica / laboratorio (xUnit en VS 2022)
+- Ejercicios Prácticos
 
 **TODOs:**
 - Ninguno
+
+**R1 Revision (2026-02-01):** Correcciones de acentos/ortografía; agregada práctica con pasos Windows y checklist; tiempos y checklists en ejercicios; tabla de Test Doubles corregida.
 
 ---
 
@@ -161,15 +190,17 @@
 - `assets/infografias/clase-06-three-amigos.png`
 
 **Secciones incluidas:**
-- Header con objetivos y prerequisitos
-- Teoria (TDD vs BDD, principios, Gherkin)
-- Ejemplos con escenarios Gherkin
-- Practica / laboratorio (SpecFlow, steps)
-- Ejercicios y checklist
+- Header con objetivos y prerrequisitos
+- Teoría (TDD vs BDD, principios, Gherkin)
+- Ejemplos con escenarios Gherkin e infografías
+- Práctica / laboratorio (SpecFlow, pasos Windows, checklist)
+- Ejercicios con tiempos y checklist
 - Referencias
 
 **TODOs:**
 - Ninguno
+
+**R1 Revision (2026-02-01):** Correcciones de acentos/ortografía; prerrequisitos ajustados a Windows 10/11; práctica con pasos VS 2022 y checklist; tiempos en ejercicios.
 
 ---
 
@@ -184,15 +215,17 @@
 - `assets/infografias/clase-07-ddd-arquitectura.png`
 
 **Secciones incluidas:**
-- Header con objetivos y prerequisitos
-- Teoria (fundamentos, lenguaje ubicuo, entities/value objects)
-- Ejemplos con codigo y aggregate root
-- Practica / laboratorio (repositorio, bounded contexts)
-- Ejercicios y checklist
+- Header con objetivos y prerrequisitos
+- Teoría (fundamentos, lenguaje ubicuo, entities/value objects)
+- Ejemplos con código y aggregate root
+- Práctica / laboratorio (pasos Windows, repositorio, bounded contexts)
+- Ejercicios con tiempos y checklist
 - Referencias
 
 **TODOs:**
 - Ninguno
+
+**R1 Revision (2026-02-01):** Correcciones de acentos/ortografía; prerrequisitos Windows 10/11; práctica con pasos VS 2022 y checklist; tiempos en ejercicios; notas pedagógicas en lenguaje ubicuo.
 
 ---
 

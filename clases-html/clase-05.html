@@ -288,8 +288,8 @@
 <body>
     <header>
         <h1>TDD y Pruebas Unitarias</h1>
-        <div class="subtitle">IF0100 - Lenguaje de Programacion OO II | 4 Semestre - Ingenieria Informatica</div>
-        <div class="meta">Duracion: 90 minutos | Fecha: Semana 5</div>
+        <div class="subtitle">IF0100 - Lenguaje de Programación OO II | 4.º Semestre - Ingeniería Informática</div>
+        <div class="meta">Duración: 90 minutos | Semana 5</div>
     </header>
 
     <div class="container">
@@ -297,13 +297,14 @@
             <h2>Tabla de Contenidos</h2>
             <div class="toc-grid">
                 <a href="#objetivos">Objetivos y Agenda</a>
-                <a href="#que-es-tdd">Que es TDD?</a>
+                <a href="#que-es-tdd">Qué es TDD?</a>
                 <a href="#ciclo-tdd">Ciclo Red-Green-Refactor</a>
                 <a href="#xunit">xUnit Framework</a>
-                <a href="#patron-aaa">Patron AAA</a>
+                <a href="#patron-aaa">Patrón AAA</a>
                 <a href="#test-doubles">Test Doubles</a>
                 <a href="#ejemplos">Ejemplos Completos</a>
-                <a href="#ejercicios">Ejercicios Practicos</a>
+                <a href="#practica">Práctica / Laboratorio</a>
+                <a href="#ejercicios">Ejercicios Prácticos</a>
                 <a href="#resumen">Resumen</a>
             </div>
         </nav>
@@ -318,34 +319,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>1. Entender TDD</td><td>20' Que es TDD?</td></tr>
+                    <tr><td>1. Entender TDD</td><td>20' Qué es TDD?</td></tr>
                     <tr><td>2. Usar xUnit</td><td>25' xUnit Framework</td></tr>
-                    <tr><td>3. Aplicar patron AAA</td><td>20' Patron AAA</td></tr>
+                    <tr><td>3. Aplicar patrón AAA</td><td>20' Patrón AAA</td></tr>
                     <tr><td>4. Conocer Test Doubles</td><td>15' Test Doubles</td></tr>
                     <tr><td>5. Practicar con ejemplos</td><td>10' Ejercicios</td></tr>
                 </tbody>
             </table>
+            <div class="highlight-box">
+                <h4>Prerrequisitos</h4>
+                <ul>
+                    <li>Visual Studio 2022 Community instalado (Windows 10/11).</li>
+                    <li>.NET 8 SDK (incluido con VS) y conocimientos básicos de C#.</li>
+                    <li>Acceso a consola o terminal integrada de Visual Studio.</li>
+                </ul>
+            </div>
         </section>
 
         <section id="que-es-tdd">
-            <h2>1. Que es TDD?</h2>
+            <h2>1. Qué es TDD?</h2>
 
             <h3>Test-Driven Development (TDD)</h3>
-            <p><strong>TDD</strong> es una practica de desarrollo donde se escriben las pruebas <strong>ANTES</strong> del codigo de produccion.</p>
+            <p><strong>TDD</strong> es una práctica de desarrollo donde se escriben las pruebas <strong>ANTES</strong> del código de producción.</p>
 
             <figure>
                 <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor">
-                <figcaption>Figura 1: Ciclo de TDD - Red (prueba falla), Green (codigo pasa), Refactor (mejorar).</figcaption>
+                <figcaption>Figura 1: Ciclo de TDD Red-Green-Refactor - el flujo iterativo donde primero se escribe una prueba que falla (Red), luego se implementa el código mínimo para pasarla (Green), y finalmente se refacciona para mejorar el diseño sin cambiar el comportamiento (Refactor), repitiéndose este ciclo continuamente para construir software de calidad incremental.</figcaption>
             </figure>
 
-            <h3>Por que TDD?</h3>
+            <h3>Por qué TDD?</h3>
             <div class="success-box">
                 <h4>Beneficios:</h4>
                 <ul>
-                    <li><strong>Codigo mas confiable:</strong> Las pruebas garantizan funcionalidad</li>
-                    <li><strong>Diseño mejor:</strong> Pensar en pruebas primero mejora el diseño</li>
-                    <li><strong>Refactorizacion segura:</strong> Las pruebas protegen contra regresiones</li>
-                    <li><strong>Documentacion viva:</strong> Las pruebas documentan el comportamiento</li>
+                    <li><strong>Código más confiable:</strong> Las pruebas garantizan funcionalidad</li>
+                    <li><strong>Mejor diseño:</strong> Pensar en pruebas primero mejora el diseño</li>
+                    <li><strong>Refactorización segura:</strong> Las pruebas protegen contra regresiones</li>
+                    <li><strong>Documentación viva:</strong> Las pruebas documentan el comportamiento</li>
                 </ul>
             </div>
         </section>
@@ -356,26 +365,26 @@
             <h3>El Ciclo de TDD</h3>
             <div class="diagram">
 <pre>
-🔴 RED    → Escribir prueba que falla
-             (El codigo aun no existe)
+🔴 RED     → Escribir prueba que falla
+              (El código aún no existe)
 
-🟢 GREEN  → Codigo minimo para pasar
-             (Implementacion basica)
+🟢 GREEN   → Código mínimo para pasar
+              (Implementación básica)
 
-🔵 REFACTOR → Eliminar duplicacion
-             (Mejorar diseno)
+🔵 REFACTOR → Eliminar duplicación
+              (Mejorar diseño)
 
-🔁 REPEAT → Siguiente prueba
-             (Continuar ciclo...)
+🔁 REPEAT  → Siguiente prueba
+              (Continuar ciclo...)
 </pre>
             </div>
 
             <h3>Las Tres Leyes de TDD (Uncle Bob Martin)</h3>
             <div class="highlight-box">
                 <ol>
-                    <li><strong>No escribiras codigo de produccion</strong> hasta haber escrito una prueba que falle</li>
-                    <li><strong>No escribiras mas de una prueba</strong> suficiente para fallar (y compilar)</li>
-                    <li><strong>No escribiras mas codigo</strong> del necesario para pasar la prueba</li>
+                    <li><strong>No escribirás código de producción</strong> hasta haber escrito una prueba que falle</li>
+                    <li><strong>No escribirás más de una prueba</strong> suficiente para fallar (y compilar)</li>
+                    <li><strong>No escribirás más código</strong> del necesario para pasar la prueba</li>
                 </ol>
             </div>
         </section>
@@ -383,7 +392,7 @@
         <section id="xunit">
             <h2>3. xUnit Framework</h2>
 
-            <h3>Que es xUnit?</h3>
+            <h3>Qué es xUnit?</h3>
             <p><strong>xUnit</strong> es un framework de pruebas unitarias para .NET. Es open source y ampliamente utilizado en la comunidad .NET.</p>
 
             <h3>Atributos Principales</h3>
@@ -396,13 +405,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>[Fact]</code></td><td>Prueba sin parametros</td><td>Un caso de prueba especifico</td></tr>
-                    <tr><td><code>[Theory]</code></td><td>Prueba parametrizada</td><td>Multiple casos con datos diferentes</td></tr>
-                    <tr><td><code>[InlineData(...)]</code></td><td>Datos para [Theory]</td><td>Proporciona valores para los parametros</td></tr>
+                    <tr><td><code>[Fact]</code></td><td>Prueba sin parámetros</td><td>Un caso de prueba específico</td></tr>
+                    <tr><td><code>[Theory]</code></td><td>Prueba parametrizada</td><td>Múltiples casos con datos diferentes</td></tr>
+                    <tr><td><code>[InlineData(...)]</code></td><td>Datos para [Theory]</td><td>Proporciona valores para los parámetros</td></tr>
                 </tbody>
             </table>
 
-            <h3>Instalacion</h3>
+            <h3>Instalación (CLI)</h3>
             <pre><code class="language-bash"># Crear proyecto de pruebas
 dotnet new xunit -n MiProyecto.Tests
 
@@ -415,15 +424,15 @@ dotnet test</code></pre>
 
             <figure>
                 <img src="../assets/infografias/clase-05-testing-pyramid.png" alt="Testing Pyramid - Unit, Integration, E2E Tests">
-                <figcaption>Figura 2: Piramide de Testing - Mas pruebas unitarias en la base, menos pruebas de integracion y E2E en la cima.</figcaption>
+                <figcaption>Figura 2: Pirámide de Testing - estrategia de estratificación de pruebas donde la base amplia contiene muchas pruebas unitarias rápidas y aisladas, el nivel intermedio tiene menos pruebas de integración que verifican interacciones entre componentes, y la cima contiene muy pocas pruebas end-to-end lentas pero críticas, equilibrando cobertura, velocidad y costo de mantenimiento.</figcaption>
             </figure>
         </section>
 
         <section id="patron-aaa">
-            <h2>4. Patron AAA (Arrange-Act-Assert)</h2>
+            <h2>4. Patrón AAA (Arrange-Act-Assert)</h2>
 
-            <h3>Que es el Patron AAA?</h3>
-            <p>Es un patron estandar para escribir pruebas unitarias organizadas en tres secciones claras.</p>
+            <h3>Qué es el Patrón AAA?</h3>
+            <p>Es un patrón estándar para escribir pruebas unitarias organizadas en tres secciones claras.</p>
 
             <div class="diagram">
 <pre>
@@ -437,7 +446,7 @@ dotnet test</code></pre>
 │  └─────────────┘  └─────────────┘  └─────────┘ │
 │         │               │              │         │
 │         ▼               ▼              ▼         │
-│  Crear objetos   Llamar metodo   Comprobar     │
+│  Crear objetos   Llamar método   Comprobar     │
 │  Inicializar     a probar       resultado      │
 │  variables                                  │
 │                                                 │
@@ -460,11 +469,11 @@ public void Sumar_DosNumeros_RetornaSuma()
     Assert.Equal(esperado, resultado);
 }</code></pre>
 
-            <h3>Metodos Assert Comunes</h3>
+            <h3>Métodos Assert Comunes</h3>
             <table>
                 <thead>
                     <tr>
-                        <th>Metodo</th>
+                        <th>Método</th>
                         <th>Uso</th>
                         <th>Ejemplo</th>
                     </tr>
@@ -473,8 +482,8 @@ public void Sumar_DosNumeros_RetornaSuma()
                     <tr><td><code>Equal()</code></td><td>Compara igualdad</td><td><code>Assert.Equal(8, resultado)</code></td></tr>
                     <tr><td><code>True()/False()</code></td><td>Booleano</td><td><code>Assert.True(condicion)</code></td></tr>
                     <tr><td><code>NotNull()</code></td><td>No es null</td><td><code>Assert.NotNull(obj)</code></td></tr>
-                    <tr><td><code>Throws()</code></td><td>Excepcion esperada</td><td><code>Assert.Throws&lt;Exception&gt;(() => metodo())</code></td></tr>
-                    <tr><td><code>Contains()</code></td><td>Coleccion contiene</td><td><code>Assert.Contains(lista, valor)</code></td></tr>
+                    <tr><td><code>Throws()</code></td><td>Excepción esperada</td><td><code>Assert.Throws&lt;Exception&gt;(() => metodo())</code></td></tr>
+                    <tr><td><code>Contains()</code></td><td>Colección contiene</td><td><code>Assert.Contains(lista, valor)</code></td></tr>
                 </tbody>
             </table>
         </section>
@@ -482,7 +491,7 @@ public void Sumar_DosNumeros_RetornaSuma()
         <section id="test-doubles">
             <h2>5. Test Doubles</h2>
 
-            <h3>Que son los Test Doubles?</h3>
+            <h3>Qué son los Test Doubles?</h3>
             <p>Son objetos sustitutos usados en pruebas para simular dependencias externas o complejas.</p>
 
             <h3>Tipos de Test Doubles</h3>
@@ -490,15 +499,15 @@ public void Sumar_DosNumeros_RetornaSuma()
                 <thead>
                     <tr>
                         <th>Tipo</th>
-                        <th>Proposito</th>
+                        <th>Propósito</th>
                         <th>Ejemplo</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><strong>Dummy</strong></td>
-                        <>Llena parametros, sin uso real</td>
-                        <td>Objeto vacio para cumplir firma</td>
+                        <td>Llena parámetros, sin uso real</td>
+                        <td>Objeto vacío para cumplir firma</td>
                     </tr>
                     <tr>
                         <td><strong>Stub</strong></td>
@@ -507,22 +516,22 @@ public void Sumar_DosNumeros_RetornaSuma()
                     </tr>
                     <tr>
                         <td><strong>Fake</strong></td>
-                        <td>Implementacion simplificada</td>
+                        <td>Implementación simplificada</td>
                         <td>Repository con lista en memoria</td>
                     </tr>
                     <tr>
                         <td><strong>Mock</strong></td>
                         <td>Verifica comportamiento</td>
-                        <td>Confirma que se llamo al metodo</td>
+                        <td>Confirma que se llamó al método</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Cuando usar cada uno?</h3>
+            <h3>Cuándo usar cada uno?</h3>
             <div class="comparison-table">
                 <div>
                     <h4>Dummy</h4>
-                    <pre><code class="language-csharp">// Solo para llenar parametros
+                    <pre><code class="language-csharp">// Solo para llenar parámetros
 public void Probar(DummyServicio servicio) {
     // El servicio no se usa
 }</code></pre>
@@ -545,7 +554,7 @@ var estudiante = repo.Obtener(1);</code></pre>
                     <h4>Fake</h4>
                     <pre><code class="language-csharp">// Implementacion simplificada
 public class FakeRepo : IRepositorio {
-    private List _datos = new();
+    private List<Estudiante> _datos = new();
     public void Guardar(Estudiante e) => _datos.Add(e);
     public Estudiante Obtener(int id) => _datos.FirstOrDefault();
 }</code></pre>
@@ -584,7 +593,7 @@ public void Sumar_DosNumeros_RetornaSuma()
     Assert.Equal(8, resultado);
 }</code></pre>
 
-            <h4>2. Codigo Minimo (GREEN)</h4>
+            <h4>2. Código Mínimo (GREEN)</h4>
             <pre><code class="language-csharp">public class Calculadora
 {
     public int Sumar(int a, int b) => a + b; // Minimo para pasar
@@ -630,7 +639,7 @@ public void Sumar_DosNumeros_RetornaSuma()
     }
 
     [Fact]
-    public void Agregar_MontoPosicional_IncrementaSaldo()
+    public void Agregar_MontoPositivo_IncrementaSaldo()
     {
         var billetera = new Billetera();
         billetera.Agregar(100);
@@ -678,35 +687,59 @@ public void Sumar_VariosNumeros_RetornaSuma(
 }</code></pre>
         </section>
 
-        <section id="ejercicios">
-            <h2>7. Ejercicios Practicos</h2>
+        <section id="practica">
+            <h2>7. Práctica / Laboratorio (35 min)</h2>
+            <p><strong>Objetivo:</strong> crear una solución con una librería de clases y un proyecto de pruebas xUnit en Visual Studio 2022.</p>
+            <h3>Pasos en Windows (Visual Studio 2022)</h3>
+            <ol>
+                <li>Crear una solución nueva &gt; plantilla <strong>Biblioteca de clases (.NET)</strong>.</li>
+                <li>Agregar un proyecto de pruebas: <strong>xUnit Test Project (.NET)</strong>.</li>
+                <li>Agregar referencia del proyecto de pruebas a la biblioteca.</li>
+                <li>Crear clase <code>Calculadora</code> con método <code>Sumar</code>.</li>
+                <li>Escribir pruebas con <code>[Fact]</code> y ejecutar <strong>Test Explorer</strong>.</li>
+            </ol>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>Solución compila sin errores.</li>
+                    <li>Se ejecuta al menos 1 prueba en verde.</li>
+                    <li>Una prueba falla primero (RED) y luego pasa (GREEN).</li>
+                </ul>
+            </div>
+        </section>
 
-            <h3>Ejercicio 1: Calculadora TDD Completa</h3>
+        <section id="ejercicios">
+            <h2>8. Ejercicios Prácticos</h2>
+
+            <h3>Ejercicio 1: Calculadora TDD Completa (25 min)</h3>
             <p>Implementar una calculadora siguiendo TDD:</p>
             <table>
                 <thead>
                     <tr>
-                        <th>Operacion</th>
+                        <th>Operación</th>
                         <th>Casos de Prueba</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><td>Suma</td><td>2+3=5, -1+1=0, 0+0=0</td></tr>
                     <tr><td>Resta</td><td>5-3=2, 3-5=-2</td></tr>
-                    <tr><td>Multiplicacion</td><td>3*4=12, -2*3=-6</td></tr>
-                    <tr><td>Division</td><td>10/2=5, /0 lanza excepcion</td></tr>
+                    <tr><td>Multiplicación</td><td>3*4=12, -2*3=-6</td></tr>
+                    <tr><td>División</td><td>10/2=5, /0 lanza excepción</td></tr>
                 </tbody>
             </table>
+            <div class="highlight-box">
+                <strong>Checklist:</strong> pruebas RED/GREEN, métodos con nombres claros, manejo de división por cero.
+            </div>
 
-            <h3>Ejercicio 2: Validador de Contrasenas</h3>
+            <h3>Ejercicio 2: Validador de Contraseñas (20 min)</h3>
             <pre><code class="language-csharp">public class ValidadorContrasenas
 {
     public void Validar(string contrasena)
     {
         if (contrasena.Length < 8)
-            throw new ArgumentException("Minimo 8 caracteres");
+            throw new ArgumentException("Mínimo 8 caracteres");
         if (!contrasena.Any(char.IsUpper))
-            throw new ArgumentException("Al menos una mayuscula");
+            throw new ArgumentException("Al menos una mayúscula");
         if (!contrasena.Any(char.IsDigit))
             throw new ArgumentException("Al menos un numero");
     }
@@ -714,13 +747,16 @@ public void Sumar_VariosNumeros_RetornaSuma(
 
             <p><strong>Requisitos:</strong></p>
             <ul>
-                <li>Minimo 8 caracteres</li>
-                <li>Al menos una mayuscula</li>
-                <li>Al menos un numero</li>
-                <li>Debe lanzar excepcion si no cumple</li>
+                <li>Mínimo 8 caracteres</li>
+                <li>Al menos una mayúscula</li>
+                <li>Al menos un número</li>
+                <li>Debe lanzar excepción si no cumple</li>
             </ul>
+            <div class="highlight-box">
+                <strong>Checklist:</strong> 4 pruebas fallan correctamente, mensajes de error claros, cobertura de bordes.
+            </div>
 
-            <h3>Ejercicio 3: Carrito de Compras</h3>
+            <h3>Ejercicio 3: Carrito de Compras (30 min)</h3>
             <p><strong>Funcionalidades a probar:</strong></p>
             <ul>
                 <li>Agregar producto al carrito</li>
@@ -728,6 +764,9 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <li>Aplicar descuento porcentual</li>
                 <li>Validar stock antes de agregar</li>
             </ul>
+            <div class="highlight-box">
+                <strong>Checklist:</strong> pruebas por cada regla de negocio, uso de datos parametrizados, validaciones de stock.
+            </div>
         </section>
 
         <section id="resumen">
@@ -738,13 +777,13 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <thead>
                     <tr>
                         <th>Tema</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>TDD</strong></td><td>Escribir pruebas antes del codigo (Red-Green-Refactor)</td></tr>
+                    <tr><td><strong>TDD</strong></td><td>Escribir pruebas antes del código (Red-Green-Refactor)</td></tr>
                     <tr><td><strong>xUnit</strong></td><td>Framework de pruebas para .NET ([Fact], [Theory])</td></tr>
-                    <tr><td><strong>AAA</strong></td><td>Patron Arrange-Act-Assert para pruebas</td></tr>
+                    <tr><td><strong>AAA</strong></td><td>Patrón Arrange-Act-Assert para pruebas</td></tr>
                     <tr><td><strong>Test Doubles</strong></td><td>Dummy, Stub, Fake, Mock para aislar pruebas</td></tr>
                 </tbody>
             </table>
@@ -753,12 +792,12 @@ public void Sumar_VariosNumeros_RetornaSuma(
             <ul>
                 <li>Crear proyecto de pruebas xUnit</li>
                 <li>Escribir pruebas usando [Fact] y [Theory]</li>
-                <li>Aplicar patron AAA</li>
+                <li>Aplicar patrón AAA</li>
                 <li>Usar Assert para verificar resultados</li>
                 <li>Probar excepciones con Assert.Throws</li>
             </ul>
 
-            <h3>Proximos Pasos</h3>
+            <h3>Próximos Pasos</h3>
             <ul>
                 <li><strong>Clase 6:</strong> BDD (Behavior-Driven Development)</li>
                 <li>Practicar TDD en proyectos reales</li>
@@ -770,8 +809,8 @@ public void Sumar_VariosNumeros_RetornaSuma(
     <a href="#inicio" class="back-to-top">&uarr;</a>
 
     <footer>
-        <p><strong>IF0100 - Lenguaje de Programacion OO II</strong></p>
-        <p>UNAULA - Ingenieria Informatica - 2026-I</p>
+        <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
         <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
             Contacto: [correo del docente] | Repositorio: [enlace del curso]
         </p>

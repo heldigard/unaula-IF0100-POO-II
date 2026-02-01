@@ -119,24 +119,24 @@
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programacion OO II | Unidad 3</div>
       <h1>Clase 10: MVC y Razor Pages</h1>
-      <div>Duracion: 90 minutos</div>
+      <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
           <strong>Objetivos</strong>
           <ul>
-            <li>Comprender el patron MVC en detalle.</li>
+            <li>Comprender el patrón MVC en detalle.</li>
             <li>Implementar routing personalizado.</li>
-            <li>Aplicar model binding y validacion.</li>
-            <li>Crear Razor Pages para casos especificos.</li>
+            <li>Aplicar model binding y validación.</li>
+            <li>Crear Razor Pages para casos específicos.</li>
             <li>Utilizar Tag Helpers eficientemente.</li>
           </ul>
         </div>
         <div>
-          <strong>Prerequisitos</strong>
+          <strong>Prerrequisitos</strong>
           <ul>
-            <li>ASP.NET Core basico.</li>
+            <li>ASP.NET Core básico.</li>
             <li>Conocimiento de C# y POO.</li>
-            <li>HTML/CSS fundamentals.</li>
+            <li>HTML/CSS fundamentales.</li>
           </ul>
         </div>
       </div>
@@ -145,23 +145,23 @@
 
   <nav>
     <ul>
-      <li><a href="#teoria">Teoria</a></li>
-      <li><a href="#ejemplos">Ejemplos e infografias</a></li>
-      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#teoría">Teoría</a></li>
+      <li><a href="#ejemplos">Ejemplos e infografías</a></li>
+      <li><a href="#práctica">Práctica / laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
     </ul>
   </nav>
 
   <main>
-    <section id="teoria">
-      <h2>Teoria</h2>
+    <section id="teoría">
+      <h2>Teoría</h2>
 
-      <h3>Patron MVC y responsabilidades</h3>
-      <p>El controlador orquesta el flujo, el modelo contiene reglas y datos, y la vista presenta HTML. La separacion evita mezclar UI con logica de negocio.</p>
+      <h3>Patrón MVC y responsabilidades</h3>
+      <p>El controlador orquesta el flujo, el modelo contiene reglas y datos, y la vista presenta HTML. La separación evita mezclar UI con lógica de negocio.</p>
       <pre><code>Controller: recibe request, valida, decide flujo
 Model: entidades, reglas, acceso a datos
-View: presentacion HTML/CSS (Razor)</code></pre>
+View: presentación HTML/CSS (Razor)</code></pre>
 
       <h3>Routing y atributos HTTP</h3>
       <pre><code class="language-csharp">app.MapControllerRoute(
@@ -187,29 +187,29 @@ public IActionResult Detalles(int id) { }</code></pre>
 
       <h3>Razor Pages y Tag Helpers</h3>
       <ul>
-        <li>Razor Pages simplifica paginas con PageModel + .cshtml.</li>
-        <li>Tag Helpers generan HTML dinamico con atributos asp-*.</li>
-        <li>Ideal para formularios simples o paginas de contenido.</li>
+        <li>Razor Pages simplifica páginas con PageModel + .cshtml.</li>
+        <li>Tag Helpers generan HTML dinámico con atributos asp-*.</li>
+        <li>Ideal para formularios simples o páginas de contenido.</li>
       </ul>
     </section>
 
     <section id="ejemplos">
-      <h2>Ejemplos e infografias</h2>
+      <h2>Ejemplos e infografías</h2>
 
-      <h3>Infografia: MVC</h3>
+      <h3>Infografía: MVC</h3>
       <figure>
-        <img src="../assets/infografias/clase-10-mvc.png" alt="Infografia patron MVC" />
-        <figcaption>Relacion entre Controller, Model y View y flujo de request/response.</figcaption>
+        <img src="../assets/infografias/clase-10-mvc.png" alt="Infografía patrón MVC" />
+        <figcaption>Relación entre Controller, Model y View y flujo de request/response.</figcaption>
       </figure>
 
       <h3>Controller CRUD (fragmento)</h3>
       <pre><code class="language-csharp">public class EstudiantesController : Controller
 {
-    public async Task&lt;IActionResult&gt; Index(string busqueda)
+    public async Task&lt;IActionResult&gt; Index(string búsqueda)
     {
         var estudiantes = await _service.ObtenerTodosAsync();
-        if (!string.IsNullOrEmpty(busqueda))
-            estudiantes = estudiantes.Where(e => e.Nombre.Contains(busqueda));
+        if (!string.IsNullOrEmpty(búsqueda))
+            estudiantes = estudiantes.Where(e => e.Nombre.Contains(búsqueda));
         return View(estudiantes);
     }
 
@@ -223,7 +223,7 @@ public IActionResult Detalles(int id) { }</code></pre>
     }
 }</code></pre>
 
-      <h3>Razor Page basica</h3>
+      <h3>Razor Page básica</h3>
       <pre><code class="language-html">@page
 @model CrearModel
 
@@ -234,12 +234,34 @@ public IActionResult Detalles(int id) { }</code></pre>
 </form></code></pre>
     </section>
 
-    <section id="practica">
-      <h2>Practica / laboratorio</h2>
+    <section id="práctica">
+      <h2>Práctica / laboratorio</h2>
+      <p><strong>Duración estimada:</strong> 35 minutos</p>
+      <p><strong>Objetivo:</strong> Implementar un CRUD simple de Estudiantes con MVC, usando routing personalizado y Tag Helpers.</p>
+
+      <h3>Pasos en Visual Studio 2022</h3>
+      <ol>
+        <li>Abre Visual Studio 2022 y crea un nuevo proyecto <strong>ASP.NET Core Web App (Model-View-Controller)</strong></li>
+        <li>Nombra el proyecto <code>EstudiantesMVC</code> y selecciona .NET 8</li>
+        <li>En <code>Models/Estudiante.cs</code>, crea la clase con propiedades Codigo, Nombre, CarreraId</li>
+        <li>En <code>Controllers/EstudiantesController.cs</code>, scaffoldea el CRUD usando Entity Framework</li>
+        <li>En <code>Program.cs</code>, añade una ruta personalizada para búsqueda: <code>buscar/{termino}</code></li>
+        <li>En las vistas <code>Views/Estudiantes/*.cshtml</code>, usa Tag Helpers: <code>asp-for</code>, <code>asp-action</code>, <code>asp-validation-for</code></li>
+        <li>Ejecuta y prueba: crear, editar, eliminar y buscar estudiantes</li>
+      </ol>
+
+      <h3>Checklist de verificación</h3>
+      <ul>
+        <li>✅ El proyecto compila sin errores</li>
+        <li>✅ Las vistas usan Tag Helpers (asp-*) en lugar de HTML tradicional</li>
+        <li>✅ La ruta personalizada <code>/buscar/{termino}</code> funciona correctamente</li>
+        <li>✅ Los formularios incluyen <code>[ValidateAntiForgeryToken]</code> en el controller</li>
+        <li>✅ Las validaciones de ModelState están implementadas</li>
+      </ul>
 
       <h3>Routing personalizado</h3>
       <pre><code class="language-csharp">app.MapControllerRoute(
-    name: "busqueda",
+    name: "búsqueda",
     pattern: "buscar/{termino}",
     defaults: new { controller = "Estudiantes", action = "Buscar" });</code></pre>
 
@@ -251,34 +273,63 @@ public IActionResult Detalles(int id) { }</code></pre>
 
       <h3>ViewComponents y Partial Views</h3>
       <ul>
-        <li>Partial: vista reutilizable sin logica.</li>
-        <li>ViewComponent: componente UI con logica y datos propios.</li>
-        <li>Usar para menus, widgets y paneles repetidos.</li>
+        <li>Partial: vista reutilizable sin lógica.</li>
+        <li>ViewComponent: componente UI con lógica y datos propios.</li>
+        <li>Usar para menús, widgets y paneles repetidos.</li>
       </ul>
     </section>
 
     <section id="ejercicios">
       <h2>Ejercicios</h2>
 
-      <h3>CRUD de Cursos</h3>
-      <p>Implementar CRUD completo con paginacion y busqueda, usando Bootstrap en vistas.</p>
+      <h3>1. CRUD de Cursos</h3>
+      <p><strong>Duración estimada:</strong> 30 minutos</p>
+      <p>Implementar CRUD completo con paginación y búsqueda, usando Bootstrap en vistas.</p>
+      <h4>Checklist:</h4>
+      <ul>
+        <li>✅ Controller con acciones Index, Crear, Editar, Eliminar, Detalles</li>
+        <li>✅ ViewModel con Data Annotations para validación</li>
+        <li>✅ Vistas con Bootstrap 5 (card, table, buttons)</li>
+        <li>✅ Paginación con parámetros página y tamaño</li>
+        <li>✅ Búsqueda por nombre con filtro en controller</li>
+      </ul>
 
-      <h3>Razor Page alternativa</h3>
+      <h3>2. Razor Page alternativa</h3>
+      <p><strong>Duración estimada:</strong> 20 minutos</p>
       <p>Crear Razor Page para la vista Detalles de un curso.</p>
+      <h4>Checklist:</h4>
+      <ul>
+        <li>✅ PageModel con OnGetasync que recibe id</li>
+        <li>✅ Vista .cshtml con Razor sintaxis</li>
+        <li>✅ Tag Helpers para mostrar datos y enlaces</li>
+        <li>✅ Layout compartido con MVC</li>
+      </ul>
+
+      <h3>3. Debugging de errores comunes</h3>
+      <p><strong>Duración estimada:</strong> 15 minutos</p>
+      <p>Identificar y corregir errores en código MVC proporcionado por el docente.</p>
+      <h4>Checklist:</h4>
+      <ul>
+        <li>✅ Detectar HTML colocado en el controller (violación de separación)</li>
+        <li>✅ Corregir uso del modelo de dominio directamente en la vista (sin ViewModel)</li>
+        <li>✅ Agregar validación de ModelState faltante</li>
+        <li>✅ Añadir [ValidateAntiForgeryToken] a formularios POST</li>
+      </ul>
 
       <h3>Checklist de errores comunes</h3>
       <ul>
-        <li>Colocar HTML en el controller.</li>
-        <li>Usar el modelo de dominio directamente en la vista.</li>
-        <li>Olvidar validacion de ModelState.</li>
-        <li>No proteger formularios con anti-forgery.</li>
+        <li>❌ Colocar HTML en el controller (violación de MVC)</li>
+        <li>❌ Usar el modelo de dominio directamente en la vista (sin ViewModel)</li>
+        <li>❌ Olvidar validación de ModelState antes de guardar</li>
+        <li>❌ No proteger formularios con anti-forgery tokens</li>
+        <li>❌ No usar Tag Helpers (asp-*) para vincular modelo a vista</li>
       </ul>
     </section>
 
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>Documentacion ASP.NET Core MVC.</li>
+        <li>Documentación ASP.NET Core MVC.</li>
         <li>Razor Pages (Microsoft).</li>
         <li>Tag Helpers Reference.</li>
       </ul>
