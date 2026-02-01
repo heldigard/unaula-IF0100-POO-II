@@ -241,9 +241,42 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Visualización del Ecosistema
 
-![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 55%; max-height: 350px; display: block; margin: 0 auto;"}
+<div style="display: flex; gap: 30px; align-items: center;">
 
-*El diagrama muestra cómo .NET 8 unifica todas las plataformas bajo un solo runtime, permitiendo compartir código entre diferentes tipos de aplicaciones.*
+<div style="flex: 1;">
+
+![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 100%; max-height: 350px;"}
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Puntos Clave del Ecosistema:**
+
+**✅ Unificación de Plataformas**
+- .NET 8 unifica Framework, Core y Xamarin
+- Un solo runtime para todas las aplicaciones
+- Comparte código entre web, móvil, desktop
+
+**✅ Multiplataforma Real**
+- Windows, Linux, macOS nativo
+- iOS y Android via MAUI
+- Contenedores Docker optimizados
+
+**✅ Modelo de Ejecución**
+- Compilación JIT para rendimiento
+- IL (Intermediate Language) portable
+- AOT (Ahead-of-Time) opcional
+
+**📊 Casos de Uso por Área:**
+- **Web:** ASP.NET Core → APIs de alto rendimiento
+- **Desktop:** WPF/WinForms → Apps empresariales
+- **Cloud:** Azure SDK → Serverless y microservicios
+- **Gaming:** Unity → 2.5M+ juegos desarrollados
+
+</div>
+
+</div>
 
 ---
 
@@ -536,8 +569,30 @@ var edad = 20;           // El compilador infiere: int
 ---
 ### Ejercicio en clase (25 min)
 
+<div style="display: flex; gap: 30px;">
 
-**Objetivo:** Crear una aplicación de consola que calcule el área de un rectángulo
+<div style="flex: 1;">
+
+**🎯 Objetivo del Ejercicio:**
+
+Crear una aplicación de consola que calcule el área de un rectángulo aplicando conceptos básicos de C#.
+
+**Conceptos que practicarás:**
+- ✅ Entrada/Salida con `Console`
+- ✅ Declaración de variables
+- ✅ Tipos de datos (`double`)
+- ✅ Parseo de strings a números
+- ✅ Interpolación de strings (`$`)
+- ✅ Estructura de un programa C#
+
+**Reto adicional:**
+- Agregar validación para evitar números negativos
+- Permitir calcular áreas de otras figuras (círculo, triángulo)
+- Usar métodos para organizar el código
+
+</div>
+
+<div style="flex: 1;">
 
 ```csharp
 using System;
@@ -549,217 +604,313 @@ namespace CalculadoraArea
         static void Main(string[] args)
         {
             Console.WriteLine("=== CALCULADORA DE ÁREA ===");
-            
+
             // Entrada de datos
             Console.Write("Ingrese la base: ");
             double baseRect = double.Parse(Console.ReadLine());
-            
+
             Console.Write("Ingrese la altura: ");
             double altura = double.Parse(Console.ReadLine());
-            
+
             // Cálculo
             double area = baseRect * altura;
-            
+
             // Salida
             Console.WriteLine($"El área es: {area:F2}");
-            
+
             Console.ReadKey();
         }
     }
 }
 ```
+
+**📝 Análisis del código:**
+- `Console.Write()` - Sin salto de línea
+- `Console.ReadLine()` - Lee como string
+- `double.Parse()` - Convierte string a double
+- `$"{area:F2}"` - Formatea con 2 decimales
+
+</div>
+
+</div>
 
 ---
 
 ## Ejercicios Prácticos Adicionales
 
-### Ejercicio 1: Calculadora Simple
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**🧮 Ejercicio 1: Calculadora Simple**
+
+**Objetivo:** Implementar operaciones aritméticas básicas con manejo de errores.
 
 ```csharp
-using System;
+// Estructura principal:
+Console.Write("Número 1: ");
+double num1 = double.Parse(Console.ReadLine());
 
-namespace Calculadora
+Console.Write("Operación (+ - * /): ");
+char op = Console.ReadLine()[0];
+
+Console.Write("Número 2: ");
+double num2 = double.Parse(Console.ReadLine());
+
+double resultado = op switch
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("=== CALCULADORA SIMPLE ===\n");
-            
-            Console.Write("Número 1: ");
-            double num1 = double.Parse(Console.ReadLine());
-            
-            Console.Write("Operación (+ - * /): ");
-            char op = Console.ReadLine()[0];
-            
-            Console.Write("Número 2: ");
-            double num2 = double.Parse(Console.ReadLine());
-            
-            double resultado = 0;
-            bool valido = true;
-            
-            switch (op)
-            {
-                case '+': resultado = num1 + num2; break;
-                case '-': resultado = num1 - num2; break;
-                case '*': resultado = num1 * num2; break;
-                case '/': 
-                    if (num2 != 0) resultado = num1 / num2;
-                    else { Console.WriteLine("Error: División por cero"); valido = false; }
-                    break;
-                default: Console.WriteLine("Operación inválida"); valido = false; break;
-            }
-            
-            if (valido)
-                Console.WriteLine($"\nResultado: {resultado:F2}");
-            
-            Console.ReadKey();
-        }
-    }
-}
+    '+' => num1 + num2,
+    '-' => num1 - num2,
+    '*' => num1 * num2,
+    '/' => num2 != 0 ? num1 / num2 :
+           throw new Exception("División por cero"),
+    _ => throw new Exception("Operación inválida")
+};
+
+Console.WriteLine($"Resultado: {resultado:F2}");
 ```
 
-### Ejercicio 2: Conversor de Temperatura
+**Conceptos aplicados:**
+- Switch expressions (C# 8+)
+- Manejo de excepciones
+- Operadores aritméticos
+- Validación de entrada
+
+</div>
+
+<div style="flex: 1;">
+
+**🌡️ Ejercicio 2: Conversor de Temperatura**
+
+**Objetivo:** Convertir Celsius a Fahrenheit y Kelvin con lógica condicional.
 
 ```csharp
-using System;
+Console.Write("Temperatura en Celsius: ");
+double celsius = double.Parse(Console.ReadLine());
 
-namespace Temperatura
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("=== CONVERSOR DE TEMPERATURA ===\n");
-            
-            Console.Write("Ingrese temperatura en Celsius: ");
-            double celsius = double.Parse(Console.ReadLine());
-            
-            // Fórmulas de conversión
-            double fahrenheit = (celsius * 9 / 5) + 32;
-            double kelvin = celsius + 273.15;
-            
-            Console.WriteLine("\n--- Resultados ---");
-            Console.WriteLine($"{celsius}°C = {fahrenheit:F2}°F");
-            Console.WriteLine($"{celsius}°C = {kelvin:F2}K");
-            
-            // Evaluar estado del agua
-            if (celsius <= 0)
-                Console.WriteLine("→ El agua está en estado SÓLIDO (hielo)");
-            else if (celsius >= 100)
-                Console.WriteLine("→ El agua está en estado GASEOSO (vapor)");
-            else
-                Console.WriteLine("→ El agua está en estado LÍQUIDO");
-            
-            Console.ReadKey();
-        }
-    }
-}
+// Fórmulas de conversión
+double fahrenheit = (celsius * 9 / 5) + 32;
+double kelvin = celsius + 273.15;
+
+Console.WriteLine($"{celsius}°C = {fahrenheit:F2}°F");
+Console.WriteLine($"{celsius}°C = {kelvin:F2}K");
+
+// Estado del agua
+string estado = celsius <= 0 ? "SÓLIDO ❄️" :
+                celsius >= 100 ? "GASEOSO 💨" : "LÍQUIDO 💧";
+
+Console.WriteLine($"→ Estado del agua: {estado}");
 ```
+
+**Conceptos aplicados:**
+- Operador ternario `? :`
+- Expresiones matemáticas
+- Formato de salida (`:F2`)
+- Lógica condicional encadenada
+
+**Reto:** Agregar conversión a Rankine y Réaumur
+
+</div>
+
+</div>
 
 ---
 
-## Ejercicio Propuesto en Clase
+## Ejercicio Propuesto: Sistema de Calificaciones
 
-### Calculadora de Promedio Estudiantil
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**🎯 Desafío de Programación:**
+
+Crear un **Sistema de Calificaciones** que calcule promedios de estudiantes.
+
+**Requisitos funcionales:**
+1. Solicitar nombre del estudiante
+2. Ingresar 3 notas (0.0 - 5.0)
+3. Calcular promedio automáticamente
+4. Determinar estado: APROBADO (≥3.0) o REPROBADO
+5. Validar entrada de datos con manejo de errores
+6. Mostrar resultados formateados
+
+**🚀 Niveles de dificultad:**
+
+| Nivel | Requisito |
+|-------|-----------|
+| **Básico** | Calcular promedio de 3 notas |
+| **Intermedio** | Agregar validación de notas (0-5) |
+| **Avanzado** | Crear método `PedirNota()` reutilizable |
+
+</div>
+
+<div style="flex: 1;">
+
+**📊 Salida esperada:**
+
+```
+================================
+  SISTEMA DE CALIFICACIONES
+================================
+Estudiante: María López
+
+Notas ingresadas:
+  Nota 1: 4.5
+  Nota 2: 3.8
+  Nota 3: 4.2
+--------------------------------
+Promedio: 4.17
+Estado: ✅ APROBADO
+================================
+```
+
+**💡 Pistas para la solución:**
 
 ```csharp
-// Ejercicio: Calcular promedio de 3 notas
-// El programa debe:
-// 1. Pedir nombre del estudiante
-// 2. Pedir 3 notas (decimal)
-// 3. Calcular promedio
-// 4. Mostrar si aprobó (>= 3.0) o reprobó
-// 5. Manejar errores de entrada (validar números)
+// Pedir nombre
+Console.Write("Nombre: ");
+string nombre = Console.ReadLine();
 
-// Ejemplo de salida:
-// ================================
-//   SISTEMA DE CALIFICACIONES
-// ================================
-// Estudiante: María López
-// Nota 1: 4.5
-// Nota 2: 3.8
-// Nota 3: 4.2
-// -------------------------------
-// Promedio: 4.17
-// Estado: ✅ APROBADO
-// ================================
+// Pedir notas
+Console.Write("Nota 1: ");
+double n1 = double.Parse(Console.ReadLine());
+// ... repetir para n2, n3
+
+// Calcular
+double promedio = (n1 + n2 + n3) / 3;
+
+// Determinar estado
+string estado = promedio >= 3.0 ?
+    "APROBADO ✅" : "REPROBADO ❌";
 ```
+
+**🔑 Conceptos clave:**
+- Console.Write vs WriteLine
+- double.Parse para conversión
+- Operadores aritméticos
+- Operador ternario para estado
+
+</div>
+
+</div>
 
 ---
 
 ## Ejercicio con Manejo de Errores
 
-### Validación de entrada de datos
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**✅ Validación Robusta de Entrada:**
+
+Aprender a validar datos de entrada es **crítico** para aplicaciones reales.
+
+**Problemas que resuelve la validación:**
+- ❌ Usuario ingresa letras en lugar de números
+- ❌ Usuario ingresa notas fuera de rango (negativas, >5)
+- ❌ El programa se cierra inesperadamente
+
+**🔑 Conceptos clave:**
+
+| Método | Propósito |
+|--------|-----------|
+| `TryParse()` | Convierte sin lanzar excepción |
+| `while(true)` | Repite hasta entrada válida |
+| `return nota` | Sale del método con el valor |
+| `out nota` | Parámetro de salida |
+
+</div>
+
+<div style="flex: 1;">
 
 ```csharp
-using System;
-
-namespace ValidacionNotas
+// Método reutilizable de validación
+static double PedirNota(string etiqueta)
 {
-    class Program
+    double nota;
+    while (true)
     {
-        static void Main(string[] args)
+        Console.Write($"{etiqueta} (0.0 - 5.0): ");
+
+        // TryParse devuelve bool, no lanza excepción
+        if (double.TryParse(Console.ReadLine(),
+            out nota))
         {
-            Console.WriteLine("=== CALCULADORA DE PROMEDIO CON VALIDACIÓN ===\n");
+            if (nota >= 0.0 && nota <= 5.0)
+                return nota; // ✅ Válido, retornar
 
-            // Pedir nombre
-            Console.Write("Nombre del estudiante: ");
-            string nombre = Console.ReadLine();
-
-            double nota1 = PedirNota("Nota 1");
-            double nota2 = PedirNota("Nota 2");
-            double nota3 = PedirNota("Nota 3");
-
-            double promedio = (nota1 + nota2 + nota3) / 3.0;
-
-            Console.WriteLine($"\n=== RESULTADO ===");
-            Console.WriteLine($"Estudiante: {nombre}");
-            Console.WriteLine($"Promedio: {promedio:F2}");
-            Console.WriteLine($"Estado: {(promedio >= 3.0 ? "✅ APROBADO" : "❌ REPROBADO")}");
-
-            Console.ReadKey();
+            Console.WriteLine("  ⚠️ Fuera de rango");
         }
-
-        static double PedirNota(string etiqueta)
+        else
         {
-            double nota;
-            while (true)
-            {
-                Console.Write($"{etiqueta} (0.0 - 5.0): ");
-                if (double.TryParse(Console.ReadLine(), out nota))
-                {
-                    if (nota >= 0.0 && nota <= 5.0)
-                        return nota;
-                    Console.WriteLine("  ⚠️ Error: La nota debe estar entre 0.0 y 5.0");
-                }
-                else
-                {
-                    Console.WriteLine("  ⚠️ Error: Ingrese un número válido");
-                }
-            }
+            Console.WriteLine("  ⚠️ No es un número");
         }
     }
 }
+
+// Uso en Main:
+double n1 = PedirNota("Nota 1");
+double n2 = PedirNota("Nota 2");
+double n3 = PedirNota("Nota 3");
+
+double promedio = (n1 + n2 + n3) / 3.0;
 ```
+
+**💡 Ventajas:**
+- Código limpio y reutilizable
+- Maneja errores sin crashes
+- Retroalimentación inmediata al usuario
+- Evita datos inválidos en el sistema
+
+</div>
+
+</div>
 
 ---
 
 ## Atajos de Visual Studio Útiles
 
-### Productividad
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**⌨️ Atajos Esenciales:**
 
 | Atajo | Acción |
-| ------- | -------- |
-| `Ctrl + K, Ctrl + C` | Comentar selección |
-| `Ctrl + K, Ctrl + U` | Descomentar selección |
-| `Ctrl + .` | Quick Actions (corregir errores) |
+|-------|--------|
+| `Ctrl + .` | Quick Actions / Corregir errores |
 | `F5` | Ejecutar con debugging |
 | `Ctrl + F5` | Ejecutar sin debugging |
-| `Tab` | Autocompletar (IntelliSense) |
+| `Shift + F5` | Detener debugging |
+| `F9` | Toggle breakpoint |
+| `F10` | Step Over (siguiente línea) |
+| `F11` | Step Into (entrar en función) |
+| `Shift + F11` | Step Out (salir de función) |
+
+</div>
+
+<div style="flex: 1;">
+
+**🛠️ Edición y Navegación:**
+
+| Atajo | Acción |
+|-------|--------|
+| `Ctrl + K, C` | Comentar selección |
+| `Ctrl + K, U` | Descomentar selección |
 | `Ctrl + Space` | Forzar IntelliSense |
+| `Tab` | Aceptar sugerencia IntelliSense |
 | `F12` | Ir a definición |
-| `Ctrl + R, Ctrl + R` | Renombrar refactoring |
+| `Shift + F12` | Find All References |
+| `Ctrl + R, R` | Renombrar (refactor) |
+| `Ctrl + -` | Navegar hacia atrás |
+| `Ctrl + Shift + -` | Navegar hacia adelante |
+
+**💡 Tip:** Presiona `Ctrl + E, Ctrl + I` para búsqueda incremental
+
+</div>
+
+</div>
 
 ---
 
@@ -979,38 +1130,27 @@ int? longitud = texto?.Length;  // null si texto es null
 
 ---
 
-## 📊 C# vs Otros Lenguajes: Comparativa
+## 📊 C# vs Otros Lenguajes
 
-### Benchmark de Rendimiento
-
-| Operación | C# | Java | Python | JavaScript |
-|-----------|-----|------|--------|------------|
-| **Hello World** | 30ms | 35ms | 50ms | 40ms |
-| **Loop 1M iteraciones** | 15ms | 18ms | 980ms | 25ms |
-| **Ordenar 100K items** | 180ms | 200ms | 450ms | 300ms |
-| **Manejo JSON** | 90ms | 100ms | 150ms | 80ms |
-| **Consumo memoria** | 25MB | 40MB | 15MB | 30MB |
-
----
-
-### Análisis de Resultados
-
-<div style="display: flex; gap: 20px;">
+<div style="display: flex; gap: 30px;">
 
 <div style="flex: 1;">
 
-**🏆 Fortalezas de C#**
+**Benchmark de Rendimiento:**
 
-- **Rendimiento cercano a C++:** Gracias al compilador JIT que optimiza en runtime
-- **Menor consumo de memoria vs Java:** CLR más eficiente en gestión de objetos
-- **Velocidad de desarrollo:** Equilibrio entre performance y productividad
-- **Tipado estático:** Detección de errores en compilación, no en ejecución
+| Operación | C# | Java | Python | JS |
+|-----------|-----|------|--------|-----|
+| Hello World | 30ms | 35ms | 50ms | 40ms |
+| Loop 1M | 15ms | 18ms | 980ms | 25ms |
+| Sort 100K | 180ms | 200ms | 450ms | 300ms |
+| JSON | 90ms | 100ms | 150ms | 80ms |
+| Memoria | 25MB | 40MB | 15MB | 30MB |
 
-**📈 Casos donde C# brilla:**
-- Aplicaciones empresariales de alto tráfico
-- Procesamiento de datos en tiempo real
-- APIs de alto rendimiento
-- Microservicios en contenedores
+**🏆 Fortalezas de C#:**
+- Rendimiento cercano a C++ (JIT)
+- Menor memoria que Java
+- Tipado estático (errores en compilación)
+- Excelente para: APIs empresariales, microservicios, procesamiento en tiempo real
 
 </div>
 
@@ -1019,29 +1159,27 @@ int? longitud = texto?.Length;  // null si texto es null
 **🎯 Cuándo elegir cada lenguaje:**
 
 ```
-C#          → Aplicaciones empresariales Windows/Cloud
-Java        → Sistemas legacy, Android nativo
-Python      → Data Science, IA, scripts rápidos
-JavaScript  → Frontend web, Node.js full-stack
-Go          → Microservicios de alta concurrencia
-Rust        → Sistemas de bajo nivel, seguridad crítica
+┌────────────────────────────────────┐
+│ C#       → Empresas, Windows, Cloud │
+│ Java     → Legacy, Android          │
+│ Python   → Data Science, IA         │
+│ JS       → Frontend web, Node.js    │
+│ Go       → Microservicios           │
+│ Rust     → Bajo nivel, crítico      │
+└────────────────────────────────────┘
 ```
 
-**💼 Mercado laboral Colombia (2025):**
-- C#/.NET: ⭐⭐⭐⭐⭐ Alta demanda en empresas medianas/grandes
-- Java: ⭐⭐⭐⭐⭐ Máxima demanda (sistemas legacy)
-- Python: ⭐⭐⭐⭐⭐ En crecimiento (Data/AI)
-- JavaScript: ⭐⭐⭐⭐⭐ Universal para web
+**💼 Mercado Colombia 2026:**
+- C#/.NET: ⭐⭐⭐⭐⭐ Alta demanda
+- Java: ⭐⭐⭐⭐⭐ Máxima (legacy)
+- Python: ⭐⭐⭐⭐⭐ Creciente (Data/AI)
+- JavaScript: ⭐⭐⭐⭐⭐ Universal
+
+**📈 Tendencia:** C# creciendo en cloud y microservicios
 
 </div>
 
 </div>
-
----
-
-### Conclusión
-
-> **C# ofrece el mejor balance entre rendimiento, productividad y ecosistema empresarial. Ideal para desarrolladores que buscan un lenguaje moderno con amplia demanda laboral.**
 
 ---
 
@@ -1086,227 +1224,455 @@ Rust        → Sistemas de bajo nivel, seguridad crítica
 
 ## 💼 Casos de Uso Reales de .NET
 
-### Empresas que Usan .NET
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**🏢 Empresas que Usan .NET:**
 
 ```
-MICROSOFT           → Azure, Visual Studio, Office 365
-STACK OVERFLOW      → Sitio web completo
-UNITY               → Motor de juegos (millones de juegos)
-SIEMENS             → Sistemas industriales
-DELL                → Herramientas internas
-ALASKA AIRLINES     → Sistema de reservas
+Microsoft    → Azure, VS, Office 365
+Stack Overflow→ Sitio web completo
+Unity        → Motor de juegos #1
+Siemens      → Sistemas industriales
+Dell         → Herramientas internas
+Alaska Airlines→ Sistema reservas
 ```
 
-### Proyectos Open Source Famosos
+**📊 Impacto en el mercado:**
+- Más de 7 millones de desarrolladores .NET
+- 90% de PCs Windows ejecutan .NET Framework
+- Azure procesa 1B+ transacciones/día con .NET
 
-| Proyecto | Descripción | GitHub Stars |
-|----------|-------------|--------------|
-| **ASP.NET Core** | Framework web | 35K+ ⭐ |
-| **Roslyn** | Compilador C# | 19K+ ⭐ |
-| **ML.NET** | Machine Learning | 9K+ ⭐ |
-| **Orleans** | Actor model framework | 10K+ ⭐ |
-| **Blazor** | WebAssembly con C# | (Parte de ASP.NET) |
+</div>
+
+<div style="flex: 1;">
+
+**🌟 Proyectos Open Source:**
+
+| Proyecto | Descripción | Stars |
+|----------|-------------|-------|
+| ASP.NET Core | Framework web | 35K+ |
+| Roslyn | Compilador C# | 19K+ |
+| ML.NET | Machine Learning | 9K+ |
+| Orleans | Actor model | 10K+ |
+| Blazor | WebAssembly C# | + |
+
+**🎮 Gaming con C#:**
+- Unity: 2.5M+ juegos creados
+- 50% de juegos móviles usan Unity
+- C# es el lenguaje principal de Unity
+
+**💡 Conclusión:**
+C# tiene un ecosistema maduro con amplias oportunidades laborales.
+
+</div>
+
+</div>
 
 ---
 
 ## 🛠️ Herramientas del Ecosistema .NET
 
-### Más Allá de Visual Studio
+<div style="display: flex; gap: 30px;">
 
-**IDEs Alternativos:**
-- 🟦 **Visual Studio Code** + C# Extension (Ligero, multiplataforma)
-- 🟦 **JetBrains Rider** (Potente, comercial)
-- 🟦 **Visual Studio for Mac** (Nativo macOS)
+<div style="flex: 1;">
 
-**CLI (dotnet command):**
+**💻 IDEs Disponibles:**
+- **Visual Studio 2022** - IDE completo (Windows)
+- **VS Code + C# Dev Kit** - Ligero, cross-platform
+- **JetBrains Rider** - Potente, comercial
+- **Visual Studio for Mac** - Nativo macOS
+
+**⚙️ CLI dotnet (Comandos clave):**
+
 ```bash
-# Crear proyecto
-dotnet new console -n MiApp
+dotnet new console -n App    # Crear
+dotnet build                 # Compilar
+dotnet run                   # Ejecutar
+dotnet test                  # Probar
+dotnet publish -c Release    # Producción
+```
 
-# Restaurar dependencias
-dotnet restore
-
-# Compilar
-dotnet build
-
-# Ejecutar
-dotnet run
-
-# Publicar para producción
-dotnet publish -c Release
-
-# Agregar paquete NuGet
+**📦 Gestión de paquetes:**
+```bash
 dotnet add package Newtonsoft.Json
+dotnet restore                # Restaurar deps
 ```
 
-**Herramientas de Testing:**
-- xUnit, NUnit, MSTest (frameworks de pruebas)
-- Moq (mocking)
-- BenchmarkDotNet (benchmarks)
+</div>
+
+<div style="flex: 1;">
+
+**🧪 Frameworks de Testing:**
+- **xUnit** - Popular, open source
+- **NUnit** - Ampliamente usado
+- **MSTest** - Oficial Microsoft
+- **Moq** - Mocking framework
+- **BenchmarkDotNet** - Benchmarks
+
+**🔧 Extensiones útiles:**
+- **C# Dev Kit** - VS Code completo
+- **.NET Core Test Explorer** - Tests en VS Code
+- **NuGet Package Manager** - Gestión paquetes
+
+**💡 ¿Por qué aprender la CLI?**
+- Automatización de builds
+- CI/CD pipelines
+- Contenedores Docker
+- Servidores sin GUI (Linux)
+
+</div>
+
+</div>
 
 ---
 
-## 📦 NuGet: Gestor de Paquetes
+## 📦 NuGet: Gestor de Paquetes de .NET
 
-### El "npm" de .NET
+<div style="display: flex; gap: 30px;">
 
-```xml
-<!-- Archivo .csproj -->
-<ItemGroup>
-  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  <PackageReference Include="Dapper" Version="2.1.28" />
-  <PackageReference Include="Serilog" Version="3.1.1" />
-</ItemGroup>
+<div style="flex: 1;">
+
+**📚 ¿Qué es NuGet?**
+
+Es el gestor de paquetes oficial de .NET (similar a npm de Node.js o pip de Python).
+
+**Uso desde CLI:**
+```bash
+# Buscar paquete
+dotnet add package Newtonsoft.Json
+
+# Versión específica
+dotnet add package Dapper --version 2.1.28
+
+# Listar paquetes
+dotnet list package
 ```
 
-**Repositorio oficial:** https://www.nuget.org/
+**Uso en Visual Studio:**
+- Click derecho → Manage NuGet Packages
+- Buscar → Install
 
-**Paquetes populares:**
-- **Newtonsoft.Json** - Manejo JSON (2.5B descargas)
-- **AutoMapper** - Mapeo de objetos
-- **Dapper** - Micro ORM rápido
-- **Serilog** - Logging estructurado
-- **FluentValidation** - Validaciones fluidas
+</div>
+
+<div style="flex: 1;">
+
+**🔥 Paquetes Populares (Billones de descargas):**
+
+| Paquete | Uso | Descargas |
+|---------|-----|-----------|
+| **Newtonsoft.Json** | JSON | 2.5B+ |
+| **Dapper** | Micro ORM | 500M+ |
+| **Serilog** | Logging | 300M+ |
+| **AutoMapper** | Mapeo objetos | 250M+ |
+| **FluentValidation** | Validaciones | 100M+ |
+| **xUnit** | Testing | 150M+ |
+
+**💡 Ventajas:**
+- Reutilización de código
+- Actualizaciones automáticas
+- Gestión de dependencias
+- 400K+ paquetes disponibles
+
+**🔗 https://www.nuget.org/**
+
+</div>
+
+</div>
 
 ---
 
-## 🎓 Ejercicio Avanzado: Debugging
+## 🎓 Ejercicio Avanzado: Debugging en Visual Studio
 
-### Práctica con Breakpoints
+<div style="display: flex; gap: 30px;">
 
-**Código con bug intencional:**
+<div style="flex: 1;">
+
+**🐛 Encuentra el Bug:**
+
 ```csharp
-using System;
+int[] numeros = { 10, 20, 30, 40, 50 };
+int suma = 0;
 
-class Program
+// 🐛 Bug en esta línea
+for (int i = 0; i <= numeros.Length; i++)
 {
-    static void Main()
-    {
-        int[] numeros = { 10, 20, 30, 40, 50 };
-        int suma = 0;
-        
-        for (int i = 0; i <= numeros.Length; i++)  // 🐛 Bug aquí
-        {
-            suma += numeros[i];
-        }
-        
-        Console.WriteLine($"Suma: {suma}");
-    }
+    suma += numeros[i];
 }
+
+Console.WriteLine($"Suma: {suma}");
 ```
 
-**Instrucciones:**
-1. Copiar código a Visual Studio
-2. Poner breakpoint en línea del `for`
-3. Presionar F5 (Debug)
-4. Usar F10 (Step Over) para ver el error
-5. Identificar y corregir el bug
-6. ¿Qué excepción lanza? ¿En qué línea?
+**🔍 Ejercicio de debugging:**
+1. Breakpoint en línea del `for` (F9)
+2. F5 para iniciar debug
+3. F10 para Step Over (línea por línea)
+4. Observa valor de `i` e intenta acceder a `numeros[5]`
 
-**Respuesta:** `IndexOutOfRangeException` - `i <= numeros.Length` debe ser `i < numeros.Length`
+**❓ ¿Qué sucede?**
+- Excepción: `IndexOutOfRangeException`
+- El array tiene índices 0-4 (5 elementos)
+- `i <= Length` intenta acceder al índice 5
+
+**✅ Solución:**
+```csharp
+// Corregir la condición
+for (int i = 0; i < numeros.Length; i++)
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Comandos de Debugging:**
+
+| Tecla | Acción |
+|-------|--------|
+| `F5` | Iniciar debug |
+| `F9` | Toggle breakpoint |
+| `F10` | Step Over (siguiente) |
+| `F11` | Step Into (entrar func) |
+| `Shift+F11` | Step Out (salir func) |
+| `Shift+F5` | Detener debug |
+
+**💡 Tips de Debugging:**
+- **Watch Window:** Inspeccionar variables
+- **Immediate Window:** Ejecutar código en tiempo de ejecución
+- **Call Stack:** Ver ruta de ejecución
+- **Locals:** Variables locales del scope actual
+
+**🚀 ¿Por qué aprender debugging?**
+- Ahorra 50%+ del tiempo de desarrollo
+- Permite entender el flujo del código
+- Esencial para encontrar bugs complejos
+- Habilidad obligatoria para cualquier desarrollador
+
+</div>
+
+</div>
 
 ---
 
 ## 🔥 Mejores Prácticas desde el Día 1
 
-### Code Style y Convenciones
+<div style="display: flex; gap: 30px;">
 
+<div style="flex: 1;">
+
+**✅ Convenciones de Nomenclatura C#:**
+
+| Elemento | Estilo | Ejemplo |
+|----------|--------|---------|
+| Clases | PascalCase | `StudentManager` |
+| Métodos | PascalCase | `GetStudent()` |
+| Propiedades | PascalCase | `Name { get; }` |
+| Campos privados | _camelCase | `_studentCount` |
+| Variables locales | camelCase | `studentName` |
+| Constantes | PascalCase | `MaxCount` |
+
+**Ejemplo correcto:**
 ```csharp
-// ✅ CORRECTO
-public class StudentManager        // PascalCase para clases
+public class StudentManager
 {
-    private int _studentCount;     // camelCase con _ para campos privados
-    
-    public string Name { get; set; }  // PascalCase para propiedades
-    
-    public void AddStudent()       // PascalCase para métodos
-    {
-        int localVar = 10;         // camelCase para variables locales
-    }
-}
+    private int _studentCount;
 
-// ❌ INCORRECTO
-public class student_manager      // Minúsculas y guiones bajos
-{
-    private int StudentCount;     // Sin _
-    
-    public string name { get; set; }  // Minúsculas
-    
-    public void add_student()     // Estilo Python
+    public string Name { get; set; }
+
+    public void AddStudent()
     {
-        int LocalVar = 10;        // Mayúscula inicial
+        int localVar = 10;
     }
 }
 ```
 
-### Reglas de Oro
-1. ✅ Usar nombres descriptivos
-2. ✅ Evitar abreviaturas confusas
-3. ✅ Comentar solo lo necesario
-4. ✅ Máximo 100-120 caracteres por línea
-5. ✅ Un archivo por clase (usualmente)
+</div>
+
+<div style="flex: 1;">
+
+**📜 Reglas de Oro:**
+
+1. **Nombres descriptivos:** `GetStudentById()`, no `Get()`
+2. **Sin abreviaturas confusas:** `Student`, no `Stu`
+3. **Comentarios mínimos:** El código debe explicarse solo
+4. **Líneas ≤ 100 caracteres:** Mayor legibilidad
+5. **Un archivo por clase:** Organización limpia
+
+**🎨 Formato con EditorConfig:**
+```ini
+# .editorconfig
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+```
+
+**🚀 Herramientas útiles:**
+- **StyleCop Analyzer** - Reglas de estilo
+- **Resharper** - Refactoring automático
+- **Formatter** - Formato automático (Ctrl+K, D)
+
+**💡 Beneficio:** Código consistente = Código mantenible
+
+</div>
+
+</div>
 
 ---
 
 ## Resumen de la Clase
 
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**📚 Conceptos Aprendidos:**
+
 | Concepto | Descripción |
-| ---------- | ------------- |
-| **C#** | Lenguaje moderno, orientado a objetos, type-safe |
-| **.NET 8** | Plataforma unificada, multiplataforma, open source |
-| **CLR** | Common Language Runtime, máquina virtual de .NET |
-| **Visual Studio** | IDE oficial para desarrollo .NET |
-| **Namespace** | Organización jerárquica del código |
-| **Main()** | Punto de entrada de la aplicación |
+|----------|-------------|
+| **C#** | Lenguaje moderno, POO, type-safe |
+| **.NET 8** | Plataforma unificada, open source |
+| **CLR** | Máquina virtual (JIT, GC, seguridad) |
+| **Visual Studio** | IDE oficial para desarrollo |
+| **Namespace** | Organización jerárquica |
+| **Main()** | Punto de entrada |
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Habilidades Desarrolladas:**
+
+```
+✅ Instalar y configurar VS 2022
+✅ Crear aplicación de consola
+✅ Escribir código C# básico
+✅ Usar variables y tipos de datos
+✅ Implementar entrada/salida
+✅ Depurar código (breakpoints)
+✅ Aplicar convenciones de código
+```
+
+**🚀 Próximos pasos:**
+- Clase 2: Clases y Objetos
+- Practicar ejercicios propuestos
+- Completar tarea de promedios
+
+**💡 Recurso:** Microsoft Learn C#
+
+</div>
+
+</div>
 
 ---
 
 ## Tarea para la Próxima Clase
 
-### Preparación (individual)
+<div style="display: flex; gap: 30px;">
 
-1. **Instalar** Visual Studio 2022 Community
-   - Workloads: ASP.NET y desarrollo web
-   - Componente: .NET 8 SDK
+<div style="flex: 1;">
 
-2. **Crear** una aplicación de consola que:
-   - Pida el nombre de un estudiante
-   - Pida 3 notas
-   - Calcule el promedio
-   - Muestre el resultado con 2 decimales
-   - Indique si aprobó o reprobó
+**🖥️ 1. Instalación de Visual Studio 2022**
 
-3. **Subir** el código a un repositorio Git (GitHub/GitLab)
+- Descargar desde: visualstudio.microsoft.com
+- Edición: Community (gratis)
+- Workloads necesarios:
+  - ☑️ ASP.NET y desarrollo web
+  - ☑️ Almacenamiento y procesamiento de datos
+- Componentes:
+  - ☑️ .NET 8 SDK
+  - ☑️ Git para Windows
+
+</div>
+
+<div style="flex: 1;">
+
+**💻 2. Proyecto: Calculadora de Promedios**
+
+Crear una app de consola que:
+
+```csharp
+// Requisitos funcionales:
+1. Solicitar nombre del estudiante
+2. Ingresar 3 notas (0.0 - 5.0)
+3. Calcular promedio
+4. Mostrar con 2 decimales
+5. Indicar: APROBADO (≥3.0) o REPROBADO
+6. Validar entrada de datos
+```
+
+**Salida esperada:**
+```
+===============================
+  SISTEMA DE CALIFICACIONES
+===============================
+Estudiante: María López
+Nota 1: 4.5
+Nota 2: 3.8
+Nota 3: 4.2
+-------------------------------
+Promedio: 4.17
+Estado: ✅ APROBADO
+===============================
+```
+
+**📦 3. Entrega:**
+- Subir a GitHub/GitLab
+- Compartir enlace del repositorio
+
+</div>
+
+</div>
 
 ---
 
-## Recursos de Aprendizaje
+## Recursos y Próxima Clase
 
-### Documentación oficial
+<div style="display: flex; gap: 30px;">
 
-- **Microsoft Learn:** https://learn.microsoft.com/es-es/dotnet/csharp/
-- **Documentación C#:** https://docs.microsoft.com/es-es/dotnet/csharp/
-- **Descargas .NET:** https://dotnet.microsoft.com/download
+<div style="flex: 1;">
 
-### Libros recomendados (PDF oficial)
+**📚 Recursos de Aprendizaje**
 
+**Documentación oficial:**
+- [Microsoft Learn C#](https://learn.microsoft.com/es-es/dotnet/csharp/)
+- [.NET Downloads](https://dotnet.microsoft.com/download)
+
+**Libros recomendados (según PDF oficial):**
 1. "Programación Orientada a Objetos en C#" - Pérez Chaves, Roger
 2. "C# and the .NET Platform" - Troelsen, Andrew
 3. "Así es Microsoft Visual Studio .NET" - Microsoft Corporation
 
----
+**Comunidad:**
+- Stack Overflow: tag `c#`
+- Reddit: r/csharp
+- Discord: C# Discord Server
 
-## Próxima Clase
+</div>
 
-### Clase 2: Clases, Objetos y Encapsulamiento
+<div style="flex: 1;">
 
+**🎓 Próxima Clase: Clases, Objetos y Encapsulamiento**
+
+**Temas a tratar:**
 - Programación Orientada a Objetos en C#
 - Creación de clases y objetos
 - Atributos y métodos
-- Encapsulamiento: propiedades y modificadores de acceso
-- Constructores
+- Encapsulamiento: propiedades y modificadores
+- Constructores y destructores
 
-**¡Traigan Visual Studio instalado!**
+**📝 Requisitos:**
+- ✅ Visual Studio 2022 instalado
+- ✅ Tarea completada (Calculadora de promedios)
+- ✅ Repositorio Git creado
+
+**🔗 Preparación:**
+Revisa los conceptos básicos de POO: clases, objetos, atributos y métodos.
+
+</div>
+
+</div>
 
 ---
 

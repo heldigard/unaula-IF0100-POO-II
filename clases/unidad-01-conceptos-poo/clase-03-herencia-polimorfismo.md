@@ -80,9 +80,42 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### ¿Qué es la herencia?
 
-> **Herencia** es un mecanismo que permite crear nuevas clases basadas en clases existentes, reutilizando código y estableciendo relaciones jerárquicas.
+<div style="display: flex; gap: 30px; align-items: center;">
 
-![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+<div style="flex: 1;">
+
+![Jerarquía de Herencia](../../assets/infografias/clase-03-herencia.png){: style="max-width: 100%; max-height: 350px;"}
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Concepto:**
+
+> **Herencia** = Crear nuevas clases basadas en existentes, reutilizando código.
+
+**🔑 Terminología:**
+
+| Término | Significado |
+|---------|-------------|
+| **Clase Base** | Padre/Superclass (compartida) |
+| **Clase Derivada** | Hija/Subclass (extiende) |
+| **`:`** | Operador de herencia en C# |
+| **`base`** | Referencia a la clase padre |
+| **`protected`** | Accesible en clase e hijas |
+
+**✅ Beneficios:**
+- Reutilización de código
+- Jerarquías lógicas
+- Extensibilidad
+- Mantenimiento centralizado
+
+**⚠️ Recomendación:**
+Máximo 3 niveles de profundidad.
+
+</div>
+
+</div>
 
 ---
 ### Representación ASCII:
@@ -327,9 +360,45 @@ prof.Materias = new List<string> { "POO I", "POO II" };  // ← De Profesor
 
 ### Un nombre, múltiples formas
 
-> **Polimorfismo** permite que objetos de diferentes clases respondan al mismo mensaje (método) de manera específica.
+<div style="display: flex; gap: 30px; align-items: center;">
 
-![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+<div style="flex: 1;">
+
+![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 100%; max-height: 350px;"}
+
+</div>
+
+<div style="flex: 1;">
+
+**🎭 El Poder del Polimorfismo:**
+
+> **Polimorfismo** = Mismo mensaje, diferentes comportamientos según el objeto.
+
+**🔑 Palabras clave:**
+
+| Palabra | Propósito |
+|---------|-----------|
+| `virtual` | Método que PUEDE sobrescribirse |
+| `override` | Sobrescribe método virtual/abstract |
+| `abstract` | Método SIN implementación (obliga a hijos) |
+
+**💡 Analogía del mundo real:**
+```
+Mismo mensaje: "¡Muévete!"
+  🐕 Perro → Corre en 4 patas
+  🐈 Gato → Salta y camina sigilosamente
+  🐟 Pez → Nada en el agua
+  🦅 Águila → Vuela en el aire
+```
+
+**✅ Ventajas:**
+- Código flexible y extensible
+- Tratamiento uniforme de objetos diferentes
+- Fácil agregar nuevos tipos sin modificar código existente
+
+</div>
+
+</div>
 
 ---
 ### Representación ASCII:
@@ -357,18 +426,6 @@ prof.Materias = new List<string> { "POO I", "POO II" };  // ← De Profesor
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
-
----
-
-## 2. Polimorfismo
-
-### Un nombre, múltiples formas
-
-> **Polimorfismo** permite que objetos de diferentes clases respondan al mismo mensaje (método) de manera específica según su implementación.
-
-![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 50%; max-height: 300px; display: block; margin: 0 auto;"}
-
-*Imagen: Cada figura geométrica implementa `CalcularArea()` de forma diferente, pero todas responden al mismo mensaje.*
 
 ---
 
@@ -803,154 +860,119 @@ class Program
 
 ---
 
-## Resumen de la Clase
+## Resumen, Ejercicios y Conceptos Avanzados
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**📚 Resumen de Conceptos:**
 
 | Concepto | Descripción |
-| ---------- | ------------- |
-| **Herencia** | `:` permite crear jerarquías de clases |
-| **base** | Llama a miembros de la clase padre |
+|----------|-------------|
+| **Herencia** | `:` crea jerarquías de clases |
+| **base** | Llama miembros de clase padre |
 | **protected** | Visible en clase y derivadas |
-| **virtual** | Método que PUEDE ser sobrescrito |
+| **virtual** | Método que PUEDE sobrescribirse |
 | **override** | Sobrescribe método virtual/abstract |
-| **abstract** | Sin implementación, obliga a sobrescribir |
-| **sealed** | Impide herencia o sobrescritura |
-| **Polimorfismo** | Un interfaz, múltiples implementaciones |
+| **abstract** | Sin implementación, obliga a hijos |
+| **sealed** | Impide herencia/sobrescritura |
+| **Polimorfismo** | Un interfaz, múltiples formas |
 
----
+**📝 Ejercicios Propuestos:**
 
-## Ejercicios Propuestos
+**1. Sistema Bancario**
+- `CuentaBancaria` (abstracta): Número, Saldo, `CalcularInteres()` (abstract)
+- `CuentaAhorros`: 3% interés anual
+- `CuentaCorriente`: 0% interés, permite sobregiro
 
-### Para practicar en casa
+**2. Empleados Universitarios**
+- `EmpleadoUniversidad` (abstracta): `CalcularSalario()` (abstract)
+- `Profesor`: Base + horas × valor/hora
+- `Administrativo`: Salario fijo
+- `Monitor`: Horas × valor/hora
 
-**Ejercicio 1: Sistema Bancario**
-Crear una jerarquía:
-- `CuentaBancaria` (abstracta): Numero, Saldo, Depositar(), Retirar(), CalcularInteres() (abstracto)
-- `CuentaAhorros` : Hereda de CuentaBancaria, interés 3% anual
-- `CuentaCorriente` : Hereda de CuentaBancaria, interés 0%, permite sobregiro
+</div>
 
-**Ejercicio 2: Empleados Universitarios**
-- `EmpleadoUniversidad` (abstracta): Nombre, Identificacion, CalcularSalario() (abstracto)
-- `Profesor`: Salario base + valor hora * horas dictadas
-- `Administrativo`: Salario base fijo
-- `Monitor`: Valor hora * horas (sin salario base)
+<div style="flex: 1;">
 
-Crear una lista de empleados y calcular la nómina total.
+**🔗 Binding: Temprano vs Tardío**
 
----
-
-## Binding Temprano vs Tardío
-
-### ¿Cómo decide el programa qué método ejecutar?
+| Tipo | ¿Cuándo se decide? | Ejemplo |
+|------|-------------------|---------|
+| **Temprano** (Early) | Compilación | Sobrecarga de métodos |
+| **Tardío** (Late) | Ejecución | Polimorfismo virtual/override |
 
 ```csharp
-// BINDING TEMPLANO (Early Binding) - En compilación
-public class Calculadora
-{
-    public int Sumar(int a, int b) => a + b;  // Sobrecarga
-    public double Sumar(double a, double b) => a + b;
-}
+// Early binding (compilación)
+calc.Sumar(5, 3);  // Tipos conocidos
 
-Calculadora calc = new Calculadora();
-int r = calc.Sumar(5, 3);  // El compilador SABE cuál método llamar
-                          // Se decide en TIEMPO DE COMPILACIÓN
-
-
-// BINDING TARDÍO (Late Binding) - En ejecución
-public class Animal
-{
-    public virtual void Hablar() => Console.WriteLine("Sonido");
-}
-
-public class Perro : Animal
-{
-    public override void Hablar() => Console.WriteLine("Guau");
-}
-
-Animal animal = new Perro();  // El tipo es Animal, el objeto es Perro
-animal.Hablar();               // ¿Qué método ejecutar?
-                              // Se decide en TIEMPO DE EJECUCIÓN
-                              // Esto es POLIMORFISMO
+// Late binding (ejecución)
+animal.Hablar();   // Tipo Animal, objeto Perro
+                    // Se decide en runtime
 ```
 
----
+**🎯 Interfaces vs Clases Abstractas:**
 
-## Interfaces vs Clases Abstractas
+| Aspecto | Interfaz | Clase Abstracta |
+|----------|-----------|-----------------|
+| Implementación | Ninguna (solo firma) | Puede tener código |
+| Herencia | Múltiple | Simple (1 clase) |
+| Uso | Contratos/capacidades | Compartir código |
 
-### ¿Cuándo usar cada uno?
+**Regla:**
+- Interface → "PUEDE hacer" (IVolador, IComparable)
+- Abstract → "ES un" (Ave, Vehículo, Figura)
 
-```csharp
-// INTERFAZ: Solo define el "qué" (contrato)
-public interface IVolador
-{
-    void Volar();              // Solo firma, sin implementación
-    int AlturaMaxima { get; }  // Propiedad sin implementación
-}
+</div>
 
-// CLASE ABSTRACTA: Define "qué" y puede incluir "cómo"
-public abstract class Ave
-{
-    public string Nombre { get; set; }
-    public abstract void Volar();  // Las hijas DEBEN implementar
-
-    public void Comer()            // Implementación compartida
-    {
-        Console.WriteLine($"{Nombre} está comiendo");
-    }
-}
-
-// IMPLEMENTAR INTERFAZ
-public class Avion : IVolador
-{
-    public int AlturaMaxima => 12000;
-    public void Volar()
-    {
-        Console.WriteLine("El avión vuela con motores");
-    }
-}
-
-// HEREDAR CLASE ABSTRACTA
-public class Aguila : Ave
-{
-    public Aguila() { Nombre = "Águila"; }
-
-    public override void Volar()
-    {
-        Console.WriteLine("El águila vuela con alas");
-    }
-    // Comer() ya está implementado en Ave
-}
-```
+</div>
 
 ---
 
-### Comparación: Interface vs Abstract Class
+## Próxima Clase: Sobrecarga y Modelado BD
 
-| Característica | Interfaz | Clase Abstracta |
-|----------------|-----------|-----------------|
-| **Implementación** | Ninguna (solo firmas) | Puede tener implementación |
-| **Herencia** | Múltiple interfaces | Herencia simple (1 clase) |
-| **Campos** | No permite campos | Sí permite campos |
-| **Constructores** | No permite constructores | Sí permite constructores |
-| **Accesores** | Solo públicas | Pública, protegida, privada |
-| **Uso típico** | Contratos, capacidades | Compartir código base |
+<div style="display: flex; gap: 30px;">
 
-**Regla general:**
-- Usa **interfaces** para definir capacidades/comportamientos (IVolador, IComparable, IDisposable)
-- Usa **clases abstractas** para compartir implementación entre clases relacionadas (Ave, Vehiculo, Figura)
+<div style="flex: 1;">
 
----
+**📋 Temas de la Clase 4:**
 
-## Próxima Clase
+- ✅ **Sobrecarga de métodos** (overloading)
+- ✅ **Sobrecarga de operadores**
+- ✅ **Sobrecarga vs Sobreescritura**
+- ✅ **Modelamiento de bases de datos**
+- ✅ **Relaciones: 1-1, 1-N, N-N**
 
-### Clase 4: Sobrecarga, Sobreescritura y Modelamiento de Bases de Datos
+**🎯 Objetivo:**
+Entender sobrecarga (mismo método, diferentes parámetros) vs sobreescritura (mismo método, diferente implementación), y aprender fundamentos de modelado BD.
 
-- Sobrecarga de métodos (overloading)
-- Sobrecarga de operadores
-- Sobrescritura vs Sobrecarga
-- Introducción al modelamiento de bases de datos
-- Relaciones: 1-1, 1-N, N-N
+</div>
+
+<div style="flex: 1;">
+
+**📖 Preparación:**
+
+1. **Repasar** herencia y polimorfismo
+2. **Practicar** ejercicios propuestos
+3. **Pensar** en ejemplos de sobrecarga:
+   - `Sumar(int, int)` vs `Sumar(double, double)`
+   - `Imprimir(string)` vs `Imprimir(int)`
+   - `+` para números vs `+` para strings
+
+**💡 Pregunta reflexiva:**
+¿Por qué C# permite sobrecargar operadores pero Java no?
+
+**Preparar modelado:**
+- Entidades: Usuario, Pedido, Producto
+- Relaciones: Un usuario → muchos pedidos
+- Claves primarias y foráneas
 
 **¡Nos vemos!**
+
+</div>
+
+</div>
 
 ---
 

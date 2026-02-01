@@ -199,9 +199,45 @@ g1.Diametro = 5.5;
 
 ### Visualización Gráfica
 
-![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 50%; max-height: 300px; display: block; margin: 0 auto;"}
+<div style="display: flex; gap: 30px; align-items: center;">
 
-*Imagen: La clase Galleta actúa como molde para crear múltiples objetos galleta, cada uno con sus propias características (sabor, tamaño, decoración).*
+<div style="flex: 1;">
+
+![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 100%; max-height: 350px;"}
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Clave del Concepto:**
+
+| Aspecto | Clase (Molde) | Objeto (Galleta) |
+|---------|---------------|-----------------|
+| **Naturaleza** | Abstracta | Concreta |
+| **Memoria** | No ocupa memoria | Ocupa heap |
+| **Cantidad** | Una sola definición | Muchas instancias |
+| **Valores** | Define estructura | Tiene datos reales |
+| **Uso** | `class Galleta` | `new Galleta()` |
+
+**💡 Analogía extendida:**
+- **Clase** = Receta de galletas (instrucciones)
+- **Objeto** = Cada galleta horneada (producto real)
+- **Atributos** = Sabor, tamaño, decoración (varían por galleta)
+- **Métodos** = Hornear(), decorar() (comportamiento)
+
+**🔑 En programación:**
+```csharp
+// Clase (plantilla)
+class Galleta { string Sabor; }
+
+// Objetos (instancias)
+Galleta g1 = new Galleta { Sabor = "Chocolate" };
+Galleta g2 = new Galleta { Sabor = "Vainilla" };
+```
+
+</div>
+
+</div>
 
 ---
 
@@ -387,24 +423,61 @@ STACK (variables)              HEAP (objetos)
 
 ## 3. Encapsulamiento
 
-![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
+<div style="display: flex; gap: 30px; align-items: center;">
 
-### Problema con campos públicos
+<div style="flex: 1;">
 
-```csharp
-// ❌ PROBLEMA: Campos públicos
-public class CuentaBancaria
-{
-    public double saldo;  // Cualquiera puede modificarlo
-}
+![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png){: style="max-width: 100%; max-height: 400px;"}
 
-// En algún lugar del código...
-CuentaBancaria cuenta = new CuentaBancaria();
-cuenta.saldo = 1000000;  // ¡Creé dinero de la nada!
-cuenta.saldo = -5000;    // ¡Saldo negativo válido!
+</div>
+
+<div style="flex: 1;">
+
+**🔒 El Encapsulamiento en 3 niveles:**
+
+```
+┌────────────────────────────────┐
+│     PÚBLICO (Accesible)        │
+│  ┌──────────────────────────┐  │
+│  │  Propiedades (get/set)   │  │ ← Interface expuesta
+│  │  Métodos públicos        │  │
+│  └──────────────────────────┘  │
+│  ─────────────────────────────  │
+│     PRIVADO (Oculto)           │
+│  ┌──────────────────────────┐  │
+│  │  Campos privados         │  │ ← Implementación oculta
+│  │  Lógica de validación     │  │
+│  │  Estado interno          │  │
+│  └──────────────────────────┘  │
+└────────────────────────────────┘
 ```
 
-**El encapsulamiento protege la integridad de los datos**
+**💡 ¿Por qué encapsular?**
+
+| Beneficio | Explicación |
+|-----------|-------------|
+| **Protección** | Los datos no pueden modificarse directamente |
+| **Validación** | Control sobre qué valores son aceptables |
+| **Flexibilidad** | Cambiar implementación sin afectar código externo |
+| **Mantenimiento** | Menor riesgo de bugs por estado inválido |
+
+**❌ Sin encapsulamiento:**
+```csharp
+cuenta.saldo = -1000;  // ¡Saldo negativo válido!
+```
+
+**✅ Con encapsulamiento:**
+```csharp
+cuenta.Depositar(-1000);  // Rechazado por validación
+```
+
+</div>
+
+</div>
+
+---
+
+### Problema con campos públicos
 
 ---
 
@@ -985,67 +1058,106 @@ class Program
 </div>
 ---
 
-## Resumen de la Clase
+## Resumen y Ejercicios
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**📚 Conceptos Aprendidos:**
 
 | Concepto | Descripción |
-| ---------- | ------------- |
-| **Clase** | Plantilla/blueprint para crear objetos |
+|----------|-------------|
+| **Clase** | Plantilla/blueprint para objetos |
 | **Objeto** | Instancia concreta de una clase |
 | **Campo** | Variable de instancia (dato) |
 | **Propiedad** | Encapsulamiento con get/set |
-| **Método** | Comportamiento/acción del objeto |
-| **Constructor** | Método especial para inicializar objetos |
-| **Encapsulamiento** | Ocultar implementación, exponer interfaz |
+| **Método** | Comportamiento del objeto |
+| **Constructor** | Inicialización de objetos |
+| **Encapsulamiento** | Ocultar implementación |
+
+**🎯 Habilidades:**
+```
+✅ Definir clases con sintaxis C#
+✅ Crear objetos con new
+✅ Aplicar encapsulamiento
+✅ Usar propiedades con validación
+✅ Implementar constructores
+✅ Entender referencia vs valor
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**📝 Ejercicios Propuestos:**
+
+**1. Clase Producto**
+- Código (solo lectura), Nombre (no vacío)
+- Precio (> 0), Stock (>= 0)
+- Método `CalcularValorInventario()`
+
+**2. Clase CuentaBancaria**
+- Saldo privado con métodos:
+  - `Depositar()`, `Retirar()`, `ConsultarSaldo()`
+- Validar saldo negativo
+
+**3. Miembros Estáticos**
+- Clase `Tienda` con contador estático
+- Propiedad estática de total productos
+
+**4. 🌟 Biblioteca (Avanzado)**
+```
+Libro: ISBN, título, autor, stock
+Usuario: código, nombre, tipo
+Prestamo: fechas, estado
+→ Implementar validaciones completas
+```
+
+</div>
+
+</div>
 
 ---
 
-## Ejercicios Propuestos
+## Próxima Clase: Herencia y Polimorfismo
 
-### Para practicar en casa
+<div style="display: flex; gap: 30px;">
 
-**Ejercicio 1: Clase Producto**
-Crear una clase `Producto` con:
-- Código (solo lectura, asignado en constructor)
-- Nombre (propiedad con validación: no vacío)
-- Precio (propiedad con validación: > 0)
-- Cantidad en stock (>= 0)
-- Método `CalcularValorInventario()` que retorne Precio * Stock
+<div style="flex: 1;">
 
-**Ejercicio 2: Clase CuentaBancaria**
-Crear una clase con:
-- Número de cuenta (solo lectura)
-- Saldo (privado, acceso solo mediante métodos)
-- Métodos: Depositar(), Retirar(), ConsultarSaldo()
-- Validar que no se pueda retirar más del saldo disponible
+**📋 Temas de la Clase 3:**
 
-**Ejercicio 3: Clase con Miembros Estáticos**
-Crear una clase `Tienda` con:
-- Campo estático para contar productos creados
-- Propiedad estática de solo lectura para obtener el total
-- Constructor que incremente el contador
-- Método estático para mostrar estadísticas
+- ✅ **Herencia:** Clase base y clase derivada
+- ✅ **Palabra clave `base`**
+- ✅ **Polimorfismo:** virtual, override
+- ✅ **Clases y métodos abstractos**
+- ✅ **Principio de sustitución de Liskov**
 
-**Ejercicio 4: Sistema de Biblioteca (Avanzado)**
-Modelar las siguientes clases:
-- `Libro`: ISBN, título, autor, año, cantidad disponible
-- `Usuario`: código, nombre, email, tipo (estudiante/profesor)
-- `Prestamo`: fecha préstamo, fecha devolución, estado
-- Implementar propiedades con validación
-- Agregar métodos para calcular fechas de devolución según tipo de usuario
+**🎯 Objetivo:**
+Reutilizar código mediante herencia y lograr comportamiento polimórfico.
 
----
+</div>
 
-## Próxima Clase
+<div style="flex: 1;">
 
-### Clase 3: Herencia y Polimorfismo
+**📖 Preparación:**
 
-- Herencia: clase base y clase derivada
-- Palabra clave `base`
-- Polimorfismo: virtual, override, abstract
-- Clases y métodos abstractos
-- Principio de sustitución de Liskov
+1. **Repasar** conceptos de POO básicos
+2. **Practicar** ejercicios propuestos
+3. **Pensar** en ejemplos del mundo real:
+   - Vehículo → Carro, Moto, Bus
+   - Animal → Perro, Gato, Pájaro
+   - Figura → Círculo, Rectángulo
 
-**¡Nos vemos!**
+**💡 Pregunta reflexiva:**
+¿Cómo harías para que diferentes tipos de vehículos tengan un método `Mover()` que se comporte diferente?
+
+**¡Nos vemos en la próxima clase!**
+
+</div>
+
+</div>
 
 ---
 

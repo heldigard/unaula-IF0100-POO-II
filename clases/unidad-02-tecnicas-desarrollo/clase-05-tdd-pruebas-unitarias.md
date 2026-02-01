@@ -76,57 +76,97 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### El problema del desarrollo tradicional
 
+<div style="display: flex; gap: 30px;">
+<div style="flex: 1;">
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│              DESARROLLO TRADICIONAL (SIN TDD)               │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   1. Escribir código          ← Semanas de desarrollo       │
-│           ↓                                                 │
-│   2. Escribir código          ← Más funcionalidades         │
-│           ↓                                                 │
-│   3. Escribir código          ← Más código...               │
-│           ↓                                                 │
-│   4. Probar manualmente       ← "Parece funcionar"          │
-│           ↓                                                 │
-│   5. Entregar a producción    ← ¡Deploy! 🚀                 │
-│           ↓                                                 │
-│   6. 💥 ERROR CRÍTICO         ← Usuario reporta bug         │
-│           ↓                                                 │
-│   7. Debuggear desesperadamente                              │
-│      "¿Quién tocó esto?"                                    │
-│           ↓                                                 │
-│   8. Hotfix urgente a las 3 AM                              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+DESARROLLO SIN TDD:
+
+1. Escribir código
+2. Más código...
+3. Probar manual
+4. Deploy 🚀
+5. 💥 ERROR
+6. Debuggear 😱
+7. Hotfix 3AM
 ```
+
+</div>
+<div style="flex: 1;">
+
+**❌ Problemas del Desarrollo Tradicional:**
+
+**Pruebas Tardías**
+- Bugs se encuentran en producción
+- Costo de corrección 100x mayor
+- Estrés de hotfixes urgentes
+
+**Falta de Confianza**
+- Miedo a refactorizar
+- "Si funciona, no lo toques"
+- Código frágil que se rompe fácil
+
+**Pruebas Manuales**
+- Repetitivas y propensas a errores
+- Difíciles de mantener
+- No escalables con el crecimiento
+
+**💡 TDD resuelve:**
+- Pruebas automatizadas desde el inicio
+- Feedback inmediato
+- Código siempre probado
+- Refactorización segura
+
+</div>
+</div>
 
 ---
 
 ## Costo de los Errores
 
-### Cuanto más tarde se detecta, más cuesta
+<div style="display: flex; gap: 30px;">
+<div style="flex: 1;">
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│          COSTO DE CORREGIR UN ERROR SEGÚN FASE              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   $1        $10        $100        $1,000        $10,000    │
-│    │          │          │           │              │       │
-│    ▼          ▼          ▼           ▼              ▼       │
-│  ┌────┐    ┌────┐    ┌────┐     ┌──────┐      ┌────────┐  │
-│  │Diseño│    │Cod │    │Test│     │Integr│      │Producción│  │
-│  │    │    │    │    │    │     │ación │      │        │  │
-│  └────┘    └────┘    └────┘     └──────┘      └────────┘  │
-│                                                             │
-│  Catching bugs early saves money and sanity!               │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+COSTO POR FASE:
+
+$1      $10     $100    $1,000   $10,000
+ │       │       │        │         │
+ ▼       ▼       ▼        ▼         ▼
+Diseño  Código  Test   Integración  Producción
 ```
 
-**Estudios (IBM, NIST):** El costo de corregir un error en producción es 100x más que en desarrollo.
+</div>
+<div style="flex: 1;">
+
+**📈 Costo Exponencial de Errores:**
+
+**Diseño ($1)**
+- Fácil de corregir
+- Solo afecta documentos
+
+**Código ($10)**
+- Requiere refactorización
+- Afecta una clase/módulo
+
+**Test ($100)**
+- Rompe otras pruebas
+- Requiere actualización
+
+**Integración ($1,000)**
+- Afecta múltiples módulos
+- Rompe integración
+
+**Producción ($10,000+)**
+- Daño reputacional
+- Pérdida de clientes
+- Hotfixes urgentes
+
+**💡 Conclusión:**
+Los estudios de IBM/NIST muestran que corregir un error en producción cuesta **100x más** que en desarrollo.
+
+</div>
+</div>
 
 ---
 

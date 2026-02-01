@@ -69,9 +69,39 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## 1. Sobrecarga vs Sobreescritura
 
-### Dos conceptos frecuentemente confundidos
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
-![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+![Sobrecarga vs Sobreescritura](../../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png)
+
+</div>
+<div style="flex: 1;">
+
+**🎯 Puntos Clave:**
+
+**✅ Sobrecarga (Overloading)**
+- Mismo nombre, diferentes parámetros
+- Misma clase
+- Polimorfismo estático (compilación)
+- Constructor con distinta cantidad/tipo de datos
+
+**✅ Sobreescritura (Overriding)**
+- Mismo nombre y firma
+- Clase padre → hija
+- Polimorfismo dinámico (ejecución)
+- Reimplementación de comportamiento
+
+**💡 Ejemplo Práctico:**
+```csharp
+// Sobrecarga: mismos métodos, diferentes parámetros
+Sumar(int a, int b) → Sumar(int a, int b, int c)
+
+// Sobreescritura: firma idéntica, comportamiento distinto
+Animal.Hablar() vs Perro.Hablar()
+```
+
+</div>
+</div>
 
 ---
 ### Representación ASCII:
@@ -391,57 +421,124 @@ public class Punto
 
 ## 4. Modelamiento de Bases de Datos
 
-### Introducción al diseño de datos
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│              DEL MUNDO REAL A LA BASE DE DATOS              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   MUNDO REAL        →   MODELO CONCEPTUAL   →   TABLAS     │
-│                                                             │
-│   Estudiantes            Entidad             Tabla          │
-│      ↓                      ↓                   ↓           │
-│   • Nombre              Atributos          Columnas         │
-│   • Código              (propiedades)      (campos)         │
-│   • Edad                                     ↓              │
-│   • Carrera               ↓                Registros        │
-│                        Relaciones          (filas)          │
-│                          (PK, FK)                           │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────┐
+│ MUNDO REAL → BD         │
+├─────────────────────────┤
+│                         │
+│ MUNDO REAL    ENTIDAD   TABLA
+│                         │
+│ Estudiante   Entidad   Tabla
+│   ↓           ↓          ↓
+│ Nombre     Atributos Columnas
+│ Código    Props     Campos
+│ Edad                 Registros
+│ Carrera      ↓        Filas
+│            PK/FK
+│                         │
+└─────────────────────────┘
 ```
+
+</div>
+<div style="flex: 1;">
+
+**🎯 Transformación de Datos:**
+
+**1. Entidad → Tabla**
+- Objeto del mundo real
+- Se convierte en tabla SQL
+- Ejemplo: Estudiante → `Estudiantes`
+
+**2. Atributos → Columnas**
+- Propiedades de la entidad
+- Definen tipo de datos
+- Ejemplo: nombre → `VARCHAR(100)`
+
+**3. PK (Primary Key)**
+- Identificador único
+- No nulo, sin duplicados
+- Ejemplo: `id INT PRIMARY KEY`
+
+**4. FK (Foreign Key)**
+- Relación entre tablas
+- Mantiene integridad referencial
+- Ejemplo: `carrera_id INT FK`
+
+**💡 Beneficios del Modelado:**
+- Organización lógica de datos
+- Integridad referencial
+- Consultas eficientes
+- Escalabilidad
+
+</div>
+</div>
 
 ---
 
 ## Entidades y Atributos
 
-### Representación en diagramas ER
+<div style="display: flex; gap: 30px; align-items: center;">
+<div style="flex: 1;">
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   DIAGRAMA ENTIDAD-RELACIÓN                 │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ┌─────────────────────┐                                   │
-│   │    ESTUDIANTE       │  ← Entidad (tabla)                │
-│   ├─────────────────────┤                                   │
-│   │ * PK codigo         │  ← Clave primaria (identificador) │
-│   │   nombre            │  ← Atributo simple                │
-│   │   edad              │  ← Atributo numérico              │
-│   │   email             │  ← Atributo único                 │
-│   │   fecha_nacimiento  │  ← Atributo fecha                 │
-│   │ FK carrera_id       │  ← Clave foránea (relación)       │
-│   └─────────────────────┘                                   │
-│                                                             │
-│   PK = Primary Key (no nulo, único)                         │
-│   FK = Foreign Key (referencia a otra tabla)                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────┐
+│    ESTUDIANTE       │
+├─────────────────────┤
+│ * PK codigo         │
+│   nombre            │
+│   edad              │
+│   email             │
+│   fecha_nacimiento  │
+│ FK carrera_id       │
+└─────────────────────┘
 ```
+
+</div>
+<div style="flex: 1;">
+
+**🎯 Componentes del Diagrama ER:**
+
+**PK (Primary Key)**
+- `*` Indica clave primaria
+- Identificador único
+- No acepta nulos
+- Ejemplo: `codigo VARCHAR(20) PRIMARY KEY`
+
+**Atributos Simples**
+- `nombre` → String
+- `edad` → Integer
+- `email` → String (único)
+- `fecha_nacimiento` → Date
+
+**FK (Foreign Key)**
+- `carrera_id` → Referencia a otra tabla
+- Mantiene integridad referencial
+- Permite relaciones entre entidades
+
+**💡 Mapeo C# a SQL:**
+```csharp
+// C# Class
+public string Codigo { get; set; }  // PK
+public string Nombre { get; set; }
+public int CarreraId { get; set; }   // FK
+```
+```sql
+-- SQL Table
+CREATE TABLE Estudiantes (
+  Codigo VARCHAR(20) PRIMARY KEY,
+  Nombre VARCHAR(100) NOT NULL,
+  CarreraId INT FOREIGN KEY
+);
+```
+
+</div>
+</div>
 
 ---
-### Clasificación de propiedades
+### Tipos de Atributos
 
 
 ```
@@ -783,46 +880,43 @@ public class Prestamo
 
 ---
 
-## Resumen de la Clase
+## Resumen, Ejercicios y Próxima Clase
 
-| Concepto | Descripción |
-| ---------- | ------------- |
-| **Sobrecarga** | Mismo nombre, diferentes parámetros (misma clase) |
-| **Sobreescritura** | Misma firma, reimplementación (padre→hija) |
-| `this` | Llama a otro constructor de la misma clase |
-| **Operador sobrecargado** | Define comportamiento de operadores |
-| **Entidad** | Objeto del mundo real → tabla en BD |
-| **Atributo** | Propiedad de entidad → columna en BD |
-| **Relación 1:N** | Una entidad tiene muchas otras |
-| **Relación N:M** | Tabla intermedia para relacionar |
+<div style="display: flex; gap: 30px;">
+<div style="flex: 1;">
 
----
+**📚 Resumen de la Clase:**
+- **Sobrecarga:** Mismo nombre, diferentes parámetros
+- **Sobreescritura:** Misma firma, reimplementación
+- `this`: Llama a otro constructor
+- **PK/FK:** Claves primarias y foráneas
+- **1:N, N:M:** Tipos de relaciones
 
-## Ejercicios Propuestos
+**✏️ Ejercicios Propuestos:**
+1. **Clase Complejo:** Sobrecargar `+`, `-`, `*`, `==`, `!=`
+2. **Tienda Online:** Modelar ER (Clientes, Productos, Órdenes)
+3. **Sistema Reservas:** Habitaciones, Clientes, Reservas
 
-### Para practicar
+</div>
+<div style="flex: 1;">
 
-**Ejercicio 1: Clase Complejo**
-Crear una clase `Complejo` que represente números complejos (a + bi) con sobrecarga de:
-- `+` (suma de complejos)
-- `-` (resta)
-- `*` (multiplicación)
-- `==` y `!=` (comparación)
-- `ToString()` para mostrar como "3 + 4i"
+**🚀 Preparación Unidad 2:**
+- TDD: Red-Green-Refactor, xUnit
+- BDD: Gherkin, Given-When-Then
+- DDD: Entidades, Value Objects
 
-**Ejercicio 2: Modelar Tienda Online**
-Diseñar diagrama ER y clases C# para:
-- Clientes, Productos, Categorías, Órdenes, DetalleOrden
-- Un cliente hace muchas órdenes
-- Una orden tiene muchos productos (detalle)
-- Un producto pertenece a una categoría
+**Instalar:**
+```bash
+dotnet new xunit
+```
 
-**Ejercicio 3: Sistema de Reservas**
-Modelar un sistema de reservas de hotel con:
-- `Habitacion`: número, tipo, precio, disponible
-- `Cliente`: identificación, nombre, email, teléfono
-- `Reserva`: fechas, estado, métodos para calcular total
-- Relaciones: Un cliente hace muchas reservas, una reserva tiene una habitación
+**📝 Evaluación 1 (Semana 4):**
+- Quiz teórico (30 min)
+- Práctico en VS (90 min)
+- Tema: POO completo
+
+</div>
+</div>
 
 ---
 
@@ -1005,50 +1099,6 @@ public interface IUnitOfWork : IDisposable
     int GuardarCambios();
 }
 ```
-
----
-
-## Preparación Unidad 2
-
-### Próximos temas: TDD, BDD, DDD
-
-```
-UNIDAD 2: TÉCNICAS DE DESARROLLO DE SOFTWARE
-
-• Test Driven Development (TDD)
-  - Red-Green-Refactor
-  - Pruebas unitarias con xUnit/NUnit
-  
-• Behavior Driven Development (BDD)
-  - Lenguaje Gherkin
-  - Given-When-Then
-  
-• Domain Driven Design (DDD)
-  - Entidades, Value Objects, Aggregates
-  - Repositorios, Servicios de dominio
-```
-
-**Instalar para la próxima clase:**
-- Extensión xUnit para Visual Studio
-- O crear proyecto con: `dotnet new xunit`
-
----
-
-## Evaluación 1 (15%) - Semana 4
-
-### Taller + Quiz de POO
-
-**Contenido:**
-- Clases, objetos, propiedades
-- Herencia y polimorfismo
-- Sobrecarga y sobreescritura
-- Modelamiento de bases de datos
-
-**Formato:**
-- Quiz teórico (30 min)
-- Ejercicio práctico en Visual Studio (90 min)
-
-**Entrega:** Proyecto de C# con el ejercicio resuelto
 
 ---
 
