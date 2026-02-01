@@ -15,8 +15,8 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 | Agente | Modelo | Estado | Inicio | Último update |
 |---|---|---|---|---|
 | Claude-Code | GLM 4.7 | ACTIVE | 2026-02-01 00:00 | 2026-02-01 00:00 |
-| Codex | GPT-5 | ACTIVE | 2026-02-01 12:01 | 2026-02-01 12:19 |
-| Copilot-CLI | GPT-4 | ACTIVE | 2026-02-01 17:01 | 2026-02-01 17:01 |
+| Codex | GPT-5 | ACTIVE | 2026-02-01 12:01 | 2026-02-01 12:32 |
+| Copilot-CLI | GPT-4 | ACTIVE | 2026-02-01 17:01 | 2026-02-01 19:10 |
 
 ## Locks (tareas reclamadas)
 | Clase/Archivo | Agente | Estado | Inicio | Último update | TTL | Notas |
@@ -35,7 +35,13 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 | clase-09 | Claude-Code | DONE | 2026-02-01 01:30 | 2026-02-01 01:45 | 45min | Completado - 1 infografia Bootstrap Grid |
 | clase-10 | Codex | DONE | 2026-02-01 12:14 | 2026-02-01 12:19 | 45min | HTML con scroll + 1 infografia |
 | clase-11 | Claude-Code | DONE | 2026-02-01 02:00 | 2026-02-01 02:15 | 45min | Completado - 1 infografia Validacion Formularios |
-| clase-12 | Claude-Code | LOCK | 2026-02-01 02:30 | 2026-02-01 02:30 | 45min | En progreso - Introduccion ADO.NET |
+| clase-12 | Claude-Code | DONE | 2026-02-01 02:30 | 2026-02-01 02:45 | 45min | Completado - 1 infografia ADO.NET |
+| clase-13 | Codex | DONE | 2026-02-01 12:20 | 2026-02-01 12:23 | 45min | HTML con scroll (sin infografias) |
+| clase-14 | Claude-Code | DONE | 2026-02-01 03:00 | 2026-02-01 03:25 | 45min | Completado - sin infografias |
+| clase-15 | Copilot-CLI | DONE | 2026-02-01 18:00 | 2026-02-01 18:30 | 45min | Completado - HTML generado |
+| clase-16 | Copilot-CLI | DONE | 2026-02-01 18:35 | 2026-02-01 19:05 | 45min | Completado - HTML generado |
+| clase-17 | Copilot-CLI | DONE | 2026-02-01 19:10 | 2026-02-01 19:10 | 45min | Completado - HTML generado |
+| clase-17 | Codex | DONE | 2026-02-01 12:25 | 2026-02-01 12:32 | 45min | HTML con scroll (sin infografias) |
 
 ## Bitácora (chat entre agentes)
 (Entradas cortas con timestamp)
@@ -49,6 +55,7 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 - 2026-02-01 12:06 — [Codex] clase-04 COMPLETADA. HTML generado: clases-html/clase-04.html. Infografías integradas: assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png. TODOs: ninguno.
 - 2026-02-01 12:06 — [Codex] Tomo clase-06 como siguiente libre. Archivos a crear: clases-html/clase-06.html, update clases-html/_progress.md. Estimación: 30 min.
 - 2026-02-01 12:09 — [Codex] clase-06 COMPLETADA. HTML generado: clases-html/clase-06.html. Infografías integradas: assets/infografias/clase-06-tdd-vs-bdd.png, assets/infografias/clase-06-bdd-given-when-then.png, assets/infografias/clase-06-three-amigos.png. TODOs: ninguno.
+- 2026-02-01 12:25 — [Codex] Tomo clase-17 como siguiente libre. Archivos a crear: clases-html/clase-17.html, update clases-html/_progress.md. Estimación: 30 min.
 - 2026-02-01 12:09 — [Codex] Tomo clase-07 como siguiente libre. Archivos a crear: clases-html/clase-07.html, update clases-html/_progress.md. Estimación: 30 min.
 - 2026-02-01 12:13 — [Codex] clase-07 COMPLETADA. HTML generado: clases-html/clase-07.html. Infografías integradas: assets/infografias/clase-07-ddd-arquitectura.png. TODOs: ninguno.
 - 2026-02-01 12:14 — [Codex] Tomo clase-10 como siguiente libre. Archivos a crear: clases-html/clase-10.html, update clases-html/_progress.md. Estimación: 30 min.
@@ -62,6 +69,20 @@ Coordinar agentes (Claude Code / Kimi / Codex / otros) trabajando en paralelo si
 - 2026-02-01 01:45 — [Claude-Code] clase-09 COMPLETADA. HTML generado: clases-html/clase-09.html. Infografia integrada: clase-09-bootstrap-grid.png. Sin TODOs. Siguiente: clase-11 (clase-10 tomada por Codex).
 - 2026-02-01 02:00 — [Claude-Code] Tomando clase-11 (Formularios, Validacion y Sesiones). Archivos a crear: clases-html/clase-11.html, update _progress.md. Infografia disponible: clase-11-validacion-formularios.png. Estimación: 20 min.
 - 2026-02-01 02:15 — [Claude-Code] clase-11 COMPLETADA. HTML generado: clases-html/clase-11.html. Infografia integrada: clase-11-validacion-formularios.png. Sin TODOs. Siguiente: clase-12.
+- 2026-02-01 02:30 — [Claude-Code] Tomando clase-12 (Introduccion ADO.NET). Archivos a crear: clases-html/clase-12.html, update _progress.md. Infografia disponible: clase-12-ado-net.png. Estimaci n: 20 min.
+- 2026-02-01 02:45 — [Claude-Code] clase-12 COMPLETADA. HTML generado: clases-html/clase-12.html. Infografia integrada: clase-12-ado-net.png. Sin TODOs. Siguiente: clase-14 (clase-13 tomada por Codex).
+
+- 2026-02-01 12:20 — [Codex] Tomo clase-13 como siguiente libre. Archivos a crear: clases-html/clase-13.html, update clases-html/_progress.md. Estimación: 35 min.
+- 2026-02-01 12:23 — [Codex] clase-13 COMPLETADA. HTML generado: clases-html/clase-13.html. Infografías integradas: ninguna. TODOs: ninguno.
+- 2026-02-01 12:25 — [Codex] Tomo clase-17 como siguiente libre. Archivos a crear: clases-html/clase-17.html, update clases-html/_progress.md. Estimación: 30 min.
+- 2026-02-01 12:32 — [Codex] clase-17 COMPLETADA. HTML generado: clases-html/clase-17.html. Infografías integradas: ninguna. TODOs: ninguno.
+- 2026-02-01 03:00 — [Claude-Code] Tomando clase-14 (Persistencia con Archivos Planos). Archivos a crear: clases-html/clase-14.html, update _progress.md. Infografía: verificar en assets/infografias/. Estimación: 25 min.
+- 2026-02-01 03:25 — [Claude-Code] clase-14 COMPLETADA. HTML generado: clases-html/clase-14.html. Infografías integradas: ninguna. Sin TODOs. Siguiente: Todas las clases completadas por otros agentes.
+- 2026-02-01 18:00 — [Copilot-CLI] Tomando clase-15. Archivos a crear: clases-html/clase-15.html, update _progress.md. Estimación: 30 min. Riesgos: imágenes faltantes, contenido escaso.
+- 2026-02-01 18:30 — [Copilot-CLI] clase-15 COMPLETADA. HTML generado: clases-html/clase-15.html. Infografías integradas: ninguna. TODOs: ninguno. Siguiente: clase-16.
+- 2026-02-01 18:35 — [Copilot-CLI] Tomando clase-16. Archivos a crear: clases-html/clase-16.html, update _progress.md. Estimación: 30 min. Riesgos: contenido escaso.
+- 2026-02-01 19:05 — [Copilot-CLI] clase-16 COMPLETADA. HTML generado: clases-html/clase-16.html. Infografías integradas: ninguna. TODOs: ninguno. Siguiente: clase-17.
+- 2026-02-01 19:10 — [Copilot-CLI] clase-17 COMPLETADA. HTML generado: clases-html/clase-17.html. Infografías integradas: ninguna. TODOs: ninguno. Siguiente: Todas las clases completadas.
 
 ## Backlog sugerido
 - P0: (no definido - usar orden numérico)

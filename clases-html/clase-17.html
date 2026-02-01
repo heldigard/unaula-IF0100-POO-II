@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 17 - Proyecto Final: Integracion | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 5</div>
+      <h1>Clase 17: Proyecto Final - Integracion</h1>
+      <div>Duracion: 75 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Integrar tecnologias del curso en un proyecto final.</li>
+            <li>Aplicar buenas practicas de arquitectura por capas.</li>
+            <li>Documentar y presentar un proyecto completo.</li>
+            <li>Implementar patrones de diseno profesionales.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerequisitos</strong>
+          <ul>
+            <li>Dominar CRUD con ADO.NET y SQL Server.</li>
+            <li>Conocer DataSet/DataAdapter y DataBinding.</li>
+            <li>Practicar TDD/BDD/DDD basicos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="teoria">
+      <h2>Teoria</h2>
+
+      <h3>Proyecto integrador: Sistema de Gestion Academica</h3>
+      <p>El proyecto final integra POO avanzada, ADO.NET, DataSet, DataBinding, XML y pruebas unitarias en un sistema realista.</p>
+      <ul>
+        <li>POO avanzada y patrones (Repository, Service, Unit of Work).</li>
+        <li>Persistencia con SQL Server y exportacion XML.</li>
+        <li>Interfaz grafica (Windows Forms / WPF).</li>
+        <li>Pruebas unitarias con xUnit/NUnit.</li>
+      </ul>
+
+      <h3>Entregables y pesos</h3>
+      <table>
+        <thead>
+          <tr><th>Entregable</th><th>Descripcion</th><th>Peso</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Codigo fuente</td><td>Proyecto completo en GitHub</td><td>40%</td></tr>
+          <tr><td>Base de datos</td><td>Script SQL con esquema y datos</td><td>10%</td></tr>
+          <tr><td>Pruebas</td><td>Cobertura &gt; 70%</td><td>15%</td></tr>
+          <tr><td>Documentacion tecnica</td><td>README y diagramas</td><td>15%</td></tr>
+          <tr><td>Presentacion</td><td>Demo 15 min</td><td>10%</td></tr>
+          <tr><td>Video</td><td>Screencast explicando arquitectura</td><td>10%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos</h2>
+
+      <h3>Estructura sugerida del proyecto</h3>
+      <pre><code>SistemaAcademico/
+├── src/
+│   ├── SistemaAcademico.Core/
+│   ├── SistemaAcademico.Data/
+│   ├── SistemaAcademico.UI/
+│   └── SistemaAcademico.Tests/
+├── database/
+├── docs/
+└── SistemaAcademico.sln</code></pre>
+
+      <h3>Repository Pattern (fragmento)</h3>
+      <pre><code class="language-csharp">public interface IEstudianteRepository
+{
+    Estudiante ObtenerPorId(int id);
+    IEnumerable&lt;Estudiante&gt; ObtenerTodos();
+    void Agregar(Estudiante estudiante);
+    void Actualizar(Estudiante estudiante);
+    void Eliminar(int id);
+}</code></pre>
+
+      <h3>Unit of Work (fragmento)</h3>
+      <pre><code class="language-csharp">public interface IUnitOfWork : IDisposable
+{
+    IEstudianteRepository Estudiantes { get; }
+    ICursoRepository Cursos { get; }
+    INotaRepository Notas { get; }
+    void Commit();
+    void Rollback();
+}</code></pre>
+    </section>
+
+    <section id="practica">
+      <h2>Practica / laboratorio</h2>
+
+      <h3>Modulo minimo (checklist)</h3>
+      <ul>
+        <li>CRUD Estudiantes con validacion.</li>
+        <li>CRUD Cursos con capacidad maxima.</li>
+        <li>Gestion de notas y calculo de promedios.</li>
+        <li>Reportes: top 10, estudiantes en riesgo.</li>
+        <li>Exportacion XML.</li>
+      </ul>
+
+      <h3>Cronograma sugerido</h3>
+      <table>
+        <thead>
+          <tr><th>Semana</th><th>Actividad</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1-2</td><td>Modelo BD y entidades</td></tr>
+          <tr><td>3-4</td><td>Repositorios y servicios</td></tr>
+          <tr><td>5-6</td><td>UI (Windows Forms/WPF)</td></tr>
+          <tr><td>7</td><td>Pruebas y correccion</td></tr>
+          <tr><td>8</td><td>Documentacion y demo</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Checklist de calidad</h3>
+      <ul>
+        <li>Capas separadas (Core/Data/UI/Tests).</li>
+        <li>Sin SQL concatenado (parametros).</li>
+        <li>Testing con AAA y cobertura base.</li>
+        <li>README con pasos de ejecucion.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <h3>Diseno del modelo</h3>
+      <p>Identificar Entities, relaciones y reglas de negocio del sistema academico.</p>
+
+      <h3>Documentacion</h3>
+      <p>Crear README con instalacion, requisitos y capturas del sistema.</p>
+
+      <h3>Checklist de errores comunes</h3>
+      <ul>
+        <li>Mezclar logica de negocio en la UI.</li>
+        <li>No validar entradas de usuario.</li>
+        <li>No versionar scripts SQL.</li>
+        <li>No incluir pruebas automatizadas.</li>
+      </ul>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li>Documentacion oficial de ADO.NET.</li>
+        <li>Guia de pruebas xUnit/NUnit.</li>
+        <li>Patrones Repository y Unit of Work.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

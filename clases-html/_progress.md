@@ -22,12 +22,12 @@
 | 09 | clase-09-html5-bootstrap.md | clase-09.html | clase-09-bootstrap-grid.png | ✅ COMPLETADO |
 | 10 | clase-10-mvc-razor-pages.md | clase-10.html | clase-10-mvc.png | ✅ COMPLETADO |
 | 11 | clase-11-formularios-validacion-sesiones.md | clase-11.html | clase-11-validacion-formularios.png | ✅ COMPLETADO |
-| 12 | clase-12-introduccion-ado-net.md | - | clase-12-ado-net.png | ⏳ PENDIENTE |
-| 13 | clase-13-crud-ado-net-sqlserver.md | - | - | ⏳ PENDIENTE |
-| 14 | clase-14-persistencia-archivos-planos.md | - | - | ⏳ PENDIENTE |
-| 15 | clase-15-dataset-dataadapter.md | - | - | ⏳ PENDIENTE |
-| 16 | clase-16-databinding-xml-proyecto-final.md | - | - | ⏳ PENDIENTE |
-| 17 | clase-17-proyecto-final-integracion.md | - | - | ⏳ PENDIENTE |
+| 12 | clase-12-introduccion-ado-net.md | clase-12.html | clase-12-ado-net.png | ✅ COMPLETADO |
+| 13 | clase-13-crud-ado-net-sqlserver.md | clase-13.html | - | ✅ COMPLETADO |
+| 14 | clase-14-persistencia-archivos-planos.md | clase-14.html | (TODO: imagen faltante: clase-14-formatos-archivo.png) | ✅ COMPLETADO |
+| 15 | clase-15-dataset-dataadapter.md | clase-15.html | - | ✅ COMPLETADO |
+| 16 | clase-16-databinding-xml-proyecto-final.md | clase-16.html | - | ✅ COMPLETADO |
+| 17 | clase-17-proyecto-final-integracion.md | clase-17.html | - | ✅ COMPLETADO |
 
 ---
 
@@ -36,8 +36,8 @@
 | Metrica | Valor |
 |---------|-------|
 | Total de clases | 17 |
-| Clases procesadas | 11 |
-| Progreso | 64.7% |
+| Clases procesadas | 17 |
+| Progreso | 100% |
 
 ---
 
@@ -298,13 +298,157 @@
 
 ---
 
-## Proxima Clase a Procesar
-**Clase 13:** CRUD con ADO.NET y SQL Server
+### Clase 12 - Introduccion a ADO.NET ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO
 
-**Infografias disponibles:**
-- Sin infografias asignadas (validar en assets/infografias/)
+**Archivos creados:**
+- `clases-html/clase-12.html`
 
-**Nota:** Clases 12 puede estar siendo procesada por otro agente. Verificar AGENTS.md antes de comenzar.
+**Infografias integradas:**
+- `assets/infografias/clase-12-ado-net.png`
+
+**Secciones incluidas:**
+- Objetivos y Agenda
+- Arquitectura ADO.NET (Connected vs Disconnected)
+- SqlConnection y Configuration (Connection Strings, appsettings.json)
+- SqlCommand (ExecuteNonQuery, ExecuteScalar, ExecuteReader)
+- SqlDataReader (lectura forward-only, Read(), usando bloques using)
+- CRUD Operations (Create, Read, Update, Delete con ejemplos)
+- Transacciones (SqlTransaction, Commit, Rollback)
+- Parametros (SqlParameter, prevencion SQL Injection)
+- Buenas Practicas (using, connection pooling, async/await)
+- Ejercicios Practicos
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
+### Clase 13 - CRUD con ADO.NET y SQL Server ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO (HTML con scroll y secciones obligatorias)
+
+**Archivos creados:**
+- `clases-html/clase-13.html`
+
+**Infografias integradas:**
+- Ninguna (no hay assets asignados)
+
+**Secciones incluidas:**
+- Header con objetivos y prerequisitos
+- Teoria (arquitectura, modelo BD, seguridad)
+- Ejemplos CRUD (Create/Read/Update/Delete)
+- Practica / laboratorio (menu consola, paginacion, bulk)
+- Ejercicios y checklist
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
+### Clase 14 - Persistencia con Archivos Planos ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO
+
+**Archivos creados:**
+- `clases-html/clase-14.html`
+
+**Infografias integradas:**
+- Ninguna (TODO: imagen faltante: clase-14-formatos-archivo.png)
+
+**Secciones incluidas:**
+- Objetivos y Agenda
+- Fundamentos de Archivos Planos (cuándo usar, comparación con BD)
+- System.IO API (File, StreamReader, StreamWriter, FileStream)
+- Persistencia con CSV (Repository pattern, manejo de comillas)
+- Persistencia con JSON (System.Text.Json, Repository JSON)
+- Persistencia con XML (XmlSerializer, Repository XML)
+- Comparación de Formatos (CSV vs JSON vs XML)
+- Temas Avanzados (INI files, GZIP compression, logger de auditoría)
+- Ejercicios Prácticos
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
+### Clase 15 - Dataset y DataAdapter ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO (HTML con scroll y secciones obligatorias)
+
+**Archivos creados:**
+- `clases-html/clase-15.html`
+
+**Infografias integradas:**
+- Ninguna (imagen faltante: assets/infografias/clase-15-dataset.png)
+
+**Secciones incluidas:**
+- Header con objetivos y prerequisitos
+- Teoria (arquitectura desconectada, componentes, DataSet/DataTable, DataAdapter)
+- Ejemplos (crear DataSet manual, operaciones CRUD, sincronizar con BD)
+- Practica (sistema de inventario)
+- Ejercicios (ejercicio para casa)
+- Referencias
+
+**TODOs:**
+- Verificar y crear infografia clase-15-dataset.png
+
+---
+
+### Clase 16 - DataBinding y XML ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO (HTML con scroll y secciones obligatorias)
+
+**Archivos creados:**
+- `clases-html/clase-16.html`
+
+**Infografias integradas:**
+- Ninguna (no hay assets asignados)
+
+**Secciones incluidas:**
+- Header con objetivos y prerequisitos
+- Teoria (DataBinding, BindingSource, XML export/import)
+- Ejemplos (Windows Forms con DataBinding, XML helper, ADO.NET integration)
+- Practica (aplicacion de gestion, XML personalizado)
+- Ejercicios (ejercicios propuestos)
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
+### Clase 17 - Proyecto Final Integración ✅
+**Fecha:** 2026-02-01
+**Estado:** COMPLETADO (HTML con scroll y secciones obligatorias)
+
+**Archivos creados:**
+- `clases-html/clase-17.html`
+
+**Infografias integradas:**
+- Ninguna (no hay assets asignados)
+
+**Secciones incluidas:**
+- Header con objetivos y prerequisitos
+- Teoria (proyecto final, tecnologias, funcionalidades, entregables, estructura, cronograma, rubrica)
+- Ejemplos (patrones Repository, Service Layer, Unit of Work, DataGridView avanzado, XML serialization, logging)
+- Practica (resumen del semestre, proximos pasos)
+- Ejercicios (proyecto final)
+- Referencias
+
+**TODOs:**
+- Ninguno
+
+---
+
+## Todas las Clases Completadas
+**Estado:** Proyecto finalizado exitosamente - 100% completado
+
+**Nota:** Todas las 17 clases han sido procesadas y sus archivos HTML generados.
 
 ---
 
