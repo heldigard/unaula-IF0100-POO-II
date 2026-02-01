@@ -779,6 +779,108 @@ Crear una lista de empleados y calcular la nómina total.
 
 ---
 
+## Binding Temprano vs Tardío
+
+### ¿Cómo decide el programa qué método ejecutar?
+
+```csharp
+// BINDING TEMPLANO (Early Binding) - En compilación
+public class Calculadora
+{
+    public int Sumar(int a, int b) => a + b;  // Sobrecarga
+    public double Sumar(double a, double b) => a + b;
+}
+
+Calculadora calc = new Calculadora();
+int r = calc.Sumar(5, 3);  // El compilador SABE cuál método llamar
+                          // Se decide en TIEMPO DE COMPILACIÓN
+
+
+// BINDING TARDÍO (Late Binding) - En ejecución
+public class Animal
+{
+    public virtual void Hablar() => Console.WriteLine("Sonido");
+}
+
+public class Perro : Animal
+{
+    public override void Hablar() => Console.WriteLine("Guau");
+}
+
+Animal animal = new Perro();  // El tipo es Animal, el objeto es Perro
+animal.Hablar();               // ¿Qué método ejecutar?
+                              // Se decide en TIEMPO DE EJECUCIÓN
+                              // Esto es POLIMORFISMO
+```
+
+---
+
+## Interfaces vs Clases Abstractas
+
+### ¿Cuándo usar cada uno?
+
+```csharp
+// INTERFAZ: Solo define el "qué" (contrato)
+public interface IVolador
+{
+    void Volar();              // Solo firma, sin implementación
+    int AlturaMaxima { get; }  // Propiedad sin implementación
+}
+
+// CLASE ABSTRACTA: Define "qué" y puede incluir "cómo"
+public abstract class Ave
+{
+    public string Nombre { get; set; }
+    public abstract void Volar();  // Las hijas DEBEN implementar
+
+    public void Comer()            // Implementación compartida
+    {
+        Console.WriteLine($"{Nombre} está comiendo");
+    }
+}
+
+// IMPLEMENTAR INTERFAZ
+public class Avion : IVolador
+{
+    public int AlturaMaxima => 12000;
+    public void Volar()
+    {
+        Console.WriteLine("El avión vuela con motores");
+    }
+}
+
+// HEREDAR CLASE ABSTRACTA
+public class Aguila : Ave
+{
+    public Aguila() { Nombre = "Águila"; }
+
+    public override void Volar()
+    {
+        Console.WriteLine("El águila vuela con alas");
+    }
+    // Comer() ya está implementado en Ave
+}
+```
+
+---
+
+### Comparación: Interface vs Abstract Class
+
+| Característica | Interfaz | Clase Abstracta |
+|----------------|-----------|-----------------|
+| **Implementación** | Ninguna (solo firmas) | Puede tener implementación |
+| **Herencia** | Múltiple interfaces | Herencia simple (1 clase) |
+| **Campos** | No permite campos | Sí permite campos |
+| **Constructores** | No permite constructores | Sí permite constructores |
+| **Accesores** | Solo públicas | Pública, protegida, privada |
+| **Uso típico** | Contratos, capacidades | Compartir código base |
+
+**Regla general:**
+- Usa **interfaces** para definir capacidades/comportamientos (IVolador, IComparable, IDisposable)
+- Usa **clases abstractas** para compartir implementación entre clases relacionadas (Ave, Vehiculo, Figura)
+
+---
+
 ## Próxima Clase
 
 ### Clase 4: Sobrecarga, Sobreescritura y Modelamiento de Bases de Datos

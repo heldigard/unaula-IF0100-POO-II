@@ -817,6 +817,195 @@ Diseñar diagrama ER y clases C# para:
 - Una orden tiene muchos productos (detalle)
 - Un producto pertenece a una categoría
 
+**Ejercicio 3: Sistema de Reservas**
+Modelar un sistema de reservas de hotel con:
+- `Habitacion`: número, tipo, precio, disponible
+- `Cliente`: identificación, nombre, email, teléfono
+- `Reserva`: fechas, estado, métodos para calcular total
+- Relaciones: Un cliente hace muchas reservas, una reserva tiene una habitación
+
+---
+
+## Normalización de Bases de Datos
+
+### Formas Normales - Evitar redundancia
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  ANORMALIZADO (PROBLEMAS)                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  TABLA: Estudiantes                                          │
+│  ┌──────┬──────────┬──────────┬──────────────┬────────────┐ │
+│  │ ID   │ Nombre   │ Carrera  │ Facultad     │ Ciudad     │ │
+│  ├──────┼──────────┼──────────┼──────────────┼────────────┤ │
+│  │ 001  │ María    │ Ingeniería│ Ingeniería   │ Pereira    │ │
+│  │ 002  │ Juan     │ Ingeniería│ Ingeniería   │ Pereira    │ │
+│  │ 003  │ Ana      │ Medicina │ Salud       │ Pereira    │ │
+│  │ 004  │ Pedro    │ Medicina │ Salud       │ Pereira    │ │
+│  └──────┴──────────┴──────────┴──────────────┴────────────┘ │
+│                                                             │
+│  PROBLEMAS:                                                 │
+│  • Redundancia: "Ingeniería" se repite                       │
+│  • Anomalías: Si cambio "Ingeniería" por "Ingeniería de     │
+│    Sistemas", debo actualizar TODOS los registros            │
+│  • Eliminación: Si borro a Juan, pierdo info de Ingeniería  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    NORMALIZADO (SOLUCIÓN)                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  TABLA: Estudiantes      TABLA: Carreras                    │
+│  ┌──────┬──────────┬─────┐  ┌─────────┬──────────┬──────┐    │
+│  │ ID   │ Nombre   │ FK │  │   ID    │ Nombre   │ Fac..│    │
+│  ├──────┼──────────┼─────┤  ├─────────┼──────────┼──────┤    │
+│  │ 001  │ María    │  1 │  │    1    │Ingeniería│Ingen.│    │
+│  │ 002  │ Juan     │  1 │  │    2    │ Medicina │Salud │    │
+│  │ 003  │ Ana      │  2 │  └─────────┴──────────┴──────┘    │
+│  │ 004  │ Pedro    │  2 │                                     │
+│  └──────┴──────────┴─────┘                                     │
+│                                                             │
+│  VENTAJAS:                                                  │
+│  • No redundancia: Cada carrera aparece una vez             │
+│  • Actualización: Cambio en un solo lugar                    │
+│  • Integridad: No se pierde información                     │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### Tercera Forma Normal (3FN)
+
+Una tabla está en 3FN si:
+1. Está en 2FN
+2. **No** hay atributos que dependan de otros atributos que no sean la clave primaria
+
+```sql
+-- ❌ NO ESTÁ EN 3FN
+CREATE TABLE Estudiantes (
+    INT ID PRIMARY KEY,
+    VARCHAR Nombre,
+    VARCHAR Ciudad,
+    VARCHAR Zona,           -- Depende funcionalmente de Ciudad
+    VARCHAR CodAreaPostal   -- Depende funcionalmente de Ciudad
+);
+
+-- ✅ ESTÁ EN 3FN (separamos en tablas)
+CREATE TABLE Estudiantes (
+    INT ID PRIMARY KEY,
+    VARCHAR Nombre,
+    INT CiudadID,           -- FK a Ciudades
+    FOREIGN KEY (CiudadID) REFERENCES Ciudades(ID)
+);
+
+CREATE TABLE Ciudades (
+    INT ID PRIMARY KEY,
+    VARCHAR Nombre,
+    VARCHAR Zona,
+    VARCHAR CodAreaPostal
+);
+```
+
+---
+
+## Ejercicio Práctico: Normalización
+
+### De 1FN a 3FN - Sistema de Ventas
+
+**Situación inicial (1FN):**
+```sql
+CREATE TABLE Ventas (
+    INT ID PRIMARY KEY,
+    DATE Fecha,
+    VARCHAR ClienteNombre,
+    VARCHAR ClienteDireccion,
+    VARCHAR ClienteTelefono,
+    VARCHAR Producto1,
+    DECIMAL Precio1,
+    INT Cantidad1,
+    VARCHAR Producto2,
+    DECIMAL Precio2,
+    INT Cantidad2,
+    DECIMAL Total
+);
+```
+
+**Problemas:**
+1. Producto2 puede ser NULL (espacio desperdiciado)
+2. Solo puede comprar hasta 2 productos
+3. Datos del cliente se repiten en cada venta
+
+**Actividad:** Normalizar a 3NF
+
+---
+
+## Mapeo ORM: Conceptos Avanzados
+
+### Lazy Loading vs Eager Loading
+
+```csharp
+// EAGER LOADING: Cargar todo de una vez
+var estudiante = context.Estudiantes
+    .Include(e => e.Carrera)      // Carga la carrera relacionada
+    .Include(e => e.Inscripciones) // Carga las inscripciones
+        .ThenInclude(i => i.Materia)
+    .FirstOrDefault(e => e.Codigo == "2024001");
+
+// LAZY LOADING: Cargar bajo demanda
+var estudiante = context.Estudiantes.FirstOrDefault(e => e.Codigo == "2024001");
+// La carrera NO se carga hasta que se accede:
+string nombreCarrera = estudiante.Carrera.Nombre;  // Recién aquí se carga
+```
+
+---
+
+## Patrones de Diseño en Modelado BD
+
+### Repository Pattern y Unit of Work
+
+```csharp
+// REPOSITORY: Abstrae el acceso a datos
+public interface IEstudianteRepository
+{
+    Estudiante ObtenerPorCodigo(string codigo);
+    IEnumerable<Estudiante> ObtenerTodos();
+    void Agregar(Estudiante estudiante);
+    void Actualizar(Estudiante estudiante);
+    void Eliminar(string codigo);
+}
+
+public class EstudianteRepository : IEstudianteRepository
+{
+    private readonly ApplicationDbContext _context;
+
+    public EstudianteRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public Estudiante ObtenerPorCodigo(string codigo)
+    {
+        return _context.Estudiantes.FirstOrDefault(e => e.Codigo == codigo);
+    }
+
+    // ... otros métodos
+}
+
+// UNIT OF WORK: Agrupa múltiples repositorios
+public interface IUnitOfWork : IDisposable
+{
+    IEstudianteRepository Estudiantes { get; }
+    ICarreraRepository Carreras { get; }
+    IMateriaRepository Materias { get; }
+    int GuardarCambios();
+}
+```
+
 ---
 
 ## Preparación Unidad 2

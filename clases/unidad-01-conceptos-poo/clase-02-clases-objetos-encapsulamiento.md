@@ -640,6 +640,76 @@ public class Estudiante
 }
 ```
 ---
+
+## Miembros Estáticos vs de Instancia
+
+### Comprender la diferencia
+
+```csharp
+public class Contador
+{
+    // Campo estático: compartido por TODAS las instancias
+    public static int ContadorGlobal = 0;
+
+    // Campo de instancia: cada objeto tiene su propio valor
+    public int ContadorInstancia = 0;
+
+    public Contador()
+    {
+        ContadorGlobal++;    // Se incrementa para TODOS los objetos
+        ContadorInstancia++; // Se incrementa solo para este objeto
+    }
+}
+
+// Uso
+Contador c1 = new Contador();  // ContadorGlobal=1, c1.ContadorInstancia=1
+Contador c2 = new Contador();  // ContadorGlobal=2, c2.ContadorInstancia=1
+Contador c3 = new Contador();  // ContadorGlobal=3, c3.ContadorInstancia=1
+
+// Acceso a miembros estáticos (desde la clase, no desde objetos)
+Console.WriteLine(Contador.ContadorGlobal);  // 3
+
+// Acceso a miembros de instancia
+Console.WriteLine(c1.ContadorInstancia);     // 1
+Console.WriteLine(c2.ContadorInstancia);     // 1
+```
+
+---
+
+## class vs struct en C#
+
+### ¿Cuándo usar cada uno?
+
+```csharp
+// CLASS (Reference Type) - USO COMÚN
+public class Persona
+{
+    public string Nombre { get; set; }
+    public int Edad { get; set; }
+}
+
+// STRUCT (Value Type) - Para datos pequeños
+public struct Punto
+{
+    public double X { get; set; }
+    public double Y { get; set; }
+}
+
+// DIFERENCIAS:
+Persona p1 = new Persona("Juan", 25);
+Persona p2 = p1;      // Copia REFERENCIA (misma dirección)
+p2.Nombre = "María";  // ¡p1 también cambia!
+
+Punto pt1 = new Punto(10, 20);
+Punto pt2 = pt1;      // Copia VALOR (independiente)
+pt2.X = 50;          // pt1.X sigue siendo 10
+```
+
+**USAR CLASS PARA:** Objetos con identidad, herencia, polimorfismo
+**USAR STRUCT PARA:** Datos pequeños, inmutables, mejor rendimiento
+
+---
+
 ## 6. Práctica en Clase
 ---
 ### Ejercicio: Sistema de Gestión Estudiantil
@@ -719,6 +789,21 @@ Crear una clase con:
 - Saldo (privado, acceso solo mediante métodos)
 - Métodos: Depositar(), Retirar(), ConsultarSaldo()
 - Validar que no se pueda retirar más del saldo disponible
+
+**Ejercicio 3: Clase con Miembros Estáticos**
+Crear una clase `Tienda` con:
+- Campo estático para contar productos creados
+- Propiedad estática de solo lectura para obtener el total
+- Constructor que incremente el contador
+- Método estático para mostrar estadísticas
+
+**Ejercicio 4: Sistema de Biblioteca (Avanzado)**
+Modelar las siguientes clases:
+- `Libro`: ISBN, título, autor, año, cantidad disponible
+- `Usuario`: código, nombre, email, tipo (estudiante/profesor)
+- `Prestamo`: fecha préstamo, fecha devolución, estado
+- Implementar propiedades con validación
+- Agregar métodos para calcular fechas de devolución según tipo de usuario
 
 ---
 

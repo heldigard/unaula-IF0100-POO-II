@@ -578,6 +578,7 @@ namespace Temperatura
 // 2. Pedir 3 notas (decimal)
 // 3. Calcular promedio
 // 4. Mostrar si aprobó (>= 3.0) o reprobó
+// 5. Manejar errores de entrada (validar números)
 
 // Ejemplo de salida:
 // ================================
@@ -591,6 +592,63 @@ namespace Temperatura
 // Promedio: 4.17
 // Estado: ✅ APROBADO
 // ================================
+```
+
+---
+
+## Ejercicio con Manejo de Errores
+
+### Validación de entrada de datos
+
+```csharp
+using System;
+
+namespace ValidacionNotas
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== CALCULADORA DE PROMEDIO CON VALIDACIÓN ===\n");
+
+            // Pedir nombre
+            Console.Write("Nombre del estudiante: ");
+            string nombre = Console.ReadLine();
+
+            double nota1 = PedirNota("Nota 1");
+            double nota2 = PedirNota("Nota 2");
+            double nota3 = PedirNota("Nota 3");
+
+            double promedio = (nota1 + nota2 + nota3) / 3.0;
+
+            Console.WriteLine($"\n=== RESULTADO ===");
+            Console.WriteLine($"Estudiante: {nombre}");
+            Console.WriteLine($"Promedio: {promedio:F2}");
+            Console.WriteLine($"Estado: {(promedio >= 3.0 ? "✅ APROBADO" : "❌ REPROBADO")}");
+
+            Console.ReadKey();
+        }
+
+        static double PedirNota(string etiqueta)
+        {
+            double nota;
+            while (true)
+            {
+                Console.Write($"{etiqueta} (0.0 - 5.0): ");
+                if (double.TryParse(Console.ReadLine(), out nota))
+                {
+                    if (nota >= 0.0 && nota <= 5.0)
+                        return nota;
+                    Console.WriteLine("  ⚠️ Error: La nota debe estar entre 0.0 y 5.0");
+                }
+                else
+                {
+                    Console.WriteLine("  ⚠️ Error: Ingrese un número válido");
+                }
+            }
+        }
+    }
+}
 ```
 
 ---
@@ -610,6 +668,121 @@ namespace Temperatura
 | `Ctrl + Space` | Forzar IntelliSense |
 | `F12` | Ir a definición |
 | `Ctrl + R, Ctrl + R` | Renombrar refactoring |
+
+---
+
+## 🔄 Ciclo de Vida de un Programa C#
+
+### De código a ejecución
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                  CICLO DE EJECUCIÓN C#                       │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  1. ESCRITURA                                                │
+│     ┌─────────────┐                                          │
+│     │ Código C#   │  ← Tu programa (.cs)                     │
+│     └──────┬──────┘                                          │
+│            │                                                 │
+│            ▼                                                 │
+│  2. COMPILACIÓN (csc.exe)                                    │
+│     ┌─────────────┐                                          │
+│     │ Compilador  │  → Verifica sintaxis y tipos             │
+│     │  C#         │  → Genera código IL                       │
+│     └──────┬──────┘                                          │
+│            │                                                 │
+│            ▼                                                 │
+│  3. CÓDIGO IL (Intermediate Language)                         │
+│     ┌─────────────┐                                          │
+│     │  .exe/.dll  │  → Bytecode multiplataforma              │
+│     │     IL      │  → Independiente del SO                  │
+│     └──────┬──────┘                                          │
+│            │                                                 │
+│            ▼                                                 │
+│  4. EJECUCIÓN (CLR)                                          │
+│     ┌─────────────────────────────────────┐                  │
+│     │     JIT (Just-In-Time)             │                  │
+│     │  Compila IL → Código máquina       │                  │
+│     └──────────────┬──────────────────────┘                  │
+│                    │                                         │
+│                    ▼                                         │
+│     ┌─────────────────────────────────────┐                  │
+│     │    Código NATIVO ejecutándose      │                  │
+│     │    (Windows/Linux/macOS)           │                  │
+│     └─────────────────────────────────────┘                  │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📝 Conceptos Clave de C#
+
+### Value Types vs Reference Types
+
+```csharp
+// VALUE TYPE (almacenado en STACK)
+int edad = 25;
+// Copia el valor
+int edad2 = edad;  // edad2 = 25 (copia independiente)
+edad2 = 30;        // edad sigue siendo 25
+
+// REFERENCE TYPE (almacenado en HEAP)
+string nombre = "Juan";
+// Copia la referencia (misma dirección de memoria)
+string nombre2 = nombre;  // Ambos apuntan al mismo objeto
+nombre2 = "Maria";        // nombre sigue siendo "Juan"
+```
+
+---
+
+### Nullable Types
+
+```csharp
+// Tipos que pueden ser null
+int? numero = null;           // int? es equivalente a Nullable<int>
+double? precio = null;        // Puede ser null o un double
+bool? activo = null;          // Puede ser null, true o false
+
+// Operador null-coalescing (??)
+int edad = numero ?? 18;      // Si numero es null, usa 18
+
+// Verificar si tiene valor
+if (numero.HasValue)
+{
+    Console.WriteLine(numero.Value);
+}
+```
+
+---
+
+### Strings en C#
+
+```csharp
+// Concatenación
+string nombre = "Juan";
+string saludo = "Hola, " + nombre;  // "Hola, Juan"
+
+// Interpolación de cadenas (C# 6+)
+string saludo2 = $"Hola, {nombre}";  // "Hola, Juan"
+
+// Strings verbatim (mantienen formato)
+string ruta = @"C:\Users\Nombre\Archivos";
+
+// Strings multilínea (C# 11+)
+string texto = """
+    Esta es una línea
+    Esta es otra línea
+    """;
+
+// Métodos útiles
+string texto = "  Hola Mundo  ";
+texto = texto.Trim();           // "Hola Mundo"
+texto = texto.ToUpper();        // "HOLA MUNDO"
+bool contiene = texto.Contains("Mundo");  // true
+string[] partes = texto.Split(' ');      // ["Hola", "Mundo"]
+```
 
 ---
 
