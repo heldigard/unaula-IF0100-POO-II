@@ -344,7 +344,7 @@
 
             <figure>
                 <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor">
-                <figcaption>Figura 1: Ciclo de TDD Red-Green-Refactor - el flujo iterativo donde primero se escribe una prueba que falla (Red), luego se implementa el código mínimo para pasarla (Green), y finalmente se refacciona para mejorar el diseño sin cambiar el comportamiento (Refactor), repitiéndose este ciclo continuamente para construir software de calidad incremental.</figcaption>
+                <figcaption>Figura 1: Ciclo de TDD Red-Green-Refactor - el flujo iterativo donde primero se escribe una prueba que falla (Red), luego se implementa el código mínimo para pasarla (Green), y finalmente se refactoriza para mejorar el diseño sin cambiar el comportamiento (Refactor), repitiéndose este ciclo continuamente para construir software de calidad incremental.</figcaption>
             </figure>
 
             <h3>Por qué TDD?</h3>
@@ -437,7 +437,7 @@ dotnet test</code></pre>
             <div class="diagram">
 <pre>
 ┌─────────────────────────────────────────────────┐
-│           PATRON AAA (Arrange-Act-Assert)        │
+│           PATRÓN AAA (Arrange-Act-Assert)        │
 ├─────────────────────────────────────────────────┤
 │                                                 │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────┐ │
@@ -552,13 +552,13 @@ var estudiante = repo.Obtener(1);</code></pre>
             <div class="comparison-table">
                 <div>
                     <h4>Fake</h4>
-                    <pre><code class="language-csharp">// Implementacion simplificada
+                    <pre><code class="language-csharp">// Implementación simplificada
 public class FakeRepo : IRepositorio {
     private List<Estudiante> _datos = new();
     public void Guardar(Estudiante e) => _datos.Add(e);
     public Estudiante Obtener(int id) => _datos.FirstOrDefault();
 }</code></pre>
-                    <p><em>Usar cuando necesitas logica real pero simple.</em></p>
+                    <p><em>Usar cuando necesitas lógica real pero simple.</em></p>
                 </div>
                 <div>
                     <h4>Mock</h4>
@@ -600,7 +600,7 @@ public void Sumar_DosNumeros_RetornaSuma()
 }</code></pre>
 
             <h4>3. Refactor (si es necesario)</h4>
-            <pre><code class="language-csharp">// El codigo ya es simple, no hay refactor necesario</code></pre>
+            <pre><code class="language-csharp">// El código ya es simple, no hay refactor necesario</code></pre>
 
             <h3>Ejemplo 2: Billetera con Validaciones</h3>
 
@@ -666,7 +666,7 @@ public void Sumar_DosNumeros_RetornaSuma()
     }
 }</code></pre>
 
-            <h3>Ejemplo 3: Parametrizacion con [Theory]</h3>
+            <h3>Ejemplo 3: Parametrización con [Theory]</h3>
             <pre><code class="language-csharp">[Theory]
 [InlineData(1, 1, 2)]
 [InlineData(5, 3, 8)]
@@ -741,7 +741,7 @@ public void Sumar_VariosNumeros_RetornaSuma(
         if (!contrasena.Any(char.IsUpper))
             throw new ArgumentException("Al menos una mayúscula");
         if (!contrasena.Any(char.IsDigit))
-            throw new ArgumentException("Al menos un numero");
+            throw new ArgumentException("Al menos un número");
     }
 }</code></pre>
 

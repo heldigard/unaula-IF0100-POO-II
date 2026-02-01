@@ -147,8 +147,8 @@
             <li>Comprender la historia y el contexto de C# y .NET.</li>
             <li>Diferenciar .NET Framework, .NET Core y .NET 8.</li>
             <li>Configurar Visual Studio Community 2022.</li>
-            <li>Crear la primera aplicacion de consola en C#.</li>
-            <li>Reconocer la estructura basica de un programa C#.</li>
+            <li>Crear la primera aplicación de consola en C#.</li>
+            <li>Reconocer la estructura básica de un programa C#.</li>
           </ul>
         </div>
         <div>
@@ -209,7 +209,7 @@
       <h3>Ecosistema .NET y arquitectura</h3>
       <p>.NET 8 unifica el runtime para web, desktop, mobile, cloud y gaming. Antes existían plataformas separadas (Framework/Core/Xamarin); ahora se comparte el mismo runtime y librerías base.</p>
       <pre><code>┌─────────────────────────────────────────┐
-│            TU APLICACION C#             │
+│            TU APLICACIÓN C#             │
 ├─────────────────────────────────────────┤
 │     BCL (Base Class Library)            │
 │   System.String, Collections, IO, Data  │
@@ -284,7 +284,7 @@ int edadDefault = edad ?? 18;</code></pre>
           <h4>Pattern matching</h4>
           <pre><code class="language-csharp">string categoria = edadDefault switch
 {
-    &lt; 13 => "Nino",
+    &lt; 13 => "Niño",
     &lt; 20 => "Adolescente",
     &lt; 65 => "Adulto",
     _ => "Mayor"
@@ -299,7 +299,7 @@ int edadDefault = edad ?? 18;</code></pre>
         </thead>
         <tbody>
           <tr><td>Clases</td><td>PascalCase</td><td>StudentManager</td></tr>
-          <tr><td>Metodos</td><td>PascalCase</td><td>GetStudent</td></tr>
+          <tr><td>Métodos</td><td>PascalCase</td><td>GetStudent</td></tr>
           <tr><td>Campos privados</td><td>_camelCase</td><td>_count</td></tr>
           <tr><td>Constantes</td><td>UPPER_SNAKE</td><td>MAX_SIZE</td></tr>
         </tbody>
@@ -371,10 +371,10 @@ var pares = nums.Where(n => n % 2 == 0)
       </div>
 
       <h3>Ciclo de ejecución en C#</h3>
-      <pre><code>1) Codigo C# (.cs)
-2) Compilacion -> IL (.dll/.exe)
-3) CLR (JIT) -> codigo maquina
-4) Ejecucion en Windows/Linux/macOS</code></pre>
+      <pre><code>1) Código C# (.cs)
+2) Compilación -> IL (.dll/.exe)
+3) CLR (JIT) -> código máquina
+4) Ejecución en Windows/Linux/macOS</code></pre>
     </section>
 
     <section id="practica">
@@ -413,7 +413,7 @@ namespace HolaMundo
       <h3>Depuración básica (10 min)</h3>
       <table>
         <thead>
-          <tr><th>Atajo</th><th>Accion</th></tr>
+          <tr><th>Atajo</th><th>Acción</th></tr>
         </thead>
         <tbody>
           <tr><td>F5</td><td>Iniciar debug</td></tr>
@@ -454,7 +454,7 @@ namespace CalculadoraArea
             Console.Write("Altura: ");
             double h = double.Parse(Console.ReadLine());
             double area = b * h;
-            Console.WriteLine($"Area: {area:F2}");
+            Console.WriteLine($"Área: {area:F2}");
         }
     }
 }</code></pre>
@@ -477,7 +477,7 @@ namespace CalculadoraArea
         }
         else
         {
-            Console.WriteLine("No valido");
+            Console.WriteLine("No válido");
         }
     }
 }</code></pre>
@@ -494,12 +494,17 @@ namespace CalculadoraArea
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>Documentacion oficial .NET</li>
+        <li>Documentación oficial .NET</li>
         <li>Visual Studio Community 2022</li>
         <li>NuGet Package Manager</li>
-        <li>Guia de convenciones C# (Microsoft)</li>
+        <li>Guía de convenciones C# (Microsoft)</li>
       </ul>
     </section>
   </main>
+
+  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+    <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+    <p>UNAULA - Ingeniería Informática - 2026-I</p>
+  </footer>
 </body>
 </html>

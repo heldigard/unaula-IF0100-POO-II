@@ -294,7 +294,7 @@
             <h2>Tabla de Contenidos</h2>
             <div class="toc-grid">
                 <a href="#objetivos">Objetivos y Agenda</a>
-                <a href="#que-es">Qué es ASP.NET Core?</a>
+                <a href="#que-es">¿Qué es ASP.NET Core?</a>
                 <a href="#arquitectura">Arquitectura</a>
                 <a href="#middleware">Middleware Pipeline</a>
                 <a href="#crear-proyecto">Crear Proyecto</a>
@@ -329,7 +329,7 @@
             <h2>1. Qué es ASP.NET Core?</h2>
 
             <h3>Definición</h3>
-            <p><strong>ASP.NET Core</strong> es un framework web <strong>cross-platform</strong>, moderno y de alto rendimiento para construir aplicaciónes web en la nube.</p>
+            <p><strong>ASP.NET Core</strong> es un framework web <strong>cross-platform</strong>, moderno y de alto rendimiento para construir aplicaciones web en la nube.</p>
 
             <div class="success-box">
                 <h4>Características Principales:</h4>
@@ -395,20 +395,20 @@
         <section id="middleware">
             <h2>3. Middleware Pipeline</h2>
 
-            <h3>Que es el Middleware Pipeline?</h3>
+            <h3>¿Qué es el Middleware Pipeline?</h3>
             <p>El Middleware Pipeline es una secuencia de componentes que procesan las solicitudes HTTP entrantes y las respuestas HTTP salientes.</p>
 
-            <h3>Orden Tipico de Middleware</h3>
+            <h3>Orden Típico de Middleware</h3>
             <pre><code class="language-csharp">var app = builder.Build();
 
-// 1. Exception Handler (primero en ejecutar, ultimo en respuesta)
+// 1. Exception Handler (primero en ejecutar, último en respuesta)
 app.UseExceptionHandler("/Error");
 
 // 2. HTTPS Redirection (en desarrollo)
 app.UseHsts();
 app.UseHttpsRedirection();
 
-// 3. Static Files (archivos CSS, JS, imagenes)
+// 3. Static Files (archivos CSS, JS, imágenes)
 app.UseStaticFiles();
 
 // 4. Routing (direccionamiento de URLs)
@@ -474,7 +474,7 @@ dotnet watch run
                 </thead>
                 <tbody>
                     <tr><td><strong>Razor Pages</strong></td><td>Sitios web tradicionales</td><td>Pages + PageModel, simple</td></tr>
-                    <tr><td><strong>MVC</strong></td><td>Aplicaciones complejas</td><td>Controllers + Views, separacion</td></tr>
+                    <tr><td><strong>MVC</strong></td><td>Aplicaciones complejas</td><td>Controllers + Views, separación</td></tr>
                     <tr><td><strong>Web API</strong></td><td>Servicios REST</td><td>Controllers, JSON, no vistas</td></tr>
                     <tr><td><strong>Blazor</strong></td><td>SPA con C#</td><td>WebAssembly en cliente</td></tr>
                 </tbody>
@@ -484,8 +484,8 @@ dotnet watch run
         <section id="razor-pages">
             <h2>5. Razor Pages</h2>
 
-            <h3>Que son Razor Pages?</h3>
-            <p><strong>Razor Pages</strong> es un modelo de programacion orientado a páginas que facilita la creacion de interfaces web.</p>
+            <h3>¿Qué son Razor Pages?</h3>
+            <p><strong>Razor Pages</strong> es un modelo de programación orientado a páginas que facilita la creación de interfaces web.</p>
 
             <h3>PageModel (Backend)</h3>
             <pre><code class="language-csharp">public class IndexModel : PageModel
@@ -600,7 +600,7 @@ app.UseMiddleware&lt;TimingMiddleware&gt;();
 // O como método de extensión
 // app.UseTiming();</code></pre>
 
-            <h3>Middleware con Condicion</h3>
+            <h3>Middleware con Condición</h3>
             <pre><code class="language-csharp">public class AdminOnlyMiddleware
 {
     private readonly RequestDelegate _next;
@@ -690,7 +690,7 @@ public class TimingMiddleware
                 <li>Manejar GET (mostrar) y POST (calcular)</li>
                 <li>Validar división por cero</li>
             </ul>
-            <div class="success-box">Checklist: Razor Page creada, formulario funcional, operaciones correctas, válidación de división por cero implementada.</div>
+            <div class="success-box">Checklist: Razor Page creada, formulario funcional, operaciones correctas, validación de división por cero implementada.</div>
 
             <h3>Ejercicio 2: Middleware de Timing (15 min)</h3>
             <p><strong>Objetivo:</strong> Middleware que mide tiempo de respuesta.</p>
@@ -702,7 +702,7 @@ public class TimingMiddleware
             <div class="success-box">Checklist: Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output.</div>
 
             <h3>Ejercicio 3: Página con Validación (25 min)</h3>
-            <p><strong>Objetivo:</strong> Formulario con válidaciónes.</p>
+            <p><strong>Objetivo:</strong> Formulario con validaciones.</p>
             <ul>
                 <li>Nombre requerido</li>
                 <li>Email formato válido</li>
@@ -727,7 +727,7 @@ public class TimingMiddleware
                 <tbody>
                     <tr><td><strong>ASP.NET Core</strong></td><td>Framework web cross-platform moderno</td></tr>
                     <tr><td><strong>Kestrel</strong></td><td>Servidor web incorporado</td></tr>
-                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tuberia de procesamiento de solicitudes</td></tr>
+                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes</td></tr>
                     <tr><td><strong>Razor Pages</strong></td><td>Modelo de páginas simple</td></tr>
                     <tr><td><strong>PageModel</strong></td><td>Backend con handlers OnGet/OnPost</td></tr>
                     <tr><td><strong>Dependency Injection</strong></td><td>Contenedor DI integrado</td></tr>
@@ -743,7 +743,7 @@ public class TimingMiddleware
                 <li>Usar inyeccion de dependencias</li>
             </ul>
 
-            <h3>Proximos Pasos</h3>
+            <h3>Próximos Pasos</h3>
             <ul>
                 <li><strong>Clase 9:</strong> HTML5 y Bootstrap</li>
                 <li>Practicar creando proyectos reales</li>

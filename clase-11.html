@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -375,7 +375,7 @@ public class EstudianteViewModel
             <table class="tag-table">
                 <thead>
                     <tr>
-                        <th>Categor a</th>
+                        <th>Categoría</th>
                         <th>Atributo</th>
                         <th>Descripción</th>
                     </tr>
@@ -394,10 +394,10 @@ public class EstudianteViewModel
                     <tr>
                         <td>Longitud</td>
                         <td><code>[MinLength(5)]</code></td>
-                        <td>M nimo 5 caracteres</td>
+                        <td>Mínimo 5 caracteres</td>
                     </tr>
                     <tr>
-                        <td>Num rica</td>
+                        <td>Numérica</td>
                         <td><code>[Range(0, 100)]</code></td>
                         <td>Entre 0 y 100</td>
                     </tr>
@@ -419,7 +419,7 @@ public class EstudianteViewModel
                     <tr>
                         <td>Formato</td>
                         <td><code>[RegularExpression(@"...")]</code></td>
-                        <td>Patr n regex personalizado</td>
+                        <td>Patrón regex personalizado</td>
                     </tr>
                     <tr>
                         <td>Comparación</td>
@@ -531,7 +531,7 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
                 <li>Usuario escribe datos en formulario</li>
                 <li>JavaScript valida (jQuery Validation) en navegador</li>
                 <li>Si es inválido, muestra error <strong>sin enviar al servidor</strong></li>
-                <li>Si pasa validación cliente, env a POST</li>
+                <li>Si pasa validación cliente, envía POST</li>
                 <li>Servidor valida con ModelState (Data Annotations)</li>
                 <li>Si inválido, retorna vista con errores</li>
                 <li>Si válido, procesa y guarda</li>
@@ -775,7 +775,7 @@ public async Task&lt;IActionResult&gt; SubirFoto(IFormFile archivo, int estudian
 {
     if (archivo == null || archivo.Length == 0)
     {
-        ModelState.AddModelError("", "No se seleccion ning n archivo");
+        ModelState.AddModelError("", "No se seleccionó ningún archivo");
         return View();
     }
 
@@ -860,7 +860,7 @@ public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; arc
             <ul>
                 <li><code>[ValidateAntiForgeryToken]</code> en Controller</li>
                 <li><code>@Html.AntiForgeryToken()</code> en form</li>
-                <li>Token generado automáticamente y válido por sesi n</li>
+                <li>Token generado automáticamente y válido por sesión</li>
             </ul>
 
             <pre><code>&lt;!-- EN FORMULARIO: --&gt;
@@ -921,8 +921,8 @@ $.ajax({
             </ul>
             <ul>
                 <li>Validación de email</li>
-                <li>Validación de clave (m nimo 6 caracteres)</li>
-                <li>Manejo de sesi n</li>
+                <li>Validación de clave (mínimo 6 caracteres)</li>
+                <li>Manejo de sesión</li>
                 <li>Logout</li>
             </ul>
 
@@ -940,8 +940,8 @@ $.ajax({
                 <li>Vaciar carrito</li>
             </ul>
 
-            <h3>Ejercicio Integrador: Sistema de Inscripci
-            <p><strong>Duración estimada:</strong> 45 minutos</p>ón</h3>
+            <h3>Ejercicio Integrador: Sistema de Inscripción</h3>
+            <p><strong>Duración estimada:</strong> 45 minutos</p>
             <p>Crear sistema de inscripción de estudiantes con:</p>
             <table class="objectives-table">
                 <thead>
@@ -1093,3 +1093,4 @@ $.ajax({
     </footer>
 </body>
 </html>
+

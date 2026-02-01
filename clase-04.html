@@ -117,15 +117,15 @@
 <body>
   <header>
     <div class="wrap">
-      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 1</div>
+      <div>IF0100 - Lenguaje de Programación OO II | Unidad 1</div>
       <h1>Clase 04: Sobrecarga, Sobreescritura y Modelado BD</h1>
-      <div>Duracion: 90 minutos</div>
+      <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
           <strong>Objetivos</strong>
           <ul>
             <li>Diferenciar sobrecarga y sobreescritura.</li>
-            <li>Implementar sobrecarga de metodos y constructores.</li>
+            <li>Implementar sobrecarga de métodos y constructores.</li>
             <li>Sobrecargar operadores en C# con buenas practicas.</li>
             <li>Modelar una base de datos con diagramas ER.</li>
             <li>Identificar relaciones 1-1, 1-N y N-M.</li>
@@ -135,8 +135,8 @@
           <strong>Prerequisitos</strong>
           <ul>
             <li>Conceptos de clases, objetos y herencia.</li>
-            <li>Conocimientos basicos de C# (metodos, clases).</li>
-            <li>Herramienta de diagramacion (opcional).</li>
+            <li>Conocimientos básicos de C# (métodos, clases).</li>
+            <li>Herramienta de diagramación (opcional).</li>
           </ul>
         </div>
       </div>
@@ -145,9 +145,9 @@
 
   <nav>
     <ul>
-      <li><a href="#teoria">Teoria</a></li>
+      <li><a href="#teoria">Teoría</a></li>
       <li><a href="#ejemplos">Ejemplos e infografias</a></li>
-      <li><a href="#practica">Practica / laboratorio</a></li>
+      <li><a href="#practica">Práctica / laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
     </ul>
@@ -155,7 +155,7 @@
 
   <main>
     <section id="teoria">
-      <h2>Teoria</h2>
+      <h2>Teoría</h2>
 
       <h3>Sobrecarga vs sobreescritura</h3>
       <table>
@@ -163,10 +163,10 @@
           <tr><th>Aspecto</th><th>Sobrecarga</th><th>Sobreescritura</th></tr>
         </thead>
         <tbody>
-          <tr><td>Ubicacion</td><td>Misma clase</td><td>Padre -> hija</td></tr>
+          <tr><td>Ubicación</td><td>Misma clase</td><td>Padre -> hija</td></tr>
           <tr><td>Parametros</td><td>Diferentes</td><td>Iguales</td></tr>
           <tr><td>Palabras clave</td><td>Ninguna</td><td>virtual / override</td></tr>
-          <tr><td>Polimorfismo</td><td>Estatico (compilacion)</td><td>Dinamico (ejecucion)</td></tr>
+          <tr><td>Polimorfismo</td><td>Estático (compilación)</td><td>Dinámico (ejecución)</td></tr>
         </tbody>
       </table>
 
@@ -175,33 +175,33 @@
         <div>
           <h4>Valido</h4>
           <ul>
-            <li>Diferente cantidad de parametros.</li>
-            <li>Diferentes tipos de parametros.</li>
-            <li>Diferente orden de parametros.</li>
+            <li>Diferente cantidad de parámetros.</li>
+            <li>Diferentes tipos de parámetros.</li>
+            <li>Diferente orden de parámetros.</li>
           </ul>
         </div>
         <div>
           <h4>No valido</h4>
           <ul>
             <li>Solo cambiar el tipo de retorno.</li>
-            <li>Solo cambiar nombres de parametros.</li>
+            <li>Solo cambiar nombres de parámetros.</li>
           </ul>
         </div>
       </div>
 
       <h3>Modelamiento de bases de datos</h3>
-      <p>El modelado ER traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foraneas.</p>
+      <p>El modelado ER traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foráneas.</p>
       <pre><code>Entidad (POO)  -> Tabla (BD)
 Atributo       -> Columna
 Objeto         -> Registro
-PK             -> Id unico
+PK             -> Id único
 FK             -> Referencia</code></pre>
 
       <h3>Cardinalidad</h3>
       <pre><code>1:1 Persona - Pasaporte
 1:N Carrera - Estudiante
 N:M Estudiante - Materia</code></pre>
-      <div class="note">La cardinalidad define como se conectan las entidades en el modelo ER y determina el diseno fisico de tablas.</div>
+      <div class="note">La cardinalidad define como se conectan las entidades en el modelo ER y determina el diseño físico de tablas.</div>
     </section>
 
     <section id="ejemplos">
@@ -230,10 +230,10 @@ class Perro : Animal
         </div>
       </div>
 
-      <h3>Infografia: sobrecarga vs sobreescritura</h3>
+      <h3>Infografía: sobrecarga vs sobreescritura</h3>
       <figure>
         <img src="../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png" alt="Infografia sobrecarga vs sobreescritura" />
-        <figcaption>Diferencias clave entre sobrecarga (misma clase, firma diferente, resolucion estatica en compilacion) y sobreescritura (herencia padre-hija, misma firma, resolucion dinamica en ejecucion con virtual/override), ilustrando como cada mecanismo permite polimorfismo en C#.</figcaption>
+        <figcaption>Diferencias clave entre sobrecarga (misma clase, firma diferente, resolución estática en compilación) y sobreescritura (herencia padre-hija, misma firma, resolución dinámica en ejecución con virtual/override), ilustrando como cada mecanismo permite polimorfismo en C#.</figcaption>
       </figure>
 
       <h3>Sobrecarga de operadores</h3>
@@ -258,17 +258,17 @@ class Perro : Animal
     </section>
 
     <section id="practica">
-      <h2>Practica / laboratorio</h2>
+      <h2>Práctica / laboratorio</h2>
 
       <h3>Ejercicio Guiado: Calculadora con Sobrecarga</h3>
-      <p><strong>Objetivo:</strong> Implementar una clase <code>Calculadora</code> con sobrecarga de metodos para diferentes operaciones.</p>
+      <p><strong>Objetivo:</strong> Implementar una clase <code>Calculadora</code> con sobrecarga de métodos para diferentes operaciones.</p>
       <p><strong>Duracion:</strong> 30 minutos</p>
 
       <h4>Requisitos</h4>
       <ul>
-        <li>Metodo <code>Sumar</code> con 2 parametros int</li>
-        <li>Metodo <code>Sumar</code> con 3 parametros int</li>
-        <li>Metodo <code>Sumar</code> con 2 parametros double</li>
+        <li>Método <code>Sumar</code> con 2 parámetros int</li>
+        <li>Método <code>Sumar</code> con 3 parámetros int</li>
+        <li>Método <code>Sumar</code> con 2 parámetros double</li>
         <li>Metodo <code>Sumar</code> con params array (N enteros)</li>
         <li>Sobrecargar constructor con diferentes firmas</li>
       </ul>
@@ -280,11 +280,11 @@ class Perro : Animal
         </thead>
         <tbody>
           <tr><td>1</td><td>Crear proyecto de consola en Visual Studio</td><td>3 min</td></tr>
-          <tr><td>2</td><td>Definir clase Calculadora con metodos sobrecargados</td><td>12 min</td></tr>
+          <tr><td>2</td><td>Definir clase Calculadora con métodos sobrecargados</td><td>12 min</td></tr>
           <tr><td>3</td><td>Implementar Sumar(int, int) y Sumar(int, int, int)</td><td>5 min</td></tr>
           <tr><td>4</td><td>Implementar Sumar(double, double) y Sumar(params int[])</td><td>5 min</td></tr>
           <tr><td>5</td><td>Probar en Main con diferentes combinaciones</td><td>3 min</td></tr>
-          <tr><td>6</td><td>Verificar que el compilador selecciona la version correcta</td><td>2 min</td></tr>
+          <tr><td>6</td><td>Verificar que el compilador selecciona la versión correcta</td><td>2 min</td></tr>
         </tbody>
       </table>
 
@@ -301,10 +301,10 @@ class Perro : Animal
     public double Sumar(double a, double b) => a + b;
 
     // N enteros (params array)
-    public int Sumar(params int[] numeros)
+    public int Sumar(params int[] números)
     {
         int total = 0;
-        foreach (int n in numeros)
+        foreach (int n in números)
             total += n;
         return total;
     }
@@ -361,20 +361,20 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
         <tbody>
           <tr><td>Libro</td><td>ISBN, titulo, anio, paginas</td><td>ISBN</td><td>N:M con Autor</td></tr>
           <tr><td>Autor</td><td>ID, nombre, nacionalidad</td><td>ID</td><td>N:M con Libro</td></tr>
-          <tr><td>Prestamo</td><td>ID, fecha_prestamo, fecha_devolucion</td><td>ID</td><td>N:1 con Libro, N:1 con Socio</td></tr>
-          <tr><td>Socio</td><td>ID, nombre, direccion, telefono</td><td>ID</td><td>1:N con Prestamo</td></tr>
+          <tr><td>Prestamo</td><td>ID, fecha_prestamo, fecha_devolución</td><td>ID</td><td>N:1 con Libro, N:1 con Socio</td></tr>
+          <tr><td>Socio</td><td>ID, nombre, dirección, teléfono</td><td>ID</td><td>1:N con Prestamo</td></tr>
         </tbody>
       </table>
 
       <h4>Checklist de Modelado</h4>
       <ol>
-        <li>Identificar entidades (Libro, Autor, Prestamo, Socio)</li>
+        <li>Identificar entidades (Libro, Autor, Préstamo, Socio)</li>
         <li>Definir atributos y tipos de datos</li>
         <li>Establecer PK (ISBN para Libro, ID autoincremental para otros)</li>
         <li>Determinar cardinalidad (1:N, N:M)</li>
         <li>Crear tablas intermedias para N:M (Libro_Autor)</li>
         <li>Definir FK en las tablas correspondientes</li>
-        <li>Validar normalizacion 3FN</li>
+        <li>Validar normalización 3FN</li>
       </ol>
     </section>
 
@@ -383,7 +383,7 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
 
       <h3>Ejercicio 1: Clase Complejo</h3>
       <p><strong>Nivel:</strong> Intermedio | <strong>Duracion:</strong> 30 minutos</p>
-      <p>Crear una clase <code>Complejo</code> que represente numeros complejos con sobrecarga de operadores <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> y comparadores <code>==</code>, <code>!=</code>.</p>
+      <p>Crear una clase <code>Complejo</code> que represente números complejos con sobrecarga de operadores <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> y comparadores <code>==</code>, <code>!=</code>.</p>
 
       <h4>Requisitos</h4>
       <ul>
@@ -392,8 +392,8 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
         <li>Sobrecargar <code>+</code>: suma parte real e imaginaria</li>
         <li>Sobrecargar <code>-</code>: resta parte real e imaginaria</li>
         <li>Sobrecargar <code>*</code>: (a+bi)(c+di) = (ac-bd) + (ad+bc)i</li>
-        <li>Sobrecargar <code>/</code>: division de complejos</li>
-        <li>Sobrecargar <code>==</code> y <code>!=</code> para comparacion</li>
+        <li>Sobrecargar <code>/</code>: división de complejos</li>
+        <li>Sobrecargar <code>==</code> y <code>!=</code> para comparación</li>
         <li>Override de <code>ToString()</code> para formato "a + bi"</li>
       </ul>
 
@@ -405,7 +405,7 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
           <li>[ ] Operador * aplica formula (ac-bd) + (ad+bc)i</li>
           <li>[ ] Operador == compara ambas partes</li>
           <li>[ ] ToString retorna formato correcto</li>
-          <li>[ ] Operadores == y != son pares logicos</li>
+          <li>[ ] Operadores == y != son pares lógicos</li>
         </ul>
       </div>
 
@@ -428,7 +428,7 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
           <tr><th>Entidad</th><th>Atributos</th><th>PK</th><th>Relaciones</th></tr>
         </thead>
         <tbody>
-          <tr><td>Cliente</td><td>id, nombre, email, direccion</td><td>id</td><td>1:N con Orden</td></tr>
+          <tr><td>Cliente</td><td>id, nombre, email, dirección</td><td>id</td><td>1:N con Orden</td></tr>
           <tr><td>Orden</td><td>id, fecha, total, estado</td><td>id</td><td>N:1 con Cliente, N:M con Producto</td></tr>
           <tr><td>Producto</td><td>id, nombre, precio, stock</td><td>id</td><td>N:M con Orden</td></tr>
           <tr><td>OrdenDetalle</td><td>orden_id, producto_id, cantidad, subtotal</td><td>(orden_id, producto_id)</td><td>Tabla intermedia N:M</td></tr>
@@ -453,8 +453,8 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
 
       <h4>Requisitos de Modelado</h4>
       <ul>
-        <li>Habitacion: numero, tipo, capacidad, precio_por_noche</li>
-        <li>Cliente: id, nombre, email, telefono</li>
+        <li>Habitación: número, tipo, capacidad, precio_por_noche</li>
+        <li>Cliente: id, nombre, email, teléfono</li>
         <li>Reserva: id, fecha_entrada, fecha_salida, estado</li>
         <li>Relaciones: Cliente-Reserva (1:N), Habitacion-Reserva (1:N)</li>
       </ul>
@@ -463,19 +463,19 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
       <ul>
         <li>Clases con propiedades y constructores</li>
         <li>Sobrecarga de constructores en Habitacion</li>
-        <li>Metodo <code>CalcularNoches()</code> en Reserva</li>
-        <li>Metodo <code>CalcularCostoTotal()</code> usando precio de Habitacion</li>
-        <li>Validacion: fecha_salida > fecha_entrada</li>
+        <li>Método <code>CalcularNoches()</code> en Reserva</li>
+        <li>Método <code>CalcularCostoTotal()</code> usando precio de Habitacion</li>
+        <li>Validación: fecha_salida > fecha_entrada</li>
       </ul>
 
       <div class="note">
         <h4>Checklist</h4>
         <ul>
-          <li>[ ] Habitacion tiene constructor sobrecargado (con/sin numero)</li>
+          <li>[ ] Habitación tiene constructor sobrecargado (con/sin número)</li>
           <li>[ ] Reserva valida fechas en constructor</li>
           <li>[ ] CalcularNoches retorna diferencia correcta</li>
           <li>[ ] CalcularCostoTotal multiplica noches * precio</li>
-          <li>[ ] Relaciones implementadas con propiedades de navegacion</li>
+          <li>[ ] Relaciones implementadas con propiedades de navegación</li>
           <li>[ ] Datos validados antes de crear objetos</li>
         </ul>
       </div>
@@ -483,13 +483,13 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
       <h3>Tarea para Casa</h3>
       <div class="note">
         <h4>Entregable: Sistema Vector con Sobrecarga</h4>
-        <p><strong>Fecha limite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
+        <p><strong>Fecha límite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
         <p>Crear una clase <code>Vector2D</code> para representar vectores en 2D:</p>
         <ul>
           <li>Coordenadas X y Y (double)</li>
           <li>Sobrecargar <code>+</code>, <code>-</code> (suma y resta componente a componente)</li>
           <li>Sobrecargar <code>*</code> (producto por escalar)</li>
-          <li>Sobrecargar <code>==</code> y <code>!=</code> (comparacion de componentes)</li>
+          <li>Sobrecargar <code>==</code> y <code>!=</code> (comparación de componentes)</li>
           <li>Propiedad calculada <code>Magnitud</code> = sqrt(x^2 + y^2)</li>
           <li>Propiedad calculada <code>Normalizado</code> = vector / magnitud</li>
           <li>Metodo <code>DotProduct(Vector2D other)</code> = x1*x2 + y1*y2</li>
@@ -500,7 +500,7 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
           <li>Repositorio en GitHub con README.md</li>
           <li>Codigo fuente en C# con comentarios</li>
           <li>Programa Main que demuestre todas las operaciones</li>
-          <li>Capturas de pantalla de la ejecucion</li>
+          <li>Capturas de pantalla de la ejecución</li>
         </ul>
       </div>
     </section>
@@ -508,11 +508,16 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>Documentacion oficial de C# (sobrecarga y sobreescritura).</li>
-        <li>Guia de modelado ER y normalizacion (3FN).</li>
+        <li>Documentación oficial de C# (sobrecarga y sobreescritura).</li>
+        <li>Guía de modelado ER y normalización (3FN).</li>
         <li>Material de clase IF0100 - Unidad 1.</li>
       </ul>
     </section>
   </main>
+
+  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+    <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+    <p>UNAULA - Ingeniería Informática - 2026-I</p>
+  </footer>
 </body>
 </html>

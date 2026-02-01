@@ -108,7 +108,7 @@
 <body>
   <header>
     <div class="wrap">
-      <div>IF0100 - Lenguaje de Programacion OO II | Unidad 4</div>
+      <div>IF0100 - Lenguaje de Programación OO II | Unidad 4</div>
       <h1>Clase 13: CRUD con ADO.NET y SQL Server</h1>
       <div>Duración: 90 minutos</div>
       <div class="meta">
@@ -117,7 +117,7 @@
           <ul>
             <li>Implementar CRUD completo con ADO.NET.</li>
             <li>Modelar base de datos y entidad C#.</li>
-            <li>Aplicar válidaciones y parámetros seguros.</li>
+            <li>Aplicar validaciones y parámetros seguros.</li>
             <li>Implementar paginación y operaciones masivas.</li>
             <li>Escribir consultas avanzadas con SQL.</li>
           </ul>
@@ -151,7 +151,7 @@
       <h3>Arquitectura por capas</h3>
       <pre><code>Presentación (Console/WinForms)
    ↓
-Lógica de negocio (válidaciones)
+Lógica de negocio (validaciones)
    ↓
 Acceso a datos (ADO.NET)
    ↓
@@ -187,7 +187,7 @@ SQL Server (tabla Estudiantes)</code></pre>
     public int Edad => DateTime.Now.Year - FechaNacimiento.Year;
 }</code></pre>
 
-      <h3>Seguridad basica</h3>
+      <h3>Seguridad básica</h3>
       <ul>
         <li>Usar parámetros SQL para evitar inyección.</li>
         <li>Manejar excepciones de clave unica (codigo duplicado).</li>
@@ -318,13 +318,13 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
     <section id="ejercicios">
       <h2>Ejercicios</h2>
 
-      <h3>Busqueda por nombre</h3>
+      <h3>Búsqueda por nombre</h3>
       <p>Implementar <code>BuscarPorNombre(string término)</code> con LIKE en nombre y apellido.</p>
 
       <h3>Paginación</h3>
       <p>Modificar <code>ObtenerTodos</code> para aceptar pagina y tamaño y retornar resultado paginado.</p>
 
-      <h3>Transacciónes</h3>
+      <h3>Transacciones</h3>
       <p>Crear un método que actualice múltiples promedios en una sola transacción.</p>
 
       <h3>Checklist de errores comunes</h3>
@@ -345,5 +345,10 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
       </ul>
     </section>
   </main>
+
+  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+    <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+    <p>UNAULA - Ingeniería Informática - 2026-I</p>
+  </footer>
 </body>
 </html>

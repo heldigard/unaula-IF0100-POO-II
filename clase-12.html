@@ -273,7 +273,7 @@
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td><strong>Aplicar</strong> buenas pr cticas de manejo de conexiones</td>
+                        <td><strong>Aplicar</strong> buenas prácticas de manejo de conexiones</td>
                     </tr>
                 </tbody>
             </table>
@@ -312,7 +312,7 @@
                     </tr>
                     <tr>
                         <td>10'</td>
-                        <td>Buenas pr cticas</td>
+                        <td>Buenas prácticas</td>
                     </tr>
                 </tbody>
             </table>
@@ -345,7 +345,7 @@
             <table class="tag-table">
                 <thead>
                     <tr>
-                        <th>Caracter stica</th>
+                        <th>Característica</th>
                         <th>ADO.NET</th>
                         <th>EF Core</th>
                     </tr>
@@ -359,16 +359,16 @@
                     <tr>
                         <td>Cuando usar</td>
                         <td>Queries complejas, Stored procedures, Control total del SQL</td>
-                        <td>CRUD est ndar, Mapeo O/R simple, Productividad</td>
+                        <td>CRUD estándar, Mapeo O/R simple, Productividad</td>
                     </tr>
                     <tr>
                         <td>Ventajas</td>
                         <td>Máximo control, Máximo rendimiento, Flexibilidad SQL</td>
-                        <td>Menos c digo, Más mantenible, Strong typing</td>
+                        <td>Menos código, Más mantenible, Strong typing</td>
                     </tr>
                     <tr>
                         <td>Desventajas</td>
-                        <td>Más c digo, Más propenso a errores</td>
+                        <td>Más código, Más propenso a errores</td>
                         <td>Menos control, Overhead</td>
                     </tr>
                 </tbody>
@@ -406,9 +406,9 @@ dotnet add package System.Data.SqlClient
 dotnet add package Microsoft.Data.SqlClient
 
 // Namespaces necesarios
-using System.Data;           // Tipos gen ricos: DataTable, DataSet
-using System.Data.SqlClient; // Proveedor SQL Server espec fico
-using Microsoft.Data.SqlClient; // Nuevo paquete (m s actualizado)</code></pre>
+using System.Data;           // Tipos genéricos: DataTable, DataSet
+using System.Data.SqlClient; // Proveedor SQL Server específico
+using Microsoft.Data.SqlClient; // Nuevo paquete (más actualizado)</code></pre>
         </section>
 
         <!-- Conexion -->
@@ -432,7 +432,7 @@ builder.Services.AddSingleton(connectionString);
 
 // ─────────────────────────────────────────────────────────────
 
-// Opción 2: Connection String Builder (m s seguro)
+// Opción 2: Connection String Builder (más seguro)
 var builder = new SqlConnectionStringBuilder
 {
     DataSource = @"(localdb)\mssqllocaldb",
@@ -493,7 +493,7 @@ string connectionString = builder.ConnectionString;</code></pre>
             <h3>SqlDataReader - Lectura de datos</h3>
             <pre><code>// Métodos del SqlDataReader
 
-// Por ndice (posici n)
+// Por índice (posición)
 int id = reader.GetInt32(0);
 string nombre = reader.GetString(1);
 
@@ -506,7 +506,7 @@ if (!reader.IsDBNull(3))
     email = reader.GetString(3);
 }
 
-// Cast gen rico (m s lento pero flexible)
+// Cast genérico (más lento pero flexible)
 int id = (int)reader["Id"];
 string nombre = reader["Nombre"].ToString();
 
@@ -605,10 +605,10 @@ private Estudiante MapFromReader(SqlDataReader reader)
     command.Parameters.AddWithValue("@Email",
         (object)estudiante.Email ?? DBNull.Value);
 
-    // ExecuteNonQuery retorna n mero de filas afectadas
+    // ExecuteNonQuery retorna número de filas afectadas
     int filasAfectadas = await command.ExecuteNonQueryAsync();
 
-    return filasAfectadas &gt; 0;  // True si se actualiz
+    return filasAfectadas &gt; 0;  // True si se actualizó
 }</code></pre>
 
             <h3>Delete (DELETE)</h3>
@@ -627,7 +627,7 @@ private Estudiante MapFromReader(SqlDataReader reader)
     return filasAfectadas &gt; 0;
 }
 
-// Alternativa: Eliminaci n l gica (m s segura)
+// Alternativa: Eliminación lógica (más segura)
 public async Task&lt;bool&gt; DesactivarAsync(int id)
 {
     using var connection = new SqlConnection(_connectionString);
@@ -738,7 +738,7 @@ public async Task&lt;bool&gt; DesactivarAsync(int id)
                 <strong>✅ SIEMPRE USAR USING</strong>
                 <ul>
                     <li>SqlConnection, SqlCommand, SqlDataReader</li>
-                    <li>Garantiza liberaci n de recursos</li>
+                    <li>Garantiza liberación de recursos</li>
                 </ul>
             </div>
 
@@ -747,15 +747,15 @@ public async Task&lt;bool&gt; DesactivarAsync(int id)
                 <pre><code>// VULNERABLE A SQL INJECTION
 var sql = $"SELECT * FROM Users WHERE Id = {id}";
 
-// SEGURO CON PAR METROS
+// SEGURO CON PARÁMETROS
 command.Parameters.AddWithValue("@Id", id);</code></pre>
             </div>
 
             <div class="checklist-box">
-                <strong>✅ CERRAR CONEXIONES R PIDO</strong>
+                <strong>✅ CERRAR CONEXIONES RÁPIDO</strong>
                 <ul>
                     <li>Abrir justo antes de usar</li>
-                    <li>Cerrar inmediatamente despu s</li>
+                    <li>Cerrar inmediatamente después</li>
                     <li>NO mantener conexiones abiertas</li>
                 </ul>
             </div>
@@ -785,8 +785,8 @@ command.Parameters.AddWithValue("@Id", id);</code></pre>
             </div>
 
             <h3>Connection Pooling</h3>
-            <p>Reutilización autom tica de conexiones físicas para mejorar rendimiento.</p>
-            <pre><code>// Connection Pool est activado por defecto
+            <p>Reutilización automática de conexiones físicas para mejorar rendimiento.</p>
+            <pre><code>// Connection Pool está activado por defecto
 // Configuración en connection string:
 
 "Server=localhost;Database=UniversidadDB;Integrated Security=true;
@@ -941,7 +941,7 @@ command.Parameters.AddWithValue("@Codigo", codigo);
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td><code>Actualizar(Estudiante estudiante) : Task&lt;bool&gt;;</code> - Actualizar datos, retornar true si se actualiz</td>
+                        <td><code>Actualizar(Estudiante estudiante) : Task&lt;bool&gt;;</code> - Actualizar datos, retornar true si se actualizó</td>
                     </tr>
                     <tr>
                         <td>5</td>
