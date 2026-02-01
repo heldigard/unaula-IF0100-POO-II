@@ -328,8 +328,8 @@ namespace UniversidadApp.Data
         {
             return $"{e.Id}{SEPARADOR}" +
                    $"{e.Codigo}{SEPARADOR}" +
-                   $""{e.Nombre}"{SEPARADOR}" +  // Comillas por si tiene comas
-                   $""{e.Apellido}"{SEPARADOR}" +
+                   $"\"{e.Nombre}\"{SEPARADOR}" +  // Comillas por si tiene comas
+                   $"\"{e.Apellido}\"{SEPARADOR}" +
                    $"{e.Email}{SEPARADOR}" +
                    $"{e.FechaNacimiento:yyyy-MM-dd}{SEPARADOR}" +
                    $"{e.Promedio:F2}{SEPARADOR}" +

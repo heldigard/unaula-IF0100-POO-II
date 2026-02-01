@@ -156,6 +156,8 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 
 ### Representación ASCII:
+
+```
 ┌────────────────────────────────────────────────────────────┐
 │                      .NET 8 (2024)                         │
 │                    ┌──────────────────┐                    │
@@ -470,12 +472,94 @@ namespace CalculadoraArea
             Console.WriteLine($"El área es: {area:F2}");
             
 ---
-### Ejercicio en clase (25 min)
+## Ejercicios Prácticos Adicionales
 
+### Ejercicio 1: Calculadora Simple
 
-            // Esperar antes de cerrar
-            Console.WriteLine("\nPresione cualquier tecla...");
+```csharp
+using System;
+
+namespace Calculadora
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== CALCULADORA SIMPLE ===\n");
+            
+            Console.Write("Número 1: ");
+            double num1 = double.Parse(Console.ReadLine());
+            
+            Console.Write("Operación (+ - * /): ");
+            char op = Console.ReadLine()[0];
+            
+            Console.Write("Número 2: ");
+            double num2 = double.Parse(Console.ReadLine());
+            
+            double resultado = 0;
+            bool valido = true;
+            
+            switch (op)
+            {
+                case '+': resultado = num1 + num2; break;
+                case '-': resultado = num1 - num2; break;
+                case '*': resultado = num1 * num2; break;
+                case '/': 
+                    if (num2 != 0) resultado = num1 / num2;
+                    else { Console.WriteLine("Error: División por cero"); valido = false; }
+                    break;
+                default: Console.WriteLine("Operación inválida"); valido = false; break;
+            }
+            
+            if (valido)
+                Console.WriteLine($"\nResultado: {resultado:F2}");
+            
             Console.ReadKey();
+        }
+    }
+}
+```
+
+### Ejercicio 2: Conversor de Temperatura
+
+```csharp
+using System;
+
+namespace Temperatura
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("=== CONVERSOR DE TEMPERATURA ===\n");
+            
+            Console.Write("Ingrese temperatura en Celsius: ");
+            double celsius = double.Parse(Console.ReadLine());
+            
+            // Fórmulas de conversión
+            double fahrenheit = (celsius * 9 / 5) + 32;
+            double kelvin = celsius + 273.15;
+            
+            Console.WriteLine("\n--- Resultados ---");
+            Console.WriteLine($"{celsius}°C = {fahrenheit:F2}°F");
+            Console.WriteLine($"{celsius}°C = {kelvin:F2}K");
+            
+            // Evaluar estado del agua
+            if (celsius <= 0)
+                Console.WriteLine("→ El agua está en estado SÓLIDO (hielo)");
+            else if (celsius >= 100)
+                Console.WriteLine("→ El agua está en estado GASEOSO (vapor)");
+            else
+                Console.WriteLine("→ El agua está en estado LÍQUIDO");
+            
+            Console.ReadKey();
+        }
+    }
+}
+```
+
+---
+### Ejercicio en clase (25 min)
         }
     }
 }

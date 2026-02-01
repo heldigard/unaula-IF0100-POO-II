@@ -144,9 +144,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Significado y uso
 
-
----
-## Ejemplo: Estructura HTML5 Completa
 ---
 ## Ejemplo: Estructura HTML5 Completa
 ---
@@ -218,8 +215,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </body>
 </html>
 ```
----
-## 2. Formularios HTML5
 ---
 ## 2. Formularios HTML5
 ---
@@ -370,7 +365,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### Framework CSS más popular
 
-
 ---
 ### El corazón de Bootstrap
 
@@ -406,9 +400,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ### El corazón de Bootstrap
 
-
----
-## Ejemplos de Grid
 ---
 ## Ejemplos de Grid
 ---
@@ -519,8 +510,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 </div>
 ```
 
----
-## Más Componentes Bootstrap
 ---
 ## Más Componentes Bootstrap
 ---
@@ -737,8 +726,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ## Vista con Bootstrap
 ---
-## Vista con Bootstrap
----
 ### CRUD de Estudiantes
 
 ```html
@@ -804,8 +791,6 @@ Al finalizar esta clase, el estudiante será capaz de:
     </div>
 </div>
 ```
----
-## Formulario con Bootstrap
 ---
 ## Formulario con Bootstrap
 ---
@@ -911,7 +896,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 ### Mobile-first con Bootstrap
-
 
 ---
 

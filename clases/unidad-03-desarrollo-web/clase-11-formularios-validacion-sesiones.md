@@ -144,8 +144,6 @@ public class EstudianteViewModel
 ```
 ---
 ## Data Annotations Disponibles
----
-## Data Annotations Disponibles
 ### Lista completa de atributos
 
 ![Validación de Formularios](../../assets/infografias/clase-11-validacion-formularios.png){: style="max-width: 80%; max-height: 500px; display: block; margin: 0 auto;"}
@@ -184,8 +182,6 @@ public class EstudianteViewModel
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
----
-## Validación Personalizada
 ---
 ## Validación Personalizada
 ---
@@ -289,8 +285,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 }
 ```
 
----
-## 2. Validación Cliente vs Servidor
 ---
 ## 2. Validación Cliente vs Servidor
 ### Doble validación
@@ -587,8 +581,6 @@ public class PreferenciasController : Controller
 }
 ```
 
----
-## 5. Upload de Archivos
 ---
 ## 5. Upload de Archivos
 ---

@@ -111,8 +111,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 ---
 ## Flujo MVC Detallado
 ---
-## Flujo MVC Detallado
----
 ### Ejemplo: Crear Estudiante
 
 ```
@@ -157,8 +155,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
----
-## Controller Completo
 ---
 ## Controller Completo
 ---
@@ -455,8 +451,6 @@ public class EstudiantesController : Controller
 }
 ```
 
----
-## ViewModels
 ---
 ## ViewModels
 ---

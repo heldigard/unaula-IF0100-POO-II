@@ -169,10 +169,6 @@ public class EjemploDataSet
         // Definir clave primaria
         dtEstudiantes.PrimaryKey = new DataColumn[] { dtEstudiantes.Columns["Id"] };
         
----
-### 3. DataSet Básico (15 min)
-
-
         // 4. Agregar filas
         DataRow fila1 = dtEstudiantes.NewRow();
         fila1["Id"] = 1;
@@ -194,7 +190,7 @@ public class EjemploDataSet
         dtEstudiantes.Rows.Add(3, "Carlos", "López", 19, 3.8m);
         
         // 5. Agregar tabla al DataSet
----
+        dsUniversidad.Tables.Add(dtEstudiantes);
         
         // 6. Navegar datos
         Console.WriteLine($"DataSet: {dsUniversidad.DataSetName}");
@@ -219,10 +215,6 @@ if (filaEncontrada != null)
 {
     Console.WriteLine($"Encontrado: {filaEncontrada["Nombre"]}");
 }
-
----
-
-
 
 // Filtrar filas
 DataRow[] estudiantesDestacados = dtEstudiantes.Select("Promedio >= 4.0");
@@ -274,10 +266,6 @@ public class EstudianteDataAdapter
             adapter.Fill(ds, "Estudiantes");
         }
         
----
-### 4. DataAdapter - Puente con la BD (25 min)
-
-
         Console.WriteLine($"Filas cargadas: {ds.Tables["Estudiantes"].Rows.Count}");
         return ds;
     }
@@ -306,10 +294,6 @@ public int GuardarCambios(DataTable dt)
 {
     int filasAfectadas = 0;
     
----
-### 4. DataAdapter - Puente con la BD (25 min)
-
-
     using (SqlConnection conn = new SqlConnection(connectionString))
     {
         string selectQuery = "SELECT * FROM Estudiantes";
@@ -334,8 +318,6 @@ class Program
 {
     static void Main()
     {
----
-        
         // 1. Cargar datos desde BD
         DataTable dt = repo.CargarEstudiantesTabla();
         Console.WriteLine($"Cargados: {dt.Rows.Count} estudiantes\n");
@@ -358,10 +340,6 @@ class Program
             filaActualizar["Email"] = "nuevo_email@unaula.edu.co";
         }
         
----
-
-
-
         // Eliminar estudiante
         DataRow filaEliminar = dt.Rows.Find(5);
         if (filaEliminar != null)
@@ -389,10 +367,6 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
     string selectQuery = "SELECT Id, Nombre, Apellido, Email FROM Estudiantes";
     SqlDataAdapter adapter = new SqlDataAdapter(selectQuery, conn);
     
----
-
-
-
     // INSERT personalizado
     adapter.InsertCommand = new SqlCommand(
         "INSERT INTO Estudiantes (Nombre, Apellido, Email) " +
@@ -416,10 +390,6 @@ public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
     adapter.DeleteCommand = new SqlCommand(
         "DELETE FROM Estudiantes WHERE Id = @Id", conn);
     
----
-
-
-
     adapter.DeleteCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
     
     return adapter;
@@ -457,7 +427,6 @@ public void MostrarEstadoFilas(DataTable dt)
 ---
 ### 5. Tracking de Cambios (10 min)
 
-
 **Versiones de datos:**
 - `Current`: Valor actual
 - `Original`: Valor original desde la BD
@@ -490,10 +459,6 @@ public DataSet CargarUniversidadCompleta()
         adapterMat.Fill(ds, "Matriculas");
     }
     
----
-### 6. DataSet con Múltiples Tablas (10 min)
-
-
     // Definir relaciones
     DataColumn pkEstudiante = ds.Tables["Estudiantes"].Columns["Id"];
     DataColumn fkMatricula = ds.Tables["Matriculas"].Columns["EstudianteId"];
@@ -519,10 +484,6 @@ public void MostrarMatriculasPorEstudiante(DataSet ds, int estudianteId)
         // Obtener filas hijas usando la relación
         DataRow[] matriculas = estudiante.GetChildRows("Estudiante_Matriculas");
         
----
-### 6. DataSet con Múltiples Tablas (10 min)
-
-
         foreach (DataRow mat in matriculas)
         {
             Console.WriteLine($"  - Curso ID: {mat["CursoId"]}, Fecha: {mat["FechaMatricula"]}");
@@ -582,8 +543,6 @@ CREATE TABLE Movimientos (
 
 1. **Cargar datos al iniciar** (Fill de ambas tablas)
 2. **Menú interactivo:**
----
-## 🛠️ Ejercicio para Casa (En Parejas)
    - Ver todos los productos
    - Agregar nuevo producto
    - Modificar precio/stock
@@ -605,10 +564,6 @@ CREATE TABLE Movimientos (
    - Confirmar antes de guardar cambios
 
 5. **Bonus:**
----
-## 🛠️ Ejercicio para Casa (En Parejas)
-
-
    - Exportar inventario a XML
    - Reporte de productos con bajo stock (< 10)
    - Calcular valor total del inventario
@@ -646,19 +601,5 @@ Hoy aprendimos:
 **Fecha:** 2026-05-18 (Lunes)  
 **Profesor:** [Nombre]  
 **Curso:** IF0100 - POO II
-
-
-
----
-
-## 🎯 Objetivos de Aprendizaje
-
-Al finalizar esta clase, el estudiante será capaz de:
-
-1. **Comprender** la arquitectura de datos desconectados en ADO.NET
-2. **Utilizar** DataSet y DataAdapter para gestión de datos offline
-3. **Implementar** operaciones CRUD con datos desconectados
-4. **Aplicar** técnicas de sincronización entre DataSet y base de datos
-5. **Resolver** conflictos de concurrencia en escenarios multi-usuario
 
 ---

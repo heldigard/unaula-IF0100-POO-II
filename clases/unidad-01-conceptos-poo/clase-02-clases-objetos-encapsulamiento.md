@@ -110,10 +110,6 @@ Persona maria = new Persona("María", 30);
 ```
 
 ---
-### Programación Orientada a Objetos
-
-
----
 
 ## Clase vs Objeto
 
@@ -124,12 +120,14 @@ Persona maria = new Persona("María", 30);
 ---
 
 ### Representación ASCII:
+
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                                                             │
 │     MOLDE (Clase)              GALLETAS (Objetos)          │
 │                                                             │
 │    ┌───────────┐              ┌───┐ ┌───┐ ┌───┐ ┌───┐      │
-│    │  Galleta  │              │ 🍪 │ │ 🍪 │ │ 🍪 │ │ 🍪 │      │
+│    │  Galleta  │              │ 🍪│ │ 🍪│ │ 🍪│ │ 🍪│      │
 │    │           │    crea →    └───┘ └───┘ └───┘ └───┘      │
 │    │ - forma   │              Cada una es INDEPENDIENTE     │
 │    │ - sabor   │              pero comparten el MOLDE      │
@@ -205,10 +203,6 @@ namespace Universidad
 ```
 
 ---
-### Primera versión (campos públicos)
-
-
----
 ### Instanciación con new
 
 
@@ -239,10 +233,6 @@ class Program
     }
 }
 ```
-
----
-### Instanciación con new
-
 
 ---
 
@@ -345,10 +335,6 @@ public class CuentaBancaria
     }
 }
 ```
-
----
-### Campos privados, acceso controlado
-
 
 ---
 

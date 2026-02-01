@@ -200,7 +200,6 @@ En parejas:
 ---
 #### Base de Datos SQL Server
 
-
 ```sql
 -- Crear base de datos
 CREATE DATABASE UniversidadDB;
@@ -222,10 +221,6 @@ CREATE TABLE Estudiantes (
     FechaCreacion DATETIME DEFAULT GETDATE()
 );
 GO
-
----
-#### Base de Datos SQL Server
-
 
 -- Insertar datos de prueba
 INSERT INTO Estudiantes (Codigo, Nombre, Apellido, Email, FechaNacimiento, Promedio)
@@ -261,10 +256,6 @@ namespace UniversidadApp.Models
         
         // Edad
         public int Edad => DateTime.Now.Year - FechaNacimiento.Year;
-
----
-### 2️⃣ Modelo de Entidad (Clase C#)
-
 
         // Override ToString para facilitar visualización
         public override string ToString()

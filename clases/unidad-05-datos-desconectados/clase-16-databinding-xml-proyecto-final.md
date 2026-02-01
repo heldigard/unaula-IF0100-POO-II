@@ -58,8 +58,6 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## 📋 Contenido
 
----
-
 ### 1. Data Binding - Enlace de Datos (20 min)
 
 **¿Qué es Data Binding?**
@@ -94,10 +92,6 @@ public class FormEstudiantes : Form
             SelectionMode = DataGridViewSelectionMode.FullRowSelect
         };
         
----
-### 1. Data Binding - Enlace de Datos (20 min)
-
-
         txtNombre = new TextBox { Location = new Point(100, 320), Width = 200 };
         txtApellido = new TextBox { Location = new Point(100, 350), Width = 200 };
         txtEmail = new TextBox { Location = new Point(100, 380), Width = 200 };
@@ -126,10 +120,6 @@ public class FormEstudiantes : Form
         };
         btnEliminar.Click += BtnEliminar_Click;
         
----
-### 1. Data Binding - Enlace de Datos (20 min)
-
-
         // Agregar labels
         Controls.Add(new Label { Text = "Nombre:", Location = new Point(20, 323) });
         Controls.Add(new Label { Text = "Apellido:", Location = new Point(20, 353) });
@@ -138,8 +128,6 @@ public class FormEstudiantes : Form
         // Agregar controles al form
         Controls.Add(dgvEstudiantes);
         Controls.Add(txtNombre);
----
-## 📋 Contenido
         Controls.Add(txtApellido);
         Controls.Add(txtEmail);
         Controls.Add(btnNuevo);
@@ -161,10 +149,6 @@ public class FormEstudiantes : Form
         dtEstudiantes.Columns.Add("Email", typeof(string));
         dtEstudiantes.PrimaryKey = new DataColumn[] { dtEstudiantes.Columns["Id"] };
         
----
-## 📋 Contenido
-
-
         // Datos de ejemplo
         dtEstudiantes.Rows.Add(1, "Juan", "Pérez", "juan@unaula.edu.co");
         dtEstudiantes.Rows.Add(2, "María", "García", "maria@unaula.edu.co");
@@ -189,10 +173,6 @@ public class FormEstudiantes : Form
         txtNombre.Focus();
     }
     
----
-## 📋 Contenido
-
-
     private void BtnGuardar_Click(object sender, EventArgs e)
     {
         bindingSource.EndEdit();
@@ -213,9 +193,6 @@ public class FormEstudiantes : Form
     }
 }
 ```
-
----
-## 📋 Contenido
 
 
 **Ventajas de BindingSource:**
@@ -252,10 +229,6 @@ public class DataSetXmlHelper
         ds.WriteXmlSchema($"{archivoBase}_esquema.xsd");
     }
     
----
-### 2. DataSet y XML (20 min)
-
-
     // Importar desde XML
     public DataSet ImportarDatos(string archivo)
     {
@@ -277,17 +250,12 @@ class Program
         // Crear DataSet con datos
         DataSet dsUniversidad = new DataSet("Universidad");
         
----
-### 2. DataSet y XML (20 min)
-
-
         DataTable dtEstudiantes = new DataTable("Estudiantes");
         dtEstudiantes.Columns.Add("Id", typeof(int));
         dtEstudiantes.Columns.Add("Nombre", typeof(string));
         dtEstudiantes.Columns.Add("Promedio", typeof(decimal));
         
         dtEstudiantes.Rows.Add(1, "Juan Pérez", 4.2m);
----
         
         dsUniversidad.Tables.Add(dtEstudiantes);
         
@@ -337,9 +305,6 @@ class Program
 </Universidad>
 ```
 
----
-
-
 
 **2.2. Aplicaciones prácticas:**
 - ✅ Backup de datos
@@ -373,10 +338,6 @@ class Program
 - Validación de email único
 - Estado activo/inactivo
 
----
-### 3. Proyecto Integrador - Especificación (15 min)
-
-
 **3. Préstamos**
 - Registrar préstamo (validar disponibilidad)
 - Registrar devolución
@@ -397,7 +358,8 @@ class Program
 - DataBinding en formularios
 
 **Modelo de datos (SQL):**
----
+
+```sql
 CREATE TABLE Libros (
     Id INT PRIMARY KEY IDENTITY(1,1),
     Titulo NVARCHAR(200) NOT NULL,
@@ -428,9 +390,6 @@ CREATE TABLE Prestamos (
     Estado NVARCHAR(20) DEFAULT 'Activo' -- 'Activo', 'Devuelto', 'Vencido'
 );
 ```
-
----
-
 
 
 **Entregables:**
@@ -503,10 +462,6 @@ public class PrestamoRepository
         {
             conn.Open();
             
----
-### 4. Integración de Conocimientos (20 min)
-
-
             using (SqlTransaction trans = conn.BeginTransaction())
             {
                 try
@@ -532,10 +487,6 @@ public class PrestamoRepository
                         (@LibroId, @UsuarioId, GETDATE(), DATEADD(day, 15, GETDATE()));
                         SELECT CAST(SCOPE_IDENTITY() AS INT);";
                     
----
-### 4. Integración de Conocimientos (20 min)
-
-
                     using (SqlCommand cmd = new SqlCommand(queryPrestamo, conn, trans))
                     {
                         cmd.Parameters.AddWithValue("@LibroId", libroId);
@@ -563,10 +514,6 @@ public class PrestamoRepository
             }
         }
         
----
-### 4. Integración de Conocimientos (20 min)
-
-
         return prestamoId;
     }
     
@@ -575,7 +522,7 @@ public class PrestamoRepository
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
----
+            using (SqlTransaction trans = conn.BeginTransaction())
             {
                 try
                 {
@@ -601,10 +548,6 @@ public class PrestamoRepository
                         }
                     }
                     
----
-
-
-
                     // 2. Calcular multa si hay atraso
                     decimal multa = 0;
                     TimeSpan diferencia = DateTime.Now - fechaEsperada;
@@ -628,10 +571,6 @@ public class PrestamoRepository
                         cmd.ExecuteNonQuery();
                     }
                     
----
-
-
-
                     // 4. Marcar libro como disponible
                     string queryLibro = 
                         "UPDATE Libros SET Disponible = 1 WHERE Id = @LibroId";
@@ -653,9 +592,6 @@ public class PrestamoRepository
         }
     }
 }
-
----
-
 
 
 // Pruebas Unitarias (TDD - Unidad 2)
@@ -687,10 +623,6 @@ public class PrestamoTests
             FechaDevolucionEsperada = DateTime.Now.AddDays(-10)
         };
         
----
-
-
-
         // Act
         decimal multa = prestamo.CalcularMulta();
         
@@ -777,7 +709,6 @@ Implementar un mini-sistema con las siguientes características:
 
 ---
 ## 🎯 Resumen del Semestre
-
 
 **Unidad 5 - Datos Desconectados:**
 - ✅ DataSet y DataTable
