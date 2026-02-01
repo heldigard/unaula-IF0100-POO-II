@@ -114,15 +114,15 @@ Al finalizar esta clase, el estudiante será capaz de:
 ```
 
 ---
-### Representación ASCII:
 
+### La palabra clave `:` (dos puntos)
 
----
-### La palabra clave `:``
-
+En C#, el símbolo `:` después del nombre de la clase indica herencia:
 
 ```csharp
-// CLASE BASE (Padre)
+// ════════════════════════════════════════════════════
+// CLASE BASE (Padre) - La clase "general"
+// ════════════════════════════════════════════════════
 public class Persona
 {
     public string Nombre { get; set; }
@@ -135,20 +135,27 @@ public class Persona
     }
 }
 
-// CLASE DERIVADA (Hija) - sintaxis: ":"
-public class Estudiante : Persona  // Estudiante HEREDA de Persona
+// ════════════════════════════════════════════════════
+// CLASE DERIVADA (Hija) - Sintaxis: Nombre : Base
+// ════════════════════════════════════════════════════
+public class Estudiante : Persona  // ← Estudiante HEREDA de Persona
 {
-    public string Codigo { get; set; }      // Atributo propio
-    public string Carrera { get; set; }     // Atributo propio
-    public int Semestre { get; set; }       // Atributo propio
+    // Atributos propios de Estudiante (no heredados)
+    public string Codigo { get; set; }
+    public string Carrera { get; set; }
+    public int Semestre { get; set; }
     
----
-### La palabra clave `:``
-
-
+    // Método propio de Estudiante
     public void Estudiar()
     {
-        Console.WriteLine($"{Nombre} está estudiando");
+        Console.WriteLine($"{Nombre} está estudiando {Carrera}");
+    }
+    
+    // Método que usa propiedades heredadas y propias
+    public void Presentarse()
+    {
+        Console.WriteLine($"Soy {Nombre}, tengo {Edad} años");
+        Console.WriteLine($"Estudio {Carrera}, semestre {Semestre}");
     }
 }
 ```
@@ -213,10 +220,15 @@ public class Empleado : Persona
 ```
 
 ---
+
 ### La palabra clave `base`
 
+La palabra clave `base` permite acceder a miembros de la clase padre, especialmente útil en constructores:
 
 ```csharp
+// ════════════════════════════════════════════════════
+// CLASE BASE
+// ════════════════════════════════════════════════════
 public class Persona
 {
     public string Nombre { get; set; }
@@ -225,62 +237,84 @@ public class Persona
     // Constructor de Persona
     public Persona(string nombre, int edad)
     {
+        Console.WriteLine("Constructor Persona ejecutado");
         Nombre = nombre;
         Edad = edad;
     }
 }
 
+// ════════════════════════════════════════════════════
+// CLASE DERIVADA
+// ════════════════════════════════════════════════════
 public class Estudiante : Persona
 {
     public string Codigo { get; set; }
     
     // Constructor de Estudiante llama a base
     public Estudiante(string nombre, int edad, string codigo) 
-        : base(nombre, edad)  // ← Llama constructor de Persona
+        : base(nombre, edad)  // ← Llama constructor de Persona PRIMERO
     {
-        Codigo = codigo;  // Inicializa lo propio
+        Console.WriteLine("Constructor Estudiante ejecutado");
+        Codigo = codigo;  // Luego inicializa lo propio
     }
 }
 
----
-### La palabra clave `base`
-
-
-// Uso
+// ════════════════════════════════════════════════════
+// USO
+// ════════════════════════════════════════════════════
 Estudiante est = new Estudiante("María", 20, "2024001");
-// Primero: Persona("María", 20)
-// Luego: Estudiante asigna Codigo
+// Salida:
+// Constructor Persona ejecutado
+// Constructor Estudiante ejecutado
 ```
 
 ---
+
 ### Jerarquías más profundas
 
+La herencia puede extenderse a múltiples niveles (aunque se recomienda máximo 3):
 
 ```csharp
-// NIVEL 1: Clase base
+// ════════════════════════════════════════════════════
+// NIVEL 1: Clase base (abuelo)
+// ════════════════════════════════════════════════════
 public class Persona 
 { 
     public string Nombre { get; set; }
+    public string Documento { get; set; }
 }
 
-// NIVEL 2: Hereda de Persona
+// ════════════════════════════════════════════════════
+// NIVEL 2: Hereda de Persona (padre)
+// ════════════════════════════════════════════════════
 public class Empleado : Persona 
 { 
     public string CodigoEmpleado { get; set; }
+    public DateTime FechaContratacion { get; set; }
+    public decimal SalarioBase { get; set; }
 }
 
-// NIVEL 3: Hereda de Empleado (y transitivamente de Persona)
+// ════════════════════════════════════════════════════
+// NIVEL 3: Hereda de Empleado (hijo)
+// Hereda TRANSITIVAMENTE de Persona también
+// ════════════════════════════════════════════════════
 public class Profesor : Empleado 
 { 
     public string Especialidad { get; set; }
     public List<string> Materias { get; set; }
+    public string TituloPostgrado { get; set; }
 }
 
-// Uso
+// ════════════════════════════════════════════════════
+// USO: Acceso a todos los niveles
+// ════════════════════════════════════════════════════
 Profesor prof = new Profesor();
-prof.Nombre = "Carlos";           // De Persona
-prof.CodigoEmpleado = "EMP001";   // De Empleado
-prof.Especialidad = "Programación"; // De Profesor
+prof.Nombre = "Carlos Ruiz";          // ← De Persona (Nivel 1)
+prof.Documento = "1234567890";        // ← De Persona (Nivel 1)
+prof.CodigoEmpleado = "EMP001";       // ← De Empleado (Nivel 2)
+prof.SalarioBase = 3500000;           // ← De Empleado (Nivel 2)
+prof.Especialidad = "Programación";   // ← De Profesor (Nivel 3)
+prof.Materias = new List<string> { "POO I", "POO II" };  // ← De Profesor
 ```
 
 ---
@@ -325,23 +359,35 @@ prof.Especialidad = "Programación"; // De Profesor
 ```
 
 ---
-### Representación ASCII:
 
+## 2. Polimorfismo
+
+### Un nombre, múltiples formas
+
+> **Polimorfismo** permite que objetos de diferentes clases respondan al mismo mensaje (método) de manera específica según su implementación.
+
+![Polimorfismo](../../assets/infografias/clase-03-polimorfismo.png){: style="max-width: 50%; max-height: 300px; display: block; margin: 0 auto;"}
+
+*Imagen: Cada figura geométrica implementa `CalcularArea()` de forma diferente, pero todas responden al mismo mensaje.*
 
 ---
+
 ## Virtual y Override
----
+
 ### Sobrescritura de métodos
 
 ```csharp
+// ════════════════════════════════════════════════════
+// CLASE BASE con métodos virtual
+// ════════════════════════════════════════════════════
 public class Animal
 {
     public string Nombre { get; set; }
     
-    // Método VIRTUAL: puede ser sobrescrito
+    // Método VIRTUAL: puede ser sobrescrito por hijos
     public virtual void HacerSonido()
     {
-        Console.WriteLine("El animal hace un sonido");
+        Console.WriteLine("El animal hace un sonido genérico");
     }
     
     public virtual void Moverse()
@@ -350,21 +396,20 @@ public class Animal
     }
 }
 
+// ════════════════════════════════════════════════════
+// CLASE DERIVADA que sobrescribe
+// ════════════════════════════════════════════════════
 public class Perro : Animal
 {
-    // OVERRIDE: sobrescribe el método de la clase base
+    // OVERRIDE: proporciona implementación específica
     public override void HacerSonido()
     {
         Console.WriteLine("¡Guau guau! 🐕");
     }
     
----
-### Sobrescritura de métodos
-
-
     public override void Moverse()
     {
-        Console.WriteLine("El perro corre en 4 patas");
+        Console.WriteLine("El perro corre en 4 patas 🐾");
     }
 }
 
@@ -377,42 +422,51 @@ public class Gato : Animal
 }
 ```
 ---
-### Uso con referencias de clase base
 
+### Uso con referencias de clase base (Polimorfismo en acción)
 
 ```csharp
 class Program
 {
     static void Main(string[] args)
     {
-        // Referencias de tipo Animal, objetos de tipo específico
-        Animal animal1 = new Perro() { Nombre = "Rex" };
-        Animal animal2 = new Gato() { Nombre = "Michi" };
-        Animal animal3 = new Animal() { Nombre = "Genérico" };
+        // ════════════════════════════════════════════════════
+        // POLIMORFISMO: Referencias de tipo base, objetos específicos
+        // ════════════════════════════════════════════════════
         
-        // Mismo método, diferente comportamiento
-        animal1.HacerSonido();  // "¡Guau guau! 🐕"
-        animal2.HacerSonido();  // "¡Miau miau! 🐈"
-        animal3.HacerSonido();  // "El animal hace un sonido"
+        Animal animal1 = new Perro() { Nombre = "Rex" };    // ← Perro como Animal
+        Animal animal2 = new Gato() { Nombre = "Michi" };   // ← Gato como Animal
+        Animal animal3 = new Animal() { Nombre = "Genérico" }; // ← Animal puro
         
-        // Colección polimórfica
+        // Mismo método llamado, diferente comportamiento (POLIMORFISMO)
+        Console.WriteLine("=== SONIDOS ===");
+        animal1.HacerSonido();  // "¡Guau guau! 🐕"  ← Ejecuta Perro.HacerSonido()
+        animal2.HacerSonido();  // "¡Miau miau! 🐈"  ← Ejecuta Gato.HacerSonido()
+        animal3.HacerSonido();  // "El animal hace un sonido"  ← Ejecuta Animal.HacerSonido()
+        
+        // ════════════════════════════════════════════════════
+        // COLECCIÓN POLIMÓRFICA: Almacenar diferentes tipos
+        // ════════════════════════════════════════════════════
         List<Animal> animales = new List<Animal> 
         { 
-            new Perro(), 
-            new Gato(), 
-            new Perro() 
+            new Perro { Nombre = "Rex" }, 
+            new Gato { Nombre = "Michi" }, 
+            new Perro { Nombre = "Toby" },
+            new Gato { Nombre = "Luna" }
         };
         
----
-### Uso con referencias de clase base
-
-
+        Console.WriteLine("\n=== RECORRIENDO LA LISTA ===");
         foreach (Animal a in animales)
         {
-            a.HacerSonido();  // Cada uno hace su sonido
+            Console.Write($"{a.Nombre}: ");
+            a.HacerSonido();  // Cada animal hace su propio sonido!
         }
     }
 }
+// Output: Rex: ¡Guau guau! 🐕
+//         Michi: ¡Miau miau! 🐈
+//         Toby: ¡Guau guau! 🐕
+//         Luna: ¡Miau miau! 🐈
 ```
 
 ---
@@ -442,13 +496,9 @@ public class Vendedor : Empleado
 {
     public decimal Comision { get; set; }
     
----
-### Preservando comportamiento padre
-
-
     public override decimal CalcularSalario()
     {
-        // Llamar al método base + agregar comportamiento
+        // Llamar al método base + agregar comportamiento propio
         return base.CalcularSalario() + Comision;
     }
     
@@ -457,9 +507,18 @@ public class Vendedor : Empleado
         Console.WriteLine("=== VENDEDOR ===");
         base.MostrarInfo();  // Reutiliza código del padre
         Console.WriteLine($"Comisión: {Comision:C}");
+        Console.WriteLine($"TOTAL: {CalcularSalario():C}");
     }
 }
-```
+
+// ════════════════════════════════════════════════════
+// USO
+// ════════════════════════════════════════════════════
+Empleado emp = new Empleado { Nombre = "Ana", SalarioBase = 3000 };
+emp.MostrarInfo();  // Muestra solo salario base
+
+Vendedor vend = new Vendedor { Nombre = "Carlos", SalarioBase = 2000, Comision = 1500 };
+vend.MostrarInfo();  // Muestra base + comisión + total
 ---
 
 ## 3. Clases y Métodos Abstractos

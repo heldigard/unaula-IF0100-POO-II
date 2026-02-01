@@ -67,46 +67,81 @@ Al finalizar esta clase, el estudiante será capaz de:
 6. Práctica: Clase Estudiante (5 min)
 
 ---
-### Programación Orientada a Objetos
+## 1. Repaso: Programación Orientada a Objetos
 
+### Evolución de la Programación
 
-**Programación Procedural (antigua):**
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**📜 Programación Procedural (Años 70-80)**
+
 ```csharp
+// Datos separados de las funciones
 string[] nombres = {"Juan", "María"};
 int[] edades = {25, 30};
-// Datos y funciones separados, difícil de mantener
+
+void ImprimirPersona(int index) {
+    Console.WriteLine(nombres[index] + 
+                      " tiene " + 
+                      edades[index] + " años");
+}
 ```
 
-**POO (moderna):**
+**❌ Problemas:**
+- Datos y lógica desconectados
+- Código difícil de mantener
+- Alto riesgo de inconsistencias
+- Escalabilidad limitada
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Programación Orientada a Objetos (POO)**
+
 ```csharp
+// Datos y comportamiento unidos
 Persona juan = new Persona("Juan", 25);
 Persona maria = new Persona("María", 30);
-// Datos y comportamiento juntos, más organizado
+
+juan.CumplirAnios();  // Lógica encapsulada
+juan.MostrarInfo();   // Comportamiento asociado
 ```
 
-**Ventajas POO:**
-- ✅ Código más organizado y reutilizable
-- ✅ Más fácil de mantener y extender
-- ✅ Refleja mejor el mundo real
-- ✅ Trabajo en equipo más eficiente
+**✅ Ventajas:**
+- Código modular y reutilizable
+- Fácil mantenimiento y extensión
+- Modela objetos del mundo real
+- Facilita trabajo en equipo
 
+</div>
 
+</div>
+
+---
+
+### Los Tres Pilares de la POO
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  PILARES DE LA POO                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐   │
-│    │ENCAPSULAMIENTO│   │  HERENCIA   │    │POLIMORFISMO │   │
-│    │    (Hoy)    │    │  (Clase 3)  │    │  (Clase 3)  │   │
-│    └─────────────┘    └─────────────┘    └─────────────┘   │
-│                                                             │
-│    Ocultar datos      Reutilizar código    Un interfaz,   │
-│    internos           existente            múltiples       │
-│                                            formas          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      PILARES DE LA POO                          │
+├──────────────────────┬──────────────────────┬───────────────────┤
+│  ENCAPSULAMIENTO     │     HERENCIA         │  POLIMORFISMO     │
+│       (Hoy)          │    (Clase 3)         │   (Clase 3)       │
+├──────────────────────┼──────────────────────┼───────────────────┤
+│                      │                      │                   │
+│  🔒 Ocultar datos    │  🔄 Reutilizar       │  🎭 Una interfaz, │
+│     internos         │     código           │     múltiples     │
+│                      │     existente        │     formas        │
+│                      │                      │                   │
+│  Ejemplo:            │  Ejemplo:            │  Ejemplo:         │
+│  Propiedades con     │  Estudiante hereda   │  Dibujar() se     │
+│  get/set             │  de Persona          │  comporta         │
+│                      │                      │  diferente para   │
+│                      │                      │  Círculo/Cuadrado │
+└──────────────────────┴──────────────────────┴───────────────────┘
 ```
 
 ---
@@ -115,31 +150,88 @@ Persona maria = new Persona("María", 30);
 
 ### Analogía: Molde vs Producto
 
-![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+<div style="display: flex; gap: 20px; align-items: center;">
+
+<div style="flex: 1;">
+
+**🎨 CLASE = Molde / Plantilla / Blueprint**
+
+- Define la estructura
+- Especifica atributos (datos)
+- Define comportamientos (métodos)
+- No ocupa memoria por sí sola
+- Es el "tipo" de dato
+
+**Ejemplo:**
+```csharp
+class Galleta {
+    public string Sabor;
+    public double Diametro;
+    
+    public void Hornear() { }
+}
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**🍪 OBJETO = Instancia concreta**
+
+- Creado a partir de una clase
+- Ocupa memoria en el heap
+- Tiene valores específicos
+- Puede ejecutar métodos
+- Es una "variable" del tipo
+
+**Ejemplo:**
+```csharp
+Galleta g1 = new Galleta();
+g1.Sabor = "Chocolate";
+g1.Diametro = 5.5;
+```
+
+</div>
+
+</div>
 
 ---
 
-### Representación ASCII:
+### Visualización Gráfica
+
+![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 50%; max-height: 300px; display: block; margin: 0 auto;"}
+
+*Imagen: La clase Galleta actúa como molde para crear múltiples objetos galleta, cada uno con sus propias características (sabor, tamaño, decoración).*
+
+---
+
+### Representación en Memoria
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│     MOLDE (Clase)              GALLETAS (Objetos)          │
-│                                                             │
-│    ┌───────────┐              ┌───┐ ┌───┐ ┌───┐ ┌───┐      │
-│    │  Galleta  │              │ 🍪│ │ 🍪│ │ 🍪│ │ 🍪│      │
-│    │           │    crea →    └───┘ └───┘ └───┘ └───┘      │
-│    │ - forma   │              Cada una es INDEPENDIENTE     │
-│    │ - sabor   │              pero comparten el MOLDE      │
-│    │ - tamaño  │                                             │
-│    └───────────┘              Cada una puede tener         │
-│                               diferente decoración          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-
-   CLASE = Definición / Plantilla
-   OBJETO = Instancia concreta en memoria
+┌────────────────────────────────────────────────────────────────────┐
+│                         MEMORIA                                    │
+├─────────────────────────┬──────────────────────────────────────────┤
+│      STACK              │              HEAP                        │
+│  (Referencias)          │         (Objetos reales)                 │
+├─────────────────────────┼──────────────────────────────────────────┤
+│                         │                                          │
+│  ┌─────────────────┐    │    ┌─────────────────────────────┐      │
+│  │   est1          │────┼───→│      Objeto Estudiante      │      │
+│  │   0x7F3A...     │    │    │  ┌─────────────────────┐    │      │
+│  └─────────────────┘    │    │  │ Nombre: "María"     │    │      │
+│                         │    │  │ Código: "2024001"   │    │      │
+│  ┌─────────────────┐    │    │  │ Edad: 20            │    │      │
+│  │   est2          │────┼───→│  │ Promedio: 4.2       │    │      │
+│  │   0x8B2C...     │    │    │  └─────────────────────┘    │      │
+│  └─────────────────┘    │    └─────────────────────────────┘      │
+│                         │                                          │
+│  Las variables son      │    Los objetos contienen los datos      │
+│  solo "direcciones"     │    reales y ocupan memoria en el heap   │
+│  (4 u 8 bytes)          │                                          │
+└─────────────────────────┴──────────────────────────────────────────┘
 ```
+
+> **💡 Concepto clave:** En C#, las variables de tipo clase almacenan **referencias** (direcciones de memoria), no los objetos en sí. Esto es diferente de los tipos valor como `int` o `struct`.
 
 ---
 
@@ -173,15 +265,19 @@ Persona maria = new Persona("María", 30);
 ```
 
 ---
-### Primera versión (campos públicos)
+### Ejemplo: Clase Estudiante - Primera Versión
 
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**📋 Código C#:**
 
 ```csharp
 using System;
 
 namespace Universidad
 {
-    // DECLARACIÓN DE LA CLASE
     public class Estudiante
     {
         // CAMPOS (fields) - Variables de instancia
@@ -193,14 +289,43 @@ namespace Universidad
         // MÉTODO
         public void MostrarInfo()
         {
-            Console.WriteLine($"Nombre: {nombre}");
-            Console.WriteLine($"Código: {codigo}");
-            Console.WriteLine($"Edad: {edad}");
-            Console.WriteLine($"Promedio: {promedio}");
+            Console.WriteLine(
+                $"Nombre: {nombre}");
+            Console.WriteLine(
+                $"Código: {codigo}");
+            Console.WriteLine(
+                $"Edad: {edad}");
+            Console.WriteLine(
+                $"Promedio: {promedio}");
         }
     }
 }
 ```
+
+</div>
+
+<div style="flex: 1;">
+
+**🔍 Análisis:**
+
+| Elemento | Descripción |
+|----------|-------------|
+| `namespace` | Agrupa clases relacionadas |
+| `public class` | Define una clase accesible |
+| `string nombre` | Campo público (❌ mala práctica) |
+| `void MostrarInfo()` | Método sin retorno |
+
+**⚠️ Problemas de esta versión:**
+- Campos públicos = violación de encapsulamiento
+- Cualquiera puede modificar los datos
+- Sin validación de valores
+- Difícil mantener consistencia
+
+**✅ Usar esto solo para ejemplos iniciales**
+
+</div>
+
+</div>
 
 ---
 ### Instanciación con new
@@ -396,14 +521,38 @@ public class Producto
 
     // 4. Propiedad AUTOIMPLEMENTADA (sintaxis corta)
     public double Precio { get; set; }
-    public double IVA { get; set; } = 0.19;  // valor por defecto
+    
+    // 5. Propiedad con valor por defecto
+    public double IVA { get; set; } = 0.19;  // 19% por defecto
+    
+    // 6. Propiedad de solo lectura (init-only C# 9+)
+    public string SKU { get; init; }
 }
 ```
 
 ---
-## Propiedades con Validación
+
+### Cuándo usar cada tipo de propiedad
+
+| Tipo | Sintaxis | Uso recomendado |
+|------|----------|-----------------|
+| **Autoimplementada** | `{ get; set; }` | Cuando no necesitas validación |
+| **Con backing field** | `{ get { return x; } set { x = value; } }` | Cuando necesitas lógica en get/set |
+| **Solo lectura** | `{ get; }` o `{ get; private set; }` | Valores calculados o inmutables |
+| **Init-only** | `{ get; init; }` | Asignable solo en construcción |
+| **C# 12 auto** | `public string Nombre { get; set; } = "";` | Evita null warnings |
+
 ---
+## Propiedades con Validación
+
 ### El poder del encapsulamiento
+
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**💡 Concepto:**
+Las propiedades permiten validar datos antes de asignarlos, garantizando la integridad del objeto.
 
 ```csharp
 public class Estudiante
@@ -420,10 +569,19 @@ public class Estudiante
             if (!string.IsNullOrWhiteSpace(value))
                 nombre = value;
             else
-                throw new ArgumentException("Nombre inválido");
+                throw new ArgumentException(
+                    "Nombre no puede estar vacío");
         }
     }
-    
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**🔍 Más validaciones:**
+
+```csharp
     public int Edad
     {
         get { return edad; }
@@ -432,14 +590,11 @@ public class Estudiante
             if (value >= 0 && value <= 120)
                 edad = value;
             else
-                throw new ArgumentOutOfRangeException("Edad inválida");
+                throw new ArgumentOutOfRangeException(
+                    "Edad debe estar entre 0 y 120");
         }
     }
     
----
-### El poder del encapsulamiento
-
-
     public double Promedio
     {
         get { return promedio; }
@@ -448,50 +603,92 @@ public class Estudiante
             if (value >= 0.0 && value <= 5.0)
                 promedio = value;
             else
-                throw new ArgumentOutOfRangeException("Promedio debe ser 0-5");
+                throw new ArgumentOutOfRangeException(
+                    "Promedio debe ser 0-5");
         }
     }
 }
 ```
----
-### Inicialización en constructores
 
+</div>
+
+</div>
+
+---
+
+### Ejemplo de uso con validación
+
+```csharp
+var est = new Estudiante();
+
+// ✅ Asignaciones válidas
+est.Nombre = "María López";
+est.Edad = 20;
+est.Promedio = 4.5;
+
+// ❌ Asignaciones inválidas (lanzan excepciones)
+est.Nombre = "";           // ArgumentException
+est.Edad = -5;             // ArgumentOutOfRangeException
+est.Promedio = 10.0;       // ArgumentOutOfRangeException
+```
+
+> **💼 En proyectos reales:** Usa estas validaciones para garantizar que los objetos siempre estén en un estado válido. Esto previene bugs difíciles de rastrear.
+---
+### Inicialización en Constructores
+
+**Concepto:** Algunas propiedades deben establecerse solo durante la creación del objeto y no cambiar después.
 
 ```csharp
 public class Estudiante
 {
     // Propiedad de solo lectura (desde fuera)
     public string Codigo { get; }
+    
+    // Propiedad de solo lectura con valor calculado
     public DateTime FechaIngreso { get; }
     
-    // Propiedad con setter privado
+    // Propiedad con setter privado (modificable solo dentro de la clase)
     public int SemestreActual { get; private set; }
     
+    // CONSTRUCTOR
     public Estudiante(string codigo)
     {
-        Codigo = codigo;           // Se asigna una sola vez
-        FechaIngreso = DateTime.Now;
-        SemestreActual = 1;
+        Codigo = codigo;              // Se asigna una sola vez
+        FechaIngreso = DateTime.Now;  // Registro automático
+        SemestreActual = 1;           // Valor inicial
     }
     
+    // Método que modifica la propiedad de lectura privada
     public void AvanzarSemestre()
     {
-        SemestreActual++;  // Puede modificarse dentro de la clase
+        SemestreActual++;  // ✅ Válido: dentro de la clase
     }
 }
-
----
-### Inicialización en constructores
-
-
-// Uso
-var est = new Estudiante("2024001");
-// est.Codigo = "otro";  // ❌ ERROR: es de solo lectura
 ```
 
 ---
-### Inicialización de objetos
 
+### Uso del constructor
+
+```csharp
+// Crear estudiante - código asignado en constructor
+var est = new Estudiante("2024001");
+
+Console.WriteLine(est.Codigo);           // "2024001"
+Console.WriteLine(est.FechaIngreso);     // Fecha actual
+Console.WriteLine(est.SemestreActual);   // 1
+
+// est.Codigo = "otro";     // ❌ ERROR: propiedad de solo lectura
+// est.SemestreActual = 5;  // ❌ ERROR: setter es privado
+
+est.AvanzarSemestre();       // ✅ Válido
+Console.WriteLine(est.SemestreActual);   // 2
+```
+
+---
+### Constructores - Múltiples Versiones
+
+Una clase puede tener varios constructores (sobrecarga) para diferentes escenarios:
 
 ```csharp
 public class Estudiante
@@ -500,15 +697,20 @@ public class Estudiante
     public string Codigo { get; set; }
     public int Edad { get; set; }
     
+    // ═══════════════════════════════════════════════════
     // CONSTRUCTOR POR DEFECTO (sin parámetros)
+    // ═══════════════════════════════════════════════════
     public Estudiante()
     {
         Nombre = "Sin nombre";
         Codigo = "0000000";
         Edad = 18;
+        Console.WriteLine("Constructor por defecto ejecutado");
     }
     
-    // CONSTRUCTOR PARAMETRIZADO
+    // ═══════════════════════════════════════════════════
+    // CONSTRUCTOR PARAMETRIZADO (3 parámetros)
+    // ═══════════════════════════════════════════════════
     public Estudiante(string nombre, string codigo, int edad)
     {
         Nombre = nombre;
@@ -516,11 +718,9 @@ public class Estudiante
         Edad = edad;
     }
     
----
-### Inicialización de objetos
-
-
-    // CONSTRUCTOR CON PARÁMETROS OPCIONALES
+    // ═══════════════════════════════════════════════════
+    // CONSTRUCTOR CON PARÁMETROS OPCIONALES (2 params)
+    // ═══════════════════════════════════════════════════
     public Estudiante(string nombre, string codigo)
     {
         Nombre = nombre;
@@ -585,19 +785,25 @@ Estudiante est = new Estudiante("María", "2024001")
 
 ---
 ## Clase Estudiante Completa
----
+
 ### Versión final con buenas prácticas
 
 ```csharp
+using System;
+
 public class Estudiante
 {
-    // Propiedades autoimplementadas
+    // ═══════════════════════════════════════════════════════
+    // PROPIEDADES AUTOIMPLEMENTADAS
+    // ═══════════════════════════════════════════════════════
     public string Nombre { get; set; }
     public string Codigo { get; set; }
     public int Edad { get; set; }
     public double Promedio { get; set; }
     
-    // Constructor por defecto
+    // ═══════════════════════════════════════════════════════
+    // CONSTRUCTORES
+    // ═══════════════════════════════════════════════════════
     public Estudiante()
     {
         Nombre = "Sin nombre";
@@ -606,7 +812,6 @@ public class Estudiante
         Promedio = 0.0;
     }
     
-    // Constructor parametrizado
     public Estudiante(string nombre, string codigo, int edad)
     {
         Nombre = nombre;
@@ -615,11 +820,9 @@ public class Estudiante
         Promedio = 0.0;
     }
     
----
-### Versión final con buenas prácticas
-
-
-    // Métodos
+    // ═══════════════════════════════════════════════════════
+    // MÉTODOS DE NEGOCIO
+    // ═══════════════════════════════════════════════════════
     public bool Aprobo()
     {
         return Promedio >= 3.0;
@@ -711,42 +914,68 @@ pt2.X = 50;          // pt1.X sigue siendo 10
 ---
 
 ## 6. Práctica en Clase
----
+
 ### Ejercicio: Sistema de Gestión Estudiantil
 
-```csharp
-// 1. Crear la clase Estudiante (completa arriba)
+<div style="display: flex; gap: 20px;">
 
-// 2. Crear programa principal
+<div style="flex: 1;">
+
+**🎯 Objetivo:** Crear una aplicación que gestione estudiantes usando los conceptos de POO aprendidos.
+
+**📋 Instrucciones:**
+1. Crear un nuevo proyecto Console App en Visual Studio
+2. Agregar la clase `Estudiante` (versión completa)
+3. Implementar el programa principal (→)
+4. Probar creando al menos 3 estudiantes
+5. Mostrar información de todos
+
+**🧪 Datos de prueba:**
+- María López, 2024001, 20 años, Promedio: 4.2
+- Carlos Ruiz, 2024002, 22 años, Promedio: 2.8
+- Ana Martínez, 2024003, 19 años, Promedio: 3.5
+
+</div>
+
+<div style="flex: 1;">
+
+**💻 Código del programa principal:**
+
+```csharp
+using System;
+using System.Collections.Generic;
+
 class Program
 {
     static void Main(string[] args)
     {
-        // Crear lista de estudiantes
-        List<Estudiante> estudiantes = new List<Estudiante>();
+        // Lista para almacenar estudiantes
+        List<Estudiante> estudiantes = 
+            new List<Estudiante>();
         
-        // Agregar estudiantes
-        estudiantes.Add(new Estudiante("María López", "2024001", 20) 
+        // Agregar estudiantes usando object initializer
+        estudiantes.Add(new Estudiante(
+            "María López", "2024001", 20) 
         { 
             Promedio = 4.2 
         });
         
-        estudiantes.Add(new Estudiante("Carlos Ruiz", "2024002", 22) 
+        estudiantes.Add(new Estudiante(
+            "Carlos Ruiz", "2024002", 22) 
         { 
             Promedio = 2.8 
         });
         
----
-### Ejercicio: Sistema de Gestión Estudiantil
-
-
-        estudiantes.Add(new Estudiante("Ana Martínez", "2024003", 19) 
+        estudiantes.Add(new Estudiante(
+            "Ana Martínez", "2024003", 19) 
         { 
             Promedio = 3.5 
         });
         
         // Mostrar información
-        Console.WriteLine("=== LISTA DE ESTUDIANTES ===\n");
+        Console.WriteLine(
+            "=== LISTA DE ESTUDIANTES ===\n");
+        
         foreach (var est in estudiantes)
         {
             est.MostrarInfo();
@@ -755,6 +984,10 @@ class Program
     }
 }
 ```
+
+</div>
+
+</div>
 ---
 
 ## Resumen de la Clase

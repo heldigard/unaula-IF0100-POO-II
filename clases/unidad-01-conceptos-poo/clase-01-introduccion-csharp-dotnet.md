@@ -126,21 +126,64 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Anders Hejlsberg - El arquitecto principal
 
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**👤 Perfil Profesional**
+
+- **Nacionalidad:** Danesa 🇩🇰
+- **Posición:** Chief Architect at Microsoft
+- **Años activo:** 1996 - presente
+
+**🏆 Contribuciones Tecnológicas:**
+
+| Año | Tecnología | Impacto |
+|-----|------------|---------|
+| 1995 | Delphi | Revolucionó el desarrollo Windows |
+| 2000 | C# | Lenguaje flagship de Microsoft |
+| 2002 | .NET | Plataforma de desarrollo unificada |
+| 2012 | TypeScript | JavaScript con tipos estáticos |
+
+</div>
+
+<div style="flex: 1;">
+
+**💡 Filosofía de Diseño:**
+
+> *"C# es el lenguaje que siempre quise tener para desarrollo empresarial. Combina la potencia de C++ con la productividad de Visual Basic."*
+
+**🎯 Principios aplicados:**
+- ✅ Productividad del desarrollador
+- ✅ Seguridad de tipos en tiempo de compilación
+- ✅ Orientación a objetos pura
+- ✅ Evolución continua con retrocompatibilidad
+- ✅ Código limpio y expresivo
+
+</div>
+
+</div>
+
+---
+
+### Influencia en la Industria
+
 ```
-┌─────────────────────────────────────────────┐
-│                                             │
-│     👤 Anders Hejlsberg                     │
-│                                             │
-│     • Creador de C# (2000)                  │
-│     • Creador de TypeScript (2012)          │
-│     • Diseñador de Delphi (Borland)         │
-│     • Chief Architect at Microsoft          │
-│                                             │
-│     "C# es el lenguaje que siempre          │
-│      quise tener para desarrollo            │
-│      empresarial"                           │
-│                                             │
-└─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  ANTES DE C# (finales 90s)          DESPUÉS DE C# (2000+)   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Java: Líder pero limitado          C#: Competencia real    │
+│  C++: Poderoso pero complejo        Sintaxis familiar       │
+│  VB: Fácil pero poco robusto        Type-safe + Productivo  │
+│  PHP: Solo web                      Multiplataforma real    │
+│                                                             │
+│  ────────────────────────────────────────────────────────  │
+│                                                             │
+│  🎯 Resultado: Microsoft recupera terreno en empresas       │
+│     Grandes corporaciones adoptan .NET para sistemas críticos│
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -151,7 +194,56 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 > **.NET** es una plataforma de desarrollo unificada para construir cualquier tipo de aplicación: web, móvil, desktop, cloud, IoT, AI.
 
-![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 60%; max-height: 400px; display: block; margin: 0 auto;"}
+---
+
+### Componentes del Ecosistema .NET
+
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**🌐 ASP.NET Core**
+- Aplicaciones web MVC
+- Web APIs RESTful
+- Aplicaciones en tiempo real (SignalR)
+
+**🖥️ Desktop**
+- WPF (Windows Presentation Foundation)
+- WinForms (Aplicaciones tradicionales)
+- .NET MAUI (Multiplataforma)
+
+**📱 Mobile**
+- .NET MAUI para iOS/Android
+- Xamarin (legacy)
+
+</div>
+
+<div style="flex: 1;">
+
+**☁️ Cloud**
+- Azure SDK para C#
+- Azure Functions (serverless)
+- Microservicios con Docker
+
+**🎮 Gaming**
+- Unity (motor de juegos líder)
+- Unreal Engine con C#
+
+**🤖 ML/AI**
+- ML.NET (machine learning)
+- Integración con Azure AI
+
+</div>
+
+</div>
+
+---
+
+### Visualización del Ecosistema
+
+![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 55%; max-height: 350px; display: block; margin: 0 auto;"}
+
+*El diagrama muestra cómo .NET 8 unifica todas las plataformas bajo un solo runtime, permitiendo compartir código entre diferentes tipos de aplicaciones.*
 
 ---
 
@@ -788,36 +880,101 @@ string[] partes = texto.Split(' ');      // ["Hola", "Mundo"]
 
 ## 🎯 Características Avanzadas de C# 12
 
-### Novedades y Ventajas Competitivas
+### 1. Primary Constructors
+
+Simplifica la declaración de constructores en clases y structs:
 
 ```csharp
-// 1. Primary Constructors (C# 12)
-public class Persona(string nombre, int edad)
+// Antes (C# 11)
+public class Persona
 {
-    public void Saludar() => Console.WriteLine($"Hola, soy {nombre}");
+    private string _nombre;
+    private int _edad;
+    
+    public Persona(string nombre, int edad)
+    {
+        _nombre = nombre;
+        _edad = edad;
+    }
 }
 
-// 2. Collection Expressions
+// Ahora (C# 12) - Más conciso
+public class Persona(string nombre, int edad)
+{
+    public void Saludar() => 
+        Console.WriteLine($"Hola, soy {nombre} y tengo {edad} años");
+}
+```
+
+---
+
+### 2. Collection Expressions
+
+Nueva sintaxis unificada para crear colecciones:
+
+```csharp
+// Arrays
 int[] numeros = [1, 2, 3, 4, 5];
+
+// Listas
 List<string> nombres = ["Ana", "Juan", "María"];
 
-// 3. String Interpolation mejorado
-string mensaje = $"""
-    Usuario: {nombre}
-    Edad: {edad}
-    Fecha: {DateTime.Now:yyyy-MM-dd}
-    """;
-
-// 4. Pattern Matching avanzado
-string resultado = edad switch
+// Diccionarios
+Dictionary<string, int> edades = new()
 {
-    < 18 => "Menor de edad",
-    >= 18 and < 65 => "Adulto",
-    >= 65 => "Adulto mayor",
+    ["Ana"] = 25,
+    ["Juan"] = 30
 };
 
-// 5. Null-coalescing assignment
-string nombre ??= "Anónimo";  // Si es null, asigna "Anónimo"
+// Span (para alto rendimiento)
+Span<int> span = [1, 2, 3];
+```
+
+---
+
+### 3. Pattern Matching Avanzado
+
+Lógica condicional más expresiva y legible:
+
+```csharp
+// Switch expression con rangos
+string categoria = edad switch
+{
+    < 13 => "Niño",
+    >= 13 and < 20 => "Adolescente",
+    >= 20 and < 65 => "Adulto",
+    >= 65 => "Adulto mayor"
+};
+
+// Pattern matching con tipos
+string descripcion = obj switch
+{
+    int i when i > 0 => $"Entero positivo: {i}",
+    string s => $"Texto de {s.Length} caracteres",
+    null => "Valor nulo",
+    _ => "Tipo desconocido"
+};
+```
+
+---
+
+### 4. Strings Multilínea y Null-Coalescing
+
+```csharp
+// String interpolation con formato
+string reporte = $"""
+    === REPORTE DE USUARIO ===
+    Nombre: {nombre.ToUpper()}
+    Edad: {edad} años
+    Fecha: {DateTime.Now:yyyy-MM-dd HH:mm}
+    ==========================
+    """;
+
+// Null-coalescing assignment
+string nombre ??= "Anónimo";  // Asigna solo si es null
+
+// Null-conditional operator
+int? longitud = texto?.Length;  // null si texto es null
 ```
 
 ---
@@ -834,8 +991,57 @@ string nombre ??= "Anónimo";  // Si es null, asigna "Anónimo"
 | **Manejo JSON** | 90ms | 100ms | 150ms | 80ms |
 | **Consumo memoria** | 25MB | 40MB | 15MB | 30MB |
 
-**Conclusión:** C# ofrece excelente balance
-rendimiento/productividad.
+---
+
+### Análisis de Resultados
+
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**🏆 Fortalezas de C#**
+
+- **Rendimiento cercano a C++:** Gracias al compilador JIT que optimiza en runtime
+- **Menor consumo de memoria vs Java:** CLR más eficiente en gestión de objetos
+- **Velocidad de desarrollo:** Equilibrio entre performance y productividad
+- **Tipado estático:** Detección de errores en compilación, no en ejecución
+
+**📈 Casos donde C# brilla:**
+- Aplicaciones empresariales de alto tráfico
+- Procesamiento de datos en tiempo real
+- APIs de alto rendimiento
+- Microservicios en contenedores
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Cuándo elegir cada lenguaje:**
+
+```
+C#          → Aplicaciones empresariales Windows/Cloud
+Java        → Sistemas legacy, Android nativo
+Python      → Data Science, IA, scripts rápidos
+JavaScript  → Frontend web, Node.js full-stack
+Go          → Microservicios de alta concurrencia
+Rust        → Sistemas de bajo nivel, seguridad crítica
+```
+
+**💼 Mercado laboral Colombia (2025):**
+- C#/.NET: ⭐⭐⭐⭐⭐ Alta demanda en empresas medianas/grandes
+- Java: ⭐⭐⭐⭐⭐ Máxima demanda (sistemas legacy)
+- Python: ⭐⭐⭐⭐⭐ En crecimiento (Data/AI)
+- JavaScript: ⭐⭐⭐⭐⭐ Universal para web
+
+</div>
+
+</div>
+
+---
+
+### Conclusión
+
+> **C# ofrece el mejor balance entre rendimiento, productividad y ecosistema empresarial. Ideal para desarrolladores que buscan un lenguaje moderno con amplia demanda laboral.**
 
 ---
 
