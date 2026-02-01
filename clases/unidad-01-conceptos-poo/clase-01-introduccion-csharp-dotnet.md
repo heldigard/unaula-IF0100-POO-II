@@ -117,7 +117,10 @@ NACE       GENERICS   ASYNC/     .NET      .NET 8
 
 ---
 
-## Genéricos: Type-Safety
+## Genéricos y su Arquitecto: Anders Hejlsberg
+
+<div class="columns">
+<div>
 
 ### ❌ ANTES: ArrayList
 
@@ -143,11 +146,10 @@ int valor = nums[0]; // ✅ sin cast
 
 **Ventajas:** Verificación en compilación | Sin boxing overhead | Código más rápido
 
----
+</div>
+<div>
 
-## Anders Hejlsberg: El Arquitecto
-
-### 👤 Perfil
+### 👤 Anders Hejlsberg
 
 | Atributo | Info |
 |----------|------|
@@ -165,6 +167,9 @@ int valor = nums[0]; // ✅ sin cast
 | 2012 | TypeScript |
 
 > 💡 *"C# combina potencia de C++ con productividad de VB"*
+
+</div>
+</div>
 
 ---
 
@@ -264,7 +269,7 @@ int valor = nums[0]; // ✅ sin cast
 
 ---
 
-## Estructura Programa C#
+## Estructura Programa C# y Namespaces
 
 <div class="columns">
 <div>
@@ -278,9 +283,6 @@ int valor = nums[0]; // ✅ sin cast
 | 3️⃣ | `class` | Contenedor de código |
 | 4️⃣ | `Main` | Punto de entrada |
 | 5️⃣ | Código | Lógica ejecutable |
-
-</div>
-<div>
 
 ### 💻 Estructura Básica
 
@@ -300,11 +302,9 @@ namespace MiApp
 ```
 
 </div>
-</div>
+<div>
 
----
-
-## Namespaces en C#
+### 🌳 Namespaces Comunes
 
 ```
 System                    ← Raíz
@@ -321,6 +321,9 @@ System                    ← Raíz
 ```
 
 **💡 Tip:** `using System;` evita escribir `System.Console` cada vez
+
+</div>
+</div>
 
 ---
 
@@ -937,6 +940,9 @@ public class StudentManager
 
 ## NuGet: Gestor de Paquetes
 
+<div class="columns">
+<div>
+
 ### 📚 ¿Qué es NuGet?
 
 Repositorio de librerías para .NET (similar a npm para Node.js o pip para Python)
@@ -957,6 +963,14 @@ dotnet list package
 dotnet restore
 ```
 
+### 🔗 Recursos
+
+- **Portal:** https://www.nuget.org/
+- **En VS:** Click derecho proyecto → Manage NuGet Packages
+
+</div>
+<div>
+
 ### 🔥 Paquetes Populares 2026
 
 | Paquete | Uso | Descargas |
@@ -967,14 +981,12 @@ dotnet restore
 | **xUnit** | Testing unitario | 150M+ |
 | **AutoMapper** | Mapeo de objetos | 400M+ |
 
-### 🔗 Recursos
-
-- **Portal:** https://www.nuget.org/
-- **En VS:** Click derecho proyecto → Manage NuGet Packages
+</div>
+</div>
 
 ---
 
-## Resumen de la Clase
+## Resumen de la Clase (1/2)
 
 ### 📚 Conceptos Clave Aprendidos
 
@@ -987,6 +999,10 @@ dotnet restore
 | **Reference Types** | Heap, almacenan referencia (`string`, clases) |
 | **Nullable** | `int?` permite null en value types |
 | **C# 12** | Primary constructors, collection expressions |
+
+---
+
+## Resumen de la Clase (2/2)
 
 ### 🎯 Habilidades Adquiridas
 

@@ -741,7 +741,7 @@ class Program
 
 ---
 
-## Resumen de la Clase
+## Resumen de la Clase (1/2)
 
 ### 📚 Conceptos Clave
 
@@ -762,24 +762,39 @@ class Program
 - ✅ Usar propiedades
 - ✅ Implementar constructores
 
-### 📝 Ejercicios Propuestos
+---
 
-**1. Producto**
+## 📝 Ejercicios Propuestos (2/2)
+
+<div class="columns">
+<div>
+
+### 1. Producto
+
 - Código (solo lectura)
 - Nombre (no vacío)
 - Precio > 0, Stock >= 0
 - `CalcularInventario()`
 
-**2. CuentaBancaria**
+### 2. CuentaBancaria
+
 - Saldo privado
 - `Depositar()`, `Retirar()`
 - Validar negativos
 
-**3. 🌟 Biblioteca**  
-Libro: ISBN, título, autor  
-Usuario: código, nombre  
-Prestamo: fechas, estado  
+</div>
+<div>
+
+### 3. 🌟 Biblioteca
+
+**Libro:** ISBN, título, autor
+**Usuario:** código, nombre
+**Prestamo:** fechas, estado
+
 → Validaciones completas
+
+</div>
+</div>
 
 ---
 
@@ -804,7 +819,26 @@ Prestamo: fechas, estado
 - Animal → Perro, Gato, Pájaro
 - Figura → Círculo, Rectángulo
 
-**💡 Pregunta:** ¿Cómo hacer que diferentes tipos de vehículos tengan `Mover()` con comportamientos diferentes?
+---
+
+## 💡 Pregunta de Reflexión
+
+### ¿Cómo hacer que diferentes tipos de vehículos tengan `Mover()` con comportamientos diferentes?
+
+```csharp
+// ¿Cómo diseñar esto?
+Vehiculo v = new Carro();   // v.Mover() = "Rodando"
+Vehiculo v2 = new Moto();   // v2.Mover() = "Rodando"
+Vehiculo v3 = new Bus();    // v3.Mover() = "Rodando con pasajeros"
+
+// ¿Qué mecanismo permite esto?
+```
+
+### 📝 Requisitos para la próxima clase
+
+- ✅ Tarea completada
+- ✅ Ejercicios de práctica resueltos
+- ✅ Repaso de POO básico
 
 ---
 
