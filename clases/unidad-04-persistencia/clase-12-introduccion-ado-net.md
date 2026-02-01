@@ -666,7 +666,7 @@ public Estudiante BuscarPorCodigo(string codigo)
 {
     var query = $"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'";
     // Si codigo = "'; DROP TABLE Estudiantes; --"
-    // Query resultante: SELECT * FROM Estudiantes WHERE Codigo = ''; 
+    // Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';
     //                    DROP TABLE Estudiantes; --'
     // ¡DESASTRE!
 }
@@ -678,6 +678,343 @@ public Estudiante BuscarPorCodigo(string codigo)
     command.Parameters.AddWithValue("@Codigo", codigo);
     // El parámetro se escapa automáticamente
     // Caracteres peligrosos se neutralizan
+}
+```
+
+---
+
+## Connection Pooling
+
+### Optimización de conexiones
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              CONNECTION POOLING                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Sin Pooling                    Con Pooling                 │
+│  ───────────                    ───────────                 │
+│                                                             │
+│  App → Open() → 1 seg        App → Pool → 0.01 seg          │
+│  App → Open() → 1 seg        App → Pool → 0.01 sec          │
+│  App → Open() → 1 seg        App → Pool → 0.01 sec          │
+│                                                             │
+│  Cada Open() = nueva          Conexiones reutilizadas       │
+│  conexión física              automáticamente              │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```csharp
+// Connection Pool está activado por defecto
+// Configuración en connection string:
+
+"Server=localhost;Database=UniversidadDB;Integrated Security=true;
+Connection Lifetime=60;              // Tiempo vida conexión (seg)
+Max Pool Size=100;                   // Máximo conexiones
+Min Pool Size=5;                     // Mínimo conexiones
+Pooling=true;                        // Activar (default)
+Connection Reset=true;               // Reset al devolver al pool
+Connection Timeout=15;"              // Timeout conexión (seg)
+
+// Benefits:
+// - Reutiliza conexiones físicas
+// - Reduce overhead de crear conexiones
+// - Mejora rendimiento dramáticamente
+```
+
+---
+
+## SqlDataAdapter y DataTable
+
+### Modo desconectado de datos
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              SQLDATAADAPTER FLUJO                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. SqlDataAdapter se crea con SELECT query                │
+│         │                                                   │
+│         ▼                                                   │
+│  2. Fill() abre conexión, ejecuta, cierra                  │
+│         │                                                   │
+│         ▼                                                   │
+│  3. DataTable queda en memoria (desconectado)              │
+│         │                                                   │
+│         ▼                                                   │
+│  4. Modificar DataTable en memoria                         │
+│         │                                                   │
+│         ▼                                                   │
+│  5. Update() sincroniza cambios con BD                      │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```csharp
+using System.Data;
+using System.Data.SqlClient;
+
+public class EstudianteRepositoryAdapter
+{
+    private readonly string _connectionString;
+
+    public DataTable ObtenerTodosDataTable()
+    {
+        using var connection = new SqlConnection(_connectionString);
+        var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes";
+
+        using var adapter = new SqlDataAdapter(query, connection);
+        var dataTable = new DataTable();
+
+        // Fill: abre conexión, llena datos, cierra conexión
+        adapter.Fill(dataTable);
+
+        return dataTable;  // DataTable desconectado
+    }
+
+    public int ActualizarDesdeDataTable(DataTable dataTable)
+    {
+        var updateQuery = @"UPDATE Estudiantes
+                           SET Codigo = @Codigo, Nombre = @Nombre, Email = @Email
+                           WHERE Id = @Id";
+
+        using var connection = new SqlConnection(_connectionString);
+        using var adapter = new SqlDataAdapter();
+
+        // Configurar comandos para actualización
+        adapter.UpdateCommand = new SqlCommand(updateQuery, connection);
+        adapter.UpdateCommand.Parameters.AddWithValue("@Codigo",
+            dataTable.Columns["Codigo"], DataRowVersion.Current);
+        adapter.UpdateCommand.Parameters.AddWithValue("@Nombre",
+            dataTable.Columns["Nombre"], DataRowVersion.Current);
+        adapter.UpdateCommand.Parameters.AddWithValue("@Email",
+            dataTable.Columns["Email"], DataRowVersion.Current);
+        adapter.UpdateCommand.Parameters.AddWithValue("@Id",
+            dataTable.Columns["Id"], DataRowVersion.Original);
+
+        // Update: sincroniza cambios con BD
+        return adapter.Update(dataTable);
+    }
+
+    public DataTable BuscarConRelacion()
+    {
+        using var connection = new SqlConnection(_connectionString);
+        var query = @"SELECT e.Id, e.Codigo, e.Nombre, c.Nombre as Carrera
+                     FROM Estudiantes e
+                     INNER JOIN Carreras c ON e.CarreraId = c.Id";
+
+        using var adapter = new SqlDataAdapter(query, connection);
+        var dataTable = new DataTable();
+        adapter.Fill(dataTable);
+
+        return dataTable;
+    }
+}
+```
+
+---
+
+## Stored Procedures
+
+### Ejecutar procedimientos almacenados
+
+```csharp
+// Stored Procedure en SQL Server
+/*
+CREATE PROCEDURE sp_Estudiantes_Crear
+    @Codigo NVARCHAR(20),
+    @Nombre NVARCHAR(100),
+    @Email NVARCHAR(100),
+    @NewId INT OUTPUT
+AS
+BEGIN
+    INSERT INTO Estudiantes (Codigo, Nombre, Email)
+    VALUES (@Codigo, @Nombre, @Email);
+
+    SET @NewId = SCOPE_IDENTITY();
+END
+*/
+
+public class EstudianteRepositorySP
+{
+    public int CrearConSP(Estudiante estudiante)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        using var command = new SqlCommand("sp_Estudiantes_Crear", connection);
+
+        command.CommandType = CommandType.StoredProcedure;
+
+        // Parámetros de entrada
+        command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+        command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+        command.Parameters.AddWithValue("@Email",
+            (object)estudiante.Email ?? DBNull.Value);
+
+        // Parámetro de salida
+        var paramId = new SqlParameter("@NewId", SqlDbType.Int)
+        {
+            Direction = ParameterDirection.Output
+        };
+        command.Parameters.Add(paramId);
+
+        connection.Open();
+        command.ExecuteNonQuery();
+
+        return (int)paramId.Value;
+    }
+
+    public List<Estudiante> BuscarPorCarreraSP(int carreraId)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        using var command = new SqlCommand("sp_Estudiantes_PorCarrera", connection);
+
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@CarreraId", carreraId);
+
+        connection.Open();
+        using var reader = command.ExecuteReader();
+
+        var estudiantes = new List<Estudiante>();
+        while (reader.Read())
+        {
+            estudiantes.Add(MapFromReader(reader));
+        }
+
+        return estudiantes;
+    }
+
+    // SP con valor de retorno
+    public int CrearConRetornoSP(Estudiante estudiante)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        using var command = new SqlCommand("sp_Estudiantes_CrearConRetorno", connection);
+
+        command.CommandType = CommandType.StoredProcedure;
+
+        // Parámetros de entrada
+        command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+        command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+
+        // Parámetro de retorno
+        var returnParam = new SqlParameter("ReturnValue", SqlDbType.Int)
+        {
+            Direction = ParameterDirection.ReturnValue
+        };
+        command.Parameters.Add(returnParam);
+
+        connection.Open();
+        command.ExecuteNonQuery();
+
+        return (int)returnParam.Value;
+    }
+}
+```
+
+---
+
+## Exception Handling
+
+### Manejo robusto de errores SQL
+
+```csharp
+using System.Data.SqlClient;
+
+public class EstudianteRepositorySafe
+{
+    public async Task<int> CrearSeguroAsync(Estudiante estudiante)
+    {
+        using var connection = new SqlConnection(_connectionString);
+
+        try
+        {
+            await connection.OpenAsync();
+
+            var query = @"INSERT INTO Estudiantes (Codigo, Nombre, Email)
+                         VALUES (@Codigo, @Nombre, @Email);
+                         SELECT SCOPE_IDENTITY();";
+
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
+            command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
+
+            var id = Convert.ToInt32(await command.ExecuteScalarAsync());
+            return id;
+        }
+        catch (SqlException ex) when (ex.Number == 2627)
+        {
+            // Violación de clave única (PRIMARY KEY, UNIQUE)
+            throw new InvalidOperationException(
+                $"Ya existe un estudiante con código {estudiante.Codigo}", ex);
+        }
+        catch (SqlException ex) when (ex.Number == 547)
+        {
+            // Violación de clave foránea
+            throw new InvalidOperationException(
+                "La carrera especificada no existe", ex);
+        }
+        catch (SqlException ex) when (ex.Number == 2601)
+        {
+            // Violación de índice único
+            throw new InvalidOperationException(
+                "El email ya está registrado", ex);
+        }
+        catch (SqlException ex) when (ex.Number == -2)
+        {
+            // Timeout
+            throw new TimeoutException(
+                "La operación excedió el tiempo de espera", ex);
+        }
+        catch (SqlException ex)
+        {
+            // Otros errores SQL
+            throw new ApplicationException(
+                $"Error de base de datos: {ex.Message}", ex);
+        }
+    }
+
+    // Con retry policy para reintentos
+    public async Task<Estudiante> ObtenerPorIdConRetryAsync(int id, int maxRetries = 3)
+    {
+        for (int intento = 1; intento <= maxRetries; intento++)
+        {
+            try
+            {
+                using var connection = new SqlConnection(_connectionString);
+                await connection.OpenAsync();
+
+                var query = "SELECT * FROM Estudiantes WHERE Id = @Id";
+                using var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Id", id);
+
+                using var reader = await command.ExecuteReaderAsync();
+                if (await reader.ReadAsync())
+                    return MapFromReader(reader);
+
+                return null;
+            }
+            catch (SqlException ex) when (ex.Number == -2 && intento < maxRetries)
+            {
+                // Timeout - reintentar con espera exponencial
+                await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, intento)));
+            }
+        }
+
+        throw new RetryLimitExceededException(
+            $"Máximo reintentos ({maxRetries}) excedido");
+    }
+}
+
+// Códigos de error SQL comunes
+public static class SqlErrorCodes
+{
+    public const int ViolationUniqueKey = 2627;     // PK o UNIQUE
+    public const int ViolationForeignKey = 547;     // FK constraint
+    public const int ViolationUniqueIndex = 2601;   // Unique index
+    public const int Timeout = -2;                  // Timeout expired
+    public const int Deadlock = 1205;               // Deadlock victim
+    public const int ConnectionFailed = 53;         // Connection failed
+    public const int LoginFailed = 18456;           // Login failed
 }
 ```
 
@@ -695,6 +1032,10 @@ public Estudiante BuscarPorCodigo(string codigo)
 | **ExecuteNonQuery** | Para INSERT, UPDATE, DELETE |
 | **Parameters** | Protección contra SQL Injection |
 | **Transaction** | Consistencia en operaciones múltiples |
+| **Connection Pooling** | Reutilización de conexiones |
+| **SqlDataAdapter** | Modo desconectado (DataTable) |
+| **Stored Procedures** | Procedimientos en SQL |
+| **Exception Handling** | Manejo de errores SQL |
 
 ---
 

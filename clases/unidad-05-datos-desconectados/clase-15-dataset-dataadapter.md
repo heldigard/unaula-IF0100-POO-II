@@ -598,6 +598,503 @@ Hoy aprendimos:
 
 ---
 
+## DataView - Filtrado y Ordenamiento en Memoria
+
+### Vista personalizada de DataTable
+
+```csharp
+using System.Data;
+
+public class DataSetDataView
+{
+    public void FiltrarYOrdenar(DataTable dtEstudiantes)
+    {
+        // Crear DataView con diferentes filtros
+        DataView dvDestacados = new DataView(dtEstudiantes);
+
+        // Filtrar estudiantes con promedio >= 4.0
+        dvDestacados.RowFilter = "Promedio >= 4.0";
+
+        // Ordenar por promedio descendente
+        dvDestacados.Sort = "Promedio DESC";
+
+        Console.WriteLine("=== Estudiantes Destacados ===");
+        foreach (DataRowView fila in dvDestacados)
+        {
+            Console.WriteLine($"{fila["Nombre"]} - Promedio: {fila["Promedio"]}");
+        }
+
+        // Vista de estudiantes con nombre que empieza con 'J'
+        DataView dvFiltroNombre = new DataView(dtEstudiantes);
+        dvFiltroNombre.RowFilter = "Nombre LIKE 'J%'";
+        dvFiltroNombre.Sort = "Apellido ASC";
+
+        // Combinar múltiples condiciones
+        DataView dvComplejo = new DataView(dtEstudiantes);
+        dvComplejo.RowFilter = "Promedio >= 3.5 AND Edad BETWEEN 18 AND 25";
+        dvComplejo.Sort = "Promedio DESC, Nombre ASC";
+    }
+
+    // Buscar en DataView
+    public DataRowView BuscarEstudiante(DataView dv, int id)
+    {
+        int posicion = dv.Find(id);
+        return posicion >= 0 ? dv[posicion] : null;
+    }
+
+    // Buscar con criterio personalizado
+    public DataRowView[] BuscarPorNombre(DataView dv, string nombre)
+    {
+        DataRowView[] resultados = dv.FindRows($"Nombre = '{nombre}'");
+        return resultados;
+    }
+}
+```
+
+---
+
+## DataColumn Expressions - Columnas Calculadas
+
+### Crear columnas derivadas
+
+```csharp
+public class DataSetCalculatedColumns
+{
+    public DataTable CrearTablaConExpresiones()
+    {
+        DataTable dt = new DataTable("Notas");
+
+        // Columnas regulares
+        dt.Columns.Add("EstudianteId", typeof(int));
+        dt.Columns.Add("Nombre", typeof(string));
+        dt.Columns.Add("Nota1", typeof(decimal));
+        dt.Columns.Add("Nota2", typeof(decimal));
+        dt.Columns.Add("Nota3", typeof(decimal));
+
+        // Columna calculada: Promedio
+        DataColumn colPromedio = new DataColumn("Promedio", typeof(decimal));
+        colPromedio.Expression = "(Nota1 + Nota2 + Nota3) / 3";
+        dt.Columns.Add(colPromedio);
+
+        // Columna calculada: Estado
+        DataColumn colEstado = new DataColumn("Estado", typeof(string));
+        colEstado.Expression = "IIF(Promedio >= 3.0, 'Aprobado', 'Reprobado')";
+        dt.Columns.Add(colEstado);
+
+        // Columna calculada: Letra cualitativa
+        DataColumn colLetra = new DataColumn("Letra", typeof(string));
+        colLetra.Expression = "IIF(Promedio >= 4.5, 'A', IIF(Promedio >= 4.0, 'B', IIF(Promedio >= 3.5, 'C', IIF(Promedio >= 3.0, 'D', 'F'))))";
+        dt.Columns.Add(colLetra);
+
+        // Agregar datos
+        dt.Rows.Add(1, "Juan Pérez", 4.2m, 3.8m, 4.5m);
+        dt.Rows.Add(2, "María García", 2.5m, 3.0m, 2.8m);
+        dt.Rows.Add(3, "Carlos López", 5.0m, 4.8m, 4.9m);
+
+        return dt;
+    }
+
+    // Columnas calculadas con agregación
+    public DataTable AgregarColumnasAgregadas(DataTable dt)
+    {
+        // Promedio general de la tabla
+        DataColumn colPromedioGeneral = new DataColumn("PromedioGeneral");
+        colPromedioGeneral.Expression = "Avg(Promedio)";
+        dt.Columns.Add(colPromedioGeneral);
+
+        // Máximo promedio
+        DataColumn colMaxPromedio = new DataColumn("MaxPromedio");
+        colMaxPromedio.Expression = "Max(Promedio)";
+        dt.Columns.Add(colMaxPromedio);
+
+        // Conteo de filas
+        DataColumn colTotal = new DataColumn("TotalEstudiantes");
+        colTotal.Expression = "Count(Id)";
+        dt.Columns.Add(colTotal);
+
+        // Suma de notas (si aplica)
+        DataColumn colSuma = new DataColumn("SumaNotas");
+        colSuma.Expression = "Sum(Promedio)";
+        dt.Columns.Add(colSuma);
+
+        return dt;
+    }
+}
+```
+
+---
+
+## Constraints - Restricciones en DataTable
+
+### Validaciones a nivel de tabla
+
+```csharp
+public class DataSetConstraints
+{
+    public DataTable CrearTablaConRestricciones()
+    {
+        DataTable dt = new DataTable("Productos");
+
+        // Columnas
+        DataColumn colId = new DataColumn("Id", typeof(int));
+        DataColumn colCodigo = new DataColumn("Codigo", typeof(string));
+        DataColumn colNombre = new DataColumn("Nombre", typeof(string));
+        DataColumn colPrecio = new DataColumn("Precio", typeof(decimal));
+        DataColumn colStock = new DataColumn("Stock", typeof(int));
+        DataColumn colCategoriaId = new DataColumn("CategoriaId", typeof(int));
+
+        dt.Columns.AddRange(new DataColumn[] { colId, colCodigo, colNombre, colPrecio, colStock, colCategoriaId });
+
+        // 1. Primary Key
+        dt.PrimaryKey = new DataColumn[] { colId };
+
+        // 2. Unique Constraint (código único)
+        UniqueConstraint uniqueCodigo = new UniqueConstraint(colCodigo);
+        dt.Constraints.Add(uniqueCodigo);
+
+        // 3. AutoIncrement
+        colId.AutoIncrement = true;
+        colId.AutoIncrementSeed = 1;
+        colId.AutoIncrementStep = 1;
+        colId.ReadOnly = true; // No se puede modificar manualmente
+
+        // 4. Default Values
+        colPrecio.DefaultValue = 0;
+        colStock.DefaultValue = 0;
+
+        // 5. AllowDBNull (restringir nulos)
+        colCodigo.AllowDBNull = false;
+        colNombre.AllowDBNull = false;
+
+        // 6. MaxLength
+        colCodigo.MaxLength = 20;
+        colNombre.MaxLength = 100;
+
+        return dt;
+    }
+
+    // ForeignKey Constraint entre dos tablas
+    public void CrearRelacionConRestriccion(DataSet ds)
+    {
+        // Tabla Padres
+        DataTable dtCategorias = ds.Tables.Add("Categorias");
+        dtCategorias.Columns.Add("Id", typeof(int));
+        dtCategorias.Columns.Add("Nombre", typeof(string));
+        dtCategorias.PrimaryKey = new DataColumn[] { dtCategorias.Columns["Id"] };
+
+        // Tabla Hijos
+        DataTable dtProductos = ds.Tables.Add("Productos");
+        dtProductos.Columns.Add("Id", typeof(int));
+        dtProductos.Columns.Add("Nombre", typeof(string));
+        dtProductos.Columns.Add("CategoriaId", typeof(int));
+        dtProductos.PrimaryKey = new DataColumn[] { dtProductos.Columns["Id"] };
+
+        // ForeignKey Constraint con reglas
+        ForeignKeyConstraint fkCategoriaProducto = new ForeignKeyConstraint(
+            "FK_Categoria_Producto",
+            dtCategorias.Columns["Id"],
+            dtProductos.Columns["CategoriaId"]
+        );
+
+        // Reglas de actualización y eliminación
+        fkCategoriaProducto.UpdateRule = Rule.SetNull;      // SetNull, SetDefault, Cascade, None
+        fkCategoriaProducto.DeleteRule = Rule.None;         // No permitir eliminar si tiene hijos
+
+        fkCategoriaProducto.AcceptRejectRule = AcceptRejectRule.Cascade;
+
+        ds.Relations.Add(fkCategoriaProducto);
+    }
+}
+```
+
+---
+
+## Typed DataSet - DataSet Fuertemente Tipado
+
+### DataSet con tipo seguro en tiempo de compilación
+
+```csharp
+// Ventaja principal: IntelliSense y validación en tiempo de compilación
+// Se genera con xsd.exe o Visual Studio
+
+// Archivo XSD de ejemplo (guardar como UniversidadDS.xsd)
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="UniversidadDS" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="UniversidadDS">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="Estudiantes">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id" type="xs:int" />
+              <xs:element name="Codigo" type="xs:string" />
+              <xs:element name="Nombre" type="xs:string" />
+              <xs:element name="Promedio" type="xs:decimal" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+// Uso del Typed DataSet (después de generarlo)
+public class UsoTypedDataSet
+{
+    public void UsarDataSetTipado()
+    {
+        // Instanciar el DataSet tipado
+        UniversidadDS ds = new UniversidadDS();
+
+        // Acceso tipo seguro a tablas
+        UniversidadDS.EstudiantesDataTable dtEstudiantes = ds.Estudiantes;
+
+        // Crear fila tipada
+        UniversidadDS.EstudiantesRow fila = dtEstudiantes.NewEstudiantesRow();
+        fila.Codigo = "EST001";
+        fila.Nombre = "Juan Pérez";
+        fila.Promedio = 4.2m;
+
+        dtEstudiantes.AddEstudiantesRow(fila);
+
+        // Acceso tipo seguro a filas
+        foreach (UniversidadDS.EstudiantesRow est in dtEstudiantes)
+        {
+            // IntelliSense disponible
+            string nombre = est.Nombre;
+            decimal promedio = est.Promedio;
+
+            // Propiedades calculadas si existen
+            if (est.IsPromedioNull())
+                Console.WriteLine($"{est.Nombre} sin promedio");
+            else
+                Console.WriteLine($"{est.Nombre}: {est.Promedio}");
+        }
+
+        // Buscar por clave primaria (tipo seguro)
+        UniversidadDS.EstudiantesRow encontrado = dtEstudiantes.FindByCodigo("EST001");
+    }
+}
+```
+
+---
+
+## DataTable Events - Eventos de Cambios
+
+### Reactividad a modificaciones en datos
+
+```csharp
+public class DataTableEventos
+{
+    public void ConfigurarEventos(DataTable dt)
+    {
+        // Evento: ColumnChanging (antes de cambiar)
+        dt.ColumnChanging += (sender, e) =>
+        {
+            if (e.Column.ColumnName == "Promedio")
+            {
+                decimal nuevoValor = (decimal)e.ProposedValue;
+                if (nuevoValor < 0 || nuevoValor > 5)
+                {
+                    throw new ArgumentException("El promedio debe estar entre 0 y 5");
+                }
+            }
+
+            if (e.Column.ColumnName == "Email")
+            {
+                string email = e.ProposedValue?.ToString();
+                if (!string.IsNullOrEmpty(email) && !email.Contains("@"))
+                {
+                    throw new ArgumentException("Email inválido");
+                }
+            }
+        };
+
+        // Evento: ColumnChanged (después de cambiar)
+        dt.ColumnChanged += (sender, e) =>
+        {
+            Console.WriteLine($"Columna cambiada: {e.Column.ColumnName}");
+
+            if (e.Column.ColumnName == "Promedio")
+            {
+                // Actualizar otra columna basada en el cambio
+                DataRow fila = e.Row;
+                if (fila.Table.Columns.Contains("Estado"))
+                {
+                    fila["Estado"] = (decimal)e.Row["Promedio"] >= 3.0 ? "Aprobado" : "Reprobado";
+                }
+            }
+        };
+
+        // Evento: RowChanged (después de modificar fila)
+        dt.RowChanged += (sender, e) =>
+        {
+            Console.WriteLine($"Fila modificada: {e.Action}");
+            Console.WriteLine($"  RowState: {e.Row.RowState}");
+        };
+
+        // Evento: RowChanging (antes de modificar fila)
+        dt.RowChanging += (sender, e) =>
+        {
+            // Validación de negocio
+            if (e.Action == DataRowAction.Change)
+            {
+                decimal promedio = e.Row["Promedio"] != DBNull.Value ? (decimal)e.Row["Promedio"] : 0;
+                if (promedio > 5.0m)
+                {
+                    e.Row.RejectChanges();
+                    throw new Exception("Promedio no puede superar 5.0");
+                }
+            }
+        };
+
+        // Evento: RowDeleting (antes de eliminar)
+        dt.RowDeleting += (sender, e) =>
+        {
+            int id = (int)e.Row["Id"];
+            Console.WriteLine($"Intentando eliminar fila con ID: {id}");
+
+            // Prevenir eliminación bajo ciertas condiciones
+            // if (e.Row["Promedio"] != DBNull.Value && (decimal)e.Row["Promedio"] > 4.5)
+            // {
+            //     throw new Exception("No se puede eliminar estudiante destacado");
+            // }
+        };
+
+        // Evento: RowDeleted (después de eliminar)
+        dt.RowDeleted += (sender, e) =>
+        {
+            Console.WriteLine("Fila eliminada exitosamente");
+            // Registrar en log de auditoría
+        };
+
+        // Evento: TableNewRow (nueva fila agregada)
+        dt.TableNewRow += (sender, e) =>
+        {
+            Console.WriteLine("Nueva fila creada");
+            // Establecer valores por defecto
+            e.Row["FechaCreacion"] = DateTime.Now;
+            e.Row["Activo"] = true;
+        };
+
+        // Evento: TableCleared (todas las filas eliminadas)
+        dt.TableCleared += (sender, e) =>
+        {
+            Console.WriteLine("Tabla limpiada completamente");
+        };
+    }
+}
+```
+
+---
+
+## LINQ to DataSet - Consultas con LINQ
+
+### Usar LINQ para consultar DataTables
+
+```csharp
+using System.Linq;
+using System.Data;
+
+public class LinqToDataSet
+{
+    public void ConsultarConLinq(DataTable dtEstudiantes)
+    {
+        // LINQ sobre DataTable (requiere AsEnumerable())
+        var estudiantesDestacados =
+            from est in dtEstudiantes.AsEnumerable()
+            where est.Field<decimal>("Promedio") >= 4.0m
+            orderby est.Field<string>("Nombre")
+            select new
+            {
+                Id = est.Field<int>("Id"),
+                Nombre = est.Field<string>("Nombre"),
+                Promedio = est.Field<decimal>("Promedio")
+            };
+
+        Console.WriteLine("=== Estudiantes Destacados (LINQ) ===");
+        foreach (var est in estudiantesDestacados)
+        {
+            Console.WriteLine($"{est.Nombre}: {est.Promedio}");
+        }
+
+        // Agrupación por categoría
+        var gruposPorPromedio =
+            from est in dtEstudiantes.AsEnumerable()
+            group est by est.Field<decimal>("Promedio") >= 4.0m into g
+            select new
+            {
+                Categoria = g.Key ? "Destacados" : "Regulares",
+                Cantidad = g.Count(),
+                PromedioPromedio = g.Average(x => x.Field<decimal>("Promedio"))
+            };
+
+        Console.WriteLine("\n=== Estadísticas por Grupo ===");
+        foreach (var grupo in gruposPorPromedio)
+        {
+            Console.WriteLine($"{grupo.Categoria}: {grupo.Cantidad} estudiantes, " +
+                            $"Promedio: {grupo.PromedioPromedio:F2}");
+        }
+
+        // Join entre dos DataTables
+        DataTable dtCursos = new DataTable("Cursos");
+        dtCursos.Columns.Add("Id", typeof(int));
+        dtCursos.Columns.Add("Nombre", typeof(string));
+
+        DataTable dtMatriculas = new DataTable("Matriculas");
+        dtMatriculas.Columns.Add("EstudianteId", typeof(int));
+        dtMatriculas.Columns.Add("CursoId", typeof(int));
+
+        var matriculasConNombres =
+            from mat in dtMatriculas.AsEnumerable()
+            join est in dtEstudiantes.AsEnumerable()
+                on mat.Field<int>("EstudianteId") equals est.Field<int>("Id")
+            join cur in dtCursos.AsEnumerable()
+                on mat.Field<int>("CursoId") equals cur.Field<int>("Id")
+            select new
+            {
+                Estudiante = est.Field<string>("Nombre"),
+                Curso = cur.Field<string>("Nombre")
+            };
+
+        // Copiar resultados a nuevo DataTable
+        DataTable dtDestacadosCopy =
+            estudiantesDestacados.CopyToDataTable() ?? new DataTable();
+    }
+}
+
+// Método de extensión para copiar resultados LINQ a DataTable
+public static class LinqExtensions
+{
+    public static DataTable CopyToDataTable<T>(this IEnumerable<T> data)
+    {
+        DataTable dt = new DataTable();
+        PropertyInfo[] properties = typeof(T).GetProperties();
+
+        foreach (PropertyInfo prop in properties)
+        {
+            dt.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType)
+                ?? prop.PropertyType);
+        }
+
+        foreach (T item in data)
+        {
+            DataRow row = dt.NewRow();
+            foreach (PropertyInfo prop in properties)
+            {
+                object value = prop.GetValue(item) ?? DBNull.Value;
+                row[prop.Name] = value;
+            }
+            dt.Rows.Add(row);
+        }
+
+        return dt;
+    }
+}
+```
+
+---
+
 **Fecha:** 2026-05-18 (Lunes)  
 **Profesor:** [Nombre]  
 **Curso:** IF0100 - POO II

@@ -1070,3 +1070,975 @@ public partial class frmEstudiantes : Form
 
 ---
 
+## DataGridView Avanzado - Personalización Completa
+
+### Configuración profesional del grid
+
+```csharp
+using System.Windows.Forms;
+using System.Drawing;
+
+public class DataGridViewAvanzado : Form
+{
+    private DataGridView dgv;
+    private BindingSource bindingSource;
+    private ContextMenuStrip contextMenu;
+
+    public DataGridViewAvanzado()
+    {
+        ConfigurarGrid();
+        ConfigurarMenuContextual();
+        ConfigurarEventos();
+    }
+
+    private void ConfigurarGrid()
+    {
+        dgv = new DataGridView
+        {
+            Dock = DockStyle.Fill,
+            AutoGenerateColumns = false,
+            AllowUserToAddRows = false,
+            AllowUserToDeleteRows = false,
+            ReadOnly = false,
+            SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+            MultiSelect = false,
+            GridColor = Color.LightGray,
+            BorderStyle = BorderStyle.Fixed3D,
+            CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
+            RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single,
+            ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single,
+            BackgroundColor = Color.White,
+            AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.AliceBlue,
+                ForeColor = Color.Black
+            },
+            DefaultCellStyle = new DataGridViewCellStyle
+            {
+                SelectionBackColor = Color.SteelBlue,
+                SelectionForeColor = Color.White,
+                Font = new Font("Segoe UI", 10F)
+            },
+            ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.Navy,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10F, FontStyle.Bold),
+                Alignment = DataGridViewContentAlignment.MiddleCenter
+            },
+            RowHeadersDefaultCellStyle = new DataGridViewCellStyle
+            {
+                BackColor = Color.Navy,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9F)
+            },
+            EnableHeadersVisualStyles = false,
+            RowTemplate = { Height = 24 }
+        };
+
+        // Modo de edición
+        dgv.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
+        dgv.BeginEdit += (s, e) => { Console.WriteLine("Editando fila"); };
+
+        // Auto-sizing de columnas
+        dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+        dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+
+        // Habilitar reorder de columnas
+        dgv.AllowUserToOrderColumns = true;
+        dgv.ColumnDisplayIndexChanged += (s, e) =>
+        {
+            Console.WriteLine($"Columna {e.Column.Name} movida a índice {e.NewDisplayIndex}");
+        };
+
+        // Habilitar resize de columnas
+        dgv.AllowUserToResizeColumns = true;
+        dgv.AllowUserToResizeRows = false;
+
+        // Habilitar ordenamiento
+        dgv.SortCompare += (s, e) =>
+        {
+            // Ordenamiento personalizado para promedios
+            if (e.Column.Name == "Promedio")
+            {
+                e.SortResult = Comparer<decimal>.Default.Compare(
+                    (decimal)e.CellValue1,
+                    (decimal)e.CellValue2);
+                e.Handled = true;
+            }
+        };
+
+        // Configurar columnas manualmente
+        ConfigurarColumnas();
+    }
+
+    private void ConfigurarColumnas()
+    {
+        // Columna ID (oculta o de solo lectura)
+        DataGridViewTextBoxColumn colId = new DataGridViewTextBoxColumn
+        {
+            Name = "Id",
+            HeaderText = "ID",
+            DataPropertyName = "Id",
+            Visible = false,  // No mostrar, pero sí existe
+            ReadOnly = true
+        };
+
+        // Columna Código
+        DataGridViewTextBoxColumn colCodigo = new DataGridViewTextBoxColumn
+        {
+            Name = "Codigo",
+            HeaderText = "Código",
+            DataPropertyName = "Codigo",
+            Width = 100,
+            ReadOnly = false,
+            MaxInputLength = 20
+        };
+
+        // Columna Nombre
+        DataGridViewTextBoxColumn colNombre = new DataGridViewTextBoxColumn
+        {
+            Name = "Nombre",
+            HeaderText = "Nombre Completo",
+            DataPropertyName = "Nombre",
+            Width = 200,
+            ReadOnly = false
+        };
+
+        // Columna Promedio (con formato)
+        DataGridViewTextBoxColumn colPromedio = new DataGridViewTextBoxColumn
+        {
+            Name = "Promedio",
+            HeaderText = "Promedio",
+            DataPropertyName = "Promedio",
+            Width = 100,
+            DefaultCellStyle = new DataGridViewCellStyle
+            {
+                Format = "F2",
+                Alignment = DataGridViewContentAlignment.MiddleRight,
+                NullValue = "0.00"
+            }
+        };
+
+        // Columna Activo (CheckBox)
+        DataGridViewCheckBoxColumn colActivo = new DataGridViewCheckBoxColumn
+        {
+            Name = "Activo",
+            HeaderText = "Activo",
+            DataPropertyName = "Activo",
+            Width = 60,
+            TrueValue = true,
+            FalseValue = false,
+            IndeterminateValue = false
+        };
+
+        // Columna de imagen (opcional)
+        DataGridViewImageColumn colImagen = new DataGridViewImageColumn
+        {
+            Name = "Foto",
+            HeaderText = "Foto",
+            ImageLayout = DataGridViewImageCellLayout.Zoom,
+            Width = 60,
+            ValuesAreIcons = false
+        };
+
+        // Columna de botón (acciones)
+        DataGridViewButtonColumn colAcciones = new DataGridViewButtonColumn
+        {
+            Name = "Acciones",
+            HeaderText = "",
+            Text = "Ver",
+            UseColumnTextForButtonValue = false,
+            Width = 60
+        };
+        colAcciones.CellTemplate = new DataGridViewButtonCell();
+
+        dgv.Columns.AddRange(new DataGridViewColumn[] {
+            colId, colCodigo, colNombre, colPromedio, colActivo, colImagen, colAcciones
+        });
+    }
+
+    private void ConfigurarMenuContextual()
+    {
+        contextMenu = new ContextMenuStrip();
+
+        var tsmEditar = new ToolStripMenuItem("Editar", null, OnEditar);
+        var tsmEliminar = new ToolStripMenuItem("Eliminar", null, OnEliminar);
+        var tsmCopiar = new ToolStripMenuItem("Copiar", null, OnCopiar);
+        var tsmDuplicar = new ToolStripMenuItem("Duplicar", null, OnDuplicar);
+
+        contextMenu.Items.AddRange(new ToolStripItem[] { tsmEditar, tsmEliminar,
+            new ToolStripSeparator(), tsmCopiar, tsmDuplicar });
+
+        dgv.ContextMenuStrip = contextMenu;
+    }
+
+    private void ConfigurarEventos()
+    {
+        // Selección de fila
+        dgv.SelectionChanged += (s, e) =>
+        {
+            if (dgv.SelectedRows.Count > 0)
+            {
+                var fila = dgv.SelectedRows[0];
+                Console.WriteLine($"Seleccionado: ID={fila.Cells["Id"].Value}");
+            }
+        };
+
+        // Click en celda
+        dgv.CellClick += (s, e) =>
+        {
+            if (e.ColumnIndex == dgv.Columns["Acciones"].Index)
+            {
+                var id = dgv.Rows[e.RowIndex].Cells["Id"].Value;
+                MessageBox.Show($"Acción para ID: {id}");
+            }
+        };
+
+        // Validación de celda
+        dgv.CellValidating += (s, e) =>
+        {
+            if (dgv.Columns[e.ColumnIndex].Name == "Promedio")
+            {
+                if (e.FormattedValue != null && decimal.TryParse(e.FormattedValue.ToString(), out decimal valor))
+                {
+                    if (valor < 0 || valor > 5)
+                    {
+                        e.Cancel = true;
+                        dgv.Rows[e.RowIndex].ErrorText = "Promedio debe estar entre 0 y 5";
+                    }
+                }
+            }
+        };
+
+        dgv.CellEndEdit += (s, e) =>
+        {
+            dgv.Rows[e.RowIndex].ErrorText = string.Empty;
+        };
+
+        // Formateo de celdas por valor
+        dgv.CellFormatting += (s, e) =>
+        {
+            if (dgv.Columns[e.ColumnIndex].Name == "Promedio")
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
+                {
+                    decimal promedio = (decimal)e.Value;
+                    e.CellStyle.BackColor = promedio >= 4.0 ? Color.PaleGreen :
+                                                 promedio >= 3.0 ? Color.Yellow : Color.IndianRed;
+                }
+            }
+
+            if (dgv.Columns[e.ColumnIndex].Name == "Activo")
+            {
+                // Mostrar check verde/rojo
+                var cell = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (cell.Value != null && (bool)cell.Value)
+                {
+                    e.CellStyle.BackColor = Color.LightGreen;
+                }
+            }
+        };
+
+        // DataError para errores de conversión
+        dgv.DataError += (s, e) =>
+        {
+            MessageBox.Show($"Error: {e.Exception.Message}", "Error de datos",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            e.ThrowException = false;
+        };
+    }
+
+    private void OnEditar(object sender, EventArgs e) => EditarFilaSeleccionada();
+    private void OnEliminar(object sender, EventArgs e) => EliminarFilaSeleccionada();
+    private void OnCopiar(object sender, EventArgs e) => CopiarFilaSeleccionada();
+    private void OnDuplicar(object sender, EventArgs e) => DuplicarFilaSeleccionada();
+
+    private void EditarFilaSeleccionada()
+    {
+        if (dgv.SelectedRows.Count > 0)
+        {
+            var id = dgv.SelectedRows[0].Cells["Id"].Value;
+            // Abrir formulario de edición
+        }
+    }
+
+    // Filtrado en tiempo real
+    public void FiltrarDatos(string texto)
+    {
+        if (string.IsNullOrEmpty(texto))
+        {
+            bindingSource.RemoveFilter();
+        }
+        else
+        {
+            bindingSource.Filter = $"Nombre LIKE '%{texto}%' OR Codigo LIKE '%{texto}%'";
+        }
+    }
+}
+```
+
+---
+
+## XML Serialization Avanzada
+
+### Atributos de serialización personalizados
+
+```csharp
+using System;
+using System.Xml.Serialization;
+using System.IO;
+using System.Collections.Generic;
+
+namespace UniversidadApp.Serialization
+{
+    /// <summary>
+    /// Clase con atributos de serialización XML personalizados
+    /// </summary>
+    [XmlRoot("Universidad", Namespace = "http://www.unaula.edu.co/esquema")]
+    public class Universidad
+    {
+        [XmlElement("Estudiante")]
+        [XmlElement("Alumno")]  // Permite ambos nombres en XML
+        public List<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+
+        [XmlAttribute("Nombre")]
+        public string NombreInstitucion { get; set; }
+
+        [XmlAttribute("AnioFundacion")]
+        public int AnioFundacion { get; set; }
+    }
+
+    public class Estudiante
+    {
+        [XmlAttribute("Id")]
+        public int Id { get; set; }
+
+        [XmlAttribute("Codigo")]
+        public string Codigo { get; set; }
+
+        [XmlElement("NombreCompleto")]
+        public string Nombre { get; set; }
+
+        [XmlElement("Correo")]
+        [XmlElement("Email")]  // Alias
+        public string Email { get; set; }
+
+        [XmlIgnore]  // Ignorar propiedad en serialización
+        public string Password { get; set; }
+
+        [XmlArray("Notas")]
+        [XmlArrayItem("Nota")]
+        public List<decimal> Calificaciones { get; set; } = new List<decimal>();
+
+        [XmlIgnore]
+        public decimal Promedio
+        {
+            get
+            {
+                if (Calificaciones.Count == 0)
+                    return 0;
+                return Calificaciones.Sum() / Calificaciones.Count;
+            }
+        }
+
+        // Propiedad con nombre diferente en XML
+        [XmlElement("FechaDeNacimiento")]
+        public DateTime FechaNacimiento { get; set; }
+
+        // Tipo enumerado
+        [XmlElement("Estado")]
+        public EstadoEstudiante Estado { get; set; }
+    }
+
+    public enum EstadoEstudiante
+    {
+        [XmlEnum("Activo")]
+        Activo = 1,
+
+        [XmlEnum("Inactivo")]
+        Inactivo = 2,
+
+        [XmlEnum("Graduado")]
+        Graduado = 3
+    }
+
+    /// <summary>
+    /// Serializador con opciones
+    /// </summary>
+    public class XmlSerializerHelper
+    {
+        public static void Serializar(T obj, string archivo, bool indentar = true)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+
+            var opciones = new XmlWriterSettings
+            {
+                Indent = indentar,
+                IndentChars = "  ",
+                NewLineOnAttributes = false,
+                OmitXmlDeclaration = false,
+                ConformanceLevel = ConformanceLevel.Document
+            };
+
+            using var writer = XmlWriter.Create(archivo, opciones);
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("xsd", "http://www.w3.org/2001/XMLSchema");
+
+            serializer.Serialize(writer, obj, namespaces);
+        }
+
+        public static T Deserializar(string archivo)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+
+            using var reader = new StreamReader(archivo);
+            return (T)serializer.Deserialize(reader);
+        }
+
+        // Serializar a string
+        public static string SerializarToString(T obj)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+
+            using var stringWriter = new StringWriter();
+            using var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings
+            {
+                Indent = true,
+                OmitXmlDeclaration = false
+            });
+
+            serializer.Serialize(writer, obj);
+            return stringWriter.ToString();
+        }
+
+        // Deserializar desde string
+        public static T DeserializarDesdeString(string xml)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+
+            using var stringReader = new StringReader(xml);
+            return (T)serializer.Deserialize(stringReader);
+        }
+    }
+
+    // Uso
+    class Program
+    {
+        static void Main()
+        {
+            var universidad = new Universidad
+            {
+                NombreInstitucion = "UNAULA",
+                AnioFundacion = 1995,
+                Estudiantes = new List<Estudiante>
+                {
+                    new Estudiante
+                    {
+                        Id = 1,
+                        Codigo = "EST001",
+                        Nombre = "Juan Pérez",
+                        Email = "juan@unaula.edu.co",
+                        Password = "secreto",  // No se serializa
+                        Calificaciones = new List<decimal> { 4.2m, 3.8m, 4.5m },
+                        FechaNacimiento = new DateTime(2000, 5, 15),
+                        Estado = EstadoEstudiante.Activo
+                    }
+                }
+            };
+
+            // Serializar
+            XmlSerializerHelper.Serializar(universidad, "universidad.xml");
+
+            // Deserializar
+            var universidadCargada = XmlSerializerHelper.Deserializar<Universidad>("universidad.xml");
+
+            Console.WriteLine($"Institución: {universidadCargada.NombreInstitucion}");
+            Console.WriteLine($"Estudiantes: {universidadCargada.Estudiantes.Count}");
+        }
+    }
+}
+
+/* XML generado (universidad.xml):
+<?xml version="1.0" encoding="utf-8"?>
+<Universidad xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           Nombre="UNAULA"
+           AnioFundacion="1995"
+           xmlns="http://www.unaula.edu.co/esquema">
+  <Estudiante Id="1" Codigo="EST001">
+    <NombreCompleto>Juan Pérez</NombreCompleto>
+    <Email>juan@unaula.edu.co</Email>
+    <FechaDeNacimiento>2000-05-15T00:00:00</FechaDeNacimiento>
+    <Estado>Activo</Estado>
+    <Notas>
+      <Nota>4.2</Nota>
+      <Nota>3.8</Nota>
+      <Nota>4.5</Nota>
+    </Notas>
+  </Estudiante>
+</Universidad>
+*/
+```
+
+---
+
+## ConcurrentDictionary - Datos Compartidos en Memoria
+
+### Caché de datos thread-safe para aplicaciones web
+
+```csharp
+using System;
+using System.Collections.Concurrent;
+using System.Linq;
+
+namespace UniversidadApp.Cache
+{
+    /// <summary>
+    /// Caché thread-safe usando ConcurrentDictionary
+    /// Ideal para aplicaciones web con múltiples usuarios concurrentes
+    /// </summary>
+    public class EstudianteCache
+    {
+        private readonly ConcurrentDictionary<int, Estudiante> _cache;
+        private readonly TimeSpan _tiempoExpiracion;
+        private readonly ConcurrentDictionary<int, DateTime> _expiraciones;
+
+        public EstudianteCache(TimeSpan? tiempoExpiracion = null)
+        {
+            _cache = new ConcurrentDictionary<int, Estudiante>();
+            _expiraciones = new ConcurrentDictionary<int, DateTime>();
+            _tiempoExpiracion = tiempoExpiracion ?? TimeSpan.FromMinutes(30);
+        }
+
+        public void AgregarOActualizar(int id, Estudiante estudiante)
+        {
+            _cache.AddOrUpdate(id,
+                addKey: estudiante,
+                updateKeyFactory: (key, existing) => estudiante);
+
+            _expiraciones.AddOrUpdate(id,
+                addKey: DateTime.Now.Add(_tiempoExpiracion),
+                updateKeyFactory: (key, existing) => DateTime.Now.Add(_tiempoExpiracion));
+        }
+
+        public bool Obtener(int id, out Estudiante estudiante)
+        {
+            // Verificar expiración
+            if (_expiraciones.TryGetValue(id, out var expiracion))
+            {
+                if (DateTime.Now > expiracion)
+                {
+                    Remover(id);
+                    estudiante = null;
+                    return false;
+                }
+            }
+
+            return _cache.TryGetValue(id, out estudiante);
+        }
+
+        public bool Remover(int id)
+        {
+            _expiraciones.TryRemove(id, out _);
+            return _cache.TryRemove(id, out _);
+        }
+
+        public void Limpiar()
+        {
+            _cache.Clear();
+            _expiraciones.Clear();
+        }
+
+        public void LimpiarExpirados()
+        {
+            var ahora = DateTime.Now;
+            var expirados = _expiraciones.Where(kvp => kvp.Value < ahora).Select(kvp => kvp.Key).ToList();
+
+            foreach (var id in expirados)
+            {
+                Remover(id);
+            }
+        }
+
+        public int Total => _cache.Count;
+
+        // Obtener o crear (carga diferida)
+        public Estudiante ObtenerOCrear(int id, Func<int, Estudiante> factory)
+        {
+            return _cache.GetOrAdd(id, factory);
+        }
+
+        // Obtener múltiples
+        public Estudiante[] ObtenerTodos()
+        {
+            LimpiarExpirados();
+            return _cache.Values.ToArray();
+        }
+
+        // Agregar lote
+        public void AgregarLote(IEnumerable<Estudiante> estudiantes)
+        {
+            foreach (var est in estudiantes)
+            {
+                AgregarOActualizar(est.Id, est);
+            }
+        }
+    }
+
+    // Uso en aplicación web
+    public class GlobalCache
+    {
+        public static EstudianteCache Estudiantes { get; } = new EstudianteCache();
+
+        // En Global.asax o Startup
+        public static void Inicializar()
+        {
+            // Cargar datos al inicio
+            var estudiantes = CargarEstudiantesDesdeBD();
+            Estudiantes.AgregarLote(estudiantes);
+        }
+
+        private static Estudiante[] CargarEstudiantesDesdeBD()
+        {
+            // Cargar desde ADO.NET
+            return new Estudiante[0];
+        }
+    }
+}
+```
+
+---
+
+## Patrones de Diseño para el Proyecto Final
+
+### Patrones recomendados por Microsoft
+
+```csharp
+// ========== Repository Pattern ==========
+// Abstrae el acceso a datos
+public interface IEstudianteRepository
+{
+    Estudiante ObtenerPorId(int id);
+    IEnumerable<Estudiante> ObtenerTodos();
+    void Agregar(Estudiante estudiante);
+    void Actualizar(Estudiante estudiante);
+    void Eliminar(int id);
+}
+
+public class EstudianteRepository : IEstudianteRepository
+{
+    private readonly string _connectionString;
+
+    public Estudiante ObtenerPorId(int id)
+    {
+        // Implementación ADO.NET
+        return null;
+    }
+
+    // ... otros métodos
+}
+
+// ========== Unit of Work Pattern ==========
+// Agrupa múltiples repositorios en una sola transacción
+public interface IUnitOfWork : IDisposable
+{
+    IEstudianteRepository Estudiantes { get; }
+    ICursoRepository Cursos { get; }
+    IMatriculaRepository Matriculas { get; }
+    void Commit();
+    void Rollback();
+}
+
+public class SqlUnitOfWork : IUnitOfWork
+{
+    private readonly SqlTransaction _transaction;
+    private readonly SqlConnection _connection;
+
+    public IEstudianteRepository Estudiantes { get; }
+    public ICursoRepository Cursos { get; }
+    public IMatriculaRepository Matriculas { get; }
+
+    public void Commit()
+    {
+        try
+        {
+            _transaction.Commit();
+        }
+        catch
+        {
+            _transaction.Rollback();
+            throw;
+        }
+    }
+
+    public void Rollback()
+    {
+        _transaction.Rollback();
+    }
+
+    public void Dispose()
+    {
+        _transaction?.Dispose();
+        _connection?.Dispose();
+    }
+}
+
+// ========== Service Layer Pattern ==========
+// Lógica de negocio separada del acceso a datos
+public interface IEstudianteService
+{
+    Estudiante RegistrarEstudiante(NuevoEstudianteDto dto);
+    void ActualizarPromedio(int estudianteId);
+    IReadOnlyList<Estudiante> ObtenerEstudiantesDestacados();
+}
+
+public class EstudianteService : IEstudianteService
+{
+    private readonly IEstudianteRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly INotificationService _notification;
+
+    public Estudiante RegistrarEstudiante(NuevoEstudianteDto dto)
+    {
+        // Validaciones de negocio
+        if (_repository.ObtenerPorCodigo(dto.Codigo) != null)
+            throw new Exception("Código ya existe");
+
+        var estudiante = new Estudiante
+        {
+            Codigo = dto.Codigo,
+            Nombre = dto.Nombre,
+            // ...
+        };
+
+        _repository.Agregar(estudiante);
+        _unitOfWork.Commit();
+
+        _notification.EnviarBienvenida(estudiante.Email);
+
+        return estudiante;
+    }
+}
+
+// ========== Factory Pattern ==========
+// Creación de objetos complejos
+public interface IEstudianteFactory
+{
+    Estudiante CrearRegular(string codigo, string nombre);
+    Estudiante CrearBecado(string codigo, string nombre);
+}
+
+public class EstudianteFactory : IEstudianteFactory
+{
+    public Estudiante CrearRegular(string codigo, string nombre)
+    {
+        return new Estudiante
+        {
+            Codigo = codigo,
+            Nombre = nombre,
+            Tipo = TipoEstudiante.Regular,
+            FechaRegistro = DateTime.Now
+        };
+    }
+
+    public Estudiante CrearBecado(string codigo, string nombre)
+    {
+        return new Estudiante
+        {
+            Codigo = codigo,
+            Nombre = nombre,
+            Tipo = TipoEstudiante.Becado,
+            FechaRegistro = DateTime.Now,
+            Beneficios = new[] { "Beca20", "Transporte" }
+        };
+    }
+}
+
+// ========== Singleton Pattern ==========
+// Una sola instancia de configuración
+public sealed class ConfiguracionAplicacion
+{
+    private static readonly Lazy<ConfiguracionApp> _instance =
+        new Lazy<ConfiguracionApp>(() => new ConfiguracionApp());
+
+    public static ConfiguracionAplicacion Instance => _instance.Value;
+
+    private ConfiguracionAplicacion() { }
+
+    public string ConnectionString { get; set; }
+    public string ApiKey { get; set; }
+    public int TimeoutSegundos { get; set; } = 30;
+}
+
+// ========== Strategy Pattern ==========
+// Algoritmos intercambiables
+public interface ICalculoPromedio
+{
+    decimal Calcular(decimal[] notas);
+}
+
+public class PromedioSimple : ICalculoPromedio
+{
+    public decimal Calcular(decimal[] notas)
+    {
+        return notas.Average();
+    }
+}
+
+public class PromedioPonderado : ICalculoPromedio
+{
+    private readonly decimal[] _pesos;
+
+    public PromedioPonderado(decimal[] pesos)
+    {
+        _pesos = pesos;
+    }
+
+    public decimal Calcular(decimal[] notas)
+    {
+        decimal suma = 0;
+        decimal totalPesos = 0;
+
+        for (int i = 0; i < notas.Length; i++)
+        {
+            suma += notas[i] * _pesos[i];
+            totalPesos += _pesos[i];
+        }
+
+        return suma / totalPesos;
+    }
+}
+
+public class CalculadoraPromedio
+{
+    private ICalculoPromedio _estrategia;
+
+    public void SetEstrategia(ICalculoPromedio estrategia)
+    {
+        _estrategia = estrategia;
+    }
+
+    public decimal Calcular(decimal[] notas)
+    {
+        return _estrategia.Calcular(notas);
+    }
+}
+```
+
+---
+
+## Logging y Auditoría
+
+### Sistema de logs para el proyecto
+
+```csharp
+using System;
+using System.IO;
+
+namespace UniversidadApp.Logging
+{
+    /// <summary>
+    /// Logger simple para aplicaciones de escritorio
+    /// </summary>
+    public class Logger
+    {
+        private static readonly Lazy<Logger> _instance =
+            new Lazy<Logger>(() => new Logger());
+
+        public static Logger Instance => _instance.Value;
+
+        private readonly string _logPath;
+        private readonly object _lock = new object();
+
+        private Logger()
+        {
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var logDir = Path.Combine(appData, "UniversidadApp", "Logs");
+            Directory.CreateDirectory(logDir);
+
+            _logPath = Path.Combine(logDir, $"app_{DateTime.Now:yyyyMMdd}.log");
+        }
+
+        public void Info(string mensaje)
+        {
+            EscribirLog("INFO", mensaje);
+        }
+
+        public void Warning(string mensaje)
+        {
+            EscribirLog("WARN", mensaje);
+        }
+
+        public void Error(string mensaje, Exception ex = null)
+        {
+            var mensajeCompleto = ex != null
+                ? $"{mensaje}: {ex.Message}\n{ex.StackTrace}"
+                : mensaje;
+
+            EscribirLog("ERROR", mensajeCompleto);
+        }
+
+        public void Debug(string mensaje)
+        {
+            #if DEBUG
+            EscribirLog("DEBUG", mensaje);
+            #endif
+        }
+
+        public void Auditoria(string usuario, string accion, string detalles)
+        {
+            var mensaje = $"[{usuario}] {accion}: {detalles}";
+            EscribirLog("AUDIT", mensaje);
+        }
+
+        private void EscribirLog(string nivel, string mensaje)
+        {
+            lock (_lock)
+            {
+                var entrada = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] [{nivel}] {mensaje}";
+                File.AppendAllText(_logPath, entrada + Environment.NewLine);
+            }
+        }
+
+        public string[] ObtenerUltimosLogs(int cantidad = 100)
+        {
+            if (!File.Exists(_logPath))
+                return Array.Empty<string>();
+
+            var lineas = File.ReadAllLines(_logPath);
+            return lineas.TakeLast(cantidad).ToArray();
+        }
+    }
+
+    // Uso
+    class Program
+    {
+        static void Main()
+        {
+            var logger = Logger.Instance;
+
+            logger.Info("Aplicación iniciada");
+            logger.Debug("Modo depuración activado");
+
+            try
+            {
+                // Operación que puede fallar
+                int resultado = Dividir(10, 0);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error en división", ex);
+            }
+
+            logger.Auditoria("admin", "ELIMINAR", "Estudiante ID=123");
+            logger.Info("Aplicación finalizada");
+        }
+
+        static int Dividir(int a, int b) => a / b;
+    }
+}
+```
+
+---
+
+

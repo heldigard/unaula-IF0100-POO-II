@@ -753,3 +753,556 @@ Usando una librería como EPPlus o ClosedXML, exportar los datos a un archivo Ex
 ### Tiempo estimado: 75 minutos
 
 ---
+
+## 🔧 Archivos de Configuración INI
+
+### Manejo de archivos .ini para configuraciones
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+
+namespace UniversidadApp.Config
+{
+    /// <summary>
+    /// Lector de archivos INI simple y eficiente
+    /// Formato:
+    /// [Seccion]
+    /// Clave=Valor
+    /// </summary>
+    public class IniFile
+    {
+        private readonly string _filePath;
+        private readonly Dictionary<string, Dictionary<string, string>> _data;
+
+        public IniFile(string filePath)
+        {
+            _filePath = filePath;
+            _data = new Dictionary<string, Dictionary<string, string>>();
+            Load();
+        }
+
+        private void Load()
+        {
+            if (!File.Exists(_filePath))
+            {
+                // Crear archivo vacío si no existe
+                File.WriteAllText(_filePath, "; Archivo de configuración\n");
+                return;
+            }
+
+            string currentSection = "DEFAULT";
+
+            foreach (var line in File.ReadAllLines(_filePath))
+            {
+                var trimmed = line.Trim();
+
+                // Ignorar comentarios y líneas vacías
+                if (string.IsNullOrWhiteSpace(trimmed) || trimmed.StartsWith(";"))
+                    continue;
+
+                // Sección: [NombreSeccion]
+                var sectionMatch = Regex.Match(trimmed, @"^\[([^\]]+)\]$");
+                if (sectionMatch.Success)
+                {
+                    currentSection = sectionMatch.Groups[1].Value;
+                    if (!_data.ContainsKey(currentSection))
+                        _data[currentSection] = new Dictionary<string, string>();
+                    continue;
+                }
+
+                // Clave=Valor
+                var keyValueMatch = Regex.Match(trimmed, @"^([^=]+)=(.*)$");
+                if (keyValueMatch.Success)
+                {
+                    var key = keyValueMatch.Groups[1].Value.Trim();
+                    var value = keyValueMatch.Groups[2].Value.Trim();
+
+                    if (!_data.ContainsKey(currentSection))
+                        _data[currentSection] = new Dictionary<string, string>();
+
+                    _data[currentSection][key] = value;
+                }
+            }
+        }
+
+        public void Save()
+        {
+            using var writer = new StreamWriter(_filePath);
+
+            foreach (var section in _data)
+            {
+                writer.WriteLine($"[{section.Key}]");
+
+                foreach (var keyValue in section.Value)
+                {
+                    writer.WriteLine($"{keyValue.Key}={keyValue.Value}");
+                }
+
+                writer.WriteLine();
+            }
+        }
+
+        public string GetValue(string section, string key, string defaultValue = "")
+        {
+            if (_data.ContainsKey(section) && _data[section].ContainsKey(key))
+                return _data[section][key];
+
+            return defaultValue;
+        }
+
+        public void SetValue(string section, string key, string value)
+        {
+            if (!_data.ContainsKey(section))
+                _data[section] = new Dictionary<string, string>();
+
+            _data[section][key] = value;
+        }
+
+        public int GetInt(string section, string key, int defaultValue = 0)
+        {
+            var value = GetValue(section, key);
+            return int.TryParse(value, out var result) ? result : defaultValue;
+        }
+
+        public bool GetBool(string section, string key, bool defaultValue = false)
+        {
+            var value = GetValue(section, key);
+            return bool.TryParse(value, out var result) ? result : defaultValue;
+        }
+    }
+}
+
+// Uso
+var config = new IniFile("config.ini");
+
+// Leer valores
+var servidor = config.GetValue("Database", "Server", "localhost");
+var puerto = config.GetInt("Database", "Port", 1433);
+var usarSSL = config.GetBool("Database", "UseSSL", false);
+
+// Escribir valores
+config.SetValue("App", "Theme", "Dark");
+config.SetValue("App", "Language", "es-CO");
+config.Save();
+
+/* Archivo config.ini de ejemplo:
+; Archivo de configuración de UniversidadApp
+
+[Database]
+Server=localhost
+Port=1433
+Database=UniversidadDB
+UseSSL=true
+
+[App]
+Theme=Dark
+Language=es-CO
+PageSize=20
+*/
+```
+
+---
+
+## 🔒 File Locking y Concurrencia
+
+### Manejo de acceso concurrente a archivos
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│              CONCURRENCIA DE ARCHIVOS                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Sin Locking                     Con Locking                │
+│  ────────────                    ────────────                │
+│                                                             │
+│  Proceso A → Leer                Proceso A → Leer           │
+│  Proceso B → Leer                Proceso B → Leer           │
+│  Proceso A → Escribir            Proceso A → Esperar        │
+│  Proceso B → Escribir ✗ CORRUPCIÓN │  └─→ Escribir          │
+│                                  Proceso B → Esperar        │
+│                                    └─→ Escribir            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```csharp
+using System;
+using System.IO;
+using System.Threading;
+
+namespace UniversidadApp.IO
+{
+    /// <summary>
+    /// Manejo seguro de archivos con locking
+    /// </summary>
+    public class SafeFileWriter
+    {
+        private readonly string _filePath;
+        private readonly TimeSpan _lockTimeout;
+        private readonly int _retryDelay;
+
+        public SafeFileWriter(string filePath,
+            TimeSpan? lockTimeout = null, int retryDelay = 100)
+        {
+            _filePath = filePath;
+            _lockTimeout = lockTimeout ?? TimeSpan.FromSeconds(30);
+            _retryDelay = retryDelay;
+        }
+
+        /// <summary>
+        /// Escribir contenido con reintentos en caso de archivo bloqueado
+        /// </summary>
+        public void WriteWithRetry(string content)
+        {
+            var startTime = DateTime.Now;
+
+            while (DateTime.Now - startTime < _lockTimeout)
+            {
+                try
+                {
+                    // Intentar escribir
+                    File.WriteAllText(_filePath, content);
+                    return;
+                }
+                catch (IOException ex) when (IsFileLocked(ex))
+                {
+                    // Archivo bloqueado - esperar y reintentar
+                    Thread.Sleep(_retryDelay);
+                }
+            }
+
+            throw new TimeoutException(
+                $"No se pudo escribir en {_filePath} después de {_lockTimeout.TotalSeconds} segundos");
+        }
+
+        /// <summary>
+        /// Leer contenido con reintentos
+        /// </summary>
+        public string ReadWithRetry()
+        {
+            var startTime = DateTime.Now;
+
+            while (DateTime.Now - startTime < _lockTimeout)
+            {
+                try
+                {
+                    return File.ReadAllText(_filePath);
+                }
+                catch (IOException ex) when (IsFileLocked(ex))
+                {
+                    Thread.Sleep(_retryDelay);
+                }
+            }
+
+            throw new TimeoutException(
+                $"No se pudo leer {_filePath} después de {_lockTimeout.TotalSeconds} segundos");
+        }
+
+        /// <summary>
+        /// Escribir de forma atómica (usando archivo temporal)
+        /// </summary>
+        public void WriteAtomic(string content)
+        {
+            var tempPath = _filePath + ".tmp";
+
+            try
+            {
+                // Escribir en archivo temporal
+                File.WriteAllText(tempPath, content);
+
+                // Reemplazar original de forma atómica
+                File.Replace(tempPath, _filePath, backupPath: null);
+            }
+            catch
+            {
+                // Limpiar archivo temporal en caso de error
+                if (File.Exists(tempPath))
+                    File.Delete(tempPath);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Usar FileStream con modo exclusivo para locking a nivel de SO
+        /// </summary>
+        public void WriteWithLock(string content)
+        {
+            using var stream = new FileStream(
+                _filePath,
+                FileMode.Create,
+                FileAccess.Write,
+                FileShare.None  // Nadie más puede acceder mientras escribimos
+            );
+
+            using var writer = new StreamWriter(stream);
+            writer.Write(content);
+        }
+
+        private bool IsFileLocked(IOException exception)
+        {
+            // Código de error para archivo bloqueado en Windows
+            const int ERROR_SHARING_VIOLATION = unchecked((int)0x80070020);
+            const int ERROR_LOCK_VIOLATION = unchecked((int)0x80070021);
+
+            return exception.HResult == ERROR_SHARING_VIOLATION ||
+                   exception.HResult == ERROR_LOCK_VIOLATION;
+        }
+    }
+
+    /// <summary>
+    /// Monitor de cambios en archivos
+    /// </summary>
+    public class FileWatcher : IDisposable
+    {
+        private readonly FileSystemWatcher _watcher;
+        private readonly string _filePath;
+
+        public event Action<FileChangeType> OnFileChanged;
+
+        public FileWatcher(string filePath)
+        {
+            _filePath = filePath;
+            var directory = Path.GetDirectoryName(filePath);
+            var fileName = Path.GetFileName(filePath);
+
+            _watcher = new FileSystemWatcher(directory)
+            {
+                Filter = fileName,
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
+            };
+
+            _watcher.Changed += (s, e) => OnFileChanged?.Invoke(FileChangeType.Modified);
+            _watcher.Created += (s, e) => OnFileChanged?.Invoke(FileChangeType.Created);
+            _watcher.Deleted += (s, e) => OnFileChanged?.Invoke(FileChangeType.Deleted);
+
+            _watcher.EnableRaisingEvents = true;
+        }
+
+        public void Dispose()
+        {
+            _watcher?.Dispose();
+        }
+    }
+
+    public enum FileChangeType
+    {
+        Created,
+        Modified,
+        Deleted
+    }
+}
+
+// Uso
+var writer = new SafeFileWriter("datos.txt");
+
+// Escritura segura con reintentos
+writer.WriteWithRetry("Contenido nuevo");
+
+// Escritura atómica (garantiza que no hay datos corruptos)
+writer.WriteAtomic("Contenido crítico");
+
+// Monitorear cambios
+using var watcher = new FileWatcher("datos.txt");
+watcher.OnFileChanged += (changeType) =>
+{
+    Console.WriteLine($"Archivo {changeType}: Recargando datos...");
+    // Recargar datos del archivo
+};
+```
+
+---
+
+## 🗜️ Compresión de Archivos
+
+### Reducir tamaño de archivos con compresión
+
+```csharp
+using System;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
+
+namespace UniversidadApp.IO
+{
+    /// <summary>
+    /// Utilidades de compresión y descompresión
+    /// </summary>
+    public static class FileCompression
+    {
+        /// <summary>
+        /// Comprimir archivo usando GZIP
+        /// </summary>
+        public static void CompressGzip(string sourcePath, string compressedPath)
+        {
+            using var originalStream = File.OpenRead(sourcePath);
+            using var compressedStream = File.Create(compressedPath);
+            using var gzipStream = new GZipStream(compressedStream, CompressionMode.Compress);
+
+            originalStream.CopyTo(gzipStream);
+
+            var originalSize = originalStream.Length;
+            var compressedSize = compressedStream.Length;
+            var ratio = (1 - (double)compressedSize / originalSize) * 100;
+
+            Console.WriteLine($"Original: {originalSize:N0} bytes");
+            Console.WriteLine($"Comprimido: {compressedSize:N0} bytes");
+            Console.WriteLine($"Ratio de compresión: {ratio:F1}%");
+        }
+
+        /// <summary>
+        /// Descomprimir archivo GZIP
+        /// </summary>
+        public static void DecompressGzip(string compressedPath, string decompressedPath)
+        {
+            using var compressedStream = File.OpenRead(compressedPath);
+            using var gzipStream = new GZipStream(compressedStream, CompressionMode.Decompress);
+            using var decompressedStream = File.Create(decompressedPath);
+
+            gzipStream.CopyTo(decompressedStream);
+        }
+
+        /// <summary>
+        /// Comprimir string en memoria
+        /// </summary>
+        public static byte[] CompressString(string text)
+        {
+            var bytes = Encoding.UTF8.GetBytes(text);
+
+            using var outputStream = new MemoryStream();
+            using (var gzipStream = new GZipStream(outputStream, CompressionMode.Compress))
+            {
+                gzipStream.Write(bytes, 0, bytes.Length);
+            }
+
+            return outputStream.ToArray();
+        }
+
+        /// <summary>
+        /// Descomprimir string desde memoria
+        /// </summary>
+        public static string DecompressString(byte[] compressedBytes)
+        {
+            using var inputStream = new MemoryStream(compressedBytes);
+            using var gzipStream = new GZipStream(inputStream, CompressionMode.Decompress);
+            using var outputStream = new MemoryStream();
+
+            gzipStream.CopyTo(outputStream);
+            return Encoding.UTF8.GetString(outputStream.ToArray());
+        }
+
+        /// <summary>
+        /// Crear archivo ZIP con múltiples archivos
+        /// </summary>
+        public static void CreateZip(string zipPath, params string[] filesToInclude)
+        {
+            if (File.Exists(zipPath))
+                File.Delete(zipPath);
+
+            using var archive = ZipFile.Open(zipPath, ZipArchiveMode.Create);
+
+            foreach (var filePath in filesToInclude)
+            {
+                if (!File.Exists(filePath))
+                    continue;
+
+                var entryName = Path.GetFileName(filePath);
+                archive.CreateEntryFromFile(filePath, entryName);
+            }
+
+            Console.WriteLine($"ZIP creado: {zipPath}");
+        }
+
+        /// <summary>
+        /// Extraer archivo ZIP
+        /// </summary>
+        public static void ExtractZip(string zipPath, string destinationFolder)
+        {
+            if (!Directory.Exists(destinationFolder))
+                Directory.CreateDirectory(destinationFolder);
+
+            ZipFile.ExtractToDirectory(zipPath, destinationFolder);
+
+            Console.WriteLine($"ZIP extraído en: {destinationFolder}");
+        }
+
+        /// <summary>
+        /// Comprimir CSV a JSON comprimido
+        /// </summary>
+        public static void CompressRepositoryData(string csvPath, string jsonCompressedPath)
+        {
+            // 1. Leer CSV
+            var lines = File.ReadAllLines(csvPath);
+
+            // 2. Convertir a JSON
+            var json = string.Join(",", lines);
+            var jsonArray = $"[{json}]";
+
+            // 3. Comprimir JSON
+            var compressedJson = CompressString(jsonArray);
+
+            // 4. Guardar comprimido
+            File.WriteAllBytes(jsonCompressedPath, compressedJson);
+
+            Console.WriteLine($"CSV: {new FileInfo(csvPath).Length:N0} bytes");
+            Console.WriteLine($"JSON comprimido: {compressedJson.Length:N0} bytes");
+        }
+    }
+}
+
+// Uso
+// Comprimir un solo archivo
+FileCompression.CompressGzip("estudiantes.json", "estudiantes.json.gz");
+
+// Descomprimir
+FileCompression.DecompressGzip("estudiantes.json.gz", "estudiantes_restored.json");
+
+// Crear ZIP con múltiples archivos
+FileCompression.CreateZip(
+    "backup.zip",
+    "estudiantes.csv",
+    "estudiantes.json",
+    "config.ini"
+);
+
+// Extraer ZIP
+FileCompression.ExtractZip("backup.zip", "backup_extraido");
+
+// Comprimir string en memoria
+var original = "Datos muy largos que se repiten muchas veces...";
+var compressed = FileCompression.CompressString(original);
+var decompressed = FileCompression.DecompressString(compressed);
+
+Console.WriteLine($"Original: {original.Length} bytes");
+Console.WriteLine($"Comprimido: {compressed.Length} bytes");
+Console.WriteLine($"Igual: {original == decompressed}");
+```
+
+---
+
+## Comparación Final: Cuándo Usar Cada Formato
+
+| Aspecto | CSV | JSON | XML | INI | ZIP/GZIP |
+|---------|-----|------|-----|-----|----------|
+| **Legibilidad** | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐ |
+| **Tamaño** | ⭐⭐⭐ | ⭐⭐ | ⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Parsing** | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐ |
+| **Soporte tipos** | ⭐ | ⭐⭐⭐ | ⭐⭐⭐ | ⭐ | ⭐⭐⭐ |
+| **Metadatos** | ⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐⭐ |
+| **Configuración** | ⭐⭐ | ⭐ | ⭐ | ⭐⭐⭐ | ⭐ |
+| **Intercambio web** | ⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐ | ⭐⭐ |
+| **Compresión** | ⭐ | ⭐ | ⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
+
+### Casos de uso recomendados
+
+| Formato | Mejor para... |
+|---------|--------------|
+| **CSV** | Exportar datos tabulares, Excel, importación masiva |
+| **JSON** | APIs web, configuración moderna, intercambio de datos |
+| **XML** | APIs SOAP, documentos con metadatos, legacy systems |
+| **INI** | Configuración de aplicación simple, settings locales |
+| **ZIP** | Backup, distribución de múltiples archivos, archivado |
+
+---
