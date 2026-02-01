@@ -136,11 +136,24 @@ Animal.Hablar() vs Perro.Hablar()
 ```
 
 ---
-### Representación ASCII:
-
-
 ---
-### Mismo nombre, diferentes parámetros
+
+### Sobrecarga de Métodos: Mismo Nombre, Diferentes Parámetros
+
+**Reglas para Sobrecargar Métodos:**
+
+1. **El nombre debe ser idéntico**
+2. **La firma debe ser diferente:**
+   - Cantidad de parámetros diferente
+   - Tipos de parámetros diferente
+   - Orden de parámetros diferente
+
+**❌ No es sobrecarga válida:**
+```csharp
+// ERROR: Misma firma, solo cambia retorno
+public int Procesar(int x) { }
+public double Procesar(int x) { }  // ❌ Error de compilación
+```
 
 
 ```csharp

@@ -167,9 +167,7 @@ En parejas:
 
 **¡Nos vemos!**
 
-
 ---
-
 
 ## 📚 CRUD Completo con ADO.NET y SQL Server
 

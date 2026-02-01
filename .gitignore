@@ -51,3 +51,6 @@ venv/
 
 # Git backups
 .git.backup/
+
+# Carpeta temporal para previsualización de slides
+.temp-preview/

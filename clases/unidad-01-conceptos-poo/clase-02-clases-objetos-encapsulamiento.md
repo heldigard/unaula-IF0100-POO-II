@@ -197,42 +197,57 @@ g1.Diametro = 5.5;
 
 ---
 
-### Visualización Gráfica
+### Visualización Gráfica: Clase vs Objeto
 
-<div style="display: flex; gap: 30px; align-items: center;">
+<div style="display: flex; gap: 30px; align-items: flex-start;">
 
 <div style="flex: 1;">
 
-![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 100%; max-height: 350px;"}
+**🖼️ Diagrama Conceptual:**
+
+![Clase vs Objeto](../../assets/infografias/clase-02-clase-vs-objeto.png){: style="max-width: 100%; max-height: 280px;"}
+
+**📌 ¿Qué representa esta imagen?**
+El diagrama muestra la relación entre:
+- **La CLASE** como plantilla/blueprint (definición abstracta)
+- **Los OBJETOS** como instancias concretas creadas a partir de esa clase
+- Cada objeto tiene sus propios valores pero comparten la misma estructura
 
 </div>
 
 <div style="flex: 1;">
 
-**🎯 Clave del Concepto:**
+**🎯 Comparativa Detallada:**
 
 | Aspecto | Clase (Molde) | Objeto (Galleta) |
-|---------|---------------|-----------------|
-| **Naturaleza** | Abstracta | Concreta |
-| **Memoria** | No ocupa memoria | Ocupa heap |
-| **Cantidad** | Una sola definición | Muchas instancias |
-| **Valores** | Define estructura | Tiene datos reales |
-| **Uso** | `class Galleta` | `new Galleta()` |
+|---------|---------------|------------------|
+| **Naturaleza** | Abstracta - Es una idea | Concreta - Es real |
+| **Memoria** | No ocupa espacio | Ocupa memoria en heap |
+| **Cantidad** | Una definición única | Múltiples instancias |
+| **Valores** | Define qué datos tendrá | Tiene valores específicos |
+| **Declaración** | `class Galleta {...}` | `new Galleta()` |
 
-**💡 Analogía extendida:**
-- **Clase** = Receta de galletas (instrucciones)
-- **Objeto** = Cada galleta horneada (producto real)
-- **Atributos** = Sabor, tamaño, decoración (varían por galleta)
-- **Métodos** = Hornear(), decorar() (comportamiento)
+**💡 Analogía Extendida:**
 
-**🔑 En programación:**
+| Concepto | En la Cocina | En C# |
+|----------|--------------|-------|
+| **Clase** | Receta de galletas | `class Galleta` |
+| **Objeto** | Galleta horneada #1 | `g1 = new Galleta()` |
+| **Atributo** | Sabor: Chocolate | `g1.Sabor = "Chocolate"` |
+| **Método** | Hornear(), Decorar() | `g1.Hornear()` |
+
+**🔑 Ejemplo en C#:**
 ```csharp
-// Clase (plantilla)
-class Galleta { string Sabor; }
+// Una sola CLASE (plantilla)
+class Galleta { 
+    public string Sabor; 
+    public double Diametro;
+}
 
-// Objetos (instancias)
-Galleta g1 = new Galleta { Sabor = "Chocolate" };
-Galleta g2 = new Galleta { Sabor = "Vainilla" };
+// Múltiples OBJETOS (instancias)
+Galleta g1 = new Galleta { Sabor = "Chocolate", Diametro = 5.5 };
+Galleta g2 = new Galleta { Sabor = "Vainilla", Diametro = 6.0 };
+Galleta g3 = new Galleta { Sabor = "Fresa", Diametro = 5.0 };
 ```
 
 </div>
@@ -423,53 +438,114 @@ STACK (variables)              HEAP (objetos)
 
 ## 3. Encapsulamiento
 
-<div style="display: flex; gap: 30px; align-items: center;">
+<div style="display: flex; gap: 30px; align-items: flex-start;">
 
 <div style="flex: 1;">
 
-![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png){: style="max-width: 100%; max-height: 400px;"}
+**🖼️ Representación Visual del Encapsulamiento:**
+
+![Encapsulamiento](../../assets/infografias/clase-02-encapsulamiento.png){: style="max-width: 100%; max-height: 320px;"}
+
+**📌 ¿Qué muestra esta imagen?**
+La cápsula representa cómo los datos sensibles (campos privados) están protegidos dentro del objeto, mientras que el acceso controlado se realiza a través de una interfaz pública (propiedades y métodos).
 
 </div>
 
 <div style="flex: 1;">
 
-**🔒 El Encapsulamiento en 3 niveles:**
+**🔒 El Encapsulamiento como Cápsula Protectora:**
 
 ```
-┌────────────────────────────────┐
-│     PÚBLICO (Accesible)        │
-│  ┌──────────────────────────┐  │
-│  │  Propiedades (get/set)   │  │ ← Interface expuesta
-│  │  Métodos públicos        │  │
-│  └──────────────────────────┘  │
-│  ─────────────────────────────  │
-│     PRIVADO (Oculto)           │
-│  ┌──────────────────────────┐  │
-│  │  Campos privados         │  │ ← Implementación oculta
-│  │  Lógica de validación     │  │
-│  │  Estado interno          │  │
-│  └──────────────────────────┘  │
-└────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│  INTERFAZ PÚBLICA (Lo que se expone)    │
+│  ┌─────────────────────────────────┐    │
+│  │  ✅ Propiedades (get/set)       │    │
+│  │  ✅ Métodos públicos            │    │
+│  │  ✅ Contrato de uso             │    │
+│  └─────────────────────────────────┘    │
+│  ═════════════════════════════════════  │
+│  IMPLEMENTACIÓN PRIVADA (Protegido)     │
+│  ┌─────────────────────────────────┐    │
+│  │  🔒 Campos privados (_saldo)    │    │
+│  │  🔒 Lógica de validación        │    │
+│  │  🔒 Estado interno              │    │
+│  └─────────────────────────────────┘    │
+└─────────────────────────────────────────┘
 ```
 
-**💡 ¿Por qué encapsular?**
+**💡 Beneficios del Encapsulamiento:**
 
-| Beneficio | Explicación |
-|-----------|-------------|
-| **Protección** | Los datos no pueden modificarse directamente |
-| **Validación** | Control sobre qué valores son aceptables |
-| **Flexibilidad** | Cambiar implementación sin afectar código externo |
-| **Mantenimiento** | Menor riesgo de bugs por estado inválido |
+| Beneficio | Descripción | Ejemplo |
+|-----------|-------------|---------|
+| **Protección** | Datos no modificables directamente | `_saldo` es privado |
+| **Validación** | Control de valores aceptables | Rechazar montos negativos |
+| **Flexibilidad** | Cambiar implementación interna | Cambiar tipo de dato |
+| **Abstracción** | Usuario no necesita saber cómo funciona internamente | Solo usa `Depositar()` |
 
-**❌ Sin encapsulamiento:**
+</div>
+
+</div>
+
+---
+
+### Comparación: Sin vs Con Encapsulamiento
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**❌ Sin Encapsulamiento (Código Fragil):**
+
 ```csharp
-cuenta.saldo = -1000;  // ¡Saldo negativo válido!
+public class CuentaBancaria
+{
+    public double saldo;  // Campo público - ¡Peligroso!
+}
+
+// Uso:
+var cuenta = new CuentaBancaria();
+cuenta.saldo = -1000;        // ❌ ¡Válido! Saldo negativo
+cuenta.saldo = 999999999;    // ❌ Sin validación
+cuenta.saldo = 0;            // ❌ Cualquiera puede modificar
 ```
 
-**✅ Con encapsulamiento:**
+**Problemas:**
+- ❌ Datos inconsistentes
+- ❌ Sin validación de negocio
+- ❌ Imposible mantener invariantes
+- ❌ Código propenso a bugs
+
+</div>
+
+<div style="flex: 1;">
+
+**✅ Con Encapsulamiento (Código Robusto):**
+
 ```csharp
-cuenta.Depositar(-1000);  // Rechazado por validación
+public class CuentaBancaria
+{
+    private double _saldo;  // Campo privado - Protegido
+    
+    public double Saldo => _saldo;  // Solo lectura pública
+    
+    public void Depositar(double monto)
+    {
+        if (monto <= 0)           // ✅ Validación
+            throw new ArgumentException("Monto debe ser positivo");
+        _saldo += monto;          // ✅ Modificación controlada
+    }
+}
+
+// Uso:
+cuenta.Depositar(-1000);  // ❌ Excepción: monto inválido
+cuenta.Depositar(500);    // ✅ Válido
 ```
+
+**Ventajas:**
+- ✅ Datos siempre válidos
+- ✅ Validaciones garantizadas
+- ✅ Invariantes protegidas
+- ✅ Código mantenible
 
 </div>
 
@@ -481,23 +557,60 @@ cuenta.Depositar(-1000);  // Rechazado por validación
 
 ---
 
-## Encapsulamiento: Solución
+## Encapsulamiento: Modificadores de Acceso
 
-### Modificadores de acceso
+### Controlando la Visibilidad en C#
+
+Los modificadores de acceso determinan **quién puede ver y usar** los miembros de una clase. Son la herramienta fundamental para implementar el encapsulamiento.
 
 ```csharp
-┌─────────────────────────────────────────────────────────────┐
-│              MODIFICADORES DE ACCESO EN C#                  │
-├───────────────┬─────────────────────────────────────────────┤
-│ Modificador   │ Alcance                                     │
-├───────────────┼─────────────────────────────────────────────┤
-│ public        │ Accesible desde cualquier lugar             │
-│ private       │ Solo dentro de la misma clase               │
-│ protected     │ Dentro de la clase y sus hijas (herencia)   │
-│ internal      │ Dentro del mismo ensamblado/proyecto        │
-│ protected     │ Combinación: proyecto + herencia            │
-│ internal      │                                             │
-└───────────────┴─────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    MODIFICADORES DE ACCESO EN C#                        │
+├───────────────┬───────────────────────────────┬─────────────────────────┤
+│ Modificador   │ ¿Quién puede acceder?         │ Uso típico             │
+├───────────────┼───────────────────────────────┼─────────────────────────┤
+│ public        │ Cualquier código              │ API pública, métodos    │
+│               │ (desde cualquier lugar)       │ que otros usarán        │
+├───────────────┼───────────────────────────────┼─────────────────────────┤
+│ private       │ Solo la misma clase           │ Campos internos,        │
+│               │ (por defecto en campos)       │ implementación oculta   │
+├───────────────┼───────────────────────────────┼─────────────────────────┤
+│ protected     │ Clase + Clases hijas          │ Para herencia, permite  │
+│               │ (herencia)                    │ acceso en subclases     │
+├───────────────┼───────────────────────────────┼─────────────────────────┤
+│ internal      │ Mismo proyecto/ensamblado     │ Clases internas de      │
+│               │ (por defecto en clases)       │ una biblioteca          │
+├───────────────┼───────────────────────────────┼─────────────────────────┤
+│ protected     │ Mismo proyecto O clases hijas │ Casos especiales de     │
+│ internal      │ (combinación)                 │ herencia en mismo proyecto│
+└───────────────┴───────────────────────────────┴─────────────────────────┘
+```
+
+---
+
+### Visualización de Alcance
+
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│                         PROYECTO/ENSAMBLADO                          │
+│  ┌──────────────────────────────────────────────────────────────┐    │
+│  │                    CLASE BASE (Persona)                      │    │
+│  │  ┌──────────────────────────────────────────────────────┐   │    │
+│  │  │  private string _nombre;     ← Solo esta clase       │   │    │
+│  │  │  protected int _edad;        ← + clases hijas        │   │    │
+│  │  │  internal string _codigo;    ← + mismo proyecto      │   │    │
+│  │  │  public string Nombre {      ← + todo el mundo       │   │    │
+│  │  │      get { return _nombre; }                         │   │    │
+│  │  │  }                                                   │   │    │
+│  │  └──────────────────────────────────────────────────────┘   │    │
+│  └──────────────────────────────────────────────────────────────┘    │
+│                              ↓ HERENCIA                              │
+│  ┌──────────────────────────────────────────────────────────────┐    │
+│  │                 CLASE HIJA (Estudiante)                      │    │
+│  │  ✅ Puede usar: _edad, Nombre                                │    │
+│  │  ❌ NO puede usar: _nombre (es privado)                      │    │
+│  └──────────────────────────────────────────────────────────────┘    │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -538,27 +651,110 @@ public class CuentaBancaria
 
 ## 4. Propiedades en C#
 
-### Sintaxis moderna de C#
+### Sintaxis Moderna vs Tradicional
+
+Las propiedades en C# son una característica poderosa que simplifica el encapsulamiento. Son **métodos que se usan como campos**.
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**❌ FORMA TRADICIONAL (Java, C++):**
 
 ```csharp
-// FORMA TRADICIONAL (Java, C++ antiguo)
-private string nombre;
-public string GetNombre() { return nombre; }
-public void SetNombre(string value) { nombre = value; }
-
-// FORMA MODERNA C# - PROPIEDADES
-public string Nombre 
-{ 
-    get { return nombre; }
-    set { nombre = value; }
+public class Persona
+{
+    // Campo privado
+    private string nombre;
+    
+    // Getter explícito
+    public string GetNombre() 
+    { 
+        return nombre; 
+    }
+    
+    // Setter explícito
+    public void SetNombre(string value) 
+    { 
+        nombre = value; 
+    }
 }
 
-// USO (más limpio)
-estudiante.Nombre = "María";     // set
-Console.WriteLine(estudiante.Nombre);  // get
+// USO (verboso):
+Persona p = new Persona();
+p.SetNombre("María");                    // Llamada a método
+Console.WriteLine(p.GetNombre());        // Llamada a método
 ```
 
-**Las propiedades parecen campos, pero son métodos disfrazados**
+**Problemas:**
+- ❌ Sintaxis verbosa
+- ❌ Rompe fluidez del código
+- ❌ Paréntesis everywhere
+
+</div>
+
+<div style="flex: 1;">
+
+**✅ FORMA MODERNA C# (Propiedades):**
+
+```csharp
+public class Persona
+{
+    private string nombre;  // Backing field
+    
+    // Propiedad
+    public string Nombre 
+    { 
+        get { return nombre; }      // Accesor
+        set { nombre = value; }     // Mutador
+    }
+}
+
+// USO (natural, como un campo):
+Persona p = new Persona();
+p.Nombre = "María";                      // Asignación directa
+Console.WriteLine(p.Nombre);             // Acceso directo
+```
+
+**Ventajas:**
+- ✅ Sintaxis limpia y natural
+- ✅ Mantiene encapsulamiento
+- ✅ Parece campo, pero es método
+- ✅ Permite lógica en get/set
+
+</div>
+
+</div>
+
+---
+
+### ¿Cómo Funcionan las Propiedades?
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                  ANATOMÍA DE UNA PROPIEDAD                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   backing field          propiedad (fachada)        uso         │
+│   ┌──────────────┐      ┌─────────────────┐      ┌─────────┐   │
+│   │ private      │      │ public string   │      │ obj.Nom │   │
+│   │ string       │←────→│ Nombre          │←────→│ = "Ana" │   │
+│   │ _nombre;     │      │ {               │      │         │   │
+│   └──────────────┘      │   get {         │      │ Console │   │
+│          ↑              │     return      │      │ .Write  │   │
+│          │              │     _nombre;    │      │ (obj    │   │
+│    Almacena el          │   }             │      │ .Nom);  │   │
+│    valor real           │   set {         │      └─────────┘   │
+│                         │     _nombre =   │                    │
+│                         │     value;      │    value: palabra  │
+│                         │   }             │    clave especial  │
+│                         │ }               │    que representa  │
+│                         └─────────────────┘    el valor        │
+│                                                  asignado      │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**💡 Concepto clave:** Las propiedades son **sintactic sugar** que simplifica el encapsulamiento sin sacrificar control.
 
 ---
 ### Diferentes configuraciones

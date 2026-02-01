@@ -103,7 +103,9 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ## Historia de C#
 
-### Evolución del lenguaje
+### Evolución del Lenguaje (2000-2024)
+
+C# ha evolucionado constantemente durante 24 años, manteniéndose moderno y competitivo.
 
 ```
 2000        2005        2010        2015        2020        2024
@@ -122,43 +124,62 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
-## Creadores de C#
+### Hitos Importantes en la Evolución de C#
 
-### Anders Hejlsberg - El arquitecto principal
-
-<div style="display: flex; gap: 20px;">
+<div style="display: flex; gap: 30px;">
 
 <div style="flex: 1;">
 
-**👤 Perfil Profesional**
+**📅 Era Inicial (2000-2005)**
 
-- **Nacionalidad:** Danesa 🇩🇰
-- **Posición:** Chief Architect at Microsoft
-- **Años activo:** 1996 - presente
+| Versión | Año | Característica Clave |
+|---------|-----|---------------------|
+| **C# 1.0** | 2000 | Lanzamiento con .NET Framework |
+| **C# 2.0** | 2005 | Generics (`List<T>`), nullable types |
 
-**🏆 Contribuciones Tecnológicas:**
+**💡 Impacto de Generics:**
+Antes: `ArrayList` (no type-safe) → Después: `List<int>` (type-safe)
 
-| Año | Tecnología | Impacto |
-|-----|------------|---------|
-| 1995 | Delphi | Revolucionó el desarrollo Windows |
-| 2000 | C# | Lenguaje flagship de Microsoft |
-| 2002 | .NET | Plataforma de desarrollo unificada |
-| 2012 | TypeScript | JavaScript con tipos estáticos |
+```csharp
+// Antes (C# 1.0) - Problemas de tipo
+ArrayList lista = new ArrayList();
+lista.Add(42);           // ⚠️ boxing
+int valor = (int)lista[0]; // ⚠️ unboxing, posible error
+
+// Después (C# 2.0+) - Type-safe
+List<int> numeros = new List<int>();
+numeros.Add(42);         // ✅ Sin boxing
+int valor = numeros[0];  // ✅ Sin casting
+```
 
 </div>
 
 <div style="flex: 1;">
 
-**💡 Filosofía de Diseño:**
+**📅 Era Moderna (2010-2024)**
 
-> *"C# es el lenguaje que siempre quise tener para desarrollo empresarial. Combina la potencia de C++ con la productividad de Visual Basic."*
+| Versión | Año | Característica Clave |
+|---------|-----|---------------------|
+| **C# 5** | 2012 | `async/await` - Programación asíncrona simplificada |
+| **C# 6** | 2015 | .NET Core - Open source y multiplataforma |
+| **C# 9** | 2020 | Records, init-only properties |
+| **C# 12** | 2024 | Primary constructors, collection expressions |
 
-**🎯 Principios aplicados:**
-- ✅ Productividad del desarrollador
-- ✅ Seguridad de tipos en tiempo de compilación
-- ✅ Orientación a objetos pura
-- ✅ Evolución continua con retrocompatibilidad
-- ✅ Código limpio y expresivo
+**💡 Impacto de async/await:**
+```csharp
+// Antes - Código complejo con callbacks
+public void DescargarDatos() {
+    webClient.DownloadCompleted += (s, e) => {
+        Procesar(e.Result);
+    };
+}
+
+// Después - Código lineal y legible
+public async Task DescargarDatos() {
+    var datos = await httpClient.GetAsync(url);
+    Procesar(datos);
+}
+```
 
 </div>
 
@@ -166,24 +187,124 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ---
 
-### Influencia en la Industria
+## Creadores de C#
+
+### Anders Hejlsberg - El Arquitecto Principal de C#
+
+<div style="display: flex; gap: 20px;">
+
+<div style="flex: 1;">
+
+**👤 Perfil Profesional**
+
+| Atributo | Información |
+|----------|-------------|
+| **Nacionalidad** | Danesa 🇩🇰 |
+| **Posición actual** | Chief Architect at Microsoft |
+| **Años en Microsoft** | 1996 - presente |
+| **Especialidad** | Diseño de lenguajes de programación |
+
+**🏆 Trayectoria de Innovación:**
+
+| Año | Tecnología | Impacto en la Industria |
+|-----|------------|------------------------|
+| **1995** | Delphi (Borland) | Revolucionó el desarrollo Windows GUI |
+| **2000** | C# | Lenguaje flagship de Microsoft, competidor directo de Java |
+| **2002** | .NET Framework | Plataforma de desarrollo unificada enterprise |
+| **2012** | TypeScript | JavaScript con tipos estáticos, adoptado por Google/Angular |
+
+</div>
+
+<div style="flex: 1;">
+
+**💡 Filosofía de Diseño de Hejlsberg:**
+
+> *"C# es el lenguaje que siempre quise tener para desarrollo empresarial. Combina la potencia de C++ con la productividad de Visual Basic, y añade seguridad de tipos desde el compilador."*
+
+**🎯 Principios que Guiaron el Diseño de C#:**
+
+| Principio | Descripción | Ejemplo en C# |
+|-----------|-------------|---------------|
+| **Productividad** | Menos código, más resultado | `var`, `=>`, propiedades auto-implementadas |
+| **Type Safety** | Errores detectados en compilación | Generics, nullable reference types |
+| **POO Pura** | Todo es un objeto (casi) | `System.Object` como raíz, LINQ |
+| **Evolución** | Nuevas features sin romper código | 24 años de retrocompatibilidad |
+| **Expresividad** | Código que se lee como inglés | LINQ, pattern matching |
+
+**🌟 Reconocimiento:** Considerado uno de los 10 diseñadores de lenguajes más influyentes de la historia.
+
+</div>
+
+</div>
+
+---
+
+### Influencia de C# en la Industria del Software
+
+**📊 El Panorama Antes y Después de C#**
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**Antes de C# (Finales de los 90s):**
+
+| Lenguaje | Fortaleza | Debilidad |
+|----------|-----------|-----------|
+| **Java** | Multiplataforma | Limitado por JVM, no valor/reference types |
+| **C++** | Rendimiento | Complejidad, pointers, memory leaks |
+| **VB6** | Fácil de aprender | No orientado a objetos real |
+| **PHP** | Web dinámica | Solo web, inconsistente |
+
+**Problema:** Ningún lenguaje combinaba productividad + potencia + type-safety.
+
+</div>
+
+<div style="flex: 1;">
+
+**Después de C# (2000+):**
+
+| Característica | C# vs Competencia |
+|----------------|-------------------|
+| **Sintaxis** | Similar a Java/C++ (fácil migración) |
+| **Type-Safe** | Generics desde 2005 (Java los tuvo después) |
+| **Productivo** | LINQ, async/await, propiedades |
+| **Multiplataforma** | .NET Core (2016) → .NET 8 (multiplataforma real) |
+
+**🎯 Resultado:**
+- Microsoft recuperó terreno en empresas
+- Grandes corporaciones adoptaron .NET para sistemas críticos
+- Stack Overflow, Unity, Azure se construyeron con C#
+
+</div>
+
+</div>
+
+---
+
+### Evidencia del Impacto de C#
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  ANTES DE C# (finales 90s)          DESPUÉS DE C# (2000+)   │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Java: Líder pero limitado          C#: Competencia real    │
-│  C++: Poderoso pero complejo        Sintaxis familiar       │
-│  VB: Fácil pero poco robusto        Type-safe + Productivo  │
-│  PHP: Solo web                      Multiplataforma real    │
-│                                                             │
-│  ────────────────────────────────────────────────────────  │
-│                                                             │
-│  🎯 Resultado: Microsoft recupera terreno en empresas       │
-│     Grandes corporaciones adoptan .NET para sistemas críticos│
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    IMPACTO DE C# EN EL MERCADO                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  📈 Estadísticas de Adopción (2024):                                   │
+│                                                                         │
+│     • 7+ millones de desarrolladores .NET activos                      │
+│     • #4 en índice TIOBE (lenguajes más populares)                     │
+│     • 90%+ de PCs Windows ejecutan código .NET                         │
+│     • Azure: 1,000+ millones de transacciones/día en .NET              │
+│                                                                         │
+│  🏢 Empresas que Confían en C#:                                        │
+│                                                                         │
+│     Microsoft  → Todo Azure, Office 365, Visual Studio                 │
+│     Stack Overflow → Sitio completo en ASP.NET Core                    │
+│     Unity      → Motor de juegos #1 mundial (2.5M+ juegos)             │
+│     Siemens    → Sistemas industriales críticos                        │
+│     Alaska Airlines → Sistema de reservas mission-critical             │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -241,11 +362,16 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 ### Visualización del Ecosistema
 
-<div style="display: flex; gap: 30px; align-items: center;">
+<div style="display: flex; gap: 30px; align-items: flex-start;">
 
 <div style="flex: 1;">
 
-![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 100%; max-height: 350px;"}
+**🖼️ Diagrama del Ecosistema .NET**
+
+![Ecosistema .NET](../../assets/infografias/clase-01-ecosistema-dotnet.png){: style="max-width: 100%; max-height: 300px;"}
+
+**¿Qué muestra esta imagen?**
+El diagrama ilustra cómo .NET 8 unifica múltiples plataformas y tipos de aplicaciones bajo un solo runtime, permitiendo compartir código entre proyectos web, móvil, desktop y cloud.
 
 </div>
 
@@ -253,30 +379,49 @@ Al finalizar esta clase, el estudiante será capaz de:
 
 **🎯 Puntos Clave del Ecosistema:**
 
-**✅ Unificación de Plataformas**
-- .NET 8 unifica Framework, Core y Xamarin
-- Un solo runtime para todas las aplicaciones
-- Comparte código entre web, móvil, desktop
-
-**✅ Multiplataforma Real**
-- Windows, Linux, macOS nativo
-- iOS y Android via MAUI
-- Contenedores Docker optimizados
-
-**✅ Modelo de Ejecución**
-- Compilación JIT para rendimiento
-- IL (Intermediate Language) portable
-- AOT (Ahead-of-Time) opcional
+| Característica | Descripción |
+|----------------|-------------|
+| **Unificación** | Un solo runtime para todos los tipos de apps |
+| **Multiplataforma** | Windows, Linux, macOS, iOS, Android |
+| **Rendimiento** | Compilación JIT y AOT opcional |
+| **Productividad** | Una base de código, múltiples destinos |
 
 **📊 Casos de Uso por Área:**
-- **Web:** ASP.NET Core → APIs de alto rendimiento
-- **Desktop:** WPF/WinForms → Apps empresariales
-- **Cloud:** Azure SDK → Serverless y microservicios
-- **Gaming:** Unity → 2.5M+ juegos desarrollados
+
+| Área | Tecnología | Ejemplo de Uso |
+|------|------------|----------------|
+| **Web** | ASP.NET Core | APIs REST de alto rendimiento |
+| **Desktop** | WPF/WinForms | Apps empresariales internas |
+| **Móvil** | .NET MAUI | Apps iOS/Android nativas |
+| **Cloud** | Azure SDK | Microservicios serverless |
+| **Gaming** | Unity | 2.5M+ juegos desarrollados |
 
 </div>
 
 </div>
+
+---
+
+### ¿Por qué la Unificación es Importante?
+
+**Antes de .NET 5+ (múltiples plataformas separadas):**
+- .NET Framework → Solo Windows, monolítico
+- .NET Core → Web/API, modular pero limitado
+- Xamarin → Solo móvil, diferente API
+
+**Con .NET 8 (plataforma unificada):**
+```
+┌─────────────────────────────────────────┐
+│           .NET 8 (Unificado)            │
+│  ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐       │
+│  │ Web │ │App  │ │Móvil│ │Cloud│       │
+│  │     │ │Esc. │ │     │ │     │       │
+│  └─────┘ └─────┘ └─────┘ └─────┘       │
+│         ↓ UN SOLO CÓDIGO BASE           │
+│         ↓ UN SOLO RUNTIME               │
+│         ↓ UNA SOLA BCL                  │
+└─────────────────────────────────────────┘
+```
 
 ---
 
@@ -960,152 +1105,463 @@ double promedio = (n1 + n2 + n3) / 3.0;
 
 ---
 
-## 📝 Conceptos Clave de C#
+## 📝 Conceptos Clave de C#: Value vs Reference Types
 
-### Value Types vs Reference Types
+### Diferencias Fundamentales
 
+En C#, los tipos de datos se dividen en dos categorías que determinan cómo se almacenan y copian los valores en memoria.
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**📦 Value Types (Tipos por Valor)**
+
+**Características:**
+- Almacenados en el **STACK** (memoria rápida)
+- Contienen el **valor directamente**
+- Al asignar: se **copia el valor completo**
+- Tamaño fijo y conocido en compilación
+
+**Ejemplos de Value Types:**
 ```csharp
-// VALUE TYPE (almacenado en STACK)
+int edad = 25;          // Entero
+double precio = 19.99;  // Decimal
+bool activo = true;     // Booleano
+char letra = 'A';       // Carácter
+DateTime fecha;         // Fecha (struct)
+```
+
+**Comportamiento:**
+```csharp
 int edad = 25;
-// Copia el valor
-int edad2 = edad;  // edad2 = 25 (copia independiente)
-edad2 = 30;        // edad sigue siendo 25
+int edad2 = edad;   // COPIA el valor 25
+edad2 = 30;         // Solo edad2 cambia
 
-// REFERENCE TYPE (almacenado en HEAP)
+Console.WriteLine(edad);   // 25 ✅
+Console.WriteLine(edad2);  // 30 ✅
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**🔗 Reference Types (Tipos por Referencia)**
+
+**Características:**
+- Almacenados en el **HEAP** (memoria dinámica)
+- Contienen una **referencia** (dirección de memoria)
+- Al asignar: se **copia la referencia** (mismo objeto)
+- Manejados por Garbage Collector
+
+**Ejemplos de Reference Types:**
+```csharp
+string nombre = "Juan";     // Cadena
+object datos = new Object(); // Objeto base
+int[] numeros;               // Arrays
+List<string> lista;          // Colecciones
+class Persona { }            // Clases
+```
+
+**Comportamiento:**
+```csharp
+// Strings son inmutables (cada cambio crea nuevo objeto)
 string nombre = "Juan";
-// Copia la referencia (misma dirección de memoria)
-string nombre2 = nombre;  // Ambos apuntan al mismo objeto
-nombre2 = "Maria";        // nombre sigue siendo "Juan"
+string nombre2 = nombre;  // Misma referencia
+nombre2 = "Maria";        // ¡Nuevo objeto en heap!
+
+Console.WriteLine(nombre);   // "Juan" ✅
+Console.WriteLine(nombre2);  // "Maria" ✅
 ```
+
+</div>
+
+</div>
 
 ---
 
-### Nullable Types
+### Visualización en Memoria
 
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         MEMORIA STACK                                │
+│                         (Value Types)                                │
+├─────────────────────────────────────────────────────────────────────┤
+│  [edad]  │  25  │  ← Valor almacenado directamente                   │
+│  [edad2] │  25  │  ← Copia independiente del valor                   │
+│  [edad2] │  30  │  ← Modificación no afecta a 'edad'                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                          MEMORIA HEAP                                │
+│                       (Reference Types)                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌─────────────────┐        ┌─────────────────┐                     │
+│  │  OBJETO "Juan"  │        │  OBJETO "Maria" │                     │
+│  │  @0x7F3A...     │        │  @0x8B2C...     │                     │
+│  └────────┬────────┘        └─────────────────┘                     │
+│           │                                                          │
+│  ┌────────┴────────┐                                               │
+│  │  [nombre]       │  ← Referencia @0x7F3A...                        │
+│  │  [nombre2]      │  ← Primero @0x7F3A..., luego @0x8B2C...        │
+│  └─────────────────┘                                               │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**💡 Regla Mnemotécnica:**
+- **Value Types** = Fotocopia (cada uno tiene su copia independiente)
+- **Reference Types** = Dirección de casa (ambos apuntan al mismo lugar)
+
+---
+
+### Nullable Types (Tipos Anulables)
+
+**¿Por qué necesitamos Nullable Types?**
+
+Por defecto, los Value Types (`int`, `double`, `bool`, etc.) no pueden ser `null`. Esto crea problemas cuando trabajamos con:
+- Bases de datos (campos que pueden ser NULL)
+- Formularios (campos opcionales)
+- Configuraciones (valores no establecidos)
+
+**Sintaxis y Uso:**
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**Declaración:**
 ```csharp
-// Tipos que pueden ser null
-int? numero = null;           // int? es equivalente a Nullable<int>
-double? precio = null;        // Puede ser null o un double
-bool? activo = null;          // Puede ser null, true o false
+// Operador ? después del tipo
+int? numero = null;           // Nullable<int>
+double? precio = null;        // Nullable<double>
+bool? activo = null;          // Nullable<bool>
+DateTime? fecha = null;       // Nullable<DateTime>
 
-// Operador null-coalescing (??)
-int edad = numero ?? 18;      // Si numero es null, usa 18
+// Equivalente explícito:
+Nullable<int> edad = null;    // Mismo que int?
+```
 
-// Verificar si tiene valor
-if (numero.HasValue)
+**Propiedades útiles:**
+```csharp
+int? numero = 42;
+
+// HasValue: bool que indica si tiene valor
+if (numero.HasValue)          // true
 {
-    Console.WriteLine(numero.Value);
+    Console.WriteLine(numero.Value);  // 42
 }
+
+// Value: obtiene el valor (solo si HasValue es true)
+// Si es null, lanza InvalidOperationException
 ```
+
+</div>
+
+<div style="flex: 1;">
+
+**Operadores para null:**
+
+| Operador | Sintaxis | Descripción |
+|----------|----------|-------------|
+| **Null-coalescing** | `a ?? b` | Usa `b` si `a` es null |
+| **Null-coalescing assignment** | `a ??= b` | Asigna `b` solo si `a` es null |
+| **Null-conditional** | `a?.Prop` | Accede solo si `a` no es null |
+| **Null-forgiving** | `a!.Prop` | Dice al compilador "confía en mí" |
+
+```csharp
+// ?? - Operador coalescing
+int? numero = null;
+int edad = numero ?? 18;      // edad = 18 (usó default)
+
+// ??= - Asignación condicional
+string nombre = null;
+nombre ??= "Anónimo";         // nombre = "Anónimo"
+nombre ??= "Otro";            // No cambia, ya tiene valor
+
+// ?. - Acceso seguro
+string texto = null;
+int? longitud = texto?.Length; // null (no lanza excepción)
+```
+
+</div>
+
+</div>
 
 ---
 
-### Strings en C#
+### Manipulación de Strings en C#
+
+**¿Qué es un string en C#?**
+
+En C#, `string` es un tipo por referencia (Reference Type) que representa una secuencia inmutable de caracteres Unicode. **Inmutable** significa que cada modificación crea un nuevo objeto en memoria.
+
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**📝 Métodos de Creación:**
 
 ```csharp
-// Concatenación
+// 1. Concatenación tradicional
 string nombre = "Juan";
 string saludo = "Hola, " + nombre;  // "Hola, Juan"
 
-// Interpolación de cadenas (C# 6+)
+// 2. Interpolación de cadenas (C# 6+) ⭐ RECOMENDADO
 string saludo2 = $"Hola, {nombre}";  // "Hola, Juan"
+string edad = 25;
+string perfil = $"Nombre: {nombre}, Edad: {edad}";
 
-// Strings verbatim (mantienen formato)
-string ruta = @"C:\Users\Nombre\Archivos";
-
-// Strings multilínea (C# 11+)
-string texto = """
-    Esta es una línea
-    Esta es otra línea
-    """;
-
-// Métodos útiles
-string texto = "  Hola Mundo  ";
-texto = texto.Trim();           // "Hola Mundo"
-texto = texto.ToUpper();        // "HOLA MUNDO"
-bool contiene = texto.Contains("Mundo");  // true
-string[] partes = texto.Split(' ');      // ["Hola", "Mundo"]
+// 3. String.Format (antiguo, aún útil)
+string mensaje = string.Format("Hola {0}, tienes {1} años", nombre, edad);
 ```
+
+**🔤 Strings Especiales:**
+```csharp
+// Verbatim (@) - Ignora caracteres de escape
+string ruta = @"C:\Users\Nombre\Archivos";  // Sin necesidad de \
+string query = @"SELECT * FROM Users WHERE Name = 'Juan'";
+
+// Multilínea (C# 11+) - Preserva formato
+string emailTemplate = """
+    Estimado {nombre},
+    
+    Su pedido #{pedidoId} ha sido confirmado.
+    
+    Saludos,
+    El Equipo
+    """;
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**🛠️ Métodos Más Usados:**
+
+| Método | Descripción | Ejemplo |
+|--------|-------------|---------|
+| `Trim()` | Elimina espacios | `"  hola  "` → `"hola"` |
+| `ToUpper()` | Mayúsculas | `"hola"` → `"HOLA"` |
+| `ToLower()` | Minúsculas | `"HOLA"` → `"hola"` |
+| `Contains()` | Busca subcadena | `"hola".Contains("ol")` → `true` |
+| `StartsWith()` | Inicia con | `"hola".StartsWith("ho")` → `true` |
+| `Split()` | Divide en array | `"a,b,c".Split(',')` → `["a","b","c"]` |
+| `Replace()` | Reemplaza | `"hola".Replace("o","0")` → `"h0la"` |
+| `Substring()` | Extrae parte | `"hola".Substring(1,2)` → `"ol"` |
+| `IndexOf()` | Posición | `"hola".IndexOf("l")` → `2` |
+| `Length` | Longitud | `"hola".Length` → `4` |
+
+**⚠️ Importante: Inmutabilidad**
+```csharp
+string texto = "Hola";
+texto.ToUpper();  // ❌ No modifica 'texto'!
+texto = texto.ToUpper();  // ✅ Reasignación necesaria
+```
+
+</div>
+
+</div>
 
 ---
 
-## 🎯 Características Avanzadas de C# 12
+## 🎯 Características Avanzadas de C# 12 (.NET 8)
 
-### 1. Primary Constructors
+### 1. Primary Constructors (Constructores Primarios)
 
-Simplifica la declaración de constructores en clases y structs:
+**Problema que resuelve:** Reduce el código repetitivo (boilerplate) al declarar clases con propiedades inmutables.
 
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**Antes (C# 11) - Código Verboso:**
 ```csharp
-// Antes (C# 11)
 public class Persona
 {
-    private string _nombre;
-    private int _edad;
+    private readonly string _nombre;
+    private readonly int _edad;
     
     public Persona(string nombre, int edad)
     {
         _nombre = nombre;
         _edad = edad;
     }
-}
-
-// Ahora (C# 12) - Más conciso
-public class Persona(string nombre, int edad)
-{
+    
+    public string Nombre => _nombre;
+    public int Edad => _edad;
+    
     public void Saludar() => 
-        Console.WriteLine($"Hola, soy {nombre} y tengo {edad} años");
+        Console.WriteLine($"Hola, soy {_nombre}");
 }
 ```
 
+**Líneas de código:** 16  
+**Complejidad:** Media
+
+</div>
+
+<div style="flex: 1;">
+
+**Ahora (C# 12) - Código Conciso:**
+```csharp
+public class Persona(string nombre, int edad)
+{
+    // 'nombre' y 'edad' son accesibles en TODO el cuerpo de la clase
+    
+    public void Saludar() => 
+        Console.WriteLine($"Hola, soy {nombre}");
+        
+    public string Info => $"{nombre} ({edad} años)";
+}
+
+// Uso igual
+var persona = new Persona("Ana", 25);
+persona.Saludar();  // "Hola, soy Ana"
+```
+
+**Líneas de código:** 8  
+**Complejidad:** Baja  
+**Reducción:** 50% menos código
+
+</div>
+
+</div>
+
 ---
 
-### 2. Collection Expressions
+### 2. Collection Expressions (Expresiones de Colección)
 
-Nueva sintaxis unificada para crear colecciones:
+**Problema que resuelve:** Sintaxis inconsistente para crear diferentes tipos de colecciones. Ahora usamos `[...]` para todo.
 
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**❌ Antes (Múltiples sintaxis):**
 ```csharp
-// Arrays
+// Array - sintaxis específica
+int[] numeros = new int[] { 1, 2, 3 };
+
+// List - sintaxis diferente
+var lista = new List<int> { 1, 2, 3 };
+
+// Span - requería stackalloc
+Span<int> span = stackalloc int[] { 1, 2, 3 };
+
+// Diccionario - sintaxis verbosa
+var dict = new Dictionary<string, int>
+{
+    { "Ana", 25 },
+    { "Juan", 30 }
+};
+```
+
+</div>
+
+<div style="flex: 1;">
+
+**✅ Ahora (C# 12) - Sintaxis Unificada:**
+```csharp
+// Array
 int[] numeros = [1, 2, 3, 4, 5];
 
-// Listas
+// List
 List<string> nombres = ["Ana", "Juan", "María"];
 
-// Diccionarios
+// Span (alto rendimiento)
+Span<int> span = [1, 2, 3];
+
+// Diccionario
 Dictionary<string, int> edades = new()
 {
     ["Ana"] = 25,
     ["Juan"] = 30
 };
 
-// Span (para alto rendimiento)
-Span<int> span = [1, 2, 3];
+// Spread operator (combinar colecciones)
+int[] pares = [2, 4, 6];
+int[] impares = [1, 3, 5];
+int[] todos = [..pares, ..impares];  // [2,4,6,1,3,5]
 ```
+
+</div>
+
+</div>
+
+**🎯 Beneficio:** Menor curva de aprendizaje, código más limpio y consistente.
 
 ---
 
-### 3. Pattern Matching Avanzado
+### 3. Pattern Matching Avanzado (Coincidencia de Patrones)
 
-Lógica condicional más expresiva y legible:
+**¿Qué es el Pattern Matching?**
+Es una técnica que permite verificar si un valor cumple cierta forma (patrón) y extraer información de él en un solo paso.
 
+<div style="display: flex; gap: 30px;">
+
+<div style="flex: 1;">
+
+**🔢 Pattern Matching con Rangos:**
 ```csharp
-// Switch expression con rangos
 string categoria = edad switch
 {
-    < 13 => "Niño",
-    >= 13 and < 20 => "Adolescente",
-    >= 20 and < 65 => "Adulto",
-    >= 65 => "Adulto mayor"
+    < 13 => "Niño 👶",
+    >= 13 and < 20 => "Adolescente 🧑",
+    >= 20 and < 65 => "Adulto 👨",
+    >= 65 => "Adulto mayor 👴",
+    _ => "Desconocido"  // Default case
 };
 
-// Pattern matching con tipos
-string descripcion = obj switch
+// Ejemplo: Clasificación de notas
+string calificacion = promedio switch
 {
-    int i when i > 0 => $"Entero positivo: {i}",
-    string s => $"Texto de {s.Length} caracteres",
-    null => "Valor nulo",
-    _ => "Tipo desconocido"
+    >= 4.5 => "Excelente ⭐",
+    >= 3.5 => "Bueno 👍",
+    >= 3.0 => "Aceptable",
+    _ => "Reprobado ❌"
 };
 ```
+
+</div>
+
+<div style="flex: 1;">
+
+**🎯 Pattern Matching con Tipos:**
+```csharp
+string descripcion = objeto switch
+{
+    // Patrón con condición (when)
+    int i when i > 0 => $"Positivo: {i}",
+    int i when i < 0 => $"Negativo: {i}",
+    
+    // Patrón de tipo directo
+    string s => $"Texto ({s.Length} chars)",
+    
+    // Patrón null
+    null => "Sin valor",
+    
+    // Patrón descarte (default)
+    _ => "Otro tipo"
+};
+
+// List patterns (C# 11+)
+int[] numeros = [1, 2, 3];
+string patron = numeros switch
+{
+    [1, 2, 3] => "Secuencia exacta",
+    [1, _, _] => "Empieza con 1",
+    [.., 9] => "Termina en 9",
+    _ => "Otro patrón"
+};
+```
+
+</div>
+
+</div>
+
+**💡 Ventaja:** Elimina complejos `if-else` anidados, código más declarativo y legible.
 
 ---
 

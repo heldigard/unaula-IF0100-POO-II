@@ -217,8 +217,10 @@ using Microsoft.Data.SqlClient;
 ```
 
 ---
+
 ### Connection String
 
+La cadena de conexión contiene los parámetros necesarios para conectar con la base de datos:
 
 ```csharp
 // Program.cs - Configuración
