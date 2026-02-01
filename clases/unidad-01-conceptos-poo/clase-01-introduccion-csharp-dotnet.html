@@ -497,49 +497,63 @@ nums.Add(<span class="hljs-number">42</span>);    <span class="hljs-comment">// 
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="13" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="estructura-programa-c-anatom%C3%ADa">Estructura Programa C#: Anatomía</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">using</span> System;           <span class="hljs-comment">// 1 Importar namespaces</span>
-
-<span class="hljs-keyword">namespace</span> <span class="hljs-title">MiApp</span>          <span class="hljs-comment">// 2 Organización lógica</span>
-{
-    <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>        <span class="hljs-comment">// 3 Contenedor de código</span>
-    {
-        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] <span class="hljs-keyword">args</span></span>)  <span class="hljs-comment">// 4 Punto entrada</span></span>
-        {
-            Console.WriteLine(<span class="hljs-string">&quot;¡Hola!&quot;</span>); <span class="hljs-comment">// 5 Código ejecutable</span>
-        }
-    }
-}
-</code></pre>
+<div class="two-col">
+<div>
+<h3 id="%F0%9F%93%8B-partes-esenciales"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Partes Esenciales</h3>
 <table>
 <thead>
 <tr>
-<th>Parte</th>
+<th>#</th>
+<th>Elemento</th>
 <th>Propósito</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><img class="emoji" draggable="false" alt="1️⃣" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/31-20e3.svg" data-marp-twemoji=""/></td>
 <td><code>using</code></td>
 <td>Importar namespaces</td>
 </tr>
 <tr>
+<td><img class="emoji" draggable="false" alt="2️⃣" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/32-20e3.svg" data-marp-twemoji=""/></td>
 <td><code>namespace</code></td>
-<td>Agrupar código relacionado</td>
+<td>Organización lógica</td>
 </tr>
 <tr>
+<td><img class="emoji" draggable="false" alt="3️⃣" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/33-20e3.svg" data-marp-twemoji=""/></td>
 <td><code>class</code></td>
-<td>Definir tipo/objeto</td>
+<td>Contenedor de código</td>
 </tr>
 <tr>
+<td><img class="emoji" draggable="false" alt="4️⃣" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/34-20e3.svg" data-marp-twemoji=""/></td>
 <td><code>Main</code></td>
-<td>Método de entrada</td>
+<td>Punto de entrada</td>
 </tr>
 <tr>
-<td><code>Console</code></td>
-<td>I/O estándar</td>
+<td><img class="emoji" draggable="false" alt="5️⃣" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/35-20e3.svg" data-marp-twemoji=""/></td>
+<td>Código</td>
+<td>Lógica ejecutable</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-estructura-b%C3%A1sica"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Estructura Básica</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">using</span> System;
+
+<span class="hljs-keyword">namespace</span> <span class="hljs-title">MiApp</span>
+{
+    <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span>
+    {
+        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] <span class="hljs-keyword">args</span></span>)</span>
+        {
+            Console.WriteLine(<span class="hljs-string">&quot;¡Hola!&quot;</span>);
+        }
+    }
+}
+</code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="14" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
@@ -817,12 +831,11 @@ texto = texto.ToUpper(); <span class="hljs-comment">// <img class="emoji" dragga
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Edad =&gt; _edad;
 }
 </code></pre>
-<p><strong>16 líneas</strong></p>
+<p><strong>16 líneas</strong> • Campos privados • Constructor explícito</p>
 </div>
 <div>
 <h3 id="%E2%9C%85-ahora-conciso"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> AHORA (Conciso)</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>(<span class="hljs-params">
-    <span class="hljs-built_in">string</span> nombre, <span class="hljs-built_in">int</span> edad</span>)</span>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> nombre, <span class="hljs-built_in">int</span> edad</span>)</span>
 {
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Saludar</span>()</span> =&gt;
         Console.WriteLine(<span class="hljs-string">$&quot;Hola <span class="hljs-subst">{nombre}</span>&quot;</span>);
@@ -835,7 +848,7 @@ texto = texto.ToUpper(); <span class="hljs-comment">// <img class="emoji" dragga
 <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> Persona(<span class="hljs-string">&quot;Ana&quot;</span>, <span class="hljs-number">25</span>);
 p.Saludar();  <span class="hljs-comment">// &quot;Hola, Ana&quot;</span>
 </code></pre>
-<p><strong>8 líneas</strong> • 50% menos código</p>
+<p><strong>8 líneas</strong> • 50% menos código • Parámetros directos</p>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -904,8 +917,6 @@ List&lt;<span class="hljs-built_in">string</span>&gt; names = [<span class="hljs
     _ =&gt; <span class="hljs-string">&quot;Reprobado <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/>&quot;</span>
 };
 </code></pre>
-</div>
-<div>
 <h3 id="%F0%9F%8E%AF-tipos"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Tipos</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-built_in">string</span> desc = obj <span class="hljs-keyword">switch</span>
 {
@@ -915,9 +926,11 @@ List&lt;<span class="hljs-built_in">string</span>&gt; names = [<span class="hljs
     <span class="hljs-literal">null</span> =&gt; <span class="hljs-string">&quot;Sin valor&quot;</span>,
     _ =&gt; <span class="hljs-string">&quot;Otro&quot;</span>
 };
-
-<span class="hljs-comment">// List patterns</span>
-<span class="hljs-built_in">int</span>[] nums = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+</code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%93%8B-list-patterns"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> List Patterns</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-built_in">int</span>[] nums = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
 <span class="hljs-built_in">string</span> patron = nums <span class="hljs-keyword">switch</span>
 {
     [<span class="hljs-meta">1, 2, 3</span>] =&gt; <span class="hljs-string">&quot;Exacto&quot;</span>,
@@ -925,6 +938,13 @@ List&lt;<span class="hljs-built_in">string</span>&gt; names = [<span class="hljs
     _ =&gt; <span class="hljs-string">&quot;Otro&quot;</span>
 };
 </code></pre>
+<h3 id="%F0%9F%92%A1-ventajas"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Código más legible</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Menos <code>if/else</code></li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Verificación exhaustiva</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Type-safe</li>
+</ul>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -1009,14 +1029,13 @@ List&lt;<span class="hljs-built_in">string</span>&gt; names = [<span class="hljs
 <li>Calcular promedio</li>
 <li>APROBADO/REPROBADO</li>
 <li>Validar datos</li>
-<li>Formatear salida</li>
 </ol>
 <h3 id="%F0%9F%9A%80-niveles"><img class="emoji" draggable="false" alt="🚀" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f680.svg" data-marp-twemoji=""/> Niveles</h3>
 <table>
 <thead>
 <tr>
 <th>Nivel</th>
-<th>Req</th>
+<th>Requisito</th>
 </tr>
 </thead>
 <tbody>
@@ -1036,7 +1055,13 @@ List&lt;<span class="hljs-built_in">string</span>&gt; names = [<span class="hljs
 </table>
 </div>
 <div>
-<h3 id="%F0%9F%93%8A-salida"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Salida</h3>
+<h3 id="%F0%9F%92%A1-pistas"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Pistas</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-built_in">double</span> n1 = <span class="hljs-built_in">double</span>.Parse(Console.ReadLine());
+<span class="hljs-built_in">double</span> promedio = (n1 + n2 + n3) / <span class="hljs-number">3</span>;
+<span class="hljs-built_in">string</span> estado = promedio &gt;= <span class="hljs-number">3.0</span> ?
+    <span class="hljs-string">&quot;APROBADO&quot;</span> : <span class="hljs-string">&quot;REPROBADO&quot;</span>;
+</code></pre>
+<h3 id="%F0%9F%93%8A-salida-esperada"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Salida Esperada</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code>================================
   SISTEMA DE CALIFICACIONES
 ================================
@@ -1050,12 +1075,6 @@ Notas:
 Promedio: 4.17
 Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> APROBADO
 ================================
-</code></pre>
-<h3 id="%F0%9F%92%A1-pistas"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Pistas</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-built_in">double</span> n1 = <span class="hljs-built_in">double</span>.Parse(Console.ReadLine());
-<span class="hljs-built_in">double</span> promedio = (n1 + n2 + n3) / <span class="hljs-number">3</span>;
-<span class="hljs-built_in">string</span> estado = promedio &gt;= <span class="hljs-number">3.0</span> ?
-    <span class="hljs-string">&quot;APROBADO&quot;</span> : <span class="hljs-string">&quot;REPROBADO&quot;</span>;
 </code></pre>
 </div>
 </div>
@@ -1072,7 +1091,7 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 <li><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Notas fuera de rango</li>
 <li><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Crashes inesperados</li>
 </ul>
-<h3 id="%F0%9F%94%91-conceptos"><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> Conceptos</h3>
+<h3 id="%F0%9F%94%91-conceptos-clave"><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> Conceptos Clave</h3>
 <table>
 <thead>
 <tr>
@@ -1095,9 +1114,14 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 </tr>
 </tbody>
 </table>
+<h3 id="%F0%9F%92%BB-uso"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-built_in">double</span> n1 = PedirNota(<span class="hljs-string">&quot;Nota 1&quot;</span>);
+<span class="hljs-built_in">double</span> n2 = PedirNota(<span class="hljs-string">&quot;Nota 2&quot;</span>);
+<span class="hljs-built_in">double</span> n3 = PedirNota(<span class="hljs-string">&quot;Nota 3&quot;</span>);
+</code></pre>
 </div>
 <div>
-<h3 id="%F0%9F%92%BB-c%C3%B3digo-1"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Código</h3>
+<h3 id="%F0%9F%93%9D-m%C3%A9todo-de-validaci%C3%B3n"><img class="emoji" draggable="false" alt="📝" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4dd.svg" data-marp-twemoji=""/> Método de Validación</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-built_in">double</span> <span class="hljs-title">PedirNota</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> etiqueta</span>)</span>
 {
     <span class="hljs-built_in">double</span> nota;
@@ -1117,10 +1141,13 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
         }
     }
 }
-
-<span class="hljs-comment">// Uso</span>
-<span class="hljs-built_in">double</span> n1 = PedirNota(<span class="hljs-string">&quot;Nota 1&quot;</span>);
 </code></pre>
+<h3 id="%E2%9C%85-ventajas"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Previene crashes</li>
+<li>Experiencia de usuario mejor</li>
+<li>Código robusto</li>
+</ul>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -1211,7 +1238,7 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 <h2 id="c-vs-otros-lenguajes-2024">C# vs Otros Lenguajes (2024)</h2>
 <div class="two-col">
 <div>
-<h3 id="%F0%9F%8F%86-benchmark"><img class="emoji" draggable="false" alt="🏆" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3c6.svg" data-marp-twemoji=""/> Benchmark</h3>
+<h3 id="%F0%9F%8F%86-rendimiento"><img class="emoji" draggable="false" alt="🏆" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3c6.svg" data-marp-twemoji=""/> Rendimiento</h3>
 <table>
 <thead>
 <tr>
@@ -1229,45 +1256,55 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 <td>980ms</td>
 </tr>
 <tr>
-<td>Sort 100K</td>
-<td>180ms</td>
-<td>200ms</td>
-<td>450ms</td>
-</tr>
-<tr>
 <td>JSON</td>
 <td>90ms</td>
 <td>100ms</td>
 <td>150ms</td>
 </tr>
 <tr>
-<td><strong>Memoria</strong></td>
-<td><strong>25MB</strong></td>
-<td><strong>40MB</strong></td>
-<td><strong>15MB</strong></td>
+<td>Memoria</td>
+<td>25MB</td>
+<td>40MB</td>
+<td>15MB</td>
 </tr>
 </tbody>
 </table>
-<h3 id="%F0%9F%92%BC-mercado-colombia-2026"><img class="emoji" draggable="false" alt="💼" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bc.svg" data-marp-twemoji=""/> Mercado Colombia 2026</h3>
-<ul>
-<li>C#/.NET: <img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/></li>
-<li>Java: <img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/> (legacy)</li>
-<li>Python: <img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/> (Data/AI)</li>
-<li>JS: <img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/> (Universal)</li>
-</ul>
+<h3 id="%F0%9F%8C%9F-casos-de-uso"><img class="emoji" draggable="false" alt="🌟" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f31f.svg" data-marp-twemoji=""/> Casos de Uso</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>C#     → Empresas, Windows, Azure
+Java   → Legacy, Android
+Python → Data Science, IA
+JS     → Frontend, Node.js
+</code></pre>
 </div>
 <div>
-<h3 id="%F0%9F%8C%9F-cu%C3%A1ndo-usar"><img class="emoji" draggable="false" alt="🌟" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f31f.svg" data-marp-twemoji=""/> Cuándo usar</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>┌─────────────────────────────┐
-│ C#    → Empresas, Windows   │
-│ Java  → Legacy, Android     │
-│ Python→ Data Science, IA    │
-│ JS    → Frontend, Node.js   │
-│ Go    → Microservicios      │
-│ Rust  → Bajo nivel, crítico │
-└─────────────────────────────┘
-</code></pre>
-<p><strong>Fortalezas C#:</strong></p>
+<h3 id="%F0%9F%92%BC-mercado-colombia-2026"><img class="emoji" draggable="false" alt="💼" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bc.svg" data-marp-twemoji=""/> Mercado Colombia 2026</h3>
+<table>
+<thead>
+<tr>
+<th>Tecnología</th>
+<th>Demanda</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C#/.NET</td>
+<td><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/> (legacy)</td>
+</tr>
+<tr>
+<td>Python</td>
+<td><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/> (Data/AI)</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/><img class="emoji" draggable="false" alt="⭐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2b50.svg" data-marp-twemoji=""/></td>
+</tr>
+</tbody>
+</table>
+<h3 id="%E2%9C%85-fortalezas-c"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Fortalezas C#</h3>
 <ul>
 <li>Rendimiento ≈ C++</li>
 <li>Menor memoria que Java</li>
@@ -1343,28 +1380,21 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 <td>camelCase</td>
 <td><code>studentName</code></td>
 </tr>
-<tr>
-<td>Constantes</td>
-<td>PascalCase</td>
-<td><code>MaxCount</code></td>
-</tr>
 </tbody>
 </table>
 <h3 id="%F0%9F%93%9C-reglas-de-oro"><img class="emoji" draggable="false" alt="📜" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4dc.svg" data-marp-twemoji=""/> Reglas de Oro</h3>
-<ol>
+<ul>
 <li>Nombres descriptivos</li>
 <li>Sin abreviaturas</li>
-<li>Código se explica solo</li>
 <li>Líneas ≤ 100 chars</li>
 <li>Un archivo por clase</li>
-</ol>
+</ul>
 </div>
 <div>
 <h3 id="%F0%9F%92%BB-ejemplo-correcto"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Ejemplo Correcto</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">StudentManager</span>
 {
     <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> _studentCount;
-
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AddStudent</span>()</span>
@@ -1395,11 +1425,11 @@ Estado: <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr
 dotnet add package Dapper --version 2.1.28
 dotnet list package
 </code></pre>
-<h3 id="%F0%9F%96%A5%EF%B8%8F-vs"><img class="emoji" draggable="false" alt="🖥️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f5a5.svg" data-marp-twemoji=""/> VS</h3>
+<h3 id="%F0%9F%96%A5%EF%B8%8F-visual-studio"><img class="emoji" draggable="false" alt="🖥️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f5a5.svg" data-marp-twemoji=""/> Visual Studio</h3>
 <p>Click derecho → Manage NuGet Packages → Install</p>
 </div>
 <div>
-<h3 id="%F0%9F%94%A5-populares"><img class="emoji" draggable="false" alt="🔥" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f525.svg" data-marp-twemoji=""/> Populares</h3>
+<h3 id="%F0%9F%94%A5-paquetes-populares"><img class="emoji" draggable="false" alt="🔥" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f525.svg" data-marp-twemoji=""/> Paquetes Populares</h3>
 <table>
 <thead>
 <tr>
@@ -1431,7 +1461,8 @@ dotnet list package
 </tr>
 </tbody>
 </table>
-<p><strong><img class="emoji" draggable="false" alt="🔗" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f517.svg" data-marp-twemoji=""/> <a href="https://www.nuget.org/">https://www.nuget.org/</a></strong></p>
+<h3 id="%F0%9F%94%97-recurso"><img class="emoji" draggable="false" alt="🔗" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f517.svg" data-marp-twemoji=""/> Recurso</h3>
+<p><strong><a href="https://www.nuget.org/">https://www.nuget.org/</a></strong></p>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -1439,9 +1470,9 @@ dotnet list package
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="30" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="30" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="resumen-de-la-clase">Resumen de la Clase</h2>
-<div class="compact-list">
+<div class="two-col">
 <div>
-<h3 id="%F0%9F%93%9A-conceptos"><img class="emoji" draggable="false" alt="📚" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4da.svg" data-marp-twemoji=""/> Conceptos</h3>
+<h3 id="%F0%9F%93%9A-conceptos-clave"><img class="emoji" draggable="false" alt="📚" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4da.svg" data-marp-twemoji=""/> Conceptos Clave</h3>
 <table>
 <thead>
 <tr>
@@ -1472,13 +1503,12 @@ dotnet list package
 </tr>
 </tbody>
 </table>
-<h3 id="%F0%9F%8E%AF-habilidades"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Habilidades</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Instalar VS 2022
-<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Crear app consola
-<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Variables y tipos
-<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> I/O con Console
-<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Depurar código
-</code></pre>
+<h3 id="%F0%9F%8E%AF-habilidades-adquiridas"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Habilidades Adquiridas</h3>
+<p><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Instalar VS 2022<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Crear app consola<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Variables y tipos<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> I/O con Console<br />
+<img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Depurar código</p>
 </div>
 <div>
 <h3 id="%F0%9F%9A%80-pr%C3%B3ximos-pasos"><img class="emoji" draggable="false" alt="🚀" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f680.svg" data-marp-twemoji=""/> Próximos Pasos</h3>
@@ -1487,7 +1517,7 @@ dotnet list package
 <li>Practicar ejercicios</li>
 <li>Completar tarea</li>
 </ul>
-<h3 id="%F0%9F%92%A1-recurso"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Recurso</h3>
+<h3 id="%F0%9F%92%A1-recurso-recomendado"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Recurso Recomendado</h3>
 <p><a href="https://learn.microsoft.com/es-es/dotnet/csharp/">Microsoft Learn C#</a></p>
 </div>
 </div>
@@ -1501,30 +1531,37 @@ dotnet list package
 <h3 id="%F0%9F%96%A5%EF%B8%8F-instalaci%C3%B3n"><img class="emoji" draggable="false" alt="🖥️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f5a5.svg" data-marp-twemoji=""/> Instalación</h3>
 <ol>
 <li>Descargar VS Community</li>
-<li>Workloads:
-<ul>
-<li><img class="emoji" draggable="false" alt="☑️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2611.svg" data-marp-twemoji=""/> ASP.NET web</li>
-<li><img class="emoji" draggable="false" alt="☑️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2611.svg" data-marp-twemoji=""/> Datos</li>
-</ul>
-</li>
-<li>Componentes:
-<ul>
-<li><img class="emoji" draggable="false" alt="☑️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2611.svg" data-marp-twemoji=""/> .NET 8 SDK</li>
-<li><img class="emoji" draggable="false" alt="☑️" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2611.svg" data-marp-twemoji=""/> Git</li>
-</ul>
-</li>
+<li>Workloads: ASP.NET web, Datos</li>
+<li>Componentes: .NET 8 SDK, Git</li>
 </ol>
-</div>
-<div>
 <h3 id="%F0%9F%92%BB-proyecto"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Proyecto</h3>
 <p><strong>Calculadora de Promedios</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Nombre estudiante
-2. 3 notas (0.0-5.0)
-3. Promedio
-4. APROBADO/REPROBADO
-5. Validar datos
-</code></pre>
-<p><strong><img class="emoji" draggable="false" alt="📦" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4e6.svg" data-marp-twemoji=""/> Entrega:</strong> Subir a GitHub</p>
+<ol>
+<li>Nombre estudiante</li>
+<li>3 notas (0.0-5.0)</li>
+<li>Calcular promedio</li>
+<li>APROBADO/REPROBADO</li>
+<li>Validar datos</li>
+</ol>
+<h3 id="%F0%9F%93%A6-entrega"><img class="emoji" draggable="false" alt="📦" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4e6.svg" data-marp-twemoji=""/> Entrega</h3>
+<p>Subir a GitHub</p>
+</div>
+<div>
+<h3 id="%F0%9F%93%8B-checklist-de-entrega"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Checklist de Entrega</h3>
+<ul>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Código funcional</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Validación de datos</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Formato de salida</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> README con instrucciones</li>
+<li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Repository público</li>
+</ul>
+<h3 id="%F0%9F%8E%93-preparaci%C3%B3n-pr%C3%B3xima-clase"><img class="emoji" draggable="false" alt="🎓" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f393.svg" data-marp-twemoji=""/> Preparación Próxima Clase</h3>
+<ul>
+<li><strong>Clase</strong> = Plantilla</li>
+<li><strong>Objeto</strong> = Instancia</li>
+<li><strong>Atributo</strong> = Propiedad</li>
+<li><strong>Método</strong> = Comportamiento</li>
+</ul>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -1532,7 +1569,9 @@ dotnet list package
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="32" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="32" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="%F0%9F%8E%93-pr%C3%B3xima-clase-clases-y-objetos"><img class="emoji" draggable="false" alt="🎓" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f393.svg" data-marp-twemoji=""/> Próxima Clase: Clases y Objetos</h2>
-<h3 id="temas">Temas</h3>
+<div class="two-col">
+<div>
+<h3 id="%F0%9F%93%9A-temas"><img class="emoji" draggable="false" alt="📚" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4da.svg" data-marp-twemoji=""/> Temas</h3>
 <ul>
 <li>POO en C#</li>
 <li>Clases y objetos</li>
@@ -1546,13 +1585,39 @@ dotnet list package
 <li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Tarea completada</li>
 <li><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Repo Git creado</li>
 </ul>
-<h3 id="%F0%9F%94%97-preparaci%C3%B3n"><img class="emoji" draggable="false" alt="🔗" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f517.svg" data-marp-twemoji=""/> Preparación</h3>
-<ul>
-<li><strong>Clase</strong> = Plantilla</li>
-<li><strong>Objeto</strong> = Instancia</li>
-<li><strong>Atributo</strong> = Propiedad</li>
-<li><strong>Método</strong> = Comportamiento</li>
-</ul>
+</div>
+<div>
+<h3 id="%F0%9F%94%97-conceptos-clave"><img class="emoji" draggable="false" alt="🔗" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f517.svg" data-marp-twemoji=""/> Conceptos Clave</h3>
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clase</strong></td>
+<td>Plantilla</td>
+</tr>
+<tr>
+<td><strong>Objeto</strong></td>
+<td>Instancia</td>
+</tr>
+<tr>
+<td><strong>Atributo</strong></td>
+<td>Propiedad</td>
+</tr>
+<tr>
+<td><strong>Método</strong></td>
+<td>Comportamiento</td>
+</tr>
+</tbody>
+</table>
+<h3 id="%F0%9F%92%A1-preparaci%C3%B3n"><img class="emoji" draggable="false" alt="💡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4a1.svg" data-marp-twemoji=""/> Preparación</h3>
+<p>Repasar conceptos básicos de POO antes de la próxima clase.</p>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="33" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="33" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="33">

@@ -290,8 +290,8 @@ est.Estudiar();                <span class="hljs-comment">// <img class="emoji" 
 <div class="two-col">
 <div>
 <h3 id="%F0%9F%8E%AF-%C2%BFpara-qu%C3%A9-sirve"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> ¿Para qué sirve?</h3>
-<p>Acceder a miembros de la clase padre, especialmente en constructores.</p>
-<h3 id="%F0%9F%93%8B-sintaxis"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Sintaxis</h3>
+<p>Acceder a miembros de la clase padre.</p>
+<h3 id="%F0%9F%93%8B-sintaxis-constructor"><img class="emoji" draggable="false" alt="📋" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4cb.svg" data-marp-twemoji=""/> Sintaxis Constructor</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Estudiante</span> : <span class="hljs-title">Persona</span>
 {
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Codigo { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
@@ -304,38 +304,37 @@ est.Estudiar();                <span class="hljs-comment">// <img class="emoji" 
     }
 }
 </code></pre>
-</div>
-<div>
-<h3 id="%F0%9F%92%BB-ejemplo-completo"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Ejemplo Completo</h3>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Persona</span>
-{
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Nombre { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Persona</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> nombre</span>)</span>
-    {
-        Console.WriteLine(<span class="hljs-string">&quot;Constructor Persona&quot;</span>);
-        Nombre = nombre;
-    }
-}
-
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Estudiante</span> : <span class="hljs-title">Persona</span>
-{
-    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Codigo { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
-
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Estudiante</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> n, <span class="hljs-built_in">int</span> e, <span class="hljs-built_in">string</span> c</span>)
-        : <span class="hljs-title">base</span>(<span class="hljs-params">n, e</span>)  <span class="hljs-comment">// Llama constructor padre</span></span>
-    {
-        Console.WriteLine(<span class="hljs-string">&quot;Constructor Estudiante&quot;</span>);
-        Codigo = c;
-    }
-}
-
-<span class="hljs-comment">// Uso</span>
-<span class="hljs-keyword">var</span> est = <span class="hljs-keyword">new</span> Estudiante(<span class="hljs-string">&quot;María&quot;</span>, <span class="hljs-number">20</span>, <span class="hljs-string">&quot;2024001&quot;</span>);
+<h3 id="%F0%9F%92%BB-uso"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">var</span> est = <span class="hljs-keyword">new</span> Estudiante(<span class="hljs-string">&quot;María&quot;</span>, <span class="hljs-number">20</span>, <span class="hljs-string">&quot;2024001&quot;</span>);
 <span class="hljs-comment">// Salida:</span>
 <span class="hljs-comment">// &quot;Constructor Persona&quot;</span>
 <span class="hljs-comment">// &quot;Constructor Estudiante&quot;</span>
 </code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%94%91-otros-usos-de-base"><img class="emoji" draggable="false" alt="🔑" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f511.svg" data-marp-twemoji=""/> Otros Usos de <code>base</code></h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Saludar</span>()</span>
+{
+    <span class="hljs-keyword">base</span>.Saludar();  <span class="hljs-comment">// Llama método padre</span>
+    Console.WriteLine(<span class="hljs-string">&quot;Soy estudiante&quot;</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">decimal</span> <span class="hljs-title">CalcSalario</span>()</span>
+{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">base</span>.CalcSalario() + Comision;
+}
+</code></pre>
+<h3 id="%E2%9A%A1-orden-de-ejecuci%C3%B3n"><img class="emoji" draggable="false" alt="⚡" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/26a1.svg" data-marp-twemoji=""/> Orden de Ejecución</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>1. Constructor base (Persona)
+2. Constructor derivada (Estudiante)
+3. Resto del código derivada
+</code></pre>
+<h3 id="%E2%9C%85-ventajas"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Reutiliza código padre</li>
+<li>Mantiene consistencia</li>
+<li>Evita duplicación</li>
+</ul>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -402,7 +401,7 @@ NIVEL 3: Profesor (hijo) : Empleado
 </code></pre>
 </div>
 <div>
-<h3 id="%E2%9C%85-ventajas"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<h3 id="%E2%9C%85-ventajas-1"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
 <ul>
 <li>Código flexible y extensible</li>
 <li>Tratamiento uniforme</li>
@@ -482,7 +481,10 @@ NIVEL 3: Profesor (hijo) : Empleado
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="12" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="polimorfismo-en-acci%C3%B3n">Polimorfismo en Acción</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// POLIMORFISMO: Ref. base, objetos específicos</span>
+<div class="two-col">
+<div>
+<h3 id="%F0%9F%8E%AD-referencia-base"><img class="emoji" draggable="false" alt="🎭" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3ad.svg" data-marp-twemoji=""/> Referencia Base</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// Ref. base, objetos específicos</span>
 Animal a1 = <span class="hljs-keyword">new</span> Perro() { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> };
 Animal a2 = <span class="hljs-keyword">new</span> Gato() { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> };
 Animal a3 = <span class="hljs-keyword">new</span> Animal() { Nombre = <span class="hljs-string">&quot;Genérico&quot;</span> };
@@ -491,9 +493,17 @@ Animal a3 = <span class="hljs-keyword">new</span> Animal() { Nombre = <span clas
 a1.HacerSonido();  <span class="hljs-comment">// &quot;¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/>&quot;</span>
 a2.HacerSonido();  <span class="hljs-comment">// &quot;¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/>&quot;</span>
 a3.HacerSonido();  <span class="hljs-comment">// &quot;Sonido genérico&quot;</span>
-
-<span class="hljs-comment">// COLECCIÓN POLIMÓRFICA</span>
-List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span> List&lt;Animal&gt;
+</code></pre>
+<h3 id="%F0%9F%93%8A-ventajas"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Tratamiento uniforme</li>
+<li>Código extensible</li>
+<li>Fácil agregar tipos</li>
+</ul>
+</div>
+<div>
+<h3 id="%F0%9F%94%84-colecci%C3%B3n-polim%C3%B3rfica"><img class="emoji" draggable="false" alt="🔄" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f504.svg" data-marp-twemoji=""/> Colección Polimórfica</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span>()
 {
     <span class="hljs-keyword">new</span> Perro { Nombre = <span class="hljs-string">&quot;Rex&quot;</span> },
     <span class="hljs-keyword">new</span> Gato { Nombre = <span class="hljs-string">&quot;Michi&quot;</span> },
@@ -504,9 +514,15 @@ List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span> List&lt;Anim
 <span class="hljs-keyword">foreach</span> (Animal a <span class="hljs-keyword">in</span> animales)
 {
     Console.Write(<span class="hljs-string">$&quot;<span class="hljs-subst">{a.Nombre}</span>: &quot;</span>);
-    a.HacerSonido();  <span class="hljs-comment">// Cada uno hace su sonido</span>
+    a.HacerSonido();
 }
+<span class="hljs-comment">// Rex: ¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/></span>
+<span class="hljs-comment">// Michi: ¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/></span>
+<span class="hljs-comment">// Toby: ¡Guau guau! <img class="emoji" draggable="false" alt="🐕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f415.svg" data-marp-twemoji=""/></span>
+<span class="hljs-comment">// Luna: ¡Miau miau! <img class="emoji" draggable="false" alt="🐈" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f408.svg" data-marp-twemoji=""/></span>
 </code></pre>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="13" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
@@ -534,6 +550,12 @@ List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span> List&lt;Anim
     }
 }
 </code></pre>
+<h3 id="%E2%9C%85-ventajas-2"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
+<ul>
+<li>Reutiliza código padre</li>
+<li>Agrega comportamiento hijo</li>
+<li>Mantiene consistencia</li>
+</ul>
 </div>
 <div>
 <h3 id="%F0%9F%92%BB-uso-pr%C3%A1ctico"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso Práctico</h3>
@@ -547,12 +569,17 @@ List&lt;Animal&gt; animales = <span class="hljs-keyword">new</span> List&lt;Anim
 Console.WriteLine(v.CalcSalario());
 <span class="hljs-comment">// 3500 (base + comisión)</span>
 </code></pre>
-<h3 id="%E2%9C%85-ventajas-1"><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ventajas</h3>
-<ul>
-<li>Reutiliza código padre</li>
-<li>Agrega comportamiento hijo</li>
-<li>Mantiene consistencia</li>
-</ul>
+<h3 id="%F0%9F%93%8A-flujo"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> Flujo</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code>CalcSalario() [Vendedor]
+    ↓
+base.CalcSalario() [Empleado]
+    ↓
+SalarioBase (2000)
+    ↑
++ Comision (1500)
+    ↓
+= 3500
+</code></pre>
 </div>
 </div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
@@ -610,43 +637,75 @@ Console.WriteLine(v.CalcSalario());
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="15" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
 <h2 id="implementando-clases-abstractas">Implementando Clases Abstractas</h2>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// CÍRCULO</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Circulo</span> : <span class="hljs-title">Figura</span>
+<div class="two-col">
+<div>
+<h3 id="%F0%9F%93%8A-c%C3%ADrculo"><img class="emoji" draggable="false" alt="📊" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4ca.svg" data-marp-twemoji=""/> CÍRCULO</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Circulo</span> : <span class="hljs-title">Figura</span>
 {
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Radio { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>
-    {
-        <span class="hljs-keyword">return</span> Math.PI * Radio * Radio;
-    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
+        =&gt; Math.PI * Radio * Radio;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>
-    {
-        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * Math.PI * Radio;
-    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+        =&gt; <span class="hljs-number">2</span> * Math.PI * Radio;
 }
-
-<span class="hljs-comment">// RECTÁNGULO</span>
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Rectangulo</span> : <span class="hljs-title">Figura</span>
+</code></pre>
+<h3 id="%F0%9F%93%90-rect%C3%A1ngulo"><img class="emoji" draggable="false" alt="📐" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4d0.svg" data-marp-twemoji=""/> RECTÁNGULO</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Rectangulo</span> : <span class="hljs-title">Figura</span>
 {
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Base { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
     <span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> Altura { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; }
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularArea</span>()</span>
-    {
-        <span class="hljs-keyword">return</span> Base * Altura;
-    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcArea</span>()</span>
+        =&gt; Base * Altura;
 
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcularPerimetro</span>()</span>
-    {
-        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * (Base + Altura);
-    }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-built_in">double</span> <span class="hljs-title">CalcPerimetro</span>()</span>
+        =&gt; <span class="hljs-number">2</span> * (Base + Altura);
 }
-
-<span class="hljs-comment">// Uso</span>
-Figura f = <span class="hljs-keyword">new</span> Circulo { Radio = <span class="hljs-number">5</span> };  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/></span>
-<span class="hljs-comment">// Figura f = new Figura();  // <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error: abstracta</span>
 </code></pre>
+</div>
+<div>
+<h3 id="%F0%9F%92%BB-uso-1"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso</h3>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// <img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Ref. base, objeto concreto</span>
+Figura f1 = <span class="hljs-keyword">new</span> Circulo { Radio = <span class="hljs-number">5</span> };
+Figura f2 = <span class="hljs-keyword">new</span> Rectangulo { Base=<span class="hljs-number">4</span>, Altura=<span class="hljs-number">6</span> };
+
+f1.MostrarInfo();  <span class="hljs-comment">// Área: 78.54 cm²</span>
+f2.MostrarInfo();  <span class="hljs-comment">// Área: 24.00 cm²</span>
+
+<span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error: no se puede instanciar</span>
+<span class="hljs-comment">// Figura f = new Figura();</span>
+</code></pre>
+<h3 id="%F0%9F%8E%AF-reglas"><img class="emoji" draggable="false" alt="🎯" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f3af.svg" data-marp-twemoji=""/> Reglas</h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Regla</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instanciar</td>
+<td><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> NO</td>
+</tr>
+<tr>
+<td>Heredar</td>
+<td><img class="emoji" draggable="false" alt="✅" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/2705.svg" data-marp-twemoji=""/> Sí</td>
+</tr>
+<tr>
+<td>Métodos abstractos</td>
+<td>DEBEN implementarse</td>
+</tr>
+<tr>
+<td>Métodos concretos</td>
+<td>Se heredan</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="16" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="21">
@@ -776,7 +835,7 @@ r.SetAlto(<span class="hljs-number">10</span>);
     }
 }
 </code></pre>
-<h3 id="%F0%9F%92%BB-uso"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso</h3>
+<h3 id="%F0%9F%92%BB-uso-2"><img class="emoji" draggable="false" alt="💻" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f4bb.svg" data-marp-twemoji=""/> Uso</h3>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp">List&lt;Figura&gt; figuras = <span class="hljs-keyword">new</span>()
 {
     <span class="hljs-keyword">new</span> Circulo { Nombre=<span class="hljs-string">&quot;C1&quot;</span>, Color=<span class="hljs-string">&quot;Rojo&quot;</span>, Radio=<span class="hljs-number">5</span> },
