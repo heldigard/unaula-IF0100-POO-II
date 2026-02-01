@@ -184,8 +184,6 @@ public class EstudiantesController : Controller
         _logger.LogInformation("Accediendo a lista de estudiantes");
         
 ---
-### CRUD de Estudiantes
-
 
         var estudiantes = await _service.ObtenerTodosAsync();
         
@@ -212,7 +210,6 @@ public class EstudiantesController : Controller
             return BadRequest("ID requerido");
         
 ---
-### CRUD de Estudiantes
 
 
         var estudiante = await _service.ObtenerPorIdAsync(id.Value);
@@ -360,7 +357,6 @@ public class EstudiantesController : Controller
     public async Task<IActionResult> Crear([FromBody] EstudianteDto dto) { }
 
 ---
-### Route, HttpGet, HttpPost
 
 
     // PUT: /api/Estudiantes/5
@@ -405,7 +401,6 @@ public class EstudiantesController : Controller
 
 ---
 
-### Conversión automática de datos
 El model binding convierte automáticamente los datos de entrada a los tipos especificados.
 
 ```csharp
@@ -477,7 +472,6 @@ public class EstudianteViewModel
     public int? Id { get; set; }  // Nullable para crear
     
 ---
-### Separar modelo de dominio de la vista
 
 
     [Required(ErrorMessage = "El código es obligatorio")]
@@ -506,7 +500,6 @@ public class EstudianteViewModel
     public SelectList Carreras { get; set; }
     
 ---
-### Separar modelo de dominio de la vista
 
 
     // Propiedad calculada para mostrar
@@ -550,7 +543,6 @@ public class EstudianteViewModel
 ---
 
 ## Estructura Razor Page
-### Alternativa a MVC para páginas simples
 
 ```html
 @* Pages/Estudiantes/Crear.cshtml *@
@@ -609,7 +601,6 @@ public class CrearModel : PageModel
             return Page();  // Muestra la misma página con errores
         
 ---
-### Page + PageModel
 
 
         await _service.CrearAsync(Estudiante);
@@ -653,7 +644,6 @@ public class DetallesModel : PageModel
     }
 
 ---
-### Múltiples acciones por página
 
 
     // POST: /Estudiantes/Detalles/5?handler=Desactivar
@@ -678,7 +668,6 @@ public class DetallesModel : PageModel
 ---
 ## 5. Tag Helpers
 ---
-## 5. Tag Helpers
 ### HTML semántico con funcionalidad ASP.NET
 
 ```
@@ -751,7 +740,6 @@ public class DetallesModel : PageModel
 @await Component.InvokeAsync("MenuCarreras")
 
 ---
-### Ejemplos prácticos
 
 
 <!-- ENVIRONMENT (condicional por ambiente) -->

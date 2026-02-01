@@ -889,7 +889,6 @@ public partial class frmEstudiantes : Form
             DataSourceUpdateMode.OnPropertyChanged);
 
 ---
-### Ejemplo de Código: Data Binding Bidireccional
 
 
         // DataGridView
@@ -927,7 +926,6 @@ public partial class frmEstudiantes : Form
                 dsEstudiantes.AcceptChanges();
                 
 ---
-### Ejemplo de Código: Data Binding Bidireccional
 
 
                 MessageBox.Show("Cambios guardados exitosamente", "Éxito",
@@ -953,7 +951,6 @@ public partial class frmEstudiantes : Form
     }
 
 ---
-### Ejemplo de Código: Data Binding Bidireccional
 
 
     private void btnExportarXML_Click(object sender, EventArgs e)
@@ -981,7 +978,6 @@ public partial class frmEstudiantes : Form
             openDialog.Title = "Importar Estudiantes desde XML";
 
 ---
-### Ejemplo de Código: Data Binding Bidireccional
 
 
             if (openDialog.ShowDialog() == DialogResult.OK)
@@ -1013,7 +1009,6 @@ public partial class frmEstudiantes : Form
     }
 
 ---
-### Ejemplo de Código: Data Binding Bidireccional
 
 
     private void btnPrimero_Click(object sender, EventArgs e) => bindingSource.MoveFirst();

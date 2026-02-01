@@ -103,7 +103,6 @@ public class EstudianteViewModel
     public string Email { get; set; }
     
 ---
-### Atributos de validación en .NET
 
 
     // VALIDACIÓN NUMÉRICA
@@ -133,7 +132,6 @@ public class EstudianteViewModel
     public string Password { get; set; }
     
 ---
-### Atributos de validación en .NET
 
 
     [DataType(DataType.Password)]
@@ -207,7 +205,6 @@ public class FechaPasadaAttribute : ValidationAttribute
 }
 
 ---
-### Crear atributo custom
 
 
 // Uso
@@ -237,7 +234,6 @@ public class MayorDeEdadAttribute : ValidationAttribute
                 edad--;
             
 ---
-### Crear atributo custom
 
 
             if (edad < _edadMinima)
@@ -276,7 +272,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
     }
     
 ---
-### ModelState.IsValid
 
 
     // Guardar
@@ -398,7 +393,6 @@ public async Task<IActionResult> Crear(EstudianteViewModel model)
 
 ---
 
-### Pasar datos entre acciones
 TempData es ideal para redireccionamientos con datos transitorios.
 
 ```csharp
@@ -515,7 +509,6 @@ public class AccountController : Controller
         var usuarioNombre = HttpContext.Session.GetString("UsuarioNombre");
         
 ---
-### Almacenar y recuperar datos
 
 
         if (usuarioId == null)
@@ -569,7 +562,6 @@ public class PreferenciasController : Controller
     }
     
 ---
-### Manipulación directa
 
 
     // Eliminar cookie
@@ -610,7 +602,6 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
     }
     
 ---
-### IFormFile
 
 
     // Validaciones
@@ -639,7 +630,6 @@ public async Task<IActionResult> SubirFoto(IFormFile archivo, int estudianteId)
         Directory.CreateDirectory(rutaCarpeta);
     
 ---
-### IFormFile
 
 
     // Guardar archivo
@@ -685,7 +675,6 @@ public async Task<IActionResult> SubirDocumentos(List<IFormFile> archivos)
     }
     
 ---
-### Subir varios archivos
 
 
     TempData["Mensaje"] = $"{archivos.Count} archivos subidos";
@@ -722,7 +711,6 @@ Crear sistema de inscripción de estudiantes con:
    - Mensajes de error específicos por campo
 
 ---
-### Sistema de registro completo
 
 
 4. Sesión:
@@ -1068,7 +1056,6 @@ namespace WebApp.Models
         public string Password { get; set; }
 
 ---
-### Parte 1: Modelo de Usuario (15 minutos)
 
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
@@ -1097,7 +1084,6 @@ namespace WebApp.Models
 
 ---
 
-### Parte 1: Modelo de Usuario (15 minutos)
 Creación del modelo de usuario para el ejercicio.
 
 ```csharp
@@ -1150,7 +1136,6 @@ namespace WebApp.Controllers
                 u.EstaActivo);
 
 ---
-### Parte 2: Controlador con Sesiones (30 minutos)
 
 
             if (usuario == null)
@@ -1176,7 +1161,6 @@ namespace WebApp.Controllers
             }
 
 ---
-### Parte 2: Controlador con Sesiones (30 minutos)
 
 
             TempData["SuccessMessage"] = $"Bienvenido, {usuario.Nombre}!";
@@ -1204,7 +1188,6 @@ namespace WebApp.Controllers
             ViewBag.UserEmail = HttpContext.Session.GetString("UserEmail");
 
 ---
-### Parte 2: Controlador con Sesiones (30 minutos)
 
 
             return View();
@@ -1231,7 +1214,6 @@ namespace WebApp.Controllers
             }
 
 ---
-### Parte 2: Controlador con Sesiones (30 minutos)
 
 
             // En producción: hashear password con BCrypt o PBKDF2
@@ -1275,7 +1257,6 @@ namespace WebApp.Controllers
                     }
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
                     <form asp-action="Login" method="post">
@@ -1314,7 +1295,6 @@ namespace WebApp.Controllers
                         </div>
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
                         <div class="mb-3 form-check">
@@ -1344,7 +1324,6 @@ namespace WebApp.Controllers
 </div>
 
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
 @section Scripts {
@@ -1372,7 +1351,6 @@ namespace WebApp.Controllers
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             
 ---
-### Parte 3: Vista de Login (20 minutos)
 
 
             if (!emailRegex.test(email)) {
@@ -1414,7 +1392,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 ---
-### Parte 4: Configurar Sesiones en Program.cs (10 minutos)
 
 
 app.UseHttpsRedirection();
@@ -1458,7 +1435,6 @@ namespace WebApp.Filters
 ```
 
 ---
-### Parte 5: Crear Filtro de Autorización Personalizado (15 minutos)
 
 
 **Uso en controladores:**
