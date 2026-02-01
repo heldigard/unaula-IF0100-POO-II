@@ -270,9 +270,9 @@ public class Persona
 
 ### 🎯 ¿Para qué sirve?
 
-Acceder a miembros de la clase padre, especialmente en constructores.
+Acceder a miembros de la clase padre.
 
-### 📋 Sintaxis
+### 📋 Sintaxis Constructor
 
 ```csharp
 public class Estudiante : Persona
@@ -288,42 +288,47 @@ public class Estudiante : Persona
 }
 ```
 
-</div>
-
-<div>
-
-### 💻 Ejemplo Completo
+### 💻 Uso
 
 ```csharp
-public class Persona
-{
-    public string Nombre { get; set; }
-
-    public Persona(string nombre)
-    {
-        Console.WriteLine("Constructor Persona");
-        Nombre = nombre;
-    }
-}
-
-public class Estudiante : Persona
-{
-    public string Codigo { get; set; }
-
-    public Estudiante(string n, int e, string c)
-        : base(n, e)  // Llama constructor padre
-    {
-        Console.WriteLine("Constructor Estudiante");
-        Codigo = c;
-    }
-}
-
-// Uso
 var est = new Estudiante("María", 20, "2024001");
 // Salida:
 // "Constructor Persona"
 // "Constructor Estudiante"
 ```
+
+</div>
+
+<div>
+
+### 🔑 Otros Usos de `base`
+
+```csharp
+public override void Saludar()
+{
+    base.Saludar();  // Llama método padre
+    Console.WriteLine("Soy estudiante");
+}
+
+public override decimal CalcSalario()
+{
+    return base.CalcSalario() + Comision;
+}
+```
+
+### ⚡ Orden de Ejecución
+
+```
+1. Constructor base (Persona)
+2. Constructor derivada (Estudiante)
+3. Resto del código derivada
+```
+
+### ✅ Ventajas
+
+- Reutiliza código padre
+- Mantiene consistencia
+- Evita duplicación
 
 </div>
 
@@ -483,8 +488,14 @@ public class Gato : Animal
 
 ## Polimorfismo en Acción
 
+<div class="two-col">
+
+<div>
+
+### 🎭 Referencia Base
+
 ```csharp
-// POLIMORFISMO: Ref. base, objetos específicos
+// Ref. base, objetos específicos
 Animal a1 = new Perro() { Nombre = "Rex" };
 Animal a2 = new Gato() { Nombre = "Michi" };
 Animal a3 = new Animal() { Nombre = "Genérico" };
@@ -493,9 +504,22 @@ Animal a3 = new Animal() { Nombre = "Genérico" };
 a1.HacerSonido();  // "¡Guau guau! 🐕"
 a2.HacerSonido();  // "¡Miau miau! 🐈"
 a3.HacerSonido();  // "Sonido genérico"
+```
 
-// COLECCIÓN POLIMÓRFICA
-List<Animal> animales = new List<Animal>
+### 📊 Ventajas
+
+- Tratamiento uniforme
+- Código extensible
+- Fácil agregar tipos
+
+</div>
+
+<div>
+
+### 🔄 Colección Polimórfica
+
+```csharp
+List<Animal> animales = new()
 {
     new Perro { Nombre = "Rex" },
     new Gato { Nombre = "Michi" },
@@ -506,9 +530,17 @@ List<Animal> animales = new List<Animal>
 foreach (Animal a in animales)
 {
     Console.Write($"{a.Nombre}: ");
-    a.HacerSonido();  // Cada uno hace su sonido
+    a.HacerSonido();
 }
+// Rex: ¡Guau guau! 🐕
+// Michi: ¡Miau miau! 🐈
+// Toby: ¡Guau guau! 🐕
+// Luna: ¡Miau miau! 🐈
 ```
+
+</div>
+
+</div>
 
 ---
 
@@ -541,6 +573,12 @@ public class Vendedor : Empleado
 }
 ```
 
+### ✅ Ventajas
+
+- Reutiliza código padre
+- Agrega comportamiento hijo
+- Mantiene consistencia
+
 </div>
 
 <div>
@@ -559,11 +597,19 @@ Console.WriteLine(v.CalcSalario());
 // 3500 (base + comisión)
 ```
 
-### ✅ Ventajas
+### 📊 Flujo
 
-- Reutiliza código padre
-- Agrega comportamiento hijo
-- Mantiene consistencia
+```
+CalcSalario() [Vendedor]
+    ↓
+base.CalcSalario() [Empleado]
+    ↓
+SalarioBase (2000)
+    ↑
++ Comision (1500)
+    ↓
+= 3500
+```
 
 </div>
 

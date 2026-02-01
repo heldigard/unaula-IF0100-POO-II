@@ -233,28 +233,11 @@ g1.Hornear();
 
 ## 2. Clases en C#: Estructura
 
-```csharp
-[modificador] class NombreClase
-{
-    // CAMPOS (atributos)
-    [modificador] tipo nombreCampo;
+<div class="two-col">
 
-    // PROPIEDADES (encapsulamiento)
-    [modificador] tipo NombreProp { get; set; }
+<div>
 
-    // CONSTRUCTORES
-    [modificador] NombreClase([params])
-    {
-        // inicialización
-    }
-
-    // MÉTODOS (comportamientos)
-    [modificador] tipoRetorno NombreMetodo([params])
-    {
-        // código
-    }
-}
-```
+### 📋 Anatomía de Clase
 
 | Elemento | Propósito |
 |----------|-----------|
@@ -263,6 +246,42 @@ g1.Hornear();
 | `field` | Dato interno |
 | `property` | Acceso controlado |
 | `method` | Comportamiento |
+
+### 🔑 Modificadores
+
+- `public` - Accesible desde fuera
+- `private` - Solo interno
+- `static` - Compartido por todos
+
+</div>
+
+<div>
+
+### 💻 Plantilla General
+
+```csharp
+public class NombreClase
+{
+    // Campos
+    private tipo _campo;
+
+    // Propiedades
+    public tipo Prop { get; set; }
+
+    // Constructor
+    public NombreClase(params) { }
+
+    // Métodos
+    public tipo Metodo(params)
+    {
+        // código
+    }
+}
+```
+
+</div>
+
+</div>
 
 ---
 
@@ -286,21 +305,13 @@ public class Estudiante
     // Método
     public void MostrarInfo()
     {
-        Console.WriteLine(
-            $"Nombre: {nombre}");
-        Console.WriteLine(
-            $"Código: {codigo}");
-        Console.WriteLine(
-            $"Edad: {edad}");
-        Console.WriteLine(
-            $"Promedio: {promedio}");
+        Console.WriteLine($"Nombre: {nombre}");
+        Console.WriteLine($"Código: {codigo}");
+        Console.WriteLine($"Edad: {edad}");
+        Console.WriteLine($"Promedio: {promedio}");
     }
 }
 ```
-
-</div>
-
-<div>
 
 ### 🔍 Análisis
 
@@ -309,6 +320,10 @@ public class Estudiante
 | `public class` | Clase accesible |
 | `string nombre` | Campo público |
 | `void` | Sin retorno |
+
+</div>
+
+<div>
 
 <div class="warning-box">
 
@@ -319,6 +334,17 @@ public class Estudiante
 - Difícil mantener
 
 </div>
+
+### 💻 Uso
+
+```csharp
+Estudiante est1 = new Estudiante();
+est1.nombre = "María López";
+est1.codigo = "2024001";
+est1.edad = 20;
+est1.promedio = 4.2;
+est1.MostrarInfo();
+```
 
 </div>
 
@@ -530,7 +556,7 @@ p.Nombre = "María";
 
 <div>
 
-### 📝 Tipos
+### 📝 Tipos de Propiedades
 
 | Tipo | Sintaxis | Uso |
 |------|----------|-----|
@@ -538,6 +564,8 @@ p.Nombre = "María";
 | **Con field** | Full get/set | Con lógica |
 | **Solo lectura** | `{ get; }` | Calculado |
 | **Init-only** | `{ get; init; }` | Constructor |
+
+### 💻 Ejemplos
 
 ```csharp
 // 1. Autoimplementada
@@ -549,7 +577,7 @@ public double PrecioFinal
     get { return Precio * 1.19; }
 }
 
-// 3. Con valor default
+// 3. Con default
 public double IVA { get; set; } = 0.19;
 ```
 
@@ -614,13 +642,17 @@ Método especial que se ejecuta al crear un objeto.
 | **Parametrizado** | Con parámetros |
 | **Cadena** | Llama a otro |
 
+### 💻 Definición
+
 ```csharp
+// Constructor default
 public Estudiante()
 {
     Nombre = "Sin nombre";
     Edad = 18;
 }
 
+// Constructor parametrizado
 public Estudiante(string n, int e)
 {
     Nombre = n;
@@ -632,15 +664,14 @@ public Estudiante(string n, int e)
 
 <div>
 
-### 💻 Uso
+### 🔧 Uso
 
 ```csharp
 // Default
 Estudiante e1 = new Estudiante();
 
 // Parametrizado
-Estudiante e2 = new Estudiante(
-    "María", 20);
+Estudiante e2 = new Estudiante("María", 20);
 
 // Object initializer
 Estudiante e3 = new Estudiante
@@ -671,15 +702,24 @@ public Estudiante(string cod)
 
 ## Clase Completa: Estudiante
 
+<div class="two-col">
+
+<div>
+
+### 📋 Propiedades
+
 ```csharp
 public class Estudiante
 {
-    // Propiedades autoimplementadas
     public string Nombre { get; set; }
     public string Codigo { get; set; }
     public int Edad { get; set; }
     public double Promedio { get; set; }
+```
 
+### 🔧 Constructores
+
+```csharp
     // Constructor default
     public Estudiante()
     {
@@ -697,22 +737,43 @@ public class Estudiante
         Edad = e;
         Promedio = 0.0;
     }
+```
 
-    // Métodos de negocio
-    public bool Aprobo() => Promedio >= 3.0;
+</div>
+
+<div>
+
+### 💡 Métodos de Negocio
+
+```csharp
+    // Métodos
+    public bool Aprobo() =>
+        Promedio >= 3.0;
 
     public string Estado() =>
         Aprobo() ? "APROBADO" : "REPROBADO";
 
     public void MostrarInfo()
     {
-        Console.WriteLine($"📚 {Nombre} ({Codigo})");
+        Console.WriteLine($"📚 {Nombre}");
         Console.WriteLine($"   Edad: {Edad}");
-        Console.WriteLine($"   Promedio: {Promedio:F2}");
-        Console.WriteLine($"   Estado: {Estado()}");
+        Console.WriteLine($"   Prom: {Promedio:F2}");
+        Console.WriteLine($"   Est: {Estado()}");
     }
 }
 ```
+
+### 🎯 Uso
+
+```csharp
+var est = new Estudiante("María", "2024001", 20);
+est.Promedio = 4.2;
+est.MostrarInfo();
+```
+
+</div>
+
+</div>
 
 ---
 
@@ -845,8 +906,7 @@ class Program
             new Estudiante("Carlos", "2024002", 22)
             { Promedio = 2.8 });
 
-        Console.WriteLine(
-            "=== ESTUDIANTES ===\n");
+        Console.WriteLine("=== ESTUDIANTES ===");
 
         foreach (var est in estudiantes)
         {
@@ -857,6 +917,16 @@ class Program
 }
 ```
 
+### 🎨 Salida
+
+```
+=== ESTUDIANTES ===
+📚 María (2024001)
+   Edad: 20
+   Prom: 4.20
+   Est: APROBADO
+```
+
 </div>
 
 </div>
@@ -865,30 +935,28 @@ class Program
 
 ## Resumen de la Clase
 
-<div class="compact-list">
+<div class="two-col">
 
 <div>
 
-### 📚 Conceptos
+### 📚 Conceptos Clave
 
 | Tema | Descripción |
 |------|-------------|
 | **Clase** | Plantilla |
 | **Objeto** | Instancia |
-| **Campo** | Dato |
+| **Campo** | Dato interno |
 | **Propiedad** | Encapsulamiento |
 | **Constructor** | Inicialización |
 | **Encapsulamiento** | Ocultar datos |
 
 ### 🎯 Habilidades
 
-```
 ✅ Definir clases C#
 ✅ Crear objetos con new
 ✅ Aplicar encapsulamiento
 ✅ Usar propiedades
 ✅ Implementar constructores
-```
 
 </div>
 
@@ -907,11 +975,7 @@ class Program
 - `Depositar()`, `Retirar()`
 - Validar negativo
 
-**3. Tienda (Static)**
-- Contador estático
-- Total productos
-
-**4. 🌟 Biblioteca**
+**3. 🌟 Biblioteca**
 ```
 Libro: ISBN, título, autor
 Usuario: código, nombre

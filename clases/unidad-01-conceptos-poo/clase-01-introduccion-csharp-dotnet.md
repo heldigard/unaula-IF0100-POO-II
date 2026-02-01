@@ -447,28 +447,44 @@ int valor = nums[0]; // ✅ sin cast
 
 ## Estructura Programa C#: Anatomía
 
-```csharp
-using System;           // 1️⃣ Importar namespaces
+<div class="two-col">
 
-namespace MiApp          // 2️⃣ Organización lógica
+<div>
+
+### 📋 Partes Esenciales
+
+| # | Elemento | Propósito |
+|---|----------|-----------|
+| 1️⃣ | `using` | Importar namespaces |
+| 2️⃣ | `namespace` | Organización lógica |
+| 3️⃣ | `class` | Contenedor de código |
+| 4️⃣ | `Main` | Punto de entrada |
+| 5️⃣ | Código | Lógica ejecutable |
+
+</div>
+
+<div>
+
+### 💻 Estructura Básica
+
+```csharp
+using System;
+
+namespace MiApp
 {
-    class Program        // 3️⃣ Contenedor de código
+    class Program
     {
-        static void Main(string[] args)  // 4️⃣ Punto entrada
+        static void Main(string[] args)
         {
-            Console.WriteLine("¡Hola!"); // 5️⃣ Código ejecutable
+            Console.WriteLine("¡Hola!");
         }
     }
 }
 ```
 
-| Parte | Propósito |
-|-------|-----------|
-| `using` | Importar namespaces |
-| `namespace` | Agrupar código relacionado |
-| `class` | Definir tipo/objeto |
-| `Main` | Método de entrada |
-| `Console` | I/O estándar |
+</div>
+
+</div>
 
 ---
 
@@ -711,7 +727,7 @@ public class Persona
 }
 ```
 
-**16 líneas**
+**16 líneas** • Campos privados • Constructor explícito
 
 </div>
 
@@ -720,8 +736,7 @@ public class Persona
 ### ✅ AHORA (Conciso)
 
 ```csharp
-public class Persona(
-    string nombre, int edad)
+public class Persona(string nombre, int edad)
 {
     public void Saludar() =>
         Console.WriteLine($"Hola {nombre}");
@@ -735,7 +750,7 @@ var p = new Persona("Ana", 25);
 p.Saludar();  // "Hola, Ana"
 ```
 
-**8 líneas** • 50% menos código
+**8 líneas** • 50% menos código • Parámetros directos
 
 </div>
 
@@ -822,10 +837,6 @@ string nota = promedio switch
 };
 ```
 
-</div>
-
-<div>
-
 ### 🎯 Tipos
 
 ```csharp
@@ -837,8 +848,15 @@ string desc = obj switch
     null => "Sin valor",
     _ => "Otro"
 };
+```
 
-// List patterns
+</div>
+
+<div>
+
+### 📋 List Patterns
+
+```csharp
 int[] nums = [1, 2, 3];
 string patron = nums switch
 {
@@ -847,6 +865,13 @@ string patron = nums switch
     _ => "Otro"
 };
 ```
+
+### 💡 Ventajas
+
+- ✅ Código más legible
+- ✅ Menos `if/else`
+- ✅ Verificación exhaustiva
+- ✅ Type-safe
 
 </div>
 
@@ -928,12 +953,11 @@ Sistema que calcule promedios
 3. Calcular promedio
 4. APROBADO/REPROBADO
 5. Validar datos
-6. Formatear salida
 
 ### 🚀 Niveles
 
-| Nivel | Req |
-|-------|-----|
+| Nivel | Requisito |
+|-------|-----------|
 | Básico | Calcular promedio |
 | Intermedio | Validar 0-5 |
 | Avanzado | Método reutilizable |
@@ -942,7 +966,16 @@ Sistema que calcule promedios
 
 <div>
 
-### 📊 Salida
+### 💡 Pistas
+
+```csharp
+double n1 = double.Parse(Console.ReadLine());
+double promedio = (n1 + n2 + n3) / 3;
+string estado = promedio >= 3.0 ?
+    "APROBADO" : "REPROBADO";
+```
+
+### 📊 Salida Esperada
 
 ```
 ================================
@@ -958,15 +991,6 @@ Notas:
 Promedio: 4.17
 Estado: ✅ APROBADO
 ================================
-```
-
-### 💡 Pistas
-
-```csharp
-double n1 = double.Parse(Console.ReadLine());
-double promedio = (n1 + n2 + n3) / 3;
-string estado = promedio >= 3.0 ?
-    "APROBADO" : "REPROBADO";
 ```
 
 </div>
@@ -987,7 +1011,7 @@ string estado = promedio >= 3.0 ?
 - ❌ Notas fuera de rango
 - ❌ Crashes inesperados
 
-### 🔑 Conceptos
+### 🔑 Conceptos Clave
 
 | Método | Propósito |
 |--------|-----------|
@@ -995,11 +1019,19 @@ string estado = promedio >= 3.0 ?
 | `while(true)` | Repite hasta válido |
 | `out nota` | Parámetro salida |
 
+### 💻 Uso
+
+```csharp
+double n1 = PedirNota("Nota 1");
+double n2 = PedirNota("Nota 2");
+double n3 = PedirNota("Nota 3");
+```
+
 </div>
 
 <div>
 
-### 💻 Código
+### 📝 Método de Validación
 
 ```csharp
 static double PedirNota(string etiqueta)
@@ -1021,10 +1053,13 @@ static double PedirNota(string etiqueta)
         }
     }
 }
-
-// Uso
-double n1 = PedirNota("Nota 1");
 ```
+
+### ✅ Ventajas
+
+- Previene crashes
+- Experiencia de usuario mejor
+- Código robusto
 
 </div>
 
@@ -1076,40 +1111,38 @@ double n1 = PedirNota("Nota 1");
 
 <div>
 
-### 🏆 Benchmark
+### 🏆 Rendimiento
 
 | Operación | C# | Java | Python |
 |-----------|-----|------|--------|
 | Loop 1M | 15ms | 18ms | 980ms |
-| Sort 100K | 180ms | 200ms | 450ms |
 | JSON | 90ms | 100ms | 150ms |
-| **Memoria** | **25MB** | **40MB** | **15MB** |
+| Memoria | 25MB | 40MB | 15MB |
 
-### 💼 Mercado Colombia 2026
+### 🌟 Casos de Uso
 
-- C#/.NET: ⭐⭐⭐⭐⭐
-- Java: ⭐⭐⭐⭐⭐ (legacy)
-- Python: ⭐⭐⭐⭐⭐ (Data/AI)
-- JS: ⭐⭐⭐⭐⭐ (Universal)
+```
+C#     → Empresas, Windows, Azure
+Java   → Legacy, Android
+Python → Data Science, IA
+JS     → Frontend, Node.js
+```
 
 </div>
 
 <div>
 
-### 🌟 Cuándo usar
+### 💼 Mercado Colombia 2026
 
-```
-┌─────────────────────────────┐
-│ C#    → Empresas, Windows   │
-│ Java  → Legacy, Android     │
-│ Python→ Data Science, IA    │
-│ JS    → Frontend, Node.js   │
-│ Go    → Microservicios      │
-│ Rust  → Bajo nivel, crítico │
-└─────────────────────────────┘
-```
+| Tecnología | Demanda |
+|------------|---------|
+| C#/.NET | ⭐⭐⭐⭐⭐ |
+| Java | ⭐⭐⭐⭐⭐ (legacy) |
+| Python | ⭐⭐⭐⭐⭐ (Data/AI) |
+| JavaScript | ⭐⭐⭐⭐⭐ |
 
-**Fortalezas C#:**
+### ✅ Fortalezas C#
+
 - Rendimiento ≈ C++
 - Menor memoria que Java
 - Tipado estático (errores compile)
@@ -1162,15 +1195,13 @@ double n1 = PedirNota("Nota 1");
 | Propiedades | PascalCase | `Name { get; }` |
 | Campos priv. | _camelCase | `_count` |
 | Variables | camelCase | `studentName` |
-| Constantes | PascalCase | `MaxCount` |
 
 ### 📜 Reglas de Oro
 
-1. Nombres descriptivos
-2. Sin abreviaturas
-3. Código se explica solo
-4. Líneas ≤ 100 chars
-5. Un archivo por clase
+- Nombres descriptivos
+- Sin abreviaturas
+- Líneas ≤ 100 chars
+- Un archivo por clase
 
 </div>
 
@@ -1182,7 +1213,6 @@ double n1 = PedirNota("Nota 1");
 public class StudentManager
 {
     private int _studentCount;
-
     public string Name { get; set; }
 
     public void AddStudent()
@@ -1222,7 +1252,7 @@ dotnet add package Dapper --version 2.1.28
 dotnet list package
 ```
 
-### 🖥️ VS
+### 🖥️ Visual Studio
 
 Click derecho → Manage NuGet Packages → Install
 
@@ -1230,7 +1260,7 @@ Click derecho → Manage NuGet Packages → Install
 
 <div>
 
-### 🔥 Populares
+### 🔥 Paquetes Populares
 
 | Paquete | Uso | Descargas |
 |---------|-----|-----------|
@@ -1239,7 +1269,9 @@ Click derecho → Manage NuGet Packages → Install
 | Serilog | Logging | 300M+ |
 | xUnit | Testing | 150M+ |
 
-**🔗 https://www.nuget.org/**
+### 🔗 Recurso
+
+**https://www.nuget.org/**
 
 </div>
 
@@ -1249,11 +1281,11 @@ Click derecho → Manage NuGet Packages → Install
 
 ## Resumen de la Clase
 
-<div class="compact-list">
+<div class="two-col">
 
 <div>
 
-### 📚 Conceptos
+### 📚 Conceptos Clave
 
 | Tema | Descripción |
 |------|-------------|
@@ -1263,15 +1295,13 @@ Click derecho → Manage NuGet Packages → Install
 | **Value Types** | Stack, valor |
 | **Ref. Types** | Heap, referencias |
 
-### 🎯 Habilidades
+### 🎯 Habilidades Adquiridas
 
-```
 ✅ Instalar VS 2022
 ✅ Crear app consola
 ✅ Variables y tipos
 ✅ I/O con Console
 ✅ Depurar código
-```
 
 </div>
 
@@ -1283,7 +1313,7 @@ Click derecho → Manage NuGet Packages → Install
 - Practicar ejercicios
 - Completar tarea
 
-### 💡 Recurso
+### 💡 Recurso Recomendado
 
 [Microsoft Learn C#](https://learn.microsoft.com/es-es/dotnet/csharp/)
 
@@ -1302,30 +1332,41 @@ Click derecho → Manage NuGet Packages → Install
 ### 🖥️ Instalación
 
 1. Descargar VS Community
-2. Workloads:
-   - ☑️ ASP.NET web
-   - ☑️ Datos
-3. Componentes:
-   - ☑️ .NET 8 SDK
-   - ☑️ Git
-
-</div>
-
-<div>
+2. Workloads: ASP.NET web, Datos
+3. Componentes: .NET 8 SDK, Git
 
 ### 💻 Proyecto
 
 **Calculadora de Promedios**
 
-```
 1. Nombre estudiante
 2. 3 notas (0.0-5.0)
-3. Promedio
+3. Calcular promedio
 4. APROBADO/REPROBADO
 5. Validar datos
-```
 
-**📦 Entrega:** Subir a GitHub
+### 📦 Entrega
+
+Subir a GitHub
+
+</div>
+
+<div>
+
+### 📋 Checklist de Entrega
+
+- ✅ Código funcional
+- ✅ Validación de datos
+- ✅ Formato de salida
+- ✅ README con instrucciones
+- ✅ Repository público
+
+### 🎓 Preparación Próxima Clase
+
+- **Clase** = Plantilla
+- **Objeto** = Instancia
+- **Atributo** = Propiedad
+- **Método** = Comportamiento
 
 </div>
 
@@ -1335,7 +1376,11 @@ Click derecho → Manage NuGet Packages → Install
 
 ## 🎓 Próxima Clase: Clases y Objetos
 
-### Temas
+<div class="two-col">
+
+<div>
+
+### 📚 Temas
 
 - POO en C#
 - Clases y objetos
@@ -1349,12 +1394,26 @@ Click derecho → Manage NuGet Packages → Install
 - ✅ Tarea completada
 - ✅ Repo Git creado
 
-### 🔗 Preparación
+</div>
 
-- **Clase** = Plantilla
-- **Objeto** = Instancia
-- **Atributo** = Propiedad
-- **Método** = Comportamiento
+<div>
+
+### 🔗 Conceptos Clave
+
+| Concepto | Definición |
+|----------|------------|
+| **Clase** | Plantilla |
+| **Objeto** | Instancia |
+| **Atributo** | Propiedad |
+| **Método** | Comportamiento |
+
+### 💡 Preparación
+
+Repasar conceptos básicos de POO antes de la próxima clase.
+
+</div>
+
+</div>
 
 ---
 
