@@ -111,12 +111,27 @@ Animal.Hablar() vs Perro.Hablar()
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="6" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="37">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h3 id="representaci%C3%B3n-ascii-1">Representación ASCII:</h3>
 <footer>UNAULA - Ingeniería Informática - 2026-I</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-header="IF0100 - Lenguaje de Programación OO II | Unidad 1" data-footer="UNAULA - Ingeniería Informática - 2026-I" data-theme="default" lang="C" data-marpit-pagination="7" style="--paginate:true;--header:IF0100 - Lenguaje de Programación OO II | Unidad 1;--footer:UNAULA - Ingeniería Informática - 2026-I;--theme:default;" data-marpit-pagination-total="37">
 <header>IF0100 - Lenguaje de Programación OO II | Unidad 1</header>
-<h3 id="mismo-nombre-diferentes-par%C3%A1metros">Mismo nombre, diferentes parámetros</h3>
+<h3 id="sobrecarga-de-m%C3%A9todos-mismo-nombre-diferentes-par%C3%A1metros">Sobrecarga de Métodos: Mismo Nombre, Diferentes Parámetros</h3>
+<p><strong>Reglas para Sobrecargar Métodos:</strong></p>
+<ol>
+<li><strong>El nombre debe ser idéntico</strong></li>
+<li><strong>La firma debe ser diferente:</strong>
+<ul>
+<li>Cantidad de parámetros diferente</li>
+<li>Tipos de parámetros diferente</li>
+<li>Orden de parámetros diferente</li>
+</ul>
+</li>
+</ol>
+<p><strong><img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> No es sobrecarga válida:</strong></p>
+<pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-comment">// ERROR: Misma firma, solo cambia retorno</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> <span class="hljs-title">Procesar</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> x</span>)</span> { }
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">double</span> <span class="hljs-title">Procesar</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> x</span>)</span> { }  <span class="hljs-comment">// <img class="emoji" draggable="false" alt="❌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/274c.svg" data-marp-twemoji=""/> Error de compilación</span>
+</code></pre>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Calculadora</span>
 {
     <span class="hljs-comment">// SOBRECARGA 1: Dos enteros</span>
