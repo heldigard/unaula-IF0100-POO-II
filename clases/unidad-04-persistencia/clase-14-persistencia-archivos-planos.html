@@ -344,8 +344,8 @@ EST003,Carlos,Ramírez,carlos.ramirez@unaula.edu.co,3.8
         {
             <span class="hljs-keyword">return</span> <span class="hljs-string">$&quot;<span class="hljs-subst">{e.Id}</span><span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
                    <span class="hljs-string">$&quot;<span class="hljs-subst">{e.Codigo}</span><span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
-                   <span class="hljs-string">$&quot;&quot;</span>{e.Nombre}<span class="hljs-string">&quot;{SEPARADOR}&quot;</span> +  <span class="hljs-comment">// Comillas por si tiene comas</span>
-                   <span class="hljs-string">$&quot;&quot;</span>{e.Apellido}<span class="hljs-string">&quot;{SEPARADOR}&quot;</span> +
+                   <span class="hljs-string">$&quot;\&quot;<span class="hljs-subst">{e.Nombre}</span>\&quot;<span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +  <span class="hljs-comment">// Comillas por si tiene comas</span>
+                   <span class="hljs-string">$&quot;\&quot;<span class="hljs-subst">{e.Apellido}</span>\&quot;<span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
                    <span class="hljs-string">$&quot;<span class="hljs-subst">{e.Email}</span><span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
                    <span class="hljs-string">$&quot;<span class="hljs-subst">{e.FechaNacimiento:yyyy-MM-dd}</span><span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
                    <span class="hljs-string">$&quot;<span class="hljs-subst">{e.Promedio:F2}</span><span class="hljs-subst">{SEPARADOR}</span>&quot;</span> +
