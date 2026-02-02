@@ -141,6 +141,100 @@
       a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
       pre, code { white-space: pre-wrap; }
     }
+    /* BLOQUES DE CÓDIGO MEJORADOS */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 12px;
+      margin: 16px 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: 1px solid #313244;
+    }
+
+    .code-header {
+      background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #45475a;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dot.red { background: #f38ba8; }
+    .code-dot.yellow { background: #f9e2af; }
+    .code-dot.green { background: #a6e3a1; }
+
+    .code-title {
+      color: #cdd6f4;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: auto;
+      font-family: 'Cascadia Code', Consolas, monospace;
+    }
+
+    .code-content {
+      display: flex;
+      background: #1e1e2e;
+    }
+
+    .line-numbers {
+      background: #181825;
+      color: #6c7086;
+      padding: 12px 10px;
+      text-align: right;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      user-select: none;
+      border-right: 1px solid #313244;
+    }
+
+    .code-block pre {
+      background: transparent;
+      margin: 0;
+      padding: 12px 16px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .code-block pre code {
+      color: #cdd6f4;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Syntax highlighting mejorado */
+    .code-block .token-keyword { color: #cba6f7; font-weight: 600; }
+    .code-block .token-type { color: #f9e2af; }
+    .code-block .token-string { color: #a6e3a1; }
+    .code-block .token-comment { color: #6c7086; font-style: italic; }
+    .code-block .token-number { color: #fab387; }
+    .code-block .token-operator { color: #89dceb; }
+    .code-block .token-method { color: #89b4fa; }
+    .code-block .token-class { color: #f9e2af; font-weight: 600; }
+    .code-block .token-property { color: #b4befe; }
+    .code-block .token-namespace { color: #f38ba8; }
+
+    p code, li code {
+      background: #313244;
+      color: #cdd6f4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      border: 1px solid #45475a;
+    }
   </style>
 </head>
 <body>
@@ -222,17 +316,46 @@
       <h3>Modelamiento de bases de datos</h3>
       <p>El modelado <strong><abbr title="Entity-Relationship: Modelo entidad-relación que representa estructuras de datos y sus relaciones">ER</abbr></strong> traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foráneas.</p>
       <p><strong>¿Por qué modelar antes de programar?</strong> Un buen modelo ER evita redundancia, inconsistencias y problemas de integridad en la base de datos.</p>
-      <pre><code>Entidad (POO)  -> Tabla (BD)
-Atributo       -> Columna
-Objeto         -> Registro
-PK             -> <abbr title="Primary Key: Clave primaria, identificador único de cada registro">PK</abbr> (Id único)
-FK             -> <abbr title="Foreign Key: Clave foránea, referencia a otra tabla">FK</abbr> (Referencia)</code></pre>
+      
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <div class="code-title">mapeo-poo-bd.txt</div>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+          <pre><code>Entidad (POO)  -&gt; Tabla (BD)
+Atributo       -&gt; Columna
+Objeto         -&gt; Registro
+PK             -&gt; <abbr title="Primary Key: Clave primaria, identificador único de cada registro">PK</abbr> (Id único)
+FK             -&gt; <abbr title="Foreign Key: Clave foránea, referencia a otra tabla">FK</abbr> (Referencia)</code></pre>
+        </div>
+      </div>
 
       <h3>Cardinalidad</h3>
       <p>La cardinalidad define cuántas instancias de una entidad pueden relacionarse con instancias de otra entidad.</p>
-      <pre><code>1:1 Persona - Pasaporte
+      
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <div class="code-title">cardinalidad-ejemplos.txt</div>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3</div>
+          <pre><code>1:1 Persona - Pasaporte
 1:N Carrera - Estudiante
 N:M Estudiante - Materia</code></pre>
+        </div>
+      </div>
+      
       <div class="note">La cardinalidad define como se conectan las entidades en el modelo ER y determina el diseño físico de tablas.</div>
 
       <div class="warning-box">
@@ -262,50 +385,89 @@ N:M Estudiante - Materia</code></pre>
       <div class="grid-2">
         <div>
           <h4>Sobrecarga</h4>
-          <pre><code class="language-csharp">class Calculadora
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <div class="code-dot red"></div>
+                <div class="code-dot yellow"></div>
+                <div class="code-dot green"></div>
+              </div>
+              <div class="code-title">Calculadora.cs</div>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Calculadora</span>
 {
-    int Sumar(int a, int b) => a + b;
-    double Sumar(double a, double b) => a + b;
+    <span class="token-type">int</span> <span class="token-method">Sumar</span>(<span class="token-type">int</span> a, <span class="token-type">int</span> b) <span class="token-operator">=></span> a <span class="token-operator">+</span> b;
+    <span class="token-type">double</span> <span class="token-method">Sumar</span>(<span class="token-type">double</span> a, <span class="token-type">double</span> b) <span class="token-operator">=></span> a <span class="token-operator">+</span> b;
 }</code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>Sobreescritura</h4>
-          <pre><code class="language-csharp">class Animal
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <div class="code-dot red"></div>
+                <div class="code-dot yellow"></div>
+                <div class="code-dot green"></div>
+              </div>
+              <div class="code-title">Animal.cs</div>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Animal</span>
 {
-    public virtual void Hablar() { }
+    <span class="token-keyword">public virtual void</span> <span class="token-method">Hablar</span>() { }
 }
-class Perro : Animal
+<span class="token-keyword">class</span> <span class="token-class">Perro</span> : <span class="token-type">Animal</span>
 {
-    public override void Hablar() { }
+    <span class="token-keyword">public override void</span> <span class="token-method">Hablar</span>() { }
 }</code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
       <h3>Infografía: sobrecarga vs sobreescritura</h3>
       <figure>
-        <img src="../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png" alt="Infografia sobrecarga vs sobreescritura" />
+        <img src="../assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png" alt="Infografia sobrecarga vs sobreescritura" onerror="this.onerror=null;this.src='/assets/infografias/clase-04-sobrecarga-vs-sobreescritura.png'" />
         <figcaption>Diferencias clave entre sobrecarga (misma clase, firma diferente, resolución estática en compilación) y sobreescritura (herencia padre-hija, misma firma, resolución dinámica en ejecución con virtual/override), ilustrando como cada mecanismo permite polimorfismo en C#.</figcaption>
       </figure>
 
       <h3>Sobrecarga de operadores</h3>
-      <pre><code class="language-csharp">public class Fraccion
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <div class="code-title">Fraccion.cs</div>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code><span class="token-keyword">public class</span> <span class="token-class">Fraccion</span>
 {
-    public int Numerador { get; set; }
-    public int Denominador { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-property">Numerador</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-property">Denominador</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    public Fraccion(int n, int d)
+    <span class="token-keyword">public</span> <span class="token-class">Fraccion</span>(<span class="token-type">int</span> n, <span class="token-type">int</span> d)
     {
-        Numerador = n;
-        Denominador = d != 0 ? d : 1;
+        <span class="token-property">Numerador</span> <span class="token-operator">=</span> n;
+        <span class="token-property">Denominador</span> <span class="token-operator">=</span> d <span class="token-operator">!=</span> <span class="token-number">0</span> ? d : <span class="token-number">1</span>;
     }
 
-    public static Fraccion operator +(Fraccion a, Fraccion b)
+    <span class="token-keyword">public static</span> <span class="token-class">Fraccion</span> <span class="token-keyword">operator</span> <span class="token-operator">+</span>(<span class="token-class">Fraccion</span> a, <span class="token-class">Fraccion</span> b)
     {
-        int num = a.Numerador * b.Denominador + b.Numerador * a.Denominador;
-        int den = a.Denominador * b.Denominador;
-        return new Fraccion(num, den);
+        <span class="token-type">int</span> num <span class="token-operator">=</span> a.<span class="token-property">Numerador</span> <span class="token-operator">*</span> b.<span class="token-property">Denominador</span> <span class="token-operator">+</span> b.<span class="token-property">Numerador</span> <span class="token-operator">*</span> a.<span class="token-property">Denominador</span>;
+        <span class="token-type">int</span> den <span class="token-operator">=</span> a.<span class="token-property">Denominador</span> <span class="token-operator">*</span> b.<span class="token-property">Denominador</span>;
+        <span class="token-keyword">return new</span> <span class="token-class">Fraccion</span>(num, den);
     }
 }</code></pre>
+        </div>
+      </div>
     </section>
 
     <section id="practica">
@@ -345,66 +507,92 @@ class Perro : Animal
       </table>
 
       <h4>Solucion de Referencia</h4>
-      <pre><code class="language-csharp">public class Calculadora
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <div class="code-title">Calculadora.cs</div>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
+          <pre><code><span class="token-keyword">public class</span> <span class="token-class">Calculadora</span>
 {
-    // 2 enteros
-    public int Sumar(int a, int b) => a + b;
+    <span class="token-comment">// 2 enteros</span>
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">Sumar</span>(<span class="token-type">int</span> a, <span class="token-type">int</span> b) <span class="token-operator">=></span> a <span class="token-operator">+</span> b;
 
-    // 3 enteros
-    public int Sumar(int a, int b, int c) => a + b + c;
+    <span class="token-comment">// 3 enteros</span>
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">Sumar</span>(<span class="token-type">int</span> a, <span class="token-type">int</span> b, <span class="token-type">int</span> c) <span class="token-operator">=></span> a <span class="token-operator">+</span> b <span class="token-operator">+</span> c;
 
-    // 2 doubles
-    public double Sumar(double a, double b) => a + b;
+    <span class="token-comment">// 2 doubles</span>
+    <span class="token-keyword">public</span> <span class="token-type">double</span> <span class="token-method">Sumar</span>(<span class="token-type">double</span> a, <span class="token-type">double</span> b) <span class="token-operator">=></span> a <span class="token-operator">+</span> b;
 
-    // N enteros (params array)
-    public int Sumar(params int[] números)
+    <span class="token-comment">// N enteros (params array)</span>
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-method">Sumar</span>(<span class="token-keyword">params</span> <span class="token-type">int</span>[] números)
     {
-        int total = 0;
-        foreach (int n in números)
-            total += n;
-        return total;
+        <span class="token-type">int</span> total <span class="token-operator">=</span> <span class="token-number">0</span>;
+        <span class="token-keyword">foreach</span> (<span class="token-type">int</span> n <span class="token-keyword">in</span> números)
+            total <span class="token-operator">+=</span> n;
+        <span class="token-keyword">return</span> total;
     }
 }
 
-// Uso en Main
-class Program
+<span class="token-comment">// Uso en Main</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
 {
-    static void Main()
+    <span class="token-keyword">static void</span> <span class="token-method">Main</span>()
     {
-        var calc = new Calculadora();
-        Console.WriteLine(calc.Sumar(5, 3));        // 8 (int, int)
-        Console.WriteLine(calc.Sumar(5, 3, 2));      // 10 (int, int, int)
-        Console.WriteLine(calc.Sumar(5.5, 3.2));    // 8.7 (double, double)
-        Console.WriteLine(calc.Sumar(1, 2, 3, 4));  // 10 (params)
+        <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Calculadora</span>();
+        <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(calc.<span class="token-method">Sumar</span>(<span class="token-number">5</span>, <span class="token-number">3</span>));        <span class="token-comment">// 8 (int, int)</span>
+        <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(calc.<span class="token-method">Sumar</span>(<span class="token-number">5</span>, <span class="token-number">3</span>, <span class="token-number">2</span>));      <span class="token-comment">// 10 (int, int, int)</span>
+        <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(calc.<span class="token-method">Sumar</span>(<span class="token-number">5.5</span>, <span class="token-number">3.2</span>));    <span class="token-comment">// 8.7 (double, double)</span>
+        <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(calc.<span class="token-method">Sumar</span>(<span class="token-number">1</span>, <span class="token-number">2</span>, <span class="token-number">3</span>, <span class="token-number">4</span>));  <span class="token-comment">// 10 (params)</span>
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Encadenamiento de Constructores</h3>
       <p><strong>Duracion:</strong> 15 minutos</p>
-      <pre><code class="language-csharp">public class Estudiante
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+          <div class="code-title">Estudiante.cs</div>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+          <pre><code><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    public string Nombre { get; set; }
-    public string Codigo { get; set; }
-    public int Edad { get; set; }
-    public string Carrera { get; set; }
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Carrera</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // Constructor completo
-    public Estudiante(string n, string c, int e, string ca)
+    <span class="token-comment">// Constructor completo</span>
+    <span class="token-keyword">public</span> <span class="token-class">Estudiante</span>(<span class="token-type">string</span> n, <span class="token-type">string</span> c, <span class="token-type">int</span> e, <span class="token-type">string</span> ca)
     {
-        Nombre = n; Codigo = c; Edad = e; Carrera = ca;
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> n; <span class="token-property">Codigo</span> <span class="token-operator">=</span> c; <span class="token-property">Edad</span> <span class="token-operator">=</span> e; <span class="token-property">Carrera</span> <span class="token-operator">=</span> ca;
     }
 
-    // Constructor con 2 params (llama al completo)
-    public Estudiante(string n, string c) : this(n, c, 18, "Sin carrera") { }
+    <span class="token-comment">// Constructor con 2 params (llama al completo)</span>
+    <span class="token-keyword">public</span> <span class="token-class">Estudiante</span>(<span class="token-type">string</span> n, <span class="token-type">string</span> c) : <span class="token-keyword">this</span>(n, c, <span class="token-number">18</span>, <span class="token-string">"Sin carrera"</span>) { }
 
-    // Constructor default (llama al de 2 params)
-    public Estudiante() : this("Sin nombre", "0000000") { }
+    <span class="token-comment">// Constructor default (llama al de 2 params)</span>
+    <span class="token-keyword">public</span> <span class="token-class">Estudiante</span>() : <span class="token-keyword">this</span>(<span class="token-string">"Sin nombre"</span>, <span class="token-string">"0000000"</span>) { }
 }
 
-// Uso
-var e1 = new Estudiante("Maria", "2024001", 20, "Ingenieria");
-var e2 = new Estudiante("Carlos", "2024002");           // Edad=18, Sin carrera
-var e3 = new Estudiante();                               // Nombre=Sin nombre...</code></pre>
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> e1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Maria"</span>, <span class="token-string">"2024001"</span>, <span class="token-number">20</span>, <span class="token-string">"Ingenieria"</span>);
+<span class="token-keyword">var</span> e2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Carlos"</span>, <span class="token-string">"2024002"</span>);           <span class="token-comment">// Edad=18, Sin carrera</span>
+<span class="token-keyword">var</span> e3 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();                               <span class="token-comment">// Nombre=Sin nombre...</span></code></pre>
+        </div>
+      </div>
 
       <h3>Modelamiento ER: Sistema de Biblioteca</h3>
       <p><strong>Duracion:</strong> 20 minutos</p>

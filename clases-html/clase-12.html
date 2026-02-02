@@ -236,6 +236,122 @@
             .header h1 { font-size: 1.8rem; }
             .meta-bar { flex-direction: column; text-align: center; }
         }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #313244;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+            color: #cdd6f4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+            display: flex;
+            background: #1e1e2e;
+        }
+
+        .line-numbers {
+            background: #181825;
+            color: #6c7086;
+            padding: 12px 10px;
+            text-align: right;
+            font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            user-select: none;
+            border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+            background: transparent;
+            margin: 0;
+            padding: 12px 16px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .code-block pre code {
+            color: #cdd6f4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+            margin: 0;
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: #6c7086;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
         .skip-link {
             position: absolute;
             top: -40px;
@@ -266,21 +382,16 @@
     </div>
 
     <nav class="nav">
-        <a href="#objetivos">Objetivos</a>
-        <a href="#agenda">Agenda</a>
-        <a href="#que-es">Qué es ADO.NET</a>
-        <a href="#arquitectura">Arquitectura</a>
-        <a href="#conexion">Conexión</a>
-        <a href="#crud">Operaciones CRUD</a>
-        <a href="#transacciones">Transacciones</a>
-        <a href="#buenas-practicas">Buenas Prácticas</a>
-        <a href="#sql-injection">SQL Injection</a>
+        <a href="#teoria">Teoría</a>
+        <a href="#ejemplos">Ejemplos</a>
         <a href="#practica">Práctica / Laboratorio</a>
         <a href="#ejercicios">Ejercicios</a>
         <a href="#referencias">Referencias</a>
     </nav>
 
     <main class="container" id="main">
+        <!-- Teoría -->
+        <section id="teoria">
         <!-- Objetivos -->
         <section id="objetivos" class="section">
             <h2>Objetivos de la Clase</h2>
@@ -439,7 +550,7 @@
 
             <h3>Componentes principales</h3>
             <figure class="figure-container">
-                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET">
+                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET" onerror="this.onerror=null;this.src='/assets/infografias/clase-12-ado-net.png'">
                 <figcaption>Arquitectura ADO.NET: El Data Provider (System.Data.SqlClient) contiene SqlConnection para gestionar conexiones, SqlCommand para ejecutar queries con parámetros seguros, y SqlDataReader para lectura eficiente forward-only; el DataSet ofrece modo desconectado con DataTables para escenarios donde se requiere desconexión de la base de datos; las flechas muestran el flujo de datos desde la aplicación a través del proveedor hasta la fuente de datos SQL Server.</figcaption>
             </figure>
 
@@ -959,6 +1070,20 @@ command.Parameters.AddWithValue("@Codigo", codigo);
                     <li>¿Puedes explicar el ataque con "'; DROP TABLE Estudiantes; --"?</li>
                 </ul>
             </div>
+        </section>
+        </section>
+
+        <!-- Ejemplos -->
+        <section id="ejemplos" class="section">
+            <h2>Ejemplos</h2>
+            <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
+            <ul>
+                <li>Conexión a bases de datos con SqlConnection</li>
+                <li>Operaciones CRUD con SqlCommand</li>
+                <li>Uso de SqlDataReaders y DataSets</li>
+                <li>Implementación de transacciones</li>
+                <li>Buenas prácticas de seguridad</li>
+            </ul>
         </section>
 
         <!-- Práctica / Laboratorio -->

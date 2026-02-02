@@ -124,6 +124,122 @@
             a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
             pre, code { white-space: pre-wrap; }
         }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #313244;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+            color: #cdd6f4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+            display: flex;
+            background: #1e1e2e;
+        }
+
+        .line-numbers {
+            background: #181825;
+            color: #6c7086;
+            padding: 12px 10px;
+            text-align: right;
+            font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            user-select: none;
+            border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+            background: transparent;
+            margin: 0;
+            padding: 12px 16px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .code-block pre code {
+            color: #cdd6f4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+            margin: 0;
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: #6c7086;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
         .skip-link {
             position: absolute;
             top: -40px;
@@ -151,18 +267,17 @@
 
     <nav>
         <ul>
-            <li><a href="#objectives">Objetivos</a></li>
-            <li><a href="#prerequisites">Prerrequisitos</a></li>
-            <li><a href="#theory">Teoría</a></li>
-            <li><a href="#examples">Ejemplos</a></li>
-            <li><a href="#practice">Práctica</a></li>
-            <li><a href="#exercises">Ejercicios</a></li>
-            <li><a href="#references">Referencias</a></li>
+            <li><a href="#teoria">Teoría</a></li>
+            <li><a href="#ejemplos">Ejemplos</a></li>
+            <li><a href="#practica">Práctica / Laboratorio</a></li>
+            <li><a href="#ejercicios">Ejercicios</a></li>
+            <li><a href="#referencias">Referencias</a></li>
         </ul>
     </nav>
 
     <main id="main">
-        <section id="objectives">
+        <section id="teoria">
+        <section id="objetivos">
             <h2>🎯 Objetivos de Aprendizaje</h2>
             <div class="objectives">
                 <p>Al finalizar esta clase, el estudiante será capaz de:</p>
@@ -176,7 +291,7 @@
             </div>
         </section>
 
-        <section id="prerequisites">
+        <section id="prerrequisitos">
             <h2>📋 Prerrequisitos</h2>
             <div class="prerequisites">
                 <p>Para comprender esta clase, se requiere:</p>
@@ -189,7 +304,7 @@
             </div>
         </section>
 
-        <section id="theory">
+        <section id="teoria-content">
             <h2>📊 Teoría: Arquitectura de Datos Desconectados</h2>
 
             <div class="prerequisites">
@@ -267,7 +382,7 @@
 
             <h3>Componentes Principales</h3>
             <figure>
-                <img src="../assets/infografias/clase-15-dataset.png" alt="Arquitectura desconectada con DataSet y DataAdapter - Diagrama que muestra DataSet en memoria, DataAdapter como puente, y SQL Server como fuente de datos">
+                <img src="../assets/infografias/clase-15-dataset.png" alt="Arquitectura desconectada con DataSet y DataAdapter - Diagrama que muestra DataSet en memoria, DataAdapter como puente, y SQL Server como fuente de datos" onerror="this.onerror=null;this.src='/assets/infografias/clase-15-dataset.png'">
                 <figcaption>Figura 1: Arquitectura de datos desconectados - DataSet actúa como una base de datos en memoria, mientras DataAdapter sincroniza datos con SQL Server solo durante operaciones Fill() y Update(), permitiendo trabajar offline.</figcaption>
             </figure>
             
@@ -485,8 +600,9 @@ public class EstudianteDataAdapter
                 </ul>
             </div>
         </section>
+        </section>
 
-        <section id="examples">
+        <section id="ejemplos">
             <h2>💻 Ejemplos Prácticos</h2>
             
             <h3>Ejemplo completo de uso</h3>
@@ -562,7 +678,7 @@ public class EstudianteDataAdapter
 }</code></pre>
         </section>
 
-        <section id="practice" class="actividad">
+        <section id="practica" class="actividad">
             <h3>Actividad: Sistema de Gestión de Inventario</h3>
             <p><strong>Tipo:</strong> Opcional / práctica</p>
             <p><strong>Relacionado con:</strong> Ninguno</p>
@@ -605,7 +721,7 @@ CREATE TABLE Movimientos (
             </ul>
         </section>
 
-        <section id="exercises" class="actividad">
+        <section id="ejercicios" class="actividad">
             <h3>Actividad: Ejercicios de Arquitectura Desconectada</h3>
             <p><strong>Tipo:</strong> Opcional / práctica</p>
             <p><strong>Relacionado con:</strong> Ninguno</p>
@@ -628,7 +744,7 @@ CREATE TABLE Movimientos (
             </ul>
         </section>
 
-        <section id="references">
+        <section id="referencias">
             <h2>📚 Recursos Adicionales</h2>
             
             <h3>Documentación oficial</h3>
@@ -639,5 +755,10 @@ CREATE TABLE Movimientos (
             </ul>
         </section>
     </main>
+
+    <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+        <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+    </footer>
 </body>
 </html>

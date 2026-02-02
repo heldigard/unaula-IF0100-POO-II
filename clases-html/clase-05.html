@@ -326,6 +326,101 @@
         .skip-link:focus {
             top: 0;
         }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+          background: #1e1e2e;
+          border-radius: 12px;
+          margin: 16px 0;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          border: 1px solid #313244;
+        }
+
+        .code-header {
+          background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+          padding: 10px 16px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+          display: flex;
+          gap: 6px;
+        }
+
+        .code-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+          color: #cdd6f4;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-left: auto;
+          font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+          display: flex;
+          background: #1e1e2e;
+        }
+
+        .line-numbers {
+          background: #181825;
+          color: #6c7086;
+          padding: 12px 10px;
+          text-align: right;
+          font-family: 'Cascadia Code', Consolas, monospace;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          user-select: none;
+          border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+          background: transparent;
+          margin: 0;
+          padding: 12px 16px;
+          flex: 1;
+          overflow-x: auto;
+        }
+
+        .code-block pre code {
+          color: #cdd6f4;
+          font-size: 0.95rem;
+          line-height: 1.5;
+          display: block;
+        }
+
+        /* Syntax highlighting mejorado */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; }
+        .code-block .token-type { color: #f9e2af; }
+        .code-block .token-string { color: #a6e3a1; }
+        .code-block .token-comment { color: #6c7086; font-style: italic; }
+        .code-block .token-number { color: #fab387; }
+        .code-block .token-operator { color: #89dceb; }
+        .code-block .token-method { color: #89b4fa; }
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; }
+        .code-block .token-namespace { color: #f38ba8; }
+
+        p code, li code {
+          background: #313244;
+          color: #cdd6f4;
+          padding: 2px 8px;
+          border-radius: 6px;
+          font-size: 0.9em;
+          border: 1px solid #45475a;
+        }
     </style>
 </head>
 <body>
@@ -394,7 +489,7 @@
             </div>
 
             <figure>
-                <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor">
+                <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor" onerror="this.onerror=null;this.src='/assets/infografias/clase-05-tdd-ciclo.png'">
                 <figcaption>Figura 1: Ciclo de TDD Red-Green-Refactor - el flujo iterativo donde primero se escribe una prueba que falla (Red), luego se implementa el código mínimo para pasarla (Green), y finalmente se refactoriza para mejorar el diseño sin cambiar el comportamiento (Refactor), repitiéndose este ciclo continuamente para construir software de calidad incremental.</figcaption>
             </figure>
 
@@ -463,18 +558,31 @@
             </table>
 
             <h3>Instalación (CLI)</h3>
-            <pre><code class="language-bash"># Crear proyecto de pruebas
-dotnet new xunit -n MiProyecto.Tests
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">terminal.sh</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
+                <pre><code><span class="token-comment"># Crear proyecto de pruebas</span>
+<span class="token-keyword">dotnet</span> new xunit -n MiProyecto.Tests
 
-# Agregar referencia al proyecto principal
-cd MiProyecto.Tests
-dotnet add reference ../MiProyecto/MiProyecto.csproj
+<span class="token-comment"># Agregar referencia al proyecto principal</span>
+<span class="token-keyword">cd</span> MiProyecto.Tests
+<span class="token-keyword">dotnet</span> add reference ../MiProyecto/MiProyecto.csproj
 
-# Ejecutar pruebas
-dotnet test</code></pre>
+<span class="token-comment"># Ejecutar pruebas</span>
+<span class="token-keyword">dotnet</span> test</code></pre>
+              </div>
+            </div>
 
             <figure>
-                <img src="../assets/infografias/clase-05-testing-pyramid.png" alt="Testing Pyramid - Unit, Integration, E2E Tests">
+                <img src="../assets/infografias/clase-05-testing-pyramid.png" alt="Testing Pyramid - Unit, Integration, E2E Tests" onerror="this.onerror=null;this.src='/assets/infografias/clase-05-testing-pyramid.png'">
                 <figcaption>Figura 2: Pirámide de Testing - estrategia de estratificación de pruebas donde la base amplia contiene muchas pruebas unitarias rápidas y aisladas, el nivel intermedio tiene menos pruebas de integración que verifican interacciones entre componentes, y la cima contiene muy pocas pruebas end-to-end lentas pero críticas, equilibrando cobertura, velocidad y costo de mantenimiento.</figcaption>
             </figure>
         </section>
@@ -541,19 +649,32 @@ dotnet test</code></pre>
             </div>
 
             <h3>Ejemplo Completo</h3>
-            <pre><code class="language-csharp">[Fact]
-public void Sumar_DosNumeros_RetornaSuma()
-{
-    // Arrange - Configurar
-    var calc = new Calculadora();
-    int esperado = 8;
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">CalculadoraTests.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_DosNumeros_RetornaSuma</span><span class="token-operator">()</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange - Configurar</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
+    <span class="token-keyword">int</span> esperado <span class="token-operator">=</span> <span class="token-number">8</span><span class="token-operator">;</span>
 
-    // Act - Ejecutar
-    int resultado = calc.Sumar(5, 3);
+    <span class="token-comment">// Act - Ejecutar</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">);</span>
 
-    // Assert - Verificar
-    Assert.Equal(esperado, resultado);
-}</code></pre>
+    <span class="token-comment">// Assert - Verificar</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span>esperado<span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
 
             <h3>Métodos Assert Comunes</h3>
             <table>
@@ -628,20 +749,46 @@ public void Sumar_DosNumeros_RetornaSuma()
             <div class="comparison-table">
                 <div>
                     <h4>Dummy</h4>
-                    <pre><code class="language-csharp">// Solo para llenar parámetros
-public void Probar(DummyServicio servicio) {
-    // El servicio no se usa
-}</code></pre>
+                    <div class="code-block">
+                      <div class="code-header">
+                        <div class="code-dots">
+                          <span class="code-dot red"></span>
+                          <span class="code-dot yellow"></span>
+                          <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">DummyExample.cs</span>
+                      </div>
+                      <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4</div>
+                        <pre><code><span class="token-comment">// Solo para llenar parámetros</span>
+<span class="token-keyword">public void</span> <span class="token-method">Probar</span><span class="token-operator">(</span><span class="token-type">DummyServicio</span> servicio<span class="token-operator">)</span> <span class="token-operator">{</span>
+    <span class="token-comment">// El servicio no se usa</span>
+<span class="token-operator">}</span></code></pre>
+                      </div>
+                    </div>
                     <p><em>Usar cuando no necesitas interactuar con el objeto.</em></p>
                 </div>
                 <div>
                     <h4>Stub</h4>
-                    <pre><code class="language-csharp">// Respuestas predefinidas
-var stub = new StubRepo();
-stub.Obtener(1).Returns(new Estudiante());
+                    <div class="code-block">
+                      <div class="code-header">
+                        <div class="code-dots">
+                          <span class="code-dot red"></span>
+                          <span class="code-dot yellow"></span>
+                          <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">StubExample.cs</span>
+                      </div>
+                      <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+                        <pre><code><span class="token-comment">// Respuestas predefinidas</span>
+<span class="token-keyword">var</span> stub <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">StubRepo</span><span class="token-operator">();</span>
+stub<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">).</span><span class="token-method">Returns</span><span class="token-operator">(</span><span class="token-keyword">new</span> <span class="token-type">Estudiante</span><span class="token-operator">());</span>
 
-// Test usa el stub
-var estudiante = repo.Obtener(1);</code></pre>
+<span class="token-comment">// Test usa el stub</span>
+<span class="token-keyword">var</span> estudiante <span class="token-operator">=</span> repo<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">);</span></code></pre>
+                      </div>
+                    </div>
                     <p><em>Usar cuando necesitas respuestas controladas.</em></p>
                 </div>
             </div>
@@ -649,23 +796,49 @@ var estudiante = repo.Obtener(1);</code></pre>
             <div class="comparison-table">
                 <div>
                     <h4>Fake</h4>
-                    <pre><code class="language-csharp">// Implementación simplificada
-public class FakeRepo : IRepositorio {
-    private List<Estudiante> _datos = new();
-    public void Guardar(Estudiante e) => _datos.Add(e);
-    public Estudiante Obtener(int id) => _datos.FirstOrDefault();
-}</code></pre>
+                    <div class="code-block">
+                      <div class="code-header">
+                        <div class="code-dots">
+                          <span class="code-dot red"></span>
+                          <span class="code-dot yellow"></span>
+                          <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">FakeRepository.cs</span>
+                      </div>
+                      <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+                        <pre><code><span class="token-comment">// Implementación simplificada</span>
+<span class="token-keyword">public class</span> <span class="token-class">FakeRepo</span> <span class="token-operator">:</span> <span class="token-type">IRepositorio</span> <span class="token-operator">{</span>
+    <span class="token-keyword">private</span> <span class="token-type">List</span><span class="token-operator">&lt;</span><span class="token-type">Estudiante</span><span class="token-operator">&gt;</span> _datos <span class="token-operator">=</span> <span class="token-keyword">new</span><span class="token-operator">();</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Guardar</span><span class="token-operator">(</span><span class="token-type">Estudiante</span> e<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">Add</span><span class="token-operator">(</span>e<span class="token-operator">);</span>
+    <span class="token-keyword">public</span> <span class="token-type">Estudiante</span> <span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-keyword">int</span> id<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">FirstOrDefault</span><span class="token-operator">();</span>
+<span class="token-operator">}</span></code></pre>
+                      </div>
+                    </div>
                     <p><em>Usar cuando necesitas lógica real pero simple.</em></p>
                 </div>
                 <div>
                     <h4>Mock</h4>
-                    <pre><code class="language-csharp">// Verifica comportamiento
-var mock = new Mock&lt;IRepositorio&gt;();
-mock.Setup(x => x.Guardar(It.IsAny()))
-    .Verifiable();
+                    <div class="code-block">
+                      <div class="code-header">
+                        <div class="code-dots">
+                          <span class="code-dot red"></span>
+                          <span class="code-dot yellow"></span>
+                          <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">MockExample.cs</span>
+                      </div>
+                      <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
+                        <pre><code><span class="token-comment">// Verifica comportamiento</span>
+<span class="token-keyword">var</span> mock <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Mock</span><span class="token-operator">&lt;</span><span class="token-type">IRepositorio</span><span class="token-operator">&gt;();</span>
+mock<span class="token-operator">.</span><span class="token-method">Setup</span><span class="token-operator">(</span>x <span class="token-operator">=></span> x<span class="token-operator">.</span><span class="token-method">Guardar</span><span class="token-operator">(</span><span class="token-type">It</span><span class="token-operator">.</span><span class="token-property">IsAny</span><span class="token-operator">&lt;&gt;()))</span>
+    <span class="token-operator">.</span><span class="token-method">Verifiable</span><span class="token-operator">();</span>
 
-// Test ejecuta...
-mock.Verify(); // Confirma llamada</code></pre>
+<span class="token-comment">// Test ejecuta...</span>
+mock<span class="token-operator">.</span><span class="token-method">Verify</span><span class="token-operator">();</span> <span class="token-comment">// Confirma llamada</span></code></pre>
+                      </div>
+                    </div>
                     <p><em>Usar cuando necesitas verificar interacciones.</em></p>
                 </div>
             </div>
@@ -678,111 +851,189 @@ mock.Verify(); // Confirma llamada</code></pre>
             <h3>Ejemplo 1: Calculadora con TDD</h3>
 
             <h4>1. Escribir la Prueba (RED)</h4>
-            <pre><code class="language-csharp">[Fact]
-public void Sumar_DosNumeros_RetornaSuma()
-{
-    // Arrange
-    var calc = new Calculadora();
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">CalculadoraTests.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_DosNumeros_RetornaSuma</span><span class="token-operator">()</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
 
-    // Act
-    int resultado = calc.Sumar(5, 3);
+    <span class="token-comment">// Act</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">);</span>
 
-    // Assert
-    Assert.Equal(8, resultado);
-}</code></pre>
+    <span class="token-comment">// Assert</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">8</span><span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
 
             <h4>2. Código Mínimo (GREEN)</h4>
-            <pre><code class="language-csharp">public class Calculadora
-{
-    public int Sumar(int a, int b) => a + b; // Minimo para pasar
-}</code></pre>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">Calculadora.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4</div>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">Calculadora</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">public int</span> <span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-keyword">int</span> a<span class="token-operator">,</span> <span class="token-keyword">int</span> b<span class="token-operator">)</span> <span class="token-operator">=></span> a <span class="token-operator">+</span> b<span class="token-operator">;</span> <span class="token-comment">// Minimo para pasar</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
 
             <h4>3. Refactor (si es necesario)</h4>
-            <pre><code class="language-csharp">// El código ya es simple, no hay refactor necesario</code></pre>
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">Refactor.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1</div>
+                <pre><code><span class="token-comment">// El código ya es simple, no hay refactor necesario</span></code></pre>
+              </div>
+            </div>
 
             <h3>Ejemplo 2: Billetera con Validaciones</h3>
 
             <h4>Clase Billetera</h4>
-            <pre><code class="language-csharp">public class Billetera
-{
-    private decimal _saldo;
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">Billetera.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">Billetera</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">private decimal</span> _saldo<span class="token-operator">;</span>
 
-    public decimal Saldo => _saldo;
+    <span class="token-keyword">public decimal</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo<span class="token-operator">;</span>
 
-    public void Agregar(decimal monto)
-    {
-        if (monto <= 0)
-            throw new ArgumentException("Monto debe ser positivo");
-        _saldo += monto;
-    }
+    <span class="token-keyword">public void</span> <span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-keyword">decimal</span> monto<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">);</span>
+        _saldo <span class="token-operator">+=</span> monto<span class="token-operator">;</span>
+    <span class="token-operator">}</span>
 
-    public void Retirar(decimal monto)
-    {
-        if (monto <= 0)
-            throw new ArgumentException("Monto debe ser positivo");
-        if (monto > _saldo)
-            throw new InvalidOperationException("Saldo insuficiente");
-        _saldo -= monto;
-    }
-}</code></pre>
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-keyword">decimal</span> monto<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">></span> _saldo<span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">InvalidOperationException</span><span class="token-operator">(</span><span class="token-string">"Saldo insuficiente"</span><span class="token-operator">);</span>
+        _saldo <span class="token-operator">-=</span> monto<span class="token-operator">;</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
 
             <h4>Tests Completos</h4>
-            <pre><code class="language-csharp">public class BilleteraTests
-{
-    [Fact]
-    public void Saldo_Inicialmente_EsCero()
-    {
-        var billetera = new Billetera();
-        Assert.Equal(0, billetera.Saldo);
-    }
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">BilleteraTests.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">BilleteraTests</span>
+<span class="token-operator">{</span>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Saldo_Inicialmente_EsCero</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">0</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-    [Fact]
-    public void Agregar_MontoPositivo_IncrementaSaldo()
-    {
-        var billetera = new Billetera();
-        billetera.Agregar(100);
-        Assert.Equal(100, billetera.Saldo);
-    }
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Agregar_MontoPositivo_IncrementaSaldo</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-    [Fact]
-    public void Retirar_SaldoSuficiente_DecrementaSaldo()
-    {
-        var billetera = new Billetera();
-        billetera.Agregar(100);
-        billetera.Retirar(30);
-        Assert.Equal(70, billetera.Saldo);
-    }
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar_SaldoSuficiente_DecrementaSaldo</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">);</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-number">30</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">70</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-    [Fact]
-    public void Retirar_SaldoInsuficiente_LanzaExcepcion()
-    {
-        var billetera = new Billetera();
-        billetera.Agregar(50);
-        Assert.Throws&lt;InvalidOperationException&gt;(
-            () => billetera.Retirar(100)
-        );
-    }
-}</code></pre>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar_SaldoInsuficiente_LanzaExcepcion</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">50</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Throws</span><span class="token-operator">&lt;</span><span class="token-type">InvalidOperationException</span><span class="token-operator">&gt;(</span>
+            <span class="token-operator">()</span> <span class="token-operator">=></span> billetera<span class="token-operator">.</span><span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">)</span>
+        <span class="token-operator">);</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
 
             <h3>Ejemplo 3: Parametrización con [Theory]</h3>
-            <pre><code class="language-csharp">[Theory]
-[InlineData(1, 1, 2)]
-[InlineData(5, 3, 8)]
-[InlineData(-1, 1, 0)]
-[InlineData(0, 0, 0)]
-[InlineData(-5, -3, -8)]
-public void Sumar_VariosNumeros_RetornaSuma(
-    int a, int b, int esperado)
-{
-    // Arrange
-    var calc = new Calculadora();
+            <div class="code-block">
+              <div class="code-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="code-title">CalculadoraTheoryTests.cs</span>
+              </div>
+              <div class="code-content">
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Theory</span><span class="token-operator">]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">2</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">,</span> <span class="token-number">8</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">3</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">8</span><span class="token-operator">)]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_VariosNumeros_RetornaSuma</span><span class="token-operator">(</span>
+    <span class="token-keyword">int</span> a<span class="token-operator">,</span> <span class="token-keyword">int</span> b<span class="token-operator">,</span> <span class="token-keyword">int</span> esperado<span class="token-operator">)</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
 
-    // Act
-    int resultado = calc.Sumar(a, b);
+    <span class="token-comment">// Act</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span>a<span class="token-operator">,</span> b<span class="token-operator">);</span>
 
-    // Assert
-    Assert.Equal(esperado, resultado);
-}</code></pre>
+    <span class="token-comment">// Assert</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span>esperado<span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
+              </div>
+            </div>
         </section>
 
         <section id="practica">
@@ -849,18 +1100,31 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <p><strong>Entregable:</strong> Validador con pruebas unitarias</p>
                 <p><strong>Tiempo estimado:</strong> 20 min</p>
                 <p><strong>Criterios de éxito:</strong> 4 pruebas fallan correctamente, mensajes de error claros, cobertura de bordes</p>
-                <pre><code class="language-csharp">public class ValidadorContrasenas
-{
-    public void Validar(string contrasena)
-    {
-        if (contrasena.Length < 8)
-            throw new ArgumentException("Mínimo 8 caracteres");
-        if (!contrasena.Any(char.IsUpper))
-            throw new ArgumentException("Al menos una mayúscula");
-        if (!contrasena.Any(char.IsDigit))
-            throw new ArgumentException("Al menos un número");
-    }
-}</code></pre>
+                <div class="code-block">
+                  <div class="code-header">
+                    <div class="code-dots">
+                      <span class="code-dot red"></span>
+                      <span class="code-dot yellow"></span>
+                      <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">ValidadorContrasenas.cs</span>
+                  </div>
+                  <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">ValidadorContrasenas</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Validar</span><span class="token-operator">(</span><span class="token-keyword">string</span> contrasena<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>contrasena<span class="token-operator">.</span><span class="token-property">Length</span> <span class="token-operator">&lt;</span> <span class="token-number">8</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Mínimo 8 caracteres"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(!</span>contrasena<span class="token-operator">.</span><span class="token-method">Any</span><span class="token-operator">(</span><span class="token-keyword">char</span><span class="token-operator">.</span><span class="token-property">IsUpper</span><span class="token-operator">))</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Al menos una mayúscula"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(!</span>contrasena<span class="token-operator">.</span><span class="token-method">Any</span><span class="token-operator">(</span><span class="token-keyword">char</span><span class="token-operator">.</span><span class="token-property">IsDigit</span><span class="token-operator">))</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Al menos un número"</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
+                  </div>
+                </div>
 
             <p><strong>Requisitos:</strong></p>
             <ul>
