@@ -453,34 +453,69 @@ public class Estudiante
         <section id="pilares">
             <h2>Los Tres Pilares de la POO</h2>
 
-            <div class="diagram">
+            <div class="diagram" style="background: #f8fafc; padding: 20px; border-radius: 12px;">
               <figure>
-                <svg width="100%" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="poo-pillars-3">
-                  <title id="poo-pillars-3">Pilares de la POO</title>
+                <svg width="100%" viewBox="0 0 720 240" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="poo-pillars-3">
+                  <title id="poo-pillars-3">Los Tres Pilares de la Programación Orientada a Objetos</title>
                   <style>
-                    .pill{fill:#0b2d6b}
-                    .h{font:700 15px Arial, sans-serif; fill:#fff}
-                    .s{font:13px Arial, sans-serif; fill:#e6eefc}
+                    .pillar-box { rx: 12; }
+                    .pillar-title { font: bold 16px 'Segoe UI', Arial, sans-serif; }
+                    .pillar-subtitle { font: 600 13px 'Segoe UI', Arial, sans-serif; }
+                    .pillar-desc { font: 12px 'Segoe UI', Arial, sans-serif; }
+                    .icon-text { font: bold 28px Arial, sans-serif; }
+                    
+                    /* Encapsulamiento - Azul */
+                    .enc-box { fill: #1e40af; }
+                    .enc-text { fill: #ffffff; }
+                    .enc-accent { fill: #60a5fa; }
+                    
+                    /* Herencia - Verde */
+                    .her-box { fill: #047857; }
+                    .her-text { fill: #ffffff; }
+                    .her-accent { fill: #34d399; }
+                    
+                    /* Polimorfismo - Púrpura */
+                    .pol-box { fill: #7c3aed; }
+                    .pol-text { fill: #ffffff; }
+                    .pol-accent { fill: #a78bfa; }
                   </style>
+                  
                   <!-- ENCAPSULAMIENTO -->
-                  <rect x="40" y="40" width="200" height="140" rx="10" fill="#0b2d6b"/>
-                  <text x="140" y="80" text-anchor="middle" class="h">ENCAPSULAMIENTO</text>
-                  <text x="140" y="110" text-anchor="middle" class="s">Ocultar datos internos</text>
-                  <text x="140" y="130" text-anchor="middle" class="s">y exponer interfaz pública</text>
+                  <rect x="25" y="20" width="210" height="180" class="pillar-box enc-box"/>
+                  <!-- Icono de candado -->
+                  <text x="130" y="60" text-anchor="middle" class="icon-text enc-accent">🔒</text>
+                  <text x="130" y="95" text-anchor="middle" class="pillar-title enc-text">ENCAPSULAMIENTO</text>
+                  <text x="130" y="120" text-anchor="middle" class="pillar-subtitle enc-accent">Ocultar datos internos</text>
+                  <text x="130" y="140" text-anchor="middle" class="pillar-desc enc-text" style="opacity: 0.9;">Proteger información</text>
+                  <text x="130" y="158" text-anchor="middle" class="pillar-desc enc-text" style="opacity: 0.9;">Exponer solo lo necesario</text>
+                  <text x="130" y="178" text-anchor="middle" class="pillar-subtitle enc-accent" style="font-size: 11px;">private / public</text>
 
                   <!-- HERENCIA -->
-                  <rect x="260" y="40" width="200" height="140" rx="10" fill="#0b2d6b"/>
-                  <text x="360" y="80" text-anchor="middle" class="h">HERENCIA</text>
-                  <text x="360" y="110" text-anchor="middle" class="s">Reutilizar código</text>
-                  <text x="360" y="130" text-anchor="middle" class="s">mediante jerarquías</text>
+                  <rect x="255" y="20" width="210" height="180" class="pillar-box her-box"/>
+                  <!-- Icono de flecha/arbol -->
+                  <text x="360" y="60" text-anchor="middle" class="icon-text her-accent">🌳</text>
+                  <text x="360" y="95" text-anchor="middle" class="pillar-title her-text">HERENCIA</text>
+                  <text x="360" y="120" text-anchor="middle" class="pillar-subtitle her-accent">Reutilizar código</text>
+                  <text x="360" y="140" text-anchor="middle" class="pillar-desc her-text" style="opacity: 0.9;">Clases hijas de padres</text>
+                  <text x="360" y="158" text-anchor="middle" class="pillar-desc her-text" style="opacity: 0.9;">Extender funcionalidad</text>
+                  <text x="360" y="178" text-anchor="middle" class="pillar-subtitle her-accent" style="font-size: 11px;">class Hija : Padre</text>
 
                   <!-- POLIMORFISMO -->
-                  <rect x="480" y="40" width="200" height="140" rx="10" fill="#0b2d6b"/>
-                  <text x="580" y="80" text-anchor="middle" class="h">POLIMORFISMO</text>
-                  <text x="580" y="110" text-anchor="middle" class="s">Una interfaz,</text>
-                  <text x="580" y="130" text-anchor="middle" class="s">múltiples formas</text>
+                  <rect x="485" y="20" width="210" height="180" class="pillar-box pol-box"/>
+                  <!-- Icono de formas -->
+                  <text x="590" y="60" text-anchor="middle" class="icon-text pol-accent">🎭</text>
+                  <text x="590" y="95" text-anchor="middle" class="pillar-title pol-text">POLIMORFISMO</text>
+                  <text x="590" y="120" text-anchor="middle" class="pillar-subtitle pol-accent">Múltiples formas</text>
+                  <text x="590" y="140" text-anchor="middle" class="pillar-desc pol-text" style="opacity: 0.9;">Una interfaz, varios</text>
+                  <text x="590" y="158" text-anchor="middle" class="pillar-desc pol-text" style="opacity: 0.9;">comportamientos diferentes</text>
+                  <text x="590" y="178" text-anchor="middle" class="pillar-subtitle pol-accent" style="font-size: 11px;">override / virtual</text>
                 </svg>
-                <figcaption>Pilares fundamentales: encapsulamiento (hoy), herencia y polimorfismo (próxima clase).</figcaption>
+                <figcaption style="font-size: 1em; color: #374151; margin-top: 15px;">
+                  <strong>Los 3 Pilares de la POO:</strong> 
+                  <span style="color: #1e40af;">Encapsulamiento</span> (hoy), 
+                  <span style="color: #047857;">Herencia</span> y 
+                  <span style="color: #7c3aed;">Polimorfismo</span> (próxima clase)
+                </figcaption>
               </figure>
             </div>
 
