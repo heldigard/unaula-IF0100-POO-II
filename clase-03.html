@@ -1514,52 +1514,65 @@ Total Nómina: $20800.00
 
       <h3>Paso 4: Programa Principal con Polimorfismo (10 minutos)</h3>
       <p>Modifica <code>Program.cs</code>:</p>
-      <pre><code>using System;
-using System.Collections.Generic;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Program.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
+          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+<span class="token-keyword">using</span> <span class="token-namespace">System.Collections.Generic</span>;
 
-namespace SistemaFiguras
+<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
 {
-    class Program
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
     {
-        static void Main(string[] args)
+        <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
         {
-            Console.WriteLine("=== SISTEMA DE FIGURAS GEOMÉTRICAS ===\n");
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== SISTEMA DE FIGURAS GEOMÉTRICAS ===\n"</span>);
             
-            // Lista polimórfica de figuras
-            List&lt;Figura&gt; figuras = new List&lt;Figura&gt;
+            <span class="token-comment">// Lista polimórfica de figuras</span>
+            <span class="token-class">List</span>&lt;<span class="token-class">Figura</span>&gt; figuras <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">List</span>&lt;<span class="token-class">Figura</span>&gt;
             {
-                new Rectangulo(5, 3) { Color = "Azul" },
-                new Circulo(4) { Color = "Rojo" },
-                new Rectangulo(10, 2) { Color = "Verde" },
-                new Triangulo(6, 4, 5, 5, 6) { Color = "Amarillo" },
-                new Circulo(2.5) { Color = "Naranja" }
+                <span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">5</span>, <span class="token-number">3</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Azul"</span> },
+                <span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">4</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Rojo"</span> },
+                <span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">10</span>, <span class="token-number">2</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Verde"</span> },
+                <span class="token-keyword">new</span> <span class="token-method">Triangulo</span>(<span class="token-number">6</span>, <span class="token-number">4</span>, <span class="token-number">5</span>, <span class="token-number">5</span>, <span class="token-number">6</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Amarillo"</span> },
+                <span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">2.5</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Naranja"</span> }
             };
             
-            // Procesar todas las figuras polimórficamente
-            double areaTotal = 0;
-            foreach (Figura figura in figuras)
+            <span class="token-comment">// Procesar todas las figuras polimórficamente</span>
+            <span class="token-type">double</span> areaTotal <span class="token-operator">=</span> <span class="token-number">0</span>;
+            <span class="token-keyword">foreach</span> (<span class="token-class">Figura</span> figura <span class="token-keyword">in</span> figuras)
             {
-                figura.MostrarInfo();
-                areaTotal += figura.CalcularArea();
-                Console.WriteLine(new string('-', 40));
+                figura.<span class="token-method">MostrarInfo</span>();
+                areaTotal <span class="token-operator">+=</span> figura.<span class="token-method">CalcularArea</span>();
+                <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-keyword">new</span> <span class="token-type">string</span>(<span class="token-string">'-'</span>, <span class="token-number">40</span>));
             }
             
-            Console.WriteLine($"\nÁREA TOTAL DE TODAS LAS FIGURAS: {areaTotal:F2}");
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"\nÁREA TOTAL DE TODAS LAS FIGURAS: {areaTotal:F2}"</span>);
             
-            // Demostrar polimorfismo con un método genérico
-            Console.WriteLine("\n=== USANDO MÉTODO GENÉRICO ===");
-            MostrarAreaDuplicada(new Circulo(3));
-            MostrarAreaDuplicada(new Rectangulo(4, 5));
+            <span class="token-comment">// Demostrar polimorfismo con un método genérico</span>
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"\n=== USANDO MÉTODO GENÉRICO ==="</span>);
+            <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">3</span>));
+            <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">4</span>, <span class="token-number">5</span>));
         }
         
-        // Método que acepta cualquier tipo de Figura
-        static void MostrarAreaDuplicada(Figura figura)
+        <span class="token-comment">// Método que acepta cualquier tipo de Figura</span>
+        <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-class">Figura</span> figura)
         {
-            Console.WriteLine($"{figura.Nombre}: Área normal = {figura.CalcularArea():F2}");
-            Console.WriteLine($"{figura.Nombre}: Área duplicada = {figura.CalcularArea() * 2:F2}");
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{figura.Nombre}: Área normal = {figura.CalcularArea():F2}"</span>);
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{figura.Nombre}: Área duplicada = {figura.CalcularArea() * 2:F2}"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <div class="checklist">
         <strong>Checklist de Verificación del Laboratorio</strong>
@@ -1679,16 +1692,29 @@ namespace SistemaFiguras
         <li>Crear lista de 10 figuras aleatorias y calcular área total</li>
       </ol>
 
-      <pre><code>// Ejemplo de IDibujable para Rectángulo 3x4:
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Ejemplo_Dibujar.txt</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11</div>
+          <pre><code><span class="token-comment">// Ejemplo de IDibujable para Rectángulo 3x4:</span>
 ****
 ****
 ****
 
-// Ejemplo de IDibujable para Triángulo de altura 4:
+<span class="token-comment">// Ejemplo de IDibujable para Triángulo de altura 4:</span>
    *
   ***
  *****
 *******</code></pre>
+        </div>
+      </div>
 
       <div class="checklist">
         <strong>Checklist del Ejercicio 2</strong>
@@ -1749,27 +1775,53 @@ namespace SistemaFiguras
           </ul>
         </li>
         <li>Crear clase <code>ProcesadorPagos</code> con método estático:
-          <pre><code>public static void ProcesarMultiplesPagos(List&lt;MetodoPago&gt; pagos)</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ProcesadorPagos.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1</div>
+              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">ProcesarMultiplesPagos</span>(<span class="token-class">List</span>&lt;<span class="token-class">MetodoPago</span>&gt; pagos)</span></code></pre>
+            </div>
+          </div>
         </li>
         <li>Crear programa principal que simule 5 transacciones de diferentes tipos</li>
       </ol>
 
-      <pre><code>// Estructura esperada:
-MetodoPago (abstract)
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Estructura_SistemaPagos.txt</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+          <pre><code><span class="token-comment">// Estructura esperada:</span>
+<span class="token-class">MetodoPago</span> (<span class="token-keyword">abstract</span>)
     │
-    ├── PagoTarjetaCredito
-    ├── PagoPayPal
-    └── PagoTransferenciaBancaria (sealed)
+    ├── <span class="token-class">PagoTarjetaCredito</span>
+    ├── <span class="token-class">PagoPayPal</span>
+    └── <span class="token-class">PagoTransferenciaBancaria</span> (<span class="token-keyword">sealed</span>)
 
-// Uso esperado:
-var pagos = new List&lt;MetodoPago&gt;
+<span class="token-comment">// Uso esperado:</span>
+<span class="token-type">var</span> pagos <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">List</span>&lt;<span class="token-class">MetodoPago</span>&gt;
 {
-    new PagoTarjetaCredito("Juan", 1000, "4111111111111111", ...),
-    new PagoPayPal("Maria", 500, "maria@email.com", true),
-    new PagoTransferenciaBancaria("Pedro", 2000, "012345678901234567", ...)
+    <span class="token-keyword">new</span> <span class="token-method">PagoTarjetaCredito</span>(<span class="token-string">"Juan"</span>, <span class="token-number">1000</span>, <span class="token-string">"4111111111111111"</span>, ...),
+    <span class="token-keyword">new</span> <span class="token-method">PagoPayPal</span>(<span class="token-string">"Maria"</span>, <span class="token-number">500</span>, <span class="token-string">"maria@email.com"</span>, <span class="token-keyword">true</span>),
+    <span class="token-keyword">new</span> <span class="token-method">PagoTransferenciaBancaria</span>(<span class="token-string">"Pedro"</span>, <span class="token-number">2000</span>, <span class="token-string">"012345678901234567"</span>, ...)
 };
 
-ProcesadorPagos.ProcesarMultiplesPagos(pagos);</code></pre>
+<span class="token-class">ProcesadorPagos</span>.<span class="token-method">ProcesarMultiplesPagos</span>(pagos);</code></pre>
+        </div>
+      </div>
 
       <div class="checklist">
         <strong>Checklist del Ejercicio 3</strong>
