@@ -181,6 +181,122 @@
       a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
       pre, code { white-space: pre-wrap; }
     }
+
+    /* BLOQUES DE CÓDIGO MEJORADOS */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 12px;
+      margin: 16px 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: 1px solid #313244;
+    }
+
+    .code-header {
+      background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #45475a;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dot.red { background: #f38ba8; }
+    .code-dot.yellow { background: #f9e2af; }
+    .code-dot.green { background: #a6e3a1; }
+
+    .code-title {
+      color: #cdd6f4;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: auto;
+      font-family: 'Cascadia Code', Consolas, monospace;
+    }
+
+    .code-content {
+      display: flex;
+      background: #1e1e2e;
+    }
+
+    .line-numbers {
+      background: #181825;
+      color: #6c7086;
+      padding: 12px 10px;
+      text-align: right;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      user-select: none;
+      border-right: 1px solid #313244;
+    }
+
+    .code-block pre {
+      background: transparent;
+      margin: 0;
+      padding: 12px 16px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .code-block pre code {
+      color: #cdd6f4;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+    .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+    .code-block .token-type { color: #f9e2af; } /* yellow */
+    .code-block .token-string { color: #a6e3a1; } /* green */
+    .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+    .code-block .token-number { color: #fab387; } /* peach */
+    .code-block .token-operator { color: #89dceb; } /* cyan */
+    .code-block .token-method { color: #89b4fa; } /* blue */
+    .code-block .token-class { color: #f9e2af; font-weight: 600; }
+    .code-block .token-property { color: #b4befe; } /* lavender */
+    .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+    /* Código inline */
+    p code, li code {
+      background: #313244;
+      color: #cdd6f4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      border: 1px solid #45475a;
+    }
+
+    /* Tablas de código */
+    .code-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .code-comparison .code-block {
+      margin: 0;
+    }
+
+    .code-label {
+      font-size: 0.8rem;
+      color: #6c7086;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
@@ -311,22 +427,46 @@
         <div>
           <p>Los elementos esenciales son <code>using</code>, <code>namespace</code>, <code>class</code> y el método <code>Main</code> como punto de entrada.</p>
           <p><strong><abbr title="Namespace: Espacio de nombres que organiza clases y tipos, evitando conflictos de nombres">Namespace</abbr></strong>: Es como un "apellido" para las clases. Dos clases pueden llamarse <code>Program</code> si están en namespaces diferentes. Similar a los paquetes en Java.</p>
-          <pre><code class="language-csharp">using System;
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Program.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+              <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace MiApp
+<span class="token-keyword">namespace</span> <span class="token-namespace">MiApp</span>
 {
-    class Program
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
     {
-        static void Main(string[] args)
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
         {
-            Console.WriteLine("Hola, C#");
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Hola, C#"</span>);
         }
     }
 }</code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>Namespaces comunes</h4>
-          <pre><code>System
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Namespaces</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+              <pre><code>System
 ├── Console
 ├── String
 ├── Math
@@ -334,6 +474,8 @@ namespace MiApp
 │   └── Generic (List&lt;T&gt;)
 ├── IO (File, Directory)
 └── Data (SqlClient)</code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -343,18 +485,44 @@ namespace MiApp
         <div>
           <h4>Value types (almacenados en <abbr title="Stack: Memoria de acceso rápido con organización LIFO, ideal para variables locales y tipos primitivos">stack</abbr>)</h4>
           <p>Contienen directamente el valor. Al copiar, se crea una copia independiente. Incluyen: <code>int</code>, <code>double</code>, <code>bool</code>, <code>struct</code>.</p>
-          <pre><code class="language-csharp">int edad = 25;
-int edad2 = edad;
-edad2 = 30;
-Console.WriteLine(edad);  // 25 (no cambió)</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ValueTypes.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span> <span class="token-property">edad</span> = <span class="token-number">25</span>;
+<span class="token-keyword">int</span> <span class="token-property">edad2</span> = <span class="token-property">edad</span>;
+<span class="token-property">edad2</span> = <span class="token-number">30</span>;
+<span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-property">edad</span>);  <span class="token-comment">// 25 (no cambió)</span></code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>Reference types (almacenados en <abbr title="Heap: Memoria dinámica para objetos de mayor tamaño y vida útil variable">heap</abbr>)</h4>
           <p>Contienen una referencia a un objeto. Al copiar, se comparte la referencia. Incluyen: <code>class</code>, <code>string</code>, <code>array</code>.</p>
-          <pre><code class="language-csharp">string nombre = "Juan";
-string nombre2 = nombre;
-nombre2 = "Maria";
-Console.WriteLine(nombre); // Juan (string es inmutable)</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ReferenceTypes.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">string</span> <span class="token-property">nombre</span> = <span class="token-string">"Juan"</span>;
+<span class="token-keyword">string</span> <span class="token-property">nombre2</span> = <span class="token-property">nombre</span>;
+<span class="token-property">nombre2</span> = <span class="token-string">"Maria"</span>;
+<span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-property">nombre</span>); <span class="token-comment">// Juan (string es inmutable)</span></code></pre>
+            </div>
+          </div>
           <div class="note">Nota: <code>string</code> es reference type, pero es inmutable; al reasignar se crea un nuevo objeto. Para comportamientos mutables, usar <code>StringBuilder</code>.</div>
         </div>
       </div>
@@ -371,21 +539,47 @@ Console.WriteLine(nombre); // Juan (string es inmutable)</code></pre>
           <h4><abbr title="Nullable: Tipo que puede contener un valor normal o null (sin valor)">Nullable</abbr> (tipos que pueden ser null)</h4>
           <p>Por defecto, los value types (<code>int</code>, <code>double</code>, <code>bool</code>) no pueden ser <code>null</code>. El operador <code>?</code> permite que acepten <code>null</code>.</p>
           <p><strong>¿Por qué usarlo?</strong> Útil cuando un valor puede estar ausente (ej: edad desconocida de un usuario). El operador <code>??</code> (null-coalescing) proporciona un valor por defecto.</p>
-          <pre><code class="language-csharp">int? edad = null;         // puede ser null
-int edadDefault = edad ?? 18;  // 18 si edad es null</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Nullable.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span>? <span class="token-property">edad</span> = <span class="token-keyword">null</span>;         <span class="token-comment">// puede ser null</span>
+<span class="token-keyword">int</span> <span class="token-property">edadDefault</span> = <span class="token-property">edad</span> <span class="token-operator">??</span> <span class="token-number">18</span>;  <span class="token-comment">// 18 si edad es null</span></code></pre>
+            </div>
+          </div>
           <div class="warning-box">Error común: No validar null antes de usar un nullable. Usar <code>if (edad.HasValue)</code> o <code>??</code>.</div>
         </div>
         <div>
           <h4><abbr title="Pattern matching: Técnica para evaluar una expresión y ejecutar código según patrones o condiciones">Pattern matching</abbr> (coincidencia de patrones)</h4>
           <p>Forma moderna y legible de expresar condicionales complejas. El <code>switch</code> expression devuelve un valor directamente.</p>
           <p><strong>¿Por qué usarlo?</strong> Código más limpio que múltiples <code>if-else</code>, y el compilador verifica que todos los casos estén cubiertos.</p>
-          <pre><code class="language-csharp">string categoria = edadDefault switch
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">PatternMatching.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
+              <pre><code class="language-csharp"><span class="token-keyword">string</span> <span class="token-property">categoria</span> = <span class="token-property">edadDefault</span> <span class="token-keyword">switch</span>
 {
-    &lt; 13 => "Niño",
-    &lt; 20 => "Adolescente",
-    &lt; 65 => "Adulto",
-    _ => "Mayor"  // "_" es el default (cualquier otro caso)
+    <span class="token-operator">&lt;</span> <span class="token-number">13</span> <span class="token-operator">=></span> <span class="token-string">"Niño"</span>,
+    <span class="token-operator">&lt;</span> <span class="token-number">20</span> <span class="token-operator">=></span> <span class="token-string">"Adolescente"</span>,
+    <span class="token-operator">&lt;</span> <span class="token-number">65</span> <span class="token-operator">=></span> <span class="token-string">"Adulto"</span>,
+    <span class="token-operator">_</span> <span class="token-operator">=></span> <span class="token-string">"Mayor"</span>  <span class="token-comment">// "_" es el default (cualquier otro caso)</span>
 };</code></pre>
+            </div>
+          </div>
           <p><strong>Mini-chequeo:</strong> ¿Qué pasa si edadDefault es 70? ¿Y si es -5?</p>
         </div>
       </div>
@@ -412,16 +606,42 @@ int edadDefault = edad ?? 18;  // 18 si edad es null</code></pre>
       <div class="grid-2">
         <div>
           <h4>Antes (ArrayList)</h4>
-          <pre><code class="language-csharp">ArrayList lista = new ArrayList();
-lista.Add(42);
-lista.Add("hola");
-int valor = (int)lista[0]; // riesgo</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ArrayListExample.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-type">ArrayList</span> <span class="token-property">lista</span> = <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>();
+<span class="token-property">lista</span>.<span class="token-method">Add</span>(<span class="token-number">42</span>);
+<span class="token-property">lista</span>.<span class="token-method">Add</span>(<span class="token-string">"hola"</span>);
+<span class="token-keyword">int</span> <span class="token-property">valor</span> = (<span class="token-keyword">int</span>)<span class="token-property">lista</span>[<span class="token-number">0</span>]; <span class="token-comment">// riesgo</span></code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>Ahora (List&lt;T&gt;)</h4>
-          <pre><code class="language-csharp">List&lt;int&gt; nums = new List&lt;int&gt;();
-nums.Add(42);
-// nums.Add("hola"); // error</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ListGeneric.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3</div>
+              <pre><code class="language-csharp"><span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt; <span class="token-property">nums</span> = <span class="token-keyword">new</span> <span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt;();
+<span class="token-property">nums</span>.<span class="token-method">Add</span>(<span class="token-number">42</span>);
+<span class="token-comment">// nums.Add("hola"); // error</span></code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -437,18 +657,44 @@ nums.Add(42);
           <h4><abbr title="Primary constructor: Constructor declarado directamente en la línea de la clase, simplificando código cuando solo necesita recibir parámetros">Primary constructors</abbr> (constructores primarios)</h4>
           <p>Sintaxis simplificada para clases que solo necesitan recibir parámetros en el constructor.</p>
           <p><strong>¿Por qué usarlo?</strong> Reduce código boilerplate cuando la clase solo almacena parámetros.</p>
-          <pre><code class="language-csharp">public class Persona(string nombre, int edad)
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Persona.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>(<span class="token-keyword">string</span> <span class="token-property">nombre</span>, <span class="token-keyword">int</span> <span class="token-property">edad</span>)
 {
-    public string Info => $"{nombre} ({edad} años)";
+    <span class="token-keyword">public string</span> <span class="token-property">Info</span> <span class="token-operator">=></span> <span class="token-string">$"{nombre} ({edad} años)"</span>;
 }</code></pre>
+            </div>
+          </div>
           <div class="note">Nota: Los parámetros del primary constructor están disponibles en toda la clase, similar a campos privados.</div>
         </div>
         <div>
           <h4>Collection expressions</h4>
           <p>Sintaxis moderna para crear colecciones sin repetir <code>new[]</code> o <code>new List&lt;T&gt;()</code>.</p>
-          <pre><code class="language-csharp">int[] pares = [2, 4, 6];
-int[] impares = [1, 3, 5];
-int[] all = [..pares, ..impares];  // spread operator</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">CollectionExpressions.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span>[] <span class="token-property">pares</span> = [<span class="token-number">2</span>, <span class="token-number">4</span>, <span class="token-number">6</span>];
+<span class="token-keyword">int</span>[] <span class="token-property">impares</span> = [<span class="token-number">1</span>, <span class="token-number">3</span>, <span class="token-number">5</span>];
+<span class="token-keyword">int</span>[] <span class="token-property">all</span> = [<span class="token-operator">..</span><span class="token-property">pares</span>, <span class="token-operator">..</span><span class="token-property">impares</span>];  <span class="token-comment">// spread operator</span></code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -458,11 +704,24 @@ int[] all = [..pares, ..impares];  // spread operator</code></pre>
       <div class="grid-2">
         <div>
           <h4>Filtrar y transformar lista</h4>
-          <pre><code class="language-csharp">List<int> nums = new() { 1, 2, 3, 4, 5 };
-var pares = nums.Where(n => n % 2 == 0)     // filtrar pares
-                .Select(n => n * 2)          // duplicar
-                .ToList();                   // convertir a lista
-// Resultado: [4, 8]</code></pre>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">LINQExample.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+              <pre><code class="language-csharp"><span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt; <span class="token-property">nums</span> = <span class="token-keyword">new</span>() { <span class="token-number">1</span>, <span class="token-number">2</span>, <span class="token-number">3</span>, <span class="token-number">4</span>, <span class="token-number">5</span> };
+<span class="token-keyword">var</span> <span class="token-property">pares</span> = <span class="token-property">nums</span>.<span class="token-method">Where</span>(<span class="token-property">n</span> <span class="token-operator">=></span> <span class="token-property">n</span> <span class="token-operator">%</span> <span class="token-number">2</span> <span class="token-operator">==</span> <span class="token-number">0</span>)     <span class="token-comment">// filtrar pares</span>
+                .<span class="token-method">Select</span>(<span class="token-property">n</span> <span class="token-operator">=></span> <span class="token-property">n</span> <span class="token-operator">*</span> <span class="token-number">2</span>)          <span class="token-comment">// duplicar</span>
+                .<span class="token-method">ToList</span>();                   <span class="token-comment">// convertir a lista</span>
+<span class="token-comment">// Resultado: [4, 8]</span></code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>Beneficios</h4>
@@ -478,10 +737,23 @@ var pares = nums.Where(n => n % 2 == 0)     // filtrar pares
 
       <h3>Ciclo de ejecución en C#</h3>
       <p>Entender cómo se ejecuta un programa C# ayuda a diagnosticar problemas y optimizar rendimiento.</p>
-      <pre><code>1) Código C# (.cs) - Código fuente legible por humanos
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Ciclo de Ejecución</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4</div>
+          <pre><code>1) Código C# (.cs) - Código fuente legible por humanos
 2) Compilación -> IL (.dll/.exe) - Código intermedio (CIL)
 3) CLR (JIT) -> código máquina - Compilación Just-In-Time
 4) Ejecución en Windows/Linux/macOS - Código nativo del CPU</code></pre>
+        </div>
+      </div>
       <div class="grid-2">
         <div>
           <h4>Fases clave</h4>
@@ -533,18 +805,31 @@ var pares = nums.Where(n => n % 2 == 0)     // filtrar pares
       <ul>
         <li><strong>Checklist:</strong> proyecto creado, compila sin errores, mensaje correcto.</li>
       </ul>
-      <pre><code class="language-csharp">using System;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">HolaMundo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+          <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace HolaMundo
+<span class="token-keyword">namespace</span> <span class="token-namespace">HolaMundo</span>
 {
-    class Program
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
     {
-        static void Main(string[] args)
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
         {
-            Console.WriteLine("Hola Mundo");
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Hola Mundo"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Depuración básica (10 min)</h3>
       <p><strong><abbr title="Debug: Proceso de ejecutar un programa paso a paso para encontrar y corregir errores">Debug</abbr></strong> (depuración) es ejecutar el programa controladamente para inspeccionar valores y encontrar errores.</p>
@@ -586,24 +871,37 @@ namespace HolaMundo
       <ul>
         <li><strong>Checklist:</strong> proyecto creado, entrada validada, cálculo correcto, salida formateada.</li>
       </ul>
-      <pre><code class="language-csharp">using System;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">CalculadoraArea.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace CalculadoraArea
+<span class="token-keyword">namespace</span> <span class="token-namespace">CalculadoraArea</span>
 {
-    class Program
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
     {
-        static void Main(string[] args)
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
         {
-            Console.WriteLine("=== CALCULADORA ===");
-            Console.Write("Base: ");
-            double b = double.Parse(Console.ReadLine());
-            Console.Write("Altura: ");
-            double h = double.Parse(Console.ReadLine());
-            double area = b * h;
-            Console.WriteLine($"Área: {area:F2}");
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== CALCULADORA ==="</span>);
+            <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">"Base: "</span>);
+            <span class="token-keyword">double</span> <span class="token-property">b</span> = <span class="token-keyword">double</span>.<span class="token-method">Parse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>());
+            <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">"Altura: "</span>);
+            <span class="token-keyword">double</span> <span class="token-property">h</span> = <span class="token-keyword">double</span>.<span class="token-method">Parse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>());
+            <span class="token-keyword">double</span> <span class="token-property">area</span> = <span class="token-property">b</span> <span class="token-operator">*</span> <span class="token-property">h</span>;
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Área: {area:F2}"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       </section>
 
@@ -618,23 +916,36 @@ namespace CalculadoraArea
       <ul>
         <li><strong>Checklist:</strong> validación de entrada, cálculo de promedio, condición de aprobación (>=3.0), manejo de errores.</li>
       </ul>
-      <pre><code class="language-csharp">static double PedirNota(string etiqueta)
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Validacion.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17</div>
+          <pre><code class="language-csharp"><span class="token-keyword">static double</span> <span class="token-method">PedirNota</span>(<span class="token-keyword">string</span> <span class="token-property">etiqueta</span>)
 {
-    double nota;
-    while (true)
+    <span class="token-keyword">double</span> <span class="token-property">nota</span>;
+    <span class="token-keyword">while</span> (<span class="token-keyword">true</span>)
     {
-        Console.Write($"{etiqueta} (0-5): ");
-        if (double.TryParse(Console.ReadLine(), out nota))
+        <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">$"{etiqueta} (0-5): "</span>);
+        <span class="token-keyword">if</span> (<span class="token-keyword">double</span>.<span class="token-method">TryParse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>(), <span class="token-keyword">out</span> <span class="token-property">nota</span>))
         {
-            if (nota >= 0 && nota <= 5) return nota;
-            Console.WriteLine("Fuera de rango");
+            <span class="token-keyword">if</span> (<span class="token-property">nota</span> <span class="token-operator">>=</span> <span class="token-number">0</span> <span class="token-operator">&&</span> <span class="token-property">nota</span> <span class="token-operator">&lt;=</span> <span class="token-number">5</span>) <span class="token-keyword">return</span> <span class="token-property">nota</span>;
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Fuera de rango"</span>);
         }
-        else
+        <span class="token-keyword">else</span>
         {
-            Console.WriteLine("No válido");
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"No válido"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       </section>
 

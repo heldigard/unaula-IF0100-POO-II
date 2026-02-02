@@ -326,6 +326,122 @@
         .skip-link:focus {
             top: 0;
         }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+          background: #1e1e2e;
+          border-radius: 12px;
+          margin: 16px 0;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          border: 1px solid #313244;
+        }
+
+        .code-header {
+          background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+          padding: 10px 16px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+          display: flex;
+          gap: 6px;
+        }
+
+        .code-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+          color: #cdd6f4;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-left: auto;
+          font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+          display: flex;
+          background: #1e1e2e;
+        }
+
+        .line-numbers {
+          background: #181825;
+          color: #6c7086;
+          padding: 12px 10px;
+          text-align: right;
+          font-family: 'Cascadia Code', Consolas, monospace;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          user-select: none;
+          border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+          background: transparent;
+          margin: 0;
+          padding: 12px 16px;
+          flex: 1;
+          overflow-x: auto;
+        }
+
+        .code-block pre code {
+          color: #cdd6f4;
+          font-size: 0.95rem;
+          line-height: 1.5;
+          display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+          background: #313244;
+          color: #cdd6f4;
+          padding: 2px 8px;
+          border-radius: 6px;
+          font-size: 0.9em;
+          border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 16px;
+          margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+          margin: 0;
+        }
+
+        .code-label {
+          font-size: 0.8rem;
+          color: #6c7086;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 6px;
+        }
     </style>
 </head>
 <body>
@@ -401,39 +517,65 @@
             <div class="comparison-table">
                 <div>
                     <h4>Enfoque Procedural (C)</h4>
-                    <pre><code class="language-c">// Datos separados
-struct Estudiante {
-    char nombre[100];
-    int edad;
-    double promedio;
+                    <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">estudiante.c</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17</div>
+    <pre><code class="language-c"><span class="token-comment">// Datos separados</span>
+<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span> {
+    <span class="token-keyword">char</span> nombre[<span class="token-number">100</span>];
+    <span class="token-keyword">int</span> edad;
+    <span class="token-keyword">double</span> promedio;
 };
 
-// Funciones separadas
-void imprimir_estudiante(struct Estudiante* e) {
-    printf("Nombre: %s\n", e->nombre);
+<span class="token-comment">// Funciones separadas</span>
+<span class="token-keyword">void</span> <span class="token-method">imprimir_estudiante</span>(<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span>* e) {
+    <span class="token-method">printf</span>(<span class="token-string">"Nombre: %s\n"</span>, e->nombre);
 }
 
-double calcular_promedio(struct Estudiante* e) {
-    return e->promedio;
+<span class="token-keyword">double</span> <span class="token-method">calcular_promedio</span>(<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span>* e) {
+    <span class="token-keyword">return</span> e->promedio;
 }</code></pre>
+  </div>
+</div>
                 </div>
                 <div>
                     <h4>Enfoque POO (C#)</h4>
-                    <pre><code class="language-csharp">// Datos y comportamiento UNIDOS
-public class Estudiante
+                    <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Datos y comportamiento UNIDOS</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    // Datos (propiedades)
-    public string Nombre { get; set; }
-    public int Edad { get; set; }
-    public double Promedio { get; set; }
+    <span class="token-comment">// Datos (propiedades)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // Comportamiento (metodos)
-    public void Imprimir() =>
-        Console.WriteLine($"Nombre: {Nombre}");
+    <span class="token-comment">// Comportamiento (metodos)</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Imprimir</span>() <span class="token-operator">=></span>
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Nombre: {Nombre}"</span>);
 
-    public bool Aprobado() =>
-        Promedio >= 3.0;
+    <span class="token-keyword">public bool</span> <span class="token-method">Aprobado</span>() <span class="token-operator">=></span>
+        <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
 }</code></pre>
+  </div>
+</div>
                 </div>
             </div>
 
@@ -608,56 +750,69 @@ public class Estudiante
             </div>
 
             <h3>Ejemplo de Código</h3>
-            <pre><code class="language-csharp">// ============================================
-// CLASE: Definicion (plantilla)
-// ============================================
-public class Estudiante
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51</div>
+    <pre><code class="language-csharp"><span class="token-comment">// ============================================</span>
+<span class="token-comment">// CLASE: Definicion (plantilla)</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    // Campos (atributos)
-    public string Nombre;
-    public string Codigo;
-    public int Edad;
-    public double Promedio;
+    <span class="token-comment">// Campos (atributos)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span>;
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span>;
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span>;
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span>;
 
-    // Metodos (comportamiento)
-    public void MostrarInfo()
+    <span class="token-comment">// Metodos (comportamiento)</span>
+    <span class="token-keyword">public void</span> <span class="token-method">MostrarInfo</span>()
     {
-        Console.WriteLine($"Nombre: {Nombre}");
-        Console.WriteLine($"Codigo: {Codigo}");
-        Console.WriteLine($"Edad: {Edad}");
-        Console.WriteLine($"Promedio: {Promedio}");
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Nombre: {Nombre}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Codigo: {Codigo}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Edad: {Edad}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Promedio: {Promedio}"</span>);
     }
 
-    public bool Aprobado() => Promedio >= 3.0;
+    <span class="token-keyword">public bool</span> <span class="token-method">Aprobado</span>() <span class="token-operator">=></span> <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
 }
 
-// ============================================
-// OBJETOS: Instancias (creaciones concretas)
-// ============================================
-class Program
+<span class="token-comment">// ============================================</span>
+<span class="token-comment">// OBJETOS: Instancias (creaciones concretas)</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
 {
-    static void Main()
+    <span class="token-keyword">static void</span> <span class="token-method">Main</span>()
     {
-        // Crear PRIMER objeto (instancia)
-        Estudiante est1 = new Estudiante();
-        est1.Nombre = "Maria Lopez";
-        est1.Codigo = "2024001";
-        est1.Edad = 20;
-        est1.Promedio = 4.2;
+        <span class="token-comment">// Crear PRIMER objeto (instancia)</span>
+        <span class="token-class">Estudiante</span> est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();
+        est1.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria Lopez"</span>;
+        est1.<span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"2024001"</span>;
+        est1.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">20</span>;
+        est1.<span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">4.2</span>;
 
-        // Crear SEGUNDO objeto (independiente)
-        Estudiante est2 = new Estudiante();
-        est2.Nombre = "Carlos Ruiz";
-        est2.Codigo = "2024002";
-        est2.Edad = 22;
-        est2.Promedio = 2.8;
+        <span class="token-comment">// Crear SEGUNDO objeto (independiente)</span>
+        <span class="token-class">Estudiante</span> est2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();
+        est2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Carlos Ruiz"</span>;
+        est2.<span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"2024002"</span>;
+        est2.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">22</span>;
+        est2.<span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">2.8</span>;
 
-        // Cada objeto es independiente
-        est1.MostrarInfo();
-        Console.WriteLine();
-        est2.MostrarInfo();
+        <span class="token-comment">// Cada objeto es independiente</span>
+        est1.<span class="token-method">MostrarInfo</span>();
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>();
+        est2.<span class="token-method">MostrarInfo</span>();
     }
 }</code></pre>
+  </div>
+</div>
         </section>
 
         <section id="memoria">
@@ -741,15 +896,28 @@ class Program
             </figure>
 
             <h3>Flujo de Creación de un Objeto</h3>
-            <pre><code class="language-csharp">// Paso 1: Declaracion (stack - variable de referencia)
-Estudiante est1;  // stack: est1 = null
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Program.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Paso 1: Declaracion (stack - variable de referencia)</span>
+<span class="token-class">Estudiante</span> est1;  <span class="token-comment">// stack: est1 = null</span>
 
-// Paso 2: Instanciacion (heap - objeto creado)
-est1 = new Estudiante();  // heap: new Estudiante object
+<span class="token-comment">// Paso 2: Instanciacion (heap - objeto creado)</span>
+est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();  <span class="token-comment">// heap: new Estudiante object</span>
 
-// Paso 3: Asignacion de valores
-est1.Nombre = "Maria";  // heap: Nombre = "Maria"
-est1.Edad = 20;         // heap: Edad = 20</code></pre>
+<span class="token-comment">// Paso 3: Asignacion de valores</span>
+est1.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;  <span class="token-comment">// heap: Nombre = "Maria"</span>
+est1.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">20</span>;         <span class="token-comment">// heap: Edad = 20</span></code></pre>
+  </div>
+</div>
 
             <div class="warning-box">
                 <h4>Puntos Clave</h4>
@@ -794,17 +962,30 @@ est2.Nombre = "Carlos";   // est1.Nombre tambien cambia</code></pre>
             </table>
 
             <h3>SIN Encapsulamiento (Frágil)</h3>
-            <pre><code class="language-csharp">public class CuentaBancaria
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
 {
-    // Campos PUBLICOS = peligro
-    public double saldo;
-    public string titular;
+    <span class="token-comment">// Campos PUBLICOS = peligro</span>
+    <span class="token-keyword">public double</span> saldo;
+    <span class="token-keyword">public string</span> titular;
 }
 
-// Uso problematico
-var cuenta = new CuentaBancaria();
-cuenta.saldo = -1000;  // Valido pero INCORRECTO
-cuenta.titular = "";   // Nombre vacio permitido</code></pre>
+<span class="token-comment">// Uso problematico</span>
+<span class="token-keyword">var</span> cuenta <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">CuentaBancaria</span>();
+cuenta.saldo <span class="token-operator">=</span> <span class="token-operator">-</span><span class="token-number">1000</span>;  <span class="token-comment">// Valido pero INCORRECTO</span>
+cuenta.titular <span class="token-operator">=</span> <span class="token-string">""</span>;   <span class="token-comment">// Nombre vacio permitido</span></code></pre>
+  </div>
+</div>
 
             <div class="warning-box">
                 <h4>Problemas sin encapsulamiento:</h4>
@@ -817,43 +998,56 @@ cuenta.titular = "";   // Nombre vacio permitido</code></pre>
             </div>
 
             <h3>CON Encapsulamiento (Robusto)</h3>
-            <pre><code class="language-csharp">public class CuentaBancaria
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
 {
-    // Campos PRIVADOS = protegidos
-    private double _saldo;
-    private string _titular;
+    <span class="token-comment">// Campos PRIVADOS = protegidos</span>
+    <span class="token-keyword">private double</span> _saldo;
+    <span class="token-keyword">private string</span> _titular;
 
-    // Propiedad con validacion
-    public string Titular
+    <span class="token-comment">// Propiedad con validacion</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titular</span>
     {
-        get => _titular;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _titular;
+        <span class="token-keyword">set</span>
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("El titular no puede estar vacio");
-            _titular = value;
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El titular no puede estar vacio"</span>);
+            _titular <span class="token-operator">=</span> value;
         }
     }
 
-    // Metodos controlados
-    public void Depositar(double monto)
+    <span class="token-comment">// Metodos controlados</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Depositar</span>(<span class="token-keyword">double</span> monto)
     {
-        if (monto <= 0)
-            throw new ArgumentException("El monto debe ser positivo");
-        _saldo += monto;
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
+        _saldo <span class="token-operator">+=</span> monto;
     }
 
-    public void Retirar(double monto)
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar</span>(<span class="token-keyword">double</span> monto)
     {
-        if (monto <= 0)
-            throw new ArgumentException("El monto debe ser positivo");
-        if (monto > _saldo)
-            throw new InvalidOperationException("Saldo insuficiente");
-        _saldo -= monto;
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
+        <span class="token-keyword">if</span> (monto <span class="token-operator">></span> _saldo)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">InvalidOperationException</span>(<span class="token-string">"Saldo insuficiente"</span>);
+        _saldo <span class="token-operator">-=</span> monto;
     }
 
-    public double Saldo => _saldo;  // Solo lectura
+    <span class="token-keyword">public double</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo;  <span class="token-comment">// Solo lectura</span>
 }</code></pre>
+  </div>
+</div>
 
             <div class="success-box">
                 <h4>Beneficios con encapsulamiento:</h4>
@@ -869,19 +1063,32 @@ cuenta.titular = "";   // Nombre vacio permitido</code></pre>
             <div class="highlight-box">
                 <h4>Regla de Oro</h4>
                 <p><strong>Expón solo lo que es necesario para usar la clase. Oculta todo lo demás.</strong></p>
-                <pre><code class="language-csharp">public class Estudiante
+                <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    // PUBLICO: Parte de la API externa
-    public string Nombre { get; set; }
-    public int Edad { get; set; }
+    <span class="token-comment">// PUBLICO: Parte de la API externa</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // PRIVADO: Implementacion interna
-    private double _promedioInterno;
-    private void _calcularPromedioInterno() { ... }
+    <span class="token-comment">// PRIVADO: Implementacion interna</span>
+    <span class="token-keyword">private double</span> _promedioInterno;
+    <span class="token-keyword">private void</span> <span class="token-method">_calcularPromedioInterno</span>() { ... }
 
-    // PUBLICO: Expone resultado calculado (no los detalles)
-    public double Promedio => _promedioInterno;
+    <span class="token-comment">// PUBLICO: Expone resultado calculado (no los detalles)</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> <span class="token-operator">=></span> _promedioInterno;
 }</code></pre>
+  </div>
+</div>
             </div>
         </section>
 
@@ -917,43 +1124,56 @@ cuenta.titular = "";   // Nombre vacio permitido</code></pre>
             </ol>
 
             <h3>Ejemplo Completo</h3>
-            <pre><code class="language-csharp">public class CuentaBancaria
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
 {
-    // PRIVADOS: Solo uso interno
-    private double _saldo;
-    private readonly string _numeroCuenta;
+    <span class="token-comment">// PRIVADOS: Solo uso interno</span>
+    <span class="token-keyword">private double</span> _saldo;
+    <span class="token-keyword">private readonly string</span> _numeroCuenta;
 
-    // PUBLICOS: API externa
-    public string Titular { get; set; }
+    <span class="token-comment">// PUBLICOS: API externa</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titular</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // SOLO LECTURA: No se puede modificar despues de crear
-    public string NumeroCuenta => _numeroCuenta;
+    <span class="token-comment">// SOLO LECTURA: No se puede modificar despues de crear</span>
+    <span class="token-keyword">public string</span> <span class="token-property">NumeroCuenta</span> <span class="token-operator">=></span> _numeroCuenta;
 
-    // PROPORCIONAL: Saldo expuesto pero sin modificacion directa
-    public double Saldo => _saldo;
+    <span class="token-comment">// PROPORCIONAL: Saldo expuesto pero sin modificacion directa</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo;
 
-    // Constructor
-    public CuentaBancaria(string titular, string numeroCuenta, double saldoInicial)
+    <span class="token-comment">// Constructor</span>
+    <span class="token-keyword">public</span> <span class="token-method">CuentaBancaria</span>(<span class="token-keyword">string</span> titular, <span class="token-keyword">string</span> numeroCuenta, <span class="token-keyword">double</span> saldoInicial)
     {
-        Titular = titular;
-        _numeroCuenta = numeroCuenta;
-        _saldo = saldoInicial;
+        <span class="token-property">Titular</span> <span class="token-operator">=</span> titular;
+        _numeroCuenta <span class="token-operator">=</span> numeroCuenta;
+        _saldo <span class="token-operator">=</span> saldoInicial;
     }
 
-    // PUBLICO: Comportamiento controlado
-    public void Depositar(double monto)
+    <span class="token-comment">// PUBLICO: Comportamiento controlado</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Depositar</span>(<span class="token-keyword">double</span> monto)
     {
-        _validarMontoPositivo(monto);
-        _saldo += monto;
+        <span class="token-method">_validarMontoPositivo</span>(monto);
+        _saldo <span class="token-operator">+=</span> monto;
     }
 
-    // PRIVADO: Validacion interna (reutilizable)
-    private void _validarMontoPositivo(double monto)
+    <span class="token-comment">// PRIVADO: Validacion interna (reutilizable)</span>
+    <span class="token-keyword">private void</span> <span class="token-method">_validarMontoPositivo</span>(<span class="token-keyword">double</span> monto)
     {
-        if (monto <= 0)
-            throw new ArgumentException("El monto debe ser positivo");
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
     }
 }</code></pre>
+  </div>
+</div>
         </section>
 
         <section id="propiedades">
@@ -964,45 +1184,71 @@ cuenta.titular = "";   // Nombre vacio permitido</code></pre>
             <p><strong>¿Por qué usarlas?</strong> Código más limpio y natural que métodos getter/setter tradicionales, con la misma capacidad de validación y control.</p>
 
             <h3>TRADICIONAL (Java-style) - Verboso</h3>
-            <pre><code class="language-csharp">public class Persona
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs (Java-style)</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>
 {
-    private string _nombre;
+    <span class="token-keyword">private string</span> _nombre;
 
-    // Metodo getter
-    public string GetNombre()
+    <span class="token-comment">// Metodo getter</span>
+    <span class="token-keyword">public string</span> <span class="token-method">GetNombre</span>()
     {
-        return _nombre;
+        <span class="token-keyword">return</span> _nombre;
     }
 
-    // Metodo setter
-    public void SetNombre(string valor)
+    <span class="token-comment">// Metodo setter</span>
+    <span class="token-keyword">public void</span> <span class="token-method">SetNombre</span>(<span class="token-keyword">string</span> valor)
     {
-        _nombre = valor;
+        _nombre <span class="token-operator">=</span> valor;
     }
 }
 
-// Uso verboso
-var p = new Persona();
-p.SetNombre("Maria");
-string n = p.GetNombre();</code></pre>
+<span class="token-comment">// Uso verboso</span>
+<span class="token-keyword">var</span> p <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Persona</span>();
+p.<span class="token-method">SetNombre</span>(<span class="token-string">"Maria"</span>);
+<span class="token-keyword">string</span> n <span class="token-operator">=</span> p.<span class="token-method">GetNombre</span>();</code></pre>
+  </div>
+</div>
 
             <h3>MODERNO C# - Propiedades</h3>
-            <pre><code class="language-csharp">public class Persona
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs (C# Moderno)</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>
 {
-    private string _nombre;
+    <span class="token-keyword">private string</span> _nombre;
 
-    // Propiedad con get y set
-    public string Nombre
+    <span class="token-comment">// Propiedad con get y set</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span>
     {
-        get { return _nombre; }
-        set { _nombre = value; }
+        <span class="token-keyword">get</span> { <span class="token-keyword">return</span> _nombre; }
+        <span class="token-keyword">set</span> { _nombre <span class="token-operator">=</span> value; }
     }
 }
 
-// Uso natural
-var p = new Persona();
-p.Nombre = "Maria";      // Usa 'set'
-string n = p.Nombre;     // Usa 'get'</code></pre>
+<span class="token-comment">// Uso natural</span>
+<span class="token-keyword">var</span> p <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Persona</span>();
+p.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;      <span class="token-comment">// Usa 'set'</span>
+<span class="token-keyword">string</span> n <span class="token-operator">=</span> p.<span class="token-property">Nombre</span>;     <span class="token-comment">// Usa 'get'</span></code></pre>
+  </div>
+</div>
 
             <h3>Tipos de Propiedades</h3>
             <table>
@@ -1024,37 +1270,50 @@ string n = p.Nombre;     // Usa 'get'</code></pre>
 
             <h3>Ejemplos Completos</h3>
             <p><strong>Backing field:</strong> Es el campo privado (<code>_campo</code>) que almacena el valor real de una propiedad. Se usa cuando necesitas lógica en get/set.</p>
-            <pre><code class="language-csharp">public class Estudiante
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    // 1. AUTOIMPLEMENTADA (sin validacion)
-    public string Nombre { get; set; }
-    public int Edad { get; set; }
+    <span class="token-comment">// 1. AUTOIMPLEMENTADA (sin validacion)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // 2. CON VALIDACION (usa backing field)
-    private double _promedio;  // Este es el "backing field"
-    public double Promedio
+    <span class="token-comment">// 2. CON VALIDACION (usa backing field)</span>
+    <span class="token-keyword">private double</span> _promedio;  <span class="token-comment">// Este es el "backing field"</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span>
     {
-        get => _promedio;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _promedio;
+        <span class="token-keyword">set</span>
         {
-            if (value < 0.0 || value > 5.0)
-                throw new ArgumentOutOfRangeException("Promedio", "Debe estar entre 0 y 5");
-            _promedio = value;
+            <span class="token-keyword">if</span> (value <span class="token-operator"><</span> <span class="token-number">0.0</span> <span class="token-operator">||</span> value <span class="token-operator">></span> <span class="token-number">5.0</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Promedio"</span>, <span class="token-string">"Debe estar entre 0 y 5"</span>);
+            _promedio <span class="token-operator">=</span> value;
         }
     }
 
-    // 3. SOLO LECTURA (calculada)
-    public bool Aprobado => Promedio >= 3.0;
+    <span class="token-comment">// 3. SOLO LECTURA (calculada)</span>
+    <span class="token-keyword">public bool</span> <span class="token-property">Aprobado</span> <span class="token-operator">=></span> <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
 
-    // 4. INIT-ONLY (solo se asigna en constructor o inicializador)
-    public string Matricula { get; init; }
+    <span class="token-comment">// 4. INIT-ONLY (solo se asigna en constructor o inicializador)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Matricula</span> { <span class="token-keyword">get</span>; <span class="token-keyword">init</span>; }
 
-    // 5. CON VALOR DEFAULT
-    public string Carrera { get; set; } = "Sin carrera";
+    <span class="token-comment">// 5. CON VALOR DEFAULT</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Carrera</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } <span class="token-operator">=</span> <span class="token-string">"Sin carrera"</span>;
 
-    // 6. EXPRESION BODIED (C# 7+)
-    public string InfoCompleta => $"{Nombre} ({Edad} años) - {Carrera}";
+    <span class="token-comment">// 6. EXPRESION BODIED (C# 7+)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">InfoCompleta</span> <span class="token-operator">=></span> <span class="token-string">$"{Nombre} ({Edad} años) - {Carrera}"</span>;
 }</code></pre>
+  </div>
+</div>
             <div class="note">Nota: Una propiedad es <strong>inmutable</strong> cuando su valor no puede cambiar después de la creación del objeto. Se logra con <code>{ get; }</code> (solo lectura), <code>{ get; init; }</code> (solo en constructor), o <code>readonly</code> en campos.</div>
         </section>
 
@@ -1090,152 +1349,233 @@ string n = p.Nombre;     // Usa 'get'</code></pre>
             </table>
 
             <h3>Ejemplo Completo</h3>
-            <pre><code class="language-csharp">public class Estudiante
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    public string Nombre { get; set; }
-    public string Codigo { get; set; }
-    public int Edad { get; set; }
-    public double Promedio { get; set; }
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    // 1. CONSTRUCTOR DEFAULT
-    public Estudiante()
+    <span class="token-comment">// 1. CONSTRUCTOR DEFAULT</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>()
     {
-        Nombre = "Sin nombre";
-        Codigo = "0000000";
-        Edad = 18;
-        Promedio = 0.0;
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Sin nombre"</span>;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"0000000"</span>;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">18</span>;
+        <span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">0.0</span>;
     }
 
-    // 2. CONSTRUCTOR PARAMETRIZADO
-    public Estudiante(string nombre, string codigo, int edad)
+    <span class="token-comment">// 2. CONSTRUCTOR PARAMETRIZADO</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo, <span class="token-keyword">int</span> edad)
     {
-        if (string.IsNullOrWhiteSpace(nombre))
-            throw new ArgumentException("Nombre requerido");
-        if (edad < 16 || edad > 100)
-            throw new ArgumentOutOfRangeException("Edad");
+        <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(nombre))
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"Nombre requerido"</span>);
+        <span class="token-keyword">if</span> (edad <span class="token-operator"><</span> <span class="token-number">16</span> <span class="token-operator">||</span> edad <span class="token-operator">></span> <span class="token-number">100</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Edad"</span>);
 
-        Nombre = nombre;
-        Codigo = codigo;
-        Edad = edad;
-        Promedio = 0.0;
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> nombre;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> codigo;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> edad;
+        <span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">0.0</span>;
     }
 
-    // 3. CONSTRUCTOR CON ENCADENAMIENTO (this)
-    public Estudiante(string nombre, string codigo)
-        : this(nombre, codigo, 18)  // Llama al constructor de 3 params
+    <span class="token-comment">// 3. CONSTRUCTOR CON ENCADENAMIENTO (this)</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(nombre, codigo, <span class="token-number">18</span>)  <span class="token-comment">// Llama al constructor de 3 params</span>
     {
-        // Edad ya se inicializo en 18
+        <span class="token-comment">// Edad ya se inicializo en 18</span>
     }
 }
 
-// USO
-var e1 = new Estudiante();                              // Default
-var e2 = new Estudiante("Maria", "2024001", 20);       // Parametrizado
-var e3 = new Estudiante("Carlos", "2024002");          // Encadenado (edad=18)</code></pre>
+<span class="token-comment">// USO</span>
+<span class="token-keyword">var</span> e1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();                              <span class="token-comment">// Default</span>
+<span class="token-keyword">var</span> e2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Maria"</span>, <span class="token-string">"2024001"</span>, <span class="token-number">20</span>);       <span class="token-comment">// Parametrizado</span>
+<span class="token-keyword">var</span> e3 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Carlos"</span>, <span class="token-string">"2024002"</span>);          <span class="token-comment">// Encadenado (edad=18)</span></code></pre>
+  </div>
+</div>
 
-            <h3>Orden de Ejecución con <code>this</code></h3>
-            <div class="diagram">
+            <h3>🔄 Encadenamiento de Constructores con <code>this</code></h3>
+            <p>El encadenamiento permite que un constructor llame a otro constructor de la misma clase para evitar duplicar código. El constructor con <strong>menos parámetros</strong> delega al de <strong>más parámetros</strong>.</p>
+            
+            <div class="diagram" style="background: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%); padding: 30px; border-radius: 16px;">
               <figure>
-              <svg id="chain-svg" width="100%" viewBox="0 0 880 320" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="chainTitle">
-                <title id="chainTitle">Encadenamiento de constructores en C# (animación)</title>
-                <style>
-                  .box{fill:#fff;stroke:#dbeafe;rx:8}
-                  .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
-                  .s{font:12px Arial, sans-serif; fill:#475569}
-                  .num{font:700 12px Arial, sans-serif; fill:#0b2d6b}
-
-                  /* Estados para animación */
-                  .active-rect{stroke:#0b2d6b; stroke-width:3; fill:#eff6ff}
-                  .active-text{fill:#0b2d6b; font-weight:700}
-                  .arrow-glow{stroke:#0b2d6b; stroke-width:3}
-                </style>
-
-                <!-- Titulo de llamada -->
-                <rect id="call-box" x="80" y="24" width="720" height="56" rx="8" fill="#eef2ff" stroke="#dbeafe"/>
-                <text id="call-text" x="440" y="60" text-anchor="middle" class="h">new Estudiante("Carlos", "2024002")</text>
-
-                <!-- Constructor delegante -->
-                <g id="step1">
-                  <rect id="box1" x="140" y="110" width="360" height="56" rx="8" fill="#fff" stroke="#e2e8f0"/>
-                  <text id="label1" x="320" y="138" text-anchor="middle" class="s">Estudiante(string nombre, string codigo)
-: this(nombre, codigo, 18)</text>
-                  <text x="250" y="116" text-anchor="start" class="num">1</text>
-                </g>
-
-                <!-- Constructor principal -->
-                <g id="step2">
-                  <rect id="box2" x="520" y="110" width="360" height="56" rx="8" fill="#fff" stroke="#e2e8f0"/>
-                  <text id="label2" x="700" y="138" text-anchor="middle" class="s">Estudiante(string nombre, string codigo, int edad)
-- Validaciones y Asignaciones</text>
-                  <text x="610" y="116" text-anchor="start" class="num">2</text>
-                </g>
-
-                <defs>
-                  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L6,4 L0,8 z" fill="#0b2d6b"/></marker>
-                </defs>
-                <path id="flow-arrow" d="M320 110 L520 110" stroke="#0b2d6b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-
-                <text id="step3" x="440" y="200" text-anchor="middle" class="s">3. (Opcional) Regreso al cuerpo del constructor delegante</text>
-              </svg>
-
-              <div style="text-align:center; margin-top:12px;">
-                <button id="play-btn" aria-pressed="false" style="background:#1e40af;color:white;padding:8px 12px;border-radius:6px;border:none;cursor:pointer;">▶️ Reproducir</button>
-                <button id="reset-btn" style="margin-left:8px;padding:8px 12px;border-radius:6px;border:1px solid #dbeafe;cursor:pointer;">🔁 Reiniciar</button>
-              </div>
-
-              <figcaption>Al crear la instancia, el constructor con menos parámetros delega a otro constructor usando <code>: this(...)</code>; el constructor delegado realiza validaciones y asignaciones. El flujo se anima para mostrar el orden (1 → 2 → 3).</figcaption>
-
-              <div style="text-align:center; margin-top:12px;">
-                <button id="play-btn" class="anim-btn" aria-pressed="false">▶️ Reproducir</button>
-                <button id="reset-btn" class="anim-btn-outline">🔁 Reiniciar</button>
-                <span class="step-badge" id="current-badge">Paso: -</span>
-              </div>
-
-              <div style="margin-top:12px; text-align:center;">
-                <div id="console-anim" style="display:inline-block; text-align:left; background:#f1f5f9; padding:12px 16px; border-radius:8px; border:1px solid #e2e8f0;">
-                  <div class="console-line" id="cl1">[ ] Preparando llamada...</div>
-                  <div class="console-line" id="cl2">[ ] Ejecutando constructor principal (validaciones...)</div>
-                  <div class="console-line" id="cl3">[ ] Retornando al constructor delegante</div>
-                </div>
-              </div>
-
-            </figure>
-
-            <ol>
-              <li><strong>Delegación</strong>: Se invoca el constructor delegante (1) y éste usa <code>: this(...)</code> para llamar al constructor principal (2).</li>
-              <li><strong>Validación y Asignación</strong>: El constructor principal (2) ejecuta validaciones y asigna campos/properties.</li>
-              <li><strong>Retorno</strong>: Si el constructor delegante tiene código en su cuerpo, se ejecuta al final (3).</li>
-            </ol>
+                <svg width="100%" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="chainTitle">
+                  <title id="chainTitle">Flujo de ejecución del encadenamiento de constructores en C#</title>
+                  <style>
+                    /* Caja de código */
+                    .code-box { rx: 10; }
+                    .code-title { font: bold 14px 'Consolas', monospace; }
+                    .code-line { font: 12px 'Consolas', monospace; }
+                    .code-comment { font: italic 11px 'Consolas', monospace; }
+                    
+                    /* Números de paso */
+                    .step-num { font: bold 16px Arial, sans-serif; fill: white; }
+                    .step-circle { fill: #1e40af; }
+                    
+                    /* Flechas */
+                    .arrow-line { fill: none; stroke-width: 3; stroke-linecap: round; }
+                    .arrow-head { fill: #1e40af; }
+                    
+                    /* Colores */
+                    .bg-call { fill: #1e3a8a; }
+                    .bg-delegate { fill: #f59e0b; }
+                    .bg-main { fill: #10b981; }
+                    .bg-result { fill: #7c3aed; }
+                    
+                    .text-white { fill: #ffffff; }
+                    .text-dark { fill: #1e293b; }
+                    .text-yellow { fill: #fef3c7; }
+                    .text-green { fill: #d1fae5; }
+                    .text-purple { fill: #ede9fe; }
+                  </style>
+                  
+                  <defs>
+                    <marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="9" orient="auto">
+                      <path d="M0,0 L5,9 L10,0 z" class="arrow-head"/>
+                    </marker>
+                    <marker id="arrowUp" markerWidth="10" markerHeight="10" refX="5" refY="0" orient="auto">
+                      <path d="M0,9 L5,0 L10,9 z" class="arrow-head"/>
+                    </marker>
+                  </defs>
+                  
+                  <!-- PASO 1: LLAMADA -->
+                  <g transform="translate(0, 0)">
+                    <circle cx="30" cy="35" r="18" class="step-circle"/>
+                    <text x="30" y="40" text-anchor="middle" class="step-num">1</text>
+                    <rect x="60" y="10" width="580" height="50" class="code-box bg-call"/>
+                    <text x="350" y="28" text-anchor="middle" class="code-title text-white">🚀 CÓDIGO QUE EJECUTAS</text>
+                    <text x="350" y="48" text-anchor="middle" class="code-line text-yellow">new Estudiante("Carlos", "2024002")</text>
+                  </g>
+                  
+                  <!-- Flecha 1-2 -->
+                  <path d="M350 60 L350 85" class="arrow-line" stroke="#1e40af" marker-end="url(#arrowDown)"/>
+                  <text x="430" y="78" class="code-comment" fill="#64748b">Llama al constructor de 2 parámetros</text>
+                  
+                  <!-- PASO 2: CONSTRUCTOR DELEGANTE -->
+                  <g transform="translate(0, 95)">
+                    <circle cx="30" cy="50" r="18" class="step-circle"/>
+                    <text x="30" y="55" text-anchor="middle" class="step-num">2</text>
+                    <rect x="60" y="5" width="580" height="90" class="code-box bg-delegate"/>
+                    <text x="350" y="25" text-anchor="middle" class="code-title text-dark">⚡ CONSTRUCTOR DELEGANTE (se activa primero)</text>
+                    <text x="80" y="48" text-anchor="start" class="code-line text-dark">public Estudiante(string n, string c)</text>
+                    <text x="80" y="65" text-anchor="start" class="code-line text-yellow" style="font-weight: bold;">    : this(n, c, 18)  ← Delega al otro constructor</text>
+                    <text x="80" y="82" text-anchor="start" class="code-comment text-dark" style="opacity: 0.8;">{ /* Este código se ejecuta al final */ }</text>
+                  </g>
+                  
+                  <!-- Flecha 2-3 -->
+                  <path d="M350 195 L350 220" class="arrow-line" stroke="#1e40af" marker-end="url(#arrowDown)"/>
+                  <text x="430" y="213" class="code-comment" fill="#64748b">Antes de ejecutar su cuerpo, delega con :this()</text>
+                  
+                  <!-- PASO 3: CONSTRUCTOR PRINCIPAL -->
+                  <g transform="translate(0, 230)">
+                    <circle cx="30" cy="55" r="18" class="step-circle"/>
+                    <text x="30" y="60" text-anchor="middle" class="step-num">3</text>
+                    <rect x="60" y="5" width="580" height="100" class="code-box bg-main"/>
+                    <text x="350" y="25" text-anchor="middle" class="code-title text-white">✅ CONSTRUCTOR PRINCIPAL (ejecuta primero)</text>
+                    <text x="80" y="48" text-anchor="start" class="code-line text-white">public Estudiante(string n, string c, int e)</text>
+                    <text x="80" y="65" text-anchor="start" class="code-line text-green">{</text>
+                    <text x="100" y="82" text-anchor="start" class="code-line text-white">    Nombre = n; Codigo = c; Edad = e;</text>
+                    <text x="100" y="98" text-anchor="start" class="code-line text-green">    // ← Aquí van las validaciones</text>
+                    <text x="80" y="115" text-anchor="start" class="code-line text-white">}</text>
+                  </g>
+                  
+                  <!-- Flecha 3-4 -->
+                  <path d="M350 340 L350 365" class="arrow-line" stroke="#7c3aed" marker-end="url(#arrowDown)"/>
+                  <text x="450" y="358" class="code-comment" fill="#64748b">Regresa al constructor delegante</text>
+                  
+                  <!-- PASO 4: COMPLETADO -->
+                  <g transform="translate(0, 375)">
+                    <circle cx="30" cy="35" r="18" fill="#7c3aed"/>
+                    <text x="30" y="40" text-anchor="middle" class="step-num">4</text>
+                    <rect x="60" y="10" width="580" height="50" class="code-box bg-result"/>
+                    <text x="350" y="28" text-anchor="middle" class="code-title text-white">🎯 RESULTADO: Objeto creado exitosamente</text>
+                    <text x="350" y="48" text-anchor="middle" class="code-line text-purple">e.Nombre="Carlos", e.Codigo="2024002", e.Edad=18</text>
+                  </g>
+                </svg>
+                
+                <figcaption style="margin-top: 20px; font-size: 1.05em; color: #374151; line-height: 1.6;">
+                  <strong>📋 Resumen del flujo:</strong> Cuando llamas al constructor de 2 parámetros, 
+                  éste <strong>inmediatamente delega</strong> al de 3 parámetros usando <code>: this()</code>. 
+                  El constructor principal ejecuta primero, y <strong>después</strong> se ejecuta el cuerpo del constructor delegante.
+                </figcaption>
+              </figure>
+            </div>
+            
+            <div class="success-box" style="margin-top: 25px;">
+              <h4>💡 ¿Por qué usar encadenamiento?</h4>
+              <ul>
+                <li><strong>Evita duplicar código:</strong> Las validaciones y asignaciones están en un solo lugar</li>
+                <li><strong>Valores por defecto:</strong> El constructor de 2 parámetros asigna <code>edad = 18</code> por defecto</li>
+                <li><strong>Mantenimiento:</strong> Si cambias la lógica, solo la modificas en el constructor principal</li>
+              </ul>
+            </div>
 
             <div class="highlight-box">
-              <pre><code class="language-csharp">// Ejemplo ejecutable (con salida en consola)
-public class Estudiante
+              <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Ejemplo ejecutable (con salida en consola)</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
 {
-    public string Nombre { get; }
-    public string Codigo { get; }
-    public int Edad { get; }
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; }
 
-    public Estudiante(string nombre, string codigo, int edad)
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo, <span class="token-keyword">int</span> edad)
     {
-        Console.WriteLine("[3] Constructor con 3 parámetros: valida y asigna");
-        Nombre = nombre;
-        Codigo = codigo;
-        Edad = edad;
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"[3] Constructor con 3 parámetros: valida y asigna"</span>);
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> nombre;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> codigo;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> edad;
     }
 
-    public Estudiante(string nombre, string codigo)
-        : this(nombre, codigo, 18)
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(nombre, codigo, <span class="token-number">18</span>)
     {
-        Console.WriteLine("[2] Constructor delegante (2 parámetros): código del cuerpo ejecutado después");
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"[2] Constructor delegante (2 parámetros): código del cuerpo ejecutado después"</span>);
     }
 }
 
-// Uso
-var e = new Estudiante("Carlos", "2024002");</code></pre>
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> e <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Carlos"</span>, <span class="token-string">"2024002"</span>);</code></pre>
+  </div>
+</div>
 
-              <pre style="margin-top:8px;background:#1e293b;color:#e2e8f0;padding:12px;border-radius:8px;border:1px solid #0b2d6b"><code>// Salida esperada en consola
-[3] Constructor con 3 parámetros: valida y asigna
-[2] Constructor delegante (2 parámetros): código del cuerpo ejecutado después</code></pre>
+              <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Consola</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Salida esperada en consola</span>
+[<span class="token-number">3</span>] Constructor con 3 parámetros: valida y asigna
+[<span class="token-number">2</span>] Constructor delegante (2 parámetros): código del cuerpo ejecutado después</code></pre>
+  </div>
+</div>
             </div>
 
             </div>
@@ -1345,33 +1685,46 @@ var e = new Estudiante("Carlos", "2024002");</code></pre>
             </ul>
 
             <h3>Ejemplo Visual</h3>
-            <pre><code class="language-csharp">public class Contador
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Contador.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Contador</span>
 {
-    // STATIC: Compartido por todos
-    public static int Global = 0;
+    <span class="token-comment">// STATIC: Compartido por todos</span>
+    <span class="token-keyword">public static int</span> <span class="token-property">Global</span> <span class="token-operator">=</span> <span class="token-number">0</span>;
 
-    // INSTANCE: Unico por objeto
-    public int Instancia = 0;
+    <span class="token-comment">// INSTANCE: Unico por objeto</span>
+    <span class="token-keyword">public int</span> <span class="token-property">Instancia</span> <span class="token-operator">=</span> <span class="token-number">0</span>;
 
-    public Contador()
+    <span class="token-keyword">public</span> <span class="token-method">Contador</span>()
     {
-        Global++;     // Incrementa el contador compartido
-        Instancia++; // Incrementa el contador de este objeto
+        <span class="token-property">Global</span><span class="token-operator">++</span>;     <span class="token-comment">// Incrementa el contador compartido</span>
+        <span class="token-property">Instancia</span><span class="token-operator">++</span>; <span class="token-comment">// Incrementa el contador de este objeto</span>
     }
 }
 
-// Uso
-var c1 = new Contador(); // Global=1, Instancia=1
-var c2 = new Contador(); // Global=2, Instancia=1
-var c3 = new Contador(); // Global=3, Instancia=1
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> c1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=1, Instancia=1</span>
+<span class="token-keyword">var</span> c2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=2, Instancia=1</span>
+<span class="token-keyword">var</span> c3 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=3, Instancia=1</span>
 
-// Static: desde la clase
-Console.WriteLine(Contador.Global); // 3
+<span class="token-comment">// Static: desde la clase</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-class">Contador</span>.<span class="token-property">Global</span>); <span class="token-comment">// 3</span>
 
-// Instance: desde el objeto
-Console.WriteLine(c1.Instancia);   // 1
-Console.WriteLine(c2.Instancia);   // 1
-Console.WriteLine(c3.Instancia);   // 1</code></pre>
+<span class="token-comment">// Instance: desde el objeto</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c1.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c2.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c3.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span></code></pre>
+  </div>
+</div>
 
             <h3>Cuando Usar Static</h3>
             <table>
@@ -1624,6 +1977,7 @@ class Program
                 <p>Usa <strong>propiedades autoimplementadas</strong> cuando no necesites validacion. Solo usa backing fields (<code>_campo</code>) cuando requieras logica en get/set.</p>
             </div>
         </section>
+    </section>
 
         <section id="ejercicios">
             <h2>Ejercicios</h2>

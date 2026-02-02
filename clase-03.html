@@ -261,6 +261,101 @@
     .token-comment { color: #546e7a; font-style: italic; }
     .token-number { color: #f78c6c; }
     .token-operator { color: #89ddff; }
+
+/* BLOQUES DE CÓDIGO MEJORADOS */
+.code-block {
+  background: #1e1e2e;
+  border-radius: 12px;
+  margin: 16px 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  border: 1px solid #313244;
+}
+
+.code-header {
+  background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #45475a;
+}
+
+.code-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.code-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.code-dot.red { background: #f38ba8; }
+.code-dot.yellow { background: #f9e2af; }
+.code-dot.green { background: #a6e3a1; }
+
+.code-title {
+  color: #cdd6f4;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-left: auto;
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+.code-content {
+  display: flex;
+  background: #1e1e2e;
+}
+
+.line-numbers {
+  background: #181825;
+  color: #6c7086;
+  padding: 12px 10px;
+  text-align: right;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  user-select: none;
+  border-right: 1px solid #313244;
+}
+
+.code-block pre {
+  background: transparent;
+  margin: 0;
+  padding: 12px 16px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.code-block pre code {
+  color: #cdd6f4;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: block;
+}
+
+/* Syntax highlighting mejorado */
+.code-block .token-keyword { color: #cba6f7; font-weight: 600; }
+.code-block .token-type { color: #f9e2af; }
+.code-block .token-string { color: #a6e3a1; }
+.code-block .token-comment { color: #6c7086; font-style: italic; }
+.code-block .token-number { color: #fab387; }
+.code-block .token-operator { color: #89dceb; }
+.code-block .token-method { color: #89b4fa; }
+.code-block .token-class { color: #f9e2af; font-weight: 600; }
+.code-block .token-property { color: #b4befe; }
+.code-block .token-namespace { color: #f38ba8; }
+
+p code, li code {
+  background: #313244;
+  color: #cdd6f4;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  border: 1px solid #45475a;
+}
     /* Accessibility */
     abbr[title] { text-decoration: underline dotted; cursor: help; }
     .skip-link {
@@ -389,11 +484,24 @@
             <li>Puede ser <code><abbr title="Clase abstracta no puede instanciarse directamente, sirve como plantilla para otras clases">abstract</abbr></code> (no se instancia)</li>
             <li>Usa <code><abbr title="virtual indica que un método puede ser sobreescrito por clases derivadas">virtual</abbr></code> para métodos sobreescribibles</li>
           </ul>
-          <pre><code>public class Empleado
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Empleado.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
 {
-    public string Nombre { get; set; }
-    public virtual void Trabajar() { }
+    <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>() { }
 }</code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>🔶 Subclase / Clase Derivada</h4>
@@ -403,13 +511,26 @@
             <li>Usa <code>override</code> para modificar comportamiento</li>
             <li>Accede a miembros heredados</li>
           </ul>
-          <pre><code>public class Gerente : Empleado
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Gerente.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
+              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
 {
-    public override void Trabajar()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
     {
-        // Comportamiento específico
+        <span class="token-comment">// Comportamiento específico</span>
     }
 }</code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -574,10 +695,23 @@
         <p>Una <strong><abbr title="Interface define un contrato sin implementación, especifica qué debe hacer una clase pero no cómo">interface</abbr></strong> es un contrato que define qué métodos debe tener una clase, pero no cómo implementarlos.</p>
         <p><strong>¿Por qué usar interfaces?</strong> Permiten polimorfismo múltiple sin los problemas de la herencia múltiple de clases. Una clase puede implementar múltiples interfaces.</p>
         <p>Aunque C# no permite herencia múltiple de <strong>clases</strong>, sí permite implementar <strong>múltiples interfaces</strong>:</p>
-        <pre><code>public class Pato : Animal, IVolador, INadador, ICaminador
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots">
+              <span class="code-dot red"></span>
+              <span class="code-dot yellow"></span>
+              <span class="code-dot green"></span>
+            </div>
+            <span class="code-title">Pato.cs</span>
+          </div>
+          <div class="code-content">
+            <div class="line-numbers">1<br>2<br>3<br>4</div>
+            <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pato</span> : <span class="token-class">Animal</span>, <span class="token-type">IVolador</span>, <span class="token-type">INadador</span>, <span class="token-type">ICaminador</span>
 {
-    // Implementa todos los métodos de las interfaces
+    <span class="token-comment">// Implementa todos los métodos de las interfaces</span>
 }</code></pre>
+          </div>
+        </div>
         <div class="note">Nota: Las interfaces en C# solo pueden contener firmas de métodos, propiedades y eventos, sin implementación (a partir de C# 8, pueden tener miembros default).</div>
       </div>
     </section>
@@ -598,44 +732,70 @@
       <div class="comparison-table">
         <div>
           <h4>✅ CUMPLE LSP</h4>
-          <pre><code>public class Rectangulo
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Rectangulo.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Rectangulo</span>
 {
-    public virtual int Ancho { get; set; }
-    public virtual int Alto { get; set; }
-    public int Area => Ancho * Alto;
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">int</span> Ancho { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">int</span> Alto { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> Area <span class="token-operator">=></span> Ancho <span class="token-operator">*</span> Alto;
 }
 
-public class Cuadrado : Rectangulo
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Cuadrado</span> : <span class="token-class">Rectangulo</span>
 {
-    // Cuadrado ES un Rectangulo especial
-    // donde Ancho == Alto
-    public override int Ancho 
+    <span class="token-comment">// Cuadrado ES un Rectangulo especial</span>
+    <span class="token-comment">// donde Ancho == Alto</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">int</span> Ancho 
     { 
-        set { base.Ancho = base.Alto = value; }
+        <span class="token-keyword">set</span> { <span class="token-keyword">base</span>.Ancho <span class="token-operator">=</span> <span class="token-keyword">base</span>.Alto <span class="token-operator">=</span> <span class="token-keyword">value</span>; }
     }
-    public override int Alto 
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">int</span> Alto 
     { 
-        set { base.Ancho = base.Alto = value; }
+        <span class="token-keyword">set</span> { <span class="token-keyword">base</span>.Ancho <span class="token-operator">=</span> <span class="token-keyword">base</span>.Alto <span class="token-operator">=</span> <span class="token-keyword">value</span>; }
     }
 }</code></pre>
+            </div>
+          </div>
         </div>
         <div>
           <h4>❌ VIOLA LSP</h4>
-          <pre><code>public class Pajaro
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Pajaro.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pajaro</span>
 {
-    public virtual void Volar() { }
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Volar</span>() { }
 }
 
-public class Pinguino : Pajaro
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pinguino</span> : <span class="token-class">Pajaro</span>
 {
-    // PROBLEMA: Un pingüino ES un pájaro
-    // pero NO puede volar
-    public override void Volar()
+    <span class="token-comment">// PROBLEMA: Un pingüino ES un pájaro</span>
+    <span class="token-comment">// pero NO puede volar</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Volar</span>()
     {
-        throw new InvalidOperationException(
-            "Los pingüinos no vuelan!");
+        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(
+            <span class="token-string">"Los pingüinos no vuelan!"</span>);
     }
 }</code></pre>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -650,35 +810,48 @@ public class Pinguino : Pajaro
       </div>
 
       <h3>Ejemplo de Violación Común</h3>
-      <pre><code>// Clase base
-public class CuentaBancaria
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">CuentaBancaria.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
+          <pre><code><span class="token-comment">// Clase base</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">CuentaBancaria</span>
 {
-    protected double _saldo;
+    <span class="token-keyword">protected</span> <span class="token-type">double</span> _saldo;
     
-    public virtual void Retirar(double monto)
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Retirar</span>(<span class="token-type">double</span> monto)
     {
-        if (monto > _saldo)
-            throw new InvalidOperationException("Saldo insuficiente");
-        _saldo -= monto;
+        <span class="token-keyword">if</span> (monto <span class="token-operator">></span> _saldo)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(<span class="token-string">"Saldo insuficiente"</span>);
+        _saldo <span class="token-operator">-=</span> monto;
     }
 }
 
-// Subclase que VIOLA LSP
-public class CuentaCongelada : CuentaBancaria
+<span class="token-comment">// Subclase que VIOLA LSP</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">CuentaCongelada</span> : <span class="token-class">CuentaBancaria</span>
 {
-    // PROBLEMA: Cambia el comportamiento esperado
-    // Los clientes esperan poder retirar de cualquier cuenta
-    public override void Retirar(double monto)
+    <span class="token-comment">// PROBLEMA: Cambia el comportamiento esperado</span>
+    <span class="token-comment">// Los clientes esperan poder retirar de cualquier cuenta</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Retirar</span>(<span class="token-type">double</span> monto)
     {
-        throw new InvalidOperationException(
-            "Esta cuenta está congelada, no se permiten retiros");
+        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(
+            <span class="token-string">"Esta cuenta está congelada, no se permiten retiros"</span>);
     }
 }
 
-// Uso que falla:
-CuentaBancaria cuenta = new CuentaCongelada();
-cuenta.Depositar(1000);
-cuenta.Retirar(100); // ¡EXCEPCIÓN INESPERADA!</code></pre>
+<span class="token-comment">// Uso que falla:</span>
+<span class="token-class">CuentaBancaria</span> cuenta <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-method">CuentaCongelada</span>();
+cuenta.<span class="token-method">Depositar</span>(<span class="token-number">1000</span>);
+cuenta.<span class="token-method">Retirar</span>(<span class="token-number">100</span>); <span class="token-comment">// ¡EXCEPCIÓN INESPERADA!</span></code></pre>
+        </div>
+      </div>
 
       <div class="warning-box">
         <h4>¿Cómo solucionarlo?</h4>
@@ -697,153 +870,179 @@ cuenta.Retirar(100); // ¡EXCEPCIÓN INESPERADA!</code></pre>
       <h3>Ejemplo 1: Jerarquía de Empleados</h3>
       <p>Implementación de una jerarquía completa con <code>Empleado</code> como clase base y <code>Gerente</code> y <code>Desarrollador</code> como subclases.</p>
 
-      <pre><code>// ============================================
-// CLASE BASE: Empleado
-// ============================================
-public class Empleado
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Empleado.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>100<br>101<br>102<br>103<br>104<br>105<br>106<br>107<br>108<br>109<br>110<br>111<br>112</div>
+          <pre><code><span class="token-comment">// ============================================</span>
+<span class="token-comment">// CLASE BASE: Empleado</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
 {
-    // Propiedades comunes a todos los empleados
-    public string Nombre { get; set; }
-    public int Id { get; set; }
-    public double SalarioBase { get; set; }
+    <span class="token-comment">// Propiedades comunes a todos los empleados</span>
+    <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> Id { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">double</span> SalarioBase { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
     
-    // Constructor de la clase base
-    public Empleado(string nombre, int id, double salarioBase)
+    <span class="token-comment">// Constructor de la clase base</span>
+    <span class="token-keyword">public</span> <span class="token-method">Empleado</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase)
     {
-        Nombre = nombre;
-        Id = id;
-        SalarioBase = salarioBase;
+        Nombre <span class="token-operator">=</span> nombre;
+        Id <span class="token-operator">=</span> id;
+        SalarioBase <span class="token-operator">=</span> salarioBase;
     }
     
-    // Método virtual: puede ser sobreescrito
-    public virtual void Trabajar()
+    <span class="token-comment">// Método virtual: puede ser sobreescrito</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
     {
-        Console.WriteLine($"{Nombre} está trabajando.");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está trabajando."</span>);
     }
     
-    // Método virtual para calcular salario
-    public virtual double CalcularSalario()
+    <span class="token-comment">// Método virtual para calcular salario</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
     {
-        return SalarioBase;
+        <span class="token-keyword">return</span> SalarioBase;
     }
     
-    // Método virtual para mostrar información
-    public virtual void MostrarInfo()
+    <span class="token-comment">// Método virtual para mostrar información</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
     {
-        Console.WriteLine($"ID: {Id}, Nombre: {Nombre}");
-        Console.WriteLine($"Salario Base: ${SalarioBase:F2}");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"ID: {Id}, Nombre: {Nombre}"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Base: ${SalarioBase:F2}"</span>);
     }
 }
 
-// ============================================
-// CLASE DERIVADA: Gerente
-// ============================================
-public class Gerente : Empleado
+<span class="token-comment">// ============================================</span>
+<span class="token-comment">// CLASE DERIVADA: Gerente</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
 {
-    public int CantidadSubordinados { get; set; }
-    public double Bono { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> CantidadSubordinados { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">double</span> Bono { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
     
-    // Constructor que llama al base con 'base'
-    public Gerente(string nombre, int id, double salarioBase, 
-                   int subordinados, double bono) 
-        : base(nombre, id, salarioBase)
+    <span class="token-comment">// Constructor que llama al base con 'base'</span>
+    <span class="token-keyword">public</span> <span class="token-method">Gerente</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase, 
+                   <span class="token-type">int</span> subordinados, <span class="token-type">double</span> bono) 
+        : <span class="token-keyword">base</span>(nombre, id, salarioBase)
     {
-        CantidadSubordinados = subordinados;
-        Bono = bono;
+        CantidadSubordinados <span class="token-operator">=</span> subordinados;
+        Bono <span class="token-operator">=</span> bono;
     }
     
-    // Sobreescribimos el comportamiento
-    public override void Trabajar()
+    <span class="token-comment">// Sobreescribimos el comportamiento</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
     {
-        Console.WriteLine($"{Nombre} está supervisando a {CantidadSubordinados} empleados.");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está supervisando a {CantidadSubordinados} empleados."</span>);
     }
     
-    public override double CalcularSalario()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
     {
-        return SalarioBase + Bono;
+        <span class="token-keyword">return</span> SalarioBase <span class="token-operator">+</span> Bono;
     }
     
-    public override void MostrarInfo()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
     {
-        base.MostrarInfo(); // Reutilizamos código del padre
-        Console.WriteLine($"Cargo: Gerente");
-        Console.WriteLine($"Subordinados: {CantidadSubordinados}");
-        Console.WriteLine($"Bono: ${Bono:F2}");
-        Console.WriteLine($"Salario Total: ${CalcularSalario():F2}");
+        <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>(); <span class="token-comment">// Reutilizamos código del padre</span>
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Cargo: Gerente"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Subordinados: {CantidadSubordinados}"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Bono: ${Bono:F2}"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Total: ${CalcularSalario():F2}"</span>);
     }
 }
 
-// ============================================
-// CLASE DERIVADA: Desarrollador
-// ============================================
-public class Desarrollador : Empleado
+<span class="token-comment">// ============================================</span>
+<span class="token-comment">// CLASE DERIVADA: Desarrollador</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Desarrollador</span> : <span class="token-class">Empleado</span>
 {
-    public string LenguajePrincipal { get; set; }
-    public int HorasExtra { get; set; }
-    public double TarifaHoraExtra { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">string</span> LenguajePrincipal { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> HorasExtra { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">double</span> TarifaHoraExtra { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
     
-    public Desarrollador(string nombre, int id, double salarioBase,
-                         string lenguaje, int horasExtra, double tarifa)
-        : base(nombre, id, salarioBase)
+    <span class="token-keyword">public</span> <span class="token-method">Desarrollador</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase,
+                         <span class="token-type">string</span> lenguaje, <span class="token-type">int</span> horasExtra, <span class="token-type">double</span> tarifa)
+        : <span class="token-keyword">base</span>(nombre, id, salarioBase)
     {
-        LenguajePrincipal = lenguaje;
-        HorasExtra = horasExtra;
-        TarifaHoraExtra = tarifa;
+        LenguajePrincipal <span class="token-operator">=</span> lenguaje;
+        HorasExtra <span class="token-operator">=</span> horasExtra;
+        TarifaHoraExtra <span class="token-operator">=</span> tarifa;
     }
     
-    public override void Trabajar()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
     {
-        Console.WriteLine($"{Nombre} está programando en {LenguajePrincipal}.");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está programando en {LenguajePrincipal}."</span>);
     }
     
-    public override double CalcularSalario()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
     {
-        return SalarioBase + (HorasExtra * TarifaHoraExtra);
+        <span class="token-keyword">return</span> SalarioBase <span class="token-operator">+</span> (HorasExtra <span class="token-operator">*</span> TarifaHoraExtra);
     }
     
-    public override void MostrarInfo()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
     {
-        base.MostrarInfo();
-        Console.WriteLine($"Cargo: Desarrollador");
-        Console.WriteLine($"Lenguaje: {LenguajePrincipal}");
-        Console.WriteLine($"Horas Extra: {HorasExtra}");
-        Console.WriteLine($"Salario Total: ${CalcularSalario():F2}");
+        <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Cargo: Desarrollador"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Lenguaje: {LenguajePrincipal}"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Horas Extra: {HorasExtra}"</span>);
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Total: ${CalcularSalario():F2}"</span>);
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h4>Uso Polimórfico con Arrays</h4>
-      <pre><code>class Program
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Program.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
+          <pre><code><span class="token-keyword">class</span> <span class="token-class">Program</span>
 {
-    static void Main(string[] args)
+    <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
     {
-        // Creamos un array de la clase base
-        Empleado[] empleados = new Empleado[]
+        <span class="token-comment">// Creamos un array de la clase base</span>
+        <span class="token-class">Empleado</span>[] empleados <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Empleado</span>[]
         {
-            new Gerente("Ana García", 101, 5000, 5, 1500),
-            new Desarrollador("Carlos Ruiz", 102, 4000, "C#", 20, 25),
-            new Gerente("María López", 103, 5500, 8, 2000),
-            new Desarrollador("Juan Pérez", 104, 3800, "Java", 15, 20)
+            <span class="token-keyword">new</span> <span class="token-method">Gerente</span>(<span class="token-string">"Ana García"</span>, <span class="token-number">101</span>, <span class="token-number">5000</span>, <span class="token-number">5</span>, <span class="token-number">1500</span>),
+            <span class="token-keyword">new</span> <span class="token-method">Desarrollador</span>(<span class="token-string">"Carlos Ruiz"</span>, <span class="token-number">102</span>, <span class="token-number">4000</span>, <span class="token-string">"C#"</span>, <span class="token-number">20</span>, <span class="token-number">25</span>),
+            <span class="token-keyword">new</span> <span class="token-method">Gerente</span>(<span class="token-string">"María López"</span>, <span class="token-number">103</span>, <span class="token-number">5500</span>, <span class="token-number">8</span>, <span class="token-number">2000</span>),
+            <span class="token-keyword">new</span> <span class="token-method">Desarrollador</span>(<span class="token-string">"Juan Pérez"</span>, <span class="token-number">104</span>, <span class="token-number">3800</span>, <span class="token-string">"Java"</span>, <span class="token-number">15</span>, <span class="token-number">20</span>)
         };
         
-        Console.WriteLine("=== NÓMINA DE EMPLEADOS ===\n");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== NÓMINA DE EMPLEADOS ===\n"</span>);
         
-        // Polimorfismo: tratamos todos como Empleado
-        foreach (Empleado emp in empleados)
+        <span class="token-comment">// Polimorfismo: tratamos todos como Empleado</span>
+        <span class="token-keyword">foreach</span> (<span class="token-class">Empleado</span> emp <span class="token-keyword">in</span> empleados)
         {
-            emp.MostrarInfo();
-            emp.Trabajar();  // Se ejecuta la versión específica
-            Console.WriteLine("------------------------\n");
+            emp.<span class="token-method">MostrarInfo</span>();
+            emp.<span class="token-method">Trabajar</span>();  <span class="token-comment">// Se ejecuta la versión específica</span>
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"------------------------\n"</span>);
         }
         
-        // Calcular total de nómina
-        double totalNomina = 0;
-        foreach (Empleado emp in empleados)
+        <span class="token-comment">// Calcular total de nómina</span>
+        <span class="token-type">double</span> totalNomina <span class="token-operator">=</span> <span class="token-number">0</span>;
+        <span class="token-keyword">foreach</span> (<span class="token-class">Empleado</span> emp <span class="token-keyword">in</span> empleados)
         {
-            totalNomina += emp.CalcularSalario();
+            totalNomina <span class="token-operator">+=</span> emp.<span class="token-method">CalcularSalario</span>();
         }
-        Console.WriteLine($"Total Nómina: ${totalNomina:F2}");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Total Nómina: ${totalNomina:F2}"</span>);
     }
 }</code></pre>
+        </div>
+      </div>
 
       <figure>
         <div class="diagram">
@@ -880,43 +1079,56 @@ Total Nómina: $20800.00
       <h3>Ejemplo 2: Uso de la Palabra Clave <code>base</code></h3>
       <p>La palabra clave <code>base</code> se utiliza para acceder a miembros de la clase base desde la clase derivada:</p>
 
-      <pre><code>public class Vehiculo
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Vehiculo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Vehiculo</span>
 {
-    public string Marca { get; set; }
-    public string Modelo { get; set; }
-    public int Año { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">string</span> Marca { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">string</span> Modelo { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> Año { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
     
-    public Vehiculo(string marca, string modelo, int año)
+    <span class="token-keyword">public</span> <span class="token-method">Vehiculo</span>(<span class="token-type">string</span> marca, <span class="token-type">string</span> modelo, <span class="token-type">int</span> año)
     {
-        Marca = marca;
-        Modelo = modelo;
-        Año = año;
+        Marca <span class="token-operator">=</span> marca;
+        Modelo <span class="token-operator">=</span> modelo;
+        Año <span class="token-operator">=</span> año;
     }
     
-    public virtual string ObtenerDescripcion()
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">string</span> <span class="token-method">ObtenerDescripcion</span>()
     {
-        return $"{Marca} {Modelo} ({Año})";
+        <span class="token-keyword">return</span> <span class="token-string">$"{Marca} {Modelo} ({Año})"</span>;
     }
 }
 
-public class Auto : Vehiculo
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Auto</span> : <span class="token-class">Vehiculo</span>
 {
-    public int NumPuertas { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">int</span> NumPuertas { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
     
-    // 'base' llama al constructor del padre
-    public Auto(string marca, string modelo, int año, int puertas)
-        : base(marca, modelo, año)  // ← Constructor base
+    <span class="token-comment">// 'base' llama al constructor del padre</span>
+    <span class="token-keyword">public</span> <span class="token-method">Auto</span>(<span class="token-type">string</span> marca, <span class="token-type">string</span> modelo, <span class="token-type">int</span> año, <span class="token-type">int</span> puertas)
+        : <span class="token-keyword">base</span>(marca, modelo, año)  <span class="token-comment">// ← Constructor base</span>
     {
-        NumPuertas = puertas;
+        NumPuertas <span class="token-operator">=</span> puertas;
     }
     
-    public override string ObtenerDescripcion()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">string</span> <span class="token-method">ObtenerDescripcion</span>()
     {
-        // 'base' llama al método del padre
-        string descripcionBase = base.ObtenerDescripcion();
-        return $"{descripcionBase} - {NumPuertas} puertas";
+        <span class="token-comment">// 'base' llama al método del padre</span>
+        <span class="token-type">string</span> descripcionBase <span class="token-operator">=</span> <span class="token-keyword">base</span>.<span class="token-method">ObtenerDescripcion</span>();
+        <span class="token-keyword">return</span> <span class="token-string">$"{descripcionBase} - {NumPuertas} puertas"</span>;
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Ejemplo 3: Clases <code>sealed</code> (Selladas)</h3>
       <p>Una clase sellada <code>sealed</code> no puede ser heredada. Se usa para:</p>
@@ -926,50 +1138,63 @@ public class Auto : Vehiculo
         <li>Crear clases de utilidad o constantes</li>
       </ul>
 
-      <pre><code>// Clase que NO puede ser heredada
-public sealed class CalculadoraCientifica
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">CalculadoraCientifica.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
+          <pre><code><span class="token-comment">// Clase que NO puede ser heredada</span>
+<span class="token-keyword">public</span> <span class="token-keyword">sealed</span> <span class="token-keyword">class</span> <span class="token-class">CalculadoraCientifica</span>
 {
-    public static double Potencia(double baseNum, double exponente)
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">Potencia</span>(<span class="token-type">double</span> baseNum, <span class="token-type">double</span> exponente)
     {
-        return Math.Pow(baseNum, exponente);
+        <span class="token-keyword">return</span> <span class="token-class">Math</span>.<span class="token-method">Pow</span>(baseNum, exponente);
     }
     
-    public static double LogaritmoNatural(double numero)
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">LogaritmoNatural</span>(<span class="token-type">double</span> numero)
     {
-        return Math.Log(numero);
+        <span class="token-keyword">return</span> <span class="token-class">Math</span>.<span class="token-method">Log</span>(numero);
     }
     
-    public static double Factorial(int n)
+    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">Factorial</span>(<span class="token-type">int</span> n)
     {
-        if (n < 0) throw new ArgumentException("n debe ser positivo");
-        if (n <= 1) return 1;
-        return n * Factorial(n - 1);
+        <span class="token-keyword">if</span> (n <span class="token-operator"><</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>(<span class="token-string">"n debe ser positivo"</span>);
+        <span class="token-keyword">if</span> (n <span class="token-operator"><=</span> <span class="token-number">1</span>) <span class="token-keyword">return</span> <span class="token-number">1</span>;
+        <span class="token-keyword">return</span> n <span class="token-operator">*</span> <span class="token-method">Factorial</span>(n <span class="token-operator">-</span> <span class="token-number">1</span>);
     }
 }
 
-// ERROR: No se puede derivar de una clase sealed
-// public class CalculadoraAvanzada : CalculadoraCientifica { }
+<span class="token-comment">// ERROR: No se puede derivar de una clase sealed</span>
+<span class="token-comment">// public class CalculadoraAvanzada : CalculadoraCientifica { }</span>
 
-// También podemos sellar métodos individuales
-public class Empleado
+<span class="token-comment">// También podemos sellar métodos individuales</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
 {
-    public virtual double CalcularBono() { return 0; }
+    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">double</span> <span class="token-method">CalcularBono</span>() { <span class="token-keyword">return</span> <span class="token-number">0</span>; }
 }
 
-public class Gerente : Empleado
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
 {
-    // Este método ya no puede ser sobreescrito más
-    public sealed override double CalcularBono()
+    <span class="token-comment">// Este método ya no puede ser sobreescrito más</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">sealed</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularBono</span>()
     {
-        return Salario * 0.20;
+        <span class="token-keyword">return</span> Salario <span class="token-operator">*</span> <span class="token-number">0.20</span>;
     }
 }
 
-// ERROR: No se puede sobreescribir un método sealed
-// public class Director : Gerente
-// {
-//     public override double CalcularBono() { ... } // ¡Error!
-// }</code></pre>
+<span class="token-comment">// ERROR: No se puede sobreescribir un método sealed</span>
+<span class="token-comment">// public class Director : Gerente</span>
+<span class="token-comment">// {</span>
+<span class="token-comment">//     public override double CalcularBono() { ... } // ¡Error!</span>
+<span class="token-comment">// }</span></code></pre>
+        </div>
+      </div>
 
       <h3>Ejemplo 4: Herencia con Interfaces</h3>
       <pre><code>// Definición de interfaces
