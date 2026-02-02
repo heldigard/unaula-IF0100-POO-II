@@ -247,6 +247,28 @@
       padding: 30px;
       margin-top: 50px;
     }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid #3b82f6;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #52606d;
+    }
+    /* Syntax highlighting para C# */
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
   </style>
 </head>
 <body>
@@ -349,8 +371,8 @@
           <p>La clase que proporciona los miembros (campos, métodos, propiedades) que serán heredados.</p>
           <ul>
             <li>Define el comportamiento común</li>
-            <li>Puede ser <code>abstract</code> (no se instancia)</li>
-            <li>Usa <code>virtual</code> para métodos sobreescribibles</li>
+            <li>Puede ser <code><abbr title="Clase abstracta no puede instanciarse directamente, sirve como plantilla para otras clases">abstract</abbr></code> (no se instancia)</li>
+            <li>Usa <code><abbr title="virtual indica que un método puede ser sobreescrito por clases derivadas">virtual</abbr></code> para métodos sobreescribibles</li>
           </ul>
           <pre><code>public class Empleado
 {
@@ -368,8 +390,8 @@
           </ul>
           <pre><code>public class Gerente : Empleado
 {
-    public override void Trabajar() 
-    { 
+    public override void Trabajar()
+    {
         // Comportamiento específico
     }
 }</code></pre>
@@ -434,7 +456,7 @@
 │                             │   Animal a = new Perro();         │
 │                             │   a.Hablar(); // "Guau!"          │
 │                             │                                   │
-│                             │   La JVM/CLR decide en runtime    │
+│                             │   El CLR decide en runtime        │
 │                             │   qué método ejecutar             │
 │                             │                                   │
 └─────────────────────────────┴───────────────────────────────────┘
@@ -532,12 +554,14 @@
 
       <div class="warning-box">
         <h4>⚠️ Herencia Múltiple de Interfaces</h4>
+        <p>Una <strong><abbr title="Interface define un contrato sin implementación, especifica qué debe hacer una clase pero no cómo">interface</abbr></strong> es un contrato que define qué métodos debe tener una clase, pero no cómo implementarlos.</p>
+        <p><strong>¿Por qué usar interfaces?</strong> Permiten polimorfismo múltiple sin los problemas de la herencia múltiple de clases. Una clase puede implementar múltiples interfaces.</p>
         <p>Aunque C# no permite herencia múltiple de <strong>clases</strong>, sí permite implementar <strong>múltiples interfaces</strong>:</p>
         <pre><code>public class Pato : Animal, IVolador, INadador, ICaminador
 {
     // Implementa todos los métodos de las interfaces
 }</code></pre>
-        <p>Esto permite lograr polimorfismo múltiple sin los problemas de la herencia múltiple de clases.</p>
+        <div class="note">Nota: Las interfaces en C# solo pueden contener firmas de métodos, propiedades y eventos, sin implementación (a partir de C# 8, pueden tener miembros default).</div>
       </div>
     </section>
 
@@ -1016,7 +1040,13 @@ class Program
     <section id="practica">
       <h2>5. Laboratorio Guiado: Sistema de Figuras Geométricas</h2>
 
-      <h3>Objetivo del Laboratorio</h3>
+      <section class="actividad">
+        <h3>Actividad: Laboratorio - Sistema de Figuras Geométricas (40 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Jerarquía de clases para figuras geométricas</p>
+        <p><strong>Tiempo estimado:</strong> 40 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión de herencia, polimorfismo, clases abstractas</p>
       <p>Crear una jerarquía de clases para figuras geométricas que demuestre herencia, polimorfismo y el uso de clases abstractas.</p>
 
       <div class="highlight-box">
@@ -1254,7 +1284,13 @@ namespace SistemaFiguras
     <section id="ejercicios">
       <h2>6. Ejercicios Prácticos</h2>
 
-      <h3>Ejercicio 1: Jerarquía de Vehículos (15 minutos)</h3>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Jerarquía de Vehículos (15 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Jerarquía de vehículos con 3 niveles</p>
+        <p><strong>Tiempo estimado:</strong> 15 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Aplicación de herencia multinivel</p>
       <div class="info-box">
         <p><strong>Objetivo:</strong> Crear una jerarquía de vehículos con al menos 3 niveles de herencia.</p>
         <p><strong>Dificultad:</strong> ⭐⭐ Principiante</p>
@@ -1300,7 +1336,15 @@ JERARQUÍA REQUERIDA:
         </ul>
       </div>
 
-      <h3>Ejercicio 2: Sistema de Figuras Geométricas Avanzado (20 minutos)</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Sistema de Figuras Avanzado (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Extensión del laboratorio con nuevas figuras</p>
+        <p><strong>Tiempo estimado:</strong> 20 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Uso de interfaces, métodos estáticos</p>
       <div class="info-box">
         <p><strong>Objetivo:</strong> Extender el laboratorio con nuevas figuras y funcionalidades.</p>
         <p><strong>Dificultad:</strong> ⭐⭐⭐ Intermedio</p>
@@ -1340,7 +1384,15 @@ JERARQUÍA REQUERIDA:
         </ul>
       </div>
 
-      <h3>Ejercicio 3: Sistema de Pagos con Polimorfismo (25 minutos)</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 3 - Sistema de Pagos (25 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Sistema de procesamiento de pagos polimórfico</p>
+        <p><strong>Tiempo estimado:</strong> 25 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Aplicación avanzada de polimorfismo real</p>
       <div class="info-box">
         <p><strong>Objetivo:</strong> Crear un sistema de procesamiento de pagos que demuestre polimorfismo real.</p>
         <p><strong>Dificultad:</strong> ⭐⭐⭐⭐ Avanzado</p>
@@ -1415,6 +1467,7 @@ ProcesadorPagos.ProcesarMultiplesPagos(pagos);</code></pre>
           <li>Programa simula transacciones correctamente</li>
         </ul>
       </div>
+      </section>
     </section>
 
     <section id="referencias">

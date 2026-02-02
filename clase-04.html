@@ -112,6 +112,21 @@
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
+    /* Syntax highlighting para C# */
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
   </style>
 </head>
 <body>
@@ -190,18 +205,39 @@
       </div>
 
       <h3>Modelamiento de bases de datos</h3>
-      <p>El modelado ER traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foráneas.</p>
+      <p>El modelado <strong><abbr title="Entity-Relationship: Modelo entidad-relación que representa estructuras de datos y sus relaciones">ER</abbr></strong> traduce el mundo real a estructuras de base de datos: entidades, atributos, claves primarias y foráneas.</p>
+      <p><strong>¿Por qué modelar antes de programar?</strong> Un buen modelo ER evita redundancia, inconsistencias y problemas de integridad en la base de datos.</p>
       <pre><code>Entidad (POO)  -> Tabla (BD)
 Atributo       -> Columna
 Objeto         -> Registro
-PK             -> Id único
-FK             -> Referencia</code></pre>
+PK             -> <abbr title="Primary Key: Clave primaria, identificador único de cada registro">PK</abbr> (Id único)
+FK             -> <abbr title="Foreign Key: Clave foránea, referencia a otra tabla">FK</abbr> (Referencia)</code></pre>
 
       <h3>Cardinalidad</h3>
+      <p>La cardinalidad define cuántas instancias de una entidad pueden relacionarse con instancias de otra entidad.</p>
       <pre><code>1:1 Persona - Pasaporte
 1:N Carrera - Estudiante
 N:M Estudiante - Materia</code></pre>
       <div class="note">La cardinalidad define como se conectan las entidades en el modelo ER y determina el diseño físico de tablas.</div>
+
+      <div class="warning-box">
+        <h4>Tipos de Cardinalidad</h4>
+        <ul>
+          <li><strong>1:1 (Uno a Uno)</strong>: Un registro de A se relaciona con exactamente un registro de B. Ej: Persona - Pasaporte.</li>
+          <li><strong>1:N (Uno a Muchos)</strong>: Un registro de A se relaciona con múltiples registros de B. Ej: Carrera - Estudiante.</li>
+          <li><strong>N:M (Muchos a Muchos)</strong>: Múltiples registros de A se relacionan con múltiples de B. Ej: Estudiante - Materia. Requiere tabla intermedia.</li>
+        </ul>
+      </div>
+
+      <h3>Normalización</h3>
+      <p>La <strong>normalización</strong> es el proceso de organizar las columnas y tablas de una base de datos para minimizar redundancia y evitar anomalías.</p>
+      <p><strong><abbr title="Tercera Forma Normal (3FN): Regla que dice que no hay atributos transitivos dependientes de la clave primaria">3FN</abbr></strong> significa que:</p>
+      <ul>
+        <li>Todo atributo no-calculado depende directamente de la clave primaria</li>
+        <li>No hay atributos repetidos innecesariamente</li>
+        <li>Cada tabla tiene un propósito único claro</li>
+      </ul>
+      <div class="note">Nota: La normalización mejora la integridad de datos pero puede afectar rendimiento. En sistemas de alta performance, a veces se desnormaliza intencionalmente.</div>
     </section>
 
     <section id="ejemplos">
@@ -260,9 +296,14 @@ class Perro : Animal
     <section id="practica">
       <h2>Práctica / laboratorio</h2>
 
-      <h3>Ejercicio Guiado: Calculadora con Sobrecarga</h3>
-      <p><strong>Objetivo:</strong> Implementar una clase <code>Calculadora</code> con sobrecarga de métodos para diferentes operaciones.</p>
-      <p><strong>Duracion:</strong> 30 minutos</p>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio Guiado - Calculadora con Sobrecarga (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Clase Calculadora con sobrecarga de métodos</p>
+        <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión de sobrecarga de métodos y constructores</p>
+        <p><strong>Objetivo:</strong> Implementar una clase <code>Calculadora</code> con sobrecarga de métodos para diferentes operaciones.</p>
 
       <h4>Requisitos</h4>
       <ul>
@@ -381,7 +422,13 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
     <section id="ejercicios">
       <h2>Ejercicios</h2>
 
-      <h3>Ejercicio 1: Clase Complejo</h3>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Clase Complejo (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Clase Complejo con sobrecarga de operadores</p>
+        <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Aplicación de sobrecarga de operadores aritméticos y comparadores</p>
       <p><strong>Nivel:</strong> Intermedio | <strong>Duracion:</strong> 30 minutos</p>
       <p>Crear una clase <code>Complejo</code> que represente números complejos con sobrecarga de operadores <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code> y comparadores <code>==</code>, <code>!=</code>.</p>
 
@@ -409,7 +456,15 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
         </ul>
       </div>
 
-      <h3>Ejercicio 2: Tienda Online (Modelado ER)</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Tienda Online Modelado ER (25 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Diagrama ER para sistema de tienda online</p>
+        <p><strong>Tiempo estimado:</strong> 25 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión de modelado ER, relaciones 1:N y N:M</p>
       <p><strong>Nivel:</strong> Basico | <strong>Duracion:</strong> 25 minutos</p>
       <p>Modelar un diagrama ER para un sistema de tienda online con las entidades <code>Cliente</code>, <code>Producto</code> y <code>Orden</code>.</p>
 
@@ -447,7 +502,15 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
         </ul>
       </div>
 
-      <h3>Ejercicio 3: Sistema de Reservas</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 3 - Sistema de Reservas (40 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Modelo ER y clases C# para reservas de hotel</p>
+        <p><strong>Tiempo estimado:</strong> 40 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Modelado de datos con relaciones e implementación en C#</p>
       <p><strong>Nivel:</strong> Avanzado | <strong>Duracion:</strong> 40 minutos</p>
       <p>Modelar un sistema de reservas de hotel con entidades <code>Habitacion</code>, <code>Cliente</code> y <code>Reserva</code>. Implementar clases en C# con relaciones.</p>
 
@@ -480,8 +543,16 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
         </ul>
       </div>
 
-      <h3>Tarea para Casa</h3>
-      <div class="note">
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Tarea para Casa - Sistema Vector (60 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Clase Vector2D con sobrecarga completa</p>
+        <p><strong>Tiempo estimado:</strong> 60 minutos</p>
+        <p><strong>Criterios de éxito:</strong> Integración de sobrecarga de operadores y propiedades calculadas</p>
+        <div class="note">
         <h4>Entregable: Sistema Vector con Sobrecarga</h4>
         <p><strong>Fecha límite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
         <p>Crear una clase <code>Vector2D</code> para representar vectores en 2D:</p>
@@ -503,15 +574,29 @@ var e3 = new Estudiante();                               // Nombre=Sin nombre...
           <li>Capturas de pantalla de la ejecución</li>
         </ul>
       </div>
+      </section>
+    </section>
+
+    <section class="evaluacion-calificable">
+      <h3>📋 Evaluación programada</h3>
+      <p><strong>Detalle:</strong> Consultar plataforma del curso para información completa sobre evaluación calificable.</p>
     </section>
 
     <section id="referencias">
       <h2>Referencias</h2>
+      <h3>Documentación Oficial</h3>
       <ul>
-        <li>Documentación oficial de C# (sobrecarga y sobreescritura).</li>
-        <li>Guía de modelado ER y normalización (3FN).</li>
-        <li>Material de clase IF0100 - Unidad 1.</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/operator-overloading" target="_blank" rel="noopener">Sobrecarga de operadores en C#</a> - Guía oficial de Microsoft</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/inheritance" target="_blank" rel="noopener">Herencia y sobreescritura en C#</a></li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/params" target="_blank" rel="noopener">Palabra clave params (C#)</a> - Parámetros variables</li>
       </ul>
+      <h3>Recursos de Modelado de Datos</h3>
+      <ul>
+        <li><a href="https://www.lucidchart.com/pages/tutorial/what-is-entity-relationship-diagramerd" target="_blank" rel="noopener">Guía de diagramas ER</a> - Lucidchart</li>
+        <li><a href="https://docs.microsoft.com/en-us/previous-versions/office/office-365/desktop-access-guide/design-a-database/normalization" target="_blank" rel="noopener">Normalización de bases de datos</a> - Microsoft Docs</li>
+      </ul>
+      <h3>Fuentes consultadas para esta clase</h3>
+      <p><small>Contenido basado en el syllabus oficial IF0100 y documentación de Microsoft Learn. No se requirió búsqueda web adicional para esta clase.</small></p>
     </section>
   </main>
 

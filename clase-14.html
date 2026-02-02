@@ -197,6 +197,29 @@
         .comment { color: #94a3b8; font-style: italic; }
         .method { color: #fbbf24; }
 
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+
         .diagram {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -285,6 +308,8 @@
         <section id="teoria">
             <h2>1. Fundamentos de Archivos Planos</h2>
 
+            <p><strong><abbr title="Archivos planos - Archivos de texto sin estructura compleja (CSV, JSON, XML, INI, TXT)">Archivos planos</abbr></strong> = Archivos de texto que almacenan datos sin un motor de base de datos. Son legibles por humanos y editables con cualquier editor de texto.</p>
+
             <h3>¿Cuándo usar archivos planos?</h3>
 
             <div class="success-box">
@@ -346,6 +371,11 @@
         <section id="ejemplos">
             <h2>2. System.IO - API Base de Archivos</h2>
 
+            <p><strong>System.IO</strong> = Namespace de .NET que contiene clases para leer/escribir archivos y directorios (<code>File</code>, <code>Directory</code>, <code>Stream</code>).</p>
+            <p><strong><abbr title="LINQ - Language Integrated Query, sintaxis de consulta integrada en C#">LINQ</abbr></strong> = Sintaxis de C# para consultar colecciones (como SQL pero en código).</p>
+            <p><strong><abbr title="Generics - Característica de C# que permite crear clases y métodos parametrizados por tipo">Generics</abbr></strong> = Clases que pueden trabajar con cualquier tipo (<code>List&lt;T&gt;</code>, <code>Dictionary&lt;K,V&gt;</code>).</p>
+            <p><strong><abbr title="Serialización - Proceso de convertir objetos a formato portable (JSON, XML, binario)">Serialización</abbr></strong> = Convertir un objeto en memoria a un formato que pueda guardarse en archivo o transmitirse por red.</p>
+
             <h3>Clases Principales</h3>
             <table>
                 <thead>
@@ -379,10 +409,25 @@
                     <tr>
                         <td><code>FileStream</code></td>
                         <td>Lectura/escritura binaria</td>
-                        <td>Archivos binarios, locking</td>
+                        <td>Archivos binarios, locking, acceso aleatorio</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con Archivos</strong>
+                <ul>
+                    <li><strong>Olvidar using:</strong> El archivo queda abierto (file lock) y otros procesos no pueden accederlo</li>
+                    <li><strong>Encoding incorrecto:</strong> Caracteres especiales (ñ, tildes) se corrompen</li>
+                    <li><strong>Path sin validar:</strong> File.Exists antes de abrir para evitar excepciones</li>
+                    <li><strong>Permisos insuficientes:</strong> Excepción "Access Denied" si no hay permisos de escritura</li>
+                </ul>
+            </div>
+
+            <h3>Conceptos Clave</h3>
+            <p><strong><abbr title="FileStream - Stream para lectura/escritura de archivos con acceso aleatorio (posicionarse en cualquier byte)">FileStream</abbr></strong> = Permite acceder a cualquier posición del archivo (seek), ideal para archivos binarios o acceso aleatorio.</p>
+            <p><strong><abbr title="Encoding - Forma en que se representan los caracteres como bytes (UTF-8, ASCII, UTF-16)">Encoding</abbr></strong> = Mapa de caracteres a bytes. UTF-8 es el estándar web y soporta todos los caracteres del mundo.</p>
+            <p><strong><abbr title="Buffering - Técnica de acumular datos en memoria para reducir operaciones de I/O">Buffering</abbr></strong> = StreamWriter/Reader usan buffer interno para reducir llamadas al disco (escribe/lee bloques en lugar de byte por byte).</p>
 
             <h3>Operaciones Básicas</h3>
             <pre><code><span class="keyword">using</span> System.IO;
@@ -432,8 +477,10 @@ File.AppendAllText(<span class="string">"log.txt"</span>, <span class="string">"
             <h2>3. Persistencia con CSV</h2>
 
             <h3>Formato CSV</h3>
+            <p><strong><abbr title="CSV - Comma-Separated Values, formato de texto para datos tabulares donde los campos se separan por comas">CSV</abbr></strong> = Formato de texto plano para datos tabulares donde cada línea es un registro y los campos se separan por comas (u otro delimitador).</p>
+            <p>Es el formato más simple para intercambiar datos con Excel y otras herramientas de hojas de cálculo.</p>
             <div class="info-box">
-                <p><strong>CSV (Comma-Separated Values)</strong>: Formato de texto plano para datos tabulares donde cada línea representa un registro y los campos se separan por comas.</p>
+                <p><strong>CSV</strong>: El estándar de facto para importación/exportación de datos tabulares.</p>
             </div>
 
             <h4>Ejemplo de Archivo CSV</h4>
@@ -593,8 +640,9 @@ File.AppendAllText(<span class="string">"log.txt"</span>, <span class="string">"
             <h2>4. Persistencia con JSON</h2>
 
             <h3>System.Text.Json</h3>
+            <p><strong><abbr title="JSON - JavaScript Object Notation, formato ligero de intercambio de datos basado en texto">JSON</abbr></strong> = Formato ligero de intercambio de datos, legible para humanos y nativo de JavaScript. Es el estándar de facto para APIs web.</p>
             <div class="info-box">
-                <p><strong>JSON (JavaScript Object Notation)</strong>: Formato ligero de intercambio de datos, legible para humanos y fácil de parsear para máquinas.</p>
+                <p><strong>Ventajas de JSON sobre XML:</strong> Más ligero, más fácil de parsear, soporte nativo en JavaScript.</p>
             </div>
 
             <h3>Serialización Básica</h3>
@@ -727,6 +775,17 @@ File.AppendAllText(<span class="string">"log.txt"</span>, <span class="string">"
             <h2>5. Persistencia con XML</h2>
 
             <h3>System.Xml.Serialization</h3>
+            <p><strong><abbr title="XML - eXtensible Markup Language, lenguaje de marcado para documentos estructurados">XML</abbr></strong> = Lenguaje de marcado para estructurar datos con etiquetas jerárquicas. Es más pesado que JSON pero soporta schemas y metadatos.</p>
+            <p><strong><abbr title="XmlSerializer - Clase de .NET para serializar/deserializar objetos a XML">XmlSerializer</abbr></strong> = Clase que convierte objetos C# a XML y viceversa, usando atributos para configurar la serialización.</p>
+
+            <div class="warning-box">
+                <strong>¿Cuándo usar XML en lugar de JSON?</strong>
+                <ul>
+                    <li><strong>Necesitas schemas:</strong> XML tiene XSD para validar estructura</li>
+                    <li><strong>Sistemas legacy:</strong> Muchos sistemas empresariales usan SOAP/XML</li>
+                    <li><strong>Metadatos:</strong> XML es mejor para documentos complejos con atributos</li>
+                </ul>
+            </div>
             <pre><code><span class="keyword">using</span> System;
 <span class="keyword">using</span> System.Collections.Generic;
 <span class="keyword">using</span> System.IO;
@@ -853,6 +912,7 @@ File.AppendAllText(<span class="string">"log.txt"</span>, <span class="string">"
             <h2>7. Temas Avanzados</h2>
 
             <h3>Archivos de Configuración INI</h3>
+            <p><strong><abbr title="INI - Formato de archivo de configuración con secciones y clave=valor (popular en Windows)">INI</abbr></strong> = Formato simple de archivos de configuración con secciones entre corchetes [Sección] y pares clave=valor.</p>
             <pre><code><span class="comment">// Archivo config.ini:</span>
 <span class="comment">; Archivo de configuración de UniversidadApp</span>
 
@@ -892,7 +952,20 @@ PageSize=20</code></pre>
 <span class="type">var</span> servidor = config.GetValue(<span class="string">"Database"</span>, <span class="string">"Server"</span>, <span class="string">"localhost"</span>);
 <span class="type">var</span> puerto = config.GetInt(<span class="string">"Database"</span>, <span class="string">"Port"</span>, 1433);</code></pre>
 
-            <h3>Compresión de Archivos (GZIP)</h3>
+            <h3>Compresión de Archivos</h3>
+            <p><strong><abbr title="GZIP - Formato de compresión GNU ZIP (algoritmo DEFLATE)">GZIP</abbr></strong> = Formato de compresión que reduce el tamaño de archivos individuales. Es estándar en Linux y para archivos web (.gz).</p>
+            <p><strong><abbr title="ZIP - Formato de archivo que puede contener múltiples archivos comprimidos">ZIP</abbr></strong> = Contenedor que puede almacenar múltiples archivos comprimidos. Es el formato estándar para distribuciones de software.</p>
+
+            <div class="info-box">
+                <strong>¿Por qué comprimir archivos?</strong>
+                <ul>
+                    <li><strong>Ahorro espacio:</strong> Archivos de texto pueden reducirse hasta 80%</li>
+                    <li><strong>Más rápido:</strong> Transferir 1MB comprimido es más rápido que 10MB sin comprimir</li>
+                    <li><strong>Backups:</strong> Comprimir logs antiguos para ahorrar disco</li>
+                </ul>
+            </div>
+
+            <h4>GZIP - Compresión individual</h4>
             <pre><code><span class="keyword">using</span> System.IO.Compression;
 
 <span class="keyword">public static</span> <span class="type">void</span> <span class="method">CompressGzip</span>(<span class="type">string</span> sourcePath, <span class="type">string</span> compressedPath)
@@ -944,7 +1017,13 @@ PageSize=20</code></pre>
         </section>
 
         <!-- Ejercicios -->
-        <section id="ejercicios">
+        <section id="ejercicios" class="actividad">
+            <h3>Actividad: Ejercicios de Persistencia de Datos</h3>
+            <p><strong>Tipo:</strong> Opcional / práctica</p>
+            <p><strong>Relacionado con:</strong> Ninguno</p>
+            <p><strong>Entregable:</strong> Ejercicios de CSV, JSON, XML y Logger</p>
+            <p><strong>Tiempo estimado:</strong> 60 min</p>
+            <p><strong>Criterios de éxito:</strong> Comprensión de manejo de archivos en diferentes formatos</p>
             <h2>8. Ejercicios Prácticos</h2>
 
             <h3>Ejercicio 1: Exportar a CSV</h3>
@@ -999,6 +1078,15 @@ PageSize=20</code></pre>
                 <li>Serializar 1 producto a JSON</li>
                 <li>Comprimir el archivo JSON con GZIP</li>
             </ol>
+
+            <div class="info-box">
+                <strong>Mini-Chequeo: Archivos Planos</strong>
+                <ul>
+                    <li>¿Cuándo elegir CSV vs JSON vs XML para persistencia?</li>
+                    <li>¿Por qué es importante usar UTF-8 al escribir archivos?</li>
+                    <li>¿Qué pasa si olvidas cerrar un archivo (sin using)?</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Resumen -->

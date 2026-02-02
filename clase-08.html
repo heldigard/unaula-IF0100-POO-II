@@ -152,6 +152,16 @@
             color: inherit;
         }
 
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+
         p code, li code {
             background: #e0e7ff;
             color: #1e40af;
@@ -213,6 +223,14 @@
             margin: 20px 0;
         }
 
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+
         ul, ol {
             margin-left: 25px;
             margin-bottom: 15px;
@@ -251,6 +269,13 @@
             margin-top: 50px;
         }
 
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8em;
@@ -282,7 +307,7 @@
                 <strong>Prerrequisitos</strong>
                 <ul style="margin: 8px 0 0 18px;">
                     <li>Conocimientos básicos de C# y POO.</li>
-                    <li>Comprensión de HTTP (GET, POST, Headers).</li>
+                    <li>Comprensión de <abbr title="HTTP: HyperText Transfer Protocol, protocolo de comunicación para la World Wide Web que define cómo los mensajes son formateados y transmitidos">HTTP</abbr> (GET, POST, Headers).</li>
                     <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK.</li>
                 </ul>
             </div>
@@ -385,7 +410,7 @@
                 <tbody>
                     <tr><td><strong>Kestrel</strong></td><td>Servidor web multiplataforma incorporado</td></tr>
                     <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes</td></tr>
-                    <tr><td><strong>Dependency Injection</strong></td><td>Contenedor de DI integrado</td></tr>
+                    <tr><td><strong><abbr title="Dependency Injection: Inyección de dependencias, patrón de diseño que implementa Inversión de Control (IoC) para lograr bajo acoplamiento entre componentes">Dependency Injection</abbr></strong></td><td>Contenedor de DI integrado</td></tr>
                     <tr><td><strong>Configuration</strong></td><td>Sistema de configuración flexible</td></tr>
                     <tr><td><strong>Logging</strong></td><td>Sistema de logging incorporado</td></tr>
                 </tbody>
@@ -396,7 +421,18 @@
             <h2>3. Middleware Pipeline</h2>
 
             <h3>¿Qué es el Middleware Pipeline?</h3>
-            <p>El Middleware Pipeline es una secuencia de componentes que procesan las solicitudes HTTP entrantes y las respuestas HTTP salientes.</p>
+            <p>El Middleware Pipeline es una secuencia de componentes que procesan las solicitudes <abbr title="HTTP: HyperText Transfer Protocol, protocolo de comunicación para la World Wide Web">HTTP</abbr> entrantes y las respuestas HTTP salientes.</p>
+
+            <div class="highlight-box">
+                <h4>¿Por qué el Middleware Pipeline?</h4>
+                <p>El patrón Middleware es potente porque permite <strong>componer comportamiento</strong> de forma modular. Cada middleware hace una cosa bien, y el orden determina el comportamiento:</p>
+                <ul>
+                    <li><strong>Modularidad:</strong> Cada concern (auth, logging, routing) está aislado</li>
+                    <li><strong>Reutilizable:</strong> Los middlewares se pueden reutilizar entre proyectos</li>
+                    <li><strong>Flexible:</strong> Puedes agregar/quitar middlewares sin afectar otros</li>
+                    <li><strong>El orden IMPORTA:</strong> Exception handler primero (catch todo), endpoints último (responden)</li>
+                </ul>
+            </div>
 
             <h3>Orden Típico de Middleware</h3>
             <pre><code class="language-csharp">var app = builder.Build();
@@ -475,8 +511,8 @@ dotnet watch run
                 <tbody>
                     <tr><td><strong>Razor Pages</strong></td><td>Sitios web tradicionales</td><td>Pages + PageModel, simple</td></tr>
                     <tr><td><strong>MVC</strong></td><td>Aplicaciones complejas</td><td>Controllers + Views, separación</td></tr>
-                    <tr><td><strong>Web API</strong></td><td>Servicios REST</td><td>Controllers, JSON, no vistas</td></tr>
-                    <tr><td><strong>Blazor</strong></td><td>SPA con C#</td><td>WebAssembly en cliente</td></tr>
+                    <tr><td><strong>Web <abbr title="API: Application Programming Interface, interfaz que permite que dos componentes de software se comuniquen entre sí">API</abbr></strong></td><td>Servicios <abbr title="REST: Representational State Transfer, estilo arquitectónico para sistemas distribuidos que usa HTTP">REST</abbr></td><td>Controllers, JSON, no vistas</td></tr>
+                    <tr><td><strong>Blazor</strong></td><td><abbr title="SPA: Single Page Application, aplicación web que cabe en una sola página y se actualiza dinámicamente sin recargar">SPA</abbr> con C#</td><td><abbr title="WebAssembly: formato binario de instrucciones para una máquina virtual basada en stack, permite ejecutar código en navegadores a alta velocidad">WebAssembly</abbr> en cliente</td></tr>
                 </tbody>
             </table>
         </section>
@@ -627,7 +663,14 @@ app.UseMiddleware&lt;TimingMiddleware&gt;();
 
         <section id="practica">
             <h2>Práctica / Laboratorio (35 min)</h2>
-            <div class="success-box">Objetivo: Crear una aplicación web ASP.NET Core con Razor Pages y middleware personalizado.</div>
+            <section class="actividad">
+                <h3>Actividad: Laboratorio ASP.NET Core - Primera App Web (35 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Aplicación web ASP.NET Core con Razor Pages y middleware</p>
+                <p><strong>Tiempo estimado:</strong> 35 min</p>
+                <p><strong>Criterios de éxito:</strong> Solución compila, app se ejecuta en navegador, middleware registrado y funcionando</p>
+                <div class="success-box">Objetivo: Crear una aplicación web ASP.NET Core con Razor Pages y middleware personalizado.</div>
 
             <h3>Pasos en Windows (Visual Studio 2022)</h3>
             <ol>
@@ -682,8 +725,14 @@ public class TimingMiddleware
         <section id="ejercicios">
             <h2>8. Ejercicios Prácticos</h2>
 
-            <h3>Ejercicio 1: Página de Calculadora (20 min)</h3>
-            <p><strong>Objetivo:</strong> Crear una Razor Page con calculadora básica.</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Página de Calculadora (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Razor Page con calculadora funcional</p>
+                <p><strong>Tiempo estimado:</strong> 20 min</p>
+                <p><strong>Criterios de éxito:</strong> Razor Page creada, formulario funcional, operaciones correctas, validación de división por cero</p>
+                <p><strong>Objetivo:</strong> Crear una Razor Page con calculadora básica.</p>
             <ul>
                 <li>Formulario con dos inputs numéricos</li>
                 <li>Botones para Sumar, Restar, Multiplicar, Dividir</li>
@@ -692,8 +741,14 @@ public class TimingMiddleware
             </ul>
             <div class="success-box">Checklist: Razor Page creada, formulario funcional, operaciones correctas, validación de división por cero implementada.</div>
 
-            <h3>Ejercicio 2: Middleware de Timing (15 min)</h3>
-            <p><strong>Objetivo:</strong> Middleware que mide tiempo de respuesta.</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Middleware de Timing (15 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Middleware personalizado de timing</p>
+                <p><strong>Tiempo estimado:</strong> 15 min</p>
+                <p><strong>Criterios de éxito:</strong> Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output</p>
+                <p><strong>Objetivo:</strong> Middleware que mide tiempo de respuesta.</p>
             <ul>
                 <li>Cronometrar cada solicitud</li>
                 <li>Mostrar tiempo en header de respuesta</li>
@@ -701,8 +756,14 @@ public class TimingMiddleware
             </ul>
             <div class="success-box">Checklist: Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output.</div>
 
-            <h3>Ejercicio 3: Página con Validación (25 min)</h3>
-            <p><strong>Objetivo:</strong> Formulario con validaciones.</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Página con Validación (25 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Razor Page con formulario validado</p>
+                <p><strong>Tiempo estimado:</strong> 25 min</p>
+                <p><strong>Criterios de éxito:</strong> Validaciones implementadas, mensajes de error visibles, formulario rechaza datos inválidos</p>
+                <p><strong>Objetivo:</strong> Formulario con validaciones.</p>
             <ul>
                 <li>Nombre requerido</li>
                 <li>Email formato válido</li>
@@ -711,6 +772,11 @@ public class TimingMiddleware
             </ul>
             <div class="success-box">Checklist: Validaciones implementadas, mensajes de error visibles, formulario rechaza datos inválidos.</div>
             <div class="success-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left-color: #f59e0b;">Tiempo sugerido total: 60 min (20 + 15 + 25).</div>
+        </section>
+
+        <section class="evaluacion-calificable">
+            <h3>📋 Evaluación programada</h3>
+            <p><strong>Detalle:</strong> Consultar plataforma del curso para información completa sobre evaluación calificable.</p>
         </section>
 
         <section id="resumen">
@@ -748,6 +814,15 @@ public class TimingMiddleware
                 <li><strong>Clase 9:</strong> HTML5 y Bootstrap</li>
                 <li>Practicar creando proyectos reales</li>
                 <li>Explorar MVC vs Razor Pages</li>
+            </ul>
+
+            <h3>Referencias y Recursos</h3>
+            <ul>
+                <li><strong>Documentación oficial de ASP.NET Core:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/" target="_blank" rel="noopener">https://learn.microsoft.com/en-us/aspnet/core/</a></li>
+                <li><strong>Tutorial de Razor Pages:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/" target="_blank" rel="noopener">Introduction to Razor Pages</a></li>
+                <li><strong>Middleware en ASP.NET Core:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/" target="_blank" rel="noopener">ASP.NET Core Middleware</a></li>
+                <li><strong>Inyección de Dependencias:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="noopener">Dependency Injection in ASP.NET Core</a></li>
+                <li><strong>Kestrel Web Server:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel" target="_blank" rel="noopener">Kestrel Web Server</a></li>
             </ul>
         </section>
     </div>

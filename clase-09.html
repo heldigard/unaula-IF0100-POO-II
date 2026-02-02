@@ -101,12 +101,28 @@
             font-size: 0.9em;
         }
         pre code { background: none; padding: 0; }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
         .example-box {
             background: #fef3c7;
             border-left: 4px solid #f59e0b;
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 4px;
+        }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
         }
         .figure-container {
             text-align: center;
@@ -202,6 +218,12 @@
             text-align: center;
             padding: 2rem;
             margin-top: 2rem;
+        }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
         }
         @media (max-width: 768px) {
             .comparison { grid-template-columns: 1fr; }
@@ -319,6 +341,17 @@
             <h2>1. HTML5: Estructura Semántica</h2>
 
             <h3>Más allá de <div></h3>
+
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;">
+                <h4>¿Por qué HTML5 Semántico?</h4>
+                <p><strong><abbr title="HTML5: HyperText Markup Language 5, quinta versión principal del lenguaje de marcado para estructurar contenido web">HTML5</abbr></strong> introdujo etiquetas con significado (semántica) en lugar de genéricas <code>&lt;div&gt;</code>. Esto permite:</p>
+                <ul>
+                    <li><strong>Mejor <abbr title="SEO: Search Engine Optimization, optimización para motores de búsqueda como Google">SEO</abbr>:</strong> Los motores de búsqueda entienden mejor tu contenido</li>
+                    <li><strong>Accesibilidad:</strong> Los lectores de pantalla navegan más fácilmente</li>
+                    <li><strong>Mantenibilidad:</strong> El código es más legible y auto-documentado</li>
+                    <li><strong>Consistencia:</strong> Estructura estándar en toda la web moderna</li>
+                </ul>
+            </div>
 
             <div class="comparison">
                 <div class="bad">
@@ -578,7 +611,7 @@
             <h2>3. Bootstrap: Introducción</h2>
 
             <h3>Framework CSS Más Popular</h3>
-            <p><strong>Bootstrap 5</strong> es un framework CSS/JavaScript para desarrollo responsivo y mobile-first de proyectos web.</p>
+            <p><strong>Bootstrap 5</strong> es un framework <abbr title="CSS: Cascading Style Sheets, hojas de estilo en cascada, lenguaje usado para describir la presentación de documentos HTML">CSS</abbr>/JavaScript para desarrollo responsivo y mobile-first de proyectos web.</p>
 
             <div class="badge-list">
                 <span class="badge badge-green">Ahorra tiempo</span>
@@ -609,7 +642,7 @@
             <h2>4. Sistema de Grillas Bootstrap</h2>
 
             <h3>El Corazón de Bootstrap</h3>
-            <p>Bootstrap usa un sistema de <strong>12 columnas</strong> por fila con <strong>6 breakpoints</strong> para diseño responsivo.</p>
+            <p>Bootstrap usa un sistema de <strong>12 columnas</strong> por fila con <strong>6 <abbr title="Breakpoint: Punto de corte de ancho de pantalla donde el diseño responsive cambia su comportamiento (ej: col-md cambia a 768px)">breakpoints</abbr></strong> para diseño <abbr title="Mobile-first: Estrategia de diseño responsive que comienza diseñando para dispositivos móviles y luego escala hacia pantallas más grandes">mobile-first</abbr>.</p>
 
             <table class="tag-table">
                 <thead>
@@ -1033,7 +1066,7 @@
 </div></code></pre>
 
             <h3>Accesibilidad - ARIA Labels</h3>
-            <p>Importante para usuarios con discapacidades. ARIA = Accessible Rich Internet Applications</p>
+            <p>Importante para usuarios con discapacidades. <strong><abbr title="ARIA: Accessible Rich Internet Applications, conjunto de atributos HTML que mejoran la accesibilidad de aplicaciones web para usuarios con discapacidades">ARIA</abbr></strong> = Accessible Rich Internet Applications</p>
             <pre><code><!-- ARIA-LABEL - Descripción para elementos sin texto -->
 <input type="search" aria-label="Buscar ejemplos">
 <button aria-label="Cerrar ventana">&amp;times;</button>
@@ -1061,14 +1094,21 @@
         <!-- Práctica / Laboratorio -->
         <section id="practica" class="section">
             <h2>Práctica / Laboratorio (30 min)</h2>
-            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Objetivo:</strong> Crear una landing page responsive con Bootstrap 5.</div>
+            <section class="actividad">
+                <h3>Actividad: Landing Page con Bootstrap 5 (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Landing page responsive con Bootstrap 5</p>
+                <p><strong>Tiempo estimado:</strong> 30 min</p>
+                <p><strong>Criterios de éxito:</strong> Proyecto compila, Bootstrap cargando, página responsive en móvil y desktop</p>
+                <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Objetivo:</strong> Crear una landing page responsive con Bootstrap 5.</div>
 
             <h3>Pasos en Visual Studio 2022</h3>
             <ol>
                 <li>Abrir Visual Studio 2022 y crear un proyecto <strong>ASP.NET Core Web App</strong>.</li>
                 <li>En el Explorador de Soluciones, clic derecho en <code>Pages</code> > <strong>Agregar > Nuevo elemento > Razor Page</strong>.</li>
                 <li>Nombre: <code>Index</code> en la carpeta Pages (sobrescribir el existente).</li>
-                <li>Agregar Bootstrap 5 via CDN o NuGet en <code>Pages/Shared/_Layout.cshtml</code>.</li>
+                <li>Agregar Bootstrap 5 via <abbr title="CDN: Content Delivery Network, red de servidores distribuidos globalmente que entregan contenido web (CSS, JS, imágenes) desde el servidor más cercano al usuario">CDN</abbr> o NuGet en <code>Pages/Shared/_Layout.cshtml</code>.</li>
                 <li>Ejecutar con F5 y probar la responsive con las herramientas de desarrollador (F12).</li>
             </ol>
             <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Proyecto compila sin errores, Bootstrap cargando correctamente, página responsive en móvil y desktop.</div>
@@ -1111,8 +1151,14 @@
         <section id="ejercicios" class="section">
             <h2>Ejercicios Prácticos</h2>
 
-            <h3>Ejercicio 1: Landing Page (20 min)</h3>
-            <p>Crear una landing page con:</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Landing Page (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Landing page con hero, features, formulario y footer</p>
+                <p><strong>Tiempo estimado:</strong> 20 min</p>
+                <p><strong>Criterios de éxito:</strong> Hero implementada, grid responsive, formulario con validaciones, footer funcionando</p>
+                <p>Crear una landing page con:</p>
             <ul>
                 <li>Hero section con título y botón de acción</li>
                 <li>Features en 3 columnas (1 móvil, 2 tablet, 3 desktop)</li>
@@ -1121,8 +1167,14 @@
             </ul>
             <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Hero section implementada, grid responsive correctamente, formulario HTML5 con validaciones, footer funcionando.</div>
 
-            <h3>Ejercicio 2: Dashboard de Estudiantes (25 min)</h3>
-            <p>Crear un dashboard con:</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Dashboard de Estudiantes (25 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Dashboard con navbar, sidebar, cards, tabla y modal</p>
+                <p><strong>Tiempo estimado:</strong> 25 min</p>
+                <p><strong>Criterios de éxito:</strong> Navbar con dropdown, sidebar offcanvas, cards con datos, tabla con paginación, modal de confirmación</p>
+                <p>Crear un dashboard con:</p>
             <ul>
                 <li>Navbar con dropdown</li>
                 <li>Sidebar colapsable (offcanvas)</li>
@@ -1132,8 +1184,14 @@
             </ul>
             <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Navbar con dropdown funcional, sidebar offcanvas operativo, cards mostrando datos, tabla con paginación, modal de confirmación funcionando.</div>
 
-            <h3>Ejercicio 3: Página de Estudiantes (30 min)</h3>
-            <p>Crear Vista "ListaEstudiantes" con:</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Página de Estudiantes (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Vista ListaEstudiantes con layout responsive y badges</p>
+                <p><strong>Tiempo estimado:</strong> 30 min</p>
+                <p><strong>Criterios de éxito:</strong> Layout responsive 1-2-3, cards con datos, badges de colores, botón de detalle, formulario de búsqueda</p>
+                <p>Crear Vista "ListaEstudiantes" con:</p>
             <ul>
                 <li>Layout responsivo (1 columna móvil, 2 tablet, 3 desktop)</li>
                 <li>Card de ejemplo con foto, nombre, carrera (badge), promedio</li>

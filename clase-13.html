@@ -103,6 +103,21 @@
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
+    /* Syntax highlighting para C# */
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
   </style>
 </head>
 <body>
@@ -149,6 +164,15 @@
       <h2>Teoría</h2>
 
       <h3>Arquitectura por capas</h3>
+      <p><strong>Arquitectura por capas</strong> = Separar el código en niveles con responsabilidades distintas. Cada capa solo interactúa con la capa inmediatamente inferior/superior.</p>
+      <div class="note">
+        <strong>¿Por qué arquitectura por capas?</strong>
+        <ul>
+          <li><strong>Mantenibilidad:</strong> Cambios en UI no afectan lógica de datos</li>
+          <li><strong>Reutilización:</strong> La lógica de negocio puede usarse desde Console, Web o API</li>
+          <li><strong>Testing:</strong> Cada capa se puede probar independientemente</li>
+        </ul>
+      </div>
       <pre><code>Presentación (Console/WinForms)
    ↓
 Lógica de negocio (validaciones)
@@ -158,6 +182,12 @@ Acceso a datos (ADO.NET)
 SQL Server (tabla Estudiantes)</code></pre>
 
       <h3>Modelo de base de datos</h3>
+      <p><strong><abbr title="IDENTITY(1,1) - Columna auto-incremental que empieza en 1 y aumenta de 1 en 1">IDENTITY(1,1)</abbr></strong> = Configuración para que SQL Server genere automáticamente valores únicos consecutivos.</p>
+      <p><strong><abbr title="NVARCHAR - Tipo de dato SQL para texto Unicode (admite caracteres especiales)">NVARCHAR</abbr></strong> = Tipo de dato para texto en SQL Server que soporta caracteres Unicode (emojis, acentos, caracteres internacionales).</p>
+      <p><strong><abbr title="UNIQUE - Restricción que impide valores duplicados en una columna">UNIQUE</abbr></strong> = Restricción que garantiza que no haya valores duplicados en una columna (ej: dos estudiantes con mismo código).</p>
+      <p><strong><abbr title="CHECK - Restricción que valida que un valor cumpla una condición">CHECK constraint</abbr></strong> = Regla de validación a nivel base de datos (ej: promedio debe estar entre 0 y 5).</p>
+      <p><strong><abbr title="BIT - Tipo de dato SQL para valores booleanos (0 o 1)">BIT</abbr></strong> = Tipo de dato booleano en SQL Server (0 = false, 1 = true).</p>
+      <p><strong><abbr title="GETDATE() - Función de SQL Server que retorna la fecha y hora actual">GETDATE()</abbr></strong> = Función que retorna la fecha y hora actual del servidor.</p>
       <pre><code class="language-sql">CREATE TABLE Estudiantes (
   Id INT PRIMARY KEY IDENTITY(1,1),
   Codigo NVARCHAR(20) NOT NULL UNIQUE,
@@ -171,6 +201,7 @@ SQL Server (tabla Estudiantes)</code></pre>
 );</code></pre>
 
       <h3>Entidad C#</h3>
+      <p><strong>Property expression (=>)</strong> = Sintaxis de C# para definir propiedades calculadas (read-only) que derivan su valor de otras propiedades.</p>
       <pre><code class="language-csharp">public class Estudiante
 {
     public int Id { get; set; }
@@ -242,6 +273,15 @@ SQL Server (tabla Estudiantes)</code></pre>
 }</code></pre>
 
       <h3>UPDATE y DELETE logico</h3>
+      <p><strong>DELETE lógico</strong> = Marcar un registro como inactivo (Activo = 0) en lugar de eliminarlo físicamente. Permite recuperar datos y mantiene auditoría.</p>
+      <div class="note">
+        <strong>¿Por qué DELETE lógico?</strong>
+        <ul>
+          <li><strong>Auditoría:</strong> Mantener historial de todos los registros</li>
+          <li><strong>Recuperación:</strong> Podés "reactivar" un registro eliminado por error</li>
+          <li><strong>Integridad:</strong> No rompe relaciones con otras tablas ( FOREIGN KEY )</li>
+        </ul>
+      </div>
       <pre><code class="language-csharp">public bool Actualizar(Estudiante estudiante)
 {
     const string query = @"
@@ -275,6 +315,14 @@ public bool EliminarLogico(int id)
 }</code></pre>
     </section>
 
+    <section class="evaluacion-calificable" style="background: #fef3c7; border-left: 5px solid #f59e0b; padding: 20px; border-radius: 8px; margin: 20px 0;">
+      <h2>📋 Evaluación 5 (15%) - Examen</h2>
+      <p><strong>Fecha:</strong> Lunes 5 de mayo de 2026</p>
+      <p><strong>Temas:</strong> ADO.NET, Conexión BD, CRUD con ADO.NET, SQL Server</p>
+      <p><strong>Resultados de aprendizaje:</strong> Persistencia de datos</p>
+      <p><strong>Formato:</strong> Examen escrito/práctico</p>
+    </section>
+
     <section id="practica">
       <h2>Práctica / Laboratorio</h2>
 
@@ -292,6 +340,8 @@ public bool EliminarLogico(int id)
 }</code></pre>
 
       <h3>Paginación OFFSET/FETCH</h3>
+      <p><strong>Paginación</strong> = Dividir un conjunto de resultados grandes en páginas más pequeñas (ej: 20 registros por página) para mejorar rendimiento y UX.</p>
+      <p><strong><abbr title="OFFSET/FETCH - Cláusulas de SQL Server para saltar registros y tomar un número limitado de filas (paginación)">OFFSET/FETCH</abbr></strong> = OFFSET salta N registros, FETCH NEXT toma M registros a partir de ahí.</p>
       <pre><code class="language-sql">SELECT Id, Codigo, Nombre, Apellido, Promedio
 FROM Estudiantes
 WHERE Activo = 1
@@ -300,6 +350,15 @@ OFFSET @Offset ROWS
 FETCH NEXT @PageSize ROWS ONLY;</code></pre>
 
       <h3>Bulk insert (SqlBulkCopy)</h3>
+      <p><strong><abbr title="SqlBulkCopy - Clase de ADO.NET para inserción masiva de datos (miles de filas en segundos)">SqlBulkCopy</abbr></strong> = Clase especializada para insertar grandes cantidades de datos muy rápido. Es mucho más eficiente que INSERT individual.</p>
+      <div class="note">
+        <strong>¿Por qué SqlBulkCopy?</strong>
+        <ul>
+          <li><strong>Rendimiento:</strong> Puede insertar 100,000 filas en segundos</li>
+          <li><strong>Importación:</strong> Ideal para importar datos de Excel, CSV, etc.</li>
+          <li><strong>Mínimo overhead:</strong> No crea logs detallados como INSERT normal</li>
+        </ul>
+      </div>
       <pre><code class="language-csharp">using var bulkCopy = new SqlBulkCopy(connection);
 bulkCopy.DestinationTableName = "Estudiantes";
 bulkCopy.ColumnMappings.Add("Codigo", "Codigo");
@@ -319,7 +378,18 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
       <h2>Ejercicios</h2>
 
       <h3>Búsqueda por nombre</h3>
+      <p><strong><abbr title="LIKE - Operador de SQL para búsqueda de patrones en texto (con comodines %)">LIKE</abbr></strong> = Operador de SQL para búsqueda parcial. % representa cualquier secuencia de caracteres (comodín).</p>
+      <p>Ejemplo: <code>WHERE Nombre LIKE '%Mar%'</code> encuentra "María", "Mar", "Amargo", etc.</p>
       <p>Implementar <code>BuscarPorNombre(string término)</code> con LIKE en nombre y apellido.</p>
+
+      <div class="note">
+        <strong>Mini-Chequeo: CRUD Completo</strong>
+        <ul>
+          <li>¿Por qué usar DELETE lógico en lugar de DELETE físico?</li>
+          <li>¿Cuándo usarías SqlBulkCopy vs INSERT normal?</li>
+          <li>¿Cómo funciona la paginación con OFFSET/FETCH?</li>
+        </ul>
+      </div>
 
       <h3>Paginación</h3>
       <p>Modificar <code>ObtenerTodos</code> para aceptar pagina y tamaño y retornar resultado paginado.</p>

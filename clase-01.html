@@ -107,6 +107,13 @@
       border-radius: 8px;
       color: var(--muted);
     }
+    .warning-box {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #991b1b;
+    }
     figure {
       margin: 0;
       padding: 12px;
@@ -129,9 +136,37 @@
       overflow-x: auto;
     }
     code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    /* Syntax highlighting para C# */
+    pre code[class*="language-"] { color: #e2e8f0; }
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    .token-method { color: #82aaff; }
+    .token-class { color: #ffcb6b; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    pre code { display: block; overflow-x: auto; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.6rem; }
+      header .meta { grid-template-columns: 1fr; }
+      nav ul { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      section { padding: 16px; }
+      pre { font-size: 0.85rem; }
+    }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
   </style>
 </head>
 <body>
@@ -181,11 +216,11 @@
       <h3>Qué es C# y por qué usarlo</h3>
       <div class="grid-2">
         <div>
-          <p>C# es un lenguaje moderno, orientado a objetos y type-safe. Se utiliza para crear aplicaciones web, escritorio, servicios en la nube, videojuegos y sistemas empresariales.</p>
+          <p>C# es un lenguaje moderno, orientado a objetos y <abbr title="Type-safe significa que el programa verifica los tipos de datos en tiempo de compilación, previniendo errores como tratar un número como texto">type-safe</abbr>. Se utiliza para crear aplicaciones web, escritorio, servicios en la nube, videojuegos y sistemas empresariales.</p>
           <h4>Ventajas clave</h4>
           <ul>
             <li>Multiplataforma (Windows, Linux, macOS).</li>
-            <li>Alto rendimiento y compilación con JIT.</li>
+            <li>Alto rendimiento y compilación con <abbr title="Just-In-Time: Compilación que ocurre durante la ejecución del programa, convirtiendo código intermedio a código máquina nativo">JIT</abbr>.</li>
             <li>Ecosistema .NET amplio y estable.</li>
           </ul>
         </div>
@@ -201,8 +236,10 @@
               <tr><td>C# 5.0</td><td>2012</td><td>async/await</td></tr>
               <tr><td>C# 9.0</td><td>2020</td><td>.NET 5 open-source</td></tr>
               <tr><td>C# 12</td><td>2023</td><td>Primary constructors</td></tr>
+              <tr><td>C# 14</td><td>2026</td><td>.NET 10 LTS (última versión)</td></tr>
             </tbody>
           </table>
+          <div class="note">Nota: .NET 8 (LTS hasta nov 2026) y .NET 10 (LTS actual) son las versiones recomendadas para producción. Este curso usa .NET 8 por su estabilidad y soporte extendido.</div>
         </div>
       </div>
 
@@ -219,11 +256,30 @@
 ├─────────────────────────────────────────┤
 │        Windows / Linux / macOS          │
 └─────────────────────────────────────────┘</code></pre>
+      <div class="grid-2">
+        <div>
+          <h4>Componentes clave</h4>
+          <ul>
+            <li><strong><abbr title="Common Language Runtime: Máquina virtual que ejecuta código .NET, similar a JVM en Java">CLR</abbr></strong>: Ejecuta programas, maneja memoria y provee servicios como thread management.</li>
+            <li><strong><abbr title="Base Class Library: Colección de clases y tipos predefinidos para tareas comunes">BCL</abbr></strong>: Librería estándar con String, Collections, IO, Data, etc.</li>
+            <li><strong><abbr title="Intermediate Language: Lenguaje intermedio en el que se compila el código C# antes de convertirse a código máquina">IL</abbr></strong>: Código intermedio que el CLR convierte a código máquina.</li>
+            <li><strong><abbr title="Garbage Collector: Mecanismo automático que libera memoria de objetos que ya no se usan">GC</abbr></strong>: Gestión automática de memoria, previene memory leaks.</li>
+            <li><strong><abbr title="Just-In-Time: Compilador que convierte IL a código máquina nativo durante la ejecución">JIT</abbr></strong>: Compila IL a código máquina cuando se ejecuta el programa.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>¿Por qué importa esta arquitectura?</h4>
+          <p>La arquitectura en capas permite que el mismo código C# funcione en diferentes sistemas operativos sin cambios. El CLR abstrae las diferencias de plataforma.</p>
+          <div class="warning-box">Error común: Creer que C# es solo para Windows. Desde .NET Core, C# es verdaderamente multiplataforma.</div>
+        </div>
+      </div>
+      <p><strong>Mini-chequeo:</strong> ¿Puedes explicar qué hace el CLR? ¿En qué se diferencia IL del código máquina?</p>
 
       <h3>Estructura básica de un programa C#</h3>
       <div class="grid-2">
         <div>
           <p>Los elementos esenciales son <code>using</code>, <code>namespace</code>, <code>class</code> y el método <code>Main</code> como punto de entrada.</p>
+          <p><strong><abbr title="Namespace: Espacio de nombres que organiza clases y tipos, evitando conflictos de nombres">Namespace</abbr></strong>: Es como un "apellido" para las clases. Dos clases pueden llamarse <code>Program</code> si están en namespaces diferentes. Similar a los paquetes en Java.</p>
           <pre><code class="language-csharp">using System;
 
 namespace MiApp
@@ -251,23 +307,28 @@ namespace MiApp
       </div>
 
       <h3>Tipos de datos: value vs reference</h3>
+      <p>En C#, los tipos se dividen en dos categorías que afectan cómo se almacenan y copian los datos.</p>
       <div class="grid-2">
         <div>
-          <h4>Value types (stack)</h4>
+          <h4>Value types (almacenados en <abbr title="Stack: Memoria de acceso rápido con organización LIFO, ideal para variables locales y tipos primitivos">stack</abbr>)</h4>
+          <p>Contienen directamente el valor. Al copiar, se crea una copia independiente. Incluyen: <code>int</code>, <code>double</code>, <code>bool</code>, <code>struct</code>.</p>
           <pre><code class="language-csharp">int edad = 25;
 int edad2 = edad;
 edad2 = 30;
-Console.WriteLine(edad);  // 25</code></pre>
+Console.WriteLine(edad);  // 25 (no cambió)</code></pre>
         </div>
         <div>
-          <h4>Reference types (heap)</h4>
+          <h4>Reference types (almacenados en <abbr title="Heap: Memoria dinámica para objetos de mayor tamaño y vida útil variable">heap</abbr>)</h4>
+          <p>Contienen una referencia a un objeto. Al copiar, se comparte la referencia. Incluyen: <code>class</code>, <code>string</code>, <code>array</code>.</p>
           <pre><code class="language-csharp">string nombre = "Juan";
 string nombre2 = nombre;
 nombre2 = "Maria";
-Console.WriteLine(nombre); // Juan</code></pre>
-          <div class="note">Nota: <code>string</code> es reference type, pero es inmutable; al reasignar se crea un nuevo objeto.</div>
+Console.WriteLine(nombre); // Juan (string es inmutable)</code></pre>
+          <div class="note">Nota: <code>string</code> es reference type, pero es inmutable; al reasignar se crea un nuevo objeto. Para comportamientos mutables, usar <code>StringBuilder</code>.</div>
         </div>
       </div>
+      <div class="warning-box">Error común: Creer que modificar una variable de referencia afecta a todas las variables que apuntan al mismo objeto. Depende de si el tipo es mutable o inmutable.</div>
+      <p><strong>Mini-chequeo:</strong> ¿Cuál es la diferencia fundamental entre value types y reference types al asignar una variable a otra?</p>
       <figure>
         <img src="../assets/infografias/clase-01-value-vs-reference.png" alt="Infografia value types vs reference types en C#" />
         <figcaption>Ilustración de las diferencias entre tipos de valor (almacenados en stack, copia directa) y tipos de referencia (almacenados en heap, referencia compartida) en C#. Los value types incluyen int, double, struct; reference types incluyen class, string, array.</figcaption>
@@ -276,19 +337,25 @@ Console.WriteLine(nombre); // Juan</code></pre>
       <h3>Nullable, strings y patrones</h3>
       <div class="grid-2">
         <div>
-          <h4>Nullable</h4>
-          <pre><code class="language-csharp">int? edad = null;
-int edadDefault = edad ?? 18;</code></pre>
+          <h4><abbr title="Nullable: Tipo que puede contener un valor normal o null (sin valor)">Nullable</abbr> (tipos que pueden ser null)</h4>
+          <p>Por defecto, los value types (<code>int</code>, <code>double</code>, <code>bool</code>) no pueden ser <code>null</code>. El operador <code>?</code> permite que acepten <code>null</code>.</p>
+          <p><strong>¿Por qué usarlo?</strong> Útil cuando un valor puede estar ausente (ej: edad desconocida de un usuario). El operador <code>??</code> (null-coalescing) proporciona un valor por defecto.</p>
+          <pre><code class="language-csharp">int? edad = null;         // puede ser null
+int edadDefault = edad ?? 18;  // 18 si edad es null</code></pre>
+          <div class="warning-box">Error común: No validar null antes de usar un nullable. Usar <code>if (edad.HasValue)</code> o <code>??</code>.</div>
         </div>
         <div>
-          <h4>Pattern matching</h4>
+          <h4><abbr title="Pattern matching: Técnica para evaluar una expresión y ejecutar código según patrones o condiciones">Pattern matching</abbr> (coincidencia de patrones)</h4>
+          <p>Forma moderna y legible de expresar condicionales complejas. El <code>switch</code> expression devuelve un valor directamente.</p>
+          <p><strong>¿Por qué usarlo?</strong> Código más limpio que múltiples <code>if-else</code>, y el compilador verifica que todos los casos estén cubiertos.</p>
           <pre><code class="language-csharp">string categoria = edadDefault switch
 {
     &lt; 13 => "Niño",
     &lt; 20 => "Adolescente",
     &lt; 65 => "Adulto",
-    _ => "Mayor"
+    _ => "Mayor"  // "_" es el default (cualquier otro caso)
 };</code></pre>
+          <p><strong>Mini-chequeo:</strong> ¿Qué pasa si edadDefault es 70? ¿Y si es -5?</p>
         </div>
       </div>
 
@@ -336,28 +403,34 @@ nums.Add(42);
       <h3>Novedades de C# 12</h3>
       <div class="grid-2">
         <div>
-          <h4>Primary constructors</h4>
+          <h4><abbr title="Primary constructor: Constructor declarado directamente en la línea de la clase, simplificando código cuando solo necesita recibir parámetros">Primary constructors</abbr> (constructores primarios)</h4>
+          <p>Sintaxis simplificada para clases que solo necesitan recibir parámetros en el constructor.</p>
+          <p><strong>¿Por qué usarlo?</strong> Reduce código boilerplate cuando la clase solo almacena parámetros.</p>
           <pre><code class="language-csharp">public class Persona(string nombre, int edad)
 {
     public string Info => $"{nombre} ({edad} años)";
 }</code></pre>
+          <div class="note">Nota: Los parámetros del primary constructor están disponibles en toda la clase, similar a campos privados.</div>
         </div>
         <div>
           <h4>Collection expressions</h4>
+          <p>Sintaxis moderna para crear colecciones sin repetir <code>new[]</code> o <code>new List&lt;T&gt;()</code>.</p>
           <pre><code class="language-csharp">int[] pares = [2, 4, 6];
 int[] impares = [1, 3, 5];
-int[] all = [..pares, ..impares];</code></pre>
+int[] all = [..pares, ..impares];  // spread operator</code></pre>
         </div>
       </div>
 
-      <h3>Ejemplo: LINQ para consultas funcionales</h3>
+      <h3>Ejemplo: <abbr title="Language Integrated Query: Sintaxis para consultar colecciones de datos de forma declarativa, similar a SQL pero en código C#">LINQ</abbr> para consultas funcionales</h3>
+      <p>LINQ permite consultar colecciones (listas, arrays, bases de datos) de forma declarativa, similar a SQL pero dentro de C#.</p>
+      <p><strong>¿Por qué usarlo?</strong> Código más legible que loops <code>foreach</code> anidados, menos propenso a errores, y permite encadenar operaciones.</p>
       <div class="grid-2">
         <div>
           <h4>Filtrar y transformar lista</h4>
           <pre><code class="language-csharp">List<int> nums = new() { 1, 2, 3, 4, 5 };
-var pares = nums.Where(n => n % 2 == 0)
-                .Select(n => n * 2)
-                .ToList();
+var pares = nums.Where(n => n % 2 == 0)     // filtrar pares
+                .Select(n => n * 2)          // duplicar
+                .ToList();                   // convertir a lista
 // Resultado: [4, 8]</code></pre>
         </div>
         <div>
@@ -367,20 +440,44 @@ var pares = nums.Where(n => n % 2 == 0)
             <li>Integrado en el lenguaje.</li>
             <li>Optimizado por el compilador.</li>
           </ul>
+          <div class="warning-box">Error común: Creer que LINQ siempre crea una lista nueva. Algunos métodos como <code>Where</code> retornan un <em>iterador</em> lazy (se ejecutan solo cuando se enumera).</div>
         </div>
       </div>
+      <p><strong>Mini-chequeo:</strong> ¿Qué hace <code>Where</code>? ¿Qué pasa si llamas <code>ToList()</code> antes de <code>Select</code>?</p>
 
       <h3>Ciclo de ejecución en C#</h3>
-      <pre><code>1) Código C# (.cs)
-2) Compilación -> IL (.dll/.exe)
-3) CLR (JIT) -> código máquina
-4) Ejecución en Windows/Linux/macOS</code></pre>
+      <p>Entender cómo se ejecuta un programa C# ayuda a diagnosticar problemas y optimizar rendimiento.</p>
+      <pre><code>1) Código C# (.cs) - Código fuente legible por humanos
+2) Compilación -> IL (.dll/.exe) - Código intermedio (CIL)
+3) CLR (JIT) -> código máquina - Compilación Just-In-Time
+4) Ejecución en Windows/Linux/macOS - Código nativo del CPU</code></pre>
+      <div class="grid-2">
+        <div>
+          <h4>Fases clave</h4>
+          <ul>
+            <li><strong>Compilación a IL</strong>: El compilador C# convierte código fuente a <abbr title="Intermediate Language: Representación intermedia del código, similar a bytecode en Java">IL</abbr>, independiente de la plataforma.</li>
+            <li><strong>JIT compilation</strong>: El CLR compila IL a código máquina nativo <em>durante la ejecución</em>, específico para cada CPU/SO.</li>
+            <li><strong>NGen</strong>: Opcionalmente, IL puede pre-compilarse a nativo para reducir el tiempo de inicio.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>¿Por qué este diseño?</h4>
+          <p>La compilación en dos pasos permite que el mismo código IL funcione en diferentes plataformas sin recompilar. El JIT optimiza según el hardware específico.</p>
+          <div class="note">Nota: El código IL puede desensamblarse con herramientas como ILSpy o dotPeek, útil para aprender cómo funciona el código compilado.</div>
+        </div>
+      </div>
     </section>
 
     <section id="practica">
       <h2>Práctica / laboratorio</h2>
 
-      <h3>Instalación y configuración de Visual Studio 2022 (30 min)</h3>
+      <section class="actividad">
+        <h3>Actividad: Instalación y configuración de Visual Studio 2022 (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Visual Studio instalado y configurado</p>
+        <p><strong>Tiempo estimado:</strong> 30 min</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión del entorno de desarrollo</p>
       <ul>
         <li>Descargar e instalar Visual Studio Community 2022.</li>
         <li>Workloads: Desarrollo de escritorio con .NET y ASP.NET y desarrollo web.</li>
@@ -388,7 +485,15 @@ var pares = nums.Where(n => n % 2 == 0)
       </ul>
       <div class="note">Alternativa ligera (si el equipo es limitado): instalar solo .NET 8 SDK y usar Visual Studio Code.</div>
 
-      <h3>Actividad guiada: primera aplicación de consola (20 min)</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Primera aplicación de consola (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Aplicación de consola funcional</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión de estructura básica de programa C#</p>
       <ol>
         <li>Crear proyecto: Aplicación de consola (.NET).</li>
         <li>Revisar <code>Program.cs</code> y escribir un saludo personalizado.</li>
@@ -411,17 +516,21 @@ namespace HolaMundo
 }</code></pre>
 
       <h3>Depuración básica (10 min)</h3>
+      <p><strong><abbr title="Debug: Proceso de ejecutar un programa paso a paso para encontrar y corregir errores">Debug</abbr></strong> (depuración) es ejecutar el programa controladamente para inspeccionar valores y encontrar errores.</p>
+      <p><strong><abbr title="Breakpoint: Punto en el código donde la ejecución se pausa automáticamente, permitiendo inspeccionar variables">Breakpoint</abbr></strong> es un marcador que pausa la ejecución en una línea específica. Presiona <code>F9</code> en la línea deseada.</p>
       <table>
         <thead>
-          <tr><th>Atajo</th><th>Acción</th></tr>
+          <tr><th>Atajo</th><th>Acción</th><th>Descripción</th></tr>
         </thead>
         <tbody>
-          <tr><td>F5</td><td>Iniciar debug</td></tr>
-          <tr><td>F9</td><td>Breakpoint</td></tr>
-          <tr><td>F10</td><td>Step Over</td></tr>
-          <tr><td>F11</td><td>Step Into</td></tr>
+          <tr><td>F5</td><td>Iniciar debug</td><td>Comienza ejecución con debugger</td></tr>
+          <tr><td>F9</td><td>Toggle breakpoint</td><td>Añade/quita breakpoint en línea actual</td></tr>
+          <tr><td>F10</td><td>Step Over</td><td>Ejecuta línea actual sin entrar en funciones</td></tr>
+          <tr><td>F11</td><td>Step Into</td><td>Entra en funciones llamadas</td></tr>
+          <tr><td>Shift+F11</td><td>Step Out</td><td>Sale de función actual</td></tr>
         </tbody>
       </table>
+      <div class="note">Tip: Pasa el mouse sobre variables para ver sus valores durante el debug. Usa la ventana "Inmediato" (Ctrl+Alt+I) para evaluar expresiones.</div>
 
       <h3>Errores comunes y checklist</h3>
       <ul>
@@ -435,7 +544,13 @@ namespace HolaMundo
     <section id="ejercicios">
       <h2>Ejercicios</h2>
 
-      <h3>Ejercicio 1: Calculadora de área (20 min)</h3>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Calculadora de área (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Aplicación de calculadora de área funcional</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Uso de variables, entrada/salida, operaciones matemáticas</p>
       <p>Crear una app de consola que calcule el área de un rectángulo a partir de base y altura.</p>
       <ul>
         <li><strong>Checklist:</strong> proyecto creado, entrada validada, cálculo correcto, salida formateada.</li>
@@ -459,7 +574,15 @@ namespace CalculadoraArea
     }
 }</code></pre>
 
-      <h3>Ejercicio 2: Sistema de calificaciones (30 min)</h3>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Sistema de calificaciones (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Sistema de calificaciones con validación</p>
+        <p><strong>Tiempo estimado:</strong> 30 min</p>
+        <p><strong>Criterios de éxito:</strong> Manejo de entrada, validación, condicionales</p>
       <p>Solicitar nombre y tres notas (0.0 - 5.0), calcular promedio y mostrar APROBADO/REPROBADO con validación.</p>
       <ul>
         <li><strong>Checklist:</strong> validación de entrada, cálculo de promedio, condición de aprobación (>=3.0), manejo de errores.</li>
@@ -482,23 +605,42 @@ namespace CalculadoraArea
     }
 }</code></pre>
 
-      <h3>Tarea para casa (60 min)</h3>
-      <ul>
-        <li>Instalar Visual Studio 2022 con workloads indicados.</li>
-        <li>Proyecto: calculadora de promedios con validación.</li>
-        <li>Entregar repositorio en GitHub con README.</li>
-        <li><strong>Checklist:</strong> VS instalado, proyecto funcional, validaciones implementadas, repo creado y README descriptivo.</li>
-      </ul>
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Tarea para casa (60 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Repositorio GitHub con proyecto de calculadora de promedios</p>
+        <p><strong>Tiempo estimado:</strong> 60 min</p>
+        <p><strong>Criterios de éxito:</strong> Integración de conceptos de la clase</p>
+        <ul>
+          <li>Instalar Visual Studio 2022 con workloads indicados.</li>
+          <li>Proyecto: calculadora de promedios con validación.</li>
+          <li>Entregar repositorio en GitHub con README.</li>
+          <li><strong>Checklist:</strong> VS instalado, proyecto funcional, validaciones implementadas, repo creado y README descriptivo.</li>
+        </ul>
+      </section>
     </section>
 
     <section id="referencias">
       <h2>Referencias</h2>
+      <h3>Documentación oficial</h3>
       <ul>
-        <li>Documentación oficial .NET</li>
-        <li>Visual Studio Community 2022</li>
-        <li>NuGet Package Manager</li>
-        <li>Guía de convenciones C# (Microsoft)</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener">Documentación oficial de C#</a> - Guías de referencia y tutoriales</li>
+        <li><a href="https://dotnet.microsoft.com/en-us/download/dotnet" target="_blank" rel="noopener">Descargar .NET 8 SDK</a> - SDK oficial de .NET</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/" target="_blank" rel="noopener">Tipos en C#</a> - Value types vs reference types</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/collections/" target="_blank" rel="noopener">Colecciones y LINQ</a> - Guía de colecciones</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-version-history" target="_blank" rel="noopener">Historial de versiones de C#</a> - Novedades por versión</li>
       </ul>
+      <h3>Herramientas</h3>
+      <ul>
+        <li><a href="https://visualstudio.microsoft.com/vs/community/" target="_blank" rel="noopener">Visual Studio Community 2022</a> - IDE gratuito</li>
+        <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a> - Editor ligero (requiere extensión C#)</li>
+        <li><a href="https://devblogs.microsoft.com/dotnet/introducing-csharp-10/" target="_blank" rel="noopener">Novedades de C# 10+</a> - Artículos sobre nuevas características</li>
+      </ul>
+      <h3>Fuentes consultadas para esta clase</h3>
+      <p><small>Se utilizó búsqueda web para verificar versiones actuales de .NET y C# (enero 2026): .NET 8 (LTS), .NET 10 (LTS), C# 14. Consultado en <a href="https://dotnet.microsoft.com/en-us/download/dotnet" target="_blank" rel="noopener">dotnet.microsoft.com</a> y <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history" target="_blank" rel="noopener">Microsoft Learn</a>.</small></p>
     </section>
   </main>
 

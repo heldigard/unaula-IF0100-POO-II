@@ -270,6 +270,32 @@
             margin-top: 50px;
         }
 
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.8em;
@@ -340,7 +366,19 @@
             <h2>1. Qué es TDD?</h2>
 
             <h3>Test-Driven Development (TDD)</h3>
-            <p><strong>TDD</strong> es una práctica de desarrollo donde se escriben las pruebas <strong>ANTES</strong> del código de producción.</p>
+            <p><strong><abbr title="Test-Driven Development: Desarrollo guiado por pruebas, práctica de escribir pruebas antes del código de producción">TDD</abbr></strong> es una práctica de desarrollo donde se escriben las pruebas <strong>ANTES</strong> del código de producción.</p>
+
+            <div class="highlight-box">
+                <h4>¿Por qué "Unit Tests" o Pruebas Unitarias?</h4>
+                <p>Las <strong><abbr title="Unit test: Prueba automatizada que verifica una pequeña unidad de código (método o clase) de forma aislada">pruebas unitarias</abbr></strong> (unit tests) son pruebas automatizadas que verifican una pequeña porción de código — típicamente un solo método o clase — de forma aislada de sus dependencias externas. Se llaman "unit" (unidad) porque prueban la unidad más pequeña de funcionalidad posible.</p>
+                <p>Las pruebas unitarias son importantes porque:</p>
+                <ul>
+                    <li><strong>Detección temprana:</strong> Encuentran bugs durante el desarrollo, no en producción</li>
+                    <li><strong>Documentación viva:</strong> Muestran cómo se debe usar el código</li>
+                    <li><strong>Refactorización segura:</strong> Permiten cambiar código sin miedo a romper funcionalidad</li>
+                    <li><strong>Diseño mejor:</strong> Código testeable suele tener mejor diseño</li>
+                </ul>
+            </div>
 
             <figure>
                 <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor">
@@ -393,7 +431,7 @@
             <h2>3. xUnit Framework</h2>
 
             <h3>Qué es xUnit?</h3>
-            <p><strong>xUnit</strong> es un framework de pruebas unitarias para .NET. Es open source y ampliamente utilizado en la comunidad .NET.</p>
+            <p><strong><abbr title="xUnit: Framework de pruebas unitarias para .NET, open source, creado por los inventores originales de NUnit">xUnit</abbr></strong> es un framework de pruebas unitarias para .NET. Es open source y ampliamente utilizado en la comunidad .NET.</p>
 
             <h3>Atributos Principales</h3>
             <table>
@@ -432,7 +470,34 @@ dotnet test</code></pre>
             <h2>4. Patrón AAA (Arrange-Act-Assert)</h2>
 
             <h3>Qué es el Patrón AAA?</h3>
-            <p>Es un patrón estándar para escribir pruebas unitarias organizadas en tres secciones claras.</p>
+            <p>Es un patrón estándar para escribir pruebas unitarias organizadas en tres secciones claras. <strong><abbr title="Arrange-Act-Assert: Patrón para estructurar pruebas (Preparar-Ejecutar-Verificar)">AAA</abbr></strong> significa:</p>
+            <ul>
+                <li><strong>Arrange (Preparar):</strong> Configurar objetos, variables y condiciones iniciales</li>
+                <li><strong>Act (Ejecutar):</strong> Llamar al método que se está probando</li>
+                <li><strong>Assert (Verificar):</strong> Comprobar que el resultado es el esperado</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>¿Por qué seguir el patrón AAA?</h4>
+                <p>El patrón AAA hace que las pruebas sean más <strong>legibles</strong>, <strong>mantenibles</strong> y <strong>consistentes</strong>. Al seguir siempre la misma estructura:</p>
+                <ul>
+                    <li><strong>Facilita lectura:</strong> Cualquier desarrollador puede entender rápidamente qué hace la prueba</li>
+                    <li><strong>Reduce errores:</strong> Separar claramente preparación, ejecución y verificación evita mezclar conceptos</li>
+                    <li><strong>Consistencia:</strong> Todas las pruebas tienen el mismo "look & feel"</li>
+                    <li><strong>Debugging más fácil:</strong> Si falla, sabes exactamente en qué fase ocurrió el problema</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>Errores Comunes en Pruebas Unitarias</h4>
+                <ul>
+                    <li><strong>Probar demasiadas cosas en una prueba:</strong> Una prueba debe verificar UNA sola cosa. Si prueba múltiples comportamientos, divídela.</li>
+                    <li><strong>Probar detalles de implementación:</strong> Prueba el <strong>comportamiento</strong> observable, no cómo está implementado internamente.</li>
+                    <li><strong>Pruebas frágiles:</strong> Las pruebas que se rompen con cambios inocentes en el código están probando detalles de implementación.</li>
+                    <li><strong>No seguir AAA:</strong> Mezclar preparación con ejecución hace las pruebas difíciles de leer y mantener.</li>
+                    <li><strong>Dependencias externas:</strong> Las pruebas unitarias deben ser aisladas. Si depende de base de datos o API externa, usa Test Doubles.</li>
+                </ul>
+            </div>
 
             <div class="diagram">
 <pre>
@@ -492,7 +557,18 @@ public void Sumar_DosNumeros_RetornaSuma()
             <h2>5. Test Doubles</h2>
 
             <h3>Qué son los Test Doubles?</h3>
-            <p>Son objetos sustitutos usados en pruebas para simular dependencias externas o complejas.</p>
+            <p>Son objetos sustitutos usados en pruebas para simular dependencias externas o complejas. El término <strong><abbr title="Test Double: Objeto sustituto usado en pruebas para simular dependencias (como un doble de cine actúa por el actor real)">Test Double</abbr></strong> viene del concepto de "doble de cine" — alguien que reemplaza al actor real en escenas peligrosas.</p>
+
+            <div class="highlight-box">
+                <h4>¿Por qué necesitamos Test Doubles?</h4>
+                <p>En pruebas unitarias queremos aislar la unidad bajo prueba. Sin embargo, la mayoría de las clases tienen <strong>dependencias</strong> (base de datos, APIs web, sistemas de archivos, etc.). Los Test Doubles nos permiten:</p>
+                <ul>
+                    <li><strong>Aislar la prueba:</strong> Probar solo la clase que nos interesa, no sus dependencias</li>
+                    <li><strong>Velocidad:</strong> Evitar llamadas lentas a base de datos o servicios externos</li>
+                    <li><strong>Control:</strong> Simular cualquier escenario (errores, timeouts, datos específicos)</li>
+                    <li><strong>Reproducibilidad:</strong> Las pruebas no dependen de estados externos variables</li>
+                </ul>
+            </div>
 
             <h3>Tipos de Test Doubles</h3>
             <table>
@@ -689,7 +765,14 @@ public void Sumar_VariosNumeros_RetornaSuma(
 
         <section id="practica">
             <h2>7. Práctica / Laboratorio (35 min)</h2>
-            <p><strong>Objetivo:</strong> crear una solución con una librería de clases y un proyecto de pruebas xUnit en Visual Studio 2022.</p>
+            <section class="actividad">
+                <h3>Actividad: Práctica TDD con xUnit (35 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Solución con librería de clases y proyecto de pruebas xUnit</p>
+                <p><strong>Tiempo estimado:</strong> 35 min</p>
+                <p><strong>Criterios de éxito:</strong> Solución compila, al menos 1 prueba en verde, ciclo RED/GREEN completado</p>
+                <p><strong>Objetivo:</strong> crear una solución con una librería de clases y un proyecto de pruebas xUnit en Visual Studio 2022.</p>
             <h3>Pasos en Windows (Visual Studio 2022)</h3>
             <ol>
                 <li>Crear una solución nueva &gt; plantilla <strong>Biblioteca de clases (.NET)</strong>.</li>
@@ -711,8 +794,14 @@ public void Sumar_VariosNumeros_RetornaSuma(
         <section id="ejercicios">
             <h2>8. Ejercicios Prácticos</h2>
 
-            <h3>Ejercicio 1: Calculadora TDD Completa (25 min)</h3>
-            <p>Implementar una calculadora siguiendo TDD:</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Calculadora TDD Completa (25 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Calculadora implementada con pruebas TDD</p>
+                <p><strong>Tiempo estimado:</strong> 25 min</p>
+                <p><strong>Criterios de éxito:</strong> Pruebas RED/GREEN, métodos con nombres claros, manejo de división por cero</p>
+                <p>Implementar una calculadora siguiendo TDD:</p>
             <table>
                 <thead>
                     <tr>
@@ -731,8 +820,14 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <strong>Checklist:</strong> pruebas RED/GREEN, métodos con nombres claros, manejo de división por cero.
             </div>
 
-            <h3>Ejercicio 2: Validador de Contraseñas (20 min)</h3>
-            <pre><code class="language-csharp">public class ValidadorContrasenas
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Validador de Contraseñas (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Validador con pruebas unitarias</p>
+                <p><strong>Tiempo estimado:</strong> 20 min</p>
+                <p><strong>Criterios de éxito:</strong> 4 pruebas fallan correctamente, mensajes de error claros, cobertura de bordes</p>
+                <pre><code class="language-csharp">public class ValidadorContrasenas
 {
     public void Validar(string contrasena)
     {
@@ -756,8 +851,14 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <strong>Checklist:</strong> 4 pruebas fallan correctamente, mensajes de error claros, cobertura de bordes.
             </div>
 
-            <h3>Ejercicio 3: Carrito de Compras (30 min)</h3>
-            <p><strong>Funcionalidades a probar:</strong></p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Carrito de Compras (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Carrito de compras con pruebas</p>
+                <p><strong>Tiempo estimado:</strong> 30 min</p>
+                <p><strong>Criterios de éxito:</strong> Pruebas por cada regla de negocio, uso de datos parametrizados, validaciones de stock</p>
+                <p><strong>Funcionalidades a probar:</strong></p>
             <ul>
                 <li>Agregar producto al carrito</li>
                 <li>Calcular total del carrito</li>
@@ -802,6 +903,16 @@ public void Sumar_VariosNumeros_RetornaSuma(
                 <li><strong>Clase 6:</strong> BDD (Behavior-Driven Development)</li>
                 <li>Practicar TDD en proyectos reales</li>
                 <li>Explorar Moq para mocks avanzados</li>
+            </ul>
+
+            <h3>Referencias y Recursos</h3>
+            <ul>
+                <li><strong>Documentación oficial de xUnit:</strong> <a href="https://xunit.net/" target="_blank" rel="noopener">https://xunit.net/</a></li>
+                <li><strong>Guía de xUnit en Microsoft Learn:</strong> <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test" target="_blank" rel="noopener">Unit testing with C#</a></li>
+                <li><strong>Moq (mocking library):</strong> <a href="https://github.com/moq/moq4" target="_blank" rel="noopener">https://github.com/moq/moq4</a></li>
+                <li><strong>TDD por Kent Beck (inventor):</strong> <em>Test-Driven Development: By Example</em> (libro)</li>
+                <li><strong>Three Laws of TDD (Uncle Bob):</strong> <a href="https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html" target="_blank" rel="noopener">The Cycles of TDD</a></li>
+                <li><strong>Pirámide de testing (Martin Fowler):</strong> <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener">The Practical Test Pyramid</a></li>
             </ul>
         </section>
     </div>

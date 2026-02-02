@@ -102,6 +102,28 @@
             padding: 15px;
             border-left: 5px solid #1e40af;
         }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
     </style>
 </head>
 <body>
@@ -153,13 +175,24 @@
 
         <section id="theory">
             <h2>📊 Teoría: DataBinding y XML</h2>
-            
+
+            <div class="prerequisites" style="background-color: #fff3cd; border-left-color: #ffc107;">
+                <strong>¿Por qué DataBinding?</strong>
+                <ul>
+                    <li><strong>Productividad:</strong> Menos código manual para sincronizar UI con datos</li>
+                    <li><strong>Consistencia:</strong> Todos los controles reflejan los mismos datos automáticamente</li>
+                    <li><strong>Navegación:</strong> Implementación simplificada de anterior/siguiente/primero/último</li>
+                    <li><strong>Validación:</strong> Las reglas de validación se aplican en un solo lugar</li>
+                </ul>
+            </div>
+
             <h3>¿Qué es Data Binding?</h3>
+            <p><strong><abbr title="Mecanismo que enlaza automáticamente controles visuales (TextBox, DataGridView, ComboBox) con fuentes de datos (DataTable, List, objetos), sincronizando cambios bidireccionalmente">Data Binding</abbr></strong> = Enlace automático entre controles visuales y fuentes de datos que sincroniza cambios bidireccionalmente sin código manual.</p>
             <p>Enlazar automáticamente controles visuales (TextBox, DataGridView, ComboBox) con fuentes de datos (DataTable, List, etc.).</p>
 
             <h3>BindingSource (Recomendado)</h3>
-            <p>Componente intermediario entre datos y controles UI.</p>
-            
+            <p><strong><abbr title="Componente de Windows Forms que actúa como intermediario entre la fuente de datos y los controles UI, proporcionando navegación, filtrado, ordenamiento y notificación de cambios">BindingSource</abbr></strong> = Componente intermediario entre datos y controles UI.</p>
+
             <h4>Ventajas de BindingSource:</h4>
             <ul>
                 <li>✅ Sincronización automática entre controles</li>
@@ -168,9 +201,14 @@
                 <li>✅ Notificación de cambios</li>
             </ul>
 
+            <h3>Windows Forms y DataGridView</h3>
+            <p><strong><abbr title="Framework de UI para aplicaciones de escritorio en .NET con controles visuales pre-construidos como TextBox, Button, DataGridView">Windows Forms</abbr></strong> = Framework de UI para aplicaciones de escritorio en .NET.</p>
+            <p><strong><abbr title="Control de Windows Forms que muestra datos en formato de tabla (filas y columnas) con soporte para selección, edición, ordenamiento y paginación">DataGridView</abbr></strong> = Control de tabla para mostrar y editar datos.</p>
+
             <h3>DataSet y XML</h3>
+            <p><strong><abbr title="Lenguaje de Marcado Extensible, formato de texto para almacenar y transportar datos de manera estructurada y legible por humanos">XML</abbr></strong> = Formato de texto para almacenar y transportar datos estructurados.</p>
             <p>Exportar e importar datos usando formato XML.</p>
-            
+
             <h4>Aplicaciones prácticas:</h4>
             <ul>
                 <li>✅ Backup de datos</li>
@@ -179,8 +217,28 @@
                 <li>✅ Datos temporales offline</li>
             </ul>
 
+            <div class="prerequisites" style="background-color: #fff3cd; border-left-color: #ffc107;">
+                <strong>Errores Comunes con DataBinding</strong>
+                <ul>
+                    <li><strong>No usar BindingSource:</strong> Enlazar directamente a DataTable causa problemas de sincronización entre controles</li>
+                    <li><strong>Olvidar EndEdit():</strong> Los cambios en TextBox no se aplican al DataRow hasta llamar EndEdit()</li>
+                    <li><strong>DataSourceUpdateMode incorrecto:</strong> OnPropertyChanged actualiza en cada tecla, OnValidation solo al perder foco</li>
+                    <li><strong>Conflicto de concurrencia:</strong> DBConcurrencyException ocurre cuando múltiples usuarios editan el mismo registro</li>
+                </ul>
+            </div>
+
             <h3>DataBinding con ADO.NET</h3>
             <p>Integración completa con base de datos usando BindingSource y SqlDataAdapter.</p>
+
+            <div class="prerequisites" style="background-color: #d4edda; border-left-color: #28a745;">
+                <strong>Mini-Chequeo: DataBinding y XML</strong>
+                <ul>
+                    <li>¿Por qué usar BindingSource en lugar de enlazar directamente?</li>
+                    <li>¿Cuál es la diferencia entre DataSourceUpdateMode.OnPropertyChanged y OnValidation?</li>
+                    <li>¿Para qué sirve DataSet.WriteXml() vs WriteXmlSchema()?</li>
+                    <li>¿Cómo manejar DBConcurrencyException?</li>
+                </ul>
+            </div>
         </section>
 
         <section id="examples">
@@ -315,6 +373,8 @@ public class FormEstudiantes : Form
 }</code></pre>
 
             <h3>Exportar e Importar DataSet a XML</h3>
+            <p><strong><abbr title="Enumeración que controla qué se exporta: WriteSchema (datos + esquema XSD), IgnoreSchema (solo datos), DiffGram (datos + versión original + cambios)">XmlWriteMode</abbr></strong> = Modo de exportación XML.</p>
+            <p><strong><abbr title="Enumeración que controla cómo se lee XML: ReadSchema (lee esquema incrustado), IgnoreSchema (infiere desde datos), InferSchema (crea esquema desde datos), DiffGram (lee con tracking de cambios)">XmlReadMode</abbr></strong> = Modo de importación XML.</p>
             <pre><code>public class DataSetXmlHelper
 {
     // Exportar solo datos
@@ -502,9 +562,17 @@ public class FormEstudiantes : Form
 }</code></pre>
         </section>
 
+        <section class="evaluacion-calificable" style="background: #fef3c7; border-left: 5px solid #f59e0b; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2>📋 Examen Final (20%)</h2>
+            <p><strong>Fecha:</strong> Jueves 28 de mayo de 2026</p>
+            <p><strong>Temas:</strong> Dataset, DataAdapter, XML, DataBinding, Arquitectura de datos desconectados, Proyecto integrador</p>
+            <p><strong>Resultados de aprendizaje:</strong> Integración de todos los temas del curso</p>
+            <p><strong>Formato:</strong> Examen final escrito/práctico + Proyecto integrador</p>
+        </section>
+
         <section id="practice">
             <h2>🛠️ Práctica: Aplicación de Gestión</h2>
-            
+
             <h3>Crear una app de gestión de productos</h3>
             <ul>
                 <li>DataGridView para listar productos</li>
@@ -516,10 +584,14 @@ public class FormEstudiantes : Form
             <h3>XML Personalizado</h3>
             <p>Crear un serializador XML personalizado con atributos:</p>
             <ul>
-                <li><code>[XmlRoot]</code>, <code>[XmlElement]</code>, <code>[XmlAttribute]</code></li>
+                <li><code>[XmlRoot]</code>, <code>[XmlElement]</code>, <code>[XmlAttribute]</code> = Atributos para controlar cómo se serializan clases a XML</li>
                 <li><code>[XmlIgnore]</code> para propiedades sensibles</li>
                 <li>Exportar/importar objetos complejos</li>
             </ul>
+
+            <p><strong><abbr title="Clase que muestra el diálogo nativo de Windows para seleccionar dónde guardar un archivo, retornando la ruta seleccionada por el usuario">SaveFileDialog</abbr></strong> = Diálogo de sistema para guardar archivos.</p>
+            <p><strong><abbr title="Clase que proporciona acceso a secciones de configuración de aplicación como ConnectionStrings y AppSettings desde archivo app.config o web.config">ConfigurationManager</abbr></strong> = Acceso a configuración de aplicación.</p>
+            <p><strong><abbr title="Excepción que ocurre durante Update() cuando otro usuario modificó el registro que intentas actualizar, requiriendo recargar los datos y reintentar">DBConcurrencyException</abbr></strong> = Error de concurrencia cuando múltiples usuarios editan el mismo registro.</p>
 
             <h3>Integración Completa</h3>
             <p>Aplicación con:</p>

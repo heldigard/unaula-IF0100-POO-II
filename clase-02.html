@@ -232,6 +232,25 @@
             margin: 20px 0;
         }
 
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+
         ul, ol {
             margin-left: 25px;
             margin-bottom: 15px;
@@ -282,6 +301,13 @@
             section {
                 padding: 20px;
             }
+        }
+
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
         }
     </style>
 </head>
@@ -336,11 +362,12 @@
             <h2>1. Programación Orientada a Objetos</h2>
 
             <h3>Qué es la POO?</h3>
-            <p>La <strong>Programación Orientada a Objetos (POO)</strong> es un paradigma de programación que se basa en el concepto de "objetos", que pueden contener datos y código:</p>
+            <p>La <strong><abbr title="Programación Orientada a Objetos: Paradigma de programación que organiza el software como objetos que contienen datos y código">POO</abbr></strong> (<strong>Programación Orientada a Objetos</strong>) es un <strong>paradigma</strong> de programación (estilo o enfoque para escribir código) que se basa en el concepto de "objetos", que pueden contener datos y código:</p>
             <ul>
                 <li><strong>Datos:</strong> Atributos o propiedades (campos)</li>
                 <li><strong>Código:</strong> Comportamientos o métodos (funciones)</li>
             </ul>
+            <p><strong>¿Por qué usar POO?</strong> Permite organizar código complejo de manera modular, reutilizable y más fácil de mantener que la programación procedural tradicional.</p>
 
             <h3>Procedural vs POO</h3>
             <table>
@@ -420,21 +447,21 @@ public class Estudiante
             <div class="diagram">
 <pre>
 ┌─────────────────────────────────────────────────┐
-│          PILARES DE LA PROGRAMACIN ORIENTADA    │
-│                  A OBJETOS (POO)                  │
+│       PILARES DE LA PROGRAMACIÓN ORIENTADA      │
+│              A OBJETOS (POO)                     │
 ├─────────────┬───────────────┬───────────────────┤
 │  1         │  2            │  3                │
 │ ENCAPSULA   │  HERENCIA     │   POLIMORFISMO     │
 │ MIENTO      │               │                   │
 ├─────────────┼───────────────┼───────────────────┤
 │ Ocultar     │ Reutilizar    │ Una interfaz,     │
-│ datos       │ codigo        │ multiples formas  │
+│ datos       │ código        │ múltiples formas  │
 │ internos    │               │                   │
 │             │               │                   │
 │ Exponer     │ Crear         │ Misma llamada,    │
-│ compor-     │ jerarquas     │ diferente         │
+│ compor-     │ jerarquías    │ diferente         │
 │ tamiento    │               │ comportamiento   │
-│ publico     │               │                   │
+│ público     │               │                   │
 │             │               │                   │
 │ **HOY**     │ **CLASE 03**  │ **CLASE 03**      │
 └─────────────┴───────────────┴───────────────────┘
@@ -589,22 +616,25 @@ class Program
             <p>En C#, los objetos (reference types) se almacenan en dos areas de memoria:</p>
 
             <h4>STACK (Pila)</h4>
+            <p>Memoria organizada como <abbr title="LIFO: Last In, First Out - El último elemento en entrar es el primero en salir, como una pila de platos">LIFO</abbr> (Last In, First Out), ideal para variables locales y referencias.</p>
             <ul>
                 <li>Almacena <strong>variables locales</strong> y <strong>referencias</strong> a objetos</li>
-                <li>Crece y decrece rápidamente (LIFO - Last In, First Out)</li>
-                <li>Limpieza automatica al salir del metodo</li>
+                <li>Crece y decrece rápidamente</li>
+                <li>Limpieza automática al salir del método</li>
                 <li>Cada hilo tiene su propio stack</li>
                 <li>Almacena directamente los <strong>value types</strong> (int, double, bool, struct)</li>
             </ul>
 
-            <h4>HEAP (Monticulo)</h4>
+            <h4>HEAP (Montículo)</h4>
+            <p>Memoria dinámica para objetos más grandes y con vida útil variable.</p>
             <ul>
                 <li>Almacena <strong>objetos reales</strong> (instancias de clases)</li>
-                <li>Memoria mas grande pero mas lenta de gestionar</li>
-                <li>Limpieza automatica por el <strong>Garbage Collector (GC)</strong></li>
+                <li>Memoria más grande pero más lenta de gestionar</li>
+                <li>Limpieza automática por el <strong><abbr title="Garbage Collector: Mecanismo de .NET que libera automáticamente memoria de objetos que ya no se usan">GC</abbr></strong> (Garbage Collector)</li>
                 <li>Compartido por todos los hilos</li>
                 <li>Almacena los <strong>reference types</strong> (class, string, array)</li>
             </ul>
+            <div class="note">Nota: El GC es un componente del CLR que periódicamente escanea el heap buscando objetos sin referencias y libera su memoria automáticamente.</div>
 
             <h3>Visualización de Memoria</h3>
             <div class="diagram">
@@ -854,7 +884,8 @@ cuenta.titular = "";   // Nombre vacio permitido</code></pre>
             <h2>Propiedades</h2>
 
             <h3>Qué son las Propiedades?</h3>
-            <p>Las propiedades son <strong>syntactic sugar</strong> para encapsulamiento. Parecen campos pero son metodos (<code>get</code> y <code>set</code>) disfrazados.</p>
+            <p>Las propiedades son <strong><abbr title="Syntactic sugar: Sintaxis más legible que el compilador convierte a código más complejo internamente">syntactic sugar</abbr></strong> (azúcar sintáctico) para encapsulamiento. Parecen campos pero son métodos (<code>get</code> y <code>set</code>) disfrazados que el compilador traduce a llamadas de métodos.</p>
+            <p><strong>¿Por qué usarlas?</strong> Código más limpio y natural que métodos getter/setter tradicionales, con la misma capacidad de validación y control.</p>
 
             <h3>TRADICIONAL (Java-style) - Verboso</h3>
             <pre><code class="language-csharp">public class Persona
@@ -916,6 +947,7 @@ string n = p.Nombre;     // Usa 'get'</code></pre>
             </table>
 
             <h3>Ejemplos Completos</h3>
+            <p><strong>Backing field:</strong> Es el campo privado (<code>_campo</code>) que almacena el valor real de una propiedad. Se usa cuando necesitas lógica en get/set.</p>
             <pre><code class="language-csharp">public class Estudiante
 {
     // 1. AUTOIMPLEMENTADA (sin validacion)
@@ -923,7 +955,7 @@ string n = p.Nombre;     // Usa 'get'</code></pre>
     public int Edad { get; set; }
 
     // 2. CON VALIDACION (usa backing field)
-    private double _promedio;
+    private double _promedio;  // Este es el "backing field"
     public double Promedio
     {
         get => _promedio;
@@ -945,8 +977,9 @@ string n = p.Nombre;     // Usa 'get'</code></pre>
     public string Carrera { get; set; } = "Sin carrera";
 
     // 6. EXPRESION BODIED (C# 7+)
-    public string InfoCompleta => $"{Nombre} ({Edad} anos) - {Carrera}";
+    public string InfoCompleta => $"{Nombre} ({Edad} años) - {Carrera}";
 }</code></pre>
+            <div class="note">Nota: Una propiedad es <strong>inmutable</strong> cuando su valor no puede cambiar después de la creación del objeto. Se logra con <code>{ get; }</code> (solo lectura), <code>{ get; init; }</code> (solo en constructor), o <code>readonly</code> en campos.</div>
         </section>
 
         <section id="constructores">
@@ -1183,9 +1216,14 @@ Console.WriteLine(ps1.Nombre); // "Juan" - independientes</code></pre>
         <section id="practica">
             <h2>Práctica / Laboratorio</h2>
 
-            <h3>Ejercicio Guiado: Sistema de Biblioteca</h3>
-            <p><strong>Objetivo:</strong> Implementar una clase <code>Libro</code> con encapsulamiento adecuado, propiedades y constructores.</p>
-            <p><strong>Duracion:</strong> 30 minutos</p>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio Guiado - Sistema de Biblioteca (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Libro con encapsulamiento</p>
+                <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Comprensión de encapsulamiento, propiedades y constructores</p>
+                <p><strong>Objetivo:</strong> Implementar una clase <code>Libro</code> con encapsulamiento adecuado, propiedades y constructores.</p>
 
             <h4>Requisitos</h4>
             <ul>
@@ -1338,7 +1376,13 @@ class Program
         <section id="ejercicios">
             <h2>Ejercicios</h2>
 
-            <h3>Ejercicio 1: Cuenta de Ahorros</h3>
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Cuenta de Ahorros (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase CuentaAhorros con validaciones</p>
+                <p><strong>Tiempo estimado:</strong> 20 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Aplicación de encapsulamiento y métodos</p>
             <p><strong>Nivel:</strong> Basico | <strong>Duracion:</strong> 20 minutos</p>
             <p>Implementar una clase <code>CuentaAhorros</code> con:</p>
             <ul>
@@ -1359,7 +1403,15 @@ class Program
                 </ul>
             </div>
 
-            <h3>Ejercicio 2: Sistema de Estudiantes</h3>
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Sistema de Estudiantes (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Estudiante con lista de notas</p>
+                <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Uso de colecciones, propiedades calculadas</p>
             <p><strong>Nivel:</strong> Intermedio | <strong>Duracion:</strong> 30 minutos</p>
             <p>Implementar una clase <code>Estudiante</code> con:</p>
             <ul>
@@ -1382,7 +1434,15 @@ class Program
                 </ul>
             </div>
 
-            <h3>Ejercicio 3: Producto con Inventario</h3>
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Producto con Inventario (40 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Producto para sistema de inventario</p>
+                <p><strong>Tiempo estimado:</strong> 40 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Validaciones, propiedades inmutables, constructores encadenados</p>
             <p><strong>Nivel:</strong> Avanzado | <strong>Duracion:</strong> 40 minutos</p>
             <p>Implementar una clase <code>Producto</code> para un sistema de inventario:</p>
             <ul>
@@ -1407,8 +1467,16 @@ class Program
                 </ul>
             </div>
 
-            <h3>Tarea para Casa</h3>
-            <div class="warning-box">
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Tarea para Casa - Clase Película (60 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Pelicula con todas las funcionalidades</p>
+                <p><strong>Tiempo estimado:</strong> 60 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Integración de todos los conceptos de la clase</p>
+                <div class="warning-box">
                 <h4>Entregable: Clase <code>Pelicula</code></h4>
                 <p><strong>Fecha limite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
                 <p>Crear una clase <code>Pelicula</code> que modele una pelicula con:</p>
@@ -1430,6 +1498,7 @@ class Program
                     <li>Capturas de pantalla de la ejecucion</li>
                 </ul>
             </div>
+            </section>
         </section>
 
         <section id="resumen">
@@ -1440,16 +1509,16 @@ class Program
                 <thead>
                     <tr>
                         <th>Tema</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr><td><strong>POO</strong></td><td>Paradigma basado en objetos que unen datos y comportamiento</td></tr>
-                    <tr><td><strong>Clase</strong></td><td>Plantilla o definicion abstracta para crear objetos</td></tr>
+                    <tr><td><strong>Clase</strong></td><td>Plantilla o definición abstracta para crear objetos</td></tr>
                     <tr><td><strong>Objeto</strong></td><td>Instancia concreta de una clase que ocupa memoria</td></tr>
                     <tr><td><strong>Encapsulamiento</strong></td><td>Ocultar detalles internos, exponer interfaz controlada</td></tr>
-                    <tr><td><strong>Propiedades</strong></td><td>Syntactic sugar para getters/setters con validacion</td></tr>
-                    <tr><td><strong>Constructores</strong></td><td>Metodos especiales para inicializar objetos</td></tr>
+                    <tr><td><strong>Propiedades</strong></td><td>Syntactic sugar para getters/setters con validación</td></tr>
+                    <tr><td><strong>Constructores</strong></td><td>Métodos especiales para inicializar objetos</td></tr>
                     <tr><td><strong>static</strong></td><td>Miembros compartidos por todas las instancias</td></tr>
                     <tr><td><strong>class vs struct</strong></td><td>Reference type (heap) vs Value type (stack)</td></tr>
                 </tbody>
@@ -1457,7 +1526,7 @@ class Program
 
             <h3>Habilidades Adquiridas</h3>
             <ul>
-                <li>Definir clases con propiedades y metodos</li>
+                <li>Definir clases con propiedades y métodos</li>
                 <li>Crear objetos usando <code>new</code></li>
                 <li>Aplicar encapsulamiento con modificadores de acceso</li>
                 <li>Usar propiedades para acceso controlado a datos</li>
@@ -1471,6 +1540,19 @@ class Program
                 <li>Practicar creando clases del dominio</li>
                 <li>Aplicar encapsulamiento en todos los proyectos</li>
             </ul>
+        </section>
+
+        <section id="referencias">
+            <h2>Referencias</h2>
+            <h3>Documentación oficial</h3>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/" target="_blank" rel="noopener">Programación orientada a objetos en C#</a> - Guía oficial de Microsoft</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/" target="_blank" rel="noopener">Clases y structs</a> - Referencia completa</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties/" target="_blank" rel="noopener">Propiedades en C#</a> - Uso de propiedades</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers/" target="_blank" rel="noopener">Modificadores de acceso</a> - public, private, protected</li>
+            </ul>
+            <h3>Fuentes consultadas para esta clase</h3>
+            <p><small>Contenido basado en el syllabus oficial IF0100 y documentación de Microsoft Learn. No se requirió búsqueda web adicional para esta clase.</small></p>
         </section>
     </div>
 

@@ -109,9 +109,24 @@
       overflow-x: auto;
     }
     code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    /* Syntax highlighting para C# */
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
   </style>
 </head>
 <body>
@@ -159,7 +174,19 @@
       <h2>Teoría</h2>
 
       <h3>Qué es DDD y cuándo usarlo</h3>
-      <p>Domain-Driven Design modela el software según el dominio del negocio, usando un lenguaje ubicuo compartido entre expertos y equipo técnico.</p>
+      <p><strong><abbr title="Domain-Driven Design: Diseño guiado por el dominio, enfoque de desarrollo de software que se centra en el modelo del dominio del negocio y su lógica, más que en detalles técnicos">DDD</abbr></strong> (Domain-Driven Design) modela el software según el dominio del negocio, usando un <strong>lenguaje ubicuo</strong> compartido entre expertos y equipo técnico.</p>
+
+      <div class="note">
+        <h4>¿Por qué DDD?</h4>
+        <p>DDD nació para resolver un problema crítico en proyectos complejos: <strong>la brecha entre el lenguaje del negocio y el código</strong>. En muchos proyectos, los términos y conceptos del negocio se pierden o distorsionan al traducirlos a código. DDD propone que el <strong>modelo del dominio</strong> (las clases y relaciones en el código) debe reflejar fielmente la realidad del negocio. Esto permite:</p>
+        <ul>
+          <li><strong>Comunicación precisa:</strong> Expertos y desarrolladores hablan el mismo idioma</li>
+          <li><strong>Código expresivo:</strong> El código lee como negocio, no como técnica</li>
+          <li><strong>Mantenibilidad:</strong> Los cambios en el negocio se reflejan directamente en el código</li>
+          <li><strong>Alineación estratégica:</strong> El software evoluciona con el negocio</li>
+        </ul>
+      </div>
+
       <div class="grid-2">
         <div>
           <h4>Usar DDD cuando</h4>
@@ -173,8 +200,8 @@
         <div>
           <h4>Evitar DDD cuando</h4>
           <ul>
-            <li>CRUD simple sin reglas.</li>
-            <li>Proyectos cortos o MVP.</li>
+            <li><abbr title="CRUD: Create-Read-Update-Delete (Crear-Leer-Actualizar-Borrar), operaciones básicas de persistencia de datos">CRUD</abbr> simple sin reglas.</li>
+            <li>Proyectos cortos o <abbr title="MVP: Minimum Viable Product (Producto Mínimo Viable), versión básica de un producto con solo las características esenciales">MVP</abbr>.</li>
             <li>No hay expertos de dominio.</li>
             <li>Se requiere velocidad sobre precisión.</li>
           </ul>
@@ -182,6 +209,7 @@
       </div>
 
       <h3>Lenguaje ubicuo</h3>
+      <p>El <strong><abbr title="Lenguaje ubicuo: Lenguaje compartido entre expertos de dominio y desarrolladores, usado tanto en conversaciones como en el código, garantizando que los términos tengan el mismo significado en todos los contextos">lenguaje ubicuo</abbr></strong> es el pilar de DDD: es un lenguaje compartido que se usa en conversaciones, documentación y código. Regla de oro: <strong>los mismos términos se usan en todas partes</strong>.</p>
       <table>
         <thead>
           <tr><th>Concepto</th><th>Término correcto</th></tr>
@@ -196,6 +224,19 @@
       <div class="note">Regla: los mismos términos se usan en conversaciones, documentación y código.</div>
 
       <h3>Entities vs Value Objects</h3>
+      <p>En DDD distinguimos entre objetos que tienen <strong>identidad</strong> (Entities) y objetos definidos por sus <strong>atributos</strong> (Value Objects). Esta distinción es crucial para diseñar modelos precisos.</p>
+
+      <div class="note">
+        <h4>¿Por qué distinguir Entity vs Value Object?</h4>
+        <p>La distinción permite que el modelo refleje la realidad del negocio. Un <strong>Cliente</strong> es una Entity porque sigue siendo la misma persona aunque cambie su dirección. Un <strong>Dinero</strong> es un Value Object porque $100 es $100 sin importar de dónde venga. Esto permite:</p>
+        <ul>
+          <li><strong>Modelo preciso:</strong> El código expresa las intenciones del negocio</li>
+          <li><strong>Inmutabilidad:</strong> Los Value Objects pueden ser inmutables (más seguros)</li>
+          <li><strong>Performance:</strong> Los Value Objects se pueden copiar en lugar de referenciar</li>
+          <li><strong>Menos bugs:</strong> La comparación por valor evita errores de igualdad</li>
+        </ul>
+      </div>
+
       <table>
         <thead>
           <tr><th>Aspecto</th><th>Entity</th><th>Value Object</th></tr>
@@ -209,14 +250,28 @@
       </table>
 
       <h3>Aggregates y reglas</h3>
+      <p>Un <strong><abbr title="Aggregate: Grupo de objetos tratados como una unidad para propósitos de modificación de datos, con un Aggregate Root como punto de entrada único y control de invariantes">Aggregate</abbr></strong> es un conjunto de objetos que se tratan como una unidad. El <strong>Aggregate Root</strong> es la única forma externa de interactuar con el aggregate.</p>
+
+      <div class="note">
+        <h4>¿Por qué Aggregates?</h4>
+        <p>Los Aggregates resuelven dos problemas clave: <strong>consistencia transaccional</strong> y <strong>acceso controlado</strong>. Al definir límites claros:</p>
+        <ul>
+          <li><strong>Invariantes protegidos:</strong> Las reglas de negocio se aplican en el Root, nadie puede saltárselas</li>
+          <li><strong>Transacciones claras:</strong> Una transacción modifica un solo aggregate</li>
+          <li><strong>Performance:</strong> Se cargan solo los objetos necesarios</li>
+          <li><strong>Diseño intencional:</strong> Fuerza a pensar en agrupaciones naturales del dominio</li>
+        </ul>
+      </div>
+
       <ul>
         <li>El Aggregate Root es el único punto de entrada.</li>
         <li>Referencias entre aggregates por ID, no por objetos completos.</li>
         <li>Una transacción modifica un solo aggregate.</li>
+        <li>Los <strong><abbr title="Invariante: Regla de negocio que debe cumplirse siempre, un constraint que nunca se puede violar">invariantes</abbr></strong> (reglas que deben cumplirse siempre) se protegen dentro del aggregate.</li>
       </ul>
 
       <h3>Repository y Domain Services</h3>
-      <p>Repository abstrae la persistencia; Domain Service encapsula lógica de negocio que cruza aggregates.</p>
+      <p>El patrón <strong><abbr title="Repository: Patrón que abstrae el acceso a datos, proporcionando una interfaz de colección-like para obtener y persistir agregados">Repository</abbr></strong> abstrae la persistencia; <strong>Domain Service</strong> encapsula lógica de negocio que cruza aggregates o no pertenece naturalmente a una entidad.</p>
     </section>
 
     <section id="ejemplos">
@@ -282,7 +337,14 @@
 
     <section id="practica">
       <h2>Práctica / laboratorio (35 min)</h2>
-      <div class="note">Objetivo: modelar un dominio simple y aplicar Repository en una solución .NET.</div>
+      <section class="actividad">
+        <h3>Actividad: Laboratorio DDD - Modelado de Dominio (35 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Solución .NET con modelo de dominio y Repository</p>
+        <p><strong>Tiempo estimado:</strong> 35 min</p>
+        <p><strong>Criterios de éxito:</strong> Solución compila, dominio sin referencias a infraestructura, repositorio por interfaz</p>
+        <div class="note">Objetivo: modelar un dominio simple y aplicar Repository en una solución .NET.</div>
 
       <h3>Pasos en Windows (Visual Studio 2022)</h3>
       <ol>
@@ -316,6 +378,7 @@ public class PedidoRepository : IPedidoRepository
 }</code></pre>
 
       <h3>Bounded Contexts</h3>
+      <p>Un <strong><abbr title="Bounded Context: Límite conceptual dentro del cual un modelo particular aplica y tiene significado; cada contexto tiene su propio lenguaje ubicuo y modelo del dominio">Bounded Context</abbr></strong> (Contexto Delimitado) es un límite conceptual dentro del cual un modelo particular aplica. DDD divide sistemas grandes en múltiples bounded contexts, cada uno con su propio modelo.</p>
       <ul>
         <li>Separar Ventas, Inventario y Envíos como contextos diferentes.</li>
         <li>El término "Producto" cambia significado según el contexto.</li>
@@ -334,12 +397,24 @@ public class PedidoRepository : IPedidoRepository
     <section id="ejercicios">
       <h2>Ejercicios</h2>
 
-      <h3>Ejercicio 1: Biblioteca (20 min)</h3>
-      <p>Identificar Entities, Value Objects, Aggregates y Services para un sistema de préstamos.</p>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Biblioteca (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Identificación de elementos DDD para sistema de préstamos</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service</p>
+        <p>Identificar Entities, Value Objects, Aggregates y Services para un sistema de préstamos.</p>
       <div class="note">Checklist: al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service.</div>
 
-      <h3>Ejercicio 2: Bounded Contexts (20 min)</h3>
-      <p>Dividir una tienda online en contextos (Ventas, Inventario, Envíos, Facturación) e indicar integraciones.</p>
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Bounded Contexts (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> División de tienda online en bounded contexts</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto</p>
+        <p>Dividir una tienda online en contextos (Ventas, Inventario, Envíos, Facturación) e indicar integraciones.</p>
       <div class="note">Checklist: 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto.</div>
 
       <h3>Errores comunes (10 min)</h3>
@@ -354,9 +429,11 @@ public class PedidoRepository : IPedidoRepository
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>Eric Evans, Domain-Driven Design (2003).</li>
-        <li>Vaughn Vernon, Implementing Domain-Driven Design.</li>
-        <li>Patrones Repository y Domain Services.</li>
+        <li><strong>Eric Evans, Domain-Driven Design (2003):</strong> <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank" rel="noopener">Libro original DDD</a> — el libro que fundó el movimiento DDD</li>
+        <li><strong>Vaughn Vernon, Implementing Domain-Driven Design:</strong> <a href="https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577" target="_blank" rel="noopener">IDDD Book</a> — guía práctica de implementación</li>
+        <li><strong>Domain Language (Eric Evans):</strong> <a href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener">DDD Reference</a></li>
+        <li><strong>Microsoft Architecture - DDD:</strong> <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/category/domain-driven-design" target="_blank" rel="noopener">DDD Patterns</a></li>
+        <li><strong>Repository Pattern (Martin Fowler):</strong> <a href="https://martinfowler.com/eaaCatalog/repository.html" target="_blank" rel="noopener">Repository</a></li>
       </ul>
     </section>
   </main>

@@ -101,12 +101,28 @@
             font-size: 0.9em;
         }
         pre code { background: none; padding: 0; }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
         .example-box {
             background: #fef3c7;
             border-left: 4px solid #f59e0b;
             padding: 1rem;
             margin: 1rem 0;
             border-radius: 4px;
+        }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
         }
         .figure-container {
             text-align: center;
@@ -201,6 +217,12 @@
             margin: 1rem 0;
         }
         .warning-box strong { color: #991b1b; }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
         @media (max-width: 768px) {
             .comparison { grid-template-columns: 1fr; }
             .header h1 { font-size: 1.8rem; }
@@ -312,6 +334,16 @@
         <!-- Data Annotations -->
         <section id="data-annotations" class="section">
             <h2>1. Validación con Data Annotations</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué Data Annotations?</strong>
+                <ul>
+                    <li><strong>Declarativo:</strong> Las reglas de validación están en el modelo, no dispersas en el código</li>
+                    <li><strong>Reusable:</strong> Mismas reglas para validación cliente y servidor</li>
+                    <li><strong>Mantenible:</strong> Un solo lugar para cambiar reglas de negocio</li>
+                    <li><strong>Estándar:</strong> <abbr title="Data Annotations - Sistema de atributos de validación declarativa en .NET">Data Annotations</abbr> es parte de .NET desde versión 3.5</li>
+                </ul>
+            </div>
 
             <h3>Atributos de validación en .NET</h3>
             <pre><code>using System.ComponentModel.DataAnnotations;
@@ -484,8 +516,20 @@ public class MayorDeEdadAttribute : ValidationAttribute
     }
 }</code></pre>
 
-            <h3>ModelState.IsValid</h3>
-            <p>Validación en el Controller</p>
+            <h3>ModelState y <abbr title="Model-View-Controller - Patrón de arquitectura que separa la aplicación en tres componentes">MVC</abbr></h3>
+            <p><strong>ViewModel</strong> = Clase diseñada específicamente para pasar datos del Controller a la View. No es la entidad de base de datos, sino un modelo "de presentación".</p>
+            <p><strong>ModelState</strong> = Diccionario que contiene el estado de enlace de datos y validación. Se valida automáticamente con Data Annotations.</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con ModelState</strong>
+                <ul>
+                    <li><strong>Olvidar validar ModelState.IsValid:</strong> Permite guardar datos inválidos en BD</li>
+                    <li><strong>No devolver el modelo con errores:</strong> El usuario pierde los datos que ingresó</li>
+                    <li><strong>Validar solo en cliente:</strong> Un usuario puede desactivar JavaScript y enviar datos inválidos</li>
+                </ul>
+            </div>
+
+            <h4>Validación en el Controller</h4>
             <pre><code>[HttpPost]
 public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
 {
@@ -516,6 +560,15 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
         <section id="validacion" class="section">
             <h2>2. Validación Cliente vs Servidor</h2>
 
+            <div class="note-box">
+                <strong>¿Por qué Doble Validación?</strong>
+                <ul>
+                    <li><strong>Experiencia de usuario:</strong> La validación cliente (<abbr title="JavaScript - Lenguaje de programación para interactividad web">JS</abbr>) es instantánea, sin recargar la página</li>
+                    <li><strong>Seguridad:</strong> La validación servidor es obligatoria porque JS puede ser desactivado o manipulado</li>
+                    <li><strong>Defensa en profundidad:</strong> Dos capas de validación reducen errores y ataques</li>
+                </ul>
+            </div>
+
             <h3>Doble validación</h3>
             <div class="note-box">
                 <strong>IMPORTANTE:</strong>
@@ -538,7 +591,18 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
             </ol>
 
             <h3>jQuery Validation</h3>
-            <p>Configuración en la vista</p>
+            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por ASP.NET y valida automáticamente en el navegador.</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes en Validación Cliente</strong>
+                <ul>
+                    <li><strong>Olvidar incluir los scripts:</strong> La validación cliente simplemente no funciona</li>
+                    <li><strong>No renderizar Partial de Scripts:</strong> Olvidar <code>@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}</code></li>
+                    <li><strong>Conflictos de jQuery:</strong> Incluir jQuery dos veces o versiones incompatibles</li>
+                </ul>
+            </div>
+
+            <h4>Configuración en la vista</h4>
             <pre><code>&lt;!-- Views/Shared/_ValidationScriptsPartial.cshtml --&gt;
 &lt;script src="~/lib/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
 &lt;script src="~/lib/jquery-validation/dist/jquery.validate.min.js"&gt;&lt;/script&gt;
@@ -565,7 +629,21 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
         <section id="tempdata" class="section">
             <h2>3. TempData, ViewBag y ViewData</h2>
 
-            <h3>Formas de pasar datos en MVC</h3>
+            <div class="note-box">
+                <strong>¿Por qué TempData?</strong>
+                <ul>
+                    <li><strong>Mensajes flash:</strong> Mostrar "Guardado exitosamente" después de un redirect</li>
+                    <li><strong>Preservar input:</strong> Mantener datos del formulario cuando hay errores</li>
+                    <li><strong>PRG Pattern:</strong> Evita reenvíos accidentales al recargar la página (Post-Redirect-Get)</li>
+                </ul>
+            </div>
+
+            <h3>Diferencias clave</h3>
+            <p><strong><abbr title="ViewData - Diccionario tipo clave-valor para pasar datos del Controller a la View (válido solo una petición)">ViewData</abbr></strong> = Diccionario para pasar datos Controller→View (una sola petición).</p>
+            <p><strong><abbr title="ViewBag - Wrapper dinámico sobre ViewData para pasar datos del Controller a la View">ViewBag</abbr></strong> = Versión dinámica de ViewData (mismo propósito, sintaxis más limpia).</p>
+            <p><strong><abbr title="TempData - Diccionario que persiste datos hasta la siguiente petición (útil después de redirects)">TempData</abbr></strong> = Diccionario que sobrevive un redirect (dura hasta la siguiente petición).</p>
+
+            <h4>Formas de pasar datos en MVC</h4>
             <table class="tag-table">
                 <thead>
                     <tr>
@@ -654,7 +732,20 @@ public async Task&lt;IActionResult&gt; Eliminar(int id)
         <section id="sesiones" class="section">
             <h2>4. Sesiones y Cookies</h2>
 
-            <h3>Configuración de sesiones</h3>
+            <div class="note-box">
+                <strong>¿Por qué Sesiones vs Cookies?</strong>
+                <ul>
+                    <li><strong>Session:</strong> Datos almacenados en servidor (seguro, pero consume memoria)</li>
+                    <li><strong>Cookie:</strong> Datos almacenados en navegador del cliente (limitado, pero no consume servidor)</li>
+                    <li><strong>Combinación:</strong> Session ID en cookie + datos en sesión = estándar de autenticación web</li>
+                </ul>
+            </div>
+
+            <h3>Diferencias clave</h3>
+            <p><strong><abbr title="Session - Almacenamiento de datos en servidor asociado a un usuario mediante un ID de sesión">Sesión</abbr></strong> = Datos almacenados en el servidor, identificados por un cookie de sesión.</p>
+            <p><strong><abbr title="Cookie - Pequeño archivo de texto almacenado en el navegador del usuario">Cookie</abbr></strong> = Datos almacenados en el navegador del cliente, enviados en cada petición.</p>
+
+            <h4>Configuración de sesiones</h4>
             <pre><code>// Program.cs - Configurar servicio de sesiones
 
 // Agregar servicio de sesiones
@@ -673,6 +764,9 @@ app.UseSession();
 app.MapControllers();</code></pre>
 
             <h3>Usando Sesiones</h3>
+            <p><strong><abbr title="GUID - Globally Unique Identifier (Identificador Único Global) de 128 bits">GUID</abbr></strong> = Identificador único de 128 bits (ej: <code>123e4567-e89b-12d3-a456-426614174000</code>).</p>
+            <p><strong><abbr title="JSON - JavaScript Object Notation, formato ligero de intercambio de datos">JSON</abbr></strong> = Formato de texto para representar objetos, usado para serializar datos en sesión.</p>
+
             <pre><code>public class AccountController : Controller
 {
     // Guardar en sesión
@@ -685,7 +779,7 @@ app.MapControllers();</code></pre>
         HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
         HttpContext.Session.SetString("UsuarioEmail", usuario.Email);
 
-        // Guardar objeto completo (serializado)
+        // Guardar objeto completo (serializado a JSON)
         var usuarioJson = JsonSerializer.Serialize(usuario);
         HttpContext.Session.SetString("UsuarioCompleto", usuarioJson);
 
@@ -719,19 +813,36 @@ app.MapControllers();</code></pre>
 }</code></pre>
 
             <h3>Cookies</h3>
-            <p>Manipulación directa</p>
+            <p>Manipulación directa de cookies con opciones de seguridad:</p>
+            <ul>
+                <li><strong><abbr title="HttpOnly - Bandera de cookie que previene acceso desde JavaScript">HttpOnly</abbr></strong> = Si es true, la cookie NO es accesible vía JavaScript (protege contra XSS)</li>
+                <li><strong><abbr title="SameSite - Atributo de cookie que controla cuándo se envía en solicitudes cross-site">SameSite</abbr></strong> = Controla envío de cookies en peticiones cross-site (previene CSRF)</li>
+                <li><strong>Secure</strong> = Si es true, la cookie solo se envía por HTTPS</li>
+                <li><strong><abbr title="GDPR - General Data Protection Regulation, reglamento europeo de protección de datos">GDPR</abbr></strong> = Reglamento UE que requiere consentimiento para cookies no esenciales</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con Cookies</strong>
+                <ul>
+                    <li><strong>Guardar datos sensibles sin HttpOnly:</strong> Vulnerable a robo via XSS</li>
+                    <li><strong>No usar SameSite:</strong> Vulnerable a ataques CSRF</li>
+                    <li><strong>Exceder tamaño límite:</strong> Cookies máx 4KB (si necesitas más, usa Session)</li>
+                </ul>
+            </div>
+
+            <h4>Ejemplo de manipulación</h4>
             <pre><code>public class PreferenciasController : Controller
 {
     // Establecer cookie
     public IActionResult SetTema(string tema)
     {
-        // Cookie simple
+        // Cookie con opciones de seguridad
         Response.Cookies.Append("Tema", tema, new CookieOptions
         {
             Expires = DateTime.Now.AddDays(30),  // Expira en 30 días
-            HttpOnly = false,  // Accesible por JavaScript
+            HttpOnly = false,  // Accesible por JavaScript (true para datos sensibles)
             Secure = true,     // Solo HTTPS
-            SameSite = SameSiteMode.Strict
+            SameSite = SameSiteMode.Strict  // Previene CSRF
         });
 
         return RedirectToAction("Index");
@@ -758,7 +869,34 @@ app.MapControllers();</code></pre>
         <section id="upload" class="section">
             <h2>5. Upload de Archivos</h2>
 
-            <h3>IFormFile</h3>
+            <div class="note-box">
+                <strong>¿Por qué IFormFile?</strong>
+                <ul>
+                    <li><strong>Abstracción:</strong> Representa un archivo recibido en una petición HTTP</li>
+                    <li><strong>Stream:</strong> Permite leer el archivo sin cargarlo completo en memoria</li>
+                    <li><strong>Validación:</strong> Facilita verificar tipo, tamaño y nombre del archivo</li>
+                </ul>
+            </div>
+
+            <h3><abbr title="IFormFile - Interfaz de ASP.NET Core que representa un archivo enviado en una petición HTTP">IFormFile</abbr></h3>
+            <p>Interfaz que representa un archivo recibido en una petición HTTP. Propiedades clave:</p>
+            <ul>
+                <li><code>FileName</code> - Nombre original del archivo</li>
+                <li><code>Length</code> - Tamaño en bytes</li>
+                <li><code>ContentType</code> - Tipo MIME (ej: "image/jpeg")</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Errores Comunes en Upload</strong>
+                <ul>
+                    <li><strong>No validar extensión:</strong> Permite subir archivos ejecutables (.exe, .bat)</li>
+                    <li><strong>No limitar tamaño:</strong> Puede saturar el servidor</li>
+                    <li><strong>Sobrescribir archivos:</strong> <code>Guid.NewGuid()</code> genera nombres únicos para evitar colisiones</li>
+                    <li><strong>Olvidar enctype="multipart/form-data":</strong> El formulario NO envía archivos sin este atributo</li>
+                </ul>
+            </div>
+
+            <h4>Vista con formulario</h4>
             <pre><code>&lt;!-- Vista con formulario para subir archivo --&gt;
 &lt;form asp-action="SubirFoto" method="post" enctype="multipart/form-data"&gt;
     &lt;div class="mb-3"&gt;
@@ -849,27 +987,49 @@ public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; arc
         <section id="csrf" class="section">
             <h2>6. Protección CSRF</h2>
 
+            <div class="note-box">
+                <strong>¿Por qué protección CSRF?</strong>
+                <ul>
+                    <li><strong>Ataque silencioso:</strong> Un sitio malicioso puede enviar peticiones en tu nombre sin que lo sepas</li>
+                    <li><strong>Acciones críticas:</strong> Cambio de contraseña, transferencias, eliminación de datos</li>
+                    <li><strong>Token único:</strong> El token antiforgery solo es válido para tu sesión y tu formulario</li>
+                </ul>
+            </div>
+
             <h3>Seguridad contra ataques</h3>
+            <p><strong><abbr title="CSRF - Cross-Site Request Forgery, ataque que engaña al navegador para enviar peticiones no autorizadas">CSRF</abbr> (Cross-Site Request Forgery)</strong> = Ataque donde un sitio malicioso envía un formulario con las credenciales del usuario autenticado a su servidor.</p>
+
             <div class="warning-box">
-                <strong>CSRF = Cross-Site Request Forgery</strong>
-                <p>Ataque: Sitio malicioso envía formulario con credenciales del usuario autenticado a su servidor.</p>
-                <p><strong>SOLUCIÓN: Token antiforgery</strong></p>
+                <strong>¿Cómo funciona el ataque CSRF?</strong>
+                <ol>
+                    <li>Usuario inicia sesión en sitio-banco.com</li>
+                    <li>Usuario visita sitio-malicioso.com (todavía con la sesión de banco activa)</li>
+                    <li>sitio-malicioso.com tiene un formulario oculto que POST a sitio-banco.com/transferir</li>
+                    <li>El navegador envía automáticamente las cookies de sesión del banco</li>
+                    <li>El banco procesa la transferencia porque parece legítima</li>
+                </ol>
+                <p><strong>SOLUCIÓN: Token antiforgery que solo el servidor conoce</strong></p>
             </div>
 
             <h4>Implementación Automática:</h4>
             <ul>
                 <li><code>[ValidateAntiForgeryToken]</code> en Controller</li>
-                <li><code>@Html.AntiForgeryToken()</code> en form</li>
+                <li><code>@Html.AntiForgeryToken()</code> en form (genera input oculto con token)</li>
                 <li>Token generado automáticamente y válido por sesión</li>
             </ul>
 
-            <pre><code>&lt;!-- EN FORMULARIO: --&gt;
+            <h4>Tag Helpers (átomos de HTML en Razor)</h4>
+            <p><strong><abbr title="Tag Helpers - Característica de Razor que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
+
+            <h4>Implementación con Tag Helpers</h4>
+            <pre><code>&lt;!-- EN FORMULARIO (Tag Helper): --&gt;
 &lt;form method="post"&gt;
     @Html.AntiForgeryToken()  &lt;-- Token oculto
     &lt;input name="_codigo" /&gt;
 &lt;/form&gt;
 
 &lt;!-- EN AJAX: --&gt;
+&lt;!-- AJAX = Asynchronous JavaScript and XML, técnica para actualizar página sin recargar --&gt;
 $.ajax({
     url: '/estudiantes/eliminar',
     type: 'POST',
@@ -877,8 +1037,25 @@ $.ajax({
         "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
     }
 });</code></pre>
+
+            <div class="note-box">
+                <strong>Mini-Chequeo: CSRF Protection</strong>
+                <ul>
+                    <li>¿Puedes explicar cómo funciona el ataque CSRF paso a paso?</li>
+                    <li>¿Por qué el token antiforgery protege contra este ataque?</li>
+                    <li>¿Qué pasa si olvidas poner [ValidateAntiForgeryToken] en una acción POST?</li>
+                </ul>
+            </div>
         </section>
 
+        <!-- Evaluación 4 -->
+        <section class="evaluacion-calificable section" style="background: #fef3c7; border-left: 5px solid #f59e0b;">
+            <h2>📋 Evaluación 4 (15%) - Examen</h2>
+            <p><strong>Fecha:</strong> Lunes 21 de abril de 2026</p>
+            <p><strong>Temas:</strong> HTML5, CSS3, Bootstrap, Proyecto web, Excepciones</p>
+            <p><strong>Resultados de aprendizaje:</strong> Desarrollo Web completo</p>
+            <p><strong>Formato:</strong> Examen escrito/práctico</p>
+        </section>
 
         <!-- Practica / Laboratorio -->
         <section id="practica" class="section">

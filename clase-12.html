@@ -209,6 +209,28 @@
             margin: 1rem 0;
         }
         .checklist-box strong { color: #166534; }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
         @media (max-width: 768px) {
             .comparison { grid-template-columns: 1fr; }
             .header h1 { font-size: 1.8rem; }
@@ -322,18 +344,37 @@
         <section id="que-es" class="section">
             <h2>1. Qué es ADO.NET?</h2>
 
+            <div class="note-box">
+                <strong>¿Por qué aprender ADO.NET?</strong>
+                <ul>
+                    <li><strong>Control total:</strong> Escribe SQL exacto para máximo rendimiento en queries complejas</li>
+                    <li><strong>Comprensión profunda:</strong> Entender cómo funciona el acceso a datos bajo el capó</li>
+                    <li><strong>Stored Procedures:</strong> ADO.NET es ideal para trabajar con procedimientos almacenados</li>
+                    <li><strong>Fundamento:</strong> Entity Framework y otros ORMs se construyen sobre ADO.NET</li>
+                </ul>
+            </div>
+
             <h3>Acceso a datos en .NET</h3>
-            <p><strong>ADO.NET</strong> es un conjunto de clases que permite a las aplicaciones .NET acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
+            <p><strong><abbr title="ADO.NET - ActiveX Data Objects for .NET, tecnología de acceso a datos de Microsoft">ADO.NET</abbr></strong> es un conjunto de clases que permite a las aplicaciones .NET acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
 
             <h4>Características principales:</h4>
             <div class="badge-list">
-                <span class="badge badge-blue">DataReader (modo conectado)</span>
-                <span class="badge badge-green">DataSet (modo desconectado)</span>
+                <span class="badge badge-blue"><abbr title="DataReader - Lector de datos en modo conectado, solo lectura y solo avance">DataReader</abbr> (modo conectado)</span>
+                <span class="badge badge-green"><abbr title="DataSet - Conjunto de datos en memoria que funciona en modo desconectado">DataSet</abbr> (modo desconectado)</span>
                 <span class="badge badge-purple">Proveedores de datos</span>
                 <span class="badge badge-red">Alto rendimiento</span>
             </div>
 
+            <div class="warning-box">
+                <strong>Modo Conectado vs Desconectado</strong>
+                <ul>
+                    <li><strong>Conectado (DataReader):</strong> La conexión permanece abierta mientras lees datos. Más rápido, pero bloquea la conexión.</li>
+                    <li><strong>Desconectado (DataSet):</strong> Los datos se cargan en memoria y la conexión se cierra. Puedes modificar datos y sincronizar después.</li>
+                </ul>
+            </div>
+
             <h4>Proveedores de datos (Data Providers):</h4>
+            <p><strong>Data Provider</strong> = Conjunto de clases específicas para un motor de base de datos (SqlConnection para SQL Server, OracleConnection para Oracle, etc.)</p>
             <ul>
                 <li><strong>SqlClient:</strong> SQL Server</li>
                 <li><strong>OracleClient:</strong> Oracle</li>
@@ -389,18 +430,31 @@
 
             <h4>Proveedor de datos (System.Data.SqlClient)</h4>
             <ul>
-                <li><strong>SqlConnection:</strong> Abrir/Cerrar conexión, Connection String</li>
-                <li><strong>SqlCommand:</strong> Execute, Parameters, CommandType</li>
+                <li><strong><abbr title="SqlConnection - Clase que gestiona la conexión a SQL Server">SqlConnection</abbr>:</strong> Representa una conexión abierta a SQL Server. Maneja apertura, cierre y la <strong>connection string</strong> (cadena con servidor, base de datos, credenciales).</li>
+                <li><strong><abbr title="SqlCommand - Clase que ejecuta comandos SQL contra una conexión">SqlCommand</abbr>:</strong> Ejecuta una query SQL o stored procedure. Maneja parámetros y devuelve resultados.</li>
             </ul>
 
             <h4>Objetos de datos</h4>
             <ul>
-                <li><strong>SqlDataReader:</strong> Read(), GetString(), GetInt32() (forward-only)</li>
-                <li><strong>DataSet:</strong> Tables, Relations, Fill() (disconnected)</li>
+                <li><strong><abbr title="SqlDataReader - Lector de resultados en modo conectado, solo avance, solo lectura">SqlDataReader</abbr>:</strong> Lee filas de una consulta una por una (forward-only). No permite modificar datos y requiere conexión abierta.</li>
+                <li><strong>DataSet:</strong> Contiene una colección de DataTables en memoria. Funciona en modo desconectado (no necesita conexión abierta).</li>
             </ul>
 
+            <div class="note-box">
+                <strong>Mini-Chequeo: Arquitectura ADO.NET</strong>
+                <ul>
+                    <li>¿Qué diferencia hay entre modo conectado y desconectado?</li>
+                    <li>¿Cuándo usarías DataReader vs DataSet?</li>
+                    <li>¿Qué es un Data Provider?</li>
+                </ul>
+            </div>
+
             <h3>Namespaces y Paquetes</h3>
-            <pre><code>// Instalación
+            <p><strong><abbr title="NuGet - Gestor de paquetes para .NET (similar a npm para Node.js)">NuGet</abbr></strong> = Gestor de paquetes de .NET. Permite agregar bibliotecas externas a tu proyecto.</p>
+            <p><strong><abbr title="LocalDB - Versión ligera de SQL Server Express para desarrollo">LocalDB</abbr></strong> = Versión de SQL Server que se ejecuta bajo demanda, ideal para desarrollo.</p>
+            <p><strong>Namespace</strong> = Forma de organizar clases en C# (como "paquetes" en Java o "módulos" en Python).</p>
+
+            <pre><code>// Instalación vía NuGet
 dotnet add package System.Data.SqlClient
 // O para SQL Server (recomendado)
 dotnet add package Microsoft.Data.SqlClient
@@ -415,7 +469,17 @@ using Microsoft.Data.SqlClient; // Nuevo paquete (más actualizado)</code></pre>
         <section id="conexion" class="section">
             <h2>3. Connection String</h2>
 
+            <div class="note-box">
+                <strong>¿Por qué Connection String en appsettings.json?</strong>
+                <ul>
+                    <li><strong>Separación de configuración:</strong> Cambia sin recompilar el código</li>
+                    <li><strong>Seguridad:</strong> No guardas credenciales en el código fuente</li>
+                    <li><strong>Ambientes:</strong> Distintos archivos para Development, Production, Testing</li>
+                </ul>
+            </div>
+
             <h3>Configuración de conexión</h3>
+            <p><strong>Connection String</strong> = Cadena de texto con información para conectarse a una base de datos (servidor, nombre de BD, credenciales, opciones).</p>
             <pre><code>// Opción 1: En appsettings.json (RECOMENDADO)
 {
   "ConnectionStrings": {
@@ -445,7 +509,19 @@ var builder = new SqlConnectionStringBuilder
 string connectionString = builder.ConnectionString;</code></pre>
 
             <h3>Usando SqlConnection</h3>
-            <p><strong>IMPORTANTE:</strong> SIEMPRE usar 'using' para garantizar cierre de conexión</p>
+            <p><strong>using statement</strong> = Garantiza que los recursos (conexiones, archivos, etc.) se liberen correctamente, incluso si ocurre una excepción. Es equivalente a try-finally con Dispose().</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes sin using</strong>
+                <ul>
+                    <li><strong>Connection leaks:</strong> Conexiones que nunca se cierran agotan el pool</li>
+                    <li><strong>Rendimiento degradado:</strong> El servidor se sobrecarga con conexiones abandonadas</li>
+                    <li><strong>Errores de timeout:</strong> "Connection pool exhausted" cuando se agotan las conexiones</li>
+                </ul>
+            </div>
+
+            <p><strong><abbr title="Repository - Patrón de diseño que abstrae el acceso a datos (encapsula ADO.NET)">Repository</abbr></strong> = Clase que encapsula toda la lógica de acceso a datos. Separa la lógica de negocio del código SQL.</p>
+
             <pre><code>public class EstudianteRepository
 {
     private readonly string _connectionString;
@@ -491,6 +567,8 @@ string connectionString = builder.ConnectionString;</code></pre>
 }</code></pre>
 
             <h3>SqlDataReader - Lectura de datos</h3>
+            <p><strong><abbr title="DBNull - Valor especial que representa NULL en una base de datos">DBNull</abbr></strong> = Objeto especial que representa un valor NULL de base de datos. Es diferente de null de C#.</p>
+
             <pre><code>// Métodos del SqlDataReader
 
 // Por índice (posición)
@@ -517,9 +595,10 @@ string nombre = reader["Nombre"].ToString();
 
         <!-- CRUD -->
         <section id="crud" class="section">
-            <h2>4. Operaciones CRUD</h2>
+            <h2>4. Operaciones <abbr title="CRUD - Create, Read, Update, Delete (Crear, Leer, Actualizar, Eliminar)">CRUD</abbr></h2>
 
             <h3>Create (INSERT)</h3>
+            <p><strong><abbr title="SCOPE_IDENTITY() - Función de SQL Server que retorna el último valor de identidad generado en la sesión actual">SCOPE_IDENTITY()</abbr></strong> = Función de SQL Server que retorna el último ID auto-generado en la sesión actual (evita conflictos con otras transacciones simultáneas).</p>
             <pre><code>public async Task&lt;int&gt; CrearAsync(Estudiante estudiante)
 {
     using var connection = new SqlConnection(_connectionString);
@@ -678,7 +757,31 @@ public async Task&lt;bool&gt; DesactivarAsync(int id)
         <section id="transacciones" class="section">
             <h2>5. Manejo de Transacciones</h2>
 
-            <h3>Consistencia de datos</h3>
+            <div class="note-box">
+                <strong>¿Por qué Transacciones?</strong>
+                <ul>
+                    <li><strong>Atomicidad:</strong> O todas las operaciones se completan, o ninguna</li>
+                    <li><strong>Consistencia:</strong> Los datos siempre remaincen en un estado válido</li>
+                    <li><strong>Ejemplo:</strong> Transferencia bancaria: DEBITAR origen Y ACREDITAR destino, o ninguna de las dos</li>
+                </ul>
+            </div>
+
+            <h3>Transacciones en ADO.NET</h3>
+            <p><strong><abbr title="Transaction - Unidad de trabajo compuesta por múltiples operaciones que deben ejecutarse todas o ninguna">Transaction</abbr></strong> = Unidad de trabajo compuesta por múltiples operaciones SQL que deben ejecutarse todas o ninguna (ACID).</p>
+            <p><strong>Commit</strong> = Confirmar la transacción (aplicar todos los cambios permanentemente).</p>
+            <p><strong>Rollback</strong> = Deshacer la transacción (revertir todos los cambios si algo falla).</p>
+            <p><strong>async/await</strong> = Palabras clave de C# para programación asíncrona. async marca un método como asíncrono, await espera un resultado sin bloquear el hilo.</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con Transacciones</strong>
+                <ul>
+                    <li><strong>Olvidar pasar el objeto transaction a SqlCommand:</strong> Los comandos se ejecutan FUERA de la transacción</li>
+                    <li><strong>No llamar Commit():</strong> La transacción se deshace automáticamente (rollback implícito)</li>
+                    <li><strong>Excepciones no manejadas:</strong> Siempre envolver en try-catch para llamar Rollback()</li>
+                </ul>
+            </div>
+
+            <h4>Consistencia de datos</h4>
             <pre><code>public async Task&lt;bool&gt; TransferirEstudianteAsync(
     int estudianteId, int carreraOrigenId, int carreraDestinoId)
 {
@@ -785,7 +888,8 @@ command.Parameters.AddWithValue("@Id", id);</code></pre>
             </div>
 
             <h3>Connection Pooling</h3>
-            <p>Reutilización automática de conexiones físicas para mejorar rendimiento.</p>
+            <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, ADO.NET mantiene un "pool" de conexiones disponibles.</p>
+            <p><strong>¿Por qué Connection Pooling?</strong> Abrir una conexión física es costoso (miles de milisegundos). Reutilizar conexiones existentes toma microsegundos.</p>
             <pre><code>// Connection Pool está activado por defecto
 // Configuración en connection string:
 
@@ -802,7 +906,20 @@ Connection Timeout=15;"              // Timeout conexión (seg)</code></pre>
         <section id="sql-injection" class="section">
             <h2>7. SQL Injection</h2>
 
-            <h3>El peligro de concatenar strings</h3>
+            <div class="note-box">
+                <strong>¿Por qué SQL Injection es peligroso?</strong>
+                <ul>
+                    <li><strong>Robo de datos:</strong> Atacante puede leer toda la base de datos</li>
+                    <li><strong>Destrucción:</strong> DROP TABLE elimina datos permanentemente</li>
+                    <li><strong>Bypass autenticación:</strong> Login sin contraseña válida</li>
+                    <li><strong>OWASP #1:</strong> Consistentemente #1 vulnerabilidad web más crítica</li>
+                </ul>
+            </div>
+
+            <h3>¿Qué es SQL Injection?</h3>
+            <p><strong><abbr title="SQL Injection - Vulnerabilidad que permite inyectar código SQL malicioso manipulando la entrada del usuario">SQL Injection</abbr></strong> = Ataque donde un usuario malintencionado inyecta código SQL manipulando los inputs de la aplicación.</p>
+
+            <h4>El peligro de concatenar strings</h4>
             <div class="warning-box">
                 <strong>⚠️ VULNERABLE A SQL INJECTION</strong>
                 <pre><code>var query = $"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'";
@@ -818,10 +935,25 @@ Connection Timeout=15;"              // Timeout conexión (seg)</code></pre>
 command.Parameters.AddWithValue("@Codigo", codigo);
 // El parámetro se escapa automáticamente</code></pre>
             </div>
+
+            <div class="note-box">
+                <strong>Mini-Chequeo: SQL Injection</strong>
+                <ul>
+                    <li>¿Por qué concatenar strings es vulnerable?</li>
+                    <li>¿Cómo los parámetros previenen SQL Injection?</li>
+                    <li>¿Puedes explicar el ataque con "'; DROP TABLE Estudiantes; --"?</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Práctica / Laboratorio -->
-        <section id="practica" class="section">
+        <section id="practica" class="section actividad">
+            <h3>Actividad: Repositorio ADO.NET CRUD</h3>
+            <p><strong>Tipo:</strong> Opcional / práctica</p>
+            <p><strong>Relacionado con:</strong> Ninguno</p>
+            <p><strong>Entregable:</strong> Repositorio ADO.NET con operaciones CRUD para Estudiantes</p>
+            <p><strong>Tiempo estimado:</strong> 40 min</p>
+            <p><strong>Criterios de éxito:</strong> Comprensión de SqlConnection, SqlCommand, SqlDataReader</p>
             <h2>Práctica / Laboratorio</h2>
             <p><strong>Duración estimada:</strong> 40 minutos</p>
             <p><strong>Objetivo:</strong> Implementar un repositorio ADO.NET completo con operaciones CRUD para Estudiantes.</p>
