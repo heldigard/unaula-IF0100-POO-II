@@ -272,7 +272,7 @@ p code, li code {
   <nav>
     <ul>
       <li><a href="#teoria">Teoría</a></li>
-      <li><a href="#ejemplos">Ejemplos e infografías</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
       <li><a href="#practica">Práctica / laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
@@ -598,6 +598,22 @@ public class CalificacionesSteps
         <li><strong>Introducción a BDD (Dan North - inventor):</strong> <a href="https://dannorth.net/introducing-bdd/" target="_blank" rel="noopener">Introducing BDD</a></li>
         <li><strong>Three Amigos (Melissa Niemann):</strong> <a href="https://www.pluralsight.com/blog/tutorials/three-amigos-bdd" target="_blank" rel="noopener">The Three Amigos</a></li>
         <li><strong>SpecFlow para .NET:</strong> <a href="https://specflow.org/specflow/" target="_blank" rel="noopener">Getting Started with SpecFlow</a></li>
+      </ul>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>BDD (Behavior-Driven Development) evoluciona TDD cambiando el enfoque de lo técnico a lo del negocio.</li>
+        <li>BDD mantiene el lenguaje ubicuo compartido por negocio y desarrollo, permitiendo especificaciones ejecutables.</li>
+        <li>Gherkin es un lenguaje legible por humanos y máquinas con palabras clave: Feature, Scenario, Given, When, Then.</li>
+        <li>Given-When-Then estructura los escenarios: Dado (precondiciones), Cuándo (acción), Entonces (resultado esperado).</li>
+        <li>SpecFlow es la herramienta BDD para .NET que convierte archivos .feature en pruebas automatizadas.</li>
+        <li>Los Three Amigos (Negocio + Desarrollo + QA) se reúnen para definir escenarios antes de implementar.</li>
+        <li>Background define pasos comunes a todos los escenarios de una feature, evitando duplicación.</li>
+        <li>Scenario Outline con Examples permite ejecutar el mismo escenario con múltiples conjuntos de datos.</li>
+        <li>Los Step Definitions ([Given], [When], [Then]) conectan Gherkin con código C# usando expresiones regulares.</li>
+        <li>BDD produce documentación viva que siempre está actualizada porque si no pasa, se arregla.</li>
       </ul>
     </section>
   </main>

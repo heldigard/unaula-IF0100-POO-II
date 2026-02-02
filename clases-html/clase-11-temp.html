@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 - Formularios, Validación y Sesiones | IF0100 POO II</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .meta-bar {
+            background: #1e3a8a;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .meta-bar span { font-size: 0.9rem; }
+        .nav {
+            background: #1e3a8a;
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #1e40af;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section h3 {
+            color: #3b82f6;
+            margin: 1.5rem 0 1rem;
+        }
+        .section h4 {
+            color: #1e3a8a;
+            margin: 1rem 0 0.5rem;
+        }
+        .objectives-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .objectives-table th, .objectives-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .objectives-table th { background: #f3f4f6; }
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 0.9em;
+        }
+        pre code { background: none; padding: 0; }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+        .example-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+        .figure-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .figure-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .figure-container figcaption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #6b7280;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison .bad {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison .good {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-purple { background: #f3e8ff; color: #7c3aed; }
+        .badge-red { background: #fee2e2; color: #991b1b; }
+        .tag-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .tag-table th {
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .tag-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        ul, ol { margin-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        .note-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .note-box strong { color: #92400e; }
+        .warning-box {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+        .warning-box strong { color: #991b1b; }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+        @media (max-width: 768px) {
+            .comparison { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+            .meta-bar { flex-direction: column; text-align: center; }
+        }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #313244;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+            color: #cdd6f4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+            display: flex;
+            background: #1e1e2e;
+        }
+
+        .line-numbers {
+            background: #181825;
+            color: #6c7086;
+            padding: 12px 10px;
+            text-align: right;
+            font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            user-select: none;
+            border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+            background: transparent;
+            margin: 0;
+            padding: 12px 16px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .code-block pre code {
+            color: #cdd6f4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+            margin: 0;
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: #6c7086;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <header class="header">
+        <h1>Clase 11 - Formularios, Validación y Sesiones</h1>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 3 - Desarrollo Web</p>
+    </header>
+
+    <div class="meta-bar">
+        <span> Duración: 90 minutos</span>
+        <span> Unidad 3 - Desarrollo Web</span>
+        <span> 4 Semestre - Ingeniería Informática</span>
+    </div>
+
+    <nav class="nav">
+        <a href="#teoria">Teoría</a>
+        <a href="#ejemplos">Ejemplos</a>
+        <a href="#practica">Práctica / Laboratorio</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#referencias">Referencias</a>
+    </nav>
+
+    <main class="container" id="main">
+        <!-- Teoría -->
+        <section id="teoria">
+        <!-- Objetivos -->
+        <section id="objetivos" class="section">
+            <h2>Objetivos de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Implementar</strong> validación de datos con Data Annotations</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Configurar</strong> validación en cliente y servidor</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Utilizar</strong> TempData, ViewBag y ViewData</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Gestionar</strong> sesiones y cookies</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Implementar</strong> upload de archivos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Agenda -->
+        <section id="agenda" class="section">
+            <h2>Agenda (90 min)</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tiempo</th>
+                        <th>Tema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>20'</td>
+                        <td>Validación con Data Annotations</td>
+                    </tr>
+                    <tr>
+                        <td>10'</td>
+                        <td>Validación cliente vs servidor</td>
+                    </tr>
+                    <tr>
+                        <td>10'</td>
+                        <td>TempData y mensajes flash</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Sesiones y Cookies</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Upload de archivos</td>
+                    </tr>
+                    <tr>
+                        <td>20'</td>
+                        <td>Ejercicio integrador</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Data Annotations -->
+        <section id="data-annotations" class="section">
+            <h2>1. Validación con Data Annotations</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué Data Annotations?</strong>
+                <ul>
+                    <li><strong>Declarativo:</strong> Las reglas de validación están en el modelo, no dispersas en el código</li>
+                    <li><strong>Reusable:</strong> Mismas reglas para validación cliente y servidor</li>
+                    <li><strong>Mantenible:</strong> Un solo lugar para cambiar reglas de negocio</li>
+                    <li><strong>Estándar:</strong> <abbr title="Data Annotations - Sistema de atributos de validación declarativa en .NET">Data Annotations</abbr> es parte de .NET desde versión 3.5</li>
+                </ul>
+            </div>
+
+            <h3>Atributos de validación en .NET</h3>
+            <pre><code>using System.ComponentModel.DataAnnotations;
+
+public class EstudianteViewModel
+{
+    // VALIDACIÓN BÁSICA
+    [Required(ErrorMessage = "El código es obligatorio")]
+    [StringLength(10, MinimumLength = 5,
+        ErrorMessage = "El código debe tener entre 5 y 10 caracteres")]
+    [Display(Name = "Código Estudiantil")]
+    public string Codigo { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Nombre { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Apellido { get; set; }
+
+    // VALIDACIÓN DE EMAIL
+    [Required]
+    [EmailAddress(ErrorMessage = "El formato del email no es válido")]
+    [Display(Name = "Correo Electrónico")]
+    public string Email { get; set; }
+
+    // VALIDACIÓN NUMÉRICA
+    [Range(18, 100, ErrorMessage = "La edad debe estar entre 18 y 100 años")]
+    public int Edad { get; set; }
+
+    [Range(0.0, 5.0, ErrorMessage = "El promedio debe estar entre 0.0 y 5.0")]
+    [DisplayFormat(DataFormatString = "{0:F2}")]
+    public double Promedio { get; set; }
+
+    // VALIDACIÓN DE PATRÓN (Regex)
+    [Required]
+    [RegularExpression(@"^\d{10}$",
+        ErrorMessage = "El teléfono debe tener 10 dígitos numéricos")]
+    [Display(Name = "Teléfono Celular")]
+    public string Telefono { get; set; }
+
+    // VALIDACIÓN DE FECHAS
+    [DataType(DataType.Date)]
+    [Display(Name = "Fecha de Nacimiento")]
+    [FechaPasada(ErrorMessage = "La fecha debe ser en el pasado")]  // Custom
+    public DateTime FechaNacimiento { get; set; }
+
+    // COMPARACIÓN
+    [Required]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
+    [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
+    [Display(Name = "Confirmar Contraseña")]
+    public string ConfirmarPassword { get; set; }
+}</code></pre>
+
+            <h3>Data Annotations Disponibles</h3>
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Atributo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Requerimiento</td>
+                        <td><code>[Required]</code></td>
+                        <td>Campo obligatorio</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud</td>
+                        <td><code>[StringLength(50)]</code></td>
+                        <td>Máximo 50 caracteres</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud</td>
+                        <td><code>[MinLength(5)]</code></td>
+                        <td>Mínimo 5 caracteres</td>
+                    </tr>
+                    <tr>
+                        <td>Numérica</td>
+                        <td><code>[Range(0, 100)]</code></td>
+                        <td>Entre 0 y 100</td>
+                    </tr>
+                    <tr>
+                        <td>Formato</td>
+                        <td><code>[EmailAddress]</code></td>
+                        <td>Formato email</td>
+                    </tr>
+                    <tr>
+                        <td>Formato</td>
+                        <td><code>[Phone]</code></td>
+                        <td>Formato teléfono</td>
+                    </tr>
+                    <tr>
+                        <td>Formato</td>
+                        <td><code>[Url]</code></td>
+                        <td>Formato URL</td>
+                    </tr>
+                    <tr>
+                        <td>Formato</td>
+                        <td><code>[RegularExpression(@"...")]</code></td>
+                        <td>Patrón regex personalizado</td>
+                    </tr>
+                    <tr>
+                        <td>Comparación</td>
+                        <td><code>[Compare("OtraPropiedad")]</code></td>
+                        <td>Debe coincidir con otra propiedad</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Validación Personalizada</h3>
+            <pre><code>// Validación personalizada: Fecha debe ser en el pasado
+public class FechaPasadaAttribute : ValidationAttribute
+{
+    protected override ValidationResult IsValid(object value,
+        ValidationContext validationContext)
+    {
+        if (value is DateTime fecha)
+        {
+            if (fecha >= DateTime.Today)
+            {
+                return new ValidationResult(ErrorMessage ??
+                    "La fecha debe ser en el pasado");
+            }
+        }
+        return ValidationResult.Success;
+    }
+}
+
+// Uso
+public class EstudianteViewModel
+{
+    [FechaPasada(ErrorMessage = "La fecha de nacimiento debe ser en el pasado")]
+    public DateTime FechaNacimiento { get; set; }
+}
+
+// Otra validación: Mayor de edad
+public class MayorDeEdadAttribute : ValidationAttribute
+{
+    private readonly int _edadMinima;
+
+    public MayorDeEdadAttribute(int edadMinima = 18)
+    {
+        _edadMinima = edadMinima;
+    }
+
+    protected override ValidationResult IsValid(object value,
+        ValidationContext validationContext)
+    {
+        if (value is DateTime fechaNacimiento)
+        {
+            var edad = DateTime.Today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
+                edad--;
+
+            if (edad < _edadMinima)
+            {
+                return new ValidationResult(
+                    $"Debe tener al menos {_edadMinima} años");
+            }
+        }
+        return ValidationResult.Success;
+    }
+}</code></pre>
+
+            <h3>ModelState y <abbr title="Model-View-Controller - Patrón de arquitectura que separa la aplicación en tres componentes">MVC</abbr></h3>
+            <p><strong>ViewModel</strong> = Clase diseñada específicamente para pasar datos del Controller a la View. No es la entidad de base de datos, sino un modelo "de presentación".</p>
+            <p><strong>ModelState</strong> = Diccionario que contiene el estado de enlace de datos y validación. Se valida automáticamente con Data Annotations.</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con ModelState</strong>
+                <ul>
+                    <li><strong>Olvidar validar ModelState.IsValid:</strong> Permite guardar datos inválidos en BD</li>
+                    <li><strong>No devolver el modelo con errores:</strong> El usuario pierde los datos que ingresó</li>
+                    <li><strong>Validar solo en cliente:</strong> Un usuario puede desactivar JavaScript y enviar datos inválidos</li>
+                </ul>
+            </div>
+
+            <h4>Validación en el Controller</h4>
+            <pre><code>[HttpPost]
+public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
+{
+    // Validación automática basada en Data Annotations
+    if (!ModelState.IsValid)
+    {
+        // Si hay errores, retornar la vista con el modelo
+        // Los errores se mostrarán automáticamente
+        return View(model);
+    }
+
+    // Validación de negocio adicional
+    var existe = await _service.ExisteCodigoAsync(model.Codigo);
+    if (existe)
+    {
+        ModelState.AddModelError("Codigo",
+            "Ya existe un estudiante con este código");
+        return View(model);
+    }
+
+    // Guardar
+    await _service.CrearAsync(model);
+    return RedirectToAction(nameof(Index));
+}</code></pre>
+        </section>
+
+        <!-- Validacion Cliente/Servidor -->
+        <section id="validacion" class="section">
+            <h2>2. Validación Cliente vs Servidor</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué Doble Validación?</strong>
+                <ul>
+                    <li><strong>Experiencia de usuario:</strong> La validación cliente (<abbr title="JavaScript - Lenguaje de programación para interactividad web">JS</abbr>) es instantánea, sin recargar la página</li>
+                    <li><strong>Seguridad:</strong> La validación servidor es obligatoria porque JS puede ser desactivado o manipulado</li>
+                    <li><strong>Defensa en profundidad:</strong> Dos capas de validación reducen errores y ataques</li>
+                </ul>
+            </div>
+
+            <h3>Doble validación</h3>
+            <div class="note-box">
+                <strong>IMPORTANTE:</strong>
+                <ul>
+                    <li><strong>Validación cliente</strong> = UX mejor (rápida, feedback inmediato)</li>
+                    <li><strong>Validación servidor</strong> = Seguridad (obligatoria)</li>
+                    <li><strong>Nunca confíe solo en validación cliente</strong> - Puede ser omitida</li>
+                </ul>
+            </div>
+
+            <h4>Flujo de Validación:</h4>
+            <ol>
+                <li>Usuario escribe datos en formulario</li>
+                <li>JavaScript valida (jQuery Validation) en navegador</li>
+                <li>Si es inválido, muestra error <strong>sin enviar al servidor</strong></li>
+                <li>Si pasa validación cliente, envía POST</li>
+                <li>Servidor valida con ModelState (Data Annotations)</li>
+                <li>Si inválido, retorna vista con errores</li>
+                <li>Si válido, procesa y guarda</li>
+            </ol>
+
+            <h3>jQuery Validation</h3>
+            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por ASP.NET y valida automáticamente en el navegador.</p>
+
+            <div class="warning-box">
+                <strong>Errores Comunes en Validación Cliente</strong>
+                <ul>
+                    <li><strong>Olvidar incluir los scripts:</strong> La validación cliente simplemente no funciona</li>
+                    <li><strong>No renderizar Partial de Scripts:</strong> Olvidar <code>@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}</code></li>
+                    <li><strong>Conflictos de jQuery:</strong> Incluir jQuery dos veces o versiones incompatibles</li>
+                </ul>
+            </div>
+
+            <h4>Configuración en la vista</h4>
+            <pre><code>&lt;!-- Views/Shared/_ValidationScriptsPartial.cshtml --&gt;
+&lt;script src="~/lib/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/lib/jquery-validation/dist/jquery.validate.min.js"&gt;&lt;/script&gt;
+&lt;script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"&gt;
+&lt;/script&gt;
+
+&lt;!-- En la vista --&gt;
+&lt;form asp-action="Crear" method="post"&gt;
+    &lt;div class="form-group"&gt;
+        &lt;label asp-for="Email"&gt;&lt;/label&gt;
+        &lt;input asp-for="Email" class="form-control" /&gt;
+        &lt;span asp-validation-for="Email" class="text-danger"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;button type="submit" class="btn btn-primary"&gt;Guardar&lt;/button&gt;
+&lt;/form&gt;
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}</code></pre>
+        </section>
+
+        <!-- TempData/ViewBag -->
+        <section id="tempdata" class="section">
+            <h2>3. TempData, ViewBag y ViewData</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué TempData?</strong>
+                <ul>
+                    <li><strong>Mensajes flash:</strong> Mostrar "Guardado exitosamente" después de un redirect</li>
+                    <li><strong>Preservar input:</strong> Mantener datos del formulario cuando hay errores</li>
+                    <li><strong>PRG Pattern:</strong> Evita reenvíos accidentales al recargar la página (Post-Redirect-Get)</li>
+                </ul>
+            </div>
+
+            <h3>Diferencias clave</h3>
+            <p><strong><abbr title="ViewData - Diccionario tipo clave-valor para pasar datos del Controller a la View (válido solo una petición)">ViewData</abbr></strong> = Diccionario para pasar datos Controller?View (una sola petición).</p>
+            <p><strong><abbr title="ViewBag - Wrapper dinámico sobre ViewData para pasar datos del Controller a la View">ViewBag</abbr></strong> = Versión dinámica de ViewData (mismo propósito, sintaxis más limpia).</p>
+            <p><strong><abbr title="TempData - Diccionario que persiste datos hasta la siguiente petición (útil después de redirects)">TempData</abbr></strong> = Diccionario que sobrevive un redirect (dura hasta la siguiente petición).</p>
+
+            <h4>Formas de pasar datos en MVC</h4>
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Alcance</th>
+                        <th>Uso</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ViewData/ViewBag</td>
+                        <td>Una sola petición</td>
+                        <td>Controller  View</td>
+                        <td><code>ViewBag.Mensaje = "Hola"</code></td>
+                    </tr>
+                    <tr>
+                        <td>TempData</td>
+                        <td>Hasta siguiente petición</td>
+                        <td>Controller  Redirect  Controller/View</td>
+                        <td><code>TempData["Mensaje"] = "Guardado"</code></td>
+                    </tr>
+                    <tr>
+                        <td>Sesión</td>
+                        <td>Múltiples peticiones del mismo usuario</td>
+                        <td>Datos persistentes durante sesión</td>
+                        <td><code>Session["UsuarioId"] = 123</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>TempData en Acción</h3>
+            <pre><code>[HttpPost]
+public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
+{
+    if (!ModelState.IsValid)
+        return View(model);
+
+    await _service.CrearAsync(model);
+
+    // Mensaje que persistirá después del Redirect
+    TempData["MensajeExito"] = "Estudiante creado exitosamente";
+    TempData["TipoMensaje"] = "success";  // Para Bootstrap alert
+
+    return RedirectToAction(nameof(Index));
+}
+
+[HttpPost]
+public async Task&lt;IActionResult&gt; Eliminar(int id)
+{
+    try
+    {
+        await _service.EliminarAsync(id);
+        TempData["MensajeExito"] = "Estudiante eliminado correctamente";
+        TempData["TipoMensaje"] = "success";
+    }
+    catch (Exception ex)
+    {
+        TempData["MensajeError"] = "No se pudo eliminar el estudiante";
+        TempData["TipoMensaje"] = "danger";
+    }
+
+    return RedirectToAction(nameof(Index));
+}</code></pre>
+
+            <h3>Mostrar Mensajes en la Vista</h3>
+            <pre><code>&lt;!-- Views/Estudiantes/Index.cshtml - Mostrar mensajes --&gt;
+@{
+    var mensaje = TempData["MensajeExito"] ?? TempData["MensajeError"];
+    var tipo = TempData["TipoMensaje"] ?? "info";
+}
+
+@if (mensaje != null)
+{
+    &lt;div class="alert alert-@tipo alert-dismissible fade show" role="alert"&gt;
+        @mensaje
+        &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+    &lt;/div&gt;
+}
+
+&lt;!-- O usando Partial View --&gt;
+&lt;partial name="_Mensajes" /&gt;</code></pre>
+        </section>
+
+        <!-- Sesiones y Cookies -->
+        <section id="sesiones" class="section">
+            <h2>4. Sesiones y Cookies</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué Sesiones vs Cookies?</strong>
+                <ul>
+                    <li><strong>Session:</strong> Datos almacenados en servidor (seguro, pero consume memoria)</li>
+                    <li><strong>Cookie:</strong> Datos almacenados en navegador del cliente (limitado, pero no consume servidor)</li>
+                    <li><strong>Combinación:</strong> Session ID en cookie + datos en sesión = estándar de autenticación web</li>
+                </ul>
+            </div>
+
+            <h3>Diferencias clave</h3>
+            <p><strong><abbr title="Session - Almacenamiento de datos en servidor asociado a un usuario mediante un ID de sesión">Sesión</abbr></strong> = Datos almacenados en el servidor, identificados por un cookie de sesión.</p>
+            <p><strong><abbr title="Cookie - Pequeño archivo de texto almacenado en el navegador del usuario">Cookie</abbr></strong> = Datos almacenados en el navegador del cliente, enviados en cada petición.</p>
+
+            <h4>Configuración de sesiones</h4>
+            <pre><code>// Program.cs - Configurar servicio de sesiones
+
+// Agregar servicio de sesiones
+builder.Services.AddDistributedMemoryCache();  // Almacenamiento en memoria
+builder.Services.AddSession(options =&gt;
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);  // Tiempo de expiración
+    options.Cookie.HttpOnly = true;  // Solo accesible por HTTP
+    options.Cookie.IsEssential = true;  // Necesaria para GDPR
+});
+
+var app = builder.Build();
+
+// Usar sesiones (antes de MapControllers)
+app.UseSession();
+app.MapControllers();</code></pre>
+
+            <h3>Usando Sesiones</h3>
+            <p><strong><abbr title="GUID - Globally Unique Identifier (Identificador Único Global) de 128 bits">GUID</abbr></strong> = Identificador único de 128 bits (ej: <code>123e4567-e89b-12d3-a456-426614174000</code>).</p>
+            <p><strong><abbr title="JSON - JavaScript Object Notation, formato ligero de intercambio de datos">JSON</abbr></strong> = Formato de texto para representar objetos, usado para serializar datos en sesión.</p>
+
+            <pre><code>public class AccountController : Controller
+{
+    // Guardar en sesión
+    public IActionResult Login(LoginViewModel model)
+    {
+        // Validar credenciales...
+
+        // Guardar en sesión
+        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
+        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
+        HttpContext.Session.SetString("UsuarioEmail", usuario.Email);
+
+        // Guardar objeto completo (serializado a JSON)
+        var usuarioJson = JsonSerializer.Serialize(usuario);
+        HttpContext.Session.SetString("UsuarioCompleto", usuarioJson);
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    // Leer de sesión
+    public IActionResult Perfil()
+    {
+        var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
+        var usuarioNombre = HttpContext.Session.GetString("UsuarioNombre");
+
+        if (usuarioId == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        // Recuperar objeto
+        var usuarioJson = HttpContext.Session.GetString("UsuarioCompleto");
+        var usuario = JsonSerializer.Deserialize&lt;Usuario&gt;(usuarioJson);
+
+        return View(usuario);
+    }
+
+    // Cerrar sesión
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();  // Limpiar toda la sesión
+        return RedirectToAction("Index", "Home");
+    }
+}</code></pre>
+
+            <h3>Cookies</h3>
+            <p>Manipulación directa de cookies con opciones de seguridad:</p>
+            <ul>
+                <li><strong><abbr title="HttpOnly - Bandera de cookie que previene acceso desde JavaScript">HttpOnly</abbr></strong> = Si es true, la cookie NO es accesible vía JavaScript (protege contra XSS)</li>
+                <li><strong><abbr title="SameSite - Atributo de cookie que controla cuándo se envía en solicitudes cross-site">SameSite</abbr></strong> = Controla envío de cookies en peticiones cross-site (previene CSRF)</li>
+                <li><strong>Secure</strong> = Si es true, la cookie solo se envía por HTTPS</li>
+                <li><strong><abbr title="GDPR - General Data Protection Regulation, reglamento europeo de protección de datos">GDPR</abbr></strong> = Reglamento UE que requiere consentimiento para cookies no esenciales</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Errores Comunes con Cookies</strong>
+                <ul>
+                    <li><strong>Guardar datos sensibles sin HttpOnly:</strong> Vulnerable a robo via XSS</li>
+                    <li><strong>No usar SameSite:</strong> Vulnerable a ataques CSRF</li>
+                    <li><strong>Exceder tamaño límite:</strong> Cookies máx 4KB (si necesitas más, usa Session)</li>
+                </ul>
+            </div>
+
+            <h4>Ejemplo de manipulación</h4>
+            <pre><code>public class PreferenciasController : Controller
+{
+    // Establecer cookie
+    public IActionResult SetTema(string tema)
+    {
+        // Cookie con opciones de seguridad
+        Response.Cookies.Append("Tema", tema, new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(30),  // Expira en 30 días
+            HttpOnly = false,  // Accesible por JavaScript (true para datos sensibles)
+            Secure = true,     // Solo HTTPS
+            SameSite = SameSiteMode.Strict  // Previene CSRF
+        });
+
+        return RedirectToAction("Index");
+    }
+
+    // Leer cookie
+    public IActionResult Index()
+    {
+        var tema = Request.Cookies["Tema"] ?? "claro";
+        ViewBag.Tema = tema;
+        return View();
+    }
+
+    // Eliminar cookie
+    public IActionResult EliminarTema()
+    {
+        Response.Cookies.Delete("Tema");
+        return RedirectToAction("Index");
+    }
+}</code></pre>
+        </section>
+
+        <!-- Upload de Archivos -->
+        <section id="upload" class="section">
+            <h2>5. Upload de Archivos</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué IFormFile?</strong>
+                <ul>
+                    <li><strong>Abstracción:</strong> Representa un archivo recibido en una petición HTTP</li>
+                    <li><strong>Stream:</strong> Permite leer el archivo sin cargarlo completo en memoria</li>
+                    <li><strong>Validación:</strong> Facilita verificar tipo, tamaño y nombre del archivo</li>
+                </ul>
+            </div>
+
+            <h3><abbr title="IFormFile - Interfaz de ASP.NET Core que representa un archivo enviado en una petición HTTP">IFormFile</abbr></h3>
+            <p>Interfaz que representa un archivo recibido en una petición HTTP. Propiedades clave:</p>
+            <ul>
+                <li><code>FileName</code> - Nombre original del archivo</li>
+                <li><code>Length</code> - Tamaño en bytes</li>
+                <li><code>ContentType</code> - Tipo MIME (ej: "image/jpeg")</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Errores Comunes en Upload</strong>
+                <ul>
+                    <li><strong>No validar extensión:</strong> Permite subir archivos ejecutables (.exe, .bat)</li>
+                    <li><strong>No limitar tamaño:</strong> Puede saturar el servidor</li>
+                    <li><strong>Sobrescribir archivos:</strong> <code>Guid.NewGuid()</code> genera nombres únicos para evitar colisiones</li>
+                    <li><strong>Olvidar enctype="multipart/form-data":</strong> El formulario NO envía archivos sin este atributo</li>
+                </ul>
+            </div>
+
+            <h4>Vista con formulario</h4>
+            <pre><code>&lt;!-- Vista con formulario para subir archivo --&gt;
+&lt;form asp-action="SubirFoto" method="post" enctype="multipart/form-data"&gt;
+    &lt;div class="mb-3"&gt;
+        &lt;label class="form-label"&gt;Foto del Estudiante&lt;/label&gt;
+        &lt;input type="file" name="archivo" class="form-control"
+               accept=".jpg,.jpeg,.png" /&gt;
+        &lt;div class="form-text"&gt;Formatos permitidos: JPG, PNG (máx. 2MB)&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button type="submit" class="btn btn-primary"&gt;Subir&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+            <pre><code>[HttpPost]
+public async Task&lt;IActionResult&gt; SubirFoto(IFormFile archivo, int estudianteId)
+{
+    if (archivo == null || archivo.Length == 0)
+    {
+        ModelState.AddModelError("", "No se seleccionó ningún archivo");
+        return View();
+    }
+
+    // Validaciones
+    var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
+    var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
+
+    if (!extensionesPermitidas.Contains(extension))
+    {
+        ModelState.AddModelError("", "Formato de archivo no válido");
+        return View();
+    }
+
+    if (archivo.Length &gt; 2 * 1024 * 1024)  // 2MB
+    {
+        ModelState.AddModelError("", "El archivo es demasiado grande (máx. 2MB)");
+        return View();
+    }
+
+    // Generar nombre único
+    var nombreArchivo = $"{estudianteId}_{Guid.NewGuid()}{extension}";
+    var rutaCarpeta = Path.Combine(_environment.WebRootPath, "uploads", "fotos");
+    var rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
+
+    // Crear carpeta si no existe
+    if (!Directory.Exists(rutaCarpeta))
+        Directory.CreateDirectory(rutaCarpeta);
+
+    // Guardar archivo
+    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+    {
+        await archivo.CopyToAsync(stream);
+    }
+
+    // Guardar ruta en base de datos
+    await _service.ActualizarFotoAsync(estudianteId, $"/uploads/fotos/{nombreArchivo}");
+
+    TempData["Mensaje"] = "Foto subida correctamente";
+    return RedirectToAction("Detalles", new { id = estudianteId });
+}</code></pre>
+
+            <h3>Subir Varios Archivos</h3>
+            <pre><code>&lt;form asp-action="SubirDocumentos" method="post" enctype="multipart/form-data"&gt;
+    &lt;input type="file" name="archivos" multiple class="form-control" /&gt;
+    &lt;button type="submit" class="btn btn-primary"&gt;Subir Documentos&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+            <pre><code>[HttpPost]
+public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; archivos)
+{
+    foreach (var archivo in archivos)
+    {
+        if (archivo.Length &gt; 0)
+        {
+            var nombre = Path.GetFileName(archivo.FileName);
+            var ruta = Path.Combine(_environment.WebRootPath, "uploads", nombre);
+
+            using (var stream = new FileStream(ruta, FileMode.Create))
+            {
+                await archivo.CopyToAsync(stream);
+            }
+        }
+    }
+
+    TempData["Mensaje"] = $"{archivos.Count} archivos subidos";
+    return RedirectToAction("Index");
+}</code></pre>
+        </section>
+
+        <!-- CSRF Protection -->
+        <section id="csrf" class="section">
+            <h2>6. Protección CSRF</h2>
+
+            <div class="note-box">
+                <strong>¿Por qué protección CSRF?</strong>
+                <ul>
+                    <li><strong>Ataque silencioso:</strong> Un sitio malicioso puede enviar peticiones en tu nombre sin que lo sepas</li>
+                    <li><strong>Acciones críticas:</strong> Cambio de contraseña, transferencias, eliminación de datos</li>
+                    <li><strong>Token único:</strong> El token antiforgery solo es válido para tu sesión y tu formulario</li>
+                </ul>
+            </div>
+
+            <h3>Seguridad contra ataques</h3>
+            <p><strong><abbr title="CSRF - Cross-Site Request Forgery, ataque que engaña al navegador para enviar peticiones no autorizadas">CSRF</abbr> (Cross-Site Request Forgery)</strong> = Ataque donde un sitio malicioso envía un formulario con las credenciales del usuario autenticado a su servidor.</p>
+
+            <div class="warning-box">
+                <strong>¿Cómo funciona el ataque CSRF?</strong>
+                <ol>
+                    <li>Usuario inicia sesión en sitio-banco.com</li>
+                    <li>Usuario visita sitio-malicioso.com (todavía con la sesión de banco activa)</li>
+                    <li>sitio-malicioso.com tiene un formulario oculto que POST a sitio-banco.com/transferir</li>
+                    <li>El navegador envía automáticamente las cookies de sesión del banco</li>
+                    <li>El banco procesa la transferencia porque parece legítima</li>
+                </ol>
+                <p><strong>SOLUCIÓN: Token antiforgery que solo el servidor conoce</strong></p>
+            </div>
+
+            <h4>Implementación Automática:</h4>
+            <ul>
+                <li><code>[ValidateAntiForgeryToken]</code> en Controller</li>
+                <li><code>@Html.AntiForgeryToken()</code> en form (genera input oculto con token)</li>
+                <li>Token generado automáticamente y válido por sesión</li>
+            </ul>
+
+            <h4>Tag Helpers (átomos de HTML en Razor)</h4>
+            <p><strong><abbr title="Tag Helpers - Característica de Razor que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
+
+            <h4>Implementación con Tag Helpers</h4>
+            <pre><code>&lt;!-- EN FORMULARIO (Tag Helper): --&gt;
+&lt;form method="post"&gt;
+    @Html.AntiForgeryToken()  &lt;-- Token oculto
+    &lt;input name="_codigo" /&gt;
+&lt;/form&gt;
+
+&lt;!-- EN AJAX: --&gt;
+&lt;!-- AJAX = Asynchronous JavaScript and XML, técnica para actualizar página sin recargar --&gt;
+$.ajax({
+    url: '/estudiantes/eliminar',
+    type: 'POST',
+    headers: {
+        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+    }
+});</code></pre>
+
+            <div class="note-box">
+                <strong>Mini-Chequeo: CSRF Protection</strong>
+                <ul>
+                    <li>¿Puedes explicar cómo funciona el ataque CSRF paso a paso?</li>
+                    <li>¿Por qué el token antiforgery protege contra este ataque?</li>
+                    <li>¿Qué pasa si olvidas poner [ValidateAntiForgeryToken] en una acción POST?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Evaluación 4 -->
+        <section class="evaluacion-calificable">
+            <h3>?? Evaluación programada</h3>
+            <p><strong>Detalle:</strong> Consultar plataforma del curso para información completa sobre evaluación calificable.</p>
+        </section>
+        </section>
+
+        <!-- Ejemplos -->
+        <section id="ejemplos" class="section">
+            <h2>Ejemplos</h2>
+            <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
+            <ul>
+                <li>Data Annotations para validación</li>
+                <li>Validación en cliente y servidor</li>
+                <li>Uso de TempData y ViewBag</li>
+                <li>Manejo de sesiones y cookies</li>
+                <li>Upload de archivos</li>
+                <li>Protección CSRF</li>
+            </ul>
+        </section>
+
+        <!-- Practica / Laboratorio -->
+        <section id="practica" class="section">
+            <h2>Práctica / Laboratorio</h2>
+            <p><strong>Duración estimada:</strong> 40 minutos</p>
+            <p><strong>Objetivo:</strong> Implementar un formulario de registro con validaciones y manejo de TempData para mensajes.</p>
+
+            <h3>Pasos en Visual Studio 2022</h3>
+            <ol>
+                <li>Abre Visual Studio 2022 y crea un proyecto <strong>ASP.NET Core Web App (Model-View-Controller)</strong></li>
+                <li>Crea la clase <code>Models/RegistroViewModel.cs</code> con Data Annotations</li>
+                <li>Añade validaciones: [Required], [StringLength], [EmailAddress], [Compare]</li>
+                <li>En <code>Controllers/AccountController.cs</code>, crea acciones GET y POST</li>
+                <li>Implementa lógica POST con ModelState.IsValid y TempData para mensajes</li>
+                <li>En la vista, usa Tag Helpers y añade scripts de validación jQuery</li>
+                <li>Prueba validaciones cliente y servidor, verifica mensajes TempData</li>
+            </ol>
+
+            <h3>Checklist de verificación</h3>
+            <ul>
+                <li>El modelo tiene Data Annotations ([Required], [StringLength], etc.)</li>
+                <li>Las validaciones funcionan en el navegador (jQuery Validation)</li>
+                <li>ModelState.IsValid se valida en el controller</li>
+                <li>TempData muestra mensajes después de RedirectToAction</li>
+                <li>[ValidateAntiForgeryToken] protege contra CSRF</li>
+            </ul>
+        </section>
+        <!-- Ejercicios -->
+        <section id="ejercicios" class="section">
+            <h2>Ejercicios Prácticos</h2>
+
+            <h3>Ejercicio 1: Login Completo</h3>
+            <p><strong>Duración estimada:</strong> 25 minutos</p>
+            <h4>Checklist:</h4>
+            <ul>
+                <li>Email con validación [EmailAddress]</li>
+                <li>Password con [Required] y [MinLength]</li>
+                <li>Session.SetInt32/GetString para guardar usuario</li>
+                <li>Session.Clear() en logout</li>
+            </ul>
+            <ul>
+                <li>Validación de email</li>
+                <li>Validación de clave (mínimo 6 caracteres)</li>
+                <li>Manejo de sesión</li>
+                <li>Logout</li>
+            </ul>
+
+            <h3>Ejercicio 2: Carrito con Session</h3>
+            <p><strong>Duración estimada:</strong> 20 minutos</p>
+            <h4>Checklist:</h4>
+            <ul>
+                <li>Session guardar lista de productos</li>
+                <li>Session recuperar y mostrar carrito</li>
+                <li>Botón vaciar carrito con Session.Clear()</li>
+            </ul>
+            <ul>
+                <li>Agregar productos a session</li>
+                <li>Mostrar carrito</li>
+                <li>Vaciar carrito</li>
+            </ul>
+
+            <h3>Ejercicio Integrador: Sistema de Inscripción</h3>
+            <p><strong>Duración estimada:</strong> 45 minutos</p>
+            <p>Crear sistema de inscripción de estudiantes con:</p>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Requisito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>ViewModel con validaciones:</strong> Código (requerido, 5-10 caracteres, único), Nombre (requerido, máx. 50), Email (requerido, formato válido), FechaNacimiento (requerido, mayor de 15 años), Carrera (seleccionar de dropdown), Foto (opcional, solo JPG/PNG, máx. 1MB)</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Controller:</strong> GET (mostrar formulario), POST (validar, guardar, mostrar mensaje éxito), Validación de código único</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Vista:</strong> Formulario Bootstrap estilizado, Validación cliente activada, Vista previa de foto (JS), Mensajes de error específicos por campo</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Sesión:</strong> Guardar último estudiante registrado, Mostrar en barra superior "último registro: [Nombre]"</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Extra:</strong> Exportar lista a Excel (simulado), Filtrar por carrera (session)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Referencias -->
+        <section id="referencias" class="section">
+            <h2>Referencias y Recursos</h2>
+
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Enlace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Model Validation</td>
+                        <td><a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/models/validation" target="_blank">docs.microsoft.com/aspnet/core/mvc/models/validation</a></td>
+                    </tr>
+                    <tr>
+                        <td>Session State</td>
+                        <td><a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state" target="_blank">docs.microsoft.com/aspnet/core/fundamentals/app-state</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Resumen -->
+        <section id="resumen" class="section">
+            <h2>Resumen de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Data Annotations</strong></td>
+                        <td>Atributos para validación de modelos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ModelState</strong></td>
+                        <td>Estado de validación en servidor</td>
+                    </tr>
+                    <tr>
+                        <td><strong>jQuery Validation</strong></td>
+                        <td>Validación en cliente</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TempData</strong></td>
+                        <td>Datos persistentes hasta siguiente petición</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Session</strong></td>
+                        <td>Datos persistentes durante sesión de usuario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cookies</strong></td>
+                        <td>Almacenamiento en navegador</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IFormFile</strong></td>
+                        <td>Manejo de archivos subidos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Remote Validation</strong></td>
+                        <td>Validación AJAX en tiempo real</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CSRF Protection</strong></td>
+                        <td>Token antiforgery para seguridad</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Distributed Cache</strong></td>
+                        <td>Sesión escalable (Redis, SQL Server)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Proxima Clase -->
+        <section class="section">
+            <h2>Próxima Clase: Introducción a ADO.NET</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>ADO.NET</strong></td>
+                        <td>SqlConnection, SqlCommand, SqlDataReader</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CRUD básico</strong></td>
+                        <td>Create, Read, Update, Delete con SQL puro</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Parámetros</strong></td>
+                        <td>Consultas parametrizadas para evitar SQL Injection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transacciones</strong></td>
+                        <td>Commit, Rollback</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>Unidad 3 completada: 4/4 clases ?</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
+    </footer>
+</body>
+</html>
+
+

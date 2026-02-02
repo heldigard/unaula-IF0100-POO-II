@@ -223,6 +223,102 @@
         .token-comment { color: #546e7a; font-style: italic; }
         .token-number { color: #f78c6c; }
         .token-operator { color: #89ddff; }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #313244;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+            color: #cdd6f4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+            display: flex;
+            background: #1e1e2e;
+        }
+
+        .line-numbers {
+            background: #181825;
+            color: #6c7086;
+            padding: 12px 10px;
+            text-align: right;
+            font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            user-select: none;
+            border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+            background: transparent;
+            margin: 0;
+            padding: 12px 16px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .code-block pre code {
+            color: #cdd6f4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Syntax highlighting mejorado */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; }
+        .code-block .token-type { color: #f9e2af; }
+        .code-block .token-string { color: #a6e3a1; }
+        .code-block .token-comment { color: #6c7086; font-style: italic; }
+        .code-block .token-number { color: #fab387; }
+        .code-block .token-operator { color: #89dceb; }
+        .code-block .token-method { color: #89b4fa; }
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; }
+        .code-block .token-namespace { color: #f38ba8; }
+
+        p code, li code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            border: 1px solid #45475a;
+        }
+
         /* Accessibility */
         abbr[title] { text-decoration: underline dotted; cursor: help; }
         /* Print styles */
@@ -580,15 +676,28 @@
             <p><strong><abbr title="LocalDB - Versión ligera de SQL Server Express para desarrollo">LocalDB</abbr></strong> = Versión de SQL Server que se ejecuta bajo demanda, ideal para desarrollo.</p>
             <p><strong>Namespace</strong> = Forma de organizar clases en C# (como "paquetes" en Java o "módulos" en Python).</p>
 
-            <pre><code>// Instalación vía NuGet
-dotnet add package System.Data.SqlClient
-// O para SQL Server (recomendado)
-dotnet add package Microsoft.Data.SqlClient
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">NuGetPackages.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                    <pre><code><span class="token-comment">// Instalación vía NuGet</span>
+<span class="token-method">dotnet</span> add package <span class="token-type">System.Data.SqlClient</span>
+<span class="token-comment">// O para SQL Server (recomendado)</span>
+<span class="token-method">dotnet</span> add package <span class="token-type">Microsoft.Data.SqlClient</span>
 
-// Namespaces necesarios
-using System.Data;           // Tipos genéricos: DataTable, DataSet
-using System.Data.SqlClient; // Proveedor SQL Server específico
-using Microsoft.Data.SqlClient; // Nuevo paquete (más actualizado)</code></pre>
+<span class="token-comment">// Namespaces necesarios</span>
+<span class="token-keyword">using</span> <span class="token-namespace">System.Data</span>;           <span class="token-comment">// Tipos genéricos: DataTable, DataSet</span>
+<span class="token-keyword">using</span> <span class="token-namespace">System.Data.SqlClient</span>; <span class="token-comment">// Proveedor SQL Server específico</span>
+<span class="token-keyword">using</span> <span class="token-namespace">Microsoft.Data.SqlClient</span>; <span class="token-comment">// Nuevo paquete (más actualizado)</span></code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Conexion -->
@@ -606,33 +715,46 @@ using Microsoft.Data.SqlClient; // Nuevo paquete (más actualizado)</code></pre>
 
             <h3>Configuración de conexión</h3>
             <p><strong>Connection String</strong> = Cadena de texto con información para conectarse a una base de datos (servidor, nombre de BD, credenciales, opciones).</p>
-            <pre><code>// Opción 1: En appsettings.json (RECOMENDADO)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">ConnectionConfig.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26</div>
+                    <pre><code><span class="token-comment">// Opción 1: En appsettings.json (RECOMENDADO)</span>
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=UniversidadDB;Trusted_Connection=True;MultipleActiveResultSets=true",
-    "Produccion": "Server=mi-servidor.database.windows.net;Database=UniversidadDB;User Id=usuario;Password=password;"
+  <span class="token-string">"ConnectionStrings"</span>: {
+    <span class="token-string">"DefaultConnection"</span>: <span class="token-string">"Server=(localdb)\mssqllocaldb;Database=UniversidadDB;Trusted_Connection=True;MultipleActiveResultSets=true"</span>,
+    <span class="token-string">"Produccion"</span>: <span class="token-string">"Server=mi-servidor.database.windows.net;Database=UniversidadDB;User Id=usuario;Password=password;"</span>
   }
 }
 
-// Leer en Program.cs
-var connectionString = builder.Configuration
-    .GetConnectionString("DefaultConnection");
+<span class="token-comment">// Leer en Program.cs</span>
+<span class="token-keyword">var</span> connectionString = builder.Configuration
+    .<span class="token-method">GetConnectionString</span>(<span class="token-string">"DefaultConnection"</span>);
 
-builder.Services.AddSingleton(connectionString);
+builder.Services.<span class="token-method">AddSingleton</span>(connectionString);
 
-// ─────────────────────────────────────────────────────────────
+<span class="token-comment">// ─────────────────────────────────────────────────────────────</span>
 
-// Opción 2: Connection String Builder (más seguro)
-var builder = new SqlConnectionStringBuilder
+<span class="token-comment">// Opción 2: Connection String Builder (más seguro)</span>
+<span class="token-keyword">var</span> builder = <span class="token-keyword">new</span> <span class="token-type">SqlConnectionStringBuilder</span>
 {
-    DataSource = @"(localdb)\mssqllocaldb",
-    InitialCatalog = "UniversidadDB",
-    IntegratedSecurity = true,
-    MultipleActiveResultSets = true,
-    ConnectTimeout = 30
+    DataSource = <span class="token-string">@"(localdb)\mssqllocaldb"</span>,
+    InitialCatalog = <span class="token-string">"UniversidadDB"</span>,
+    IntegratedSecurity = <span class="token-keyword">true</span>,
+    MultipleActiveResultSets = <span class="token-keyword">true</span>,
+    ConnectTimeout = <span class="token-number">30</span>
 };
 
-string connectionString = builder.ConnectionString;</code></pre>
+<span class="token-keyword">string</span> connectionString = builder.ConnectionString;</code></pre>
+                </div>
+            </div>
 
             <h3>Usando SqlConnection</h3>
             <p><strong>using statement</strong> = Garantiza que los recursos (conexiones, archivos, etc.) se liberen correctamente, incluso si ocurre una excepción. Es equivalente a try-finally con Dispose().</p>
@@ -648,75 +770,101 @@ string connectionString = builder.ConnectionString;</code></pre>
 
             <p><strong><abbr title="Repository - Patrón de diseño que abstrae el acceso a datos (encapsula ADO.NET)">Repository</abbr></strong> = Clase que encapsula toda la lógica de acceso a datos. Separa la lógica de negocio del código SQL.</p>
 
-            <pre><code>public class EstudianteRepository
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudianteRepository.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43</div>
+                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudianteRepository</span>
 {
-    private readonly string _connectionString;
+    <span class="token-keyword">private readonly string</span> _connectionString;
 
-    public EstudianteRepository(string connectionString)
+    <span class="token-keyword">public</span> <span class="token-method">EstudianteRepository</span>(<span class="token-keyword">string</span> connectionString)
     {
         _connectionString = connectionString;
     }
 
-    public List&lt;Estudiante&gt; ObtenerTodos()
+    <span class="token-keyword">public</span> <span class="token-type">List&lt;Estudiante&gt;</span> <span class="token-method">ObtenerTodos</span>()
     {
-        var estudiantes = new List&lt;Estudiante&gt;();
+        <span class="token-keyword">var</span> estudiantes = <span class="token-keyword">new</span> <span class="token-type">List&lt;Estudiante&gt;</span>();
 
-        // SIEMPRE usar 'using' para garantizar cierre de conexión
-        using (var connection = new SqlConnection(_connectionString))
+        <span class="token-comment">// SIEMPRE usar 'using' para garantizar cierre de conexión</span>
+        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString))
         {
-            connection.Open();
+            connection.<span class="token-method">Open</span>();
 
-            var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes";
+            <span class="token-keyword">var</span> query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes"</span>;
 
-            using (var command = new SqlCommand(query, connection))
+            <span class="token-keyword">using</span> (<span class="token-keyword">var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection))
             {
-                using (var reader = command.ExecuteReader())
+                <span class="token-keyword">using</span> (<span class="token-keyword">var</span> reader = command.<span class="token-method">ExecuteReader</span>())
                 {
-                    while (reader.Read())
+                    <span class="token-keyword">while</span> (reader.<span class="token-method">Read</span>())
                     {
-                        estudiantes.Add(new Estudiante
+                        estudiantes.<span class="token-method">Add</span>(<span class="token-keyword">new</span> <span class="token-type">Estudiante</span>
                         {
-                            Id = reader.GetInt32(0),
-                            Codigo = reader.GetString(1),
-                            Nombre = reader.GetString(2),
-                            Email = reader.IsDBNull(3) ? null : reader.GetString(3)
+                            Id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>),
+                            Codigo = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>),
+                            Nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">2</span>),
+                            Email = reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>) ? <span class="token-keyword">null</span> : reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>)
                         });
                     }
                 }
             }
 
-            // La conexión se cierra automáticamente al salir del using
+            <span class="token-comment">// La conexión se cierra automáticamente al salir del using</span>
         }
 
-        return estudiantes;
+        <span class="token-keyword">return</span> estudiantes;
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>SqlDataReader - Lectura de datos</h3>
             <p><strong><abbr title="DBNull - Valor especial que representa NULL en una base de datos">DBNull</abbr></strong> = Objeto especial que representa un valor NULL de base de datos. Es diferente de null de C#.</p>
 
-            <pre><code>// Métodos del SqlDataReader
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">DataReaderMethods.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
+                    <pre><code><span class="token-comment">// Métodos del SqlDataReader</span>
 
-// Por índice (posición)
-int id = reader.GetInt32(0);
-string nombre = reader.GetString(1);
+<span class="token-comment">// Por índice (posición)</span>
+<span class="token-keyword">int</span> id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>);
+<span class="token-keyword">string</span> nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>);
 
-// Por nombre de columna
-string email = reader.GetString(reader.GetOrdinal("Email"));
+<span class="token-comment">// Por nombre de columna</span>
+<span class="token-keyword">string</span> email = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>));
 
-// Verificar NULL
-if (!reader.IsDBNull(3))
+<span class="token-comment">// Verificar NULL</span>
+<span class="token-keyword">if</span> (!reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>))
 {
-    email = reader.GetString(3);
+    email = reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>);
 }
 
-// Cast genérico (más lento pero flexible)
-int id = (int)reader["Id"];
-string nombre = reader["Nombre"].ToString();
+<span class="token-comment">// Cast genérico (más lento pero flexible)</span>
+<span class="token-keyword">int</span> id = (<span class="token-keyword">int</span>)reader[<span class="token-string">"Id"</span>];
+<span class="token-keyword">string</span> nombre = reader[<span class="token-string">"Nombre"</span>].<span class="token-method">ToString</span>();
 
-// Tipos disponibles:
-// GetInt32(), GetInt64(), GetString(), GetDateTime()
-// GetDecimal(), GetDouble(), GetBoolean(), GetByte()</code></pre>
+<span class="token-comment">// Tipos disponibles:</span>
+<span class="token-comment">// GetInt32(), GetInt64(), GetString(), GetDateTime()</span>
+<span class="token-comment">// GetDecimal(), GetDouble(), GetBoolean(), GetByte()</span></code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- CRUD -->
@@ -725,130 +873,182 @@ string nombre = reader["Nombre"].ToString();
 
             <h3>Create (INSERT)</h3>
             <p><strong><abbr title="SCOPE_IDENTITY() - Función de SQL Server que retorna el último valor de identidad generado en la sesión actual">SCOPE_IDENTITY()</abbr></strong> = Función de SQL Server que retorna el último ID auto-generado en la sesión actual (evita conflictos con otras transacciones simultáneas).</p>
-            <pre><code>public async Task&lt;int&gt; CrearAsync(Estudiante estudiante)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">CreateOperation.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;int&gt;</span> <span class="token-method">CrearAsync</span>(<span class="token-type">Estudiante</span> estudiante)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    var query = @"
+    <span class="token-keyword">var</span> query = <span class="token-string">@"
         INSERT INTO Estudiantes (Codigo, Nombre, Email, FechaRegistro)
         VALUES (@Codigo, @Nombre, @Email, @FechaRegistro);
-        SELECT SCOPE_IDENTITY();";  // Retorna el ID generado
+        SELECT SCOPE_IDENTITY();"</span>;  <span class="token-comment">// Retorna el ID generado</span>
 
-    using var command = new SqlCommand(query, connection);
+    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
 
-    // Agregar parámetros (EVITA SQL INJECTION)
-    command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-    command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    command.Parameters.AddWithValue("@Email",
-        (object)estudiante.Email ?? DBNull.Value);
-    command.Parameters.AddWithValue("@FechaRegistro", DateTime.Now);
+    <span class="token-comment">// Agregar parámetros (EVITA SQL INJECTION)</span>
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
+        (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@FechaRegistro"</span>, <span class="token-type">DateTime</span>.Now);
 
-    // ExecuteScalar para retornar un solo valor (el ID)
-    var id = Convert.ToInt32(await command.ExecuteScalarAsync());
+    <span class="token-comment">// ExecuteScalar para retornar un solo valor (el ID)</span>
+    <span class="token-keyword">var</span> id = <span class="token-type">Convert</span>.<span class="token-method">ToInt32</span>(<span class="token-keyword">await</span> command.<span class="token-method">ExecuteScalarAsync</span>());
 
-    return id;
+    <span class="token-keyword">return</span> id;
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Read (SELECT)</h3>
-            <pre><code>public async Task&lt;Estudiante&gt; ObtenerPorIdAsync(int id)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">ReadOperation.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38</div>
+                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;Estudiante&gt;</span> <span class="token-method">ObtenerPorIdAsync</span>(<span class="token-keyword">int</span> id)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    var query = "SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = @Id";
+    <span class="token-keyword">var</span> query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = @Id"</span>;
 
-    using var command = new SqlCommand(query, connection);
-    command.Parameters.AddWithValue("@Id", id);
+    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
 
-    using var reader = await command.ExecuteReaderAsync();
+    <span class="token-keyword">using var</span> reader = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteReaderAsync</span>();
 
-    if (await reader.ReadAsync())
+    <span class="token-keyword">if</span> (<span class="token-keyword">await</span> reader.<span class="token-method">ReadAsync</span>())
     {
-        return new Estudiante
+        <span class="token-keyword">return new</span> <span class="token-type">Estudiante</span>
         {
-            Id = reader.GetInt32(0),
-            Codigo = reader.GetString(1),
-            Nombre = reader.GetString(2),
-            Email = reader.IsDBNull(3) ? null : reader.GetString(3)
+            Id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>),
+            Codigo = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>),
+            Nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">2</span>),
+            Email = reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>) ? <span class="token-keyword">null</span> : reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>)
         };
     }
 
-    return null;  // No encontrado
+    <span class="token-keyword">return null</span>;  <span class="token-comment">// No encontrado</span>
 }
 
-private Estudiante MapFromReader(SqlDataReader reader)
+<span class="token-keyword">private</span> <span class="token-type">Estudiante</span> <span class="token-method">MapFromReader</span>(<span class="token-type">SqlDataReader</span> reader)
 {
-    return new Estudiante
+    <span class="token-keyword">return new</span> <span class="token-type">Estudiante</span>
     {
-        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-        Codigo = reader.GetString(reader.GetOrdinal("Codigo")),
-        Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
-        Email = reader.IsDBNull(reader.GetOrdinal("Email"))
-            ? null
-            : reader.GetString(reader.GetOrdinal("Email"))
+        Id = reader.<span class="token-method">GetInt32</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Id"</span>)),
+        Codigo = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Codigo"</span>)),
+        Nombre = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Nombre"</span>)),
+        Email = reader.<span class="token-method">IsDBNull</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>))
+            ? <span class="token-keyword">null</span>
+            : reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>))
     };
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Update (UPDATE)</h3>
-            <pre><code>public async Task&lt;bool&gt; ActualizarAsync(Estudiante estudiante)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">UpdateOperation.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">ActualizarAsync</span>(<span class="token-type">Estudiante</span> estudiante)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    var query = @"
+    <span class="token-keyword">var</span> query = <span class="token-string">@"
         UPDATE Estudiantes
         SET Codigo = @Codigo,
             Nombre = @Nombre,
             Email = @Email
-        WHERE Id = @Id";
+        WHERE Id = @Id"</span>;
 
-    using var command = new SqlCommand(query, connection);
-    command.Parameters.AddWithValue("@Id", estudiante.Id);
-    command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-    command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    command.Parameters.AddWithValue("@Email",
-        (object)estudiante.Email ?? DBNull.Value);
+    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, estudiante.Id);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
+        (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
 
-    // ExecuteNonQuery retorna número de filas afectadas
-    int filasAfectadas = await command.ExecuteNonQueryAsync();
+    <span class="token-comment">// ExecuteNonQuery retorna número de filas afectadas</span>
+    <span class="token-keyword">int</span> filasAfectadas = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>();
 
-    return filasAfectadas &gt; 0;  // True si se actualizó
+    <span class="token-keyword">return</span> filasAfectadas &gt; <span class="token-number">0</span>;  <span class="token-comment">// True si se actualizó</span>
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Delete (DELETE)</h3>
-            <pre><code>public async Task&lt;bool&gt; EliminarAsync(int id)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">DeleteOperation.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
+                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">EliminarAsync</span>(<span class="token-keyword">int</span> id)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    var query = "DELETE FROM Estudiantes WHERE Id = @Id";
+    <span class="token-keyword">var</span> query = <span class="token-string">"DELETE FROM Estudiantes WHERE Id = @Id"</span>;
 
-    using var command = new SqlCommand(query, connection);
-    command.Parameters.AddWithValue("@Id", id);
+    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
 
-    int filasAfectadas = await command.ExecuteNonQueryAsync();
+    <span class="token-keyword">int</span> filasAfectadas = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>();
 
-    return filasAfectadas &gt; 0;
+    <span class="token-keyword">return</span> filasAfectadas &gt; <span class="token-number">0</span>;
 }
 
-// Alternativa: Eliminación lógica (más segura)
-public async Task&lt;bool&gt; DesactivarAsync(int id)
+<span class="token-comment">// Alternativa: Eliminación lógica (más segura)</span>
+<span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">DesactivarAsync</span>(<span class="token-keyword">int</span> id)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    var query = @"
+    <span class="token-keyword">var</span> query = <span class="token-string">@"
         UPDATE Estudiantes
         SET Activo = 0, FechaEliminacion = @Fecha
-        WHERE Id = @Id";
+        WHERE Id = @Id"</span>;
 
-    using var command = new SqlCommand(query, connection);
-    command.Parameters.AddWithValue("@Id", id);
-    command.Parameters.AddWithValue("@Fecha", DateTime.Now);
+    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
+    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Fecha"</span>, <span class="token-type">DateTime</span>.Now);
 
-    return await command.ExecuteNonQueryAsync() &gt; 0;
+    <span class="token-keyword">return await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>() &gt; <span class="token-number">0</span>;
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Métodos de Ejecución</h3>
             <table class="tag-table">
@@ -908,55 +1108,68 @@ public async Task&lt;bool&gt; DesactivarAsync(int id)
             </div>
 
             <h4>Consistencia de datos</h4>
-            <pre><code>public async Task&lt;bool&gt; TransferirEstudianteAsync(
-    int estudianteId, int carreraOrigenId, int carreraDestinoId)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">TransactionExample.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49</div>
+                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">TransferirEstudianteAsync</span>(
+    <span class="token-keyword">int</span> estudianteId, <span class="token-keyword">int</span> carreraOrigenId, <span class="token-keyword">int</span> carreraDestinoId)
 {
-    using var connection = new SqlConnection(_connectionString);
-    await connection.OpenAsync();
+    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-    // Iniciar transacción
-    using var transaction = connection.BeginTransaction();
+    <span class="token-comment">// Iniciar transacción</span>
+    <span class="token-keyword">using var</span> transaction = connection.<span class="token-method">BeginTransaction</span>();
 
-    try
+    <span class="token-keyword">try</span>
     {
-        // 1. Registrar historial de transferencia
-        var query1 = @"INSERT INTO HistorialTransferencias
+        <span class="token-comment">// 1. Registrar historial de transferencia</span>
+        <span class="token-keyword">var</span> query1 = <span class="token-string">@"INSERT INTO HistorialTransferencias
                        (EstudianteId, CarreraOrigenId, CarreraDestinoId, Fecha)
-                       VALUES (@EstId, @OrigId, @DestId, @Fecha)";
+                       VALUES (@EstId, @OrigId, @DestId, @Fecha)"</span>;
 
-        using (var cmd1 = new SqlCommand(query1, connection, transaction))
+        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> cmd1 = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query1, connection, transaction))
         {
-            cmd1.Parameters.AddWithValue("@EstId", estudianteId);
-            cmd1.Parameters.AddWithValue("@OrigId", carreraOrigenId);
-            cmd1.Parameters.AddWithValue("@DestId", carreraDestinoId);
-            cmd1.Parameters.AddWithValue("@Fecha", DateTime.Now);
-            await cmd1.ExecuteNonQueryAsync();
+            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@EstId"</span>, estudianteId);
+            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@OrigId"</span>, carreraOrigenId);
+            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@DestId"</span>, carreraDestinoId);
+            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Fecha"</span>, <span class="token-type">DateTime</span>.Now);
+            <span class="token-keyword">await</span> cmd1.<span class="token-method">ExecuteNonQueryAsync</span>();
         }
 
-        // 2. Actualizar carrera del estudiante
-        var query2 = @"UPDATE Estudiantes
+        <span class="token-comment">// 2. Actualizar carrera del estudiante</span>
+        <span class="token-keyword">var</span> query2 = <span class="token-string">@"UPDATE Estudiantes
                        SET CarreraId = @CarreraId
-                       WHERE Id = @Id";
+                       WHERE Id = @Id"</span>;
 
-        using (var cmd2 = new SqlCommand(query2, connection, transaction))
+        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> cmd2 = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query2, connection, transaction))
         {
-            cmd2.Parameters.AddWithValue("@CarreraId", carreraDestinoId);
-            cmd2.Parameters.AddWithValue("@Id", estudianteId);
-            await cmd2.ExecuteNonQueryAsync();
+            cmd2.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@CarreraId"</span>, carreraDestinoId);
+            cmd2.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, estudianteId);
+            <span class="token-keyword">await</span> cmd2.<span class="token-method">ExecuteNonQueryAsync</span>();
         }
 
-        // Si todo va bien, confirmar transacción
-        transaction.Commit();
-        return true;
+        <span class="token-comment">// Si todo va bien, confirmar transacción</span>
+        transaction.<span class="token-method">Commit</span>();
+        <span class="token-keyword">return true</span>;
     }
-    catch (Exception ex)
+    <span class="token-keyword">catch</span> (<span class="token-type">Exception</span> ex)
     {
-        // Si hay error, deshacer todo
-        transaction.Rollback();
-        _logger.LogError(ex, "Error en transferencia");
-        return false;
+        <span class="token-comment">// Si hay error, deshacer todo</span>
+        transaction.<span class="token-method">Rollback</span>();
+        _logger.<span class="token-method">LogError</span>(ex, <span class="token-string">"Error en transferencia"</span>);
+        <span class="token-keyword">return false</span>;
     }
 }</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Buenas Practicas -->
@@ -973,11 +1186,24 @@ public async Task&lt;bool&gt; DesactivarAsync(int id)
 
             <div class="warning-box">
                 <strong>❌ NUNCA concatenar strings para SQL</strong>
-                <pre><code>// VULNERABLE A SQL INJECTION
-var sql = $"SELECT * FROM Users WHERE Id = {id}";
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">SQLInjectionWarning.cs</span>
+                    </div>
+                    <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+                        <pre><code><span class="token-comment">// VULNERABLE A SQL INJECTION</span>
+<span class="token-keyword">var</span> sql = <span class="token-string">$"SELECT * FROM Users WHERE Id = {id}"</span>;
 
-// SEGURO CON PARÁMETROS
-command.Parameters.AddWithValue("@Id", id);</code></pre>
+<span class="token-comment">// SEGURO CON PARÁMETROS</span>
+command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);</code></pre>
+                    </div>
+                </div>
             </div>
 
             <div class="checklist-box">
@@ -1016,16 +1242,29 @@ command.Parameters.AddWithValue("@Id", id);</code></pre>
             <h3>Connection Pooling</h3>
             <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, ADO.NET mantiene un "pool" de conexiones disponibles.</p>
             <p><strong>¿Por qué Connection Pooling?</strong> Abrir una conexión física es costoso (miles de milisegundos). Reutilizar conexiones existentes toma microsegundos.</p>
-            <pre><code>// Connection Pool está activado por defecto
-// Configuración en connection string:
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">ConnectionPooling.config</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                    <pre><code><span class="token-comment">// Connection Pool está activado por defecto</span>
+<span class="token-comment">// Configuración en connection string:</span>
 
-"Server=localhost;Database=UniversidadDB;Integrated Security=true;
+<span class="token-string">"Server=localhost;Database=UniversidadDB;Integrated Security=true;
 Connection Lifetime=60;              // Tiempo vida conexión (seg)
 Max Pool Size=100;                   // Máximo conexiones
 Min Pool Size=5;                     // Mínimo conexiones
 Pooling=true;                        // Activar (default)
 Connection Reset=true;               // Reset al devolver al pool
-Connection Timeout=15;"              // Timeout conexión (seg)</code></pre>
+Connection Timeout=15;"</span>              <span class="token-comment">// Timeout conexión (seg)</span></code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- SQL Injection -->
@@ -1048,18 +1287,44 @@ Connection Timeout=15;"              // Timeout conexión (seg)</code></pre>
             <h4>El peligro de concatenar strings</h4>
             <div class="warning-box">
                 <strong>⚠️ VULNERABLE A SQL INJECTION</strong>
-                <pre><code>var query = $"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'";
-// Si codigo = "'; DROP TABLE Estudiantes; --"
-// Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';
-//                    DROP TABLE Estudiantes; --'
-//  DESASTRE!</code></pre>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">SQLInjectionVulnerable.cs</span>
+                    </div>
+                    <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+                        <pre><code><span class="token-keyword">var</span> query = <span class="token-string">$"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'"</span>;
+<span class="token-comment">// Si codigo = "'; DROP TABLE Estudiantes; --"</span>
+<span class="token-comment">// Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';</span>
+<span class="token-comment">//                    DROP TABLE Estudiantes; --'</span>
+<span class="token-comment">//  DESASTRE!</span></code></pre>
+                    </div>
+                </div>
             </div>
 
             <div class="checklist-box">
                 <strong>✅ SEGURO CON PARÁMETROS</strong>
-                <pre><code>var query = "SELECT * FROM Estudiantes WHERE Codigo = @Codigo";
-command.Parameters.AddWithValue("@Codigo", codigo);
-// El parámetro se escapa automáticamente</code></pre>
+                <div class="code-block">
+                    <div class="code-header">
+                        <div class="code-dots">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                        </div>
+                        <span class="code-title">SQLInjectionSafe.cs</span>
+                    </div>
+                    <div class="code-content">
+                        <div class="line-numbers">1<br>2<br>3</div>
+                        <pre><code><span class="token-keyword">var</span> query = <span class="token-string">"SELECT * FROM Estudiantes WHERE Codigo = @Codigo"</span>;
+command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, codigo);
+<span class="token-comment">// El parámetro se escapa automáticamente</span></code></pre>
+                    </div>
+                </div>
             </div>
 
             <div class="note-box">
@@ -1122,35 +1387,48 @@ command.Parameters.AddWithValue("@Codigo", codigo);
             </ul>
 
             <h3>Ejemplo de implementación</h3>
-            <pre><code>public class EstudianteRepository
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudianteRepositoryExample.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
+                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudianteRepository</span>
 {
-    private readonly string _connectionString;
+    <span class="token-keyword">private readonly string</span> _connectionString;
 
-    public EstudianteRepository(string connectionString)
+    <span class="token-keyword">public</span> <span class="token-method">EstudianteRepository</span>(<span class="token-keyword">string</span> connectionString)
     {
         _connectionString = connectionString;
     }
 
-    public async Task&lt;int&gt; CrearAsync(Estudiante estudiante)
+    <span class="token-keyword">public async</span> <span class="token-type">Task&lt;int&gt;</span> <span class="token-method">CrearAsync</span>(<span class="token-type">Estudiante</span> estudiante)
     {
-        using var connection = new SqlConnection(_connectionString);
-        await connection.OpenAsync();
+        <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
+        <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
 
-        var query = @"
+        <span class="token-keyword">var</span> query = <span class="token-string">@"
             INSERT INTO Estudiantes (Codigo, Nombre, Email)
             VALUES (@Codigo, @Nombre, @Email);
-            SELECT SCOPE_IDENTITY();";
+            SELECT SCOPE_IDENTITY();"</span>;
 
-        using var command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-        command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-        command.Parameters.AddWithValue("@Email",
-            (object)estudiante.Email ?? DBNull.Value);
+        <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
+        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
+        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
+            (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
 
-        var id = Convert.ToInt32(await command.ExecuteScalarAsync());
-        return id;
+        <span class="token-keyword">var</span> id = <span class="token-type">Convert</span>.<span class="token-method">ToInt32</span>(<span class="token-keyword">await</span> command.<span class="token-method">ExecuteScalarAsync</span>());
+        <span class="token-keyword">return</span> id;
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Errores comunes a evitar</h3>
             <ul>

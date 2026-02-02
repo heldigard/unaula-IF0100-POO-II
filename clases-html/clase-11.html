@@ -473,62 +473,75 @@
             </div>
 
             <h3>Atributos de validación en .NET</h3>
-            <pre><code>using System.ComponentModel.DataAnnotations;
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudianteViewModel.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56</div>
+                    <pre><code>using System.ComponentModel.DataAnnotations;
 
 public class EstudianteViewModel
 {
-    // VALIDACIÓN BÁSICA
-    [Required(ErrorMessage = "El código es obligatorio")]
-    [StringLength(10, MinimumLength = 5,
-        ErrorMessage = "El código debe tener entre 5 y 10 caracteres")]
-    [Display(Name = "Código Estudiantil")]
+    <span class="token-comment">// VALIDACIÓN BÁSICA</span>
+    [<span class="token-type">Required</span>(ErrorMessage = <span class="token-string">&quot;El código es obligatorio&quot;</span>)]
+    [<span class="token-type">StringLength</span>(10, MinimumLength = 5,
+        ErrorMessage = <span class="token-string">&quot;El código debe tener entre 5 y 10 caracteres&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Código Estudiantil&quot;</span>)]
     public string Codigo { get; set; }
 
-    [Required]
-    [StringLength(50)]
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">StringLength</span>(50)]
     public string Nombre { get; set; }
 
-    [Required]
-    [StringLength(50)]
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">StringLength</span>(50)]
     public string Apellido { get; set; }
 
-    // VALIDACIÓN DE EMAIL
-    [Required]
-    [EmailAddress(ErrorMessage = "El formato del email no es válido")]
-    [Display(Name = "Correo Electrónico")]
+    <span class="token-comment">// VALIDACIÓN DE EMAIL</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">EmailAddress</span>(ErrorMessage = <span class="token-string">&quot;El formato del email no es válido&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Correo Electrónico&quot;</span>)]
     public string Email { get; set; }
 
-    // VALIDACIÓN NUMÉRICA
-    [Range(18, 100, ErrorMessage = "La edad debe estar entre 18 y 100 años")]
+    <span class="token-comment">// VALIDACIÓN NUMÉRICA</span>
+    [<span class="token-type">Range</span>(18, 100, ErrorMessage = <span class="token-string">&quot;La edad debe estar entre 18 y 100 años&quot;</span>)]
     public int Edad { get; set; }
 
-    [Range(0.0, 5.0, ErrorMessage = "El promedio debe estar entre 0.0 y 5.0")]
-    [DisplayFormat(DataFormatString = "{0:F2}")]
+    [<span class="token-type">Range</span>(0.0, 5.0, ErrorMessage = <span class="token-string">&quot;El promedio debe estar entre 0.0 y 5.0&quot;</span>)]
+    [<span class="token-type">Display</span>Format(DataFormatString = <span class="token-string">&quot;{0:F2}&quot;</span>)]
     public double Promedio { get; set; }
 
-    // VALIDACIÓN DE PATRÓN (Regex)
-    [Required]
-    [RegularExpression(@"^\d{10}$",
-        ErrorMessage = "El teléfono debe tener 10 dígitos numéricos")]
-    [Display(Name = "Teléfono Celular")]
+    <span class="token-comment">// VALIDACIÓN DE PATRÓN (Regex)</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">RegularExpression</span>(@<span class="token-string">&quot;^\d{10}$&quot;</span>,
+        ErrorMessage = <span class="token-string">&quot;El teléfono debe tener 10 dígitos numéricos&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Teléfono Celular&quot;</span>)]
     public string Telefono { get; set; }
 
-    // VALIDACIÓN DE FECHAS
-    [DataType(DataType.Date)]
-    [Display(Name = "Fecha de Nacimiento")]
-    [FechaPasada(ErrorMessage = "La fecha debe ser en el pasado")]  // Custom
+    <span class="token-comment">// VALIDACIÓN DE FECHAS</span>
+    [<span class="token-type">DataType</span>(DataType.Date)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Fecha de Nacimiento&quot;</span>)]
+    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>)]  <span class="token-comment">// Custom</span>
     public DateTime FechaNacimiento { get; set; }
 
-    // COMPARACIÓN
-    [Required]
-    [DataType(DataType.Password)]
+    <span class="token-comment">// COMPARACIÓN</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">DataType</span>(DataType.Password)]
     public string Password { get; set; }
 
-    [DataType(DataType.Password)]
-    [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
-    [Display(Name = "Confirmar Contraseña")]
+    [<span class="token-type">DataType</span>(DataType.Password)]
+    [<span class="token-type">Compare</span>(<span class="token-string">&quot;Password&quot;</span>, ErrorMessage = <span class="token-string">&quot;Las contraseñas no coinciden&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Confirmar Contraseña&quot;</span>)]
     public string ConfirmarPassword { get; set; }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Data Annotations Disponibles</h3>
             <table class="tag-table">
@@ -589,7 +602,18 @@ public class EstudianteViewModel
             </table>
 
             <h3>Validación Personalizada</h3>
-            <pre><code>// Validación personalizada: Fecha debe ser en el pasado
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">FechaPasadaAttribute.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53</div>
+                    <pre><code><span class="token-comment">// Validación personalizada: Fecha debe ser en el pasado</span>
 public class FechaPasadaAttribute : ValidationAttribute
 {
     protected override ValidationResult IsValid(object value,
@@ -597,24 +621,24 @@ public class FechaPasadaAttribute : ValidationAttribute
     {
         if (value is DateTime fecha)
         {
-            if (fecha >= DateTime.Today)
+            if (fecha &gt;= DateTime.Today)
             {
                 return new ValidationResult(ErrorMessage ??
-                    "La fecha debe ser en el pasado");
+                    <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>);
             }
         }
         return ValidationResult.Success;
     }
 }
 
-// Uso
+<span class="token-comment">// Uso</span>
 public class EstudianteViewModel
 {
-    [FechaPasada(ErrorMessage = "La fecha de nacimiento debe ser en el pasado")]
+    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha de nacimiento debe ser en el pasado&quot;</span>)]
     public DateTime FechaNacimiento { get; set; }
 }
 
-// Otra validación: Mayor de edad
+<span class="token-comment">// Otra validación: Mayor de edad</span>
 public class MayorDeEdadAttribute : ValidationAttribute
 {
     private readonly int _edadMinima;
@@ -630,18 +654,20 @@ public class MayorDeEdadAttribute : ValidationAttribute
         if (value is DateTime fechaNacimiento)
         {
             var edad = DateTime.Today.Year - fechaNacimiento.Year;
-            if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
+            if (fechaNacimiento.Date &gt; DateTime.Today.AddYears(-edad))
                 edad--;
 
-            if (edad < _edadMinima)
+            if (edad &lt; _edadMinima)
             {
                 return new ValidationResult(
-                    $"Debe tener al menos {_edadMinima} años");
+                    $<span class="token-string">&quot;Debe tener al menos {_edadMinima} años&quot;</span>);
             }
         }
         return ValidationResult.Success;
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>ModelState y <abbr title="Model-View-Controller - Patrón de arquitectura que separa la aplicación en tres componentes">MVC</abbr></h3>
             <p><strong>ViewModel</strong> = Clase diseñada específicamente para pasar datos del Controller a la View. No es la entidad de base de datos, sino un modelo "de presentación".</p>
@@ -657,30 +683,43 @@ public class MayorDeEdadAttribute : ValidationAttribute
             </div>
 
             <h4>Validación en el Controller</h4>
-            <pre><code>[HttpPost]
-public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudiantesController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
 {
-    // Validación automática basada en Data Annotations
+    <span class="token-comment">// Validación automática basada en Data Annotations</span>
     if (!ModelState.IsValid)
     {
-        // Si hay errores, retornar la vista con el modelo
-        // Los errores se mostrarán automáticamente
+        <span class="token-comment">// Si hay errores, retornar la vista con el modelo</span>
+        <span class="token-comment">// Los errores se mostrarán automáticamente</span>
         return View(model);
     }
 
-    // Validación de negocio adicional
+    <span class="token-comment">// Validación de negocio adicional</span>
     var existe = await _service.ExisteCodigoAsync(model.Codigo);
     if (existe)
     {
-        ModelState.AddModelError("Codigo",
-            "Ya existe un estudiante con este código");
+        ModelState.AddModelError(<span class="token-string">&quot;Codigo&quot;</span>,
+            <span class="token-string">&quot;Ya existe un estudiante con este código&quot;</span>);
         return View(model);
     }
 
-    // Guardar
+    <span class="token-comment">// Guardar</span>
     await _service.CrearAsync(model);
     return RedirectToAction(nameof(Index));
 }</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Validacion Cliente/Servidor -->
@@ -730,26 +769,39 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
             </div>
 
             <h4>Configuración en la vista</h4>
-            <pre><code>&lt;!-- Views/Shared/_ValidationScriptsPartial.cshtml --&gt;
-&lt;script src="~/lib/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="~/lib/jquery-validation/dist/jquery.validate.min.js"&gt;&lt;/script&gt;
-&lt;script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"&gt;
-&lt;/script&gt;
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">_ValidationScriptsPartial.cshtml</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+                    <pre><code>&amp;lt;!-- Views/Shared/_ValidationScriptsPartial.cshtml --&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery/dist/jquery.min.js&quot;</span>&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery-validation/dist/jquery.validate.min.js&quot;</span>&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js&quot;</span>&amp;gt;
+&amp;lt;/script&amp;gt;
 
-&lt;!-- En la vista --&gt;
-&lt;form asp-action="Crear" method="post"&gt;
-    &lt;div class="form-group"&gt;
-        &lt;label asp-for="Email"&gt;&lt;/label&gt;
-        &lt;input asp-for="Email" class="form-control" /&gt;
-        &lt;span asp-validation-for="Email" class="text-danger"&gt;&lt;/span&gt;
-    &lt;/div&gt;
+&amp;lt;!-- En la vista --&amp;gt;
+&amp;lt;form asp-action=<span class="token-string">&quot;Crear&quot;</span> method=<span class="token-string">&quot;post&quot;</span>&amp;gt;
+    &amp;lt;div class=<span class="token-string">&quot;form-group&quot;</span>&amp;gt;
+        &amp;lt;label asp-for=<span class="token-string">&quot;Email&quot;</span>&amp;gt;&amp;lt;/label&amp;gt;
+        &amp;lt;input asp-for=<span class="token-string">&quot;Email&quot;</span> class=<span class="token-string">&quot;form-control&quot;</span> /&amp;gt;
+        &amp;lt;span asp-validation-for=<span class="token-string">&quot;Email&quot;</span> class=<span class="token-string">&quot;text-danger&quot;</span>&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/div&amp;gt;
 
-    &lt;button type="submit" class="btn btn-primary"&gt;Guardar&lt;/button&gt;
-&lt;/form&gt;
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Guardar&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync(<span class="token-string">&quot;_ValidationScriptsPartial&quot;</span>);}
 }</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- TempData/ViewBag -->
@@ -803,56 +855,82 @@ public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
             </table>
 
             <h3>TempData en Acción</h3>
-            <pre><code>[HttpPost]
-public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel model)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudiantesController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
 {
     if (!ModelState.IsValid)
         return View(model);
 
     await _service.CrearAsync(model);
 
-    // Mensaje que persistirá después del Redirect
-    TempData["MensajeExito"] = "Estudiante creado exitosamente";
-    TempData["TipoMensaje"] = "success";  // Para Bootstrap alert
+    <span class="token-comment">// Mensaje que persistirá después del Redirect</span>
+    TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] = <span class="token-string">&quot;Estudiante creado exitosamente&quot;</span>;
+    TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;success&quot;</span>;  <span class="token-comment">// Para Bootstrap alert</span>
 
     return RedirectToAction(nameof(Index));
 }
 
-[HttpPost]
-public async Task&lt;IActionResult&gt; Eliminar(int id)
+[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Eliminar(int id)
 {
     try
     {
         await _service.EliminarAsync(id);
-        TempData["MensajeExito"] = "Estudiante eliminado correctamente";
-        TempData["TipoMensaje"] = "success";
+        TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] = <span class="token-string">&quot;Estudiante eliminado correctamente&quot;</span>;
+        TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;success&quot;</span>;
     }
     catch (Exception ex)
     {
-        TempData["MensajeError"] = "No se pudo eliminar el estudiante";
-        TempData["TipoMensaje"] = "danger";
+        TempData[<span class="token-string">&quot;MensajeError&quot;</span>] = <span class="token-string">&quot;No se pudo eliminar el estudiante&quot;</span>;
+        TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;danger&quot;</span>;
     }
 
     return RedirectToAction(nameof(Index));
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Mostrar Mensajes en la Vista</h3>
-            <pre><code>&lt;!-- Views/Estudiantes/Index.cshtml - Mostrar mensajes --&gt;
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Index.cshtml</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+                    <pre><code>&amp;lt;!-- Views/Estudiantes/Index.cshtml - Mostrar mensajes --&amp;gt;
 @{
-    var mensaje = TempData["MensajeExito"] ?? TempData["MensajeError"];
-    var tipo = TempData["TipoMensaje"] ?? "info";
+    var mensaje = TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] ?? TempData[<span class="token-string">&quot;MensajeError&quot;</span>];
+    var tipo = TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] ?? <span class="token-string">&quot;info&quot;</span>;
 }
 
 @if (mensaje != null)
 {
-    &lt;div class="alert alert-@tipo alert-dismissible fade show" role="alert"&gt;
+    &amp;lt;div class=<span class="token-string">&quot;alert alert-@tipo alert-dismissible fade show&quot;</span> role=<span class="token-string">&quot;alert&quot;</span>&amp;gt;
         @mensaje
-        &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
-    &lt;/div&gt;
+        &amp;lt;button type=<span class="token-string">&quot;button&quot;</span> class=<span class="token-string">&quot;btn-close&quot;</span> data-bs-dismiss=<span class="token-string">&quot;alert&quot;</span>&amp;gt;&amp;lt;/button&amp;gt;
+    &amp;lt;/div&amp;gt;
 }
 
-&lt;!-- O usando Partial View --&gt;
-&lt;partial name="_Mensajes" /&gt;</code></pre>
+&amp;lt;!-- O usando Partial View --&amp;gt;
+&amp;lt;partial name=<span class="token-string">&quot;_Mensajes&quot;</span> /&amp;gt;</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Sesiones y Cookies -->
@@ -873,71 +951,97 @@ public async Task&lt;IActionResult&gt; Eliminar(int id)
             <p><strong><abbr title="Cookie - Pequeño archivo de texto almacenado en el navegador del usuario">Cookie</abbr></strong> = Datos almacenados en el navegador del cliente, enviados en cada petición.</p>
 
             <h4>Configuración de sesiones</h4>
-            <pre><code>// Program.cs - Configurar servicio de sesiones
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Program.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+                    <pre><code><span class="token-comment">// Program.cs - Configurar servicio de sesiones</span>
 
-// Agregar servicio de sesiones
-builder.Services.AddDistributedMemoryCache();  // Almacenamiento en memoria
-builder.Services.AddSession(options =&gt;
+<span class="token-comment">// Agregar servicio de sesiones</span>
+builder.Services.AddDistributedMemoryCache();  <span class="token-comment">// Almacenamiento en memoria</span>
+builder.Services.AddSession(options =&amp;gt;
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30);  // Tiempo de expiración
-    options.Cookie.HttpOnly = true;  // Solo accesible por HTTP
-    options.Cookie.IsEssential = true;  // Necesaria para GDPR
+    options.IdleTimeout = TimeSpan.FromMinutes(30);  <span class="token-comment">// Tiempo de expiración</span>
+    options.Cookie.HttpOnly = true;  <span class="token-comment">// Solo accesible por HTTP</span>
+    options.Cookie.IsEssential = true;  <span class="token-comment">// Necesaria para GDPR</span>
 });
 
 var app = builder.Build();
 
-// Usar sesiones (antes de MapControllers)
+<span class="token-comment">// Usar sesiones (antes de MapControllers)</span>
 app.UseSession();
 app.MapControllers();</code></pre>
+                </div>
+            </div>
 
             <h3>Usando Sesiones</h3>
             <p><strong><abbr title="GUID - Globally Unique Identifier (Identificador Único Global) de 128 bits">GUID</abbr></strong> = Identificador único de 128 bits (ej: <code>123e4567-e89b-12d3-a456-426614174000</code>).</p>
             <p><strong><abbr title="JSON - JavaScript Object Notation, formato ligero de intercambio de datos">JSON</abbr></strong> = Formato de texto para representar objetos, usado para serializar datos en sesión.</p>
 
-            <pre><code>public class AccountController : Controller
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">AccountController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
+                    <pre><code>public class AccountController : Controller
 {
-    // Guardar en sesión
+    <span class="token-comment">// Guardar en sesión</span>
     public IActionResult Login(LoginViewModel model)
     {
-        // Validar credenciales...
+        <span class="token-comment">// Validar credenciales...</span>
 
-        // Guardar en sesión
-        HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
-        HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
-        HttpContext.Session.SetString("UsuarioEmail", usuario.Email);
+        <span class="token-comment">// Guardar en sesión</span>
+        HttpContext.Session.SetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>, usuario.Id);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>, usuario.Nombre);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioEmail&quot;</span>, usuario.Email);
 
-        // Guardar objeto completo (serializado a JSON)
+        <span class="token-comment">// Guardar objeto completo (serializado a JSON)</span>
         var usuarioJson = JsonSerializer.Serialize(usuario);
-        HttpContext.Session.SetString("UsuarioCompleto", usuarioJson);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>, usuarioJson);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
     }
 
-    // Leer de sesión
+    <span class="token-comment">// Leer de sesión</span>
     public IActionResult Perfil()
     {
-        var usuarioId = HttpContext.Session.GetInt32("UsuarioId");
-        var usuarioNombre = HttpContext.Session.GetString("UsuarioNombre");
+        var usuarioId = HttpContext.Session.GetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>);
+        var usuarioNombre = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>);
 
         if (usuarioId == null)
         {
-            return RedirectToAction("Login");
+            return RedirectToAction(<span class="token-string">&quot;Login&quot;</span>);
         }
 
-        // Recuperar objeto
-        var usuarioJson = HttpContext.Session.GetString("UsuarioCompleto");
-        var usuario = JsonSerializer.Deserialize&lt;Usuario&gt;(usuarioJson);
+        <span class="token-comment">// Recuperar objeto</span>
+        var usuarioJson = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>);
+        var usuario = JsonSerializer.Deserialize&amp;lt;Usuario&amp;gt;(usuarioJson);
 
         return View(usuario);
     }
 
-    // Cerrar sesión
+    <span class="token-comment">// Cerrar sesión</span>
     public IActionResult Logout()
     {
-        HttpContext.Session.Clear();  // Limpiar toda la sesión
-        return RedirectToAction("Index", "Home");
+        HttpContext.Session.Clear();  <span class="token-comment">// Limpiar toda la sesión</span>
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Cookies</h3>
             <p>Manipulación directa de cookies con opciones de seguridad:</p>
@@ -958,38 +1062,51 @@ app.MapControllers();</code></pre>
             </div>
 
             <h4>Ejemplo de manipulación</h4>
-            <pre><code>public class PreferenciasController : Controller
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">PreferenciasController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
+                    <pre><code>public class PreferenciasController : Controller
 {
-    // Establecer cookie
+    <span class="token-comment">// Establecer cookie</span>
     public IActionResult SetTema(string tema)
     {
-        // Cookie con opciones de seguridad
-        Response.Cookies.Append("Tema", tema, new CookieOptions
+        <span class="token-comment">// Cookie con opciones de seguridad</span>
+        Response.Cookies.Append(<span class="token-string">&quot;Tema&quot;</span>, tema, new CookieOptions
         {
-            Expires = DateTime.Now.AddDays(30),  // Expira en 30 días
-            HttpOnly = false,  // Accesible por JavaScript (true para datos sensibles)
-            Secure = true,     // Solo HTTPS
-            SameSite = SameSiteMode.Strict  // Previene CSRF
+            Expires = DateTime.Now.AddDays(30),  <span class="token-comment">// Expira en 30 días</span>
+            HttpOnly = false,  <span class="token-comment">// Accesible por JavaScript (true para datos sensibles)</span>
+            Secure = true,     <span class="token-comment">// Solo HTTPS</span>
+            SameSite = SameSiteMode.Strict  <span class="token-comment">// Previene CSRF</span>
         });
 
-        return RedirectToAction("Index");
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
     }
 
-    // Leer cookie
+    <span class="token-comment">// Leer cookie</span>
     public IActionResult Index()
     {
-        var tema = Request.Cookies["Tema"] ?? "claro";
+        var tema = Request.Cookies[<span class="token-string">&quot;Tema&quot;</span>] ?? <span class="token-string">&quot;claro&quot;</span>;
         ViewBag.Tema = tema;
         return View();
     }
 
-    // Eliminar cookie
+    <span class="token-comment">// Eliminar cookie</span>
     public IActionResult EliminarTema()
     {
-        Response.Cookies.Delete("Tema");
-        return RedirectToAction("Index");
+        Response.Cookies.Delete(<span class="token-string">&quot;Tema&quot;</span>);
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
     }
 }</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Upload de Archivos -->
@@ -1024,79 +1141,129 @@ app.MapControllers();</code></pre>
             </div>
 
             <h4>Vista con formulario</h4>
-            <pre><code>&lt;!-- Vista con formulario para subir archivo --&gt;
-&lt;form asp-action="SubirFoto" method="post" enctype="multipart/form-data"&gt;
-    &lt;div class="mb-3"&gt;
-        &lt;label class="form-label"&gt;Foto del Estudiante&lt;/label&gt;
-        &lt;input type="file" name="archivo" class="form-control"
-               accept=".jpg,.jpeg,.png" /&gt;
-        &lt;div class="form-text"&gt;Formatos permitidos: JPG, PNG (máx. 2MB)&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;button type="submit" class="btn btn-primary"&gt;Subir&lt;/button&gt;
-&lt;/form&gt;</code></pre>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">SubirFoto.cshtml</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                    <pre><code>&amp;lt;!-- Vista con formulario para subir archivo --&amp;gt;
+&amp;lt;form asp-action=<span class="token-string">&quot;SubirFoto&quot;</span> method=<span class="token-string">&quot;post&quot;</span> enctype=<span class="token-string">&quot;multipart/form-data&quot;</span>&amp;gt;
+    &amp;lt;div class=<span class="token-string">&quot;mb-3&quot;</span>&amp;gt;
+        &amp;lt;label class=<span class="token-string">&quot;form-label&quot;</span>&amp;gt;Foto del Estudiante&amp;lt;/label&amp;gt;
+        &amp;lt;input type=<span class="token-string">&quot;file&quot;</span> name=<span class="token-string">&quot;archivo&quot;</span> class=<span class="token-string">&quot;form-control&quot;</span>
+               accept=<span class="token-string">&quot;.jpg,.jpeg,.png&quot;</span> /&amp;gt;
+        &amp;lt;div class=<span class="token-string">&quot;form-text&quot;</span>&amp;gt;Formatos permitidos: JPG, PNG (máx. 2MB)&amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Subir&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;</code></pre>
+                </div>
+            </div>
 
-            <pre><code>[HttpPost]
-public async Task&lt;IActionResult&gt; SubirFoto(IFormFile archivo, int estudianteId)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudiantesController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; SubirFoto(IFormFile archivo, int estudianteId)
 {
     if (archivo == null || archivo.Length == 0)
     {
-        ModelState.AddModelError("", "No se seleccionó ningún archivo");
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;No se seleccionó ningún archivo&quot;</span>);
         return View();
     }
 
-    // Validaciones
-    var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
+    <span class="token-comment">// Validaciones</span>
+    var extensionesPermitidas = new[] { <span class="token-string">&quot;.jpg&quot;</span>, <span class="token-string">&quot;.jpeg&quot;</span>, <span class="token-string">&quot;.png&quot;</span> };
     var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
 
     if (!extensionesPermitidas.Contains(extension))
     {
-        ModelState.AddModelError("", "Formato de archivo no válido");
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;Formato de archivo no válido&quot;</span>);
         return View();
     }
 
-    if (archivo.Length &gt; 2 * 1024 * 1024)  // 2MB
+    if (archivo.Length &amp;gt; 2 * 1024 * 1024)  <span class="token-comment">// 2MB</span>
     {
-        ModelState.AddModelError("", "El archivo es demasiado grande (máx. 2MB)");
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;El archivo es demasiado grande (máx. 2MB)&quot;</span>);
         return View();
     }
 
-    // Generar nombre único
-    var nombreArchivo = $"{estudianteId}_{Guid.NewGuid()}{extension}";
-    var rutaCarpeta = Path.Combine(_environment.WebRootPath, "uploads", "fotos");
+    <span class="token-comment">// Generar nombre único</span>
+    var nombreArchivo = $<span class="token-string">&quot;{estudianteId}_{Guid.NewGuid()}{extension}&quot;</span>;
+    var rutaCarpeta = Path.Combine(_environment.WebRootPath, <span class="token-string">&quot;uploads&quot;</span>, <span class="token-string">&quot;fotos&quot;</span>);
     var rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
 
-    // Crear carpeta si no existe
+    <span class="token-comment">// Crear carpeta si no existe</span>
     if (!Directory.Exists(rutaCarpeta))
         Directory.CreateDirectory(rutaCarpeta);
 
-    // Guardar archivo
+    <span class="token-comment">// Guardar archivo</span>
     using (var stream = new FileStream(rutaCompleta, FileMode.Create))
     {
         await archivo.CopyToAsync(stream);
     }
 
-    // Guardar ruta en base de datos
-    await _service.ActualizarFotoAsync(estudianteId, $"/uploads/fotos/{nombreArchivo}");
+    <span class="token-comment">// Guardar ruta en base de datos</span>
+    await _service.ActualizarFotoAsync(estudianteId, $<span class="token-string">&quot;/uploads/fotos/{nombreArchivo}&quot;</span>);
 
-    TempData["Mensaje"] = "Foto subida correctamente";
-    return RedirectToAction("Detalles", new { id = estudianteId });
+    TempData[<span class="token-string">&quot;Mensaje&quot;</span>] = <span class="token-string">&quot;Foto subida correctamente&quot;</span>;
+    return RedirectToAction(<span class="token-string">&quot;Detalles&quot;</span>, new { id = estudianteId });
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Subir Varios Archivos</h3>
-            <pre><code>&lt;form asp-action="SubirDocumentos" method="post" enctype="multipart/form-data"&gt;
-    &lt;input type="file" name="archivos" multiple class="form-control" /&gt;
-    &lt;button type="submit" class="btn btn-primary"&gt;Subir Documentos&lt;/button&gt;
-&lt;/form&gt;</code></pre>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">SubirDocumentos.cshtml</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4</div>
+                    <pre><code>&amp;lt;form asp-action=<span class="token-string">&quot;SubirDocumentos&quot;</span> method=<span class="token-string">&quot;post&quot;</span> enctype=<span class="token-string">&quot;multipart/form-data&quot;</span>&amp;gt;
+    &amp;lt;input type=<span class="token-string">&quot;file&quot;</span> name=<span class="token-string">&quot;archivos&quot;</span> multiple class=<span class="token-string">&quot;form-control&quot;</span> /&amp;gt;
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Subir Documentos&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;</code></pre>
+                </div>
+            </div>
 
-            <pre><code>[HttpPost]
-public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; archivos)
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">EstudiantesController.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; SubirDocumentos(List&amp;lt;IFormFile&amp;gt; archivos)
 {
     foreach (var archivo in archivos)
     {
-        if (archivo.Length &gt; 0)
+        if (archivo.Length &amp;gt; 0)
         {
             var nombre = Path.GetFileName(archivo.FileName);
-            var ruta = Path.Combine(_environment.WebRootPath, "uploads", nombre);
+            var ruta = Path.Combine(_environment.WebRootPath, <span class="token-string">&quot;uploads&quot;</span>, nombre);
 
             using (var stream = new FileStream(ruta, FileMode.Create))
             {
@@ -1105,9 +1272,11 @@ public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; arc
         }
     }
 
-    TempData["Mensaje"] = $"{archivos.Count} archivos subidos";
-    return RedirectToAction("Index");
+    TempData[<span class="token-string">&quot;Mensaje&quot;</span>] = $<span class="token-string">&quot;{archivos.Count} archivos subidos&quot;</span>;
+    return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
 }</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- CSRF Protection -->
@@ -1149,21 +1318,34 @@ public async Task&lt;IActionResult&gt; SubirDocumentos(List&lt;IFormFile&gt; arc
             <p><strong><abbr title="Tag Helpers - Característica de Razor que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
 
             <h4>Implementación con Tag Helpers</h4>
-            <pre><code>&lt;!-- EN FORMULARIO (Tag Helper): --&gt;
-&lt;form method="post"&gt;
-    @Html.AntiForgeryToken()  &lt;-- Token oculto
-    &lt;input name="_codigo" /&gt;
-&lt;/form&gt;
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">CSRF-Example.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15</div>
+                    <pre><code>&amp;lt;!-- EN FORMULARIO (Tag Helper): --&amp;gt;
+&amp;lt;form method=<span class="token-string">&quot;post&quot;</span>&amp;gt;
+    @Html.AntiForgeryToken()  &amp;lt;-- Token oculto
+    &amp;lt;input name=<span class="token-string">&quot;_codigo&quot;</span> /&amp;gt;
+&amp;lt;/form&amp;gt;
 
-&lt;!-- EN AJAX: --&gt;
-&lt;!-- AJAX = Asynchronous JavaScript and XML, técnica para actualizar página sin recargar --&gt;
+&amp;lt;!-- EN AJAX: --&amp;gt;
+&amp;lt;!-- AJAX = Asynchronous JavaScript and XML, técnica para actualizar página sin recargar --&amp;gt;
 $.ajax({
-    url: '/estudiantes/eliminar',
-    type: 'POST',
+    url: &#x27;/estudiantes/eliminar&#x27;,
+    type: &#x27;POST&#x27;,
     headers: {
-        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+        <span class="token-string">&quot;RequestVerificationToken&quot;</span>: $(&#x27;input[name=<span class="token-string">&quot;__RequestVerificationToken&quot;</span>]&#x27;).val()
     }
 });</code></pre>
+                </div>
+            </div>
 
             <div class="note-box">
                 <strong>Mini-Chequeo: CSRF Protection</strong>

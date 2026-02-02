@@ -542,6 +542,22 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
         <li>SqlBulkCopy y operaciones masivas.</li>
       </ul>
     </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>System.IO es el namespace de .NET para operaciones de archivos y directorios.</li>
+        <li>File y Directory proveen métodos estáticos para operaciones comunes de archivos y carpetas.</li>
+        <li>StreamReader/StreamWriter manejan lectura/escritura de texto con buffering eficiente.</li>
+        <li>FileStream permite acceso binario y posicionamiento aleatorio (seek).</li>
+        <li>Encoding (UTF-8) define cómo se representan caracteres como bytes; UTF-8 es el estándar web.</li>
+        <li>using statements aseguran que los recursos se liberen correctamente (Dispose pattern).</li>
+        <li>CUIDADO: Olvidar using causa file locks; encoding incorrecto corrompe caracteres especiales.</li>
+        <li>CSV (Comma-Separated Values) es el formato más simple para intercambiar datos tabulares.</li>
+        <li>Repository Pattern para CSV abstrae lectura/escritura de archivos como si fuera base de datos.</li>
+        <li>LINQ facilita procesamiento de datos leídos desde archivos (filter, map, reduce).</li>
+      </ul>
+    </section>
   </main>
 
   <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">

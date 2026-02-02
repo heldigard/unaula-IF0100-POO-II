@@ -565,36 +565,49 @@
             </div>
 
             <h3>Orden Típico de Middleware</h3>
-            <pre><code class="language-csharp">var app = builder.Build();
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Program.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
+                    <pre><code class="language-csharp"><span class="token-keyword">var</span> <span class="token-property">app</span> = <span class="token-property">builder</span>.<span class="token-method">Build</span>();
 
-// 1. Exception Handler (primero en ejecutar, último en respuesta)
-app.UseExceptionHandler("/Error");
+<span class="token-comment">// 1. Exception Handler (primero en ejecutar, último en respuesta)</span>
+<span class="token-property">app</span>.<span class="token-method">UseExceptionHandler</span>(<span class="token-string">"/Error"</span>);
 
-// 2. HTTPS Redirection (en desarrollo)
-app.UseHsts();
-app.UseHttpsRedirection();
+<span class="token-comment">// 2. HTTPS Redirection (en desarrollo)</span>
+<span class="token-property">app</span>.<span class="token-method">UseHsts</span>();
+<span class="token-property">app</span>.<span class="token-method">UseHttpsRedirection</span>();
 
-// 3. Static Files (archivos CSS, JS, imágenes)
-app.UseStaticFiles();
+<span class="token-comment">// 3. Static Files (archivos CSS, JS, imágenes)</span>
+<span class="token-property">app</span>.<span class="token-method">UseStaticFiles</span>();
 
-// 4. Routing (direccionamiento de URLs)
-app.UseRouting();
+<span class="token-comment">// 4. Routing (direccionamiento de URLs)</span>
+<span class="token-property">app</span>.<span class="token-method">UseRouting</span>();
 
-// 5. Authentication (autenticacion)
-app.UseAuthentication();
+<span class="token-comment">// 5. Authentication (autenticacion)</span>
+<span class="token-property">app</span>.<span class="token-method">UseAuthentication</span>();
 
-// 6. Authorization (autorizacion)
-app.UseAuthorization();
+<span class="token-comment">// 6. Authorization (autorizacion)</span>
+<span class="token-property">app</span>.<span class="token-method">UseAuthorization</span>();
 
-// 7. Custom Middleware (middleware personalizado)
-// app.UseMiddleware&lt;TimingMiddleware&gt;();
+<span class="token-comment">// 7. Custom Middleware (middleware personalizado)</span>
+<span class="token-comment">// app.UseMiddleware&lt;TimingMiddleware&gt;();</span>
 
-// 8. Endpoints (terminales)
-app.MapRazorPages();
-// app.MapControllerRoute(...);  // Para MVC
-// app.MapControllers();           // Para Web API
+<span class="token-comment">// 8. Endpoints (terminales)</span>
+<span class="token-property">app</span>.<span class="token-method">MapRazorPages</span>();
+<span class="token-comment">// app.MapControllerRoute(...);  // Para MVC</span>
+<span class="token-comment">// app.MapControllers();           // Para Web API</span>
 
-app.Run();</code></pre>
+<span class="token-property">app</span>.<span class="token-method">Run</span>();</code></pre>
+                </div>
+            </div>
 
             <div class="highlight-box">
                 <h4>Flujo de Solicitud</h4>
@@ -654,51 +667,77 @@ dotnet watch run
             <p><strong>Razor Pages</strong> es un modelo de programación orientado a páginas que facilita la creación de interfaces web.</p>
 
             <h3>PageModel (Backend)</h3>
-            <pre><code class="language-csharp">public class IndexModel : PageModel
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Index.cshtml.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27</div>
+                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">IndexModel</span> : <span class="token-type">PageModel</span>
 {
-    private readonly ILogger&lt;IndexModel&gt; _logger;
+    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; <span class="token-property">_logger</span>;
 
-    // Constructor con inyeccion de dependencias
-    public IndexModel(ILogger&lt;IndexModel&gt; logger)
+    <span class="token-comment">// Constructor con inyeccion de dependencias</span>
+    <span class="token-keyword">public</span> <span class="token-method">IndexModel</span>(<span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; logger)
     {
-        _logger = logger;
+        <span class="token-property">_logger</span> = logger;
     }
 
-    // Propiedad que se muestra en la vista
-    public string Mensaje { get; set; } = "Hola ASP.NET Core!";
+    <span class="token-comment">// Propiedad que se muestra en la vista</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Mensaje</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } = <span class="token-string">"Hola ASP.NET Core!"</span>;
 
-    // Handler GET (cuando se carga la página)
-    public void OnGet()
+    <span class="token-comment">// Handler GET (cuando se carga la página)</span>
+    <span class="token-keyword">public void</span> <span class="token-method">OnGet</span>()
     {
-        _logger.LogInformation("Cargando página Index");
+        <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(<span class="token-string">"Cargando página Index"</span>);
     }
 
-    // Handler POST (cuando se envia formulario)
-    public IActionResult OnPost()
+    <span class="token-comment">// Handler POST (cuando se envia formulario)</span>
+    <span class="token-keyword">public</span> <span class="token-type">IActionResult</span> <span class="token-method">OnPost</span>()
     {
-        string nombre = Request.Form["nombre"];
-        Mensaje = $"Formulario enviado: {nombre}";
-        return Page(); // Retornar la misma página
+        <span class="token-keyword">string</span> nombre = <span class="token-type">Request</span>.<span class="token-type">Form</span>[<span class="token-string">"nombre"</span>];
+        <span class="token-property">Mensaje</span> = <span class="token-string">$"Formulario enviado: {nombre}"</span>;
+        <span class="token-keyword">return</span> <span class="token-method">Page</span>(); <span class="token-comment">// Retornar la misma página</span>
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Razor View (Frontend)</h3>
-            <pre><code class="language-html">@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home Page";
-}
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Index.cshtml</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+                    <pre><code class="language-html"><span class="token-operator">@page</span>
+<span class="token-operator">@model</span> <span class="token-type">IndexModel</span>
+<span class="token-operator">@{</span>
+    <span class="token-type">ViewData</span>[<span class="token-string">"Title"</span>] = <span class="token-string">"Home Page"</span>;
+<span class="token-operator">}</span>
 
-&lt;h1&gt;@Model.Mensaje&lt;/h1&gt;
+<span class="token-operator">&lt;</span>h1<span class="token-operator">&gt;</span><span class="token-operator">@</span><span class="token-type">Model</span>.<span class="token-property">Mensaje</span><span class="token-operator">&lt;/</span>h1<span class="token-operator">&gt;</span>
 
-&lt;form method="post"&gt;
-    &lt;input name="nombre" placeholder="Tu nombre" /&gt;
-    &lt;button type="submit"&gt;Enviar&lt;/button&gt;
-&lt;/form&gt;
+<span class="token-operator">&lt;</span>form <span class="token-property">method</span>=<span class="token-string">"post"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span>input <span class="token-property">name</span>=<span class="token-string">"nombre"</span> <span class="token-property">placeholder</span>=<span class="token-string">"Tu nombre"</span> /<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span>button <span class="token-property">type</span>=<span class="token-string">"submit"</span><span class="token-operator">&gt;</span>Enviar<span class="token-operator">&lt;/</span>button<span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span>form<span class="token-operator">&gt;</span>
 
-@section Scripts {
-    @{await RenderPartialAsync("_ValidationScriptsPartial");}
+<span class="token-operator">@section</span> <span class="token-type">Scripts</span> {
+    <span class="token-operator">@{</span><span class="token-keyword">await</span> <span class="token-method">RenderPartialAsync</span>(<span class="token-string">"_ValidationScriptsPartial"</span>);<span class="token-operator">}</span>
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Convenciones Razor Pages</h3>
             <table>
@@ -722,73 +761,112 @@ dotnet watch run
             <h2>6. Middleware Personalizado</h2>
 
             <h3>Estructura Básica</h3>
-            <pre><code class="language-csharp">public class TimingMiddleware
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">TimingMiddleware.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
+                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">TimingMiddleware</span>
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger&lt;TimingMiddleware&gt; _logger;
+    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
+    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; <span class="token-property">_logger</span>;
 
-    public TimingMiddleware(
-        RequestDelegate next,
-        ILogger&lt;TimingMiddleware&gt; logger)
+    <span class="token-keyword">public</span> <span class="token-method">TimingMiddleware</span>(
+        <span class="token-type">RequestDelegate</span> next,
+        <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; logger)
     {
-        _next = next;       // Siguiente middleware en pipeline
-        _logger = logger;
+        <span class="token-property">_next</span> = next;       <span class="token-comment">// Siguiente middleware en pipeline</span>
+        <span class="token-property">_logger</span> = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
     {
-        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        <span class="token-keyword">var</span> stopwatch = <span class="token-type">System</span>.<span class="token-type">Diagnostics</span>.<span class="token-type">Stopwatch</span>.<span class="token-method">StartNew</span>();
 
-        try
+        <span class="token-keyword">try</span>
         {
-            // Pasar al siguiente middleware
-            await _next(context);
+            <span class="token-comment">// Pasar al siguiente middleware</span>
+            <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
         }
-        finally
+        <span class="token-keyword">finally</span>
         {
-            stopwatch.Stop();
+            stopwatch.<span class="token-method">Stop</span>();
 
-            // Log del tiempo de respuesta
-            _logger.LogInformation(
-                "Request: {Path} - Tiempo: {ElapsedMs}ms - Status: {StatusCode}",
-                context.Request.Path,
-                stopwatch.ElapsedMilliseconds,
-                context.Response.StatusCode
+            <span class="token-comment">// Log del tiempo de respuesta</span>
+            <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(
+                <span class="token-string">"Request: {Path} - Tiempo: {ElapsedMs}ms - Status: {StatusCode}"</span>,
+                context.<span class="token-type">Request</span>.<span class="token-property">Path</span>,
+                stopwatch.<span class="token-property">ElapsedMilliseconds</span>,
+                context.<span class="token-type">Response</span>.<span class="token-property">StatusCode</span>
             );
         }
     }
 }</code></pre>
+                </div>
+            </div>
 
             <h3>Registro en Program.cs</h3>
-            <pre><code class="language-csharp">// Registrar middleware custom
-app.UseMiddleware&lt;TimingMiddleware&gt;();
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">Program.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+                    <pre><code class="language-csharp"><span class="token-comment">// Registrar middleware custom</span>
+<span class="token-property">app</span>.<span class="token-method">UseMiddleware</span>&lt;<span class="token-type">TimingMiddleware</span>&gt;();
 
-// O como método de extensión
-// app.UseTiming();</code></pre>
+<span class="token-comment">// O como método de extensión</span>
+<span class="token-comment">// app.UseTiming();</span></code></pre>
+                </div>
+            </div>
 
             <h3>Middleware con Condición</h3>
-            <pre><code class="language-csharp">public class AdminOnlyMiddleware
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">AdminOnlyMiddleware.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
+                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">AdminOnlyMiddleware</span>
 {
-    private readonly RequestDelegate _next;
+    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
 
-    public AdminOnlyMiddleware(RequestDelegate next)
+    <span class="token-keyword">public</span> <span class="token-method">AdminOnlyMiddleware</span>(<span class="token-type">RequestDelegate</span> next)
     {
-        _next = next;
+        <span class="token-property">_next</span> = next;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
     {
-        // Verificar si el usuario es admin
-        if (!context.User.IsInRole("Admin"))
+        <span class="token-comment">// Verificar si el usuario es admin</span>
+        <span class="token-keyword">if</span> (!context.<span class="token-type">User</span>.<span class="token-method">IsInRole</span>(<span class="token-string">"Admin"</span>))
         {
-            context.Response.StatusCode = 403;
-            await context.Response.WriteAsync("Acceso denegado");
-            return; // Cortar el pipeline
+            context.<span class="token-type">Response</span>.<span class="token-property">StatusCode</span> = <span class="token-number">403</span>;
+            <span class="token-keyword">await</span> context.<span class="token-type">Response</span>.<span class="token-method">WriteAsync</span>(<span class="token-string">"Acceso denegado"</span>);
+            <span class="token-keyword">return</span>; <span class="token-comment">// Cortar el pipeline</span>
         }
 
-        await _next(context);
+        <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
     }
 }</code></pre>
+                </div>
+            </div>
         </section>
         </section>
 
@@ -837,26 +915,39 @@ app.UseMiddleware&lt;TimingMiddleware&gt;();
             </ol>
 
             <h3>Crear Middleware Personalizado</h3>
-            <pre><code class="language-csharp">// Agregar al proyecto: TimingMiddleware.cs
-public class TimingMiddleware
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">TimingMiddleware.cs</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19</div>
+                    <pre><code class="language-csharp"><span class="token-comment">// Agregar al proyecto: TimingMiddleware.cs</span>
+<span class="token-keyword">public class</span> <span class="token-class">TimingMiddleware</span>
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger&lt;TimingMiddleware&gt; _logger;
+    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
+    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; <span class="token-property">_logger</span>;
 
-    public TimingMiddleware(RequestDelegate next, ILogger&lt;TimingMiddleware&gt; logger)
+    <span class="token-keyword">public</span> <span class="token-method">TimingMiddleware</span>(<span class="token-type">RequestDelegate</span> next, <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; logger)
     {
-        _next = next;
-        _logger = logger;
+        <span class="token-property">_next</span> = next;
+        <span class="token-property">_logger</span> = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        await _next(context);
-        watch.Stop();
-        _logger.LogInformation($"Request: {context.Request.Path} tomó {watch.ElapsedMilliseconds}ms");
+        <span class="token-keyword">var</span> watch = <span class="token-type">System</span>.<span class="token-type">Diagnostics</span>.<span class="token-type">Stopwatch</span>.<span class="token-method">StartNew</span>();
+        <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
+        watch.<span class="token-method">Stop</span>();
+        <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(<span class="token-string">$"Request: {context.Request.Path} tomó {watch.ElapsedMilliseconds}ms"</span>);
     }
 }</code></pre>
+                </div>
+            </div>
             <ol>
                 <li>En <code>Program.cs</code>, registrar el middleware antes de <code>app.Run()</code>.</li>
                 <li>Ejecutar y verificar los logs en la ventana de Output.</li>

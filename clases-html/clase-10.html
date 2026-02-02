@@ -291,16 +291,16 @@
 
   <nav>
     <ul>
-      <li><a href="#teoría">Teoría</a></li>
-      <li><a href="#ejemplos">Ejemplos e infografías</a></li>
-      <li><a href="#práctica">Práctica / laboratorio</a></li>
+      <li><a href="#teoria">Teoría</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#practica">Práctica / laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
     </ul>
   </nav>
 
   <main id="main">
-    <section id="teoría">
+    <section id="teoria">
       <h2>Teoría</h2>
 
       <h3>Patrón MVC y responsabilidades</h3>
@@ -318,31 +318,70 @@
         </ul>
       </div>
 
-      <pre><code>Controller: recibe request, valida, decide flujo
-Model: entidades, reglas, acceso a datos
-View: presentación HTML/CSS (Razor)</code></pre>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">MVC - Responsabilidades</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3</div>
+          <pre><code><span class="token-comment">// Controller: recibe request, valida, decide flujo</span>
+<span class="token-comment">// Model: entidades, reglas, acceso a datos</span>
+<span class="token-comment">// View: presentación HTML/CSS (Razor)</span></code></pre>
+        </div>
+      </div>
 
       <h3>Routing y atributos HTTP</h3>
-      <pre><code class="language-csharp">app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Program.cs / Controller.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
+          <pre><code><span class="token-method">app.MapControllerRoute</span>(
+    name: <span class="token-string">"default"</span>,
+    pattern: <span class="token-string">"{controller=Home}/{action=Index}/{id?}"</span>);
 
-[HttpGet("{id:int}")]
-public IActionResult Detalles(int id) { }</code></pre>
+[<span class="token-namespace">HttpGet</span>(<span class="token-string">"{id:int}"</span>)]
+<span class="token-keyword">public</span> <span class="token-type">IActionResult</span> <span class="token-method">Detalles</span>(<span class="token-keyword">int</span> id) { }</code></pre>
+        </div>
+      </div>
 
       <h3>Model Binding y ViewModels</h3>
       <p>El <strong><abbr title="Model Binding: Enlace de modelo, mecanismo que automáticamente mapea datos HTTP (query string, form data, route values) a propiedades de objetos C#">Model Binding</abbr></strong> de ASP.NET Core mapea datos HTTP a objetos C#. Los <strong><abbr title="ViewModels: Modelos de vista, clases que contienen datos específicos para una vista, separando el modelo de dominio de la UI y a menudo incluyendo validaciones">ViewModels</abbr></strong> separan el modelo de dominio de la UI e incluyen validaciones.</p>
-      <pre><code class="language-csharp">public class EstudianteViewModel
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">EstudianteViewModel.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11</div>
+          <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudianteViewModel</span>
 {
-    [Required]
-    [Display(Name = "Código")]
-    public string Codigo { get; set; }
+    [<span class="token-namespace">Required</span>]
+    [<span class="token-namespace">Display</span>(Name = <span class="token-string">"Código"</span>)]
+    <span class="token-keyword">public string</span> Codigo { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    [Required]
-    public string Nombre { get; set; }
+    [<span class="token-namespace">Required</span>]
+    <span class="token-keyword">public string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 
-    public SelectList Carreras { get; set; }
+    <span class="token-keyword">public</span> <span class="token-type">SelectList</span> Carreras { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Razor Pages y Tag Helpers</h3>
       <ul>
@@ -363,38 +402,64 @@ public IActionResult Detalles(int id) { }</code></pre>
 
       <h3>Controller CRUD (fragmento)</h3>
       <p><abbr title="CRUD: Create-Read-Update-Delete (Crear-Leer-Actualizar-Borrar), operaciones básicas de persistencia de datos que forman el núcleo de muchas aplicaciones">CRUD</abbr> completo en un controller:</p>
-      <pre><code class="language-csharp">public class EstudiantesController : Controller
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">EstudiantesController.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudiantesController</span> : <span class="token-type">Controller</span>
 {
-    public async Task&lt;IActionResult&gt; Index(string búsqueda)
+    <span class="token-keyword">public async</span> <span class="token-type">Task</span>&lt;<span class="token-type">IActionResult</span>&gt; <span class="token-method">Index</span>(<span class="token-keyword">string</span> búsqueda)
     {
-        var estudiantes = await _service.ObtenerTodosAsync();
-        if (!string.IsNullOrEmpty(búsqueda))
-            estudiantes = estudiantes.Where(e => e.Nombre.Contains(búsqueda));
-        return View(estudiantes);
+        <span class="token-keyword">var</span> estudiantes = <span class="token-keyword">await</span> _service.<span class="token-method">ObtenerTodosAsync</span>();
+        <span class="token-keyword">if</span> (!<span class="token-keyword">string</span>.<span class="token-method">IsNullOrEmpty</span>(búsqueda))
+            estudiantes = estudiantes.<span class="token-method">Where</span>(e <span class="token-operator">=></span> e.Nombre.<span class="token-method">Contains</span>(búsqueda));
+        <span class="token-keyword">return</span> <span class="token-method">View</span>(estudiantes);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task&lt;IActionResult&gt; Crear(EstudianteViewModel vm)
+    [<span class="token-namespace">HttpPost</span>]
+    [<span class="token-namespace">ValidateAntiForgeryToken</span>]
+    <span class="token-keyword">public async</span> <span class="token-type">Task</span>&lt;<span class="token-type">IActionResult</span>&gt; <span class="token-method">Crear</span>(<span class="token-type">EstudianteViewModel</span> vm)
     {
-        if (!ModelState.IsValid) return View(vm);
-        await _service.CrearAsync(Mapear(vm));
-        return RedirectToAction(nameof(Index));
+        <span class="token-keyword">if</span> (!ModelState.IsValid) <span class="token-keyword">return</span> <span class="token-method">View</span>(vm);
+        <span class="token-keyword">await</span> _service.<span class="token-method">CrearAsync</span>(<span class="token-method">Mapear</span>(vm));
+        <span class="token-keyword">return</span> <span class="token-method">RedirectToAction</span>(<span class="token-keyword">nameof</span>(Index));
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Razor Page básica</h3>
-      <pre><code class="language-html">@page
-@model CrearModel
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Crear.cshtml</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+          <pre><code>@page
+@model <span class="token-type">CrearModel</span>
 
-<form method="post">
-  <input asp-for="Estudiante.Nombre" class="form-control" />
-  <span asp-validation-for="Estudiante.Nombre"></span>
-  <button type="submit">Guardar</button>
-</form></code></pre>
+&lt;<span class="token-keyword">form</span> method=<span class="token-string">"post"</span>&gt;
+  &lt;<span class="token-keyword">input</span> asp-for=<span class="token-string">"Estudiante.Nombre"</span> class=<span class="token-string">"form-control"</span> /&gt;
+  &lt;<span class="token-keyword">span</span> asp-validation-for=<span class="token-string">"Estudiante.Nombre"</span>&gt;&lt;/<span class="token-keyword">span</span>&gt;
+  &lt;<span class="token-keyword">button</span> type=<span class="token-string">"submit"</span>&gt;Guardar&lt;/<span class="token-keyword">button</span>&gt;
+&lt;/<span class="token-keyword">form</span>&gt;</code></pre>
+        </div>
+      </div>
     </section>
 
-    <section id="práctica">
+    <section id="practica">
       <h2>Práctica / laboratorio</h2>
       <section class="actividad">
         <h3>Actividad: CRUD de Estudiantes con MVC (35 min)</h3>
@@ -427,16 +492,42 @@ public IActionResult Detalles(int id) { }</code></pre>
       </ul>
 
       <h3>Routing personalizado</h3>
-      <pre><code class="language-csharp">app.MapControllerRoute(
-    name: "búsqueda",
-    pattern: "buscar/{termino}",
-    defaults: new { controller = "Estudiantes", action = "Buscar" });</code></pre>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Program.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4</div>
+          <pre><code><span class="token-method">app.MapControllerRoute</span>(
+    name: <span class="token-string">"búsqueda"</span>,
+    pattern: <span class="token-string">"buscar/{termino}"</span>,
+    defaults: <span class="token-keyword">new</span> { controller = <span class="token-string">"Estudiantes"</span>, action = <span class="token-string">"Buscar"</span> });</code></pre>
+        </div>
+      </div>
 
       <h3>Tag Helpers esenciales</h3>
-      <pre><code class="language-html"><label asp-for="Nombre"></label>
-<input asp-for="Nombre" class="form-control" />
-<span asp-validation-for="Nombre" class="text-danger"></span>
-<select asp-for="CarreraId" asp-items="Model.Carreras"></select></code></pre>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Vista .cshtml</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4</div>
+          <pre><code>&lt;<span class="token-keyword">label</span> asp-for=<span class="token-string">"Nombre"</span>&gt;&lt;/<span class="token-keyword">label</span>&gt;
+&lt;<span class="token-keyword">input</span> asp-for=<span class="token-string">"Nombre"</span> class=<span class="token-string">"form-control"</span> /&gt;
+&lt;<span class="token-keyword">span</span> asp-validation-for=<span class="token-string">"Nombre"</span> class=<span class="token-string">"text-danger"</span>&gt;&lt;/<span class="token-keyword">span</span>&gt;
+&lt;<span class="token-keyword">select</span> asp-for=<span class="token-string">"CarreraId"</span> asp-items=<span class="token-string">"Model.Carreras"</span>&gt;&lt;/<span class="token-keyword">select</span>&gt;</code></pre>
+        </div>
+      </div>
 
       <h3>ViewComponents y Partial Views</h3>
       <ul>
@@ -519,6 +610,22 @@ public IActionResult Detalles(int id) { }</code></pre>
         <li><strong>Tag Helpers:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro" target="_blank" rel="noopener">Tag Helpers in ASP.NET Core</a></li>
         <li><strong>Model Binding:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/models/model-binding" target="_blank" rel="noopener">Model Binding</a></li>
         <li><strong>Routing:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/routing" target="_blank" rel="noopener">Routing in ASP.NET Core MVC</a></li>
+      </ul>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>DataSet es una caché desconectada de datos en memoria con DataTables y relaciones.</li>
+        <li>DataAdapter puentea BD y DataSet: Fill carga datos, Update sincroniza cambios.</li>
+        <li>SqlCommandBuilder genera comandos INSERT/UPDATE/DELETE automáticamente desde SELECT.</li>
+        <li>DataRowState trackingea cambios: Unchanged, Added, Modified, Deleted, Detached.</li>
+        <li>AcceptChanges() confirma cambios, RejectChanges() revierte a valores originales.</li>
+        <li>XML permite exportar/importar DataSet con WriteXml y ReadXml para portabilidad.</li>
+        <li>La arquitectura desconectada mejora escalabilidad pero requiere manejo de conflictos de concurrencia.</li>
+        <li>DataSet puede contener múltiples DataTables con DataRelations entre ellas.</li>
+        <li>DBConcurrencyException ocurre cuando múltiples usuarios modifican el mismo registro simultáneamente.</li>
+        <li>DataGridView + BindingSource + DataBinding crea aplicaciones de datos con sincronización bidireccional.</li>
       </ul>
     </section>
   </main>

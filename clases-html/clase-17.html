@@ -492,6 +492,22 @@
         <li>Patrones Repository y Unit of Work.</li>
       </ul>
     </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>La arquitectura en capas separa responsabilidades: Presentación, Negocio, Datos.</li>
+        <li>Repository Pattern abstrae acceso a datos behind interfaces (IRepository<T>).</li>
+        <li>Unit of Work patrón agrupa múltiples operaciones de repositorio en una sola transacción.</li>
+        <li>Service Layer coordina lógica de negocio usando múltiples repositorios.</li>
+        <li>Dependency Injection (DI) inyecta dependencias por constructor para mejorar testabilidad.</li>
+        <li>xUnit/NUnit son frameworks de pruebas; AAA = Arrange, Act, Assert.</li>
+        <li>Moq permite crear mocks de dependencias para pruebas unitarias aisladas.</li>
+        <li>ConfigurationManager/AppSettings lee settings de app.config o appsettings.json.</li>
+        <li>Logging (ILogger) registra eventos para debugging y auditoría.</li>
+        <li>Las pruebas unitarias prueban una clase aisladamente; integración prueban interacción entre componentes.</li>
+      </ul>
+    </section>
   </main>
 
   <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">

@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 09 - HTML5 y Bootstrap | IF0100 POO II</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .meta-bar {
+            background: #1e3a8a;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .meta-bar span { font-size: 0.9rem; }
+        .nav {
+            background: #1e3a8a;
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #1e40af;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section h3 {
+            color: #3b82f6;
+            margin: 1.5rem 0 1rem;
+        }
+        .section h4 {
+            color: #1e3a8a;
+            margin: 1rem 0 0.5rem;
+        }
+        .objectives-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .objectives-table th, .objectives-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .objectives-table th { background: #f3f4f6; }
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        code {
+            background: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: "Fira Code", "Consolas", monospace;
+            font-size: 0.9em;
+        }
+        pre code { background: none; padding: 0; }
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+        .example-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+        .figure-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .figure-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .figure-container figcaption {
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: #6b7280;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .comparison .bad {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison .good {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        .comparison-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+        .badge-green { background: #dcfce7; color: #166534; }
+        .badge-purple { background: #f3e8ff; color: #7c3aed; }
+        .tag-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .tag-table th {
+            background: #1e40af;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .tag-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .grid-demo {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .grid-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .grid-col {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        ul, ol { margin-left: 1.5rem; }
+        li { margin: 0.5rem 0; }
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+        @media (max-width: 768px) {
+            .comparison { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; }
+            .meta-bar { flex-direction: column; text-align: center; }
+        }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+            background: #1e1e2e;
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 1px solid #313244;
+        }
+
+        .code-header {
+            background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+            color: #cdd6f4;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: auto;
+            font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+            display: flex;
+            background: #1e1e2e;
+        }
+
+        .line-numbers {
+            background: #181825;
+            color: #6c7086;
+            padding: 12px 10px;
+            text-align: right;
+            font-family: 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            user-select: none;
+            border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+            background: transparent;
+            margin: 0;
+            padding: 12px 16px;
+            flex: 1;
+            overflow-x: auto;
+        }
+
+        .code-block pre code {
+            color: #cdd6f4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+            margin: 0;
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: #6c7086;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <header class="header">
+        <h1>Clase 09 - HTML5 y Bootstrap</h1>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 3</p>
+        <div style="margin-top: 1rem;">
+            <strong>Prerrequisitos:</strong> Conocimientos básicos de HTML/CSS, Visual Studio 2022 instalado, Windows 10/11.
+        </div>
+    </header>
+
+    <div class="meta-bar">
+        <span>?? Duración: 90 minutos</span>
+        <span>?? Unidad 3 - Clase 9</span>
+        <span>?? 4 Semestre - Ingeniería Informática</span>
+    </div>
+
+    <nav class="nav">
+        <a href="#teoria">Teoría</a>
+        <a href="#ejemplos">Ejemplos</a>
+        <a href="#practica">Práctica / Laboratorio</a>
+        <a href="#ejercicios">Ejercicios</a>
+        <a href="#referencias">Referencias</a>
+    </nav>
+
+    <main class="container" id="main">
+        <!-- Teoría -->
+        <section id="teoria">
+        <!-- Objetivos -->
+        <section id="objetivos" class="section">
+            <h2>Objetivos de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Utilizar</strong> etiquetas semánticas de HTML5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Crear</strong> formularios web modernos</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Aplicar</strong> el sistema de grillas de Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Utilizar</strong> componentes Bootstrap en Vistas ASP.NET</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Desarrollar</strong> interfaces responsivas (mobile-first)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Agenda -->
+        <section id="agenda" class="section">
+            <h2>Agenda (90 min)</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tiempo</th>
+                        <th>Tema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15'</td>
+                        <td>HTML5: Estructura semántica</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Formularios HTML5</td>
+                    </tr>
+                    <tr>
+                        <td>20'</td>
+                        <td>Bootstrap: Introducción y Grid</td>
+                    </tr>
+                    <tr>
+                        <td>20'</td>
+                        <td>Componentes Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>15'</td>
+                        <td>Integración ASP.NET + Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>5'</td>
+                        <td>Responsive Design</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- HTML5 Semántico -->
+        <section id="html5" class="section">
+            <h2>1. HTML5: Estructura Semántica</h2>
+
+            <h3>Más allá de <div></h3>
+
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;">
+                <h4>¿Por qué HTML5 Semántico?</h4>
+                <p><strong><abbr title="HTML5: HyperText Markup Language 5, quinta versión principal del lenguaje de marcado para estructurar contenido web">HTML5</abbr></strong> introdujo etiquetas con significado (semántica) en lugar de genéricas <code>&lt;div&gt;</code>. Esto permite:</p>
+                <ul>
+                    <li><strong>Mejor <abbr title="SEO: Search Engine Optimization, optimización para motores de búsqueda como Google">SEO</abbr>:</strong> Los motores de búsqueda entienden mejor tu contenido</li>
+                    <li><strong>Accesibilidad:</strong> Los lectores de pantalla navegan más fácilmente</li>
+                    <li><strong>Mantenibilidad:</strong> El código es más legible y auto-documentado</li>
+                    <li><strong>Consistencia:</strong> Estructura estándar en toda la web moderna</li>
+                </ul>
+            </div>
+
+            <div class="comparison">
+                <div class="bad">
+                    <div class="comparison-title"> HTML ANTIGUO (no semántico)</div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                            </div>
+                            <span class="code-title">index-old.html</span>
+                        </div>
+                        <div class="code-content">
+                            <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
+                            <pre><code><span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"header"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"nav"</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"content"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"sidebar"</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"main"</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">id</span>=<span class="token-string">"footer"</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="good">
+                    <div class="comparison-title"> HTML5 SEMÁNTICO (significado claro)</div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span class="code-dot red"></span>
+                                <span class="code-dot yellow"></span>
+                                <span class="code-dot green"></span>
+                            </div>
+                            <span class="code-title">index.html</span>
+                        </div>
+                        <div class="code-content">
+                            <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+                            <pre><code><span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+
+<span class="token-operator">&lt;</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">aside</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">aside</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+
+<span class="token-operator">&lt;</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>...<span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Etiquetas Semánticas HTML5</h3>
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Etiqueta</th>
+                        <th>Propósito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code><header></code></td>
+                        <td>Cabecera: logo, título, navegación</td>
+                    </tr>
+                    <tr>
+                        <td><code><nav></code></td>
+                        <td>Navegación: menú principal</td>
+                    </tr>
+                    <tr>
+                        <td><code><main></code></td>
+                        <td>Contenido principal (uno por página)</td>
+                    </tr>
+                    <tr>
+                        <td><code><section></code></td>
+                        <td>Sección temática del contenido</td>
+                    </tr>
+                    <tr>
+                        <td><code><article></code></td>
+                        <td>Contenido independiente y autocontenido</td>
+                    </tr>
+                    <tr>
+                        <td><code><aside></code></td>
+                        <td>Contenido relacionado, sidebar</td>
+                    </tr>
+                    <tr>
+                        <td><code><footer></code></td>
+                        <td>Pie: copyright, enlaces, contacto</td>
+                    </tr>
+                    <tr>
+                        <td><code><figure></code> + <code><figcaption></code></td>
+                        <td>Imágenes con leyenda</td>
+                    </tr>
+                    <tr>
+                        <td><code><time></code></td>
+                        <td>Fechas y horas</td>
+                    </tr>
+                    <tr>
+                        <td><code><mark></code></td>
+                        <td>Texto resaltado</td>
+                    </tr>
+                    <tr>
+                        <td><code><details></code> + <code><summary></code></td>
+                        <td>Contenido colapsable</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo: Estructura HTML5 Completa</h3>
+            <div class="example-box">
+                <strong>Página de Blog</strong>
+            </div>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">blog.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56</div>
+                    <pre><code><span class="token-operator">&lt;!</span><span class="token-keyword">DOCTYPE</span> <span class="token-keyword">html</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">html</span> <span class="token-property">lang</span>=<span class="token-string">"es"</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> <span class="token-property">charset</span>=<span class="token-string">"UTF-8"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> <span class="token-property">name</span>=<span class="token-string">"viewport"</span> <span class="token-property">content</span>=<span class="token-string">"width=device-width, initial-scale=1.0"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span>Mi Blog - UNAULA<span class="token-operator">&lt;/</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">h1</span><span class="token-operator">&gt;</span> Blog de Ingeniería Informática<span class="token-operator">&lt;/</span><span class="token-keyword">h1</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/"</span><span class="token-operator">&gt;</span>Inicio<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/artículos"</span><span class="token-operator">&gt;</span>Artículos<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/acerca"</span><span class="token-operator">&gt;</span>Acerca de<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+
+    <span class="token-operator">&lt;</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">h2</span><span class="token-operator">&gt;</span> últimos Artículos<span class="token-operator">&lt;/</span><span class="token-keyword">h2</span><span class="token-operator">&gt;</span>
+
+            <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Introducción a ASP.NET Core<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Publicado el <span class="token-operator">&lt;</span><span class="token-keyword">time</span> <span class="token-property">datetime</span>=<span class="token-string">"2026-01-15"</span><span class="token-operator">&gt;</span>
+                        15 de enero de 2026<span class="token-operator">&lt;/</span><span class="token-keyword">time</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>ASP.NET Core es el framework moderno de Microsoft...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/artículos/aspnet"</span><span class="token-operator">&gt;</span>Leer más<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+
+            <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Patrones de Diseño en C#<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Los patrones de diseño son soluciones...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
+
+        <span class="token-operator">&lt;</span><span class="token-keyword">aside</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Categorías<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>Programación<span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>Bases de Datos<span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>Web<span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">aside</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+
+    <span class="token-operator">&lt;</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>&amp;copy; 2026 UNAULA - Ingeniería Informática<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">html</span><span class="token-operator">&gt;</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formularios HTML5 -->
+        <section id="formularios" class="section">
+            <h2>2. Formularios HTML5</h2>
+
+            <h3>Inputs Modernos y Validación</h3>
+            <pre><code><form action="/registro" method="post">
+
+    <!-- Texto básico -->
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" name="nombre"
+           required minlength="3" maxlength="50"
+           placeholder="Ej: María López">
+
+    <!-- Email con validación automática -->
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email"
+           required placeholder="maria@ejemplo.com">
+
+    <!-- Teléfono -->
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono"
+           pattern="[0-9]{10}"
+           placeholder="3001234567">
+
+    <!-- Números con rango -->
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad"
+           min="18" max="100" value="18">
+
+    <!-- Fecha -->
+    <label for="fechaNacimien">Fecha de nacimiento:</label>
+    <input type="date" id="fechaNacimien" name="fechaNacimien"
+           min="1950-01-01" max="2006-12-31">
+
+    <!-- Lista desplegable -->
+    <label for="carrera">Carrera:</label>
+    <select id="carrera" name="carrera" required>
+        <option value="">Seleccione...</option>
+        <option value="informatica">Ingeniería Informática</option>
+        <option value="sistemas">Ingeniería de Sistemas</option>
+        <option value="software">Ingeniería de Software</option>
+    </select>
+
+    <!-- Checkbox -->
+    <label>
+        <input type="checkbox" name="aceptaTerminos" required>
+        Acepto los términos y condiciones
+    </label>
+
+    <!-- Radio buttons -->
+    <fieldset>
+        <legend>Género:</legend>
+        <label><input type="radio" name="genero" value="F"> Femenino</label>
+        <label><input type="radio" name="genero" value="M"> Masculino</label>
+        <label><input type="radio" name="genero" value="O"> Otro</label>
+    </fieldset>
+
+    <button type="submit">Registrarse</button>
+    <button type="reset">Limpiar</button>
+</form></code></pre>
+
+            <h3>Nuevos Tipos de Input</h3>
+            <div class="badge-list">
+                <span class="badge badge-blue">url</span>
+                <span class="badge badge-blue">search</span>
+                <span class="badge badge-blue">color</span>
+                <span class="badge badge-blue">range</span>
+                <span class="badge badge-blue">time</span>
+                <span class="badge badge-purple">datetime-local</span>
+                <span class="badge badge-purple">month</span>
+                <span class="badge badge-purple">week</span>
+                <span class="badge badge-green">file</span>
+            </div>
+            <pre><code><!-- URL -->
+<input type="url" placeholder="https://ejemplo.com">
+
+<!-- Búsqueda -->
+<input type="search" placeholder="Buscar...">
+
+<!-- Color -->
+<input type="color" value="#ff0000">
+
+<!-- Rango (slider) -->
+<input type="range" min="0" max="100" value="50">
+
+<!-- Hora -->
+<input type="time">
+
+<!-- Fecha y hora local -->
+<input type="datetime-local">
+
+<!-- Mes -->
+<input type="month">
+
+<!-- Semana -->
+<input type="week">
+
+<!-- Archivo -->
+<input type="file" accept=".pdf,.doc,.docx">
+
+<!--  área de texto -->
+<textarea rows="4" cols="50" maxlength="500"
+          placeholder="Escribe tu mensaje..."></textarea></code></pre>
+        </section>
+
+        <!-- Bootstrap -->
+        <section id="Bootstrap" class="section">
+            <h2>3. Bootstrap: Introducción</h2>
+
+            <h3>Framework CSS Más Popular</h3>
+            <p><strong>Bootstrap 5</strong> es un framework <abbr title="CSS: Cascading Style Sheets, hojas de estilo en cascada, lenguaje usado para describir la presentación de documentos HTML">CSS</abbr>/JavaScript para desarrollo responsivo y mobile-first de proyectos web.</p>
+
+            <div class="badge-list">
+                <span class="badge badge-green">Ahorra tiempo</span>
+                <span class="badge badge-green">Diseño responsivo</span>
+                <span class="badge badge-green">Componentes listos</span>
+                <span class="badge badge-green">Cross-browser</span>
+                <span class="badge badge-green">Documentación extensa</span>
+                <span class="badge badge-green">Personalizable</span>
+            </div>
+
+            <h3>Ventajas de Bootstrap</h3>
+            <ul>
+                <li><strong>No reinventar la rueda:</strong> Componentes pre-construidos y probados</li>
+                <li><strong>Responsivo incluido:</strong> Sistema de grillas mobile-first</li>
+                <li><strong>Compatible:</strong> Funciona en todos los navegadores modernos</li>
+                <li><strong>Documentación extensa:</strong>Ejemplos y guías detalladas</li>
+                <li><strong>Personalizable:</strong> variables Sass y temas personalizables</li>
+            </ul>
+
+            <figure class="figure-container">
+                <img src="../assets/infografias/clase-09-Bootstrap-grid.png" alt="Sistema de Grillas Bootstrap" onerror="this.onerror=null;this.src='/assets/infografias/clase-09-Bootstrap-grid.png'">
+                <figcaption>Sistema de Grillas Bootstrap - 12 columnas con breakpoints responsivos</figcaption>
+            </figure>
+        </section>
+
+        <!-- Grid System -->
+        <section id="grid" class="section">
+            <h2>4. Sistema de Grillas Bootstrap</h2>
+
+            <h3>El Corazón de Bootstrap</h3>
+            <p>Bootstrap usa un sistema de <strong>12 columnas</strong> por fila con <strong>6 <abbr title="Breakpoint: Punto de corte de ancho de pantalla donde el diseño responsive cambia su comportamiento (ej: col-md cambia a 768px)">breakpoints</abbr></strong> para diseño <abbr title="Mobile-first: Estrategia de diseño responsive que comienza diseñando para dispositivos móviles y luego escala hacia pantallas más grandes">mobile-first</abbr>.</p>
+
+            <table class="tag-table">
+                <thead>
+                    <tr>
+                        <th>Clase</th>
+                        <th>Breakpoint</th>
+                        <th>Típicamente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>col-</code></td>
+                        <td>Extra small</td>
+                        <td>Móviles portrait</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-sm-</code></td>
+                        <td>Small (576px)</td>
+                        <td>Móviles landscape</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-md-</code></td>
+                        <td>Medium (768px)</td>
+                        <td>Tablets</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-lg-</code></td>
+                        <td>Large (992px)</td>
+                        <td>Laptops</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-xl-</code></td>
+                        <td>Extra large (1200px)</td>
+                        <td>Desktops</td>
+                    </tr>
+                    <tr>
+                        <td><code>col-xxl-</code></td>
+                        <td>Extra extra large (1400px)</td>
+                        <td>Pantallas grandes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><strong>Ejemplo:</strong> <code>col-md-6</code> = En tablets ocupa 6/12 (50%)</p>
+
+            <h3>Grid en Práctica</h3>
+            <div class="grid-demo">
+                <strong>Estructura básica:</strong>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">Columna 1</div>
+                    <div class="grid-col" style="flex:1;">Columna 2</div>
+                    <div class="grid-col" style="flex:1;">Columna 3</div>
+                </div>
+            </div>
+
+            <pre><code><!-- ESTRUCTURA BÁSICA -->
+<div class="container">
+    <div class="row">
+        <div class="col">Columna 1</div>
+        <div class="col">Columna 2</div>
+        <div class="col">Columna 3</div>
+    </div>
+</div>
+
+<!-- TAMA OS RESPONSIVOS -->
+<div class="container">
+    <div class="row">
+        <!-- Móvil: 100%, Tablet: 50%, Desktop: 33% -->
+        <div class="col-12 col-md-6 col-lg-4">Card 1</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 2</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 3</div>
+    </div>
+</div>
+
+<!-- SIDEBAR + CONTENIDO -->
+<div class="container">
+    <div class="row">
+        <aside class="col-12 col-md-3">Menú lateral</aside>
+        <main class="col-12 col-md-9">Contenido principal</main>
+    </div>
+</div>
+
+<!-- OFFSET (margen para centrar) -->
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        Contenido centrado (6 columnas + offset de 3)
+    </div>
+</div></code></pre>
+        </section>
+
+        <!-- Componentes -->
+        <section id="componentes" class="section">
+            <h2>5. Componentes Bootstrap</h2>
+
+            <h3>Botones</h3>
+            <pre><code><!-- Colores -->
+<button class="button button-primary">Primario</button>
+<button class="button button-secondary">Secundario</button>
+<button class="button button-success">Éxito</button>
+<button class="button button-danger">Peligro</button>
+<button class="button button-warning">Advertencia</button>
+<button class="button button-info">Información</button>
+
+<!-- Tamaños -->
+<button class="button button-primary button-lg">Grande</button>
+<button class="button button-primary">Normal</button>
+<button class="button button-primary button-sm">Pequeño</button>
+
+<!-- Outline -->
+<button class="button button-outline-primary">Outline</button></code></pre>
+
+            <h3>Alertas</h3>
+            <pre><code><div class="alert alert-success" role="alert">
+     Operación completada exitosamente
+</div>
+<div class="alert alert-danger" role="alert">
+     Ha ocurrido un error
+</div>
+<div class="alert alert-warning alert-dismissible fade show">
+     Atención: revise los datos
+    <button type="button" class="button-close" data-bs-dismiss="alert"></button>
+</div></code></pre>
+
+            <h3>Tarjetas (Cards)</h3>
+            <pre><code><div class="card" style="width: 18rem;">
+    <img src="ejemplo.jpg" class="card-img-top" alt="Estudiante">
+    <div class="card-body">
+        <h5 class="card-title">María López</h5>
+        <p class="card-text">Ingeniería Informática - 4 semestre</p>
+        <a href="#" class="button button-primary">Ver perfil</a>
+    </div>
+</div></code></pre>
+
+            <h3>Navbar (Menú de navegación)</h3>
+            <pre><code><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">UNAULA</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Estudiantes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav></code></pre>
+
+            <h3>Tablas Estilizadas</h3>
+            <pre><code><table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Promedio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2024001</td>
+            <td>María López</td>
+            <td><span class="badge bg-success">4.5</span></td>
+            <td>
+                <button class="button button-sm button-info">Editar</button>
+                <button class="button button-sm button-danger">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table></code></pre>
+
+            <h3>Utilidades Bootstrap</h3>
+            <h4>Spacing</h4>
+            <p><code>m</code> = margin, <code>p</code> = padding</p>
+            <p><code>t</code> = top, <code>b</code> = bottom, <code>s</code> = start, <code>e</code> = end, <code>x</code> = horizontales, <code>y</code> = vertical</p>
+            <p>Valores 0-5: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem</p>
+            <pre><code><div class="m-3">Margin 3 en dos lados</div>
+<div class="mt-2 mb-4">Margin top 2, bottom 4</div>
+<div class="px-5 py-3">Padding horizontales 5, vertical 3</div>
+<div class="mx-auto">Centrado horizontales (auto)</div></code></pre>
+
+            <h4>Colores y Display</h4>
+            <pre><code><!-- Colores de texto -->
+<p class="text-primary">Texto primario (azul)</p>
+<p class="text-success">Texto éxito (verde)</p>
+<p class="text-danger">Texto peligro (rojo)</p>
+
+<!-- Colores de fondo -->
+<div class="bg-primary text-white p-3">Fondo azul, texto blanco</div>
+<div class="bg-light p-3">Fondo gris claro</div>
+
+<!-- Display -->
+<div class="d-none">Oculto</div>
+<div class="d-block">Block</div>
+<div class="d-flex">Flexbox</div>
+
+<!-- Responsivo -->
+<div class="d-none d-md-block">Solo visible en tablet+</div></code></pre>
+        </section>
+
+        <!-- ASP.NET Integration -->
+        <section id="aspnet" class="section">
+            <h2>6. Integración ASP.NET + Bootstrap</h2>
+
+            <h3>Plantilla Razor (_Layout.cshtml)</h3>
+            <pre><code>@* Views/Shared/_Layout.cshtml *@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UNAULA</title>
+
+    @* Bootstrap CSS *@
+    <link href="https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/css/Bootstrap.min.css"
+          rel="stylesheet">
+
+    @* Estilos personalizados *@
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    @* Navbar *@
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                     UNAULA
+                </a>
+                <button class="navbar-toggler" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Estudiantes" asp-action="Index">Estudiantes</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    @* Contenido *@
+    <div class="container mt-4">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* Footer *@
+    <footer class="border-top footer text-muted mt-5 py-3">
+        <div class="container">
+             &amp;copy; 2026 - UNAULA Ingeniería Informática
+        </div>
+    </footer>
+
+    @* Bootstrap JS *@
+    <script src="https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/js/Bootstrap.bundle.min.js">
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html></code></pre>
+
+            <h3>Vista con Bootstrap - CRUD de Estudiantes</h3>
+            <pre><code>@* Views/Estudiantes/Index.cshtml *@
+@model IEnumerable<Estudiante>
+
+@{
+    ViewData["Title"] = "Lista de Estudiantes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1> Estudiantes</h1>
+    <a asp-action="Crear" class="button button-primary">
+         Nuevo Estudiante
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Codigo)</th>
+                    <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+                    <th>@Html.DisplayNameFor(m => m.Carrera)</th>
+                    <th>Promedio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Codigo</td>
+                        <td>@item.Nombre</td>
+                        <td>@item.Carrera</td>
+                        <td>
+                            @if (item.Promedio >= 3.5)
+                            {
+                                <span class="badge bg-success">@item.Promedio</span>
+                            }
+                            else if (item.Promedio >= 3.0)
+                            {
+                                <span class="badge bg-warning">@item.Promedio</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@item.Promedio</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Editar" asp-route-id="@item.Id"
+                               class="button button-sm button-warning"> Editar</a>
+                            <a asp-action="Detalles" asp-route-id="@item.Id"
+                               class="button button-sm button-info"> Detalles</a>
+                            <a asp-action="Eliminar" asp-route-id="@item.Id"
+                               class="button button-sm button-danger"> Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div></code></pre>
+
+            <h3>Formulario con Bootstrap</h3>
+            <pre><code>@* Views/Estudiantes/Crear.cshtml *@
+@model Estudiante
+
+@{
+    ViewData["Title"] = "Nuevo Estudiante";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"> Nuevo Estudiante</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Crear" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Codigo" class="form-label"></label>
+                        <input asp-for="Codigo" class="form-control"
+                               placeholder="Ej: 2024001">
+                        <span asp-validation-for="Codigo" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label"></label>
+                        <input asp-for="Nombre" class="form-control">
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Carrera" class="form-label"></label>
+                        <select asp-for="Carrera" class="form-select">
+                            <option value="">Seleccione...</option>
+                            <option>Ingeniería Informática</option>
+                            <option>Ingeniería de Software</option>
+                            <option>Ingeniería de Sistemas</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="button button-secondary">Cancelar</a>
+                        <button type="submit" class="button button-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}</code></pre>
+        </section>
+
+        <!-- Responsive Design -->
+        <section id="responsive" class="section">
+            <h2>7. Responsive Design - Mobile-First</h2>
+
+            <h3>Mobile-First Approach</h3>
+            <p><strong>Principio:</strong> Diseñar primero para móvil, luego escalar</p>
+
+            <div class="grid-demo">
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">MÓVIL<br><576px<br>col-12<br>100%</div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">TABLET</div>
+                    <div class="grid-col" style="flex:1;">col-md-6<br>50%</div>
+                </div>
+                <div class="grid-row">
+                    <div class="grid-col" style="flex:1;">DESKTOP</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">col-lg-4</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">33%</div>
+                    <div class="grid-col" style="flex:1; flex-basis: 33%;">33%</div>
+                </div>
+            </div>
+
+            <pre><code><!--Ejemplo: Mobile-First -->
+<div class="col-12 col-md-6 col-lg-4">
+    ? Móvil:  12/12 = 100%
+    ? Tablet:  6/12 = 50%
+    ? Desktop: 4/12 = 33%
+</div></code></pre>
+
+            <h3>Accesibilidad - ARIA Labels</h3>
+            <p>Importante para usuarios con discapacidades. <strong><abbr title="ARIA: Accessible Rich Internet Applications, conjunto de atributos HTML que mejoran la accesibilidad de aplicaciones web para usuarios con discapacidades">ARIA</abbr></strong> = Accessible Rich Internet Applications</p>
+            <pre><code><!-- ARIA-LABEL - Descripción para elementos sin texto -->
+<input type="search" aria-label="Buscar ejemplos">
+<button aria-label="Cerrar ventana">&amp;times;</button>
+
+<!-- ARIA-LABELEDBY - Relacionar con otro elemento -->
+<input type="text" id="nombre" aria-labelledby="lbl-nombre">
+<label id="lbl-nombre">Nombre completo:</label>
+
+<!-- ARIA-DESCRIBEDBY - Descripción adicional -->
+<input type="password" aria-describedby="pwd-help">
+<small id="pwd-help">Mínimo 8 caracteres, una mayúscula y un número</small>
+
+<!-- ARIA-HIDDEN - Ocultar a lectores de pantalla -->
+<span aria-hidden="true"></span>
+
+<!-- ROLES ARIA - Semántica adicional -->
+<nav role="navigation" aria-label="Menú principal">...</nav>
+<main role="main">...</main>
+<div role="alert" class="alert alert-danger">
+    Operación fallida
+</div></code></pre>
+        </section>
+        </section>
+
+        <!-- Ejemplos -->
+        <section id="ejemplos" class="section">
+            <h2>Ejemplos</h2>
+            <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
+            <ul>
+                <li>HTML5 semántico</li>
+                <li>Formularios modernos</li>
+                <li>Grid system de Bootstrap</li>
+                <li>Componentes Bootstrap</li>
+                <li>Integración con ASP.NET</li>
+            </ul>
+        </section>
+
+
+        <!-- Práctica / Laboratorio -->
+        <section id="practica" class="section">
+            <h2>Práctica / Laboratorio (30 min)</h2>
+            <section class="actividad">
+                <h3>Actividad: Landing Page con Bootstrap 5 (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Landing page responsive con Bootstrap 5</p>
+                <p><strong>Tiempo estimado:</strong> 30 min</p>
+                <p><strong>Criterios de éxito:</strong> Proyecto compila, Bootstrap cargando, página responsive en móvil y desktop</p>
+                <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Objetivo:</strong> Crear una landing page responsive con Bootstrap 5.</div>
+
+            <h3>Pasos en Visual Studio 2022</h3>
+            <ol>
+                <li>Abrir Visual Studio 2022 y crear un proyecto <strong>ASP.NET Core Web App</strong>.</li>
+                <li>En el Explorador de Soluciones, clic derecho en <code>Pages</code> > <strong>Agregar > Nuevo elemento > Razor Page</strong>.</li>
+                <li>Nombre: <code>Index</code> en la carpeta Pages (sobrescribir el existente).</li>
+                <li>Agregar Bootstrap 5 via <abbr title="CDN: Content Delivery Network, red de servidores distribuidos globalmente que entregan contenido web (CSS, JS, imágenes) desde el servidor más cercano al usuario">CDN</abbr> o NuGet en <code>Pages/Shared/_Layout.cshtml</code>.</li>
+                <li>Ejecutar con F5 y probar la responsive con las herramientas de desarrollador (F12).</li>
+            </ol>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Proyecto compila sin errores, Bootstrap cargando correctamente, página responsive en móvil y desktop.</div>
+
+            <h3>Estructura HTML Básica con Bootstrap</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;Mi Landing Page&lt;/title&gt;
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
+        &lt;div class="container"&gt;
+            &lt;a class="navbar-brand" href="#"&gt;MiMarca&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+    &lt;div class="container my-5"&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-12 col-md-6"&gt;
+                &lt;h1&gt;Bienvenido&lt;/h1&gt;
+                &lt;p class="lead"&gt;Descripción del producto.&lt;/p&gt;
+                &lt;a class="btn btn-primary btn-lg" href="#"&gt;Llamada a la Acción&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;footer class="bg-dark text-white text-center py-3 mt-5"&gt;
+        &lt;p&gt;&amp;copy; 2026 Mi Landing Page&lt;/p&gt;
+    &lt;/footer&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Estructura Navbar implementada, grid system usado (col-12, col-md-6), botón CTA funcional, footer agregado, scripts Bootstrap cargando.</div>
+        </section>
+
+        <!-- Ejercicios -->
+        <section id="ejercicios" class="section">
+            <h2>Ejercicios Prácticos</h2>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Landing Page (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Landing page con hero, features, formulario y footer</p>
+                <p><strong>Tiempo estimado:</strong> 20 min</p>
+                <p><strong>Criterios de éxito:</strong> Hero implementada, grid responsive, formulario con validaciones, footer funcionando</p>
+                <p>Crear una landing page con:</p>
+            <ul>
+                <li>Hero section con título y botón de acción</li>
+                <li>Features en 3 columnas (1 móvil, 2 tablet, 3 desktop)</li>
+                <li>Formulario de contacto con validación HTML5</li>
+                <li>Footer con enlaces</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Hero section implementada, grid responsive correctamente, formulario HTML5 con validaciones, footer funcionando.</div>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Dashboard de Estudiantes (25 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Dashboard con navbar, sidebar, cards, tabla y modal</p>
+                <p><strong>Tiempo estimado:</strong> 25 min</p>
+                <p><strong>Criterios de éxito:</strong> Navbar con dropdown, sidebar offcanvas, cards con datos, tabla con paginación, modal de confirmación</p>
+                <p>Crear un dashboard con:</p>
+            <ul>
+                <li>Navbar con dropdown</li>
+                <li>Sidebar colapsable (offcanvas)</li>
+                <li>Cards con estadísticas (tales ejemplos, promedios)</li>
+                <li>Tabla de datos con paginación</li>
+                <li>Modal para confirmar eliminación</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Navbar con dropdown funcional, sidebar offcanvas operativo, cards mostrando datos, tabla con paginación, modal de confirmación funcionando.</div>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Página de Estudiantes (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Vista ListaEstudiantes con layout responsive y badges</p>
+                <p><strong>Tiempo estimado:</strong> 30 min</p>
+                <p><strong>Criterios de éxito:</strong> Layout responsive 1-2-3, cards con datos, badges de colores, botón de detalle, formulario de búsqueda</p>
+                <p>Crear Vista "ListaEstudiantes" con:</p>
+            <ul>
+                <li>Layout responsivo (1 columna móvil, 2 tablet, 3 desktop)</li>
+                <li>Card de ejemplo con foto, nombre, carrera (badge), promedio</li>
+                <li>Badge de color según promedio: verde (>=3.5), amarillo (>=3.0), rojo (<3.0)</li>
+                <li>Botón "Ver detalle"</li>
+                <li>Formulario de búsqueda arriba</li>
+            </ul>
+            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Layout responsive correcto (1-2-3), cards con datos de ejemplo, badges de colores funcionando, botón de detalle funcional, formulario de búsqueda implementado.</div>
+            <div class="example-box" style="background: #fef3c7; border-left-color: #f59e0b;"><strong>Tiempo sugerido total:</strong> 75 min (20 + 25 + 30).</div>
+        </section>
+
+        <!-- Referencias -->
+        <section id="referencias" class="section">
+            <h2>Referencias y Recursos</h2>
+
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Enlace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>HTML5 MDN</td>
+                        <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">developer.mozilla.org/html</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap 5 Docs</td>
+                        <td><a href="https://getBootstrap.com/docs/5.3" target="_blank">getBootstrap.com/docs/5.3</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap Icons</td>
+                        <td><a href="https://icons.getBootstrap.com/" target="_blank">icons.getBootstrap.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Bootstrap Themes</td>
+                        <td><a href="https://themes.getBootstrap.com/" target="_blank">themes.getBootstrap.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Grid Generar</td>
+                        <td><a href="https://grid.layoutit.com/" target="_blank">grid.layoutit.com</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Resumen -->
+        <section id="resumen" class="section">
+            <h2>Resumen de la Clase</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTML5 semántico</strong></td>
+                        <td><code><header></code>, <code><nav></code>, <code><main></code>, <code><section></code>, <code><article></code>, <code><aside></code>, <code><footer></code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Formularios HTML5</strong></td>
+                        <td>Nuevos tipos: email, tel, date, number, range</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bootstrap Grid</strong></td>
+                        <td>12 columnas, clases: <code>col-</code>, <code>col-sm-</code>, <code>col-md-</code>, <code>col-lg-</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Componentes</strong></td>
+                        <td>Botones, alertas, cards, navbar, tablas, formularios, modals</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Utilidades</strong></td>
+                        <td>Spacing (<code>m-</code>, <code>p-</code>), colores (<code>text-</code>, <code>bg-</code>), display</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Responsive</strong></td>
+                        <td>Mobile-first, breakpoints</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td><code>asp-controller</code>, <code>asp-action</code>, <code>asp-for</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accesibilidad</strong></td>
+                        <td>ARIA labels, roles, estados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Próxima Clase -->
+        <section class="section">
+            <h2>Próxima Clase: MVC y Razor Pages</h2>
+            <table class="objectives-table">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MVC profundo</strong></td>
+                        <td>Routing avanzado, Model Binding, Validación</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Razor Pages</strong></td>
+                        <td>Page Models, Handlers (OnGet, OnPost)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td>Form, Anchor, Custom tag helpers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Partial Views</strong></td>
+                        <td>ViewComponents</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p><strong>"Bootstrap: Haz más, escribe menos"</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
+    </footer>
+</body>
+</html>
+
+
