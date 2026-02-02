@@ -924,9 +924,22 @@ est1.<span class="token-property">Edad</span> <span class="token-operator">=</sp
                 <ul>
                     <li>La variable en el STACK contiene una <strong>direccion de memoria</strong> (referencia) al objeto en el HEAP</li>
                     <li><strong>Multiples variables pueden referenciar el mismo objeto</strong>:
-                        <pre><code class="language-csharp">Estudiante est1 = new Estudiante { Nombre = "Maria" };
-Estudiante est2 = est1;  // Ambos referencian el MISMO objeto
-est2.Nombre = "Carlos";   // est1.Nombre tambien cambia</code></pre>
+                        <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Program.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3</div>
+    <pre><code class="language-csharp"><span class="token-class">Estudiante</span> est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span> };
+<span class="token-class">Estudiante</span> est2 <span class="token-operator">=</span> est1;  <span class="token-comment">// Ambos referencian el MISMO objeto</span>
+est2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Carlos"</span>;   <span class="token-comment">// est1.Nombre tambien cambia</span></code></pre>
+  </div>
+</div>
                     </li>
                     <li>Cuando una variable sale del scope, la referencia en el stack se elimina, pero el objeto en el heap permanece hasta que el GC lo reclama</li>
                 </ul>
@@ -1767,30 +1780,43 @@ p.<span class="token-property">Nombre</span> <span class="token-operator">=</spa
             </table>
 
             <h3>Ejemplo Comparativo</h3>
-            <pre><code class="language-csharp">// CLASS (Reference Type)
-public class PersonaClass
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27</div>
+    <pre><code class="language-csharp"><span class="token-comment">// CLASS (Reference Type)</span>
+<span class="token-keyword">public class</span> <span class="token-class">PersonaClass</span>
 {
-    public string Nombre { get; set; }
-    public int Edad { get; set; }
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 }
 
-// STRUCT (Value Type)
-public struct PersonaStruct
+<span class="token-comment">// STRUCT (Value Type)</span>
+<span class="token-keyword">public struct</span> <span class="token-class">PersonaStruct</span>
 {
-    public string Nombre { get; set; }
-    public int Edad { get; set; }
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
 }
 
-// Uso
-var pc1 = new PersonaClass { Nombre = "Juan", Edad = 25 };
-var pc2 = pc1;              // Copia REFERENCIA
-pc2.Nombre = "Maria";
-Console.WriteLine(pc1.Nombre); // "Maria" (!!) - ambos referencian el mismo objeto
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> pc1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">PersonaClass</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Juan"</span>, <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">25</span> };
+<span class="token-keyword">var</span> pc2 <span class="token-operator">=</span> pc1;              <span class="token-comment">// Copia REFERENCIA</span>
+pc2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(pc1.<span class="token-property">Nombre</span>); <span class="token-comment">// "Maria" (!!) - ambos referencian el mismo objeto</span>
 
-var ps1 = new PersonaStruct { Nombre = "Juan", Edad = 25 };
-var ps2 = ps1;              // Copia VALOR completo
-ps2.Nombre = "Maria";
-Console.WriteLine(ps1.Nombre); // "Juan" - independientes</code></pre>
+<span class="token-keyword">var</span> ps1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">PersonaStruct</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Juan"</span>, <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">25</span> };
+<span class="token-keyword">var</span> ps2 <span class="token-operator">=</span> ps1;              <span class="token-comment">// Copia VALOR completo</span>
+ps2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(ps1.<span class="token-property">Nombre</span>); <span class="token-comment">// "Juan" - independientes</span></code></pre>
+  </div>
+</div>
 
             <div class="highlight-box">
                 <h4>Cuando Usar struct</h4>
@@ -1860,100 +1886,113 @@ Console.WriteLine(ps1.Nombre); // "Juan" - independientes</code></pre>
             </table>
 
             <h4>Solucion de Referencia</h4>
-            <pre><code class="language-csharp">public class Libro
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Libro.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Libro</span>
 {
-    // Campos privados (convencion _camelCase)
-    private string _titulo;
-    private string _autor;
-    private int _anio;
-    private int _numeroPaginas;
+    <span class="token-comment">// Campos privados (convencion _camelCase)</span>
+    <span class="token-keyword">private string</span> _titulo;
+    <span class="token-keyword">private string</span> _autor;
+    <span class="token-keyword">private int</span> _anio;
+    <span class="token-keyword">private int</span> _numeroPaginas;
 
-    // Propiedades con validacion
-    public string Titulo
+    <span class="token-comment">// Propiedades con validacion</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titulo</span>
     {
-        get => _titulo;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _titulo;
+        <span class="token-keyword">set</span>
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("El titulo no puede estar vacio");
-            _titulo = value;
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El titulo no puede estar vacio"</span>);
+            _titulo <span class="token-operator">=</span> value;
         }
     }
 
-    public string Autor
+    <span class="token-keyword">public string</span> <span class="token-property">Autor</span>
     {
-        get => _autor;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _autor;
+        <span class="token-keyword">set</span>
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("El autor no puede estar vacio");
-            _autor = value;
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El autor no puede estar vacio"</span>);
+            _autor <span class="token-operator">=</span> value;
         }
     }
 
-    public int Anio
+    <span class="token-keyword">public int</span> <span class="token-property">Anio</span>
     {
-        get => _anio;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _anio;
+        <span class="token-keyword">set</span>
         {
-            if (value < 1000 || value > DateTime.Now.Year + 1)
-                throw new ArgumentOutOfRangeException("Anio", "Año inválido");
-            _anio = value;
+            <span class="token-keyword">if</span> (value <span class="token-operator"><</span> <span class="token-number">1000</span> <span class="token-operator">||</span> value <span class="token-operator">></span> <span class="token-type">DateTime</span>.<span class="token-property">Now</span>.<span class="token-property">Year</span> <span class="token-operator">+</span> <span class="token-number">1</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Anio"</span>, <span class="token-string">"Año inválido"</span>);
+            _anio <span class="token-operator">=</span> value;
         }
     }
 
-    public int NumeroPaginas
+    <span class="token-keyword">public int</span> <span class="token-property">NumeroPaginas</span>
     {
-        get => _numeroPaginas;
-        set
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _numeroPaginas;
+        <span class="token-keyword">set</span>
         {
-            if (value <= 0)
-                throw new ArgumentException("El número de páginas debe ser positivo");
-            _numeroPaginas = value;
+            <span class="token-keyword">if</span> (value <span class="token-operator"><=</span> <span class="token-number">0</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El número de páginas debe ser positivo"</span>);
+            _numeroPaginas <span class="token-operator">=</span> value;
         }
     }
 
-    // Constructor completo
-    public Libro(string titulo, string autor, int anio, int numeroPaginas)
+    <span class="token-comment">// Constructor completo</span>
+    <span class="token-keyword">public</span> <span class="token-method">Libro</span>(<span class="token-keyword">string</span> titulo, <span class="token-keyword">string</span> autor, <span class="token-keyword">int</span> anio, <span class="token-keyword">int</span> numeroPaginas)
     {
-        Titulo = titulo;
-        Autor = autor;
-        Anio = anio;
-        NumeroPaginas = numeroPaginas;
+        <span class="token-property">Titulo</span> <span class="token-operator">=</span> titulo;
+        <span class="token-property">Autor</span> <span class="token-operator">=</span> autor;
+        <span class="token-property">Anio</span> <span class="token-operator">=</span> anio;
+        <span class="token-property">NumeroPaginas</span> <span class="token-operator">=</span> numeroPaginas;
     }
 
-    // Constructor con encadenamiento (this)
-    public Libro(string titulo, string autor, int anio)
-        : this(titulo, autor, anio, 0)  // 0 paginas por defecto
+    <span class="token-comment">// Constructor con encadenamiento (this)</span>
+    <span class="token-keyword">public</span> <span class="token-method">Libro</span>(<span class="token-keyword">string</span> titulo, <span class="token-keyword">string</span> autor, <span class="token-keyword">int</span> anio)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(titulo, autor, anio, <span class="token-number">0</span>)  <span class="token-comment">// 0 paginas por defecto</span>
     {
     }
 
-    // Metodo de instancia
-    public bool EstaAntiguo()
+    <span class="token-comment">// Metodo de instancia</span>
+    <span class="token-keyword">public bool</span> <span class="token-method">EstaAntiguo</span>()
     {
-        int anioActual = DateTime.Now.Year;
-        return (anioActual - _anio) > 20;
+        <span class="token-keyword">int</span> anioActual <span class="token-operator">=</span> <span class="token-type">DateTime</span>.<span class="token-property">Now</span>.<span class="token-property">Year</span>;
+        <span class="token-keyword">return</span> (anioActual <span class="token-operator">-</span> _anio) <span class="token-operator">></span> <span class="token-number">20</span>;
     }
 
-    // Propiedad calculada
-    public string InfoCorta => $"{_titulo} ({_autor})";
+    <span class="token-comment">// Propiedad calculada</span>
+    <span class="token-keyword">public string</span> <span class="token-property">InfoCorta</span> <span class="token-operator">=></span> <span class="token-string">$"{_titulo} ({_autor})"</span>;
 }
 
-// Uso en Main
-class Program
+<span class="token-comment">// Uso en Main</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
 {
-    static void Main()
+    <span class="token-keyword">static void</span> <span class="token-method">Main</span>()
     {
-        var libro1 = new Libro("Cien Años de Soledad", "Gabriel García Márquez", 1967, 417);
-        var libro2 = new Libro("Don Quijote", "Miguel de Cervantes", 1605);
+        <span class="token-keyword">var</span> libro1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Libro</span>(<span class="token-string">"Cien Años de Soledad"</span>, <span class="token-string">"Gabriel García Márquez"</span>, <span class="token-number">1967</span>, <span class="token-number">417</span>);
+        <span class="token-keyword">var</span> libro2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Libro</span>(<span class="token-string">"Don Quijote"</span>, <span class="token-string">"Miguel de Cervantes"</span>, <span class="token-number">1605</span>);
 
-        Console.WriteLine(libro1.InfoCorta);
-        Console.WriteLine($"Es antiguo? {libro1.EstaAntiguo()}");  // True
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(libro1.<span class="token-property">InfoCorta</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Es antiguo? {libro1.EstaAntiguo()}"</span>);  <span class="token-comment">// True</span>
 
-        Console.WriteLine(libro2.InfoCorta);
-        Console.WriteLine($"Es antiguo? {libro2.EstaAntiguo()}");  // True
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(libro2.<span class="token-property">InfoCorta</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Es antiguo? {libro2.EstaAntiguo()}"</span>);  <span class="token-comment">// True</span>
     }
 }</code></pre>
+  </div>
+</div>
 
             <h3>Errores Comunes y Como Evitarlos</h3>
             <table>

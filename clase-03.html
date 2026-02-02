@@ -1197,64 +1197,77 @@ Total Nómina: $20800.00
       </div>
 
       <h3>Ejemplo 4: Herencia con Interfaces</h3>
-      <pre><code>// Definición de interfaces
-public interface IVolador
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Pato.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58</div>
+          <pre><code><span class="token-comment">// Definición de interfaces</span>
+<span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-type">IVolador</span>
 {
-    void Despegar();
-    void Aterrizar();
-    int AlturaMaxima { get; }
+    <span class="token-type">void</span> <span class="token-method">Despegar</span>();
+    <span class="token-type">void</span> <span class="token-method">Aterrizar</span>();
+    <span class="token-type">int</span> AlturaMaxima { <span class="token-keyword">get</span>; }
 }
 
-public interface INadador
+<span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-type">INadador</span>
 {
-    void Nadar();
-    int ProfundidadMaxima { get; }
+    <span class="token-type">void</span> <span class="token-method">Nadar</span>();
+    <span class="token-type">int</span> ProfundidadMaxima { <span class="token-keyword">get</span>; }
 }
 
-// Clase que hereda de una clase e implementa múltiples interfaces
-public class Pato : Animal, IVolador, INadador
+<span class="token-comment">// Clase que hereda de una clase e implementa múltiples interfaces</span>
+<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pato</span> : <span class="token-class">Animal</span>, <span class="token-type">IVolador</span>, <span class="token-type">INadador</span>
 {
-    public int AlturaMaxima => 1000; // metros
-    public int ProfundidadMaxima => 2; // metros
+    <span class="token-keyword">public</span> <span class="token-type">int</span> AlturaMaxima <span class="token-operator">=></span> <span class="token-number">1000</span>; <span class="token-comment">// metros</span>
+    <span class="token-keyword">public</span> <span class="token-type">int</span> ProfundidadMaxima <span class="token-operator">=></span> <span class="token-number">2</span>; <span class="token-comment">// metros</span>
     
-    public override void HacerSonido()
+    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">HacerSonido</span>()
     {
-        Console.WriteLine("¡Cuac cuac!");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"¡Cuac cuac!"</span>);
     }
     
-    public void Despegar()
+    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Despegar</span>()
     {
-        Console.WriteLine("El pato está despegando...");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está despegando..."</span>);
     }
     
-    public void Aterrizar()
+    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Aterrizar</span>()
     {
-        Console.WriteLine("El pato está aterrizando en el agua...");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está aterrizando en el agua..."</span>);
     }
     
-    public void Nadar()
+    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Nadar</span>()
     {
-        Console.WriteLine("El pato está nadando graciosamente.");
+        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está nadando graciosamente."</span>);
     }
 }
 
-// Uso polimórfico con interfaces
-class Program
+<span class="token-comment">// Uso polimórfico con interfaces</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
 {
-    static void Main(string[] args)
+    <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
     {
-        Pato pato = new Pato();
+        <span class="token-class">Pato</span> pato <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-method">Pato</span>();
         
-        // Polimorfismo con interfaces
-        IVolador volador = pato;
-        INadador nadador = pato;
-        Animal animal = pato;
+        <span class="token-comment">// Polimorfismo con interfaces</span>
+        <span class="token-type">IVolador</span> volador <span class="token-operator">=</span> pato;
+        <span class="token-type">INadador</span> nadador <span class="token-operator">=</span> pato;
+        <span class="token-class">Animal</span> animal <span class="token-operator">=</span> pato;
         
-        volador.Despegar();      // Comportamiento de IVolador
-        nadador.Nadar();          // Comportamiento de INadador
-        animal.HacerSonido();     // Comportamiento de Animal
+        volador.<span class="token-method">Despegar</span>();      <span class="token-comment">// Comportamiento de IVolador</span>
+        nadador.<span class="token-method">Nadar</span>();          <span class="token-comment">// Comportamiento de INadador</span>
+        animal.<span class="token-method">HacerSonido</span>();     <span class="token-comment">// Comportamiento de Animal</span>
     }
 }</code></pre>
+        </div>
+      </div>
 
       <figure>
         <img src="../assets/infografias/clase-03-herencia.png" alt="Infografía: herencia" onerror="this.onerror=null;this.src='/assets/infografias/clase-03-herencia.png'" />
@@ -1312,140 +1325,192 @@ class Program
 
       <h3>Paso 2: Crear la Clase Base Abstracta (10 minutos)</h3>
       <p>Crea un nuevo archivo <code>Figura.cs</code>:</p>
-      <pre><code>using System;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Figura.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
+          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace SistemaFiguras
+<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
 {
-    // Clase abstracta: no se puede instanciar directamente
-    public abstract class Figura
+    <span class="token-comment">// Clase abstracta: no se puede instanciar directamente</span>
+    <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-keyword">class</span> <span class="token-class">Figura</span>
     {
-        // Propiedad común a todas las figuras
-        public string Color { get; set; } = "Negro";
-        public string Nombre { get; protected set; }
+        <span class="token-comment">// Propiedad común a todas las figuras</span>
+        <span class="token-keyword">public</span> <span class="token-type">string</span> Color { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } <span class="token-operator">=</span> <span class="token-string">"Negro"</span>;
+        <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">protected</span> <span class="token-keyword">set</span>; }
         
-        // Constructor protegido
-        protected Figura(string nombre)
+        <span class="token-comment">// Constructor protegido</span>
+        <span class="token-keyword">protected</span> <span class="token-method">Figura</span>(<span class="token-type">string</span> nombre)
         {
-            Nombre = nombre;
+            Nombre <span class="token-operator">=</span> nombre;
         }
         
-        // Método abstracto: DEBE ser implementado por las subclases
-        public abstract double CalcularArea();
+        <span class="token-comment">// Método abstracto: DEBE ser implementado por las subclases</span>
+        <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>();
         
-        // Método abstracto para perímetro
-        public abstract double CalcularPerimetro();
+        <span class="token-comment">// Método abstracto para perímetro</span>
+        <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>();
         
-        // Método virtual: puede ser sobreescrito opcionalmente
-        public virtual void MostrarInfo()
+        <span class="token-comment">// Método virtual: puede ser sobreescrito opcionalmente</span>
+        <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
         {
-            Console.WriteLine($"Figura: {Nombre}");
-            Console.WriteLine($"Color: {Color}");
-            Console.WriteLine($"Área: {CalcularArea():F2}");
-            Console.WriteLine($"Perímetro: {CalcularPerimetro():F2}");
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Figura: {Nombre}"</span>);
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Color: {Color}"</span>);
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Área: {CalcularArea():F2}"</span>);
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Perímetro: {CalcularPerimetro():F2}"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Paso 3: Implementar Subclases (15 minutos)</h3>
       <p>Crea <code>Rectangulo.cs</code>:</p>
-      <pre><code>namespace SistemaFiguras
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Rectangulo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30</div>
+          <pre><code><span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
 {
-    public class Rectangulo : Figura
+    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Rectangulo</span> : <span class="token-class">Figura</span>
     {
-        public double Ancho { get; set; }
-        public double Alto { get; set; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> Ancho { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> Alto { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
         
-        public Rectangulo(double ancho, double alto) : base("Rectángulo")
+        <span class="token-keyword">public</span> <span class="token-method">Rectangulo</span>(<span class="token-type">double</span> ancho, <span class="token-type">double</span> alto) : <span class="token-keyword">base</span>(<span class="token-string">"Rectángulo"</span>)
         {
-            Ancho = ancho;
-            Alto = alto;
+            Ancho <span class="token-operator">=</span> ancho;
+            Alto <span class="token-operator">=</span> alto;
         }
         
-        public override double CalcularArea()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
         {
-            return Ancho * Alto;
+            <span class="token-keyword">return</span> Ancho <span class="token-operator">*</span> Alto;
         }
         
-        public override double CalcularPerimetro()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
         {
-            return 2 * (Ancho + Alto);
+            <span class="token-keyword">return</span> <span class="token-number">2</span> <span class="token-operator">*</span> (Ancho <span class="token-operator">+</span> Alto);
         }
         
-        public override void MostrarInfo()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
         {
-            base.MostrarInfo();
-            Console.WriteLine($"Dimensiones: {Ancho} x {Alto}");
+            <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Dimensiones: {Ancho} x {Alto}"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <p>Crea <code>Circulo.cs</code>:</p>
-      <pre><code>using System;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Circulo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31</div>
+          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace SistemaFiguras
+<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
 {
-    public class Circulo : Figura
+    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Circulo</span> : <span class="token-class">Figura</span>
     {
-        public double Radio { get; set; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> Radio { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
         
-        public Circulo(double radio) : base("Círculo")
+        <span class="token-keyword">public</span> <span class="token-method">Circulo</span>(<span class="token-type">double</span> radio) : <span class="token-keyword">base</span>(<span class="token-string">"Círculo"</span>)
         {
-            Radio = radio;
+            Radio <span class="token-operator">=</span> radio;
         }
         
-        public override double CalcularArea()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
         {
-            return Math.PI * Radio * Radio;
+            <span class="token-keyword">return</span> <span class="token-class">Math</span>.PI <span class="token-operator">*</span> Radio <span class="token-operator">*</span> Radio;
         }
         
-        public override double CalcularPerimetro()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
         {
-            return 2 * Math.PI * Radio;
+            <span class="token-keyword">return</span> <span class="token-number">2</span> <span class="token-operator">*</span> <span class="token-class">Math</span>.PI <span class="token-operator">*</span> Radio;
         }
         
-        public override void MostrarInfo()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
         {
-            base.MostrarInfo();
-            Console.WriteLine($"Radio: {Radio}");
-            Console.WriteLine($"Diámetro: {2 * Radio}");
+            <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Radio: {Radio}"</span>);
+            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Diámetro: {2 * Radio}"</span>);
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <p>Crea <code>Triangulo.cs</code> (desafío adicional):</p>
-      <pre><code>using System;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Triangulo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
+          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
 
-namespace SistemaFiguras
+<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
 {
-    public class Triangulo : Figura
+    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Triangulo</span> : <span class="token-class">Figura</span>
     {
-        public double Base { get; set; }
-        public double Altura { get; set; }
-        public double LadoA { get; set; }
-        public double LadoB { get; set; }
-        public double LadoC { get; set; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> Base { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> Altura { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoA { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoB { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoC { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
         
-        public Triangulo(double baseTri, double altura, 
-                         double a, double b, double c) : base("Triángulo")
+        <span class="token-keyword">public</span> <span class="token-method">Triangulo</span>(<span class="token-type">double</span> baseTri, <span class="token-type">double</span> altura, 
+                         <span class="token-type">double</span> a, <span class="token-type">double</span> b, <span class="token-type">double</span> c) : <span class="token-keyword">base</span>(<span class="token-string">"Triángulo"</span>)
         {
-            Base = baseTri;
-            Altura = altura;
-            LadoA = a;
-            LadoB = b;
-            LadoC = c;
+            Base <span class="token-operator">=</span> baseTri;
+            Altura <span class="token-operator">=</span> altura;
+            LadoA <span class="token-operator">=</span> a;
+            LadoB <span class="token-operator">=</span> b;
+            LadoC <span class="token-operator">=</span> c;
         }
         
-        public override double CalcularArea()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
         {
-            return (Base * Altura) / 2;
+            <span class="token-keyword">return</span> (Base <span class="token-operator">*</span> Altura) <span class="token-operator">/</span> <span class="token-number">2</span>;
         }
         
-        public override double CalcularPerimetro()
+        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
         {
-            return LadoA + LadoB + LadoC;
+            <span class="token-keyword">return</span> LadoA <span class="token-operator">+</span> LadoB <span class="token-operator">+</span> LadoC;
         }
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Paso 4: Programa Principal con Polimorfismo (10 minutos)</h3>
       <p>Modifica <code>Program.cs</code>:</p>
