@@ -263,6 +263,20 @@
     .token-operator { color: #89ddff; }
     /* Accessibility */
     abbr[title] { text-decoration: underline dotted; cursor: help; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
     /* Print styles */
     @media print {
       header, nav, footer { background: white !important; color: black !important; }
@@ -272,6 +286,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 2</div>
@@ -313,7 +328,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main">
     <section id="teoria">
       <h2>1. Teoría: ¿Qué es la Herencia?</h2>
       
@@ -432,37 +447,26 @@
       </table>
 
       <figure>
-        <div class="diagram">
-<pre>
-┌─────────────────────────────────────────────────────────────────┐
-│                    POLIMORFISMO EN C#                           │
-├─────────────────────────────┬───────────────────────────────────┤
-│   COMPILE-TIME              │   RUNTIME                         │
-│   (Sobrecarga)              │   (Sobrescritura)                 │
-├─────────────────────────────┼───────────────────────────────────┤
-│                             │                                   │
-│  void Procesar(int x)       │   class Animal                    │
-│  void Procesar(string s)    │   {                               │
-│  void Procesar(int x,       │       public virtual void         │
-│              string s)      │                     Hablar() { }  │
-│                             │   }                               │
-│  El compilador decide       │                                   │
-│  cuál método llamar         │   class Perro : Animal            │
-│  según los parámetros       │   {                               │
-│                             │       public override void        │
-│                             │                     Hablar() { }  │
-│                             │   }                               │
-│                             │                                   │
-│                             │   Animal a = new Perro();         │
-│                             │   a.Hablar(); // "Guau!"          │
-│                             │                                   │
-│                             │   El CLR decide en runtime        │
-│                             │   qué método ejecutar             │
-│                             │                                   │
-└─────────────────────────────┴───────────────────────────────────┘
-</pre>
-        </div>
-        <figcaption>Comparación entre polimorfismo en tiempo de compilación (sobrecarga) y en tiempo de ejecución (sobrescritura)</figcaption>
+        <svg width="100%" viewBox="0 0 760 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="polimorfismoTitle">
+          <title id="polimorfismoTitle">Comparación: polimorfismo en tiempo de compilación (sobrecarga) vs tiempo de ejecución (sobrescritura)</title>
+          <style>
+            .col{font:700 13px Arial, sans-serif; fill:#0b2d6b}
+            .mono{font:12px monospace; fill:#0b2d6b}
+            rect{rx:8}
+          </style>
+          <rect x="20" y="20" width="340" height="180" fill="#f1f5f9" stroke="#dbeafe"/>
+          <text x="190" y="44" text-anchor="middle" class="col">COMPILE-TIME (Sobrecarga)</text>
+          <text x="190" y="72" text-anchor="middle" class="mono">void Procesar(int x)</text>
+          <text x="190" y="96" text-anchor="middle" class="mono">void Procesar(string s)</text>
+          <text x="190" y="120" text-anchor="middle" class="mono">void Procesar(int x, string s)</text>
+
+          <rect x="400" y="20" width="340" height="180" fill="#f8fafc" stroke="#cfe2ff"/>
+          <text x="570" y="44" text-anchor="middle" class="col">RUNTIME (Sobrescritura)</text>
+          <text x="470" y="72" class="mono">class Animal { public virtual void Hablar() { } }</text>
+          <text x="470" y="96" class="mono">class Perro : Animal { public override void Hablar() { /* Guau! */ } }</text>
+          <text x="470" y="120" class="mono">Animal a = new Perro(); a.Hablar(); // Se decide en runtime</text>
+        </svg>
+        <figcaption>Polimorfismo estático (sobrecarga) vs dinámico (sobrescritura): el primero decide en compilación según la firma, el segundo en runtime según el tipo real del objeto.</figcaption>
       </figure>
     </section>
 
@@ -473,83 +477,96 @@
       <p>C# solo permite <strong>herencia simple de clases</strong>: una clase puede heredar directamente de <strong>una única</strong> clase base. Esto evita la ambigüedad del "diamante" que ocurre en herencia múltiple.</p>
 
       <div class="diagram">
-<pre>
-                    HERENCIA SIMPLE EN C#
-                    
-                         ┌─────────────┐
-                         │   Persona   │  ← Clase Base
-                         │  - Nombre   │
-                         │  - Edad     │
-                         └──────┬──────┘
-                                │ extends
-                                ▼
-                         ┌─────────────┐
-                         │  Empleado   │  ← Clase Derivada
-                         │  - Salario  │
-                         │  - Cargo    │
-                         └──────┬──────┘
-                                │ extends
-                                ▼
-                         ┌─────────────┐
-                         │   Gerente   │  ← Clase Derivada
-                         │  - Bonos    │
-                         │  - Equipo   │
-                         └─────────────┘
-</pre>
+        <figure>
+          <svg width="100%" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herenciaSimple">
+            <title id="herenciaSimple">Herencia simple en C#: Persona → Empleado → Gerente</title>
+            <style>
+              .box{fill:#fff;stroke:#dbeafe;rx:8}
+              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
+              .s{font:12px Arial, sans-serif; fill:#475569}
+            </style>
+            <rect x="260" y="18" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="360" y="38" text-anchor="middle" class="h">Persona</text>
+            <text x="360" y="54" text-anchor="middle" class="s">- Nombre · - Edad</text>
+
+            <rect x="260" y="96" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="360" y="116" text-anchor="middle" class="h">Empleado</text>
+            <text x="360" y="132" text-anchor="middle" class="s">- Salario · - Cargo</text>
+
+            <rect x="260" y="174" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="360" y="194" text-anchor="middle" class="h">Gerente</text>
+            <text x="360" y="210" text-anchor="middle" class="s">- Bonos · - Equipo</text>
+
+            <path d="M360 70 L360 96" stroke="#0b2d6b" stroke-width="2" marker-end="url(#arrow)"/>
+            <path d="M360 150 L360 174" stroke="#0b2d6b" stroke-width="2" marker-end="url(#arrow)"/>
+            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L6,4 L0,8 z" fill="#0b2d6b"/></marker></defs>
+          </svg>
+        </figure>
       </div>
 
       <h3>Herencia Jerárquica</h3>
       <p>Una clase base puede tener <strong>múltiples clases derivadas</strong>, creando una jerarquía en forma de árbol.</p>
 
       <div class="diagram">
-<pre>
-                    HERENCIA JERÁRQUICA
-                    
-                              ┌─────────────┐
-                              │   Figura    │
-                              │   abstract  │
-                              │  + Area()   │
-                              └──────┬──────┘
-                                     │
-           ┌─────────────────────────┼─────────────────────────┐
-           │                         │                         │
-           ▼                         ▼                         ▼
-    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
-    │  Rectangulo │           │   Circulo   │           │  Triangulo  │
-    │  - Ancho    │           │  - Radio    │           │  - Base     │
-    │  - Alto     │           │             │           │  - Altura   │
-    └─────────────┘           └─────────────┘           └─────────────┘
+        <figure>
+          <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herarqTitle">
+            <title id="herarqTitle">Herencia jerárquica: Figura → Rectángulo / Círculo / Triángulo</title>
+            <style>
+              .box{fill:#fff;stroke:#dbeafe;rx:8}
+              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
+              .s{font:12px Arial, sans-serif; fill:#475569}
+            </style>
+            <rect x="300" y="20" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="46" text-anchor="middle" class="h">Figura (abstract)</text>
+            <text x="380" y="64" text-anchor="middle" class="s">+ Area()</text>
 
-    Todas implementan: override double Area()
-</pre>
+            <rect x="60" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="140" y="146" text-anchor="middle" class="h">Rectángulo</text>
+            <text x="140" y="164" text-anchor="middle" class="s">- Ancho · - Alto</text>
+
+            <rect x="300" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="146" text-anchor="middle" class="h">Círculo</text>
+            <text x="380" y="164" text-anchor="middle" class="s">- Radio</text>
+
+            <rect x="540" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="620" y="146" text-anchor="middle" class="h">Triángulo</text>
+            <text x="620" y="164" text-anchor="middle" class="s">- Base · - Altura</text>
+
+            <path d="M380 80 L140 120" stroke="#0b2d6b" stroke-width="2"/>
+            <path d="M380 80 L380 120" stroke="#0b2d6b" stroke-width="2"/>
+            <path d="M380 80 L620 120" stroke="#0b2d6b" stroke-width="2"/>
+          </svg>
+        </figure>
       </div>
 
       <h3>Herencia Multinivel</h3>
       <p>Una clase derivada puede a su vez servir como clase base para otra clase, creando cadenas de herencia.</p>
 
       <div class="diagram">
-<pre>
-                    HERENCIA MULTINIVEL
-                    
-    ┌─────────────┐
-    │   Vehiculo  │  ← Clase base
-    │  - Marca    │     (nivel 0)
-    │  - Modelo   │
-    └──────┬──────┘
-           │ extends
-           ▼
-    ┌─────────────┐
-    │  Auto       │  ← Clase derivada
-    │  - Puertas  │     (nivel 1)
-    └──────┬──────┘
-           │ extends
-           ▼
-    ┌─────────────┐
-    │AutoElectrico│  ← Clase derivada
-    │  - Bateria  │     (nivel 2)
-    │  - Autonomia│
-    └─────────────┘
-</pre>
+        <figure>
+          <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="multiHerTitle">
+            <title id="multiHerTitle">Herencia multinivel: Vehiculo → Auto → AutoEléctrico</title>
+            <style>
+              .box{fill:#fff;stroke:#dbeafe;rx:8}
+              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
+              .s{font:12px Arial, sans-serif; fill:#475569}
+            </style>
+            <rect x="300" y="20" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="40" text-anchor="middle" class="h">Vehículo</text>
+            <text x="380" y="56" text-anchor="middle" class="s">- Marca · - Modelo</text>
+
+            <rect x="300" y="112" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="132" text-anchor="middle" class="h">Auto</text>
+            <text x="380" y="148" text-anchor="middle" class="s">- Puertas</text>
+
+            <rect x="300" y="204" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="224" text-anchor="middle" class="h">AutoEléctrico</text>
+            <text x="380" y="240" text-anchor="middle" class="s">- Batería · - Autonomía</text>
+
+            <path d="M380 72 L380 112" stroke="#0b2d6b" stroke-width="2"/>
+            <path d="M380 172 L380 204" stroke="#0b2d6b" stroke-width="2"/>
+          </svg>
+        </figure>
       </div>
 
       <div class="warning-box">
@@ -1307,19 +1324,31 @@ namespace SistemaFiguras
       </ol>
 
       <div class="diagram">
-<pre>
-JERARQUÍA REQUERIDA:
+        <figure>
+          <svg width="100%" viewBox="0 0 760 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="jerarqReq">
+            <title id="jerarqReq">Jerarquía requerida: Vehículo (abstract) con Auto y Moto, AutoElectrico derivado</title>
+            <style>
+              .box{fill:#fff;stroke:#dbeafe;rx:8}
+              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
+              .s{font:12px Arial, sans-serif; fill:#475569}
+            </style>
+            <rect x="300" y="16" width="160" height="48" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="40" text-anchor="middle" class="h">Vehículo (abstract)</text>
 
-              Vehiculo
-             (abstract)
-                  │
-      ┌───────────┴───────────┐
-      │                       │
-     Auto                   Moto
-      │
-      │
-  AutoElectrico
-</pre>
+            <rect x="140" y="108" width="160" height="48" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="220" y="132" text-anchor="middle" class="h">Auto</text>
+
+            <rect x="460" y="108" width="160" height="48" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="540" y="132" text-anchor="middle" class="h">Moto</text>
+
+            <rect x="300" y="176" width="160" height="48" rx="8" fill="#fff" stroke="#dbeafe"/>
+            <text x="380" y="200" text-anchor="middle" class="h">AutoEléctrico</text>
+
+            <path d="M380 64 L200 108" stroke="#0b2d6b" stroke-width="2"/>
+            <path d="M380 64 L540 108" stroke="#0b2d6b" stroke-width="2"/>
+            <path d="M220 156 L380 176" stroke="#0b2d6b" stroke-width="2"/>
+          </svg>
+        </figure>
       </div>
 
       <div class="checklist">

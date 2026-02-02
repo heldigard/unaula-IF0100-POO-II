@@ -228,9 +228,24 @@
             .header h1 { font-size: 1.8rem; }
             .meta-bar { flex-direction: column; text-align: center; }
         }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e3a8a;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
     <header class="header">
         <h1>Clase 11 - Formularios, Validación y Sesiones</h1>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 3 - Desarrollo Web</p>
@@ -256,7 +271,7 @@
         <a href="#referencias">Referencias</a>
     </nav>
 
-    <main class="container">
+    <main class="container" id="main">
         <!-- Objetivos -->
         <section id="objetivos" class="section">
             <h2>Objetivos de la Clase</h2>

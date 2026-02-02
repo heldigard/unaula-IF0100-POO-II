@@ -257,9 +257,24 @@
             nav a { display: inline-block; margin: 0.5rem 0.75rem; }
             section { padding: 1rem; }
         }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e40af;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
     <header>
         <h1>Clase 14: Persistencia con Archivos Planos</h1>
         <p class="subtitle">IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 4: Persistencia de Datos</p>
@@ -282,7 +297,7 @@
         <a href="#referencias">Referencias</a>
     </nav>
 
-    <main>
+    <main id="main">
         <!-- Objetivos -->
         <section id="objetivos">
             <h2>Objetivos de Aprendizaje</h2>

@@ -121,6 +121,20 @@
     .token-operator { color: #89ddff; }
     /* Accessibility */
     abbr[title] { text-decoration: underline dotted; cursor: help; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
     /* Print styles */
     @media print {
       header, nav, footer { background: white !important; color: black !important; }
@@ -130,6 +144,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 1</div>
@@ -168,7 +183,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main">
     <section id="teoria">
       <h2>Teoría</h2>
 

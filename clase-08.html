@@ -285,9 +285,24 @@
                 padding: 20px;
             }
         }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e40af;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
     <header>
         <h1>Introducción a ASP.NET Core</h1>
         <div class="subtitle">IF0100 - Lenguaje de Programación OO II | Unidad 3</div>
@@ -314,7 +329,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="container" id="main">
         <nav id="inicio">
             <h2>Tabla de Contenidos</h2>
             <div class="toc-grid">
@@ -377,27 +392,28 @@
             <h2>2. Arquitectura</h2>
 
             <h3>Vista General</h3>
-            <div class="diagram">
-<pre>
-┌─────────────────────────────────┐
-│       ASP.NET CORE APP          │
-├─────────────────────────────────┤
-│  MIDDLEWARE PIPELINE            │
-│  ┌─────────────────────────────┐│
-│  │ Exception Handler           ││
-│  │ HTTPS Redirection           ││
-│  │ Static Files                ││
-│  │ Routing                     ││
-│  │ Authentication              ││
-│  │ Authorization               ││
-│  │ Custom Middleware           ││
-│  │ Endpoints (MVC/Razor/API)   ││
-│  └─────────────────────────────┘│
-├─────────────────────────────────┤
-│  KESTREL WEB SERVER            │
-└─────────────────────────────────┘
-</pre>
-            </div>
+            <figure>
+              <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="aspnetTitle">
+                <title id="aspnetTitle">Arquitectura ASP.NET Core: Middleware pipeline y servidor Kestrel</title>
+                <style>
+                  .app{fill:#0b2d6b;rx:8}
+                  .pipe{fill:#eef2ff;stroke:#dbeafe;rx:8}
+                  .s{font:700 13px Arial, sans-serif; fill:#fff}
+                  .p{font:12px Arial, sans-serif; fill:#0b2d6b}
+                </style>
+                <rect x="40" y="20" width="680" height="56" rx="10" fill="#0b2d6b"/>
+                <text x="380" y="54" text-anchor="middle" class="s">ASP.NET CORE APP</text>
+
+                <rect x="80" y="96" width="600" height="120" rx="8" fill="#eef2ff" stroke="#dbeafe"/>
+                <text x="380" y="120" text-anchor="middle" class="p">MIDDLEWARE PIPELINE</text>
+                <text x="380" y="140" text-anchor="middle" class="p">Exception Handler · HTTPS Redirection · Static Files · Routing · Authentication · Authorization · Custom Middleware · Endpoints (MVC/Razor/API)</text>
+
+                <rect x="200" y="230" width="360" height="32" rx="8" fill="#fff" stroke="#dbeafe"/>
+                <text x="380" y="252" text-anchor="middle" class="p">KESTREL WEB SERVER</text>
+              </svg>
+              <figcaption>Arquitectura simplificada de ASP.NET Core: pipeline de middleware que procesa solicitudes, con Kestrel como servidor web subyacente.</figcaption>
+            </figure>
+            </div> 
 
             <h3>Componentes Clave</h3>
             <table>

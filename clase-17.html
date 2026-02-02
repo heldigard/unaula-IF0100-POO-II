@@ -112,6 +112,20 @@
     .token-operator { color: #89ddff; }
     /* Accessibility */
     abbr[title] { text-decoration: underline dotted; cursor: help; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
     /* Print styles */
     @media print {
       header, nav, footer { background: white !important; color: black !important; }
@@ -121,6 +135,7 @@
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 5</div>
@@ -158,7 +173,7 @@
     </ul>
   </nav>
 
-  <main>
+  <main id="main">
     <section id="teoria">
       <h2>Teoria</h2>
 
@@ -225,15 +240,43 @@
       <h2>Ejemplos</h2>
 
       <h3>Estructura sugerida del proyecto</h3>
-      <pre><code>SistemaAcademico/
-├── src/
-│   ├── SistemaAcademico.Core/
-│   ├── SistemaAcademico.Data/
-│   ├── SistemaAcademico.UI/
-│   └── SistemaAcademico.Tests/
-├── database/
-├── docs/
-└── SistemaAcademico.sln</code></pre>
+      <figure>
+        <svg width="100%" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="projTree">
+          <title id="projTree">Estructura de proyecto sugerida</title>
+          <style>
+            .n{font:600 13px Arial, sans-serif; fill:#0b2d6b}
+            .s{font:12px Arial, sans-serif; fill:#475569}
+            rect{rx:6}
+          </style>
+          <rect x="40" y="20" width="640" height="40" fill="#fff" stroke="#dbeafe"/>
+          <text x="360" y="46" text-anchor="middle" class="n">SistemaAcademico/</text>
+
+          <rect x="80" y="80" width="240" height="36" fill="#eef2ff" stroke="#dbeafe"/>
+          <text x="200" y="104" text-anchor="middle" class="s">src/</text>
+
+          <rect x="80" y="134" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="180" y="152" text-anchor="middle" class="s">SistemaAcademico.Core/</text>
+
+          <rect x="300" y="134" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="400" y="152" text-anchor="middle" class="s">SistemaAcademico.Data/</text>
+
+          <rect x="80" y="174" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="180" y="192" text-anchor="middle" class="s">SistemaAcademico.UI/</text>
+
+          <rect x="300" y="174" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="400" y="192" text-anchor="middle" class="s">SistemaAcademico.Tests/</text>
+
+          <rect x="520" y="134" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="600" y="152" text-anchor="middle" class="s">database/</text>
+
+          <rect x="520" y="174" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="600" y="192" text-anchor="middle" class="s">docs/</text>
+
+          <rect x="520" y="214" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
+          <text x="600" y="232" text-anchor="middle" class="s">SistemaAcademico.sln</text>
+        </svg>
+        <figcaption>Estructura sugerida: separar `src/` con proyectos core, data, UI y tests; recursos y base de datos en carpetas dedicadas.</figcaption>
+      </figure>
 
       <h3>Repository Pattern (fragmento)</h3>
       <pre><code class="language-csharp">public interface IEstudianteRepository
