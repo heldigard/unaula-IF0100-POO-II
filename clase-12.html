@@ -434,7 +434,7 @@
 
             <h3>Componentes principales</h3>
             <figure class="figure-container">
-                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET">
+                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET" onerror="this.onerror=null;this.src='/assets/infografias/clase-12-ado-net.png'">
                 <figcaption>Arquitectura ADO.NET: El Data Provider (System.Data.SqlClient) contiene SqlConnection para gestionar conexiones, SqlCommand para ejecutar queries con parámetros seguros, y SqlDataReader para lectura eficiente forward-only; el DataSet ofrece modo desconectado con DataTables para escenarios donde se requiere desconexión de la base de datos; las flechas muestran el flujo de datos desde la aplicación a través del proveedor hasta la fuente de datos SQL Server.</figcaption>
             </figure>
 
@@ -954,6 +954,20 @@ command.Parameters.AddWithValue("@Codigo", codigo);
                     <li>¿Puedes explicar el ataque con "'; DROP TABLE Estudiantes; --"?</li>
                 </ul>
             </div>
+        </section>
+        </section>
+
+        <!-- Ejemplos -->
+        <section id="ejemplos" class="section">
+            <h2>Ejemplos</h2>
+            <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
+            <ul>
+                <li>Conexión a bases de datos con SqlConnection</li>
+                <li>Operaciones CRUD con SqlCommand</li>
+                <li>Uso de SqlDataReaders y DataSets</li>
+                <li>Implementación de transacciones</li>
+                <li>Buenas prácticas de seguridad</li>
+            </ul>
         </section>
 
         <!-- Práctica / Laboratorio -->

@@ -55,10 +55,23 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
         nav a {
             color: white;
             text-decoration: none;
-            margin-right: 1.5rem;
             font-size: 0.9rem;
             opacity: 0.9;
             transition: opacity 0.2s;
@@ -286,18 +299,18 @@
     </header>
 
     <nav>
-        <a href="#objetivos">Objetivos</a>
-        <a href="#teoria">Teoría</a>
-        <a href="#ejemplos">Ejemplos</a>
-        <a href="#csv">CSV</a>
-        <a href="#json">JSON</a>
-        <a href="#xml">XML</a>
-        <a href="#avanzado">Avanzado</a>
-        <a href="#ejercicios">Ejercicios</a>
-        <a href="#referencias">Referencias</a>
+        <ul>
+            <li><a href="#teoria">Teoría</a></li>
+            <li><a href="#ejemplos">Ejemplos</a></li>
+            <li><a href="#practica">Práctica / Laboratorio</a></li>
+            <li><a href="#ejercicios">Ejercicios</a></li>
+            <li><a href="#referencias">Referencias</a></li>
+        </ul>
     </nav>
 
     <main id="main">
+        <!-- Teoría -->
+        <section id="teoria">
         <!-- Objetivos -->
         <section id="objetivos">
             <h2>Objetivos de Aprendizaje</h2>
@@ -381,8 +394,9 @@
                 </tbody>
             </table>
         </section>
+        </section>
 
-        <!-- System.IO -->
+        <!-- Ejemplos -->
         <section id="ejemplos">
             <h2>2. System.IO - API Base de Archivos</h2>
 
@@ -1029,6 +1043,12 @@ PageSize=20</code></pre>
 <span class="comment">// Salida example:</span>
 <span class="comment">// [2026-02-01 18:30:15] CREATE - Estudiante EST004 creado por Usuario1</span>
 <span class="comment">// [2026-02-01 18:32:20] UPDATE - Estudiante EST002 actualizado por Usuario1</span></code></pre>
+        </section>
+
+        <!-- Práctica / Laboratorio -->
+        <section id="practica">
+            <h2>Práctica / Laboratorio</h2>
+            <p>Para ejercicios prácticos, consulte la sección de ejercicios a continuación.</p>
         </section>
 
         <!-- Ejercicios -->
