@@ -413,13 +413,11 @@ p code, li code {
 
   <nav>
     <ul>
-      <li><a href="#teoria">1. Teoría: Herencia</a></li>
-      <li><a href="#tipos-herencia">2. Tipos de Herencia</a></li>
-      <li><a href="#liskov">3. Principio de Liskov</a></li>
-      <li><a href="#ejemplos">4. Ejemplos Prácticos</a></li>
-      <li><a href="#practica">5. Laboratorio Guiado</a></li>
-      <li><a href="#ejercicios">6. Ejercicios</a></li>
-      <li><a href="#referencias">7. Referencias</a></li>
+      <li><a href="#teoria">Teoría</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#practica">Práctica / Laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
     </ul>
   </nav>
 
@@ -1885,6 +1883,22 @@ Total Nómina: $20800.00
     </section>
 
   </main>
+
+  <section id="resumen">
+    <h2>Resumen de la Clase</h2>
+    <ul>
+      <li>La herencia permite crear nuevas clases basadas en clases existentes, reutilizando código y estableciendo relaciones "es-un" (Animal -> Perro).</li>
+      <li>Herencia multinivel permite cadenas de herencia (Vehiculo -> Auto -> AutoElectrico) donde cada nivel añade funcionalidad específica.</li>
+      <li>El Principio de Sustitución de Liskov (LSP) establece que una clase derivada debe poder sustituir a su clase base sin alterar el programa.</li>
+      <li>El polimorfismo permite que objetos de diferentes tipos respondan al mismo mensaje de manera diferente a través de override.</li>
+      <li>virtual/override permite modificar el comportamiento de métodos en clases derivadas mientras se mantiene la firma.</li>
+      <li>new oculta el método de la clase base (no es polimorfismo, solo cambia qué método se llama).</li>
+      <li>sealed previene que una clase o método sea heredado o sobreescrito.</li>
+      <li>Las interfaces definen contratos sin implementación y permiten "herencia múltiple" de comportamientos.</li>
+      <li>abstract class puede tener implementación parcial mientras interface solo define firmas.</li>
+      <li>El polimorfismo se logra mediante herencia (override) o interfaces, permitiendo código flexible y extensible.</li>
+    </ul>
+  </section>
 
   <footer>
     <p><strong>IF0100 - Lenguaje de Programación Orientada a Objetos II</strong></p>

@@ -1299,6 +1299,22 @@ PageSize=20</code></pre>
         </section>
     </main>
 
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>Entity Framework es un ORM que mapea objetos C# a tablas de base de datos.</li>
+        <li>DbContext es la unidad de trabajo que rastrea cambios en entidades.</li>
+        <li>DbSet<T> representa colecciones de entidades de una tabla (similar a Repository).</li>
+        <li>EF Core soporta LINQ to Entities, Change Tracking, Lazy Loading, y Migrations.</li>
+        <li>Connection String configura conexión a base de datos (SQL Server, SQLite, PostgreSQL).</li>
+        <li>OnModelCreating configura mapeos entidad-tabla, relaciones y restricciones con Fluent API.</li>
+        <li>Las relaciones se configuran con HasOne/HasMany y WithOne/WithMany para propiedades de navegación.</li>
+        <li>Migrations (Add-Migration, Update-Database) versionan el esquema de base de datos.</li>
+        <li>Include() y ThenInclude() permiten Eager Loading de entidades relacionadas.</li>
+        <li>AsNoTracking() deshabilita tracking para consultas de solo lectura (mejora rendimiento).</li>
+      </ul>
+    </section>
+
     <footer>
         <p><strong>IF0100 - Lenguaje de Programación Orientada a Objetos II</strong></p>
         <p>UNAULA - Ingeniería Informática | 2026-I Semestre</p>

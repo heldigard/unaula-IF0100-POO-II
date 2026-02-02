@@ -293,7 +293,7 @@
   <nav>
     <ul>
       <li><a href="#teoria">Teoría</a></li>
-      <li><a href="#ejemplos">Ejemplos e infografías</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
       <li><a href="#practica">Práctica / laboratorio</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
       <li><a href="#referencias">Referencias</a></li>
@@ -415,55 +415,94 @@
       </figure>
 
       <h3>Entity en C# (Cliente)</h3>
-      <pre><code class="language-csharp">public class Cliente
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Cliente.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Cliente</span>
 {
-    public ClienteId Id { get; private set; }
-    public string Nombre { get; private set; }
-    public Email Email { get; private set; }
+    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">Email</span> <span class="token-property">Email</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
 
-    public Cliente(ClienteId id, string nombre, Email email)
+    <span class="token-keyword">public</span> <span class="token-method">Cliente</span>(<span class="token-type">ClienteId</span> <span class="token-operator">id</span>, <span class="token-keyword">string</span> <span class="token-operator">nombre</span>, <span class="token-type">Email</span> <span class="token-operator">email</span>)
     {
-        Id = id;
-        Nombre = nombre;
-        Email = email;
+        <span class="token-property">Id</span> <span class="token-operator">=</span> <span class="token-operator">id</span>;
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-operator">nombre</span>;
+        <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">email</span>;
     }
 
-    public void CambiarEmail(Email nuevoEmail) => Email = nuevoEmail;
+    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">CambiarEmail</span>(<span class="token-type">Email</span> <span class="token-operator">nuevoEmail</span>) <span class="token-operator">=></span> <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">nuevoEmail</span>;
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Value Object en C# (Dinero)</h3>
-      <pre><code class="language-csharp">public class Dinero : IEquatable&lt;Dinero&gt;
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Dinero.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Dinero</span> : <span class="token-type">IEquatable</span>&lt;<span class="token-type">Dinero</span>&gt;
 {
-    public decimal Monto { get; }
-    public string Moneda { get; }
+    <span class="token-keyword">public</span> <span class="token-keyword">decimal</span> <span class="token-property">Monto</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Moneda</span> { <span class="token-keyword">get</span>; }
 
-    public Dinero(decimal monto, string moneda)
+    <span class="token-keyword">public</span> <span class="token-method">Dinero</span>(<span class="token-keyword">decimal</span> <span class="token-operator">monto</span>, <span class="token-keyword">string</span> <span class="token-operator">moneda</span>)
     {
-        if (monto &lt; 0) throw new ArgumentException();
-        Monto = monto;
-        Moneda = moneda;
+        <span class="token-keyword">if</span> (<span class="token-operator">monto</span> <span class="token-operator">&lt;</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
+        <span class="token-property">Monto</span> <span class="token-operator">=</span> <span class="token-operator">monto</span>;
+        <span class="token-property">Moneda</span> <span class="token-operator">=</span> <span class="token-operator">moneda</span>;
     }
 
-    public Dinero Sumar(Dinero otro)
+    <span class="token-keyword">public</span> <span class="token-type">Dinero</span> <span class="token-method">Sumar</span>(<span class="token-type">Dinero</span> <span class="token-operator">otro</span>)
     {
-        if (Moneda != otro.Moneda) throw new InvalidOperationException();
-        return new Dinero(Monto + otro.Monto, Moneda);
+        <span class="token-keyword">if</span> (<span class="token-property">Moneda</span> <span class="token-operator">!=</span> <span class="token-operator">otro</span>.<span class="token-property">Moneda</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>();
+        <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-method">Dinero</span>(<span class="token-property">Monto</span> <span class="token-operator">+</span> <span class="token-operator">otro</span>.<span class="token-property">Monto</span>, <span class="token-property">Moneda</span>);
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Aggregate Root: Pedido</h3>
-      <pre><code class="language-csharp">public class Pedido
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Pedido.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pedido</span>
 {
-    public PedidoId Id { get; private set; }
-    public ClienteId ClienteId { get; private set; }
-    private readonly List&lt;LineaPedido&gt; _lineas = new();
+    <span class="token-keyword">public</span> <span class="token-type">PedidoId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">ClienteId</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">List</span>&lt;<span class="token-type">LineaPedido</span>&gt; <span class="token-operator">_lineas</span> <span class="token-operator">=</span> <span class="token-keyword">new</span>();
 
-    public void AgregarProducto(ProductoId productoId, int cantidad, Dinero precio)
+    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">AgregarProducto</span>(<span class="token-type">ProductoId</span> <span class="token-operator">productoId</span>, <span class="token-keyword">int</span> <span class="token-operator">cantidad</span>, <span class="token-type">Dinero</span> <span class="token-operator">precio</span>)
     {
-        if (cantidad &lt;= 0) throw new ArgumentException();
-        _lineas.Add(new LineaPedido(productoId, cantidad, precio));
+        <span class="token-keyword">if</span> (<span class="token-operator">cantidad</span> <span class="token-operator">&lt;=</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
+        <span class="token-operator">_lineas</span>.<span class="token-method">Add</span>(<span class="token-keyword">new</span> <span class="token-method">LineaPedido</span>(<span class="token-operator">productoId</span>, <span class="token-operator">cantidad</span>, <span class="token-operator">precio</span>));
     }
 }</code></pre>
+        </div>
+      </div>
     </section>
 
     <section id="practica">
@@ -487,26 +526,52 @@
       <div class="note">Checklist: solución compila, dominio sin referencias a infraestructura, repositorio por interfaz.</div>
 
       <h3>Repository pattern (interface + implementación)</h3>
-      <pre><code class="language-csharp">public interface IPedidoRepository
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">IPedidoRepository.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-class">IPedidoRepository</span>
 {
-    Task&lt;Pedido&gt; ObtenerAsync(PedidoId id);
-    Task GuardarAsync(Pedido pedido);
-}
+    <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>);
+    <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>);
+}</code></pre>
+        </div>
+      </div>
 
-public class PedidoRepository : IPedidoRepository
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">PedidoRepository.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">PedidoRepository</span> : <span class="token-type">IPedidoRepository</span>
 {
-    private readonly AppDbContext _context;
-    public PedidoRepository(AppDbContext context) => _context = context;
+    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">AppDbContext</span> <span class="token-operator">_context</span>;
+    <span class="token-keyword">public</span> <span class="token-method">PedidoRepository</span>(<span class="token-type">AppDbContext</span> <span class="token-operator">context</span>) <span class="token-operator">=></span> <span class="token-operator">_context</span> <span class="token-operator">=</span> <span class="token-operator">context</span>;
 
-    public Task&lt;Pedido&gt; ObtenerAsync(PedidoId id)
-        => _context.Pedidos.FirstOrDefaultAsync(p => p.Id == id);
+    <span class="token-keyword">public</span> <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>)
+        <span class="token-operator">=></span> <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">FirstOrDefaultAsync</span>(<span class="token-operator">p</span> <span class="token-operator">=></span> <span class="token-operator">p</span>.<span class="token-property">Id</span> <span class="token-operator">==</span> <span class="token-operator">id</span>);
 
-    public async Task GuardarAsync(Pedido pedido)
+    <span class="token-keyword">public</span> <span class="token-keyword">async</span> <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>)
     {
-        _context.Pedidos.Update(pedido);
-        await _context.SaveChangesAsync();
+        <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">Update</span>(<span class="token-operator">pedido</span>);
+        <span class="token-keyword">await</span> <span class="token-operator">_context</span>.<span class="token-method">SaveChangesAsync</span>();
     }
 }</code></pre>
+        </div>
+      </div>
 
       <h3>Bounded Contexts</h3>
       <p>Un <strong><abbr title="Bounded Context: Límite conceptual dentro del cual un modelo particular aplica y tiene significado; cada contexto tiene su propio lenguaje ubicuo y modelo del dominio">Bounded Context</abbr></strong> (Contexto Delimitado) es un límite conceptual dentro del cual un modelo particular aplica. DDD divide sistemas grandes en múltiples bounded contexts, cada uno con su propio modelo.</p>
@@ -565,6 +630,22 @@ public class PedidoRepository : IPedidoRepository
         <li><strong>Domain Language (Eric Evans):</strong> <a href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener">DDD Reference</a></li>
         <li><strong>Microsoft Architecture - DDD:</strong> <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/category/domain-driven-design" target="_blank" rel="noopener">DDD Patterns</a></li>
         <li><strong>Repository Pattern (Martin Fowler):</strong> <a href="https://martinfowler.com/eaaCatalog/repository.html" target="_blank" rel="noopener">Repository</a></li>
+      </ul>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>Domain-Driven Design (DDD) es un enfoque que prioriza el dominio del problema sobre detalles técnicos.</li>
+        <li>El lenguaje ubicuo es un lenguaje compartido entre expertos del dominio y desarrolladores.</li>
+        <li>Entities tienen identidad única y lifecycle; Value Objects se identifican por sus atributos.</li>
+        <li>Aggregate Root es la única entrada para modificar un aggregate, controlando invariantes de negocio.</li>
+        <li>Repository Pattern abstrae el acceso a datos, exponiendo interfaces del dominio sin depender de infraestructura.</li>
+        <li>Domain Service contiene lógica de negocio que no pertenece naturalmente a una Entity o Value Object.</li>
+        <li>Factory encapsula la creación de objetos complejos, garantizando consistencia.</li>
+        <li>Bounded Context divide sistemas grandes en contextos delimitados con modelos independientes.</li>
+        <li>DDD separa en capas: Domain (dominio puro), Application (casos de uso), Infrastructure (persistencia).</li>
+        <li>La arquitectura en capas con inversión de dependencias permite que el dominio no dependa de infraestructura.</li>
       </ul>
     </section>
   </main>
