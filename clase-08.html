@@ -672,13 +672,13 @@ uvicorn main:app --reload
             </table>
         </section>
 
-        <section id="razor-pages">
-            <h2>5. Razor Pages</h2>
+        <section id="fastapi-routes">
+            <h2>5. FastAPI Routes</h2>
 
-            <h3>¿Qué son Razor Pages?</h3>
-            <p><strong>Razor Pages</strong> es un modelo de programación orientado a páginas que facilita la creación de interfaces web.</p>
+            <h3>¿Qué son las Routes en FastAPI?</h3>
+            <p><strong>Routes</strong> son decoradores que definen cómo responde la aplicación a diferentes solicitudes HTTP. FastAPI usa decoradores como <code>@app.get()</code>, <code>@app.post()</code>, etc.</p>
 
-            <h3>PageModel (Backend)</h3>
+            <h3>Route Handler (Backend)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -686,41 +686,42 @@ uvicorn main:app --reload
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">saludo.component.ts</span>
+                    <span class="code-title">main.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27</div>
-                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">IndexModel</span> : <span class="token-type">PageModel</span>
-{
-    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; <span class="token-property">_logger</span>;
+                    <pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request, Form
+<span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse, JSONResponse
+<span class="keyword">from</span> fastapi.templating <span class="keyword">import</span> Jinja2Templates
+<span class="keyword">from</span> typing <span class="keyword">import</span> Optional
+<span class="keyword">import</span> logging
 
-    <span class="token-comment">// Constructor con inyeccion de dependencias</span>
-    <span class="token-keyword">public</span> <span class="token-method">IndexModel</span>(<span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; logger)
-    {
-        <span class="token-property">_logger</span> = logger;
-    }
+<span class="comment"># Configurar logging</span>
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-    <span class="token-comment">// Propiedad que se muestra en la vista</span>
-    <span class="token-keyword">public string</span> <span class="token-property">Mensaje</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } = <span class="token-string">"Hola ASP.NET Core!"</span>;
+<span class="comment"># Inicializar app</span>
+app = FastAPI()
+templates = Jinja2Templates(directory=<span class="string">"templates"</span>)
 
-    <span class="token-comment">// Handler GET (cuando se carga la página)</span>
-    <span class="token-keyword">public void</span> <span class="token-method">OnGet</span>()
-    {
-        <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(<span class="token-string">"Cargando página Index"</span>);
-    }
+<span class="comment"># Route: GET / (cargar página)</span>
+<span class="keyword">@app</span>.get(<span class="string">"/"</span>, response_class=HTMLResponse)
+<span class="keyword">async def</span> <span class="method">index</span>(request: Request):
+    logger.info(<span class="string">"Cargando página Index"</span>)
+    <span class="keyword">return</span> templates.TemplateResponse(
+        <span class="string">"index.html"</span>,
+        {<span class="string">"request"</span>: request, <span class="string">"mensaje"</span>: <span class="string">"¡Hola FastAPI!"</span>}
+    )
 
-    <span class="token-comment">// Handler POST (cuando se envia formulario)</span>
-    <span class="token-keyword">public</span> <span class="token-type">IActionResult</span> <span class="token-method">OnPost</span>()
-    {
-        <span class="token-keyword">string</span> nombre = <span class="token-type">Request</span>.<span class="token-type">Form</span>[<span class="token-string">"nombre"</span>];
-        <span class="token-property">Mensaje</span> = <span class="token-string">$"Formulario enviado: {nombre}"</span>;
-        <span class="token-keyword">return</span> <span class="token-method">Page</span>(); <span class="token-comment">// Retornar la misma página</span>
-    }
-}</code></pre>
+<span class="comment"># Route: POST /saludo (procesar formulario)</span>
+<span class="keyword">@app</span>.post(<span class="string">"/saludo"</span>)
+<span class="keyword">async def</span> <span class="method">saludo</span>(nombre: <span class="type">str</span> = Form(...)):
+    logger.info(f<span class="string">"Formulario enviado: {nombre}"</span>)
+    <span class="keyword">return</span> {<span class="string">"mensaje"</span>: f<span class="string">"Formulario enviado: {nombre}"</span>}</code></pre>
                 </div>
             </div>
 
-            <h3>Razor View (Frontend)</h3>
+            <h3>Jinja2 Template (Frontend)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -728,30 +729,28 @@ uvicorn main:app --reload
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">saludo.component.html</span>
+                    <span class="code-title">templates/index.html</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
-                    <pre><code class="language-html"><span class="token-operator">@page</span>
-<span class="token-operator">@model</span> <span class="token-type">IndexModel</span>
-<span class="token-operator">@{</span>
-    <span class="token-type">ViewData</span>[<span class="token-string">"Title"</span>] = <span class="token-string">"Home Page"</span>;
-<span class="token-operator">}</span>
+                    <pre><code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;title&gt;</span>Home Page<span class="keyword">&lt;/title&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="keyword">&lt;h1&gt;</span>{{ mensaje }}<span class="keyword">&lt;/h1&gt;</span>
 
-<span class="token-operator">&lt;</span>h1<span class="token-operator">&gt;</span><span class="token-operator">@</span><span class="token-type">Model</span>.<span class="token-property">Mensaje</span><span class="token-operator">&lt;/</span>h1<span class="token-operator">&gt;</span>
-
-<span class="token-operator">&lt;</span>form <span class="token-property">method</span>=<span class="token-string">"post"</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span>input <span class="token-property">name</span>=<span class="token-string">"nombre"</span> <span class="token-property">placeholder</span>=<span class="token-string">"Tu nombre"</span> /<span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span>button <span class="token-property">type</span>=<span class="token-string">"submit"</span><span class="token-operator">&gt;</span>Enviar<span class="token-operator">&lt;/</span>button<span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;/</span>form<span class="token-operator">&gt;</span>
-
-<span class="token-operator">@section</span> <span class="token-type">Scripts</span> {
-    <span class="token-operator">@{</span><span class="token-keyword">await</span> <span class="token-method">RenderPartialAsync</span>(<span class="token-string">"_ValidationScriptsPartial"</span>);<span class="token-operator">}</span>
-}</code></pre>
+    <span class="keyword">&lt;form</span> action=<span class="string">"/saludo"</span> method=<span class="string">"post"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;input</span> name=<span class="string">"nombre"</span> placeholder=<span class="string">"Tu nombre"</span> /<span class="keyword">&gt;</span>
+        <span class="keyword">&lt;button</span> type=<span class="string">"submit"</span><span class="keyword">&gt;</span>Enviar<span class="keyword">&lt;/button&gt;</span>
+    <span class="keyword">&lt;/form&gt;</span>
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code></pre>
                 </div>
             </div>
 
-            <h3>Convenciones Razor Pages</h3>
+            <h3>Convenciones FastAPI</h3>
             <table>
                 <thead>
                     <tr>
@@ -760,11 +759,11 @@ uvicorn main:app --reload
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Archivo PageModel</strong></td><td><code>Nombre.cshtml.cs</code></td></tr>
-                    <tr><td><strong>Archivo View</strong></td><td><code>Nombre.cshtml</code></td></tr>
-                    <tr><td><strong>Handler GET</strong></td><td><code>OnGet()</code></td></tr>
-                    <tr><td><strong>Handler POST</strong></td><td><code>OnPost()</code></td></tr>
-                    <tr><td><strong>Handler Async</strong></td><td><code>OnPostAsync()</code></td></tr>
+                    <tr><td><strong>Archivo Main</strong></td><td><code>main.py</code></td></tr>
+                    <tr><td><strong>Archivo Template</strong></td><td><code>templates/nombre.html</code></td></tr>
+                    <tr><td><strong>Route GET</strong></td><td><code>@app.get("/ruta")</code></td></tr>
+                    <tr><td><strong>Route POST</strong></td><td><code>@app.post("/ruta")</code></td></tr>
+                    <tr><td><strong>Route Async</strong></td><td><code>async def nombre():</code></td></tr>
                 </tbody>
             </table>
         </section>
