@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+  <title id="title">Formato Given When Then</title>
+  <desc id="desc">Tres pasos de un escenario BDD.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8ff}
+      .box{fill:#ffffff;stroke:#cbd5f5;stroke-width:1.4;rx:12}
+      .h{font:700 16px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .s{font:12px 'Segoe UI', Arial, sans-serif;fill:#475569}
+      .arrow{stroke:#1e40af;stroke-width:2;fill:none;marker-end:url(#m)}
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1e40af" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="900" height="220" />
+
+  <rect class="box" x="60" y="60" width="220" height="100" />
+  <text class="h" x="170" y="95" text-anchor="middle">GIVEN</text>
+  <text class="s" x="170" y="120" text-anchor="middle">contexto inicial</text>
+
+  <rect class="box" x="340" y="60" width="220" height="100" />
+  <text class="h" x="450" y="95" text-anchor="middle">WHEN</text>
+  <text class="s" x="450" y="120" text-anchor="middle">accion</text>
+
+  <rect class="box" x="620" y="60" width="220" height="100" />
+  <text class="h" x="730" y="95" text-anchor="middle">THEN</text>
+  <text class="s" x="730" y="120" text-anchor="middle">resultado esperado</text>
+
+  <path class="arrow" d="M280 110 L340 110" />
+  <path class="arrow" d="M560 110 L620 110" />
+</svg>
