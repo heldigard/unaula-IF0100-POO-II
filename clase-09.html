@@ -672,61 +672,74 @@
             <h2>2. Formularios HTML5</h2>
 
             <h3>Inputs Modernos y Validación</h3>
-            <pre><code><form action="/registro" method="post">
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">formulario.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45</div>
+                          <pre><code>&lt;form action="/registro" method="post"&gt;
 
-    <!-- Texto básico -->
-    <label for="nombre">Nombre completo:</label>
-    <input type="text" id="nombre" name="nombre"
-           required minlength="3" maxlength="50"
-           placeholder="Ej: María López">
+                &lt;!-- Texto básico --&gt;
+                &lt;label for="nombre"&gt;Nombre completo:&lt;/label&gt;
+                &lt;input type="text" id="nombre" name="nombre"
+                    required minlength="3" maxlength="50"
+                    placeholder="Ej: María López"&gt;
 
-    <!-- Email con validación automática -->
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email"
-           required placeholder="maria@ejemplo.com">
+                &lt;!-- Email con validación automática --&gt;
+                &lt;label for="email"&gt;Correo electrónico:&lt;/label&gt;
+                &lt;input type="email" id="email" name="email"
+                    required placeholder="maria@ejemplo.com"&gt;
 
-    <!-- Teléfono -->
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" id="telefono" name="telefono"
-           pattern="[0-9]{10}"
-           placeholder="3001234567">
+                &lt;!-- Teléfono --&gt;
+                &lt;label for="telefono"&gt;Teléfono:&lt;/label&gt;
+                &lt;input type="tel" id="telefono" name="telefono"
+                    pattern="[0-9]{10}"
+                    placeholder="3001234567"&gt;
 
-    <!-- Números con rango -->
-    <label for="edad">Edad:</label>
-    <input type="number" id="edad" name="edad"
-           min="18" max="100" value="18">
+                &lt;!-- Números con rango --&gt;
+                &lt;label for="edad"&gt;Edad:&lt;/label&gt;
+                &lt;input type="number" id="edad" name="edad"
+                    min="18" max="100" value="18"&gt;
 
-    <!-- Fecha -->
-    <label for="fechaNacimien">Fecha de nacimiento:</label>
-    <input type="date" id="fechaNacimien" name="fechaNacimien"
-           min="1950-01-01" max="2006-12-31">
+                &lt;!-- Fecha --&gt;
+                &lt;label for="fechaNacimiento"&gt;Fecha de nacimiento:&lt;/label&gt;
+                &lt;input type="date" id="fechaNacimiento" name="fechaNacimiento"
+                    min="1950-01-01" max="2006-12-31"&gt;
 
-    <!-- Lista desplegable -->
-    <label for="carrera">Carrera:</label>
-    <select id="carrera" name="carrera" required>
-        <option value="">Seleccione...</option>
-        <option value="informatica">Ingeniería Informática</option>
-        <option value="sistemas">Ingeniería de Sistemas</option>
-        <option value="software">Ingeniería de Software</option>
-    </select>
+                &lt;!-- Lista desplegable --&gt;
+                &lt;label for="carrera"&gt;Carrera:&lt;/label&gt;
+                &lt;select id="carrera" name="carrera" required&gt;
+                 &lt;option value=""&gt;Seleccione...&lt;/option&gt;
+                 &lt;option value="informatica"&gt;Ingeniería Informática&lt;/option&gt;
+                 &lt;option value="sistemas"&gt;Ingeniería de Sistemas&lt;/option&gt;
+                 &lt;option value="software"&gt;Ingeniería de Software&lt;/option&gt;
+                &lt;/select&gt;
 
-    <!-- Checkbox -->
-    <label>
-        <input type="checkbox" name="aceptaTerminos" required>
-        Acepto los términos y condiciones
-    </label>
+                &lt;!-- Checkbox --&gt;
+                &lt;label&gt;
+                 &lt;input type="checkbox" name="aceptaTerminos" required&gt;
+                 Acepto los términos y condiciones
+                &lt;/label&gt;
 
-    <!-- Radio buttons -->
-    <fieldset>
-        <legend>Género:</legend>
-        <label><input type="radio" name="genero" value="F"> Femenino</label>
-        <label><input type="radio" name="genero" value="M"> Masculino</label>
-        <label><input type="radio" name="genero" value="O"> Otro</label>
-    </fieldset>
+                &lt;!-- Radio buttons --&gt;
+                &lt;fieldset&gt;
+                 &lt;legend&gt;Género:&lt;/legend&gt;
+                 &lt;label&gt;&lt;input type="radio" name="genero" value="F"&gt; Femenino&lt;/label&gt;
+                 &lt;label&gt;&lt;input type="radio" name="genero" value="M"&gt; Masculino&lt;/label&gt;
+                 &lt;label&gt;&lt;input type="radio" name="genero" value="O"&gt; Otro&lt;/label&gt;
+                &lt;/fieldset&gt;
 
-    <button type="submit">Registrarse</button>
-    <button type="reset">Limpiar</button>
-</form></code></pre>
+                &lt;button type="submit"&gt;Registrarse&lt;/button&gt;
+                &lt;button type="reset"&gt;Limpiar&lt;/button&gt;
+            &lt;/form&gt;</code></pre>
+                </div>
+            </div>
 
             <h3>Nuevos Tipos de Input</h3>
             <div class="badge-list">
@@ -740,36 +753,49 @@
                 <span class="badge badge-purple">week</span>
                 <span class="badge badge-green">file</span>
             </div>
-            <pre><code><!-- URL -->
-<input type="url" placeholder="https://ejemplo.com">
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">inputs_avanzados.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
+                    <pre><code>&lt;!-- URL --&gt;
+&lt;input type="url" placeholder="https://ejemplo.com"&gt;
 
-<!-- Búsqueda -->
-<input type="search" placeholder="Buscar...">
+&lt;!-- Búsqueda --&gt;
+&lt;input type="search" placeholder="Buscar..."&gt;
 
-<!-- Color -->
-<input type="color" value="#ff0000">
+&lt;!-- Color --&gt;
+&lt;input type="color" value="#ff0000"&gt;
 
-<!-- Rango (slider) -->
-<input type="range" min="0" max="100" value="50">
+&lt;!-- Rango (slider) --&gt;
+&lt;input type="range" min="0" max="100" value="50"&gt;
 
-<!-- Hora -->
-<input type="time">
+&lt;!-- Hora --&gt;
+&lt;input type="time"&gt;
 
-<!-- Fecha y hora local -->
-<input type="datetime-local">
+&lt;!-- Fecha y hora local --&gt;
+&lt;input type="datetime-local"&gt;
 
-<!-- Mes -->
-<input type="month">
+&lt;!-- Mes --&gt;
+&lt;input type="month"&gt;
 
-<!-- Semana -->
-<input type="week">
+&lt;!-- Semana --&gt;
+&lt;input type="week"&gt;
 
-<!-- Archivo -->
-<input type="file" accept=".pdf,.doc,.docx">
+&lt;!-- Archivo --&gt;
+&lt;input type="file" accept=".pdf,.doc,.docx"&gt;
 
-<!--  área de texto -->
-<textarea rows="4" cols="50" maxlength="500"
-          placeholder="Escribe tu mensaje..."></textarea></code></pre>
+&lt;!-- Área de texto --&gt;
+&lt;textarea rows="4" cols="50" maxlength="500"
+          placeholder="Escribe tu mensaje..."&gt;&lt;/textarea&gt;</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Bootstrap -->
@@ -798,7 +824,9 @@
             </ul>
 
             <figure class="figure-container">
-                <img src="../assets/infografias/clase-09-Bootstrap-grid.png" alt="Sistema de Grillas Bootstrap" onerror="this.onerror=null;this.src='/assets/infografias/clase-09-Bootstrap-grid.png'">
+                <object data="../assets/svg/clase-09-bootstrap-grid.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
+                  <img src="../assets/svg/clase-09-bootstrap-grid.svg" alt="Sistema de Grillas Bootstrap" />
+                </object>
                 <figcaption>Sistema de Grillas Bootstrap - 12 columnas con breakpoints responsivos</figcaption>
             </figure>
         </section>
@@ -864,39 +892,52 @@
                 </div>
             </div>
 
-            <pre><code><!-- ESTRUCTURA BÁSICA -->
-<div class="container">
-    <div class="row">
-        <div class="col">Columna 1</div>
-        <div class="col">Columna 2</div>
-        <div class="col">Columna 3</div>
-    </div>
-</div>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">grid_example.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
+                    <pre><code>&lt;!-- ESTRUCTURA BÁSICA --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col"&gt;Columna 1&lt;/div&gt;
+        &lt;div class="col"&gt;Columna 2&lt;/div&gt;
+        &lt;div class="col"&gt;Columna 3&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
-<!-- TAMA OS RESPONSIVOS -->
-<div class="container">
-    <div class="row">
-        <!-- Móvil: 100%, Tablet: 50%, Desktop: 33% -->
-        <div class="col-12 col-md-6 col-lg-4">Card 1</div>
-        <div class="col-12 col-md-6 col-lg-4">Card 2</div>
-        <div class="col-12 col-md-6 col-lg-4">Card 3</div>
-    </div>
-</div>
+&lt;!-- TAMAÑOS RESPONSIVOS --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;!-- Móvil: 100%, Tablet: 50%, Desktop: 33% --&gt;
+        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 1&lt;/div&gt;
+        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 2&lt;/div&gt;
+        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 3&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
-<!-- SIDEBAR + CONTENIDO -->
-<div class="container">
-    <div class="row">
-        <aside class="col-12 col-md-3">Menú lateral</aside>
-        <main class="col-12 col-md-9">Contenido principal</main>
-    </div>
-</div>
+&lt;!-- SIDEBAR + CONTENIDO --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;aside class="col-12 col-md-3"&gt;Menú lateral&lt;/aside&gt;
+        &lt;main class="col-12 col-md-9"&gt;Contenido principal&lt;/main&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
 
-<!-- OFFSET (margen para centrar) -->
-<div class="row">
-    <div class="col-md-6 offset-md-3">
+&lt;!-- OFFSET (margen para centrar) --&gt;
+&lt;div class="row"&gt;
+    &lt;div class="col-md-6 offset-md-3"&gt;
         Contenido centrado (6 columnas + offset de 3)
-    </div>
-</div></code></pre>
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
         </section>
 
         <!-- Componentes -->
@@ -904,115 +945,128 @@
             <h2>5. Componentes Bootstrap</h2>
 
             <h3>Botones</h3>
-            <pre><code><!-- Colores -->
-<button class="button button-primary">Primario</button>
-<button class="button button-secondary">Secundario</button>
-<button class="button button-success">Éxito</button>
-<button class="button button-danger">Peligro</button>
-<button class="button button-warning">Advertencia</button>
-<button class="button button-info">Información</button>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">botones.html</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
+                    <pre><code>&lt;!-- Colores --&gt;
+&lt;button class="button button-primary"&gt;Primario&lt;/button&gt;
+&lt;button class="button button-secondary"&gt;Secundario&lt;/button&gt;
+&lt;button class="button button-success"&gt;Éxito&lt;/button&gt;
+&lt;button class="button button-danger"&gt;Peligro&lt;/button&gt;
+&lt;button class="button button-warning"&gt;Advertencia&lt;/button&gt;
+&lt;button class="button button-info"&gt;Información&lt;/button&gt;
 
-<!-- Tamaños -->
-<button class="button button-primary button-lg">Grande</button>
-<button class="button button-primary">Normal</button>
-<button class="button button-primary button-sm">Pequeño</button>
+&lt;!-- Tamaños --&gt;
+&lt;button class="button button-primary button-lg"&gt;Grande&lt;/button&gt;
+&lt;button class="button button-primary"&gt;Normal&lt;/button&gt;
+&lt;button class="button button-primary button-sm"&gt;Pequeño&lt;/button&gt;
 
-<!-- Outline -->
-<button class="button button-outline-primary">Outline</button></code></pre>
+&lt;!-- Outline --&gt;
+&lt;button class="button button-outline-primary"&gt;Outline&lt;/button&gt;</code></pre>
+                </div>
+            </div>
 
-            <h3>Alertas</h3>
-            <pre><code><div class="alert alert-success" role="alert">
-     Operación completada exitosamente
-</div>
-<div class="alert alert-danger" role="alert">
-     Ha ocurrido un error
-</div>
-<div class="alert alert-warning alert-dismissible fade show">
-     Atención: revise los datos
-    <button type="button" class="button-close" data-bs-dismiss="alert"></button>
-</div></code></pre>
+              <h3>Alertas</h3>
+              <pre><code>&lt;div class="alert alert-success" role="alert"&gt;
+        Operación completada exitosamente
+    &lt;/div&gt;
+    &lt;div class="alert alert-danger" role="alert"&gt;
+        Ha ocurrido un error
+    &lt;/div&gt;
+    &lt;div class="alert alert-warning alert-dismissible fade show"&gt;
+        Atención: revise los datos
+        &lt;button type="button" class="button-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+    &lt;/div&gt;</code></pre>
 
             <h3>Tarjetas (Cards)</h3>
-            <pre><code><div class="card" style="width: 18rem;">
-    <img src="ejemplo.jpg" class="card-img-top" alt="Estudiante">
-    <div class="card-body">
-        <h5 class="card-title">María López</h5>
-        <p class="card-text">Ingeniería Informática - 4 semestre</p>
-        <a href="#" class="button button-primary">Ver perfil</a>
-    </div>
-</div></code></pre>
+            <pre><code>&lt;div class="card" style="width: 18rem;"&gt;
+    &lt;img src="ejemplo.jpg" class="card-img-top" alt="Estudiante"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;María López&lt;/h5&gt;
+        &lt;p class="card-text"&gt;Ingeniería Informática - 4 semestre&lt;/p&gt;
+        &lt;a href="#" class="button button-primary"&gt;Ver perfil&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
             <h3>Navbar (Menú de navegación)</h3>
-            <pre><code><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="#">UNAULA</a>
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Estudiantes</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav></code></pre>
+            <pre><code>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
+    &lt;div class="container"&gt;
+        &lt;a class="navbar-brand" href="#"&gt;UNAULA&lt;/a&gt;
+        &lt;button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
+            &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
+            &lt;ul class="navbar-nav"&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link active" href="#"&gt;Inicio&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="#"&gt;Estudiantes&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
 
             <h3>Tablas Estilizadas</h3>
-            <pre><code><table class="table table-striped table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Promedio</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>2024001</td>
-            <td>María López</td>
-            <td><span class="badge bg-success">4.5</span></td>
-            <td>
-                <button class="button button-sm button-info">Editar</button>
-                <button class="button button-sm button-danger">Eliminar</button>
-            </td>
-        </tr>
-    </tbody>
-</table></code></pre>
+            <pre><code>&lt;table class="table table-striped table-hover"&gt;
+    &lt;thead class="table-dark"&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Código&lt;/th&gt;
+            &lt;th&gt;Nombre&lt;/th&gt;
+            &lt;th&gt;Promedio&lt;/th&gt;
+            &lt;th&gt;Acciones&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;2024001&lt;/td&gt;
+            &lt;td&gt;María López&lt;/td&gt;
+            &lt;td&gt;&lt;span class="badge bg-success"&gt;4.5&lt;/span&gt;&lt;/td&gt;
+            &lt;td&gt;
+                &lt;button class="button button-sm button-info"&gt;Editar&lt;/button&gt;
+                &lt;button class="button button-sm button-danger"&gt;Eliminar&lt;/button&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
 
             <h3>Utilidades Bootstrap</h3>
             <h4>Spacing</h4>
             <p><code>m</code> = margin, <code>p</code> = padding</p>
             <p><code>t</code> = top, <code>b</code> = bottom, <code>s</code> = start, <code>e</code> = end, <code>x</code> = horizontales, <code>y</code> = vertical</p>
             <p>Valores 0-5: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem</p>
-            <pre><code><div class="m-3">Margin 3 en dos lados</div>
-<div class="mt-2 mb-4">Margin top 2, bottom 4</div>
-<div class="px-5 py-3">Padding horizontales 5, vertical 3</div>
-<div class="mx-auto">Centrado horizontales (auto)</div></code></pre>
+            <pre><code>&lt;div class="m-3"&gt;Margin 3 en dos lados&lt;/div&gt;
+&lt;div class="mt-2 mb-4"&gt;Margin top 2, bottom 4&lt;/div&gt;
+&lt;div class="px-5 py-3"&gt;Padding horizontales 5, vertical 3&lt;/div&gt;
+&lt;div class="mx-auto"&gt;Centrado horizontales (auto)&lt;/div&gt;</code></pre>
 
             <h4>Colores y Display</h4>
-            <pre><code><!-- Colores de texto -->
-<p class="text-primary">Texto primario (azul)</p>
-<p class="text-success">Texto éxito (verde)</p>
-<p class="text-danger">Texto peligro (rojo)</p>
+            <pre><code>&lt;!-- Colores de texto --&gt;
+&lt;p class="text-primary"&gt;Texto primario (azul)&lt;/p&gt;
+&lt;p class="text-success"&gt;Texto éxito (verde)&lt;/p&gt;
+&lt;p class="text-danger"&gt;Texto peligro (rojo)&lt;/p&gt;
 
-<!-- Colores de fondo -->
-<div class="bg-primary text-white p-3">Fondo azul, texto blanco</div>
-<div class="bg-light p-3">Fondo gris claro</div>
+&lt;!-- Colores de fondo --&gt;
+&lt;div class="bg-primary text-white p-3"&gt;Fondo azul, texto blanco&lt;/div&gt;
+&lt;div class="bg-light p-3"&gt;Fondo gris claro&lt;/div&gt;
 
-<!-- Display -->
-<div class="d-none">Oculto</div>
-<div class="d-block">Block</div>
-<div class="d-flex">Flexbox</div>
+&lt;!-- Display --&gt;
+&lt;div class="d-none"&gt;Oculto&lt;/div&gt;
+&lt;div class="d-block"&gt;Block&lt;/div&gt;
+&lt;div class="d-flex"&gt;Flexbox&lt;/div&gt;
 
-<!-- Responsivo -->
-<div class="d-none d-md-block">Solo visible en tablet+</div></code></pre>
+&lt;!-- Responsivo --&gt;
+&lt;div class="d-none d-md-block"&gt;Solo visible en tablet+&lt;/div&gt;</code></pre>
         </section>
 
         <!-- ASP.NET Integration -->
@@ -1249,7 +1303,7 @@
 
             <div class="grid-demo">
                 <div class="grid-row">
-                    <div class="grid-col" style="flex:1;">MÓVIL<br><576px<br>col-12<br>100%</div>
+                    <div class="grid-col" style="flex:1;">MÓVIL<br>&lt;576px<br>col-12<br>100%</div>
                 </div>
                 <div class="grid-row">
                     <div class="grid-col" style="flex:1;">TABLET</div>
@@ -1263,36 +1317,36 @@
                 </div>
             </div>
 
-            <pre><code><!--Ejemplo: Mobile-First -->
-<div class="col-12 col-md-6 col-lg-4">
+            <pre><code>&lt;!--Ejemplo: Mobile-First --&gt;
+&lt;div class="col-12 col-md-6 col-lg-4"&gt;
     → Móvil:  12/12 = 100%
     → Tablet:  6/12 = 50%
     → Desktop: 4/12 = 33%
-</div></code></pre>
+&lt;/div&gt;</code></pre>
 
             <h3>Accesibilidad - ARIA Labels</h3>
             <p>Importante para usuarios con discapacidades. <strong><abbr title="ARIA: Accessible Rich Internet Applications, conjunto de atributos HTML que mejoran la accesibilidad de aplicaciones web para usuarios con discapacidades">ARIA</abbr></strong> = Accessible Rich Internet Applications</p>
-            <pre><code><!-- ARIA-LABEL - Descripción para elementos sin texto -->
-<input type="search" aria-label="Buscar ejemplos">
-<button aria-label="Cerrar ventana">&amp;times;</button>
+            <pre><code>&lt;!-- ARIA-LABEL - Descripción para elementos sin texto --&gt;
+&lt;input type="search" aria-label="Buscar ejemplos"&gt;
+&lt;button aria-label="Cerrar ventana"&gt;&amp;times;&lt;/button&gt;
 
-<!-- ARIA-LABELEDBY - Relacionar con otro elemento -->
-<input type="text" id="nombre" aria-labelledby="lbl-nombre">
-<label id="lbl-nombre">Nombre completo:</label>
+&lt;!-- ARIA-LABELEDBY - Relacionar con otro elemento --&gt;
+&lt;input type="text" id="nombre" aria-labelledby="lbl-nombre"&gt;
+&lt;label id="lbl-nombre"&gt;Nombre completo:&lt;/label&gt;
 
-<!-- ARIA-DESCRIBEDBY - Descripción adicional -->
-<input type="password" aria-describedby="pwd-help">
-<small id="pwd-help">Mínimo 8 caracteres, una mayúscula y un número</small>
+&lt;!-- ARIA-DESCRIBEDBY - Descripción adicional --&gt;
+&lt;input type="password" aria-describedby="pwd-help"&gt;
+&lt;small id="pwd-help"&gt;Mínimo 8 caracteres, una mayúscula y un número&lt;/small&gt;
 
-<!-- ARIA-HIDDEN - Ocultar a lectores de pantalla -->
-<span aria-hidden="true"></span>
+&lt;!-- ARIA-HIDDEN - Ocultar a lectores de pantalla --&gt;
+&lt;span aria-hidden="true"&gt;&lt;/span&gt;
 
-<!-- ROLES ARIA - Semántica adicional -->
-<nav role="navigation" aria-label="Menú principal">...</nav>
-<main role="main">...</main>
-<div role="alert" class="alert alert-danger">
+&lt;!-- ROLES ARIA - Semántica adicional --&gt;
+&lt;nav role="navigation" aria-label="Menú principal"&gt;...&lt;/nav&gt;
+&lt;main role="main"&gt;...&lt;/main&gt;
+&lt;div role="alert" class="alert alert-danger"&gt;
     Operación fallida
-</div></code></pre>
+&lt;/div&gt;</code></pre>
         </section>
         </section>
 
@@ -1433,6 +1487,30 @@
             </ul>
             <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Layout responsive correcto (1-2-3), cards con datos de ejemplo, badges de colores funcionando, botón de detalle funcional, formulario de búsqueda implementado.</div>
             <div class="example-box" style="background: #fef3c7; border-left-color: #f59e0b;"><strong>Tiempo sugerido total:</strong> 75 min (20 + 25 + 30).</div>
+        </section>
+
+        <!-- Entrega con Git -->
+        <section id="entrega-git" class="section">
+            <h2>Entrega con Git</h2>
+            <p>Para el proyecto de interfaz con HTML5/Bootstrap:</p>
+            <pre><code># Crear rama feature
+git checkout -b feature/html-bootstrap-clase-09
+
+# Commit 1: Estructura HTML
+git add index.html css/
+git commit -m "chore: estructura base HTML5 y Bootstrap"
+
+# Commit 2: Componentes visuales
+git commit -am "feat: agrega cards, formularios y tablas responsive"
+
+# Commit 3: Estilos y documentación
+git commit -am "style: personaliza CSS y agrega README"
+
+# Tag de entrega
+git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
+            <div class="note">
+                <strong>Nota:</strong> Si integras con Angular, los templates HTML de componentes Angular usan las mismas estructuras semánticas HTML5 y pueden estilizarse con Bootstrap.
+            </div>
         </section>
 
         <!-- Referencias -->

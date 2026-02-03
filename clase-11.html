@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -101,7 +101,7 @@
             font-size: 0.9em;
         }
         pre code { background: none; padding: 0; }
-        /* Syntax highlighting para C# */
+        /* Syntax highlighting para Python */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -468,11 +468,11 @@
                     <li><strong>Declarativo:</strong> Las reglas de validación están en el modelo, no dispersas en el código</li>
                     <li><strong>Reusable:</strong> Mismas reglas para validación cliente y servidor</li>
                     <li><strong>Mantenible:</strong> Un solo lugar para cambiar reglas de negocio</li>
-                    <li><strong>Estándar:</strong> <abbr title="Data Annotations - Sistema de atributos de validación declarativa en .NET">Data Annotations</abbr> es parte de .NET desde versión 3.5</li>
+                    <li><strong>Estándar:</strong> <abbr title="Data Annotations - Sistema de atributos de validación declarativa en Python">Data Annotations</abbr> es parte de Python desde versión 3.5</li>
                 </ul>
             </div>
 
-            <h3>Atributos de validación en .NET</h3>
+            <h3>Atributos de validación en Python</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -757,7 +757,7 @@ public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
             </ol>
 
             <h3>jQuery Validation</h3>
-            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por ASP.NET y valida automáticamente en el navegador.</p>
+            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por ASPPython y valida automáticamente en el navegador.</p>
 
             <div class="warning-box">
                 <strong>Errores Comunes en Validación Cliente</strong>
@@ -1122,7 +1122,7 @@ app.MapControllers();</code></pre>
                 </ul>
             </div>
 
-            <h3><abbr title="IFormFile - Interfaz de ASP.NET Core que representa un archivo enviado en una petición HTTP">IFormFile</abbr></h3>
+            <h3><abbr title="IFormFile - Interfaz de ASPPython Core que representa un archivo enviado en una petición HTTP">IFormFile</abbr></h3>
             <p>Interfaz que representa un archivo recibido en una petición HTTP. Propiedades clave:</p>
             <ul>
                 <li><code>FileName</code> - Nombre original del archivo</li>
@@ -1314,8 +1314,8 @@ public async Task&amp;lt;IActionResult&amp;gt; SubirDocumentos(List&amp;lt;IForm
                 <li>Token generado automáticamente y válido por sesión</li>
             </ul>
 
-            <h4>Tag Helpers (átomos de HTML en Razor)</h4>
-            <p><strong><abbr title="Tag Helpers - Característica de Razor que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
+            <h4>Tag Helpers (átomos de HTML en Angular templates)</h4>
+            <p><strong><abbr title="Tag Helpers - Característica de Angular templates que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
 
             <h4>Implementación con Tag Helpers</h4>
             <div class="code-block">
@@ -1384,9 +1384,9 @@ $.ajax({
             <p><strong>Duración estimada:</strong> 40 minutos</p>
             <p><strong>Objetivo:</strong> Implementar un formulario de registro con validaciones y manejo de TempData para mensajes.</p>
 
-            <h3>Pasos en Visual Studio 2022</h3>
+            <h3>Pasos en VS Code / Visual Studio Code</h3>
             <ol>
-                <li>Abre Visual Studio 2022 y crea un proyecto <strong>ASP.NET Core Web App (Model-View-Controller)</strong></li>
+                <li>Abre VS Code / Visual Studio Code y crea un proyecto <strong>ASPPython Core Web App (Model-View-Controller)</strong></li>
                 <li>Crea la clase <code>Models/RegistroViewModel.cs</code> con Data Annotations</li>
                 <li>Añade validaciones: [Required], [StringLength], [EmailAddress], [Compare]</li>
                 <li>En <code>Controllers/AccountController.cs</code>, crea acciones GET y POST</li>
@@ -1554,7 +1554,7 @@ $.ajax({
 
         <!-- Proxima Clase -->
         <section class="section">
-            <h2>Próxima Clase: Introducción a ADO.NET</h2>
+            <h2>Próxima Clase: Introducción a ADOPython</h2>
             <table class="objectives-table">
                 <thead>
                     <tr>
@@ -1564,7 +1564,7 @@ $.ajax({
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>ADO.NET</strong></td>
+                        <td><strong>ADOPython</strong></td>
                         <td>SqlConnection, SqlCommand, SqlDataReader</td>
                     </tr>
                     <tr>
@@ -1584,11 +1584,19 @@ $.ajax({
         </section>
     </main>
 
-    <footer class="footer">
+    <section id='entrega-git'>
+  <h3>Entrega con Git</h3>
+  <p>Branch: <code>feature/tema-clase-11</code></p>
+  <ul>
+    <li>Commits: setup / implementación / pruebas-docs</li>
+  </ul>
+  <p>Tag: <code>clase-11-v1</code></p>
+</section><footer class="footer">
         <p><strong>Unidad 3 completada: 4/4 clases ✅</strong></p>
         <p>UNAULA - Ingeniería Informática - 2026-I</p>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
     </footer>
 </body>
 </html>
+
 

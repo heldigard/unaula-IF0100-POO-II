@@ -109,7 +109,7 @@
       overflow-x: auto;
     }
     code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
-    /* Syntax highlighting para C# */
+    /* Syntax highlighting para Python */
     .token-keyword { color: #c792ea; font-weight: 600; }
     .token-type { color: #ffcb6b; }
     .token-string { color: #c3e88d; }
@@ -264,7 +264,7 @@
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 2</div>
-      <h1>Clase 07: DDD - Domain-Driven Design</h1>
+      <h1>Clase 07: DDD - Domain-Driven Design con Python</h1>
       <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
@@ -281,9 +281,9 @@
           <strong>Prerrequisitos</strong>
           <ul>
             <li>Conocer conceptos de POO y capas.</li>
-            <li>Experiencia básica con C# y UML.</li>
+            <li>Experiencia básica con Python 3.11+ y dataclasses.</li>
             <li>Comprensión de necesidades de negocio.</li>
-            <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK.</li>
+            <li>Windows 10/11 con Python instalado.</li>
           </ul>
         </div>
       </div>
@@ -410,11 +410,13 @@
 
       <h3>Infografía: Arquitectura DDD</h3>
       <figure>
-        <img src="../assets/infografias/clase-07-ddd-arquitectura.png" alt="Infografía arquitectura DDD" onerror="this.onerror=null;this.src='/assets/infografias/clase-07-ddd-arquitectura.png'" />
+        <object data="../assets/svg/clase-07-ddd-arquitectura.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
+          <img src="../assets/svg/clase-07-ddd-arquitectura.svg" alt="Infografia arquitectura DDD" />
+        </object>
         <figcaption>Figura 1: Arquitectura en capas de DDD - Presentation/UI maneja interacción con usuarios, Application/Domain coordina lógica de negocio y flujos de trabajo, Domain contiene el modelo del dominio con entidades de negocio y reglas, e Infrastructure abstrae persistencia y servicios externos; las flechas hacia el centro indican la dependencia invertida donde las capas exteriores dependen del núcleo (Domain), manteniendo el dominio puro y libre de detalles técnicos.</figcaption>
       </figure>
 
-      <h3>Entity en C# (Cliente)</h3>
+      <h3>Entity en Python (Cliente)</h3>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -422,29 +424,45 @@
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Cliente.cs</span>
+          <span class="code-title">cliente.py</span>
         </div>
         <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Cliente</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">Email</span> <span class="token-property">Email</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
+          <pre><code><span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> <span class="token-type">dataclass</span>
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> <span class="token-type">Optional</span>
 
-    <span class="token-keyword">public</span> <span class="token-method">Cliente</span>(<span class="token-type">ClienteId</span> <span class="token-operator">id</span>, <span class="token-keyword">string</span> <span class="token-operator">nombre</span>, <span class="token-type">Email</span> <span class="token-operator">email</span>)
-    {
-        <span class="token-property">Id</span> <span class="token-operator">=</span> <span class="token-operator">id</span>;
-        <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-operator">nombre</span>;
-        <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">email</span>;
-    }
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">ClienteId</span><span class="token-operator">:</span>
+    <span class="token-property">valor</span><span class="token-operator">:</span> <span class="token-keyword">int</span>
 
-    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">CambiarEmail</span>(<span class="token-type">Email</span> <span class="token-operator">nuevoEmail</span>) <span class="token-operator">=></span> <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">nuevoEmail</span>;
-}</code></pre>
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">Email</span><span class="token-operator">:</span>
+    <span class="token-property">valor</span><span class="token-operator">:</span> <span class="token-keyword">str</span>
+
+<span class="token-keyword">class</span> <span class="token-class">Cliente</span><span class="token-operator">:</span>
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> id<span class="token-operator">:</span> <span class="token-type">ClienteId</span><span class="token-operator">,</span> nombre<span class="token-operator">:</span> <span class="token-keyword">str</span><span class="token-operator">,</span> email<span class="token-operator">:</span> <span class="token-type">Email</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">None</span><span class="token-operator">:</span>
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_id <span class="token-operator">=</span> id
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_nombre <span class="token-operator">=</span> nombre
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_email <span class="token-operator">=</span> email
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">id</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">ClienteId</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_id
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">nombre</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-keyword">str</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_nombre
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">email</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">Email</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_email
+
+    <span class="token-keyword">def</span> <span class="token-method">cambiar_email</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> nuevo_email<span class="token-operator">:</span> <span class="token-type">Email</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">None</span><span class="token-operator">:</span>
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_email <span class="token-operator">=</span> nuevo_email</code></pre>
         </div>
       </div>
 
-      <h3>Value Object en C# (Dinero)</h3>
+      <h3>Value Object en Python (Dinero)</h3>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -452,28 +470,34 @@
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Dinero.cs</span>
+          <span class="code-title">dinero.py</span>
         </div>
         <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Dinero</span> : <span class="token-type">IEquatable</span>&lt;<span class="token-type">Dinero</span>&gt;
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">decimal</span> <span class="token-property">Monto</span> { <span class="token-keyword">get</span>; }
-    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Moneda</span> { <span class="token-keyword">get</span>; }
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37</div>
+          <pre><code><span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> <span class="token-type">dataclass</span>
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> <span class="token-type">Self</span>
 
-    <span class="token-keyword">public</span> <span class="token-method">Dinero</span>(<span class="token-keyword">decimal</span> <span class="token-operator">monto</span>, <span class="token-keyword">string</span> <span class="token-operator">moneda</span>)
-    {
-        <span class="token-keyword">if</span> (<span class="token-operator">monto</span> <span class="token-operator">&lt;</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
-        <span class="token-property">Monto</span> <span class="token-operator">=</span> <span class="token-operator">monto</span>;
-        <span class="token-property">Moneda</span> <span class="token-operator">=</span> <span class="token-operator">moneda</span>;
-    }
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">Dinero</span><span class="token-operator">:</span>
+    <span class="token-property">monto</span><span class="token-operator">:</span> <span class="token-keyword">float</span>
+    <span class="token-property">moneda</span><span class="token-operator">:</span> <span class="token-keyword">str</span>
 
-    <span class="token-keyword">public</span> <span class="token-type">Dinero</span> <span class="token-method">Sumar</span>(<span class="token-type">Dinero</span> <span class="token-operator">otro</span>)
-    {
-        <span class="token-keyword">if</span> (<span class="token-property">Moneda</span> <span class="token-operator">!=</span> <span class="token-operator">otro</span>.<span class="token-property">Moneda</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>();
-        <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-method">Dinero</span>(<span class="token-property">Monto</span> <span class="token-operator">+</span> <span class="token-operator">otro</span>.<span class="token-property">Monto</span>, <span class="token-property">Moneda</span>);
-    }
-}</code></pre>
+    <span class="token-keyword">def</span> <span class="token-method">__post_init__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">None</span><span class="token-operator">:</span>
+        <span class="token-keyword">if</span> <span class="token-keyword">self</span><span class="token-operator">.</span>monto <span class="token-operator">&lt;</span> <span class="token-number">0</span><span class="token-operator">:</span>
+            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">)</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">sumar</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> otro<span class="token-operator">:</span> <span class="token-type">Self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">Self</span><span class="token-operator">:</span>
+        <span class="token-keyword">if</span> <span class="token-keyword">self</span><span class="token-operator">.</span>moneda <span class="token-operator">!=</span> otro<span class="token-operator">.</span>moneda<span class="token-operator">:</span>
+            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Monedas diferentes"</span><span class="token-operator">)</span>
+        <span class="token-keyword">return</span> <span class="token-type">Dinero</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">.</span>monto <span class="token-operator">+</span> otro<span class="token-operator">.</span>monto<span class="token-operator">,</span> <span class="token-keyword">self</span><span class="token-operator">.</span>moneda<span class="token-operator">)</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">__eq__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> otro<span class="token-operator">:</span> <span class="token-keyword">object</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-keyword">bool</span><span class="token-operator">:</span>
+        <span class="token-keyword">if</span> <span class="token-keyword">not</span> <span class="token-keyword">isinstance</span><span class="token-operator">(</span>otro<span class="token-operator">,</span> <span class="token-type">Dinero</span><span class="token-operator">)</span><span class="token-operator">:</span>
+            <span class="token-keyword">return</span> <span class="token-type">False</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>monto <span class="token-operator">==</span> otro<span class="token-operator">.</span>monto <span class="token-keyword">and</span> <span class="token-keyword">self</span><span class="token-operator">.</span>moneda <span class="token-operator">==</span> otro<span class="token-operator">.</span>moneda
+
+    <span class="token-keyword">def</span> <span class="token-method">__hash__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-keyword">int</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-method">hash</span><span class="token-operator">((</span><span class="token-keyword">self</span><span class="token-operator">.</span>monto<span class="token-operator">,</span> <span class="token-keyword">self</span><span class="token-operator">.</span>moneda<span class="token-operator">))</span></code></pre>
         </div>
       </div>
 
@@ -485,22 +509,54 @@
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Pedido.cs</span>
+          <span class="code-title">pedido.py</span>
         </div>
         <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pedido</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">PedidoId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">ClienteId</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
-    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">List</span>&lt;<span class="token-type">LineaPedido</span>&gt; <span class="token-operator">_lineas</span> <span class="token-operator">=</span> <span class="token-keyword">new</span>();
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
+          <pre><code><span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> <span class="token-type">dataclass</span>
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> <span class="token-type">List</span>
 
-    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">AgregarProducto</span>(<span class="token-type">ProductoId</span> <span class="token-operator">productoId</span>, <span class="token-keyword">int</span> <span class="token-operator">cantidad</span>, <span class="token-type">Dinero</span> <span class="token-operator">precio</span>)
-    {
-        <span class="token-keyword">if</span> (<span class="token-operator">cantidad</span> <span class="token-operator">&lt;=</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
-        <span class="token-operator">_lineas</span>.<span class="token-method">Add</span>(<span class="token-keyword">new</span> <span class="token-method">LineaPedido</span>(<span class="token-operator">productoId</span>, <span class="token-operator">cantidad</span>, <span class="token-operator">precio</span>));
-    }
-}</code></pre>
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">PedidoId</span><span class="token-operator">:</span>
+    <span class="token-property">valor</span><span class="token-operator">:</span> <span class="token-keyword">int</span>
+
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">ClienteId</span><span class="token-operator">:</span>
+    <span class="token-property">valor</span><span class="token-operator">:</span> <span class="token-keyword">int</span>
+
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">ProductoId</span><span class="token-operator">:</span>
+    <span class="token-property">valor</span><span class="token-operator">:</span> <span class="token-keyword">int</span>
+
+<span class="token-operator">@dataclass</span><span class="token-operator">(</span>frozen<span class="token-operator">=</span><span class="token-type">True</span><span class="token-operator">)</span>
+<span class="token-keyword">class</span> <span class="token-class">LineaPedido</span><span class="token-operator">:</span>
+    <span class="token-property">producto_id</span><span class="token-operator">:</span> <span class="token-type">ProductoId</span>
+    <span class="token-property">cantidad</span><span class="token-operator">:</span> <span class="token-keyword">int</span>
+    <span class="token-property">precio</span><span class="token-operator">:</span> <span class="token-type">Dinero</span>
+
+<span class="token-keyword">class</span> <span class="token-class">Pedido</span><span class="token-operator">:</span>
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> id<span class="token-operator">:</span> <span class="token-type">PedidoId</span><span class="token-operator">,</span> cliente_id<span class="token-operator">:</span> <span class="token-type">ClienteId</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">None</span><span class="token-operator">:</span>
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_id <span class="token-operator">=</span> id
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_cliente_id <span class="token-operator">=</span> cliente_id
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_lineas<span class="token-operator">:</span> <span class="token-type">List</span><span class="token-operator">[</span><span class="token-type">LineaPedido</span><span class="token-operator">]</span> <span class="token-operator">=</span> <span class="token-operator">[]</span>
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">id</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">PedidoId</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_id
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">cliente_id</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">ClienteId</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_cliente_id
+
+    <span class="token-property">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">lineas</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">List</span><span class="token-operator">[</span><span class="token-type">LineaPedido</span><span class="token-operator">]</span><span class="token-operator">:</span>
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span><span class="token-operator">.</span>_lineas<span class="token-operator">.</span><span class="token-method">copy</span><span class="token-operator">()</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">agregar_producto</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> producto_id<span class="token-operator">:</span> <span class="token-type">ProductoId</span><span class="token-operator">,</span> cantidad<span class="token-operator">:</span> <span class="token-keyword">int</span><span class="token-operator">,</span> precio<span class="token-operator">:</span> <span class="token-type">Dinero</span><span class="token-operator">)</span> <span class="token-operator">-></span> <span class="token-type">None</span><span class="token-operator">:</span>
+        <span class="token-keyword">if</span> cantidad <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">:</span>
+            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Cantidad debe ser positiva"</span><span class="token-operator">)</span>
+        linea <span class="token-operator">=</span> <span class="token-type">LineaPedido</span><span class="token-operator">(</span>producto_id<span class="token-operator">,</span> cantidad<span class="token-operator">,</span> precio<span class="token-operator">)</span>
+        <span class="token-keyword">self</span><span class="token-operator">.</span>_lineas<span class="token-operator">.</span><span class="token-method">append</span><span class="token-operator">(</span>linea<span class="token-operator">)</span></code></pre>
         </div>
       </div>
     </section>
@@ -533,15 +589,23 @@
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">IPedidoRepository.cs</span>
+          <span class="code-title">pedido_repository.py (ABC - Interface)</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-class">IPedidoRepository</span>
-{
-    <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>);
-    <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>);
-}</code></pre>
+          <pre><code><span class="token-keyword">from</span> abc <span class="token-keyword">import</span> ABC, abstractmethod
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
+
+<span class="token-keyword">class</span> <span class="token-class">PedidoRepository</span>(ABC):
+    <span class="token-string">"""Interfaz (clase abstracta) para el repositorio de pedidos"""</span>
+    
+    <span class="token-keyword">@abstractmethod</span>
+    <span class="token-keyword">def</span> <span class="token-method">obtener</span>(<span class="token-keyword">self</span>, id: <span class="token-type">PedidoId</span>) <span class="token-operator">-></span> Optional[<span class="token-type">Pedido</span>]:
+        <span class="token-keyword">raise</span> <span class="token-type">NotImplementedError</span>
+    
+    <span class="token-keyword">@abstractmethod</span>
+    <span class="token-keyword">def</span> <span class="token-method">guardar</span>(<span class="token-keyword">self</span>, pedido: <span class="token-type">Pedido</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">raise</span> <span class="token-type">NotImplementedError</span></code></pre>
         </div>
       </div>
 
@@ -552,24 +616,23 @@
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">PedidoRepository.cs</span>
+          <span class="code-title">pedido_repository_impl.py (Implementación)</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">PedidoRepository</span> : <span class="token-type">IPedidoRepository</span>
-{
-    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">AppDbContext</span> <span class="token-operator">_context</span>;
-    <span class="token-keyword">public</span> <span class="token-method">PedidoRepository</span>(<span class="token-type">AppDbContext</span> <span class="token-operator">context</span>) <span class="token-operator">=></span> <span class="token-operator">_context</span> <span class="token-operator">=</span> <span class="token-operator">context</span>;
+          <pre><code><span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional, Dict
 
-    <span class="token-keyword">public</span> <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>)
-        <span class="token-operator">=></span> <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">FirstOrDefaultAsync</span>(<span class="token-operator">p</span> <span class="token-operator">=></span> <span class="token-operator">p</span>.<span class="token-property">Id</span> <span class="token-operator">==</span> <span class="token-operator">id</span>);
-
-    <span class="token-keyword">public</span> <span class="token-keyword">async</span> <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>)
-    {
-        <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">Update</span>(<span class="token-operator">pedido</span>);
-        <span class="token-keyword">await</span> <span class="token-operator">_context</span>.<span class="token-method">SaveChangesAsync</span>();
-    }
-}</code></pre>
+<span class="token-keyword">class</span> <span class="token-class">PedidoRepositoryImpl</span>(PedidoRepository):
+    <span class="token-string">"""Implementación en memoria del repositorio"""</span>
+    
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">self</span>._pedidos: Dict[<span class="token-type">int</span>, <span class="token-type">Pedido</span>] <span class="token-operator">=</span> {}
+    
+    <span class="token-keyword">def</span> <span class="token-method">obtener</span>(<span class="token-keyword">self</span>, id: <span class="token-type">PedidoId</span>) <span class="token-operator">-></span> Optional[<span class="token-type">Pedido</span>]:
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span>._pedidos.get(id.valor)
+    
+    <span class="token-keyword">def</span> <span class="token-method">guardar</span>(<span class="token-keyword">self</span>, pedido: <span class="token-type">Pedido</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">self</span>._pedidos[pedido.id.valor] <span class="token-operator">=</span> pedido</code></pre>
         </div>
       </div>
 
@@ -587,7 +650,7 @@
         <li>Interfaces en Domain, implementaciones en Infrastructure.</li>
         <li>Aggregate Root controla invariantes.</li>
       </ul>
-      <div class="note">Checklist práctico: solución compila, repositorio aislado, invariantes documentadas.</div>
+      <div class="note">Checklist práctico: proyecto ejecuta, repositorio aislado, invariantes documentadas.</div>
     </section>
 
     <section id="ejercicios">
@@ -602,57 +665,37 @@
         <p><strong>Criterios de éxito:</strong> Al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service</p>
         <p>Identificar Entities, Value Objects, Aggregates y Services para un sistema de préstamos.</p>
       <div class="note">Checklist: al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service.</div>
+    </section>
 
-      <section class="actividad">
-        <h3>Actividad: Ejercicio 2 - Bounded Contexts (20 min)</h3>
-        <p><strong>Tipo:</strong> Opcional / práctica</p>
-        <p><strong>Relacionado con:</strong> Ninguno</p>
-        <p><strong>Entregable:</strong> División de tienda online en bounded contexts</p>
-        <p><strong>Tiempo estimado:</strong> 20 min</p>
-        <p><strong>Criterios de éxito:</strong> 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto</p>
-        <p>Dividir una tienda online en contextos (Ventas, Inventario, Envíos, Facturación) e indicar integraciones.</p>
-      <div class="note">Checklist: 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto.</div>
-
-      <h3>Errores comunes (10 min)</h3>
+    <section id="entrega-git">
+      <h2>Entrega con Git</h2>
+      <p>Entrega mínima por clase usando control de versiones:</p>
       <ul>
-        <li>Crear Entities para todo sin necesidad de identidad.</li>
-        <li>Permitir acceso directo a entidades internas del aggregate.</li>
-        <li>Acoplar Domain con EF Core o frameworks.</li>
+        <li>Branch: <code>feature/ddd-clase-07</code></li>
+        <li>Commits: <code>setup</code> / <code>implementacion</code> / <code>pruebas-docs</code></li>
+        <li>Tag: <code>clase-07-v1</code></li>
       </ul>
-      <div class="note">Tiempo sugerido total: 50 min (20 + 20 + 10).</div>
     </section>
 
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li><strong>Eric Evans, Domain-Driven Design (2003):</strong> <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank" rel="noopener">Libro original DDD</a> — el libro que fundó el movimiento DDD</li>
-        <li><strong>Vaughn Vernon, Implementing Domain-Driven Design:</strong> <a href="https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577" target="_blank" rel="noopener">IDDD Book</a> — guía práctica de implementación</li>
-        <li><strong>Domain Language (Eric Evans):</strong> <a href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener">DDD Reference</a></li>
-        <li><strong>Microsoft Architecture - DDD:</strong> <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/category/domain-driven-design" target="_blank" rel="noopener">DDD Patterns</a></li>
-        <li><strong>Repository Pattern (Martin Fowler):</strong> <a href="https://martinfowler.com/eaaCatalog/repository.html" target="_blank" rel="noopener">Repository</a></li>
-      </ul>
-    </section>
-
-    <section id="resumen">
-      <h2>Resumen de la Clase</h2>
-      <ul>
-        <li>Domain-Driven Design (DDD) es un enfoque que prioriza el dominio del problema sobre detalles técnicos.</li>
-        <li>El lenguaje ubicuo es un lenguaje compartido entre expertos del dominio y desarrolladores.</li>
-        <li>Entities tienen identidad única y lifecycle; Value Objects se identifican por sus atributos.</li>
-        <li>Aggregate Root es la única entrada para modificar un aggregate, controlando invariantes de negocio.</li>
-        <li>Repository Pattern abstrae el acceso a datos, exponiendo interfaces del dominio sin depender de infraestructura.</li>
-        <li>Domain Service contiene lógica de negocio que no pertenece naturalmente a una Entity o Value Object.</li>
-        <li>Factory encapsula la creación de objetos complejos, garantizando consistencia.</li>
-        <li>Bounded Context divide sistemas grandes en contextos delimitados con modelos independientes.</li>
-        <li>DDD separa en capas: Domain (dominio puro), Application (casos de uso), Infrastructure (persistencia).</li>
-        <li>La arquitectura en capas con inversión de dependencias permite que el dominio no dependa de infraestructura.</li>
+        <li><strong>Domain-Driven Design: Tackling Complexity in the Heart of Software</strong> - Eric Evans (libro fundamental)</li>
+        <li><strong>Implementing Domain-Driven Design</strong> - Vaughn Vernon (implementación práctica)</li>
+        <li><strong>Patterns, Principles, and Practices of Domain-Driven Design</strong> - Scott Millett</li>
+        <li><strong>DDD Reference</strong> - <a href="https://domainlanguage.com/ddd/reference/" target="_blank" rel="noopener">https://domainlanguage.com/ddd/reference/</a></li>
+        <li><strong>DDD Community</strong> - <a href="https://dddcommunity.org/" target="_blank" rel="noopener">https://dddcommunity.org/</a></li>
+        <li><strong>Strategic Domain-Driven Design</strong> - <a href="https://vaadin.com/learn/tutorials/ddd/strategic-domain-driven-design" target="_blank" rel="noopener">Tutorial Vaadin</a></li>
       </ul>
     </section>
   </main>
 
-  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+  <footer>
     <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
     <p>UNAULA - Ingeniería Informática - 2026-I</p>
+    <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+      Contacto: [correo del docente] | Repositorio: [enlace del curso]
+    </p>
   </footer>
 </body>
 </html>

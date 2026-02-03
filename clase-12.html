@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 12 - Introducción a ADO.NET | IF0100 POO II</title>
+    <title>Clase 12 - Introducción a ADOPython | IF0100 POO II</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -216,7 +216,7 @@
             border-radius: 8px;
             color: #52606d;
         }
-        /* Syntax highlighting para C# */
+        /* Syntax highlighting para Python */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -467,7 +467,7 @@
 <body>
     <a href="#main" class="skip-link">Saltar al contenido</a>
     <header class="header">
-        <h1>Clase 12 - Introducción a ADO.NET</h1>
+        <h1>Clase 12 - Introducción a ADOPython</h1>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 4 - Persistencia de Datos</p>
     </header>
 
@@ -501,7 +501,7 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td><strong>Comprender</strong> la arquitectura de ADO.NET</td>
+                        <td><strong>Comprender</strong> la arquitectura de ADOPython</td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -509,11 +509,11 @@
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td><strong>Implementar</strong> operaciones CRUD con ADO.NET</td>
+                        <td><strong>Implementar</strong> operaciones CRUD con ADOPython</td>
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td><strong>Utilizar</strong> SqlConnection, SqlCommand y SqlDataReader</td>
+                        <td><strong>Utilizar</strong> pyodbc, cursor.execute() y cursores</td>
                     </tr>
                     <tr>
                         <td>5</td>
@@ -536,7 +536,7 @@
                 <tbody>
                     <tr>
                         <td>10'</td>
-                        <td> Qué es ADO.NET?</td>
+                        <td> Qué es ADOPython?</td>
                     </tr>
                     <tr>
                         <td>15'</td>
@@ -562,22 +562,22 @@
             </table>
         </section>
 
-        <!-- Que es ADO.NET -->
+        <!-- Que es ADOPython -->
         <section id="que-es" class="section">
-            <h2>1. Qué es ADO.NET?</h2>
+            <h2>1. Qué es ADOPython?</h2>
 
             <div class="note-box">
-                <strong>¿Por qué aprender ADO.NET?</strong>
+                <strong>¿Por qué aprender ADOPython?</strong>
                 <ul>
                     <li><strong>Control total:</strong> Escribe SQL exacto para máximo rendimiento en queries complejas</li>
                     <li><strong>Comprensión profunda:</strong> Entender cómo funciona el acceso a datos bajo el capó</li>
-                    <li><strong>Stored Procedures:</strong> ADO.NET es ideal para trabajar con procedimientos almacenados</li>
-                    <li><strong>Fundamento:</strong> Entity Framework y otros ORMs se construyen sobre ADO.NET</li>
+                    <li><strong>Stored Procedures:</strong> ADOPython es ideal para trabajar con procedimientos almacenados</li>
+                    <li><strong>Fundamento:</strong> Entity Framework y otros ORMs se construyen sobre ADOPython</li>
                 </ul>
             </div>
 
-            <h3>Acceso a datos en .NET</h3>
-            <p><strong><abbr title="ADO.NET - ActiveX Data Objects for .NET, tecnología de acceso a datos de Microsoft">ADO.NET</abbr></strong> es un conjunto de clases que permite a las aplicaciones .NET acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
+            <h3>Acceso a datos en Python</h3>
+            <p><strong><abbr title="ADOPython - ActiveX Data Objects for Python, tecnología de acceso a datos de Microsoft">ADOPython</abbr></strong> es un conjunto de clases que permite a las aplicaciones Python acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
 
             <h4>Características principales:</h4>
             <div class="badge-list">
@@ -604,12 +604,12 @@
                 <li><strong>Npgsql:</strong> PostgreSQL</li>
             </ul>
 
-            <h3>ADO.NET vs Entity Framework</h3>
+            <h3>ADOPython vs Entity Framework</h3>
             <table class="tag-table">
                 <thead>
                     <tr>
                         <th>Característica</th>
-                        <th>ADO.NET</th>
+                        <th>ADOPython</th>
                         <th>EF Core</th>
                     </tr>
                 </thead>
@@ -637,33 +637,35 @@
                 </tbody>
             </table>
 
-            <p><em>En este curso: Ambos (ADO.NET primero, luego EF)</em></p>
+            <p><em>En este curso: Ambos (ADOPython primero, luego EF)</em></p>
         </section>
 
         <!-- Arquitectura -->
         <section id="arquitectura" class="section">
-            <h2>2. Arquitectura ADO.NET</h2>
+            <h2>2. Arquitectura ADOPython</h2>
 
             <h3>Componentes principales</h3>
             <figure class="figure-container">
-                <img src="../assets/infografias/clase-12-ado-net.png" alt="Arquitectura ADO.NET" onerror="this.onerror=null;this.src='/assets/infografias/clase-12-ado-net.png'">
-                <figcaption>Arquitectura ADO.NET: El Data Provider (System.Data.SqlClient) contiene SqlConnection para gestionar conexiones, SqlCommand para ejecutar queries con parámetros seguros, y SqlDataReader para lectura eficiente forward-only; el DataSet ofrece modo desconectado con DataTables para escenarios donde se requiere desconexión de la base de datos; las flechas muestran el flujo de datos desde la aplicación a través del proveedor hasta la fuente de datos SQL Server.</figcaption>
+                <object data="../assets/infografias/clase-12-pyodbc-arquitectura.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <img src="../assets/infografias/clase-12-pyodbc-arquitectura.svg" alt="Arquitectura pyodbc y SQL Server" />
+        </object>
+                <figcaption>Arquitectura pyodbc + SQL Server: pyodbc actúa como puente entre Python y SQL Server mediante ODBC. Modo conectado (cursor) para streaming eficiente de datos, modo desconectado (fetchall) para trabajar con datos en memoria. La connection string configura el driver, servidor y base de datos.</figcaption>
             </figure>
 
-            <h4>Proveedor de datos (System.Data.SqlClient)</h4>
+            <h4>Proveedor de datos (pyodbc)</h4>
             <ul>
-                <li><strong><abbr title="SqlConnection - Clase que gestiona la conexión a SQL Server">SqlConnection</abbr>:</strong> Representa una conexión abierta a SQL Server. Maneja apertura, cierre y la <strong>connection string</strong> (cadena con servidor, base de datos, credenciales).</li>
-                <li><strong><abbr title="SqlCommand - Clase que ejecuta comandos SQL contra una conexión">SqlCommand</abbr>:</strong> Ejecuta una query SQL o stored procedure. Maneja parámetros y devuelve resultados.</li>
+                <li><strong>pyodbc.connect():</strong> Crea una conexión a SQL Server usando ODBC. Maneja apertura, cierre y la <strong>connection string</strong> (cadena con servidor, base de datos, credenciales).</li>
+                <li><strong>cursor.execute():</strong> Ejecuta una query SQL o stored procedure usando un cursor. Maneja parámetros y devuelve resultados.</li>
             </ul>
 
             <h4>Objetos de datos</h4>
             <ul>
-                <li><strong><abbr title="SqlDataReader - Lector de resultados en modo conectado, solo avance, solo lectura">SqlDataReader</abbr>:</strong> Lee filas de una consulta una por una (forward-only). No permite modificar datos y requiere conexión abierta.</li>
+                <li><strong>Cursor pyodbc:</strong> Lee filas de una consulta una por una (forward-only) con <code>fetchone()</code> o todas con <code>fetchall()</code>. No permite modificar datos y requiere conexión abierta.</li>
                 <li><strong>DataSet:</strong> Contiene una colección de DataTables en memoria. Funciona en modo desconectado (no necesita conexión abierta).</li>
             </ul>
 
             <div class="note-box">
-                <strong>Mini-Chequeo: Arquitectura ADO.NET</strong>
+                <strong>Mini-Chequeo: Arquitectura ADOPython</strong>
                 <ul>
                     <li>¿Qué diferencia hay entre modo conectado y desconectado?</li>
                     <li>¿Cuándo usarías DataReader vs DataSet?</li>
@@ -672,9 +674,9 @@
             </div>
 
             <h3>Namespaces y Paquetes</h3>
-            <p><strong><abbr title="NuGet - Gestor de paquetes para .NET (similar a npm para Node.js)">NuGet</abbr></strong> = Gestor de paquetes de .NET. Permite agregar bibliotecas externas a tu proyecto.</p>
+            <p><strong>pip</strong> = Gestor de paquetes de Python. Permite agregar bibliotecas externas a tu proyecto.</p>
             <p><strong><abbr title="LocalDB - Versión ligera de SQL Server Express para desarrollo">LocalDB</abbr></strong> = Versión de SQL Server que se ejecuta bajo demanda, ideal para desarrollo.</p>
-            <p><strong>Namespace</strong> = Forma de organizar clases en C# (como "paquetes" en Java o "módulos" en Python).</p>
+            <p><strong>Módulos</strong> = Forma de organizar código en Python mediante archivos <code>.py</code> y paquetes con <code>__init__.py</code>.</p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -683,19 +685,20 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">NuGetPackages.cs</span>
+                    <span class="code-title">requirements.txt</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
-                    <pre><code><span class="token-comment">// Instalación vía NuGet</span>
-<span class="token-method">dotnet</span> add package <span class="token-type">System.Data.SqlClient</span>
-<span class="token-comment">// O para SQL Server (recomendado)</span>
-<span class="token-method">dotnet</span> add package <span class="token-type">Microsoft.Data.SqlClient</span>
+                    <pre><code><span class="token-comment"># Instalación vía pip</span>
+pip install pyodbc
 
-<span class="token-comment">// Namespaces necesarios</span>
-<span class="token-keyword">using</span> <span class="token-namespace">System.Data</span>;           <span class="token-comment">// Tipos genéricos: DataTable, DataSet</span>
-<span class="token-keyword">using</span> <span class="token-namespace">System.Data.SqlClient</span>; <span class="token-comment">// Proveedor SQL Server específico</span>
-<span class="token-keyword">using</span> <span class="token-namespace">Microsoft.Data.SqlClient</span>; <span class="token-comment">// Nuevo paquete (más actualizado)</span></code></pre>
+<span class="token-comment"># O usando requirements.txt</span>
+<span class="token-comment"># pyodbc>=4.0.39</span>
+
+<span class="token-comment"># Importaciones en Python</span>
+<span class="token-keyword">import</span> pyodbc                    <span class="token-comment"># Driver ODBC para SQL Server</span>
+<span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass  <span class="token-comment"># Para modelos de datos</span>
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional, List  <span class="token-comment"># Type hints</span></code></pre>
                 </div>
             </div>
         </section>
@@ -722,42 +725,43 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">ConnectionConfig.cs</span>
+                    <span class="code-title">config.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26</div>
-                    <pre><code><span class="token-comment">// Opción 1: En appsettings.json (RECOMENDADO)</span>
-{
-  <span class="token-string">"ConnectionStrings"</span>: {
-    <span class="token-string">"DefaultConnection"</span>: <span class="token-string">"Server=(localdb)\mssqllocaldb;Database=UniversidadDB;Trusted_Connection=True;MultipleActiveResultSets=true"</span>,
-    <span class="token-string">"Produccion"</span>: <span class="token-string">"Server=mi-servidor.database.windows.net;Database=UniversidadDB;User Id=usuario;Password=password;"</span>
-  }
-}
+                    <pre><code><span class="token-comment"># Opción 1: Variables de entorno (RECOMENDADO)</span>
+<span class="token-keyword">import</span> os
 
-<span class="token-comment">// Leer en Program.cs</span>
-<span class="token-keyword">var</span> connectionString = builder.Configuration
-    .<span class="token-method">GetConnectionString</span>(<span class="token-string">"DefaultConnection"</span>);
+CONNECTION_STRING = os.getenv(
+    <span class="token-string">"DATABASE_URL"</span>,
+    <span class="token-string">"DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER=localhost;"
+    "DATABASE=UniversidadDB;"
+    "Trusted_Connection=yes;"</span>
+)
 
-builder.Services.<span class="token-method">AddSingleton</span>(connectionString);
+<span class="token-comment"># ─────────────────────────────────────────────────────────────</span>
 
-<span class="token-comment">// ─────────────────────────────────────────────────────────────</span>
+<span class="token-comment"># Opción 2: Configuración por ambiente (.env)</span>
+<span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass
 
-<span class="token-comment">// Opción 2: Connection String Builder (más seguro)</span>
-<span class="token-keyword">var</span> builder = <span class="token-keyword">new</span> <span class="token-type">SqlConnectionStringBuilder</span>
-{
-    DataSource = <span class="token-string">@"(localdb)\mssqllocaldb"</span>,
-    InitialCatalog = <span class="token-string">"UniversidadDB"</span>,
-    IntegratedSecurity = <span class="token-keyword">true</span>,
-    MultipleActiveResultSets = <span class="token-keyword">true</span>,
-    ConnectTimeout = <span class="token-number">30</span>
-};
-
-<span class="token-keyword">string</span> connectionString = builder.ConnectionString;</code></pre>
+<span class="token-keyword">@dataclass</span>
+<span class="token-keyword">class</span> <span class="token-type">DatabaseConfig</span>:
+    driver: <span class="token-type">str</span> = <span class="token-string">"ODBC Driver 17 for SQL Server"</span>
+    server: <span class="token-type">str</span> = <span class="token-string">"localhost"</span>
+    database: <span class="token-type">str</span> = <span class="token-string">"UniversidadDB"</span>
+    timeout: <span class="token-type">int</span> = <span class="token-number">30</span>
+    
+    <span class="token-keyword">def</span> <span class="token-method">to_connection_string</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">str</span>:
+        <span class="token-keyword">return</span> (<span class="token-string">f"DRIVER={</span><span class="token-keyword">self</span>.driver<span class="token-string">};"</span>
+                <span class="token-string">f"SERVER={</span><span class="token-keyword">self</span>.server<span class="token-string">};"</span>
+                <span class="token-string">f"DATABASE={</span><span class="token-keyword">self</span>.database<span class="token-string">};"</span>
+                <span class="token-string">f"Connect Timeout={</span><span class="token-keyword">self</span>.timeout<span class="token-string">}"</span>)</code></pre>
                 </div>
             </div>
 
-            <h3>Usando SqlConnection</h3>
-            <p><strong>using statement</strong> = Garantiza que los recursos (conexiones, archivos, etc.) se liberen correctamente, incluso si ocurre una excepción. Es equivalente a try-finally con Dispose().</p>
+            <h3>Usando pyodbc</h3>
+            <p><strong>with statement</strong> = Garantiza que los recursos (conexiones, cursores, etc.) se liberen correctamente, incluso si ocurre una excepción. Es equivalente a try-finally con close().</p>
 
             <div class="warning-box">
                 <strong>Errores Comunes sin using</strong>
@@ -768,7 +772,7 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                 </ul>
             </div>
 
-            <p><strong><abbr title="Repository - Patrón de diseño que abstrae el acceso a datos (encapsula ADO.NET)">Repository</abbr></strong> = Clase que encapsula toda la lógica de acceso a datos. Separa la lógica de negocio del código SQL.</p>
+            <p><strong><abbr title="Repository - Patrón de diseño que abstrae el acceso a datos (encapsula pyodbc)">Repository</abbr></strong> = Clase que encapsula toda la lógica de acceso a datos. Separa la lógica de negocio del código SQL.</p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -777,58 +781,44 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudianteRepository.cs</span>
+                    <span class="code-title">estudiante_repository.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43</div>
-                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudianteRepository</span>
-{
-    <span class="token-keyword">private readonly string</span> _connectionString;
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> List, Optional
 
-    <span class="token-keyword">public</span> <span class="token-method">EstudianteRepository</span>(<span class="token-keyword">string</span> connectionString)
-    {
-        _connectionString = connectionString;
-    }
+<span class="token-keyword">class</span> <span class="token-class">EstudianteRepository</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, connection_string: <span class="token-type">str</span>):
+        <span class="token-keyword">self</span>._connection_string = connection_string
 
-    <span class="token-keyword">public</span> <span class="token-type">List&lt;Estudiante&gt;</span> <span class="token-method">ObtenerTodos</span>()
-    {
-        <span class="token-keyword">var</span> estudiantes = <span class="token-keyword">new</span> <span class="token-type">List&lt;Estudiante&gt;</span>();
+    <span class="token-keyword">def</span> <span class="token-method">obtener_todos</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> List[<span class="token-type">Estudiante</span>]:
+        estudiantes: List[<span class="token-type">Estudiante</span>] = []
 
-        <span class="token-comment">// SIEMPRE usar 'using' para garantizar cierre de conexión</span>
-        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString))
-        {
-            connection.<span class="token-method">Open</span>();
+        <span class="token-comment"># SIEMPRE usar 'with' para garantizar cierre de conexión</span>
+        <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+            query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes"</span>
 
-            <span class="token-keyword">var</span> query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes"</span>;
+            <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+                cursor.<span class="token-method">execute</span>(query)
 
-            <span class="token-keyword">using</span> (<span class="token-keyword">var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection))
-            {
-                <span class="token-keyword">using</span> (<span class="token-keyword">var</span> reader = command.<span class="token-method">ExecuteReader</span>())
-                {
-                    <span class="token-keyword">while</span> (reader.<span class="token-method">Read</span>())
-                    {
-                        estudiantes.<span class="token-method">Add</span>(<span class="token-keyword">new</span> <span class="token-type">Estudiante</span>
-                        {
-                            Id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>),
-                            Codigo = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>),
-                            Nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">2</span>),
-                            Email = reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>) ? <span class="token-keyword">null</span> : reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>)
-                        });
-                    }
-                }
-            }
+                <span class="token-comment"># Iterar sobre el cursor (forward-only)</span>
+                <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+                    estudiantes.<span class="token-method">append</span>(<span class="token-type">Estudiante</span>(
+                        <span class="token-property">id</span>=row[<span class="token-number">0</span>],
+                        <span class="token-property">codigo</span>=row[<span class="token-number">1</span>],
+                        <span class="token-property">nombre</span>=row[<span class="token-number">2</span>],
+                        <span class="token-property">email</span>=row[<span class="token-number">3</span>] <span class="token-keyword">if</span> row[<span class="token-number">3</span>] <span class="token-keyword">is not None</span> <span class="token-keyword">else</span> <span class="token-keyword">None</span>
+                    ))
 
-            <span class="token-comment">// La conexión se cierra automáticamente al salir del using</span>
-        }
+            <span class="token-comment"># La conexión se cierra automáticamente al salir del with</span>
 
-        <span class="token-keyword">return</span> estudiantes;
-    }
-}</code></pre>
+        <span class="token-keyword">return</span> estudiantes</code></pre>
                 </div>
             </div>
 
-            <h3>SqlDataReader - Lectura de datos</h3>
-            <p><strong><abbr title="DBNull - Valor especial que representa NULL en una base de datos">DBNull</abbr></strong> = Objeto especial que representa un valor NULL de base de datos. Es diferente de null de C#.</p>
+            <h3>Cursor de pyodbc - Lectura de datos</h3>
+            <p><strong>None</strong> = En Python, el valor <code>None</code> se convierte automáticamente a NULL en la base de datos. Se verifica con <code>is None</code> o <code>is not None</code>.</p>
 
             <div class="code-block">
                 <div class="code-header">
@@ -837,32 +827,36 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">DataReaderMethods.cs</span>
+                    <span class="code-title">cursor_methods.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
-                    <pre><code><span class="token-comment">// Métodos del SqlDataReader</span>
+                    <pre><code><span class="token-comment"># Métodos del cursor de pyodbc</span>
 
-<span class="token-comment">// Por índice (posición)</span>
-<span class="token-keyword">int</span> id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>);
-<span class="token-keyword">string</span> nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>);
+<span class="token-comment"># Por índice (posición) - row es una tupla</span>
+<span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+    id: <span class="token-type">int</span> = row[<span class="token-number">0</span>]
+    nombre: <span class="token-type">str</span> = row[<span class="token-number">1</span>]
 
-<span class="token-comment">// Por nombre de columna</span>
-<span class="token-keyword">string</span> email = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>));
+<span class="token-comment"># Usando fetchall() para obtener todas las filas</span>
+rows = cursor.<span class="token-method">fetchall</span>()
+<span class="token-keyword">for</span> row <span class="token-keyword">in</span> rows:
+    email: <span class="token-type">str</span> = row[<span class="token-number">2</span>]
 
-<span class="token-comment">// Verificar NULL</span>
-<span class="token-keyword">if</span> (!reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>))
-{
-    email = reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>);
-}
+<span class="token-comment"># Verificar NULL (None en Python)</span>
+<span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+    <span class="token-keyword">if</span> row[<span class="token-number">3</span>] <span class="token-keyword">is not None</span>:
+        email = row[<span class="token-number">3</span>]
 
-<span class="token-comment">// Cast genérico (más lento pero flexible)</span>
-<span class="token-keyword">int</span> id = (<span class="token-keyword">int</span>)reader[<span class="token-string">"Id"</span>];
-<span class="token-keyword">string</span> nombre = reader[<span class="token-string">"Nombre"</span>].<span class="token-method">ToString</span>();
+<span class="token-comment"># Acceso por nombre de columna (usando description)</span>
+columns = [desc[<span class="token-number">0</span>] <span class="token-keyword">for</span> desc <span class="token-keyword">in</span> cursor.<span class="token-property">description</span>]
+<span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+    row_dict = <span class="token-method">dict</span>(<span class="token-method">zip</span>(columns, row))
+    id = row_dict[<span class="token-string">"Id"</span>]
+    nombre = row_dict[<span class="token-string">"Nombre"</span>]
 
-<span class="token-comment">// Tipos disponibles:</span>
-<span class="token-comment">// GetInt32(), GetInt64(), GetString(), GetDateTime()</span>
-<span class="token-comment">// GetDecimal(), GetDouble(), GetBoolean(), GetByte()</span></code></pre>
+<span class="token-comment"># Tipos disponibles: se convierten automáticamente</span>
+<span class="token-comment"># int, str, float, datetime, Decimal, bytes, bool</span></code></pre>
                 </div>
             </div>
         </section>
@@ -880,34 +874,38 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">CreateOperation.cs</span>
+                    <span class="code-title">create_operation.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
-                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;int&gt;</span> <span class="token-method">CrearAsync</span>(<span class="token-type">Estudiante</span> estudiante)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> datetime
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
 
-    <span class="token-keyword">var</span> query = <span class="token-string">@"
-        INSERT INTO Estudiantes (Codigo, Nombre, Email, FechaRegistro)
-        VALUES (@Codigo, @Nombre, @Email, @FechaRegistro);
-        SELECT SCOPE_IDENTITY();"</span>;  <span class="token-comment">// Retorna el ID generado</span>
+<span class="token-keyword">def</span> <span class="token-method">crear</span>(<span class="token-keyword">self</span>, estudiante: <span class="token-type">Estudiante</span>) <span class="token-operator">-></span> <span class="token-type">int</span>:
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        query = <span class="token-string">"""
+            INSERT INTO Estudiantes (Codigo, Nombre, Email, FechaRegistro)
+            VALUES (?, ?, ?, ?);
+            SELECT SCOPE_IDENTITY();"""</span>  <span class="token-comment"># Retorna el ID generado</span>
 
-    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
+        <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+            <span class="token-comment"># Agregar parámetros con ? (EVITA SQL INJECTION)</span>
+            params = (
+                estudiante.codigo,
+                estudiante.nombre,
+                estudiante.email,  <span class="token-comment"># None se convierte a NULL</span>
+                datetime.<span class="token-method">now</span>()
+            )
 
-    <span class="token-comment">// Agregar parámetros (EVITA SQL INJECTION)</span>
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
-        (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@FechaRegistro"</span>, <span class="token-type">DateTime</span>.Now);
+            cursor.<span class="token-method">execute</span>(query, params)
 
-    <span class="token-comment">// ExecuteScalar para retornar un solo valor (el ID)</span>
-    <span class="token-keyword">var</span> id = <span class="token-type">Convert</span>.<span class="token-method">ToInt32</span>(<span class="token-keyword">await</span> command.<span class="token-method">ExecuteScalarAsync</span>());
+            <span class="token-comment"># fetchone para retornar un solo valor (el ID)</span>
+            row = cursor.<span class="token-method">fetchone</span>()
+            id_generado = <span class="token-method">int</span>(row[<span class="token-number">0</span>]) <span class="token-keyword">if</span> row <span class="token-keyword">else</span> <span class="token-number">0</span>
 
-    <span class="token-keyword">return</span> id;
-}</code></pre>
+        connection.<span class="token-method">commit</span>()  <span class="token-comment"># Confirmar la transacción</span>
+        <span class="token-keyword">return</span> id_generado</code></pre>
                 </div>
             </div>
 
@@ -919,48 +917,39 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">ReadOperation.cs</span>
+                    <span class="code-title">read_operation.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38</div>
-                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;Estudiante&gt;</span> <span class="token-method">ObtenerPorIdAsync</span>(<span class="token-keyword">int</span> id)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
 
-    <span class="token-keyword">var</span> query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = @Id"</span>;
+<span class="token-keyword">def</span> <span class="token-method">obtener_por_id</span>(<span class="token-keyword">self</span>, id: <span class="token-type">int</span>) <span class="token-operator">-></span> Optional[<span class="token-type">Estudiante</span>]:
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        query = <span class="token-string">"SELECT Id, Codigo, Nombre, Email FROM Estudiantes WHERE Id = ?"</span>
 
-    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
+        <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+            cursor.<span class="token-method">execute</span>(query, (id,))
+            row = cursor.<span class="token-method">fetchone</span>()
 
-    <span class="token-keyword">using var</span> reader = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteReaderAsync</span>();
+            <span class="token-keyword">if</span> row:
+                <span class="token-keyword">return</span> <span class="token-type">Estudiante</span>(
+                    <span class="token-property">id</span>=row[<span class="token-number">0</span>],
+                    <span class="token-property">codigo</span>=row[<span class="token-number">1</span>],
+                    <span class="token-property">nombre</span>=row[<span class="token-number">2</span>],
+                    <span class="token-property">email</span>=row[<span class="token-number">3</span>] <span class="token-keyword">if</span> row[<span class="token-number">3</span>] <span class="token-keyword">is not None</span> <span class="token-keyword">else</span> <span class="token-keyword">None</span>
+                )
 
-    <span class="token-keyword">if</span> (<span class="token-keyword">await</span> reader.<span class="token-method">ReadAsync</span>())
-    {
-        <span class="token-keyword">return new</span> <span class="token-type">Estudiante</span>
-        {
-            Id = reader.<span class="token-method">GetInt32</span>(<span class="token-number">0</span>),
-            Codigo = reader.<span class="token-method">GetString</span>(<span class="token-number">1</span>),
-            Nombre = reader.<span class="token-method">GetString</span>(<span class="token-number">2</span>),
-            Email = reader.<span class="token-method">IsDBNull</span>(<span class="token-number">3</span>) ? <span class="token-keyword">null</span> : reader.<span class="token-method">GetString</span>(<span class="token-number">3</span>)
-        };
-    }
+    <span class="token-keyword">return</span> <span class="token-keyword">None</span>  <span class="token-comment"># No encontrado</span>
 
-    <span class="token-keyword">return null</span>;  <span class="token-comment">// No encontrado</span>
-}
-
-<span class="token-keyword">private</span> <span class="token-type">Estudiante</span> <span class="token-method">MapFromReader</span>(<span class="token-type">SqlDataReader</span> reader)
-{
-    <span class="token-keyword">return new</span> <span class="token-type">Estudiante</span>
-    {
-        Id = reader.<span class="token-method">GetInt32</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Id"</span>)),
-        Codigo = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Codigo"</span>)),
-        Nombre = reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Nombre"</span>)),
-        Email = reader.<span class="token-method">IsDBNull</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>))
-            ? <span class="token-keyword">null</span>
-            : reader.<span class="token-method">GetString</span>(reader.<span class="token-method">GetOrdinal</span>(<span class="token-string">"Email"</span>))
-    };
-}</code></pre>
+<span class="token-keyword">def</span> <span class="token-method">_map_from_row</span>(<span class="token-keyword">self</span>, row) <span class="token-operator">-></span> <span class="token-type">Estudiante</span>:
+    <span class="token-string">"""Mapea una fila del cursor a un objeto Estudiante"""</span>
+    <span class="token-keyword">return</span> <span class="token-type">Estudiante</span>(
+        <span class="token-property">id</span>=row[<span class="token-number">0</span>],
+        <span class="token-property">codigo</span>=row[<span class="token-number">1</span>],
+        <span class="token-property">nombre</span>=row[<span class="token-number">2</span>],
+        <span class="token-property">email</span>=row[<span class="token-number">3</span>] <span class="token-keyword">if</span> row[<span class="token-number">3</span>] <span class="token-keyword">is not None</span> <span class="token-keyword">else</span> <span class="token-keyword">None</span>
+    )</code></pre>
                 </div>
             </div>
 
@@ -972,34 +961,35 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">UpdateOperation.cs</span>
+                    <span class="code-title">update_operation.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
-                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">ActualizarAsync</span>(<span class="token-type">Estudiante</span> estudiante)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+                    <pre><code><span class="token-keyword">import</span> pyodbc
 
-    <span class="token-keyword">var</span> query = <span class="token-string">@"
-        UPDATE Estudiantes
-        SET Codigo = @Codigo,
-            Nombre = @Nombre,
-            Email = @Email
-        WHERE Id = @Id"</span>;
+<span class="token-keyword">def</span> <span class="token-method">actualizar</span>(<span class="token-keyword">self</span>, estudiante: <span class="token-type">Estudiante</span>) <span class="token-operator">-></span> <span class="token-type">bool</span>:
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        query = <span class="token-string">"""
+            UPDATE Estudiantes
+            SET Codigo = ?,
+                Nombre = ?,
+                Email = ?
+            WHERE Id = ?"""</span>
 
-    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, estudiante.Id);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
-        (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
+        <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+            params = (
+                estudiante.codigo,
+                estudiante.nombre,
+                estudiante.email,  <span class="token-comment"># None se convierte a NULL</span>
+                estudiante.id
+            )
+            cursor.<span class="token-method">execute</span>(query, params)
 
-    <span class="token-comment">// ExecuteNonQuery retorna número de filas afectadas</span>
-    <span class="token-keyword">int</span> filasAfectadas = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>();
+            <span class="token-comment"># rowcount retorna número de filas afectadas</span>
+            filas_afectadas = cursor.<span class="token-property">rowcount</span>
 
-    <span class="token-keyword">return</span> filasAfectadas &gt; <span class="token-number">0</span>;  <span class="token-comment">// True si se actualizó</span>
-}</code></pre>
+        connection.<span class="token-method">commit</span>()  <span class="token-comment"># Confirmar cambios</span>
+        <span class="token-keyword">return</span> filas_afectadas > <span class="token-number">0</span>  <span class="token-comment"># True si se actualizó</span></code></pre>
                 </div>
             </div>
 
@@ -1011,42 +1001,38 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">DeleteOperation.cs</span>
+                    <span class="code-title">delete_operation.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
-                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">EliminarAsync</span>(<span class="token-keyword">int</span> id)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> datetime
 
-    <span class="token-keyword">var</span> query = <span class="token-string">"DELETE FROM Estudiantes WHERE Id = @Id"</span>;
+<span class="token-keyword">def</span> <span class="token-method">eliminar</span>(<span class="token-keyword">self</span>, id: <span class="token-type">int</span>) <span class="token-operator">-></span> <span class="token-type">bool</span>:
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        query = <span class="token-string">"DELETE FROM Estudiantes WHERE Id = ?"</span>
 
-    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
+        <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+            cursor.<span class="token-method">execute</span>(query, (id,))
+            filas_afectadas = cursor.<span class="token-property">rowcount</span>
 
-    <span class="token-keyword">int</span> filasAfectadas = <span class="token-keyword">await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>();
+        connection.<span class="token-method">commit</span>()
+        <span class="token-keyword">return</span> filas_afectadas > <span class="token-number">0</span>
 
-    <span class="token-keyword">return</span> filasAfectadas &gt; <span class="token-number">0</span>;
-}
+<span class="token-comment"># Alternativa: Eliminación lógica (más segura)</span>
+<span class="token-keyword">def</span> <span class="token-method">desactivar</span>(<span class="token-keyword">self</span>, id: <span class="token-type">int</span>) <span class="token-operator">-></span> <span class="token-type">bool</span>:
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        query = <span class="token-string">"""
+            UPDATE Estudiantes
+            SET Activo = 0, FechaEliminacion = ?
+            WHERE Id = ?"""</span>
 
-<span class="token-comment">// Alternativa: Eliminación lógica (más segura)</span>
-<span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">DesactivarAsync</span>(<span class="token-keyword">int</span> id)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+        <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+            cursor.<span class="token-method">execute</span>(query, (datetime.<span class="token-method">now</span>(), id))
+            resultado = cursor.<span class="token-property">rowcount</span> > <span class="token-number">0</span>
 
-    <span class="token-keyword">var</span> query = <span class="token-string">@"
-        UPDATE Estudiantes
-        SET Activo = 0, FechaEliminacion = @Fecha
-        WHERE Id = @Id"</span>;
-
-    <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);
-    command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Fecha"</span>, <span class="token-type">DateTime</span>.Now);
-
-    <span class="token-keyword">return await</span> command.<span class="token-method">ExecuteNonQueryAsync</span>() &gt; <span class="token-number">0</span>;
-}</code></pre>
+        connection.<span class="token-method">commit</span>()
+        <span class="token-keyword">return</span> resultado</code></pre>
                 </div>
             </div>
 
@@ -1061,17 +1047,17 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>ExecuteReader()</strong></td>
-                        <td>SqlDataReader</td>
+                        <td><strong>cursor.fetchall()</strong></td>
+                        <td>Lista de tuplas</td>
                         <td>SELECT (múltiples filas)</td>
                     </tr>
                     <tr>
-                        <td><strong>ExecuteScalar()</strong></td>
-                        <td>object</td>
+                        <td><strong>cursor.fetchone()</strong></td>
+                        <td>Tupla / None</td>
                         <td>SELECT COUNT(*), SUM(), MAX(), SCOPE_IDENTITY()</td>
                     </tr>
                     <tr>
-                        <td><strong>ExecuteNonQuery()</strong></td>
+                        <td><strong>cursor.rowcount</strong></td>
                         <td>int</td>
                         <td>INSERT, UPDATE, DELETE, CREATE TABLE</td>
                     </tr>
@@ -1092,16 +1078,16 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                 </ul>
             </div>
 
-            <h3>Transacciones en ADO.NET</h3>
+            <h3>Transacciones en ADOPython</h3>
             <p><strong><abbr title="Transaction - Unidad de trabajo compuesta por múltiples operaciones que deben ejecutarse todas o ninguna">Transaction</abbr></strong> = Unidad de trabajo compuesta por múltiples operaciones SQL que deben ejecutarse todas o ninguna (ACID).</p>
             <p><strong>Commit</strong> = Confirmar la transacción (aplicar todos los cambios permanentemente).</p>
             <p><strong>Rollback</strong> = Deshacer la transacción (revertir todos los cambios si algo falla).</p>
-            <p><strong>async/await</strong> = Palabras clave de C# para programación asíncrona. async marca un método como asíncrono, await espera un resultado sin bloquear el hilo.</p>
+            <p><strong>async/await</strong> = Palabras clave de Python para programación asíncrona. async marca un método como asíncrono, await espera un resultado sin bloquear el hilo.</p>
 
             <div class="warning-box">
                 <strong>Errores Comunes con Transacciones</strong>
                 <ul>
-                    <li><strong>Olvidar pasar el objeto transaction a SqlCommand:</strong> Los comandos se ejecutan FUERA de la transacción</li>
+                    <li><strong>Olvidar usar el mismo cursor/connection en la transacción:</strong> Los comandos deben ejecutarse dentro del contexto de la transacción</li>
                     <li><strong>No llamar Commit():</strong> La transacción se deshace automáticamente (rollback implícito)</li>
                     <li><strong>Excepciones no manejadas:</strong> Siempre envolver en try-catch para llamar Rollback()</li>
                 </ul>
@@ -1115,59 +1101,50 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">TransactionExample.cs</span>
+                    <span class="code-title">transaction_example.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49</div>
-                    <pre><code><span class="token-keyword">public async</span> <span class="token-type">Task&lt;bool&gt;</span> <span class="token-method">TransferirEstudianteAsync</span>(
-    <span class="token-keyword">int</span> estudianteId, <span class="token-keyword">int</span> carreraOrigenId, <span class="token-keyword">int</span> carreraDestinoId)
-{
-    <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-    <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> datetime
+<span class="token-keyword">import</span> logging
 
-    <span class="token-comment">// Iniciar transacción</span>
-    <span class="token-keyword">using var</span> transaction = connection.<span class="token-method">BeginTransaction</span>();
+logger = logging.<span class="token-method">getLogger</span>(<span class="token-string">"estudiante_repository"</span>)
 
-    <span class="token-keyword">try</span>
-    {
-        <span class="token-comment">// 1. Registrar historial de transferencia</span>
-        <span class="token-keyword">var</span> query1 = <span class="token-string">@"INSERT INTO HistorialTransferencias
-                       (EstudianteId, CarreraOrigenId, CarreraDestinoId, Fecha)
-                       VALUES (@EstId, @OrigId, @DestId, @Fecha)"</span>;
+<span class="token-keyword">def</span> <span class="token-method">transferir_estudiante</span>(<span class="token-keyword">self</span>, 
+    estudiante_id: <span class="token-type">int</span>, carrera_origen_id: <span class="token-type">int</span>, carrera_destino_id: <span class="token-type">int</span>) <span class="token-operator">-></span> <span class="token-type">bool</span>:
+    
+    <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+        <span class="token-comment"># Iniciar transacción</span>
+        transaction = connection.<span class="token-method">cursor</span>()
+        
+        <span class="token-keyword">try</span>:
+            <span class="token-comment"># 1. Registrar historial de transferencia</span>
+            query1 = <span class="token-string">"""INSERT INTO HistorialTransferencias
+                           (EstudianteId, CarreraOrigenId, CarreraDestinoId, Fecha)
+                           VALUES (?, ?, ?, ?)"""</span>
+            
+            transaction.<span class="token-method">execute</span>(query1, 
+                (estudiante_id, carrera_origen_id, carrera_destino_id, datetime.<span class="token-method">now</span>()))
 
-        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> cmd1 = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query1, connection, transaction))
-        {
-            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@EstId"</span>, estudianteId);
-            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@OrigId"</span>, carreraOrigenId);
-            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@DestId"</span>, carreraDestinoId);
-            cmd1.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Fecha"</span>, <span class="token-type">DateTime</span>.Now);
-            <span class="token-keyword">await</span> cmd1.<span class="token-method">ExecuteNonQueryAsync</span>();
-        }
+            <span class="token-comment"># 2. Actualizar carrera del estudiante</span>
+            query2 = <span class="token-string">"""UPDATE Estudiantes
+                           SET CarreraId = ?
+                           WHERE Id = ?"""</span>
+            
+            transaction.<span class="token-method">execute</span>(query2, (carrera_destino_id, estudiante_id))
 
-        <span class="token-comment">// 2. Actualizar carrera del estudiante</span>
-        <span class="token-keyword">var</span> query2 = <span class="token-string">@"UPDATE Estudiantes
-                       SET CarreraId = @CarreraId
-                       WHERE Id = @Id"</span>;
-
-        <span class="token-keyword">using</span> (<span class="token-keyword">var</span> cmd2 = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query2, connection, transaction))
-        {
-            cmd2.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@CarreraId"</span>, carreraDestinoId);
-            cmd2.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, estudianteId);
-            <span class="token-keyword">await</span> cmd2.<span class="token-method">ExecuteNonQueryAsync</span>();
-        }
-
-        <span class="token-comment">// Si todo va bien, confirmar transacción</span>
-        transaction.<span class="token-method">Commit</span>();
-        <span class="token-keyword">return true</span>;
-    }
-    <span class="token-keyword">catch</span> (<span class="token-type">Exception</span> ex)
-    {
-        <span class="token-comment">// Si hay error, deshacer todo</span>
-        transaction.<span class="token-method">Rollback</span>();
-        _logger.<span class="token-method">LogError</span>(ex, <span class="token-string">"Error en transferencia"</span>);
-        <span class="token-keyword">return false</span>;
-    }
-}</code></pre>
+            <span class="token-comment"># Si todo va bien, confirmar transacción</span>
+            connection.<span class="token-method">commit</span>()
+            <span class="token-keyword">return</span> <span class="token-keyword">True</span>
+            
+        <span class="token-keyword">except</span> <span class="token-type">Exception</span> <span class="token-keyword">as</span> ex:
+            <span class="token-comment"># Si hay error, deshacer todo</span>
+            connection.<span class="token-method">rollback</span>()
+            logger.<span class="token-method">error</span>(<span class="token-string">f"Error en transferencia: {ex}"</span>)
+            <span class="token-keyword">return</span> <span class="token-keyword">False</span>
+        <span class="token-keyword">finally</span>:
+            transaction.<span class="token-method">close</span>()</code></pre>
                 </div>
             </div>
         </section>
@@ -1179,7 +1156,7 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
             <div class="checklist-box">
                 <strong>✅ SIEMPRE USAR USING</strong>
                 <ul>
-                    <li>SqlConnection, SqlCommand, SqlDataReader</li>
+                    <li>pyodbc.connect(), cursor.execute(), cursor.fetchall()</li>
                     <li>Garantiza liberación de recursos</li>
                 </ul>
             </div>
@@ -1193,15 +1170,15 @@ builder.Services.<span class="token-method">AddSingleton</span>(connectionString
                             <span class="code-dot yellow"></span>
                             <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">SQLInjectionWarning.cs</span>
+                        <span class="code-title">sql_injection_warning.py</span>
                     </div>
                     <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                        <pre><code><span class="token-comment">// VULNERABLE A SQL INJECTION</span>
-<span class="token-keyword">var</span> sql = <span class="token-string">$"SELECT * FROM Users WHERE Id = {id}"</span>;
+                        <pre><code><span class="token-comment"># VULNERABLE A SQL INJECTION</span>
+sql = <span class="token-string">f"SELECT * FROM Users WHERE Id = {id}"</span>
 
-<span class="token-comment">// SEGURO CON PARÁMETROS</span>
-command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Id"</span>, id);</code></pre>
+<span class="token-comment"># SEGURO CON PARÁMETROS</span>
+cursor.<span class="token-method">execute</span>(<span class="token-string">"SELECT * FROM Users WHERE Id = ?"</span>, (id,))</code></pre>
                     </div>
                 </div>
             </div>
@@ -1240,7 +1217,7 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
             </div>
 
             <h3>Connection Pooling</h3>
-            <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, ADO.NET mantiene un "pool" de conexiones disponibles.</p>
+            <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, ADOPython mantiene un "pool" de conexiones disponibles.</p>
             <p><strong>¿Por qué Connection Pooling?</strong> Abrir una conexión física es costoso (miles de milisegundos). Reutilizar conexiones existentes toma microsegundos.</p>
             <div class="code-block">
                 <div class="code-header">
@@ -1294,15 +1271,15 @@ Connection Timeout=15;"</span>              <span class="token-comment">// Timeo
                             <span class="code-dot yellow"></span>
                             <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">SQLInjectionVulnerable.cs</span>
+                        <span class="code-title">sql_injection_vulnerable.py</span>
                     </div>
                     <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
-                        <pre><code><span class="token-keyword">var</span> query = <span class="token-string">$"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'"</span>;
-<span class="token-comment">// Si codigo = "'; DROP TABLE Estudiantes; --"</span>
-<span class="token-comment">// Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';</span>
-<span class="token-comment">//                    DROP TABLE Estudiantes; --'</span>
-<span class="token-comment">//  DESASTRE!</span></code></pre>
+                        <pre><code>query = <span class="token-string">f"SELECT * FROM Estudiantes WHERE Codigo = '{codigo}'"</span>
+<span class="token-comment"># Si codigo = "'; DROP TABLE Estudiantes; --"</span>
+<span class="token-comment"># Query resultante: SELECT * FROM Estudiantes WHERE Codigo = '';</span>
+<span class="token-comment">#                    DROP TABLE Estudiantes; --'</span>
+<span class="token-comment">#  DESASTRE!</span></code></pre>
                     </div>
                 </div>
             </div>
@@ -1316,13 +1293,13 @@ Connection Timeout=15;"</span>              <span class="token-comment">// Timeo
                             <span class="code-dot yellow"></span>
                             <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">SQLInjectionSafe.cs</span>
+                        <span class="code-title">sql_injection_safe.py</span>
                     </div>
                     <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3</div>
-                        <pre><code><span class="token-keyword">var</span> query = <span class="token-string">"SELECT * FROM Estudiantes WHERE Codigo = @Codigo"</span>;
-command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, codigo);
-<span class="token-comment">// El parámetro se escapa automáticamente</span></code></pre>
+                        <pre><code>query = <span class="token-string">"SELECT * FROM Estudiantes WHERE Codigo = ?"</span>
+cursor.<span class="token-method">execute</span>(query, (codigo,))
+<span class="token-comment"># El parámetro se escapa automáticamente</span></code></pre>
                     </div>
                 </div>
             </div>
@@ -1343,9 +1320,9 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
             <h2>Ejemplos</h2>
             <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
             <ul>
-                <li>Conexión a bases de datos con SqlConnection</li>
-                <li>Operaciones CRUD con SqlCommand</li>
-                <li>Uso de SqlDataReaders y DataSets</li>
+                <li>Conexión a bases de datos con pyodbc</li>
+                <li>Operaciones CRUD con cursor.execute()</li>
+                <li>Uso de cursores y fetchall/fetchone</li>
                 <li>Implementación de transacciones</li>
                 <li>Buenas prácticas de seguridad</li>
             </ul>
@@ -1353,24 +1330,24 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
 
         <!-- Práctica / Laboratorio -->
         <section id="practica" class="section actividad">
-            <h3>Actividad: Repositorio ADO.NET CRUD</h3>
+            <h3>Actividad: Repositorio ADOPython CRUD</h3>
             <p><strong>Tipo:</strong> Opcional / práctica</p>
             <p><strong>Relacionado con:</strong> Ninguno</p>
-            <p><strong>Entregable:</strong> Repositorio ADO.NET con operaciones CRUD para Estudiantes</p>
+            <p><strong>Entregable:</strong> Repositorio ADOPython con operaciones CRUD para Estudiantes</p>
             <p><strong>Tiempo estimado:</strong> 40 min</p>
-            <p><strong>Criterios de éxito:</strong> Comprensión de SqlConnection, SqlCommand, SqlDataReader</p>
+            <p><strong>Criterios de éxito:</strong> Comprensión de pyodbc.connect(), cursor.execute(), cursor.fetchall()</p>
             <h2>Práctica / Laboratorio</h2>
             <p><strong>Duración estimada:</strong> 40 minutos</p>
-            <p><strong>Objetivo:</strong> Implementar un repositorio ADO.NET completo con operaciones CRUD para Estudiantes.</p>
+            <p><strong>Objetivo:</strong> Implementar un repositorio pyodbc completo con operaciones CRUD para Estudiantes.</p>
 
-            <h3>Pasos en Visual Studio 2022</h3>
+            <h3>Pasos en VS Code / Visual Studio Code</h3>
             <ol>
-                <li>Abre Visual Studio 2022 y crea un nuevo proyecto <strong>Console App</strong> con .NET 8</li>
-                <li>Instala el paquete NuGet: <code>Microsoft.Data.SqlClient</code></li>
-                <li>En <code>appsettings.json</code>, configura la connection string para LocalDB</li>
+                <li>Abre VS Code / Visual Studio Code y crea un nuevo proyecto <strong>Console App</strong> con Python 8</li>
+                <li>Instala el paquete: <code>pip install pyodbc</code></li>
+                <li>En <code>config.py</code> o variables de entorno, configura la connection string para LocalDB</li>
                 <li>Crea la base de datos con el script SQL provisto por el docente</li>
                 <li>Implementa la clase <code>EstudianteRepository</code> con todos los métodos CRUD</li>
-                <li>Usa <code>using</code> statements para SqlConnection, SqlCommand y SqlDataReader</li>
+                <li>Usa <code>with</code> statements para conexiones pyodbc y cursores</li>
                 <li>Usa parámetros en todas las queries para evitar SQL Injection</li>
                 <li>Prueba cada método con datos de prueba en el Main</li>
             </ol>
@@ -1379,10 +1356,10 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
             <ul>
                 <li>✅ El proyecto compila sin errores</li>
                 <li>✅ La connection string está configurada correctamente en appsettings.json</li>
-                <li>✅ Todos los métodos usan <code>using</code> para SqlConnection y SqlCommand</li>
+                <li>✅ Todos los métodos usan <code>with</code> para conexiones y cursores</li>
                 <li>✅ Todas las queries usan parámetros (@Nombre, @Codigo, etc.)</li>
-                <li>✅ El método Crear retorna el ID generado con SCOPE_IDENTITY()</li>
-                <li>✅ El método ObtenerPorId retorna null cuando no encuentra registros</li>
+                <li>✅ El método crear retorna el ID generado con SCOPE_IDENTITY()</li>
+                <li>✅ El método obtener_por_id retorna None cuando no encuentra registros</li>
                 <li>✅ Los métodos UPDATE y DELETE verifican filas afectadas (> 0)</li>
             </ul>
 
@@ -1394,49 +1371,46 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudianteRepositoryExample.cs</span>
+                    <span class="code-title">estudiante_repository_example.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
-                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">EstudianteRepository</span>
-{
-    <span class="token-keyword">private readonly string</span> _connectionString;
+                    <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
 
-    <span class="token-keyword">public</span> <span class="token-method">EstudianteRepository</span>(<span class="token-keyword">string</span> connectionString)
-    {
-        _connectionString = connectionString;
-    }
+<span class="token-keyword">class</span> <span class="token-class">EstudianteRepository</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, connection_string: <span class="token-type">str</span>):
+        <span class="token-keyword">self</span>._connection_string = connection_string
 
-    <span class="token-keyword">public async</span> <span class="token-type">Task&lt;int&gt;</span> <span class="token-method">CrearAsync</span>(<span class="token-type">Estudiante</span> estudiante)
-    {
-        <span class="token-keyword">using var</span> connection = <span class="token-keyword">new</span> <span class="token-type">SqlConnection</span>(_connectionString);
-        <span class="token-keyword">await</span> connection.<span class="token-method">OpenAsync</span>();
+    <span class="token-keyword">def</span> <span class="token-method">crear</span>(<span class="token-keyword">self</span>, estudiante: <span class="token-type">Estudiante</span>) <span class="token-operator">-></span> <span class="token-type">int</span>:
+        <span class="token-keyword">with</span> pyodbc.<span class="token-method">connect</span>(<span class="token-keyword">self</span>._connection_string) <span class="token-keyword">as</span> connection:
+            query = <span class="token-string">"""
+                INSERT INTO Estudiantes (Codigo, Nombre, Email)
+                VALUES (?, ?, ?);
+                SELECT SCOPE_IDENTITY();"""</span>
 
-        <span class="token-keyword">var</span> query = <span class="token-string">@"
-            INSERT INTO Estudiantes (Codigo, Nombre, Email)
-            VALUES (@Codigo, @Nombre, @Email);
-            SELECT SCOPE_IDENTITY();"</span>;
+            <span class="token-keyword">with</span> connection.<span class="token-method">cursor</span>() <span class="token-keyword">as</span> cursor:
+                cursor.<span class="token-method">execute</span>(query, (
+                    estudiante.codigo,
+                    estudiante.nombre,
+                    estudiante.email  <span class="token-comment"># None se convierte a NULL</span>
+                ))
 
-        <span class="token-keyword">using var</span> command = <span class="token-keyword">new</span> <span class="token-type">SqlCommand</span>(query, connection);
-        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Codigo"</span>, estudiante.Codigo);
-        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Nombre"</span>, estudiante.Nombre);
-        command.Parameters.<span class="token-method">AddWithValue</span>(<span class="token-string">"@Email"</span>,
-            (<span class="token-keyword">object</span>)estudiante.Email ?? <span class="token-type">DBNull</span>.Value);
+                row = cursor.<span class="token-method">fetchone</span>()
+                id_generado = <span class="token-method">int</span>(row[<span class="token-number">0</span>]) <span class="token-keyword">if</span> row <span class="token-keyword">else</span> <span class="token-number">0</span>
 
-        <span class="token-keyword">var</span> id = <span class="token-type">Convert</span>.<span class="token-method">ToInt32</span>(<span class="token-keyword">await</span> command.<span class="token-method">ExecuteScalarAsync</span>());
-        <span class="token-keyword">return</span> id;
-    }
-}</code></pre>
+            connection.<span class="token-method">commit</span>()
+            <span class="token-keyword">return</span> id_generado</code></pre>
                 </div>
             </div>
 
             <h3>Errores comunes a evitar</h3>
             <ul>
-                <li>❌ No usar <code>using</code> para SqlConnection (connection leaks)</li>
+                <li>❌ No usar <code>with</code> para conexiones pyodbc (connection leaks)</li>
                 <li>❌ Concatenar strings para armar queries (SQL Injection)</li>
                 <li>❌ Olvidar llamar a Open() antes de ejecutar comandos</li>
                 <li>❌ No usar async/await en aplicaciones web/consola modernas</li>
-                <li>❌ No verificar DBNull cuando leemos valores NULL de la DB</li>
+                <li>❌ No verificar <code>None</code> cuando leemos valores NULL de la DB</li>
             </ul>
         </section>
 
@@ -1450,7 +1424,7 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
             <h4>Checklist:</h4>
             <ul>
                 <li>✅ Create con parámetros y SCOPE_IDENTITY()</li>
-                <li>✅ Read con SqlDataReader y using statements</li>
+                <li>✅ Read con cursor y with statements</li>
                 <li>✅ Update verificando filas afectadas</li>
                 <li>✅ Delete con parámetro @Id</li>
             </ul>
@@ -1463,7 +1437,7 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
                 <li>✅ Usar BeginTransaction() antes de las operaciones</li>
                 <li>✅ Commit() si todas las operaciones tienen éxito</li>
                 <li>✅ Rollback() en el bloque catch si hay error</li>
-                <li>✅ Pasar el objeto transaction a cada SqlCommand</li>
+                <li>✅ Ejecutar operaciones dentro del contexto de la transacción</li>
             </ul>
 
             <h3>Ejercicio Integrador: Repository de Estudiantes</h3>
@@ -1509,7 +1483,7 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
             <ul>
                 <li>✅ Usar parámetros en todas las queries</li>
                 <li>✅ Usar async/await</li>
-                <li>✅ Usar transacción en método CrearConMateriasIniciales</li>
+                <li>✅ Usar transacción en método crear_con_materias_iniciales</li>
             </ul>
         </section>
 
@@ -1526,12 +1500,12 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ADO.NET Docs</td>
+                        <td>ADOPython Docs</td>
                         <td><a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/index" target="_blank">docs.microsoft.com/dotnet/framework/data/adonet</a></td>
                     </tr>
                     <tr>
-                        <td>SqlConnection API</td>
-                        <td><a href="https://learn.microsoft.com/en-us/dotnet/api/system.data.sqlclient" target="_blank">docs.microsoft.com/dotnet/api/system.data.sqlclient</a></td>
+                        <td>pyodbc API</td>
+                        <td><a href="https://github.com/mkleehammer/pyodbc/wiki" target="_blank">github.com/mkleehammer/pyodbc/wiki</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -1549,51 +1523,51 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>SqlConnection</strong></td>
+                        <td><strong>pyodbc.connect()</strong></td>
                         <td>Conexión a base de datos</td>
                     </tr>
                     <tr>
-                        <td><strong>SqlCommand</strong></td>
+                        <td><strong>cursor.execute()</strong></td>
                         <td>Ejecutar SQL</td>
                     </tr>
                     <tr>
-                        <td><strong>SqlDataReader</strong></td>
+                        <td><strong>cursor.fetchall() / fetchone()</strong></td>
                         <td>Leer resultados (forward-only)</td>
                     </tr>
                     <tr>
-                        <td><strong>ExecuteReader</strong></td>
-                        <td>Para SELECT</td>
+                        <td><strong>fetchall() + for</strong></td>
+                        <td>Para SELECT (múltiples filas)</td>
                     </tr>
                     <tr>
-                        <td><strong>ExecuteScalar</strong></td>
+                        <td><strong>fetchone()[0]</strong></td>
                         <td>Para valor único (COUNT, etc.)</td>
                     </tr>
                     <tr>
-                        <td><strong>ExecuteNonQuery</strong></td>
+                        <td><strong>cursor.rowcount</strong></td>
                         <td>Para INSERT, UPDATE, DELETE</td>
                     </tr>
                     <tr>
-                        <td><strong>Parameters</strong></td>
+                        <td><strong>Parámetros (?, %s)</strong></td>
                         <td>Protección contra SQL Injection</td>
                     </tr>
                     <tr>
-                        <td><strong>Transaction</strong></td>
+                        <td><strong>connection.commit() / rollback()</strong></td>
                         <td>Consistencia en operaciones múltiples</td>
                     </tr>
                     <tr>
-                        <td><strong>Connection Pooling</strong></td>
+                        <td><strong>Connection Pooling (ODBC)</strong></td>
                         <td>Reutilización de conexiones</td>
                     </tr>
                     <tr>
-                        <td><strong>SqlDataAdapter</strong></td>
-                        <td>Modo desconectado (DataTable)</td>
+                        <td><strong>fetchall() + lista</strong></td>
+                        <td>Modo desconectado (lista de tuplas)</td>
                     </tr>
                     <tr>
-                        <td><strong>Stored Procedures</strong></td>
-                        <td>Procedimientos en SQL</td>
+                        <td><strong>CALL / EXEC</strong></td>
+                        <td>Procedimientos almacenados</td>
                     </tr>
                     <tr>
-                        <td><strong>Exception Handling</strong></td>
+                        <td><strong>try / except</strong></td>
                         <td>Manejo de errores SQL</td>
                     </tr>
                 </tbody>
@@ -1602,7 +1576,7 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
 
         <!-- Proxima Clase -->
         <section class="section">
-            <h2>Próxima Clase: Entity Framework Core</h2>
+            <h2>Próxima Clase: SQLAlchemy / ORM (ejemplo en Python)</h2>
             <table class="objectives-table">
                 <thead>
                     <tr>
@@ -1629,15 +1603,29 @@ command.Parameters.<span class="token-method">AddWithValue</span>(<span class="t
                     </tr>
                     <tr>
                         <td><strong>Comparación</strong></td>
-                        <td>ADO.NET vs EF Core</td>
+                        <td>ADOPython vs EF Core</td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </main>
 
-    <footer class="footer">
-        <p><strong>"ADO.NET: Control total sobre tus datos"</strong></p>
+    <section id='equivalencia-ado-net'>
+  <h3>Equivalencia ADO.NET / Datos desconectados</h3>
+  <ul>
+    <li>Repositorios/servicios que serializan DTOs a JSON.</li>
+    <li>Estado local (cache) en frontend y sincronización (offline-first / sync) con el servidor.</li>
+    <li>Ejemplo: Python repositorios con pyodbc/SQLAlchemy + Angular cache + endpoints REST.</li>
+  </ul>
+</section><section id='entrega-git'>
+  <h3>Entrega con Git</h3>
+  <p>Branch: <code>feature/tema-clase-12</code></p>
+  <ul>
+    <li>Commits: setup / implementación / pruebas-docs</li>
+  </ul>
+  <p>Tag: <code>clase-12-v1</code></p>
+</section><footer class="footer">
+        <p><strong>"ADOPython: Control total sobre tus datos"</strong></p>
         <p>UNAULA - Ingeniería Informática - 2026-I</p>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
     </footer>

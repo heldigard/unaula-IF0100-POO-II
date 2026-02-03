@@ -93,17 +93,19 @@
       color: var(--muted);
     }
     pre {
-      background: #0b1020;
-      color: #e2e8f0;
-      padding: 14px;
-      border-radius: 10px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 14px 16px;
+      border-radius: 12px;
       overflow-x: auto;
+      border: 1px solid #313244;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
     code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
-    /* Syntax highlighting para C# */
+    /* Syntax highlighting para Python */
     .token-keyword { color: #c792ea; font-weight: 600; }
     .token-type { color: #ffcb6b; }
     .token-string { color: #c3e88d; }
@@ -270,7 +272,7 @@
         <div>
           <strong>Prerequisitos</strong>
           <ul>
-            <li>Dominar CRUD con ADO.NET y SQL Server.</li>
+            <li>Dominar CRUD con ADOPython y SQL Server.</li>
             <li>Conocer DataSet/DataAdapter y DataBinding.</li>
             <li>Practicar TDD/BDD/DDD basicos.</li>
           </ul>
@@ -291,7 +293,7 @@
 
   <main id="main">
     <section id="teoria">
-      <h2>Teoria</h2>
+      <h2>Teoría</h2>
 
       <div class="note" style="background-color: #e7f3ff; border-left-color: #1e40af;">
         <strong>¿Por qué un Proyecto Integrador?</strong>
@@ -304,21 +306,21 @@
       </div>
 
       <h3>Proyecto integrador: Sistema de Gestión Académica</h3>
-      <p>El proyecto final integra POO avanzada, ADO.NET, DataSet, DataBinding, XML y pruebas unitarias en un sistema realista.</p>
+      <p>El proyecto final integra POO avanzada, Python, Angular, pyodbc, XML/JSON y pruebas unitarias en un sistema realista.</p>
       <ul>
         <li>POO avanzada y patrones (Repository, Service, <strong><abbr title="Patrón de diseño que agrupa múltiples repositorios en una sola unidad de trabajo, permitiendo confirmar (commit) o revertir (rollback) todos los cambios juntos como una sola transacción">Unit of Work</abbr></strong>).</li>
-        <li>Persistencia con SQL Server y exportacion XML.</li>
-        <li>Interfaz grafica (Windows Forms / WPF).</li>
-        <li>Pruebas unitarias con xUnit/NUnit.</li>
+        <li>Persistencia con SQL Server + pyodbc y exportación XML.</li>
+        <li>Interfaz web (Angular).</li>
+        <li>Pruebas unitarias con pytest/pytest-bdd.</li>
       </ul>
 
       <h3>Patrones de Diseño</h3>
-      <p><strong><abbr title="Patrón que abstrae el acceso a datos, proporcionando métodos como GetAll, GetById, Add, Update, Delete sin que la capa de negocio se preocupe por la implementación concreta (ADO.NET, Entity Framework, etc.)">Repository Pattern</abbr></strong> = Abstracción sobre el acceso a datos que encapsula lógica de persistencia.</p>
+      <p><strong><abbr title="Patrón que abstrae el acceso a datos, proporcionando métodos como GetAll, GetById, Add, Update, Delete sin que la capa de negocio se preocupe por la implementación concreta (pyodbc, SQL Server, etc.)">Repository Pattern</abbr></strong> = Abstracción sobre el acceso a datos que encapsula lógica de persistencia.</p>
       <p><strong><abbr title="Patrón que contiene lógica de negocio y orquesta operaciones entre múltiples repositorios, actuando como intermediario entre la UI y la capa de datos">Service Pattern</abbr></strong> = Capa de lógica de negocio que orquesta operaciones.</p>
 
       <h3>Testing</h3>
-      <p><strong><abbr title="Framework de testing para .NET que usa atributos como [Fact], [Theory] y soporta tests asíncronos, es el framework más moderno y recomendado">xUnit</abbr></strong> = Framework de testing moderno para .NET.</p>
-      <p><strong><abbr title="Framework de testing para .NET clásico con atributos como [Test], [SetUp], [TestCase], ampliamente usado en proyectos .NET Framework">NUnit</abbr></strong> = Framework de testing clásico para .NET.</p>
+      <p><strong><abbr title="Framework de testing para Python que usa atributos como # pytest -> def test_...(), # pytest -> @pytest.mark.parametrize(...) y soporta tests asíncronos, es el framework más moderno y recomendado">pytest</abbr></strong> = Framework de testing moderno para Python.</p>
+      <p><strong><abbr title="Framework BDD para Python con escenarios en Gherkin, se integra con pytest">pytest-bdd</abbr></strong> = Framework de testing BDD para Python.</p>
       <p><strong><abbr title="Patrón de desarrollo donde primero se escriben las pruebas (TDD), se especifica el comportamiento (BDD), y el diseño emerge del dominio (DDD)">TDD/BDD/DDD</abbr></strong> = Enfoques de desarrollo guiado por pruebas/comportamiento/dominio.</p>
       <p><strong><abbr title="Patrón de estructura de pruebas: Arrange (preparar datos y dependencias), Act (ejecutar el método bajo prueba), Assert (verificar el resultado esperado)">AAA (Arrange-Act-Assert)</abbr></strong> = Estructura estándar para pruebas unitarias.</p>
       <p><strong><abbr title="Plataforma de hosting para control de versiones Git y colaboración en desarrollo de software, usada para alojar código y seguir el trabajo en equipo">GitHub</abbr></strong> = Plataforma para control de versiones y colaboración.</p>
@@ -332,7 +334,7 @@
           <li><strong>No validar:</strong> Falta de validación en todas las capas (UI, servicio, datos)</li>
           <li><strong>Hardcoding:</strong> Cadenas de conexión y configuraciones en el código</li>
           <li><strong>No usar transacciones:</strong> Operaciones que deben ser atómicas pero no lo son</li>
-          <li><strong>Olvidar Dispose:</strong> No liberar recursos (SqlConnection, FileStream)</li>
+          <li><strong>No liberar recursos:</strong> Conexiones pyodbc y archivos sin cerrar</li>
         </ul>
       </div>
 
@@ -342,11 +344,11 @@
           <tr><th>Entregable</th><th>Descripción</th><th>Peso</th></tr>
         </thead>
         <tbody>
-          <tr><td>Codigo fuente</td><td>Proyecto completo en GitHub</td><td>40%</td></tr>
+          <tr><td>Código fuente</td><td>Proyecto completo en GitHub</td><td>40%</td></tr>
           <tr><td>Base de datos</td><td>Script SQL con esquema y datos</td><td>10%</td></tr>
           <tr><td>Pruebas</td><td>Cobertura &gt; 70%</td><td>15%</td></tr>
           <tr><td>Documentación técnica</td><td>README y diagramas</td><td>15%</td></tr>
-          <tr><td>Presentacion</td><td>Demo 15 min</td><td>10%</td></tr>
+          <tr><td>Presentación</td><td>Demo 15 min</td><td>10%</td></tr>
           <tr><td>Video</td><td>Screencast explicando arquitectura</td><td>10%</td></tr>
         </tbody>
       </table>
@@ -365,22 +367,22 @@
             rect{rx:6}
           </style>
           <rect x="40" y="20" width="640" height="40" fill="#fff" stroke="#dbeafe"/>
-          <text x="360" y="46" text-anchor="middle" class="n">SistemaAcademico/</text>
+          <text x="360" y="46" text-anchor="middle" class="n">sistema-academico/</text>
 
           <rect x="80" y="80" width="240" height="36" fill="#eef2ff" stroke="#dbeafe"/>
-          <text x="200" y="104" text-anchor="middle" class="s">src/</text>
+          <text x="200" y="104" text-anchor="middle" class="s">backend/</text>
 
           <rect x="80" y="134" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="180" y="152" text-anchor="middle" class="s">SistemaAcademico.Core/</text>
+          <text x="180" y="152" text-anchor="middle" class="s">api/</text>
 
           <rect x="300" y="134" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="400" y="152" text-anchor="middle" class="s">SistemaAcademico.Data/</text>
+          <text x="400" y="152" text-anchor="middle" class="s">data/</text>
 
           <rect x="80" y="174" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="180" y="192" text-anchor="middle" class="s">SistemaAcademico.UI/</text>
+          <text x="180" y="192" text-anchor="middle" class="s">frontend/</text>
 
           <rect x="300" y="174" width="200" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="400" y="192" text-anchor="middle" class="s">SistemaAcademico.Tests/</text>
+          <text x="400" y="192" text-anchor="middle" class="s">tests/</text>
 
           <rect x="520" y="134" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
           <text x="600" y="152" text-anchor="middle" class="s">database/</text>
@@ -389,40 +391,40 @@
           <text x="600" y="192" text-anchor="middle" class="s">docs/</text>
 
           <rect x="520" y="214" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="600" y="232" text-anchor="middle" class="s">SistemaAcademico.sln</text>
+          <text x="600" y="232" text-anchor="middle" class="s">docker-compose.yml</text>
         </svg>
-        <figcaption>Estructura sugerida: separar `src/` con proyectos core, data, UI y tests; recursos y base de datos en carpetas dedicadas.</figcaption>
+        <figcaption>Estructura sugerida: separar backend Python y frontend Angular; recursos, pruebas y base de datos en carpetas dedicadas.</figcaption>
       </figure>
 
       <h3>Repository Pattern (fragmento)</h3>
-      <pre><code class="language-csharp">public interface IEstudianteRepository
-{
-    Estudiante ObtenerPorId(int id);
-    IEnumerable&lt;Estudiante&gt; ObtenerTodos();
-    void Agregar(Estudiante estudiante);
-    void Actualizar(Estudiante estudiante);
-    void Eliminar(int id);
-}</code></pre>
+      <pre><code class="language-python">from typing import Protocol
+
+class EstudianteRepository(Protocol):
+    def obtener_por_id(self, id: int): ...
+    def obtener_todos(self) -> list: ...
+    def agregar(self, estudiante) -> None: ...
+    def actualizar(self, estudiante) -> None: ...
+    def eliminar(self, id: int) -> None: ...</code></pre>
 
       <h3>Unit of Work (fragmento)</h3>
-      <pre><code class="language-csharp">public interface IUnitOfWork : IDisposable
-{
-    IEstudianteRepository Estudiantes { get; }
-    ICursoRepository Cursos { get; }
-    INotaRepository Notas { get; }
-    void Commit();
-    void Rollback();
-}</code></pre>
+      <pre><code class="language-python">from typing import Protocol
+
+class UnitOfWork(Protocol):
+    estudiantes: EstudianteRepository
+    cursos: object
+    notas: object
+    def commit(self) -> None: ...
+    def rollback(self) -> None: ...</code></pre>
     </section>
 
     <section id="practica">
-      <h2>Practica / laboratorio</h2>
+      <h2>Práctica / laboratorio</h2>
 
       <h3>Módulo mínimo (checklist)</h3>
       <ul>
         <li>CRUD Estudiantes con validación.</li>
-        <li>CRUD Cursos con capacidad maxima.</li>
-        <li>Gestión de notas y calculo de promedios.</li>
+        <li>CRUD Cursos con capacidad máxima.</li>
+        <li>Gestión de notas y cálculo de promedios.</li>
         <li>Reportes: top 10, estudiantes en riesgo.</li>
         <li>Exportación XML.</li>
       </ul>
@@ -435,7 +437,7 @@
         <tbody>
           <tr><td>1-2</td><td>Modelo BD y entidades</td></tr>
           <tr><td>3-4</td><td>Repositorios y servicios</td></tr>
-          <tr><td>5-6</td><td>UI (Windows Forms/WPF)</td></tr>
+          <tr><td>5-6</td><td>UI (Angular)</td></tr>
           <tr><td>7</td><td>Pruebas y corrección</td></tr>
           <tr><td>8</td><td>Documentación y demo</td></tr>
         </tbody>
@@ -443,8 +445,8 @@
 
       <h3>Checklist de calidad</h3>
       <ul>
-        <li>Capas separadas (Core/Data/UI/Tests).</li>
-        <li>Sin SQL concatenado (parametros).</li>
+        <li>Capas separadas (backend/frontend/tests).</li>
+        <li>Sin SQL concatenado (parámetros).</li>
         <li>Testing con AAA y cobertura base.</li>
         <li>README con pasos de ejecución.</li>
       </ul>
@@ -460,14 +462,14 @@
       <h2>Ejercicios</h2>
 
       <h3>Diseño del modelo</h3>
-      <p>Identificar Entities, relaciones y reglas de negocio del sistema academico.</p>
+      <p>Identificar entidades, relaciones y reglas de negocio del sistema académico.</p>
 
       <h3>Documentación</h3>
       <p>Crear README con instalación, requisitos y capturas del sistema.</p>
 
       <h3>Checklist de errores comunes</h3>
       <ul>
-        <li>Mezclar logica de negocio en la UI.</li>
+        <li>Mezclar lógica de negocio en la UI.</li>
         <li>No validar entradas de usuario.</li>
         <li>No versionar scripts SQL.</li>
         <li>No incluir pruebas automatizadas.</li>
@@ -487,9 +489,9 @@
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>Documentacion oficial de ADO.NET.</li>
-        <li>Guia de pruebas xUnit/NUnit.</li>
-        <li>Patrones Repository y Unit of Work.</li>
+        <li>Documentación oficial de pyodbc y FastAPI.</li>
+        <li>Guía de pruebas pytest/pytest-bdd.</li>
+        <li>Patrones Repository y Unit of Work en Python.</li>
       </ul>
     </section>
 
@@ -497,22 +499,32 @@
       <h2>Resumen de la Clase</h2>
       <ul>
         <li>La arquitectura en capas separa responsabilidades: Presentación, Negocio, Datos.</li>
-        <li>Repository Pattern abstrae acceso a datos behind interfaces (IRepository<T>).</li>
+        <li>Repository Pattern abstrae acceso a datos mediante interfaces o protocolos.</li>
         <li>Unit of Work patrón agrupa múltiples operaciones de repositorio en una sola transacción.</li>
         <li>Service Layer coordina lógica de negocio usando múltiples repositorios.</li>
         <li>Dependency Injection (DI) inyecta dependencias por constructor para mejorar testabilidad.</li>
-        <li>xUnit/NUnit son frameworks de pruebas; AAA = Arrange, Act, Assert.</li>
-        <li>Moq permite crear mocks de dependencias para pruebas unitarias aisladas.</li>
-        <li>ConfigurationManager/AppSettings lee settings de app.config o appsettings.json.</li>
-        <li>Logging (ILogger) registra eventos para debugging y auditoría.</li>
+        <li>pytest/pytest-bdd son frameworks de pruebas; AAA = Arrange, Act, Assert.</li>
+        <li>unittest.mock permite crear mocks de dependencias para pruebas unitarias aisladas.</li>
+        <li>configuración en Python: variables de entorno y archivos .env.</li>
+        <li>logging en Python registra eventos para debugging y auditoría.</li>
         <li>Las pruebas unitarias prueban una clase aisladamente; integración prueban interacción entre componentes.</li>
       </ul>
     </section>
   </main>
 
+  <section id="entrega-git">
+    <h3>Entrega con Git</h3>
+    <pre><code>git checkout -b feature/proyecto-final-clase-17
+git add backend/ frontend/
+git commit -m "chore: setup proyecto final"
+git commit -m "feat: integracion backend y frontend"
+git commit -m "docs: pruebas y documentacion"
+git tag -a clase-17-v1 -m "Entrega clase 17 - proyecto final"</code></pre>
+  </section>
   <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
     <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
     <p>UNAULA - Ingeniería Informática - 2026-I</p>
   </footer>
 </body>
 </html>
+

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clase 10 - MVC y Razor Pages | IF0100 - POO II</title>
+  <title>Clase 10 - Angular: Componentes, Servicios y Routing | IF0100 - POO II</title>
   <style>
     :root {
       --bg: #f7f7f4;
       --ink: #1f2933;
       --muted: #52606d;
       --brand: #1e3a8a;
-      --accent: #3b82f6;
+      --accent: #dd0031;
       --card: #ffffff;
       --line: #d9e2ec;
     }
@@ -23,7 +23,7 @@
       line-height: 1.65;
     }
     header {
-      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      background: linear-gradient(135deg, #dd0031, #c3002f);
       color: #fff;
       padding: 36px 20px 28px;
     }
@@ -264,7 +264,7 @@
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 3</div>
-      <h1>Clase 10: MVC y Razor Pages</h1>
+      <h1>Clase 10: Angular - Componentes, Servicios y Routing</h1>
       <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
@@ -394,10 +394,12 @@
     <section id="ejemplos">
       <h2>Ejemplos e infografías</h2>
 
-      <h3>Infografía: MVC</h3>
+      <h3>Infografía: Arquitectura Angular</h3>
       <figure>
-        <img src="../assets/infografias/clase-10-mvc.png" alt="Infografía patrón MVC" onerror="this.onerror=null;this.src='/assets/infografias/clase-10-mvc.png'" />
-        <figcaption>El patrón Model-View-Controller (MVC) separa la aplicación en tres componentes con responsabilidades claras: el Controller recibe las solicitudes HTTP y coordina el flujo, el Model contiene la lógica de negocio y los datos, y la View genera la presentación HTML; las flechas muestran el flujo circular donde el usuario interactúa con la Vista, el Controlador procesa las acciones y actualiza el Modelo, y la Vista se actualiza y refleja los cambios del Modelo.</figcaption>
+        <object data="../assets/svg/clase-10-angular-architecture.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
+          <img src="../assets/svg/clase-10-angular-architecture.svg" alt="Arquitectura Angular" />
+        </object>
+        <figcaption>Arquitectura Angular: los componentes renderizan la UI, los servicios concentran la logica y el acceso a datos, el routing gestiona la navegacion y la app consume APIs (por ejemplo FastAPI) via HTTP/JSON.</figcaption>
       </figure>
 
       <h3>Controller CRUD (fragmento)</h3>
@@ -476,7 +478,7 @@
         <li>Abre Visual Studio 2022 y crea un nuevo proyecto <strong>ASP.NET Core Web App (Model-View-Controller)</strong></li>
         <li>Nombra el proyecto <code>EstudiantesMVC</code> y selecciona .NET 8</li>
         <li>En <code>Models/Estudiante.cs</code>, crea la clase con propiedades Codigo, Nombre, CarreraId</li>
-        <li>En <code>Controllers/EstudiantesController.cs</code>, scaffoldea el CRUD usando Entity Framework</li>
+        <li>En <code>Controllers/EstudiantesController.cs</code>, scaffoldea el CRUD usando <abbr title="Entity Framework: ORM de .NET que simplifica el acceso a bases de datos, permitiendo trabajar con datos como objetos C#">Entity Framework</abbr></li>
         <li>En <code>Program.cs</code>, añade una ruta personalizada para búsqueda: <code>buscar/{termino}</code></li>
         <li>En las vistas <code>Views/Estudiantes/*.cshtml</code>, usa Tag Helpers: <code>asp-for</code>, <code>asp-action</code>, <code>asp-validation-for</code></li>
         <li>Ejecuta y prueba: crear, editar, eliminar y buscar estudiantes</li>
@@ -605,11 +607,11 @@
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li><strong>Documentación ASP.NET Core MVC:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/" target="_blank" rel="noopener">ASP.NET Core MVC</a></li>
+        <li><strong>Documentación Angular:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/" target="_blank" rel="noopener">Angular</a></li>
         <li><strong>Razor Pages:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/razor-pages/" target="_blank" rel="noopener">Introduction to Razor Pages</a></li>
         <li><strong>Tag Helpers:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro" target="_blank" rel="noopener">Tag Helpers in ASP.NET Core</a></li>
         <li><strong>Model Binding:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/models/model-binding" target="_blank" rel="noopener">Model Binding</a></li>
-        <li><strong>Routing:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/routing" target="_blank" rel="noopener">Routing in ASP.NET Core MVC</a></li>
+        <li><strong>Routing:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/routing" target="_blank" rel="noopener">Routing in Angular</a></li>
       </ul>
     </section>
 
@@ -636,3 +638,4 @@
   </footer>
 </body>
 </html>
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 15: Dataset y DataAdapter - IF0100 POO II</title>
+    <title>Clase 15: Datos desconectados y sincronización - IF0100 POO II</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,14 +67,30 @@
             color: #666;
         }
         pre {
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 15px;
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 16px;
+            border-radius: 12px;
             overflow-x: auto;
+            line-height: 1.45;
+            font-family: "Cascadia Code", "Consolas", "Monaco", "Courier New", monospace;
+            border: 1px solid #313244;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
         }
         code {
-            font-family: 'Courier New', monospace;
+            font-family: "Cascadia Code", "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 0.95rem;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+        }
+        p code, li code, td code {
+            background: #313244;
+            color: #cdd6f4;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.9em;
         }
         table {
             width: 100%;
@@ -109,7 +125,7 @@
             border-radius: 8px;
             color: #52606d;
         }
-        /* Syntax highlighting para C# */
+        /* Syntax highlighting para Python */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -261,7 +277,7 @@
     <header>
         <h1>IF0100 - Lenguaje de Programación OO II</h1>
         <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
-        <h3>Clase 15: Dataset y DataAdapter</h3>
+        <h3>Clase 15: Datos desconectados y sincronización</h3>
         <p><strong>Duración:</strong> 90 minutos | <strong>Fecha:</strong> 2026-05-18</p>
     </header>
 
@@ -282,10 +298,10 @@
             <div class="objectives">
                 <p>Al finalizar esta clase, el estudiante será capaz de:</p>
                 <ul>
-                    <li>Comprender el modelo de datos desconectados de ADO.NET</li>
-                    <li>Utilizar DataSet como cache de datos en memoria</li>
-                    <li>Implementar DataAdapter para sincronizar datos</li>
-                    <li>Navegar y manipular datos sin conexión activa</li>
+                    <li>Comprender el modelo de datos desconectados en Python + Angular</li>
+                    <li>Usar DTOs y estado local como caché en memoria</li>
+                    <li>Implementar sincronización explícita con el backend</li>
+                    <li>Manipular datos offline y resolver conflictos simples</li>
                     <li>Comparar modelo conectado vs desconectado</li>
                 </ul>
             </div>
@@ -296,10 +312,10 @@
             <div class="prerequisites">
                 <p>Para comprender esta clase, se requiere:</p>
                 <ul>
-                    <li>Conocimientos básicos de ADO.NET conectado (SqlConnection, SqlCommand, SqlDataReader)</li>
-                    <li>Familiaridad con SQL Server y consultas básicas</li>
-                    <li>Conceptos de Programación Orientada a Objetos en C#</li>
-                    <li>Entendimiento de bases de datos relacionales</li>
+                    <li>Conocimientos básicos de pyodbc y SQL Server</li>
+                    <li>Familiaridad con consultas SQL y CRUD</li>
+                    <li>Conceptos de POO y DTOs en Python</li>
+                    <li>Servicios y estado local en Angular</li>
                 </ul>
             </div>
         </section>
@@ -318,7 +334,7 @@
             </div>
 
             <h3>¿Qué son datos desconectados?</h3>
-            <p><strong><abbr title="Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan con la BD. La conexión solo se usa para Fill (cargar) y Update (sincronizar)">Datos desconectados</abbr></strong> = Modelo de ADO.NET donde los datos se cargan en memoria del cliente, se pueden manipular sin mantener una conexión activa, y los cambios se sincronizan con la base de datos solo cuando se invoca explícitamente. La conexión solo se usa para:</p>
+            <p><strong><abbr title="Datos que se cargan en memoria, se manipulan localmente, y luego se sincronizan con la BD. La conexión solo se usa para Fill (cargar) y Update (sincronizar)">Datos desconectados</abbr></strong> = Modelo de ADOPython donde los datos se cargan en memoria del cliente, se pueden manipular sin mantener una conexión activa, y los cambios se sincronizan con la base de datos solo cuando se invoca explícitamente. La conexión solo se usa para:</p>
             <ul>
                 <li>⬇️ Cargar datos (Fill)</li>
                 <li>⬆️ Sincronizar cambios (Update)</li>
@@ -593,10 +609,10 @@ public class EstudianteDataAdapter
             <div class="prerequisites" style="background-color: #d4edda; border-left-color: #28a745;">
                 <strong>Mini-Chequeo: Datos Desconectados</strong>
                 <ul>
-                    <li>¿Cuándo usar DataSet vs SqlDataReader?</li>
-                    <li>¿Por qué SqlCommandBuilder requiere la PRIMARY KEY en el SELECT?</li>
-                    <li>¿Qué hace AcceptChanges() vs RejectChanges()?</li>
-                    <li>¿Cómo funciona DataRelation entre tablas?</li>
+                    <li>¿Cuándo usar estado local vs consulta directa?</li>
+                    <li>¿Qué validaciones haces antes de sincronizar cambios?</li>
+                    <li>¿Qué hace "confirmar cambios" vs "revertir cambios"?</li>
+                    <li>¿Cómo mantienes relaciones entre colecciones locales?</li>
                 </ul>
             </div>
         </section>
@@ -606,85 +622,67 @@ public class EstudianteDataAdapter
             <h2>💻 Ejemplos Prácticos</h2>
             
             <h3>Ejemplo completo de uso</h3>
-            <pre><code>class Program
-{
-    static void Main()
-    {
-        DataTable dt = repo.CargarEstudiantesTabla();
-        Console.WriteLine($"Cargados: {dt.Rows.Count} estudiantes\n");
-        
-        // Insertar nuevo estudiante
-        DataRow nuevaFila = dt.NewRow();
-        nuevaFila["Nombre"] = "Ana";
-        nuevaFila["Apellido"] = "Martínez";
-        nuevaFila["Cedula"] = "1234567890";
-        nuevaFila["Email"] = "ana@unaula.edu.co";
-        dt.Rows.Add(nuevaFila);
-        
-        // Actualizar estudiante existente
-        DataRow filaActualizar = dt.Rows.Find(1);
-        if (filaActualizar != null)
-        {
-            filaActualizar["Email"] = "nuevo_email@unaula.edu.co";
-        }
-        
-        // Eliminar estudiante
-        DataRow filaEliminar = dt.Rows.Find(5);
-        if (filaEliminar != null)
-        {
-            filaEliminar.Delete();
-        }
-        
-        // Sincronizar cambios con BD
-        int afectadas = repo.GuardarCambios(dt);
-        Console.WriteLine($"\nTotal cambios guardados: {afectadas}");
-        
-        dt.AcceptChanges();
-    }
-}</code></pre>
+            <pre><code>from dataclasses import dataclass
+
+@dataclass
+class EstudianteDTO:
+    id: int
+    nombre: str
+    apellido: str
+    cedula: str
+    email: str
+
+# Estado local (equivalente a DataSet)
+estado_local = repo.cargar_estudiantes()
+print(f"Cargados: {len(estado_local)} estudiantes\n")
+
+# Insertar nuevo estudiante
+estado_local.append(EstudianteDTO(0, "Ana", "Martínez", "1234567890", "ana@unaula.edu.co"))
+
+# Actualizar estudiante existente
+for e in estado_local:
+    if e.id == 1:
+        e.email = "nuevo_email@unaula.edu.co"
+
+# Eliminar estudiante (marcar para borrar)
+estado_local = [e for e in estado_local if e.id != 5]
+
+# Sincronizar cambios con BD
+afectadas = repo.sincronizar(estado_local)
+print(f"\nTotal cambios guardados: {afectadas}")</code></pre>
 
             <h3>Comandos personalizados</h3>
-            <pre><code>public SqlDataAdapter CrearAdapterConComandos(SqlConnection conn)
-{
-    string selectQuery = "SELECT Id, Nombre, Apellido, Email FROM Estudiantes";
-    SqlDataAdapter adapter = new SqlDataAdapter(selectQuery, conn);
-    
-    // INSERT personalizado
-    adapter.InsertCommand = new SqlCommand(
-        "INSERT INTO Estudiantes (Nombre, Apellido, Email) " +
-        "VALUES (@Nombre, @Apellido, @Email); SELECT SCOPE_IDENTITY();", conn);
-    
-    adapter.InsertCommand.Parameters.Add("@Nombre", SqlDbType.NVarChar, 100, "Nombre");
-    adapter.InsertCommand.Parameters.Add("@Apellido", SqlDbType.NVarChar, 100, "Apellido");
-    adapter.InsertCommand.Parameters.Add("@Email", SqlDbType.NVarChar, 100, "Email");
-    
-    // UPDATE personalizado
-    adapter.UpdateCommand = new SqlCommand(
-        "UPDATE Estudiantes SET Nombre = @Nombre, Apellido = @Apellido, " +
-        "Email = @Email WHERE Id = @Id", conn);
-    
-    adapter.UpdateCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
-    adapter.UpdateCommand.Parameters.Add("@Nombre", SqlDbType.NVarChar, 100, "Nombre");
-    adapter.UpdateCommand.Parameters.Add("@Apellido", SqlDbType.NVarChar, 100, "Apellido");
-    adapter.UpdateCommand.Parameters.Add("@Email", SqlDbType.NVarChar, 100, "Email");
-    
-    // DELETE personalizado
-    adapter.DeleteCommand = new SqlCommand(
-        "DELETE FROM Estudiantes WHERE Id = @Id", conn);
-    
-    adapter.DeleteCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
-    
-    return adapter;
-}</code></pre>
+            <pre><code>import pyodbc
+
+def crear_repositorio(conn_str: str):
+    def insertar(estudiante):
+        query = "INSERT INTO Estudiantes (Nombre, Apellido, Email) VALUES (?, ?, ?)"
+        with pyodbc.connect(conn_str) as conn:
+            conn.execute(query, (estudiante.nombre, estudiante.apellido, estudiante.email))
+            conn.commit()
+
+    def actualizar(estudiante):
+        query = "UPDATE Estudiantes SET Nombre = ?, Apellido = ?, Email = ? WHERE Id = ?"
+        with pyodbc.connect(conn_str) as conn:
+            conn.execute(query, (estudiante.nombre, estudiante.apellido, estudiante.email, estudiante.id))
+            conn.commit()
+
+    def eliminar(estudiante_id: int):
+        query = "DELETE FROM Estudiantes WHERE Id = ?"
+        with pyodbc.connect(conn_str) as conn:
+            conn.execute(query, (estudiante_id,))
+            conn.commit()
+
+    return insertar, actualizar, eliminar</code></pre>
         </section>
 
         <section id="practica" class="actividad">
             <h3>Actividad: Sistema de Gestión de Inventario</h3>
             <p><strong>Tipo:</strong> Opcional / práctica</p>
             <p><strong>Relacionado con:</strong> Ninguno</p>
-            <p><strong>Entregable:</strong> Sistema de inventario con DataSet y DataAdapter</p>
+            <p><strong>Entregable:</strong> Sistema de inventario con estado local y sincronización</p>
             <p><strong>Tiempo estimado:</strong> 45 min</p>
-            <p><strong>Criterios de éxito:</strong> Comprensión de DataSet, DataAdapter, y arquitectura desconectada</p>
+            <p><strong>Criterios de éxito:</strong> Comprensión de datos desconectados y sync</p>
             <h2>🛠️ Práctica: Sistema de Gestión de Inventario</h2>
             
             <h3>Tablas requeridas</h3>
@@ -705,12 +703,12 @@ CREATE TABLE Movimientos (
 
             <h3>Requisitos funcionales</h3>
             <ul>
-                <li>Cargar datos al iniciar (Fill de ambas tablas)</li>
+                <li>Cargar datos al iniciar (GET de ambas tablas)</li>
                 <li>Menú interactivo con opciones CRUD</li>
                 <li>Validaciones de negocio</li>
-                <li>Mostrar estado de filas (Added, Modified, Deleted)</li>
+                <li>Marcar cambios locales (added/modified/deleted)</li>
                 <li>Opción para deshacer cambios</li>
-                <li>Guardar cambios (Update)</li>
+                <li>Sincronizar cambios con backend</li>
             </ul>
 
             <h3>Características avanzadas</h3>
@@ -727,13 +725,13 @@ CREATE TABLE Movimientos (
             <p><strong>Relacionado con:</strong> Ninguno</p>
             <p><strong>Entregable:</strong> Sistema de inventario completo en parejas</p>
             <p><strong>Tiempo estimado:</strong> 60 min</p>
-            <p><strong>Criterios de éxito:</strong> Integración de todos los conceptos de DataSet y DataAdapter</p>
+            <p><strong>Criterios de éxito:</strong> Integración de todos los conceptos de datos desconectados</p>
             <h2>📝 Ejercicios</h2>
             
             <h3>Ejercicio para Casa (En Parejas)</h3>
             <p><strong>Sistema de Gestión de Inventario Desconectado</strong></p>
             
-            <p>Crear una aplicación de consola que use DataSet/DataAdapter para gestionar un inventario.</p>
+            <p>Crear una aplicación de consola que use estado local y sincronización para gestionar un inventario.</p>
             
             <h4>Entrega:</h4>
             <ul>
@@ -749,13 +747,30 @@ CREATE TABLE Movimientos (
             
             <h3>Documentación oficial</h3>
             <ul>
-                <li><a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/dataset-datatable-dataview/" target="_blank">DataSet Overview</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/populating-a-dataset-from-a-dataadapter" target="_blank">DataAdapter Overview</a></li>
-                <li><a href="https://docs.microsoft.com/en-us/dotnet/api/system.data.datarelation" target="_blank">DataRelation</a></li>
+                <li><a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI - Python Docs</a></li>
+                <li><a href="https://docs.python.org/3/library/dataclasses.html" target="_blank">dataclasses - Python Docs</a></li>
+                <li><a href="https://angular.io/guide/signals" target="_blank">Angular Signals</a></li>
             </ul>
         </section>
     </main>
 
+    <section id="equivalencia-ado-net">
+        <h3>Equivalencia ADO.NET / Datos desconectados</h3>
+        <ul>
+            <li>Repositorios/servicios que serializan DTOs a JSON.</li>
+            <li>Estado local (caché) en frontend y sincronización (offline-first / sync) con el servidor.</li>
+            <li>Ejemplo: repositorios Python con pyodbc + Angular cache + endpoints REST.</li>
+        </ul>
+    </section>
+    <section id="entrega-git">
+        <h3>Entrega con Git</h3>
+        <pre><code>git checkout -b feature/datos-desconectados-clase-15
+git add src/ api/
+git commit -m "chore: estructura inicial datos desconectados"
+git commit -m "feat: estado local y sincronizacion"
+git commit -m "docs: ejercicios y notas de equivalencia"
+git tag -a clase-15-v1 -m "Entrega clase 15 - datos desconectados"</code></pre>
+    </section>
     <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
         <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
         <p>UNAULA - Ingeniería Informática - 2026-I</p>
