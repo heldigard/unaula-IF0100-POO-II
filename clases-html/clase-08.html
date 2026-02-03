@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 08 - Introducción a ASP.NET Core | IF0100 - POO II</title>
+    <title>Clase 08 - Introducción a Angular y FastAPI | IF0100 - POO II</title>
     <style>
         * {
             margin: 0;
@@ -155,7 +155,7 @@
             color: inherit;
         }
 
-        /* Syntax highlighting para C# */
+        /* Syntax highlighting para Python */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -423,26 +423,26 @@
 <body>
     <a href="#main" class="skip-link">Saltar al contenido</a>
     <header>
-        <h1>Introducción a ASP.NET Core</h1>
+        <h1>Introducción a Angular y FastAPI</h1>
         <div class="subtitle">IF0100 - Lenguaje de Programación OO II | Unidad 3</div>
         <div class="meta">Duración: 90 minutos</div>
         <div class="meta" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 18px; background: rgba(255,255,255,0.12); padding: 16px; border-radius: 12px;">
             <div>
                 <strong>Objetivos</strong>
                 <ul style="margin: 8px 0 0 18px;">
-                    <li>Entender qué es ASP.NET Core.</li>
+                    <li>Entender qué es Angular (frontend) y FastAPI (backend).</li>
                     <li>Conocer la arquitectura y middleware pipeline.</li>
                     <li>Crear un primer proyecto web.</li>
-                    <li>Implementar Razor Pages básicas.</li>
+                    <li>Crear componentes Angular básicos.</li>
                     <li>Escribir middleware personalizado.</li>
                 </ul>
             </div>
             <div>
                 <strong>Prerrequisitos</strong>
                 <ul style="margin: 8px 0 0 18px;">
-                    <li>Conocimientos básicos de C# y POO.</li>
+                    <li>Conocimientos básicos de Python, TypeScript y POO.</li>
                     <li>Comprensión de <abbr title="HTTP: HyperText Transfer Protocol, protocolo de comunicación para la World Wide Web que define cómo los mensajes son formateados y transmitidos">HTTP</abbr> (GET, POST, Headers).</li>
-                    <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK.</li>
+                    <li>Node.js + Angular CLI, Python 3.11+.</li>
                 </ul>
             </div>
         </div>
@@ -470,35 +470,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>1. Entender ASP.NET Core</td><td>15' Qué es ASP.NET Core?</td></tr>
+                    <tr><td>1. Entender Angular + FastAPI</td><td>15' Qué es Angular y FastAPI?</td></tr>
                     <tr><td>2. Conocer arquitectura</td><td>20' Arquitectura y Middleware</td></tr>
                     <tr><td>3. Crear primer proyecto</td><td>25' Crear Proyecto</td></tr>
-                    <tr><td>4. Razor Pages básico</td><td>20' Razor Pages</td></tr>
+                    <tr><td>4. Componentes Angular</td><td>20' Componentes y Templates</td></tr>
                     <tr><td>5. Middleware personalizado</td><td>10' Middleware Custom</td></tr>
                 </tbody>
             </table>
         </section>
 
         <section id="que-es">
-            <h2>1. Qué es ASP.NET Core?</h2>
+            <h2>1. Stack Web Moderno: Angular + FastAPI</h2>
 
-            <h3>Definición</h3>
-            <p><strong>ASP.NET Core</strong> es un framework web <strong>cross-platform</strong>, moderno y de alto rendimiento para construir aplicaciones web en la nube.</p>
+            <h3>Angular (Frontend)</h3>
+            <p><strong>Angular</strong> es un framework frontend de Google para construir aplicaciones web single-page (SPA) con TypeScript.</p>
+            
+            <h3>FastAPI (Backend)</h3>
+            <p><strong>FastAPI</strong> es un framework web moderno y rápido para Python 3.7+, basado en Starlette y Pydantic, ideal para APIs REST.</p>
+            
+            <div class="note">Arquitectura típica: Angular consume APIs REST desarrolladas en FastAPI. Separación clara entre frontend y backend.</div></p>
 
             <div class="success-box">
-                <h4>Características Principales:</h4>
+                <h4>Características del Stack:</h4>
                 <ul>
-                    <li><strong>Cross-platform:</strong> Windows, Linux, macOS</li>
-                    <li><strong>Open Source:</strong> Código disponible en GitHub</li>
-                    <li><strong>Alto rendimiento:</strong> Uno de los frameworks más rápidos</li>
-                    <li><strong>Unificado:</strong> MVC, Web API, Razor Pages, Blazor</li>
-                    <li><strong>Moderno:</strong> Soporta async/await, DI integrado</li>
+                    <li><strong>Angular:</strong> Framework frontend completo con TypeScript</li>
+                    <li><strong>FastAPI:</strong> Backend Python de alto rendimiento con validación automática</li>
+                    <li><strong>Cross-platform:</strong> Ambos funcionan en Windows, Linux, macOS</li>
+                    <li><strong>Moderno:</strong> Async/await, DI integrado, tipado fuerte</li>
+                    <li><strong>Separación:</strong> Frontend y backend desacoplados vía REST API</li>
                 </ul>
             </div>
 
             <figure>
-                <img src="../assets/infografias/clase-08-aspnet-core.png" alt="Infografia ASP.NET Core - Arquitectura y componentes" onerror="this.onerror=null;this.src='/assets/infografias/clase-08-aspnet-core.png'">
-                <figcaption>Figura 1: Arquitectura de ASP.NET Core - El Middleware Pipeline procesa solicitudes HTTP en secuencia (Exception Handler → HTTPS Redirection → Static Files → Routing → Authentication → Authorization → Endpoints), Kestrel es el servidor web multiplataforma incorporado, y el framework ofrece múltiples opciones de desarrollo (Razor Pages, MVC, Web API, Blazor) para diferentes tipos de aplicaciones.</figcaption>
+                <object data="../assets/infografias/clase-08-angular-fastapi.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 8px;">
+                <img src="../assets/infografias/clase-08-angular-fastapi.svg" alt="Infografía Arquitectura Angular + FastAPI" />
+        </object>
+                <figcaption>Figura 1: Arquitectura Angular + FastAPI - Frontend con componentes, servicios HTTP y routing; Backend con FastAPI (Python) proporcionando API REST con validación automática Pydantic y documentación Swagger/OpenAPI generada automáticamente.</figcaption>
             </figure>
         </section>
 
@@ -507,25 +514,25 @@
 
             <h3>Vista General</h3>
             <figure>
-              <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="aspnetTitle">
-                <title id="aspnetTitle">Arquitectura ASP.NET Core: Middleware pipeline y servidor Kestrel</title>
+              <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="fastapiTitle">
+                <title id="fastapiTitle">Arquitectura FastAPI: Middleware pipeline y servidor Uvicorn</title>
                 <style>
-                  .app{fill:#0b2d6b;rx:8}
-                  .pipe{fill:#eef2ff;stroke:#dbeafe;rx:8}
+                  .app{fill:#05998b;rx:8}
+                  .pipe{fill:#eef2ff;stroke:#a5f3fc;rx:8}
                   .s{font:700 13px Arial, sans-serif; fill:#fff}
-                  .p{font:12px Arial, sans-serif; fill:#0b2d6b}
+                  .p{font:12px Arial, sans-serif; fill:#05998b}
                 </style>
-                <rect x="40" y="20" width="680" height="56" rx="10" fill="#0b2d6b"/>
-                <text x="380" y="54" text-anchor="middle" class="s">ASP.NET CORE APP</text>
+                <rect x="40" y="20" width="680" height="56" rx="10" fill="#05998b"/>
+                <text x="380" y="54" text-anchor="middle" class="s">FASTAPI APP</text>
 
-                <rect x="80" y="96" width="600" height="120" rx="8" fill="#eef2ff" stroke="#dbeafe"/>
-                <text x="380" y="120" text-anchor="middle" class="p">MIDDLEWARE PIPELINE</text>
-                <text x="380" y="140" text-anchor="middle" class="p">Exception Handler · HTTPS Redirection · Static Files · Routing · Authentication · Authorization · Custom Middleware · Endpoints (MVC/Razor/API)</text>
+                <rect x="80" y="96" width="600" height="120" rx="8" fill="#eef2ff" stroke="#a5f3fc"/>
+                <text x="380" y="120" text-anchor="middle" class="p">MIDDLEWARE PIPELINE (Starlette/ASGI)</text>
+                <text x="380" y="140" text-anchor="middle" class="p">CORS · GZip · Session · Authentication · Custom Middleware · Routes · Response Middleware</text>
 
-                <rect x="200" y="230" width="360" height="32" rx="8" fill="#fff" stroke="#dbeafe"/>
-                <text x="380" y="252" text-anchor="middle" class="p">KESTREL WEB SERVER</text>
+                <rect x="200" y="230" width="360" height="32" rx="8" fill="#fff" stroke="#a5f3fc"/>
+                <text x="380" y="252" text-anchor="middle" class="p">UVICORN ASGI SERVER</text>
               </svg>
-              <figcaption>Arquitectura simplificada de ASP.NET Core: pipeline de middleware que procesa solicitudes, con Kestrel como servidor web subyacente.</figcaption>
+              <figcaption>Arquitectura simplificada de FastAPI: pipeline de middleware ASGI que procesa solicitudes, con Uvicorn como servidor web subyacente.</figcaption>
             </figure>
             </div> 
 
@@ -538,11 +545,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Kestrel</strong></td><td>Servidor web multiplataforma incorporado</td></tr>
-                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes</td></tr>
-                    <tr><td><strong><abbr title="Dependency Injection: Inyección de dependencias, patrón de diseño que implementa Inversión de Control (IoC) para lograr bajo acoplamiento entre componentes">Dependency Injection</abbr></strong></td><td>Contenedor de DI integrado</td></tr>
-                    <tr><td><strong>Configuration</strong></td><td>Sistema de configuración flexible</td></tr>
-                    <tr><td><strong>Logging</strong></td><td>Sistema de logging incorporado</td></tr>
+                    <tr><td><strong>Uvicorn</strong></td><td>Servidor ASGI de alto rendimiento</td></tr>
+                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes ASGI</td></tr>
+                    <tr><td><strong><abbr title="Dependency Injection: Inyección de dependencias, patrón de diseño que implementa Inversión de Control (IoC) para lograr bajo acoplamiento entre componentes">Dependency Injection</abbr></strong></td><td>Contenedor DI en Angular + FastAPI</td></tr>
+                    <tr><td><strong>Pydantic</strong></td><td>Validación de datos con Python type hints</td></tr>
+                    <tr><td><strong>OpenAPI</strong></td><td>Documentación automática de API</td></tr>
                 </tbody>
             </table>
         </section>
@@ -572,49 +579,39 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">Program.cs</span>
+                    <span class="code-title">main.py (FastAPI)</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
-                    <pre><code class="language-csharp"><span class="token-keyword">var</span> <span class="token-property">app</span> = <span class="token-property">builder</span>.<span class="token-method">Build</span>();
+                    <pre><code><span class="token-keyword">from</span> fastapi <span class="token-keyword">import</span> FastAPI
+<span class="token-keyword">from</span> fastapi.middleware.cors <span class="token-keyword">import</span> CORSMiddleware
 
-<span class="token-comment">// 1. Exception Handler (primero en ejecutar, último en respuesta)</span>
-<span class="token-property">app</span>.<span class="token-method">UseExceptionHandler</span>(<span class="token-string">"/Error"</span>);
+<span class="token-property">app</span> = <span class="token-class">FastAPI</span>(title=<span class="token-string">"Mi API"</span>)
 
-<span class="token-comment">// 2. HTTPS Redirection (en desarrollo)</span>
-<span class="token-property">app</span>.<span class="token-method">UseHsts</span>();
-<span class="token-property">app</span>.<span class="token-method">UseHttpsRedirection</span>();
+<span class="token-comment"># 1. CORS (para permitir llamadas desde Angular)</span>
+<span class="token-property">app</span>.<span class="token-method">add_middleware</span>(
+    CORSMiddleware,
+    allow_origins=[<span class="token-string">"http://localhost:4200"</span>],
+    allow_credentials=<span class="token-keyword">True</span>,
+    allow_methods=[<span class="token-string">"*"</span>],
+    allow_headers=[<span class="token-string">"*"</span>],
+)
 
-<span class="token-comment">// 3. Static Files (archivos CSS, JS, imágenes)</span>
-<span class="token-property">app</span>.<span class="token-method">UseStaticFiles</span>();
+<span class="token-comment"># 2. Endpoints de la API</span>
+<span class="token-keyword">@app.get</span>(<span class="token-string">"/api/saludo"</span>)
+<span class="token-keyword">async def</span> <span class="token-method">saludo</span>(nombre: str = <span class="token-string">"Mundo"</span>):
+    <span class="token-keyword">return</span> {<span class="token-string">"mensaje"</span>: <span class="token-string">f"Hola, {nombre}!"</span>}
 
-<span class="token-comment">// 4. Routing (direccionamiento de URLs)</span>
-<span class="token-property">app</span>.<span class="token-method">UseRouting</span>();
-
-<span class="token-comment">// 5. Authentication (autenticacion)</span>
-<span class="token-property">app</span>.<span class="token-method">UseAuthentication</span>();
-
-<span class="token-comment">// 6. Authorization (autorizacion)</span>
-<span class="token-property">app</span>.<span class="token-method">UseAuthorization</span>();
-
-<span class="token-comment">// 7. Custom Middleware (middleware personalizado)</span>
-<span class="token-comment">// app.UseMiddleware&lt;TimingMiddleware&gt;();</span>
-
-<span class="token-comment">// 8. Endpoints (terminales)</span>
-<span class="token-property">app</span>.<span class="token-method">MapRazorPages</span>();
-<span class="token-comment">// app.MapControllerRoute(...);  // Para MVC</span>
-<span class="token-comment">// app.MapControllers();           // Para Web API</span>
-
-<span class="token-property">app</span>.<span class="token-method">Run</span>();</code></pre>
+<span class="token-comment"># Ejecutar: uvicorn main:app --reload</span></code></pre>
                 </div>
             </div>
 
             <div class="highlight-box">
                 <h4>Flujo de Solicitud</h4>
                 <ol>
-                    <li><strong>Request entra:</strong> Exception Handler → HTTPS Redirection → Static Files...</li>
-                    <li><strong><strong>Endpoint</strong>: La solicitud llega al endpoint (Razor Page/MVC/WebAPI)</li>
-                    <li><strong>Response sale:</strong> Endpoint → ... → Static Files → Exception Handler</li>
+                    <li><strong>Request entra:</strong> CORS → GZip → Session → Custom Middleware...</li>
+                    <li><strong><strong>Endpoint</strong>: La solicitud llega al endpoint (Route Operation Function)</li>
+                    <li><strong>Response sale:</strong> Endpoint → Response Middleware → ... → Cliente</li>
                 </ol>
             </div>
 
@@ -626,21 +623,36 @@
             <h2>4. Crear Proyecto</h2>
 
             <h3>Comandos CLI</h3>
-            <pre><code class="language-bash"># Razor Pages (recomendado para principiantes)
-dotnet new webapp -n MiAppWeb
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">bash</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
+                    <pre><code><span class="token-comment"># 1. Crear proyecto Angular</span>
+npm install -g @angular/cli
+ng new mi-app-angular --routing --style=css
+cd mi-app-angular
 
-# MVC (Model-View-Controller)
-dotnet new mvc -n MiMvcApp
+<span class="token-comment"># 2. Crear componente</span>
+ng generate component saludo
 
-# Web API (para servicios REST)
-dotnet new webapi -n MiApi
+<span class="token-comment"># 3. Ejecutar frontend</span>
+ng serve
+<span class="token-comment"># Abrir: http://localhost:4200</span>
 
-# Ejecutar proyecto
-cd MiAppWeb
-dotnet watch run
-
-# Abrir navegador en
-# http://localhost:5000</code></pre>
+<span class="token-comment"># 4. Backend FastAPI (en otra terminal)</span>
+pip install fastapi uvicorn
+<span class="token-comment"># Crear main.py y ejecutar:</span>
+uvicorn main:app --reload
+<span class="token-comment"># API: http://localhost:8000</span></code></pre>
+                </div>
+            </div>
 
             <h3>Tipos de Proyecto</h3>
             <table>
@@ -652,21 +664,21 @@ dotnet watch run
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Razor Pages</strong></td><td>Sitios web tradicionales</td><td>Pages + PageModel, simple</td></tr>
-                    <tr><td><strong>MVC</strong></td><td>Aplicaciones complejas</td><td>Controllers + Views, separación</td></tr>
-                    <tr><td><strong>Web <abbr title="API: Application Programming Interface, interfaz que permite que dos componentes de software se comuniquen entre sí">API</abbr></strong></td><td>Servicios <abbr title="REST: Representational State Transfer, estilo arquitectónico para sistemas distribuidos que usa HTTP">REST</abbr></td><td>Controllers, JSON, no vistas</td></tr>
-                    <tr><td><strong>Blazor</strong></td><td><abbr title="SPA: Single Page Application, aplicación web que cabe en una sola página y se actualiza dinámicamente sin recargar">SPA</abbr> con C#</td><td><abbr title="WebAssembly: formato binario de instrucciones para una máquina virtual basada en stack, permite ejecutar código en navegadores a alta velocidad">WebAssembly</abbr> en cliente</td></tr>
+                    <tr><td><strong>Angular <abbr title="SPA: Single Page Application, aplicación web que cabe en una sola página y se actualiza dinámicamente sin recargar">SPA</abbr></strong></td><td>Aplicaciones web interactivas</td><td>TypeScript, Components, RxJS</td></tr>
+                    <tr><td><strong>FastAPI REST</strong></td><td>Servicios <abbr title="API: Application Programming Interface, interfaz que permite que dos componentes de software se comuniquen entre sí">API</abbr> <abbr title="REST: Representational State Transfer, estilo arquitectónico para sistemas distribuidos que usa HTTP">REST</abbr></td><td>Python, async/await, OpenAPI</td></tr>
+                    <tr><td><strong>Angular + FastAPI</strong></td><td>Full-stack moderno</td><td>Frontend SPA + Backend API</td></tr>
+                    <tr><td><strong>FastAPI + Jinja2</strong></td><td>Sitios web tradicionales</td><td>Server-side rendering, templates</td></tr>
                 </tbody>
             </table>
         </section>
 
-        <section id="razor-pages">
-            <h2>5. Razor Pages</h2>
+        <section id="fastapi-routes">
+            <h2>5. FastAPI Routes</h2>
 
-            <h3>¿Qué son Razor Pages?</h3>
-            <p><strong>Razor Pages</strong> es un modelo de programación orientado a páginas que facilita la creación de interfaces web.</p>
+            <h3>¿Qué son las Routes en FastAPI?</h3>
+            <p><strong>Routes</strong> son decoradores que definen cómo responde la aplicación a diferentes solicitudes HTTP. FastAPI usa decoradores como <code>@app.get()</code>, <code>@app.post()</code>, etc.</p>
 
-            <h3>PageModel (Backend)</h3>
+            <h3>Route Handler (Backend)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -674,41 +686,42 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">Index.cshtml.cs</span>
+                    <span class="code-title">main.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27</div>
-                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">IndexModel</span> : <span class="token-type">PageModel</span>
-{
-    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; <span class="token-property">_logger</span>;
+                    <pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request, Form
+<span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse, JSONResponse
+<span class="keyword">from</span> fastapi.templating <span class="keyword">import</span> Jinja2Templates
+<span class="keyword">from</span> typing <span class="keyword">import</span> Optional
+<span class="keyword">import</span> logging
 
-    <span class="token-comment">// Constructor con inyeccion de dependencias</span>
-    <span class="token-keyword">public</span> <span class="token-method">IndexModel</span>(<span class="token-type">ILogger</span>&lt;<span class="token-type">IndexModel</span>&gt; logger)
-    {
-        <span class="token-property">_logger</span> = logger;
-    }
+<span class="comment"># Configurar logging</span>
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-    <span class="token-comment">// Propiedad que se muestra en la vista</span>
-    <span class="token-keyword">public string</span> <span class="token-property">Mensaje</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } = <span class="token-string">"Hola ASP.NET Core!"</span>;
+<span class="comment"># Inicializar app</span>
+app = FastAPI()
+templates = Jinja2Templates(directory=<span class="string">"templates"</span>)
 
-    <span class="token-comment">// Handler GET (cuando se carga la página)</span>
-    <span class="token-keyword">public void</span> <span class="token-method">OnGet</span>()
-    {
-        <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(<span class="token-string">"Cargando página Index"</span>);
-    }
+<span class="comment"># Route: GET / (cargar página)</span>
+<span class="keyword">@app</span>.get(<span class="string">"/"</span>, response_class=HTMLResponse)
+<span class="keyword">async def</span> <span class="method">index</span>(request: Request):
+    logger.info(<span class="string">"Cargando página Index"</span>)
+    <span class="keyword">return</span> templates.TemplateResponse(
+        <span class="string">"index.html"</span>,
+        {<span class="string">"request"</span>: request, <span class="string">"mensaje"</span>: <span class="string">"¡Hola FastAPI!"</span>}
+    )
 
-    <span class="token-comment">// Handler POST (cuando se envia formulario)</span>
-    <span class="token-keyword">public</span> <span class="token-type">IActionResult</span> <span class="token-method">OnPost</span>()
-    {
-        <span class="token-keyword">string</span> nombre = <span class="token-type">Request</span>.<span class="token-type">Form</span>[<span class="token-string">"nombre"</span>];
-        <span class="token-property">Mensaje</span> = <span class="token-string">$"Formulario enviado: {nombre}"</span>;
-        <span class="token-keyword">return</span> <span class="token-method">Page</span>(); <span class="token-comment">// Retornar la misma página</span>
-    }
-}</code></pre>
+<span class="comment"># Route: POST /saludo (procesar formulario)</span>
+<span class="keyword">@app</span>.post(<span class="string">"/saludo"</span>)
+<span class="keyword">async def</span> <span class="method">saludo</span>(nombre: <span class="type">str</span> = Form(...)):
+    logger.info(f<span class="string">"Formulario enviado: {nombre}"</span>)
+    <span class="keyword">return</span> {<span class="string">"mensaje"</span>: f<span class="string">"Formulario enviado: {nombre}"</span>}</code></pre>
                 </div>
             </div>
 
-            <h3>Razor View (Frontend)</h3>
+            <h3>Jinja2 Template (Frontend)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -716,30 +729,28 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">Index.cshtml</span>
+                    <span class="code-title">templates/index.html</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
-                    <pre><code class="language-html"><span class="token-operator">@page</span>
-<span class="token-operator">@model</span> <span class="token-type">IndexModel</span>
-<span class="token-operator">@{</span>
-    <span class="token-type">ViewData</span>[<span class="token-string">"Title"</span>] = <span class="token-string">"Home Page"</span>;
-<span class="token-operator">}</span>
+                    <pre><code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="keyword">&lt;html&gt;</span>
+<span class="keyword">&lt;head&gt;</span>
+    <span class="keyword">&lt;title&gt;</span>Home Page<span class="keyword">&lt;/title&gt;</span>
+<span class="keyword">&lt;/head&gt;</span>
+<span class="keyword">&lt;body&gt;</span>
+    <span class="keyword">&lt;h1&gt;</span>{{ mensaje }}<span class="keyword">&lt;/h1&gt;</span>
 
-<span class="token-operator">&lt;</span>h1<span class="token-operator">&gt;</span><span class="token-operator">@</span><span class="token-type">Model</span>.<span class="token-property">Mensaje</span><span class="token-operator">&lt;/</span>h1<span class="token-operator">&gt;</span>
-
-<span class="token-operator">&lt;</span>form <span class="token-property">method</span>=<span class="token-string">"post"</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span>input <span class="token-property">name</span>=<span class="token-string">"nombre"</span> <span class="token-property">placeholder</span>=<span class="token-string">"Tu nombre"</span> /<span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span>button <span class="token-property">type</span>=<span class="token-string">"submit"</span><span class="token-operator">&gt;</span>Enviar<span class="token-operator">&lt;/</span>button<span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;/</span>form<span class="token-operator">&gt;</span>
-
-<span class="token-operator">@section</span> <span class="token-type">Scripts</span> {
-    <span class="token-operator">@{</span><span class="token-keyword">await</span> <span class="token-method">RenderPartialAsync</span>(<span class="token-string">"_ValidationScriptsPartial"</span>);<span class="token-operator">}</span>
-}</code></pre>
+    <span class="keyword">&lt;form</span> action=<span class="string">"/saludo"</span> method=<span class="string">"post"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;input</span> name=<span class="string">"nombre"</span> placeholder=<span class="string">"Tu nombre"</span> /<span class="keyword">&gt;</span>
+        <span class="keyword">&lt;button</span> type=<span class="string">"submit"</span><span class="keyword">&gt;</span>Enviar<span class="keyword">&lt;/button&gt;</span>
+    <span class="keyword">&lt;/form&gt;</span>
+<span class="keyword">&lt;/body&gt;</span>
+<span class="keyword">&lt;/html&gt;</span></code></pre>
                 </div>
             </div>
 
-            <h3>Convenciones Razor Pages</h3>
+            <h3>Convenciones FastAPI</h3>
             <table>
                 <thead>
                     <tr>
@@ -748,11 +759,11 @@ dotnet watch run
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>Archivo PageModel</strong></td><td><code>Nombre.cshtml.cs</code></td></tr>
-                    <tr><td><strong>Archivo View</strong></td><td><code>Nombre.cshtml</code></td></tr>
-                    <tr><td><strong>Handler GET</strong></td><td><code>OnGet()</code></td></tr>
-                    <tr><td><strong>Handler POST</strong></td><td><code>OnPost()</code></td></tr>
-                    <tr><td><strong>Handler Async</strong></td><td><code>OnPostAsync()</code></td></tr>
+                    <tr><td><strong>Archivo Main</strong></td><td><code>main.py</code></td></tr>
+                    <tr><td><strong>Archivo Template</strong></td><td><code>templates/nombre.html</code></td></tr>
+                    <tr><td><strong>Route GET</strong></td><td><code>@app.get("/ruta")</code></td></tr>
+                    <tr><td><strong>Route POST</strong></td><td><code>@app.post("/ruta")</code></td></tr>
+                    <tr><td><strong>Route Async</strong></td><td><code>async def nombre():</code></td></tr>
                 </tbody>
             </table>
         </section>
@@ -768,50 +779,46 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">TimingMiddleware.cs</span>
+                    <span class="code-title">middleware.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
-                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">TimingMiddleware</span>
-{
-    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
-    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; <span class="token-property">_logger</span>;
+                    <pre><code><span class="keyword">import</span> time
+<span class="keyword">import</span> logging
+<span class="keyword">from</span> fastapi <span class="keyword">import</span> Request
+<span class="keyword">from</span> starlette.middleware.base <span class="keyword">import</span> BaseHTTPMiddleware, RequestResponseEndpoint
 
-    <span class="token-keyword">public</span> <span class="token-method">TimingMiddleware</span>(
-        <span class="token-type">RequestDelegate</span> next,
-        <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; logger)
-    {
-        <span class="token-property">_next</span> = next;       <span class="token-comment">// Siguiente middleware en pipeline</span>
-        <span class="token-property">_logger</span> = logger;
-    }
+logger = logging.getLogger(__name__)
 
-    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
-    {
-        <span class="token-keyword">var</span> stopwatch = <span class="token-type">System</span>.<span class="token-type">Diagnostics</span>.<span class="token-type">Stopwatch</span>.<span class="token-method">StartNew</span>();
+<span class="keyword">class</span> <span class="type">TimingMiddleware</span>(BaseHTTPMiddleware):
+    <span class="keyword">async def</span> <span class="method">dispatch</span>(
+        <span class="keyword">self</span>,
+        request: Request,
+        call_next: RequestResponseEndpoint
+    ):
+        <span class="comment"># Iniciar temporizador</span>
+        start_time = time.time()
 
-        <span class="token-keyword">try</span>
-        {
-            <span class="token-comment">// Pasar al siguiente middleware</span>
-            <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
-        }
-        <span class="token-keyword">finally</span>
-        {
-            stopwatch.<span class="token-method">Stop</span>();
+        <span class="comment"># Pasar al siguiente middleware</span>
+        response = <span class="keyword">await</span> call_next(request)
 
-            <span class="token-comment">// Log del tiempo de respuesta</span>
-            <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(
-                <span class="token-string">"Request: {Path} - Tiempo: {ElapsedMs}ms - Status: {StatusCode}"</span>,
-                context.<span class="token-type">Request</span>.<span class="token-property">Path</span>,
-                stopwatch.<span class="token-property">ElapsedMilliseconds</span>,
-                context.<span class="token-type">Response</span>.<span class="token-property">StatusCode</span>
-            );
-        }
-    }
-}</code></pre>
+        <span class="comment"># Calcular tiempo transcurrido</span>
+        process_time = (time.time() - start_time) * <span class="number">1000</span>
+
+        <span class="comment"># Log del tiempo de respuesta</span>
+        logger.info(
+            <span class="string">f"Request: {request.url.path} - "</span>
+            <span class="string">f"Tiempo: {process_time:.2f}ms - "</span>
+            <span class="string">f"Status: {response.status_code}"</span>
+        )
+
+        <span class="comment"># Agregar header de tiempo</span>
+        response.headers[<span class="string">"X-Process-Time"</span>] = <span class="keyword">str</span>(process_time)
+        <span class="keyword">return</span> response</code></pre>
                 </div>
             </div>
 
-            <h3>Registro en Program.cs</h3>
+            <h3>Registro en main.py</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -819,15 +826,21 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">Program.cs</span>
+                    <span class="code-title">main.py</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                    <pre><code class="language-csharp"><span class="token-comment">// Registrar middleware custom</span>
-<span class="token-property">app</span>.<span class="token-method">UseMiddleware</span>&lt;<span class="token-type">TimingMiddleware</span>&gt;();
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+                    <pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI
+<span class="keyword">from</span> middleware <span class="keyword">import</span> TimingMiddleware
 
-<span class="token-comment">// O como método de extensión</span>
-<span class="token-comment">// app.UseTiming();</span></code></pre>
+<span class="comment"># Crear app FastAPI</span>
+app = FastAPI()
+
+<span class="comment"># Registrar middleware custom</span>
+app.add_middleware(TimingMiddleware)
+
+<span class="comment"># O como método de extensión</span>
+<span class="comment"># app.add_middleware(TimingMiddleware)</span></code></pre>
                 </div>
             </div>
 
@@ -839,32 +852,41 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">AdminOnlyMiddleware.cs</span>
+                    <span class="code-title">auth.py</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
-                    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">AdminOnlyMiddleware</span>
-{
-    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26</div>
+                    <pre><code><span class="keyword">from</span> fastapi <span class="keyword">import</span> Depends, HTTPException, Request, status
+<span class="keyword">from</span> typing <span class="keyword">import</span> List
 
-    <span class="token-keyword">public</span> <span class="token-method">AdminOnlyMiddleware</span>(<span class="token-type">RequestDelegate</span> next)
-    {
-        <span class="token-property">_next</span> = next;
-    }
+<span class="keyword">class</span> <span class="type">AuthService</span>:
+    <span class="keyword">def</span> <span class="method">is_admin</span>(<span class="keyword">self</span>, request: Request) -> <span class="type">bool</span>:
+        <span class="comment"># Verificar si el usuario es admin</span>
+        user_role = request.state.get(<span class="string">"user_role"</span>, <span class="string">"guest"</span>)
+        <span class="keyword">return</span> user_role == <span class="string">"admin"</span>
 
-    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
-    {
-        <span class="token-comment">// Verificar si el usuario es admin</span>
-        <span class="token-keyword">if</span> (!context.<span class="token-type">User</span>.<span class="token-method">IsInRole</span>(<span class="token-string">"Admin"</span>))
-        {
-            context.<span class="token-type">Response</span>.<span class="token-property">StatusCode</span> = <span class="token-number">403</span>;
-            <span class="token-keyword">await</span> context.<span class="token-type">Response</span>.<span class="token-method">WriteAsync</span>(<span class="token-string">"Acceso denegado"</span>);
-            <span class="token-keyword">return</span>; <span class="token-comment">// Cortar el pipeline</span>
-        }
+<span class="comment"># Servicio singleton</span>
+auth_service = AuthService()
 
-        <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
-    }
-}</code></pre>
+<span class="comment"># Dependencia para verificar admin</span>
+<span class="keyword">async def</span> <span class="method">require_admin</span>(
+    request: Request,
+    auth: AuthService = Depends(<span class="keyword">lambda</span>: auth_service)
+):
+    <span class="keyword">if</span> <span class="keyword">not</span> auth.is_admin(request):
+        <span class="keyword">raise</span> HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=<span class="string">"Acceso denegado: Se requiere rol de admin"</span>
+        )
+    <span class="keyword">return</span> <span class="keyword">True</span>
+
+<span class="comment"># Uso en routes</span>
+<span class="keyword">@app</span>.get(<span class="string">"/admin/dashboard"</span>)
+<span class="keyword">async def</span> <span class="method">admin_dashboard</span>(
+    request: Request,
+    _: <span class="type">bool</span> = Depends(require_admin)
+):
+    <span class="keyword">return</span> {<span class="string">"message"</span>: <span class="string">"Panel de administración"</span>}</code></pre>
                 </div>
             </div>
         </section>
@@ -874,44 +896,42 @@ dotnet watch run
             <h2>Ejemplos</h2>
             <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
             <ul>
-                <li>Configuración de middleware en ASP.NET Core</li>
-                <li>Creación de proyectos con CLI</li>
-                <li>Implementación de Razor Pages</li>
-                <li>Desarrollo de middleware personalizado</li>
+                <li>Configuración de middleware en FastAPI</li>
+                <li>Creación de proyectos con FastAPI CLI</li>
+                <li>Implementación de routes con FastAPI</li>
+                <li>Desarrollo de middleware personalizado con BaseHTTPMiddleware</li>
             </ul>
         </section>
 
         <section id="practica">
             <h2>Práctica / Laboratorio (35 min)</h2>
             <section class="actividad">
-                <h3>Actividad: Laboratorio ASP.NET Core - Primera App Web (35 min)</h3>
+                <h3>Actividad: Laboratorio FastAPI + Angular - Primera App Web (35 min)</h3>
                 <p><strong>Tipo:</strong> Opcional / práctica</p>
                 <p><strong>Relacionado con:</strong> Ninguno</p>
-                <p><strong>Entregable:</strong> Aplicación web ASP.NET Core con Razor Pages y middleware</p>
+                <p><strong>Entregable:</strong> Aplicación web con Angular (frontend) y FastAPI (backend) con middleware</p>
                 <p><strong>Tiempo estimado:</strong> 35 min</p>
-                <p><strong>Criterios de éxito:</strong> Solución compila, app se ejecuta en navegador, middleware registrado y funcionando</p>
-                <div class="success-box">Objetivo: Crear una aplicación web ASP.NET Core con Razor Pages y middleware personalizado.</div>
+                <p><strong>Criterios de éxito:</strong> Backend se ejecuta, frontend se ejecuta, middleware registrado y funcionando</p>
+                <div class="success-box">Objetivo: Crear una aplicación web con Angular + FastAPI con middleware personalizado.</div>
 
-            <h3>Pasos en Windows (Visual Studio 2022)</h3>
+            <h3>Pasos - Backend FastAPI</h3>
             <ol>
-                <li>Abrir Visual Studio 2022 y crear un nuevo proyecto.</li>
-                <li>Buscar y seleccionar <strong>"ASP.NET Core Web App"</strong> (Razor Pages).</li>
-                <li>Nombre del proyecto: <code>MiPracticaWeb</code>.</li>
-                <li>Framework: <strong>.NET 8.0</strong> (o la versión más reciente).</li>
-                <li>Click en <strong>Crear</strong>.</li>
-                <li>Explorar la estructura del proyecto (Pages, Program.cs, wwwroot).</li>
-                <li>Ejecutar con F5 o <strong>Debug > Iniciar Depuración</strong>.</li>
+                <li>Crear carpeta para el proyecto: <code>mkdir mi-app-web</code> y entrar: <code>cd mi-app-web</code>.</li>
+                <li>Crear entorno virtual: <code>python -m venv venv</code>.</li>
+                <li>Activar entorno (Windows): <code>venv\Scripts\activate</code>.</li>
+                <li>Instalar FastAPI y Uvicorn: <code>pip install fastapi uvicorn</code>.</li>
+                <li>Crear archivo <code>main.py</code> con aplicación FastAPI básica.</li>
+                <li>Ejecutar: <code>uvicorn main:app --reload</code>.</li>
             </ol>
-            <div class="success-box">Checklist: Solución compila sin errores, aplicación se ejecuta en navegador, navegador muestra http://localhost:5000 o similar.</div>
+            <div class="success-box">Checklist: Entorno virtual creado, dependencias instaladas, servidor se ejecuta en http://localhost:8000, API responde en /docs.</div>
 
-            <h3>Crear una Razor Page con Formulario</h3>
+            <h3>Crear una Route con Formulario</h3>
             <ol>
-                <li>En la carpeta <code>Pages</code>, clic derecho > <strong>Agregar > Nueva Carpeta</strong> llamada <code>Calculadora</code>.</li>
-                <li>Clic derecho sobre carpeta Calculadora > <strong>Agregar > Razor Page</strong>.</li>
-                <li>Nombre: <code>Index</code>, seleccionar "Generar PageModel class".</li>
-                <li>En <code>Calculadora/Index.cshtml.cs</code>, agregar propiedades para los números y resultado.</li>
-                <li>En <code>Calculadora/Index.cshtml</code>, crear el formulario HTML.</li>
-                <li>Ejecutar y probar la calculadora.</li>
+                <li>En <code>main.py</code>, importar <code>Request</code> y <code>Form</code> de FastAPI.</li>
+                <li>Crear template engine con Jinja2: <code>templates = Jinja2Templates(directory="templates")</code>.</li>
+                <li>Crear carpeta <code>templates</code> y agregar archivo HTML.</li>
+                <li>Crear route <code>@app.post("/calcular")</code> que recibe datos del formulario.</li>
+                <li>Probar la route con Swagger UI en <code>http://localhost:8000/docs</code>.</li>
             </ol>
 
             <h3>Crear Middleware Personalizado</h3>
@@ -922,57 +942,68 @@ dotnet watch run
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">TimingMiddleware.cs</span>
+                    <span class="code-title">middleware.py</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19</div>
-                    <pre><code class="language-csharp"><span class="token-comment">// Agregar al proyecto: TimingMiddleware.cs</span>
-<span class="token-keyword">public class</span> <span class="token-class">TimingMiddleware</span>
-{
-    <span class="token-keyword">private readonly</span> <span class="token-type">RequestDelegate</span> <span class="token-property">_next</span>;
-    <span class="token-keyword">private readonly</span> <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; <span class="token-property">_logger</span>;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+                    <pre><code><span class="keyword">import</span> time
+<span class="keyword">import</span> logging
+<span class="keyword">from</span> fastapi <span class="keyword">import</span> Request
+<span class="keyword">from</span> starlette.middleware.base <span class="keyword">import</span> BaseHTTPMiddleware, RequestResponseEndpoint
 
-    <span class="token-keyword">public</span> <span class="token-method">TimingMiddleware</span>(<span class="token-type">RequestDelegate</span> next, <span class="token-type">ILogger</span>&lt;<span class="token-type">TimingMiddleware</span>&gt; logger)
-    {
-        <span class="token-property">_next</span> = next;
-        <span class="token-property">_logger</span> = logger;
-    }
+logger = logging.getLogger(__name__)
 
-    <span class="token-keyword">public async</span> <span class="token-type">Task</span> <span class="token-method">InvokeAsync</span>(<span class="token-type">HttpContext</span> context)
-    {
-        <span class="token-keyword">var</span> watch = <span class="token-type">System</span>.<span class="token-type">Diagnostics</span>.<span class="token-type">Stopwatch</span>.<span class="token-method">StartNew</span>();
-        <span class="token-keyword">await</span> <span class="token-property">_next</span>(context);
-        watch.<span class="token-method">Stop</span>();
-        <span class="token-property">_logger</span>.<span class="token-method">LogInformation</span>(<span class="token-string">$"Request: {context.Request.Path} tomó {watch.ElapsedMilliseconds}ms"</span>);
-    }
-}</code></pre>
+<span class="keyword">class</span> <span class="type">TimingMiddleware</span>(BaseHTTPMiddleware):
+    <span class="keyword">async def</span> <span class="method">dispatch</span>(
+        <span class="keyword">self</span>,
+        request: Request,
+        call_next: RequestResponseEndpoint
+    ):
+        <span class="comment"># Iniciar temporizador</span>
+        start_time = time.time()
+
+        <span class="comment"># Pasar al siguiente middleware</span>
+        response = <span class="keyword">await</span> call_next(request)
+
+        <span class="comment"># Calcular tiempo transcurrido</span>
+        process_time = (time.time() - start_time) * <span class="number">1000</span>
+
+        <span class="comment"># Log del tiempo de respuesta</span>
+        logger.info(
+            <span class="string">f"Request: {request.url.path} - "</span>
+            <span class="string">f"Tiempo: {process_time:.2f}ms"</span>
+        )
+
+        <span class="comment"># Agregar header de tiempo</span>
+        response.headers[<span class="string">"X-Process-Time"</span>] = <span class="keyword">str</span>(process_time)
+        <span class="keyword">return</span> response</code></pre>
                 </div>
             </div>
             <ol>
-                <li>En <code>Program.cs</code>, registrar el middleware antes de <code>app.Run()</code>.</li>
-                <li>Ejecutar y verificar los logs en la ventana de Output.</li>
+                <li>En <code>main.py</code>, agregar el middleware con <code>app.add_middleware()</code>.</li>
+                <li>Ejecutar y verificar los logs en la consola.</li>
             </ol>
-            <div class="success-box">Checklist: Middleware registrado correctamente, logs muestran tiempo de respuesta, no hay errores de compilación.</div>
+            <div class="success-box">Checklist: Middleware registrado correctamente, logs muestran tiempo de respuesta, no hay errores de ejecución.</div>
         </section>
 
         <section id="ejercicios">
             <h2>8. Ejercicios Prácticos</h2>
 
             <section class="actividad">
-                <h3>Actividad: Ejercicio 1 - Página de Calculadora (20 min)</h3>
+                <h3>Actividad: Ejercicio 1 - Calculadora con FastAPI (20 min)</h3>
                 <p><strong>Tipo:</strong> Opcional / práctica</p>
                 <p><strong>Relacionado con:</strong> Ninguno</p>
-                <p><strong>Entregable:</strong> Razor Page con calculadora funcional</p>
+                <p><strong>Entregable:</strong> Route FastAPI con calculadora funcional</p>
                 <p><strong>Tiempo estimado:</strong> 20 min</p>
-                <p><strong>Criterios de éxito:</strong> Razor Page creada, formulario funcional, operaciones correctas, validación de división por cero</p>
-                <p><strong>Objetivo:</strong> Crear una Razor Page con calculadora básica.</p>
+                <p><strong>Criterios de éxito:</strong> Route creada, formulario funcional, operaciones correctas, validación de división por cero</p>
+                <p><strong>Objetivo:</strong> Crear una route FastAPI con calculadora básica.</p>
             <ul>
-                <li>Formulario con dos inputs numéricos</li>
-                <li>Botones para Sumar, Restar, Multiplicar, Dividir</li>
-                <li>Manejar GET (mostrar) y POST (calcular)</li>
-                <li>Validar división por cero</li>
+                <li>Route POST <code>/calcular</code> con dos parámetros numéricos</li>
+                <li>Operaciones: Sumar, Restar, Multiplicar, Dividir</li>
+                <li>Retornar JSON con resultado</li>
+                <li>Validar división por cero con HTTP 400</li>
             </ul>
-            <div class="success-box">Checklist: Razor Page creada, formulario funcional, operaciones correctas, validación de división por cero implementada.</div>
+            <div class="success-box">Checklist: Route creada, responde correctamente, operaciones implementadas, validación de división por cero funcionando.</div>
 
             <section class="actividad">
                 <h3>Actividad: Ejercicio 2 - Middleware de Timing (15 min)</h3>
@@ -980,23 +1011,23 @@ dotnet watch run
                 <p><strong>Relacionado con:</strong> Ninguno</p>
                 <p><strong>Entregable:</strong> Middleware personalizado de timing</p>
                 <p><strong>Tiempo estimado:</strong> 15 min</p>
-                <p><strong>Criterios de éxito:</strong> Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output</p>
+                <p><strong>Criterios de éxito:</strong> Middleware creado y registrado, tiempo medido correctamente, logs visibles en consola</p>
                 <p><strong>Objetivo:</strong> Middleware que mide tiempo de respuesta.</p>
             <ul>
                 <li>Cronometrar cada solicitud</li>
                 <li>Mostrar tiempo en header de respuesta</li>
                 <li>Log de solicitudes lentas (>1 segundo)</li>
             </ul>
-            <div class="success-box">Checklist: Middleware creado y registrado, tiempo medido correctamente, logs visibles en Output.</div>
+            <div class="success-box">Checklist: Middleware creado y registrado, tiempo medido correctamente, logs visibles en consola.</div>
 
             <section class="actividad">
-                <h3>Actividad: Ejercicio 3 - Página con Validación (25 min)</h3>
+                <h3>Actividad: Ejercicio 3 - Formulario con Validación (25 min)</h3>
                 <p><strong>Tipo:</strong> Opcional / práctica</p>
                 <p><strong>Relacionado con:</strong> Ninguno</p>
-                <p><strong>Entregable:</strong> Razor Page con formulario validado</p>
+                <p><strong>Entregable:</strong> Componente Angular con formulario validado + Route FastAPI</p>
                 <p><strong>Tiempo estimado:</strong> 25 min</p>
                 <p><strong>Criterios de éxito:</strong> Validaciones implementadas, mensajes de error visibles, formulario rechaza datos inválidos</p>
-                <p><strong>Objetivo:</strong> Formulario con validaciones.</p>
+                <p><strong>Objetivo:</strong> Formulario con validaciones en Angular + FastAPI.</p>
             <ul>
                 <li>Nombre requerido</li>
                 <li>Email formato válido</li>
@@ -1024,48 +1055,84 @@ dotnet watch run
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><strong>ASP.NET Core</strong></td><td>Framework web cross-platform moderno</td></tr>
-                    <tr><td><strong>Kestrel</strong></td><td>Servidor web incorporado</td></tr>
-                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes</td></tr>
-                    <tr><td><strong>Razor Pages</strong></td><td>Modelo de páginas simple</td></tr>
-                    <tr><td><strong>PageModel</strong></td><td>Backend con handlers OnGet/OnPost</td></tr>
-                    <tr><td><strong>Dependency Injection</strong></td><td>Contenedor DI integrado</td></tr>
+                    <tr><td><strong>FastAPI</strong></td><td>Framework web moderno asíncrono para Python</td></tr>
+                    <tr><td><strong>Uvicorn</strong></td><td>Servidor ASGI de alto rendimiento</td></tr>
+                    <tr><td><strong>Middleware Pipeline</strong></td><td>Tubería de procesamiento de solicitudes ASGI</td></tr>
+                    <tr><td><strong>Routes</strong></td><td>Decoradores que definen endpoints HTTP</td></tr>
+                    <tr><td><strong>Angular Components</strong></td><td>Clases TypeScript con plantilla HTML</td></tr>
+                    <tr><td><strong>Dependency Injection</strong></td><td>Inyección de dependencias en Angular y FastAPI</td></tr>
                 </tbody>
             </table>
 
             <h3>Habilidades Adquiridas</h3>
             <ul>
-                <li>Crear proyecto ASP.NET Core</li>
-                <li>Configurar Middleware Pipeline</li>
-                <li>Crear Razor Pages con handlers</li>
-                <li>Implementar middleware personalizado</li>
-                <li>Usar inyeccion de dependencias</li>
+                <li>Crear proyecto FastAPI + Angular</li>
+                <li>Configurar Middleware Pipeline en FastAPI</li>
+                <li>Crear Routes FastAPI con operadores asíncronos</li>
+                <li>Implementar middleware personalizado con BaseHTTPMiddleware</li>
+                <li>Usar inyección de dependencias en Angular</li>
             </ul>
 
             <h3>Próximos Pasos</h3>
             <ul>
                 <li><strong>Clase 9:</strong> HTML5 y Bootstrap</li>
                 <li>Practicar creando proyectos reales</li>
-                <li>Explorar MVC vs Razor Pages</li>
+                <li>Explorar Reactive Forms en Angular</li>
             </ul>
 
             <h3>Referencias y Recursos</h3>
             <ul>
-                <li><strong>Documentación oficial de ASP.NET Core:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/" target="_blank" rel="noopener">https://learn.microsoft.com/en-us/aspnet/core/</a></li>
-                <li><strong>Tutorial de Razor Pages:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/" target="_blank" rel="noopener">Introduction to Razor Pages</a></li>
-                <li><strong>Middleware en ASP.NET Core:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/" target="_blank" rel="noopener">ASP.NET Core Middleware</a></li>
-                <li><strong>Inyección de Dependencias:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection" target="_blank" rel="noopener">Dependency Injection in ASP.NET Core</a></li>
-                <li><strong>Kestrel Web Server:</strong> <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel" target="_blank" rel="noopener">Kestrel Web Server</a></li>
+                <li><strong>Documentación oficial de FastAPI:</strong> <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener">https://fastapi.tiangolo.com/</a></li>
+                <li><strong>Tutorial de Angular:</strong> <a href="https://angular.io/tutorial" target="_blank" rel="noopener">Angular Tutorial</a></li>
+                <li><strong>Middleware en FastAPI:</strong> <a href="https://fastapi.tiangolo.com/tutorial/middleware/" target="_blank" rel="noopener">FastAPI Middleware</a></li>
+                <li><strong>Inyección de Dependencias en Angular:</strong> <a href="https://angular.io/guide/dependency-injection" target="_blank" rel="noopener">Angular DI</a></li>
+                <li><strong>Uvicorn ASGI Server:</strong> <a href="https://www.uvicorn.org/" target="_blank" rel="noopener">Uvicorn Documentation</a></li>
             </ul>
+        </section>
+
+        <section id="entrega-git">
+            <h2>Entrega con Git</h2>
+            <p>Para el proyecto Angular + FastAPI:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">bash</span>
+                </div>
+                <div class="code-content">
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+                    <pre><code class="language-bash"># Estructura del repo
+git init
+
+# Crear rama feature
+git checkout -b feature/angular-fastapi-clase-08
+
+# Commit 1: Setup
+git add .
+git commit -m "chore: setup Angular CLI y FastAPI"
+
+# Commit 2: Implementación
+git commit -am "feat: agrega componente saludo y endpoint API"
+
+# Commit 3: Documentación
+git commit -am "docs: README con instrucciones de ejecución"
+
+# Tag
+git tag -a clase-08-v1 -m "Entrega clase 08 - Angular + FastAPI"</code></pre>
+                </div>
+            </div>
         </section>
 
         <section id="referencias">
             <h2>Referencias</h2>
             <ul>
-                <li><strong>Documentación oficial de ASP.NET Core:</strong> <a href="https://docs.microsoft.com/aspnet/core" target="_blank" rel="noopener">docs.microsoft.com/aspnet/core</a></li>
-                <li><strong>Introducción a Razor Pages:</strong> <a href="https://docs.microsoft.com/aspnet/core/razor-pages" target="_blank" rel="noopener">Razor Pages documentation</a></li>
-                <li><strong>Middleware en ASP.NET Core:</strong> <a href="https://docs.microsoft.com/aspnet/core/fundamentals/middleware" target="_blank" rel="noopener">Middleware documentation</a></li>
-                <li><strong>Tutoriales oficiales Microsoft:</strong> <a href="https://docs.microsoft.com/aspnet/core/tutorials" target="_blank" rel="noopener">ASP.NET Core tutorials</a></li>
+                <li><strong>Documentación oficial de FastAPI:</strong> <a href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener">fastapi.tiangolo.com</a></li>
+                <li><strong>Introducción a Angular:</strong> <a href="https://angular.io/docs" target="_blank" rel="noopener">Angular documentation</a></li>
+                <li><strong>Middleware en FastAPI:</strong> <a href="https://fastapi.tiangolo.com/tutorial/middleware/" target="_blank" rel="noopener">Middleware documentation</a></li>
+                <li><strong>Starlette ASGI:</strong> <a href="https://www.starlette.io/" target="_blank" rel="noopener">Starlette documentation</a></li>
             </ul>
         </section>
     </div>

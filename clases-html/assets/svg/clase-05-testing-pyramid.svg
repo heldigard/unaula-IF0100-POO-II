@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" role="img" aria-labelledby="title desc">
+  <title id="title">Testing Pyramid</title>
+  <desc id="desc">Piramide de pruebas: Unit, Integration, E2E.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8ff}
+      .tier{stroke:#cbd5f5;stroke-width:1.4}
+      .t1{fill:#dcfce7}
+      .t2{fill:#e0e7ff}
+      .t3{fill:#fee2e2}
+      .label{font:700 15px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .sub{font:12px 'Segoe UI', Arial, sans-serif;fill:#475569}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="800" height="360" />
+
+  <polygon class="tier t1" points="150,300 650,300 560,210 240,210" />
+  <polygon class="tier t2" points="240,210 560,210 490,130 310,130" />
+  <polygon class="tier t3" points="310,130 490,130 430,60 370,60" />
+
+  <text class="label" x="400" y="265" text-anchor="middle">Unit Tests (muchas)</text>
+  <text class="sub" x="400" y="285" text-anchor="middle">rapidas, baratas, aisladas</text>
+
+  <text class="label" x="400" y="185" text-anchor="middle">Integration Tests</text>
+  <text class="sub" x="400" y="205" text-anchor="middle">servicios y bases de datos</text>
+
+  <text class="label" x="400" y="100" text-anchor="middle">E2E Tests (pocas)</text>
+  <text class="sub" x="400" y="118" text-anchor="middle">flujos completos</text>
+</svg>

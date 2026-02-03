@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clase 13 - CRUD con ADO.NET y SQL Server | IF0100 - POO II</title>
+  <title>Clase 13 - CRUD con Python, pyodbc y SQL Server | IF0100 - POO II</title>
   <style>
     :root {
       --bg: #f7f7f4;
@@ -93,17 +93,19 @@
       color: var(--muted);
     }
     pre {
-      background: #0b1020;
-      color: #e2e8f0;
-      padding: 14px;
-      border-radius: 10px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 14px 16px;
+      border-radius: 12px;
       overflow-x: auto;
+      border: 1px solid #313244;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
     code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
-    /* Syntax highlighting para C# */
+    /* Syntax highlighting para Python */
     .token-keyword { color: #c792ea; font-weight: 600; }
     .token-type { color: #ffcb6b; }
     .token-string { color: #c3e88d; }
@@ -255,14 +257,14 @@
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 4</div>
-      <h1>Clase 13: CRUD con ADO.NET y SQL Server</h1>
+      <h1>Clase 13: CRUD con Python, pyodbc y SQL Server</h1>
       <div>Duración: 90 minutos</div>
       <div class="meta">
         <div>
           <strong>Objetivos</strong>
           <ul>
-            <li>Implementar CRUD completo con ADO.NET.</li>
-            <li>Modelar base de datos y entidad C#.</li>
+            <li>Implementar CRUD completo con Python y pyodbc.</li>
+            <li>Modelar base de datos y entidad Python (dataclass/DTO).</li>
             <li>Aplicar validaciones y parámetros seguros.</li>
             <li>Implementar paginación y operaciones masivas.</li>
             <li>Escribir consultas avanzadas con SQL.</li>
@@ -271,7 +273,7 @@
         <div>
           <strong>Prerrequisitos</strong>
           <ul>
-            <li>Conocer SqlConnection, SqlCommand, SqlDataReader.</li>
+            <li>Conocer pyodbc, conexiones y cursores.</li>
             <li>SQL Server instalado o acceso a instancia.</li>
             <li>Conceptos básicos de POO y capas.</li>
           </ul>
@@ -308,7 +310,7 @@
    ↓
 Lógica de negocio (validaciones)
    ↓
-Acceso a datos (ADO.NET)
+Acceso a datos (Python + pyodbc)
    ↓
 SQL Server (tabla Estudiantes)</code></pre>
 
@@ -331,28 +333,35 @@ SQL Server (tabla Estudiantes)</code></pre>
   FechaCreación DATETIME DEFAULT GETDATE()
 );</code></pre>
 
-      <h3>Entidad C#</h3>
-      <p><strong>Property expression (=>)</strong> = Sintaxis de C# para definir propiedades calculadas (read-only) que derivan su valor de otras propiedades.</p>
-      <pre><code class="language-csharp">public class Estudiante
-{
-    public int Id { get; set; }
-    public string Codigo { get; set; }
-    public string Nombre { get; set; }
-    public string Apellido { get; set; }
-    public string Email { get; set; }
-    public DateTime FechaNacimiento { get; set; }
-    public decimal Promedio { get; set; }
-    public bool Activo { get; set; }
-    public DateTime FechaCreación { get; set; }
+      <h3>Entidad Python (dataclass)</h3>
+      <p><strong>@property</strong> = Decorador de Python para exponer propiedades calculadas (solo lectura) a partir de otros atributos.</p>
+      <pre><code class="language-python"><span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> datetime, date
 
-    public string NombreCompleto => $"{Nombre} {Apellido}";
-    public int Edad => DateTime.Now.Year - FechaNacimiento.Year;
-}</code></pre>
+<span class="token-keyword">@dataclass</span>
+<span class="token-keyword">class</span> <span class="token-class">Estudiante</span>:
+    id: int = <span class="token-keyword">None</span>
+    codigo: str = <span class="token-string">""</span>
+    nombre: str = <span class="token-string">""</span>
+    apellido: str = <span class="token-string">""</span>
+    email: str = <span class="token-string">""</span>
+    fecha_nacimiento: date = <span class="token-keyword">None</span>
+    promedio: float = <span class="token-number">0.0</span>
+    activo: bool = <span class="token-keyword">True</span>
+    fecha_creacion: datetime = <span class="token-keyword">None</span>
+
+    <span class="token-keyword">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">nombre_completo</span>(<span class="token-property">self</span>) -> str:
+        <span class="token-keyword">return</span> <span class="token-string">f"{self.nombre} {self.apellido}"</span>
+
+    <span class="token-keyword">@property</span>
+    <span class="token-keyword">def</span> <span class="token-method">edad</span>(<span class="token-property">self</span>) -> int:
+        <span class="token-keyword">return</span> date.today().year - <span class="token-property">self</span>.fecha_nacimiento.year</code></pre>
 
       <h3>Seguridad básica</h3>
       <ul>
         <li>Usar parámetros SQL para evitar inyección.</li>
-        <li>Manejar excepciones de clave unica (codigo duplicado).</li>
+        <li>Manejar excepciones de clave única (código duplicado).</li>
         <li>Validar datos antes de persistir.</li>
       </ul>
     </section>
@@ -360,50 +369,46 @@ SQL Server (tabla Estudiantes)</code></pre>
     <section id="ejemplos">
       <h2>Ejemplos</h2>
 
-      <h3>CREATE con ADO.NET</h3>
-      <pre><code class="language-csharp">public int Crear(Estudiante estudiante)
-{
-    const string query = @"
+      <h3>CREATE con pyodbc</h3>
+      <pre><code class="language-python"><span class="token-keyword">import</span> pyodbc
+
+<span class="token-keyword">def</span> <span class="token-method">crear</span>(<span class="token-property">self</span>, estudiante: Estudiante) -> int:
+    query = <span class="token-string">"""
         INSERT INTO Estudiantes (Codigo, Nombre, Apellido, Email,
                                FechaNacimiento, Promedio, Activo)
-        VALUES (@Codigo, @Nombre, @Apellido, @Email,
-               @FechaNacimiento, @Promedio, @Activo);
-        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        VALUES (?, ?, ?, ?, ?, ?, ?);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);
+    """</span>
+    
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-property">self</span>._connection_string) <span class="token-keyword">as</span> conn:
+        <span class="token-keyword">with</span> conn.cursor() <span class="token-keyword">as</span> cursor:
+            cursor.execute(query, (
+                estudiante.codigo, estudiante.nombre, 
+                estudiante.apellido, estudiante.email,
+                estudiante.fecha_nacimiento, estudiante.promedio, 
+                estudiante.activo
+            ))
+            <span class="token-keyword">return</span> cursor.fetchone()[<span class="token-number">0</span>]</span></code></pre>
 
-    using var conexión = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexión);
-    comando.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-    comando.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    comando.Parameters.AddWithValue("@Apellido", estudiante.Apellido);
-    comando.Parameters.AddWithValue("@Email", estudiante.Email);
-    comando.Parameters.AddWithValue("@FechaNacimiento", estudiante.FechaNacimiento);
-    comando.Parameters.AddWithValue("@Promedio", estudiante.Promedio);
-    comando.Parameters.AddWithValue("@Activo", estudiante.Activo);
-
-    conexión.Open();
-    return (int)comando.ExecuteScalar();
-}</code></pre>
-
-      <h3>READ (lista)</h3>
-      <pre><code class="language-csharp">public List&lt;Estudiante&gt; ObtenerTodos()
-{
-    const string query = @"
+      <h3>READ (lista) con pyodbc</h3>
+      <pre><code class="language-python"><span class="token-keyword">def</span> <span class="token-method">obtener_todos</span>(<span class="token-property">self</span>) -> list[Estudiante]:
+    query = <span class="token-string">"""
         SELECT Id, Codigo, Nombre, Apellido, Email,
                FechaNacimiento, Promedio, Activo, FechaCreación
         FROM Estudiantes
         WHERE Activo = 1
-        ORDER BY Apellido, Nombre";
+        ORDER BY Apellido, Nombre
+    """</span>
 
-    var estudiantes = new List&lt;Estudiante&gt;();
-    using var conexión = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexión);
-    conexión.Open();
-    using var reader = comando.ExecuteReader();
-    while (reader.Read()) estudiantes.Add(MapearEstudiante(reader));
-    return estudiantes;
-}</code></pre>
+    estudiantes = []
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-property">self</span>._connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+        cursor.execute(query)
+        <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+            estudiantes.append(Estudiante(*row))
+    <span class="token-keyword">return</span> estudiantes</code></pre>
 
-      <h3>UPDATE y DELETE logico</h3>
+      <h3>UPDATE y DELETE lógico</h3>
       <p><strong>DELETE lógico</strong> = Marcar un registro como inactivo (Activo = 0) en lugar de eliminarlo físicamente. Permite recuperar datos y mantiene auditoría.</p>
       <div class="note">
         <strong>¿Por qué DELETE lógico?</strong>
@@ -413,37 +418,33 @@ SQL Server (tabla Estudiantes)</code></pre>
           <li><strong>Integridad:</strong> No rompe relaciones con otras tablas ( FOREIGN KEY )</li>
         </ul>
       </div>
-      <pre><code class="language-csharp">public bool Actualizar(Estudiante estudiante)
-{
-    const string query = @"
+      <pre><code class="language-python"><span class="token-keyword">def</span> <span class="token-method">actualizar</span>(<span class="token-property">self</span>, estudiante: Estudiante) -> bool:
+    query = <span class="token-string">"""
         UPDATE Estudiantes
-        SET Nombre = @Nombre, Apellido = @Apellido, Email = @Email,
-            FechaNacimiento = @FechaNacimiento, Promedio = @Promedio, Activo = @Activo
-        WHERE Id = @Id";
+        SET Nombre = ?, Apellido = ?, Email = ?,
+            FechaNacimiento = ?, Promedio = ?, Activo = ?
+        WHERE Id = ?
+    """</span>
 
-    using var conexión = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexión);
-    comando.Parameters.AddWithValue("@Id", estudiante.Id);
-    comando.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-    comando.Parameters.AddWithValue("@Apellido", estudiante.Apellido);
-    comando.Parameters.AddWithValue("@Email", estudiante.Email);
-    comando.Parameters.AddWithValue("@FechaNacimiento", estudiante.FechaNacimiento);
-    comando.Parameters.AddWithValue("@Promedio", estudiante.Promedio);
-    comando.Parameters.AddWithValue("@Activo", estudiante.Activo);
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-property">self</span>._connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+        cursor.execute(query, (
+            estudiante.nombre,
+            estudiante.apellido,
+            estudiante.email,
+            estudiante.fecha_nacimiento,
+            estudiante.promedio,
+            estudiante.activo,
+            estudiante.id
+        ))
+        <span class="token-keyword">return</span> cursor.rowcount > <span class="token-number">0</span>
 
-    conexión.Open();
-    return comando.ExecuteNonQuery() > 0;
-}
-
-public bool EliminarLogico(int id)
-{
-    const string query = "UPDATE Estudiantes SET Activo = 0 WHERE Id = @Id";
-    using var conexión = new SqlConnection(_connectionString);
-    using var comando = new SqlCommand(query, conexión);
-    comando.Parameters.AddWithValue("@Id", id);
-    conexión.Open();
-    return comando.ExecuteNonQuery() > 0;
-}</code></pre>
+<span class="token-keyword">def</span> <span class="token-method">eliminar_logico</span>(<span class="token-property">self</span>, estudiante_id: int) -> bool:
+    query = <span class="token-string">"UPDATE Estudiantes SET Activo = 0 WHERE Id = ?"</span>
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-property">self</span>._connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+        cursor.execute(query, (estudiante_id,))
+        <span class="token-keyword">return</span> cursor.rowcount > <span class="token-number">0</span></code></pre>
     </section>
 
     <section class="evaluacion-calificable">
@@ -454,18 +455,16 @@ public bool EliminarLogico(int id)
     <section id="practica">
       <h2>Práctica / Laboratorio</h2>
 
-      <h3>Menu en consola</h3>
-      <pre><code class="language-csharp">while (true)
-{
-    Console.WriteLine("1. Crear");
-    Console.WriteLine("2. Listar");
-    Console.WriteLine("3. Buscar por ID");
-    Console.WriteLine("4. Actualizar");
-    Console.WriteLine("5. Eliminar");
-    Console.WriteLine("6. Salir");
-    var opcion = Console.ReadLine();
-    // switch con llamadas a métodos CRUD
-}</code></pre>
+      <h3>Menú en consola</h3>
+      <pre><code class="language-python"><span class="token-keyword">while</span> <span class="token-keyword">True</span>:
+    <span class="token-method">print</span>(<span class="token-string">"1. Crear"</span>)
+    <span class="token-method">print</span>(<span class="token-string">"2. Listar"</span>)
+    <span class="token-method">print</span>(<span class="token-string">"3. Buscar por ID"</span>)
+    <span class="token-method">print</span>(<span class="token-string">"4. Actualizar"</span>)
+    <span class="token-method">print</span>(<span class="token-string">"5. Eliminar"</span>)
+    <span class="token-method">print</span>(<span class="token-string">"6. Salir"</span>)
+    opcion = <span class="token-method">input</span>(<span class="token-string">"Opción: "</span>)
+    <span class="token-comment"># if/elif con llamadas a métodos CRUD</span></code></pre>
 
       <h3>Paginación OFFSET/FETCH</h3>
       <p><strong>Paginación</strong> = Dividir un conjunto de resultados grandes en páginas más pequeñas (ej: 20 registros por página) para mejorar rendimiento y UX.</p>
@@ -477,21 +476,25 @@ ORDER BY Apellido, Nombre
 OFFSET @Offset ROWS
 FETCH NEXT @PageSize ROWS ONLY;</code></pre>
 
-      <h3>Bulk insert (SqlBulkCopy)</h3>
-      <p><strong><abbr title="SqlBulkCopy - Clase de ADO.NET para inserción masiva de datos (miles de filas en segundos)">SqlBulkCopy</abbr></strong> = Clase especializada para insertar grandes cantidades de datos muy rápido. Es mucho más eficiente que INSERT individual.</p>
+      <h3>Bulk insert (pyodbc + fast_executemany)</h3>
+      <p><strong><abbr title="fast_executemany - Optimización de pyodbc para enviar lotes de parámetros de forma eficiente">fast_executemany</abbr></strong> = Opción de pyodbc para insertar grandes cantidades de datos muy rápido. Es mucho más eficiente que INSERT individual.</p>
       <div class="note">
-        <strong>¿Por qué SqlBulkCopy?</strong>
+        <strong>¿Por qué fast_executemany?</strong>
         <ul>
           <li><strong>Rendimiento:</strong> Puede insertar 100,000 filas en segundos</li>
           <li><strong>Importación:</strong> Ideal para importar datos de Excel, CSV, etc.</li>
           <li><strong>Mínimo overhead:</strong> No crea logs detallados como INSERT normal</li>
         </ul>
       </div>
-      <pre><code class="language-csharp">using var bulkCopy = new SqlBulkCopy(connection);
-bulkCopy.DestinationTableName = "Estudiantes";
-bulkCopy.ColumnMappings.Add("Codigo", "Codigo");
-// ...
-await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
+      <pre><code class="language-python"><span class="token-keyword">def</span> <span class="token-method">insertar_masivo</span>(<span class="token-property">self</span>, filas: list[tuple]) -> None:
+    query = <span class="token-string">"""
+        INSERT INTO Estudiantes (Codigo, Nombre, Apellido, Email, FechaNacimiento, Promedio, Activo)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """</span>
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-property">self</span>._connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+        cursor.fast_executemany = <span class="token-keyword">True</span>
+        cursor.executemany(query, filas)</code></pre>
 
       <h3>Validación previa</h3>
       <ul>
@@ -514,13 +517,13 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
         <strong>Mini-Chequeo: CRUD Completo</strong>
         <ul>
           <li>¿Por qué usar DELETE lógico en lugar de DELETE físico?</li>
-          <li>¿Cuándo usarías SqlBulkCopy vs INSERT normal?</li>
+          <li>¿Cuándo usarías fast_executemany vs INSERT normal?</li>
           <li>¿Cómo funciona la paginación con OFFSET/FETCH?</li>
         </ul>
       </div>
 
       <h3>Paginación</h3>
-      <p>Modificar <code>ObtenerTodos</code> para aceptar pagina y tamaño y retornar resultado paginado.</p>
+      <p>Modificar <code>obtener_todos</code> para aceptar página y tamaño y retornar resultado paginado.</p>
 
       <h3>Transacciones</h3>
       <p>Crear un método que actualice múltiples promedios en una sola transacción.</p>
@@ -528,34 +531,168 @@ await bulkCopy.WriteToServerAsync(dataTable);</code></pre>
       <h3>Checklist de errores comunes</h3>
       <ul>
         <li>Concatenar strings en SQL (inyección).</li>
-        <li>No cerrar conexiónes o readers.</li>
+        <li>No cerrar conexiones o cursores.</li>
         <li>No manejar claves duplicadas.</li>
         <li>Usar tipos incorrectos en parámetros.</li>
       </ul>
     </section>
 
+    <section id="equivalencia-datos-desconectados">
+      <h2>Equivalencia: ADO.NET DataSet / DataAdapter → Python</h2>
+      
+      <h3>Concepto de Datos Desconectados</h3>
+      <p>En ADO.NET, el <strong>DataSet</strong> y <strong>DataAdapter</strong> permiten trabajar con datos desconectados del servidor: se cargan los datos en memoria, se manipulan localmente, y luego se sincronizan con la base de datos.</p>
+      
+      <div class="note">
+        <h4>Equivalencia en el stack Python + Angular</h4>
+        <ul>
+          <li><strong>DTO (Data Transfer Object)</strong>: Clases Python que representan los datos (similar a DataTable)</li>
+          <li><strong>Estado local en Angular</strong>: Servicios con BehaviorSubject o signals para mantener datos en memoria</li>
+          <li><strong>Sincronización (sync)</strong>: Repositorio que detecta cambios y envía al backend</li>
+          <li><strong>Offline-first</strong>: Almacenamiento en localStorage/IndexedDB para operar sin conexión</li>
+        </ul>
+      </div>
+
+      <h3>Arquitectura de Datos Desconectados</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">arquitectura_datos_desconectados.txt</span>
+        </div>
+        <div class="code-content">
+          <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    ANGULAR (FRONTEND)                        │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │  Component  │→ │   Service   │→ │  Estado (Signals)   │  │
+│  │    UI       │  │  (Repositorio)│  │  (como DataSet)     │  │
+│  └─────────────┘  └──────┬──────┘  └─────────────────────┘  │
+│                          ↓                                   │
+│                   ┌─────────────┐                           │
+│                   │localStorage │ (persistencia offline)     │
+│                   │  /IndexedDB │                           │
+│                   └─────────────┘                           │
+└──────────────────────────┬──────────────────────────────────┘
+                           ↓ HTTP/REST
+┌─────────────────────────────────────────────────────────────┐
+│              FASTAPI + PYODBC (BACKEND)                      │
+├─────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   Router    │→ │  Servicio   │→ │  Repositorio        │  │
+│  │   API       │  │  Negocio    │  │  (pyodbc)           │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘  │
+│                                              ↓               │
+│                                       ┌─────────────┐        │
+│                                       │ SQL Server  │        │
+│                                       └─────────────┘        │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+        </div>
+      </div>
+
+      <h3>Ejemplo: Sincronización de Estado</h3>
+      <div class="code-comparison">
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-title">estudiante.service.ts (Angular)</span>
+          </div>
+          <div class="code-content">
+            <pre><code>// Estado local como "DataSet"
+private estudiantes = signal&lt;Estudiante[]&gt;([]);
+
+// Cargar datos (Fill)
+async cargarEstudiantes() {
+  const data = await http.get('/api/estudiantes');
+  this.estudiantes.set(data); // En memoria
+}
+
+// Actualizar localmente
+actualizarPromedio(id: number, nota: number) {
+  const current = this.estudiantes();
+  const updated = current.map(e => 
+    e.id === id ? {...e, promedio: nota} : e
+  );
+  this.estudiantes.set(updated); // Cambio local
+}
+
+// Sincronizar con backend (Update)
+async sincronizar() {
+  await http.post('/api/estudiantes/sync', 
+    this.estudiantes());
+}</code></pre>
+          </div>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-title">repositorio.py (Python)</span>
+          </div>
+          <div class="code-content">
+            <pre><code>class EstudianteRepo:
+    def __init__(self, conn_str):
+        self.conn_str = conn_str
+    
+    # Similar a DataAdapter.Fill()
+    def obtener_todos(self) -> list[EstudianteDTO]:
+        with pyodbc.connect(self.conn_str) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Estudiantes")
+            return [EstudianteDTO(*row) for row in cursor]
+    
+    # Similar a DataAdapter.Update()
+    def sincronizar(self, cambios: list):
+        with pyodbc.connect(self.conn_str) as conn:
+            for dto in cambios:
+                self._aplicar_cambio(conn, dto)
+            conn.commit()</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Resumen de equivalencias:</strong>
+        <ul>
+          <li><code>DataSet</code> → Servicio Angular con signals/BehaviorSubject</li>
+          <li><code>DataTable</code> → Array de DTOs en memoria</li>
+          <li><code>DataAdapter.Fill()</code> → GET desde API, cargar en estado</li>
+          <li><code>DataAdapter.Update()</code> → POST/PUT a API, sincronizar cambios</li>
+          <li><code>AcceptChanges()</code> → Confirmar cambios en el estado local</li>
+          <li><code>RejectChanges()</code> → Revertir cambios locales no sincronizados</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="entrega-git">
+      <h2>Entrega con Git</h2>
+      <pre><code>git checkout -b feature/crud-pyodbc-clase-13
+git add repositorio/ models/
+git commit -m "chore: setup pyodbc y modelo Estudiante"
+git commit -am "feat: implementa CRUD completo con pyodbc"
+git commit -am "docs: agrega equivalencia datos desconectados"
+git tag -a clase-13-v1 -m "Entrega clase 13 - CRUD pyodbc"</code></pre>
+    </section>
+
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li>ADO.NET SqlConnection / SqlCommand.</li>
-        <li>SQL Server OFFSET/FETCH y transacciónes.</li>
-        <li>SqlBulkCopy y operaciones masivas.</li>
+        <li>pyodbc: <a href="https://github.com/mkleehammer/pyodbc/wiki">pyodbc Documentation</a></li>
+        <li>SQL Server OFFSET/FETCH y transacciones.</li>
+        <li>Python dataclasses para DTOs.</li>
+        <li>Equivalencia DataSet: Angular Signals + Servicios.</li>
       </ul>
     </section>
 
     <section id="resumen">
       <h2>Resumen de la Clase</h2>
       <ul>
-        <li>System.IO es el namespace de .NET para operaciones de archivos y directorios.</li>
-        <li>File y Directory proveen métodos estáticos para operaciones comunes de archivos y carpetas.</li>
-        <li>StreamReader/StreamWriter manejan lectura/escritura de texto con buffering eficiente.</li>
-        <li>FileStream permite acceso binario y posicionamiento aleatorio (seek).</li>
-        <li>Encoding (UTF-8) define cómo se representan caracteres como bytes; UTF-8 es el estándar web.</li>
-        <li>using statements aseguran que los recursos se liberen correctamente (Dispose pattern).</li>
-        <li>CUIDADO: Olvidar using causa file locks; encoding incorrecto corrompe caracteres especiales.</li>
-        <li>CSV (Comma-Separated Values) es el formato más simple para intercambiar datos tabulares.</li>
-        <li>Repository Pattern para CSV abstrae lectura/escritura de archivos como si fuera base de datos.</li>
-        <li>LINQ facilita procesamiento de datos leídos desde archivos (filter, map, reduce).</li>
+        <li>CRUD completo con Python + pyodbc usando parámetros seguros.</li>
+        <li>Arquitectura por capas: presentación, negocio y repositorio.</li>
+        <li>DELETE lógico conserva historial y evita romper relaciones.</li>
+        <li>Paginación con OFFSET/FETCH mejora rendimiento en listados grandes.</li>
+        <li>Inserciones masivas con fast_executemany.</li>
+        <li>Equivalencia de datos desconectados: DTOs + estado local en Angular + sincronización.</li>
       </ul>
     </section>
   </main>

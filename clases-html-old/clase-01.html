@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 01 - Introducción a C# y .NET | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul {
+      margin: 8px 0 0 18px;
+    }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main {
+      max-width: 1100px;
+      margin: 18px auto 60px;
+      padding: 0 20px;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 {
+      margin-top: 0;
+      color: var(--brand);
+      font-size: 1.6rem;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 6px;
+    }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    .warning-box {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #991b1b;
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    /* Syntax highlighting para C# */
+    pre code[class*="language-"] { color: #e2e8f0; }
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    .token-method { color: #82aaff; }
+    .token-class { color: #ffcb6b; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    pre code { display: block; overflow-x: auto; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 1.6rem; }
+      header .meta { grid-template-columns: 1fr; }
+      nav ul { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      section { padding: 16px; }
+      pre { font-size: 0.85rem; }
+    }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
+
+    /* BLOQUES DE CÓDIGO MEJORADOS */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 12px;
+      margin: 16px 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: 1px solid #313244;
+    }
+
+    .code-header {
+      background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #45475a;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dot.red { background: #f38ba8; }
+    .code-dot.yellow { background: #f9e2af; }
+    .code-dot.green { background: #a6e3a1; }
+
+    .code-title {
+      color: #cdd6f4;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: auto;
+      font-family: 'Cascadia Code', Consolas, monospace;
+    }
+
+    .code-content {
+      display: flex;
+      background: #1e1e2e;
+    }
+
+    .line-numbers {
+      background: #181825;
+      color: #6c7086;
+      padding: 12px 10px;
+      text-align: right;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      user-select: none;
+      border-right: 1px solid #313244;
+    }
+
+    .code-block pre {
+      background: transparent;
+      margin: 0;
+      padding: 12px 16px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .code-block pre code {
+      color: #cdd6f4;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+    .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+    .code-block .token-type { color: #f9e2af; } /* yellow */
+    .code-block .token-string { color: #a6e3a1; } /* green */
+    .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+    .code-block .token-number { color: #fab387; } /* peach */
+    .code-block .token-operator { color: #89dceb; } /* cyan */
+    .code-block .token-method { color: #89b4fa; } /* blue */
+    .code-block .token-class { color: #f9e2af; font-weight: 600; }
+    .code-block .token-property { color: #b4befe; } /* lavender */
+    .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+    /* Código inline */
+    p code, li code {
+      background: #313244;
+      color: #cdd6f4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      border: 1px solid #45475a;
+    }
+
+    /* Tablas de código */
+    .code-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .code-comparison .code-block {
+      margin: 0;
+    }
+
+    .code-label {
+      font-size: 0.8rem;
+      color: #6c7086;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programación OO II | Unidad 1</div>
+      <h1>Clase 01: Introducción a C# y .NET</h1>
+      <div>Duración: 90 minutos | Semana 1</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Comprender la historia y el contexto de C# y .NET.</li>
+            <li>Diferenciar .NET Framework, .NET Core y .NET 8.</li>
+            <li>Configurar Visual Studio Community 2022.</li>
+            <li>Crear la primera aplicación de consola en C#.</li>
+            <li>Reconocer la estructura básica de un programa C#.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerrequisitos</strong>
+          <ul>
+            <li>Conocimientos básicos de programación.</li>
+            <li>Equipo con Windows 10/11 y acceso a internet.</li>
+            <li>Permisos de instalación (admin) en el equipo.</li>
+            <li>Cuenta GitHub (recomendada).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoría</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#practica">Práctica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <section id="teoria">
+      <h2>Teoría</h2>
+
+      <h3>Qué es C# y por qué usarlo</h3>
+      <div class="grid-2">
+        <div>
+          <p>C# es un lenguaje moderno, orientado a objetos y <abbr title="Type-safe significa que el programa verifica los tipos de datos en tiempo de compilación, previniendo errores como tratar un número como texto">type-safe</abbr>. Se utiliza para crear aplicaciones web, escritorio, servicios en la nube, videojuegos y sistemas empresariales.</p>
+          <h4>Ventajas clave</h4>
+          <ul>
+            <li>Multiplataforma (Windows, Linux, macOS).</li>
+            <li>Alto rendimiento y compilación con <abbr title="Just-In-Time: Compilación que ocurre durante la ejecución del programa, convirtiendo código intermedio a código máquina nativo">JIT</abbr>.</li>
+            <li>Ecosistema .NET amplio y estable.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Historia (resumen)</h4>
+          <table>
+            <thead>
+              <tr><th>Versión</th><th>Año</th><th>Hito</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>C# 1.0</td><td>2000</td><td>Nace .NET Framework</td></tr>
+              <tr><td>C# 2.0</td><td>2005</td><td>Generics (List&lt;T&gt;)</td></tr>
+              <tr><td>C# 5.0</td><td>2012</td><td>async/await</td></tr>
+              <tr><td>C# 9.0</td><td>2020</td><td>.NET 5 open-source</td></tr>
+              <tr><td>C# 12</td><td>2023</td><td>Primary constructors</td></tr>
+              <tr><td>C# 14</td><td>2026</td><td>.NET 10 LTS (última versión)</td></tr>
+            </tbody>
+          </table>
+          <div class="note">Nota: .NET 8 (LTS hasta nov 2026) y .NET 10 (LTS actual) son las versiones recomendadas para producción. Este curso usa .NET 8 por su estabilidad y soporte extendido.</div>
+        </div>
+      </div>
+
+      <h3>Ecosistema .NET y arquitectura</h3>
+      <p>.NET 8 unifica el runtime para web, desktop, mobile, cloud y gaming. Antes existían plataformas separadas (Framework/Core/Xamarin); ahora se comparte el mismo runtime y librerías base.</p>
+      <figure>
+        <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="dotnet-arch-title">
+          <title id="dotnet-arch-title">Arquitectura .NET: aplicación, librerías, runtime y sistema operativo</title>
+          <style>
+            .top{fill:#0b2d6b}
+            .mid{fill:#2563eb}
+            .clr{fill:#0b3a91}
+            .os{fill:#eef2ff}
+            .t{font:700 14px Arial, sans-serif; fill:#fff}
+            .s{font:12px Arial, sans-serif; fill:#fff}
+            .os-t{font:12px Arial, sans-serif; fill:#0b2d6b}
+            rect { rx:8 }
+          </style>
+          <rect x="40" y="20" width="680" height="60" fill="#0b2d6b" rx="10" />
+          <text x="380" y="58" text-anchor="middle" class="t">TU APLICACIÓN C#</text>
+
+          <rect x="80" y="96" width="600" height="60" fill="#2563eb" rx="8" />
+          <text x="380" y="132" text-anchor="middle" class="s">BCL — System.String, Collections, IO, Data</text>
+
+          <rect x="100" y="170" width="560" height="70" fill="#0b3a91" rx="8" />
+          <text x="380" y="196" text-anchor="middle" class="s">CLR — Common Language Runtime (JIT · GC · Type Safety · Exceptions)</text>
+
+          <rect x="120" y="250" width="520" height="40" fill="#eef2ff" rx="8" />
+          <text x="380" y="278" text-anchor="middle" class="os-t">Windows · Linux · macOS</text>
+        </svg>
+        <figcaption>Arquitectura por capas: aplicación C# → BCL (librerías) → CLR (runtime: JIT, GC, seguridad) → Sistema Operativo.</figcaption>
+      </figure>
+      <div class="grid-2">
+        <div>
+          <h4>Componentes clave</h4>
+          <ul>
+            <li><strong><abbr title="Common Language Runtime: Máquina virtual que ejecuta código .NET, similar a JVM en Java">CLR</abbr></strong>: Ejecuta programas, maneja memoria y provee servicios como thread management.</li>
+            <li><strong><abbr title="Base Class Library: Colección de clases y tipos predefinidos para tareas comunes">BCL</abbr></strong>: Librería estándar con String, Collections, IO, Data, etc.</li>
+            <li><strong><abbr title="Intermediate Language: Lenguaje intermedio en el que se compila el código C# antes de convertirse a código máquina">IL</abbr></strong>: Código intermedio que el CLR convierte a código máquina.</li>
+            <li><strong><abbr title="Garbage Collector: Mecanismo automático que libera memoria de objetos que ya no se usan">GC</abbr></strong>: Gestión automática de memoria, previene memory leaks.</li>
+            <li><strong><abbr title="Just-In-Time: Compilador que convierte IL a código máquina nativo durante la ejecución">JIT</abbr></strong>: Compila IL a código máquina cuando se ejecuta el programa.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>¿Por qué importa esta arquitectura?</h4>
+          <p>La arquitectura en capas permite que el mismo código C# funcione en diferentes sistemas operativos sin cambios. El CLR abstrae las diferencias de plataforma.</p>
+          <div class="warning-box">Error común: Creer que C# es solo para Windows. Desde .NET Core, C# es verdaderamente multiplataforma.</div>
+        </div>
+      </div>
+      <p><strong>Mini-chequeo:</strong> ¿Puedes explicar qué hace el CLR? ¿En qué se diferencia IL del código máquina?</p>
+
+      <h3>Estructura básica de un programa C#</h3>
+      <div class="grid-2">
+        <div>
+          <p>Los elementos esenciales son <code>using</code>, <code>namespace</code>, <code>class</code> y el método <code>Main</code> como punto de entrada.</p>
+          <p><strong><abbr title="Namespace: Espacio de nombres que organiza clases y tipos, evitando conflictos de nombres">Namespace</abbr></strong>: Es como un "apellido" para las clases. Dos clases pueden llamarse <code>Program</code> si están en namespaces diferentes. Similar a los paquetes en Java.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Program.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+              <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+
+<span class="token-keyword">namespace</span> <span class="token-namespace">MiApp</span>
+{
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
+    {
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
+        {
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Hola, C#"</span>);
+        }
+    }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4>Namespaces comunes</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Namespaces</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
+              <pre><code>System
+├── Console
+├── String
+├── Math
+├── Collections
+│   └── Generic (List&lt;T&gt;)
+├── IO (File, Directory)
+└── Data (SqlClient)</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Tipos de datos: value vs reference</h3>
+      <p>En C#, los tipos se dividen en dos categorías que afectan cómo se almacenan y copian los datos.</p>
+      <div class="grid-2">
+        <div>
+          <h4>Value types (almacenados en <abbr title="Stack: Memoria de acceso rápido con organización LIFO, ideal para variables locales y tipos primitivos">stack</abbr>)</h4>
+          <p>Contienen directamente el valor. Al copiar, se crea una copia independiente. Incluyen: <code>int</code>, <code>double</code>, <code>bool</code>, <code>struct</code>.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ValueTypes.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span> <span class="token-property">edad</span> = <span class="token-number">25</span>;
+<span class="token-keyword">int</span> <span class="token-property">edad2</span> = <span class="token-property">edad</span>;
+<span class="token-property">edad2</span> = <span class="token-number">30</span>;
+<span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-property">edad</span>);  <span class="token-comment">// 25 (no cambió)</span></code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4>Reference types (almacenados en <abbr title="Heap: Memoria dinámica para objetos de mayor tamaño y vida útil variable">heap</abbr>)</h4>
+          <p>Contienen una referencia a un objeto. Al copiar, se comparte la referencia. Incluyen: <code>class</code>, <code>string</code>, <code>array</code>.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ReferenceTypes.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">string</span> <span class="token-property">nombre</span> = <span class="token-string">"Juan"</span>;
+<span class="token-keyword">string</span> <span class="token-property">nombre2</span> = <span class="token-property">nombre</span>;
+<span class="token-property">nombre2</span> = <span class="token-string">"Maria"</span>;
+<span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-property">nombre</span>); <span class="token-comment">// Juan (string es inmutable)</span></code></pre>
+            </div>
+          </div>
+          <div class="note">Nota: <code>string</code> es reference type, pero es inmutable; al reasignar se crea un nuevo objeto. Para comportamientos mutables, usar <code>StringBuilder</code>.</div>
+        </div>
+      </div>
+      <div class="warning-box">Error común: Creer que modificar una variable de referencia afecta a todas las variables que apuntan al mismo objeto. Depende de si el tipo es mutable o inmutable.</div>
+      <p><strong>Mini-chequeo:</strong> ¿Cuál es la diferencia fundamental entre value types y reference types al asignar una variable a otra?</p>
+      <figure>
+        <img src="../assets/infografias/clase-01-value-vs-reference.png" alt="Infografia value types vs reference types en C#" onerror="this.onerror=null;this.src='/assets/infografias/clase-01-value-vs-reference.png'" />
+        <figcaption>Ilustración de las diferencias entre tipos de valor (almacenados en stack, copia directa) y tipos de referencia (almacenados en heap, referencia compartida) en C#. Los value types incluyen int, double, struct; reference types incluyen class, string, array.</figcaption>
+      </figure>
+
+      <h3>Nullable, strings y patrones</h3>
+      <div class="grid-2">
+        <div>
+          <h4><abbr title="Nullable: Tipo que puede contener un valor normal o null (sin valor)">Nullable</abbr> (tipos que pueden ser null)</h4>
+          <p>Por defecto, los value types (<code>int</code>, <code>double</code>, <code>bool</code>) no pueden ser <code>null</code>. El operador <code>?</code> permite que acepten <code>null</code>.</p>
+          <p><strong>¿Por qué usarlo?</strong> Útil cuando un valor puede estar ausente (ej: edad desconocida de un usuario). El operador <code>??</code> (null-coalescing) proporciona un valor por defecto.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Nullable.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span>? <span class="token-property">edad</span> = <span class="token-keyword">null</span>;         <span class="token-comment">// puede ser null</span>
+<span class="token-keyword">int</span> <span class="token-property">edadDefault</span> = <span class="token-property">edad</span> <span class="token-operator">??</span> <span class="token-number">18</span>;  <span class="token-comment">// 18 si edad es null</span></code></pre>
+            </div>
+          </div>
+          <div class="warning-box">Error común: No validar null antes de usar un nullable. Usar <code>if (edad.HasValue)</code> o <code>??</code>.</div>
+        </div>
+        <div>
+          <h4><abbr title="Pattern matching: Técnica para evaluar una expresión y ejecutar código según patrones o condiciones">Pattern matching</abbr> (coincidencia de patrones)</h4>
+          <p>Forma moderna y legible de expresar condicionales complejas. El <code>switch</code> expression devuelve un valor directamente.</p>
+          <p><strong>¿Por qué usarlo?</strong> Código más limpio que múltiples <code>if-else</code>, y el compilador verifica que todos los casos estén cubiertos.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">PatternMatching.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
+              <pre><code class="language-csharp"><span class="token-keyword">string</span> <span class="token-property">categoria</span> = <span class="token-property">edadDefault</span> <span class="token-keyword">switch</span>
+{
+    <span class="token-operator">&lt;</span> <span class="token-number">13</span> <span class="token-operator">=></span> <span class="token-string">"Niño"</span>,
+    <span class="token-operator">&lt;</span> <span class="token-number">20</span> <span class="token-operator">=></span> <span class="token-string">"Adolescente"</span>,
+    <span class="token-operator">&lt;</span> <span class="token-number">65</span> <span class="token-operator">=></span> <span class="token-string">"Adulto"</span>,
+    <span class="token-operator">_</span> <span class="token-operator">=></span> <span class="token-string">"Mayor"</span>  <span class="token-comment">// "_" es el default (cualquier otro caso)</span>
+};</code></pre>
+            </div>
+          </div>
+          <p><strong>Mini-chequeo:</strong> ¿Qué pasa si edadDefault es 70? ¿Y si es -5?</p>
+        </div>
+      </div>
+
+      <h3>Convenciones de código y buenas prácticas</h3>
+      <table>
+        <thead>
+          <tr><th>Elemento</th><th>Estilo</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Clases</td><td>PascalCase</td><td>StudentManager</td></tr>
+          <tr><td>Métodos</td><td>PascalCase</td><td>GetStudent</td></tr>
+          <tr><td>Campos privados</td><td>_camelCase</td><td>_count</td></tr>
+          <tr><td>Constantes</td><td>UPPER_SNAKE</td><td>MAX_SIZE</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Checklist rápido: nombres descriptivos, sangría de 4 espacios, evitar abreviaturas y validar entradas.</div>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografías</h2>
+
+      <h3>Generics: de ArrayList a List&lt;T&gt;</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Antes (ArrayList)</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ArrayListExample.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-type">ArrayList</span> <span class="token-property">lista</span> = <span class="token-keyword">new</span> <span class="token-type">ArrayList</span>();
+<span class="token-property">lista</span>.<span class="token-method">Add</span>(<span class="token-number">42</span>);
+<span class="token-property">lista</span>.<span class="token-method">Add</span>(<span class="token-string">"hola"</span>);
+<span class="token-keyword">int</span> <span class="token-property">valor</span> = (<span class="token-keyword">int</span>)<span class="token-property">lista</span>[<span class="token-number">0</span>]; <span class="token-comment">// riesgo</span></code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4>Ahora (List&lt;T&gt;)</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">ListGeneric.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3</div>
+              <pre><code class="language-csharp"><span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt; <span class="token-property">nums</span> = <span class="token-keyword">new</span> <span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt;();
+<span class="token-property">nums</span>.<span class="token-method">Add</span>(<span class="token-number">42</span>);
+<span class="token-comment">// nums.Add("hola"); // error</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Infografía: ecosistema .NET</h3>
+      <figure>
+        <img src="../assets/infografias/clase-01-ecosistema-dotnet.png" alt="Infografia ecosistema .NET 8" onerror="this.onerror=null;this.src='/assets/infografias/clase-01-ecosistema-dotnet.png'" />
+        <figcaption>Evolución del ecosistema .NET: de plataformas separadas (.NET Framework para Windows, .NET Core multiplataforma, Xamarin para mobile) a un runtime unificado en .NET 8 que soporta web, desktop, mobile, cloud y gaming con un solo SDK.</figcaption>
+      </figure>
+
+      <h3>Novedades de C# 12</h3>
+      <div class="grid-2">
+        <div>
+          <h4><abbr title="Primary constructor: Constructor declarado directamente en la línea de la clase, simplificando código cuando solo necesita recibir parámetros">Primary constructors</abbr> (constructores primarios)</h4>
+          <p>Sintaxis simplificada para clases que solo necesitan recibir parámetros en el constructor.</p>
+          <p><strong>¿Por qué usarlo?</strong> Reduce código boilerplate cuando la clase solo almacena parámetros.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">Persona.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4</div>
+              <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>(<span class="token-keyword">string</span> <span class="token-property">nombre</span>, <span class="token-keyword">int</span> <span class="token-property">edad</span>)
+{
+    <span class="token-keyword">public string</span> <span class="token-property">Info</span> <span class="token-operator">=></span> <span class="token-string">$"{nombre} ({edad} años)"</span>;
+}</code></pre>
+            </div>
+          </div>
+          <div class="note">Nota: Los parámetros del primary constructor están disponibles en toda la clase, similar a campos privados.</div>
+        </div>
+        <div>
+          <h4><abbr title="Collection expressions: Sintaxis moderna en C# para crear colecciones usando corchetes, sin repetir new[] o new List&lt;T&gt;()">Collection expressions</abbr> (expresiones de colección)</h4>
+          <p>Sintaxis moderna para crear colecciones sin repetir <code>new[]</code> o <code>new List&lt;T&gt;()</code>.</p>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">CollectionExpressions.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3</div>
+              <pre><code class="language-csharp"><span class="token-keyword">int</span>[] <span class="token-property">pares</span> = [<span class="token-number">2</span>, <span class="token-number">4</span>, <span class="token-number">6</span>];
+<span class="token-keyword">int</span>[] <span class="token-property">impares</span> = [<span class="token-number">1</span>, <span class="token-number">3</span>, <span class="token-number">5</span>];
+<span class="token-keyword">int</span>[] <span class="token-property">all</span> = [<span class="token-operator">..</span><span class="token-property">pares</span>, <span class="token-operator">..</span><span class="token-property">impares</span>];  <span class="token-comment">// spread operator</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Ejemplo: <abbr title="Language Integrated Query: Sintaxis para consultar colecciones de datos de forma declarativa, similar a SQL pero en código C#">LINQ</abbr> para consultas funcionales</h3>
+      <p>LINQ permite consultar colecciones (listas, arrays, bases de datos) de forma declarativa, similar a SQL pero dentro de C#.</p>
+      <p><strong>¿Por qué usarlo?</strong> Código más legible que loops <code>foreach</code> anidados, menos propenso a errores, y permite encadenar operaciones.</p>
+      <div class="grid-2">
+        <div>
+          <h4>Filtrar y transformar lista</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot red"></span>
+                <span class="code-dot yellow"></span>
+                <span class="code-dot green"></span>
+              </div>
+              <span class="code-title">LINQExample.cs</span>
+            </div>
+            <div class="code-content">
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+              <pre><code class="language-csharp"><span class="token-type">List</span>&lt;<span class="token-keyword">int</span>&gt; <span class="token-property">nums</span> = <span class="token-keyword">new</span>() { <span class="token-number">1</span>, <span class="token-number">2</span>, <span class="token-number">3</span>, <span class="token-number">4</span>, <span class="token-number">5</span> };
+<span class="token-keyword">var</span> <span class="token-property">pares</span> = <span class="token-property">nums</span>.<span class="token-method">Where</span>(<span class="token-property">n</span> <span class="token-operator">=></span> <span class="token-property">n</span> <span class="token-operator">%</span> <span class="token-number">2</span> <span class="token-operator">==</span> <span class="token-number">0</span>)     <span class="token-comment">// filtrar pares</span>
+                .<span class="token-method">Select</span>(<span class="token-property">n</span> <span class="token-operator">=></span> <span class="token-property">n</span> <span class="token-operator">*</span> <span class="token-number">2</span>)          <span class="token-comment">// duplicar</span>
+                .<span class="token-method">ToList</span>();                   <span class="token-comment">// convertir a lista</span>
+<span class="token-comment">// Resultado: [4, 8]</span></code></pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4>Beneficios</h4>
+          <ul>
+            <li>Código declarativo y legible.</li>
+            <li>Integrado en el lenguaje.</li>
+            <li>Optimizado por el compilador.</li>
+          </ul>
+          <div class="warning-box">Error común: Creer que LINQ siempre crea una lista nueva. Algunos métodos como <code>Where</code> retornan un <em>iterador</em> <abbr title="lazy: Diferido o perezoso; en programación, significa que una operación se ejecuta solo cuando se necesita el resultado, no inmediatamente">lazy</abbr> (se ejecutan solo cuando se enumera).</div>
+        </div>
+      </div>
+      <p><strong>Mini-chequeo:</strong> ¿Qué hace <code>Where</code>? ¿Qué pasa si llamas <code>ToList()</code> antes de <code>Select</code>?</p>
+
+      <h3>Ciclo de ejecución en C#</h3>
+      <p>Entender cómo se ejecuta un programa C# ayuda a diagnosticar problemas y optimizar rendimiento.</p>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Ciclo de Ejecución</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4</div>
+          <pre><code>1) Código C# (.cs) - Código fuente legible por humanos
+2) Compilación -> IL (.dll/.exe) - Código intermedio (CIL)
+3) CLR (JIT) -> código máquina - Compilación Just-In-Time
+4) Ejecución en Windows/Linux/macOS - Código nativo del CPU</code></pre>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <h4>Fases clave</h4>
+          <ul>
+            <li><strong>Compilación a IL</strong>: El compilador C# convierte código fuente a <abbr title="Intermediate Language: Representación intermedia del código, similar a bytecode en Java">IL</abbr>, independiente de la plataforma.</li>
+            <li><strong>JIT compilation</strong>: El CLR compila IL a código máquina nativo <em>durante la ejecución</em>, específico para cada CPU/SO.</li>
+            <li><strong><abbr title="NGen (Native Image Generator): Herramienta que pre-compila código IL a código nativo antes de la ejecución, reduciendo el tiempo de inicio de la aplicación">NGen</abbr></strong>: Opcionalmente, IL puede pre-compilarse a nativo para reducir el tiempo de inicio.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>¿Por qué este diseño?</h4>
+          <p>La compilación en dos pasos permite que el mismo código IL funcione en diferentes plataformas sin recompilar. El JIT optimiza según el hardware específico.</p>
+          <div class="note">Nota: El código IL puede desensamblarse con herramientas como ILSpy o dotPeek, útil para aprender cómo funciona el código compilado.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="practica">
+      <h2>Práctica / laboratorio</h2>
+
+      <section class="actividad">
+        <h3>Actividad: Instalación y configuración de Visual Studio 2022 (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Visual Studio instalado y configurado</p>
+        <p><strong>Tiempo estimado:</strong> 30 min</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión del entorno de desarrollo</p>
+      <ul>
+        <li>Descargar e instalar Visual Studio Community 2022.</li>
+        <li>Workloads: Desarrollo de escritorio con .NET y ASP.NET y desarrollo web.</li>
+        <li>Componentes: .NET 8 SDK y Git para Windows.</li>
+      </ul>
+      <div class="note">Alternativa ligera (si el equipo es limitado): instalar solo .NET 8 SDK y usar Visual Studio Code.</div>
+
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Primera aplicación de consola (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Aplicación de consola funcional</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Comprensión de estructura básica de programa C#</p>
+      <ol>
+        <li>Crear proyecto: Aplicación de consola (.NET).</li>
+        <li>Revisar <code>Program.cs</code> y escribir un saludo personalizado.</li>
+        <li>Ejecutar con F5 y observar salida.</li>
+      </ol>
+      <ul>
+        <li><strong>Checklist:</strong> proyecto creado, compila sin errores, mensaje correcto.</li>
+      </ul>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">HolaMundo.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+          <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+
+<span class="token-keyword">namespace</span> <span class="token-namespace">HolaMundo</span>
+{
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
+    {
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
+        {
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Hola Mundo"</span>);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>Depuración básica (10 min)</h3>
+      <p><strong><abbr title="Debug: Proceso de ejecutar un programa paso a paso para encontrar y corregir errores">Debug</abbr></strong> (depuración) es ejecutar el programa controladamente para inspeccionar valores y encontrar errores.</p>
+      <p><strong><abbr title="Breakpoint: Punto en el código donde la ejecución se pausa automáticamente, permitiendo inspeccionar variables">Breakpoint</abbr></strong> es un marcador que pausa la ejecución en una línea específica. Presiona <code>F9</code> en la línea deseada.</p>
+      <table>
+        <thead>
+          <tr><th>Atajo</th><th>Acción</th><th>Descripción</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>F5</td><td>Iniciar debug</td><td>Comienza ejecución con debugger</td></tr>
+          <tr><td>F9</td><td>Toggle breakpoint</td><td>Añade/quita breakpoint en línea actual</td></tr>
+          <tr><td>F10</td><td>Step Over</td><td>Ejecuta línea actual sin entrar en funciones</td></tr>
+          <tr><td>F11</td><td>Step Into</td><td>Entra en funciones llamadas</td></tr>
+          <tr><td>Shift+F11</td><td>Step Out</td><td>Sale de función actual</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Tip: Pasa el mouse sobre variables para ver sus valores durante el debug. Usa la ventana "Inmediato" (Ctrl+Alt+I) para evaluar expresiones.</div>
+
+      <h3>Errores comunes y checklist</h3>
+      <ul>
+        <li>Olvidar <code>using System;</code> cuando se usa <code>Console</code>.</li>
+        <li>No validar entradas de usuario antes de convertir a numérico.</li>
+        <li>No configurar workloads correctos en Visual Studio.</li>
+        <li>Confundir value types con reference types al asignar.</li>
+      </ul>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Calculadora de área (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Aplicación de calculadora de área funcional</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Uso de variables, entrada/salida, operaciones matemáticas</p>
+      <p>Crear una app de consola que calcule el área de un rectángulo a partir de base y altura.</p>
+      <ul>
+        <li><strong>Checklist:</strong> proyecto creado, entrada validada, cálculo correcto, salida formateada.</li>
+      </ul>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">CalculadoraArea.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code class="language-csharp"><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+
+<span class="token-keyword">namespace</span> <span class="token-namespace">CalculadoraArea</span>
+{
+    <span class="token-keyword">class</span> <span class="token-class">Program</span>
+    {
+        <span class="token-keyword">static void</span> <span class="token-method">Main</span>(<span class="token-keyword">string</span>[] <span class="token-property">args</span>)
+        {
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== CALCULADORA ==="</span>);
+            <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">"Base: "</span>);
+            <span class="token-keyword">double</span> <span class="token-property">b</span> = <span class="token-keyword">double</span>.<span class="token-method">Parse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>());
+            <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">"Altura: "</span>);
+            <span class="token-keyword">double</span> <span class="token-property">h</span> = <span class="token-keyword">double</span>.<span class="token-method">Parse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>());
+            <span class="token-keyword">double</span> <span class="token-property">area</span> = <span class="token-property">b</span> <span class="token-operator">*</span> <span class="token-property">h</span>;
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Área: {area:F2}"</span>);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Sistema de calificaciones (30 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Sistema de calificaciones con validación</p>
+        <p><strong>Tiempo estimado:</strong> 30 min</p>
+        <p><strong>Criterios de éxito:</strong> Manejo de entrada, validación, condicionales</p>
+      <p>Solicitar nombre y tres notas (0.0 - 5.0), calcular promedio y mostrar APROBADO/REPROBADO con validación.</p>
+      <ul>
+        <li><strong>Checklist:</strong> validación de entrada, cálculo de promedio, condición de aprobación (>=3.0), manejo de errores.</li>
+      </ul>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Validacion.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17</div>
+          <pre><code class="language-csharp"><span class="token-keyword">static double</span> <span class="token-method">PedirNota</span>(<span class="token-keyword">string</span> <span class="token-property">etiqueta</span>)
+{
+    <span class="token-keyword">double</span> <span class="token-property">nota</span>;
+    <span class="token-keyword">while</span> (<span class="token-keyword">true</span>)
+    {
+        <span class="token-type">Console</span>.<span class="token-method">Write</span>(<span class="token-string">$"{etiqueta} (0-5): "</span>);
+        <span class="token-keyword">if</span> (<span class="token-keyword">double</span>.<span class="token-method">TryParse</span>(<span class="token-type">Console</span>.<span class="token-method">ReadLine</span>(), <span class="token-keyword">out</span> <span class="token-property">nota</span>))
+        {
+            <span class="token-keyword">if</span> (<span class="token-property">nota</span> <span class="token-operator">>=</span> <span class="token-number">0</span> <span class="token-operator">&&</span> <span class="token-property">nota</span> <span class="token-operator">&lt;=</span> <span class="token-number">5</span>) <span class="token-keyword">return</span> <span class="token-property">nota</span>;
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"Fuera de rango"</span>);
+        }
+        <span class="token-keyword">else</span>
+        {
+            <span class="token-type">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"No válido"</span>);
+        }
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      </section>
+
+      <section class="actividad">
+        <h3>Actividad: Tarea para casa (60 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Repositorio GitHub con proyecto de calculadora de promedios</p>
+        <p><strong>Tiempo estimado:</strong> 60 min</p>
+        <p><strong>Criterios de éxito:</strong> Integración de conceptos de la clase</p>
+        <ul>
+          <li>Instalar Visual Studio 2022 con workloads indicados.</li>
+          <li>Proyecto: calculadora de promedios con validación.</li>
+          <li>Entregar repositorio en GitHub con README.</li>
+          <li><strong>Checklist:</strong> VS instalado, proyecto funcional, validaciones implementadas, repo creado y README descriptivo.</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <h3>Documentación oficial</h3>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noopener">Documentación oficial de C#</a> - Guías de referencia y tutoriales</li>
+        <li><a href="https://dotnet.microsoft.com/en-us/download/dotnet" target="_blank" rel="noopener">Descargar .NET 8 SDK</a> - SDK oficial de .NET</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/" target="_blank" rel="noopener">Tipos en C#</a> - Value types vs reference types</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/collections/" target="_blank" rel="noopener">Colecciones y LINQ</a> - Guía de colecciones</li>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-version-history" target="_blank" rel="noopener">Historial de versiones de C#</a> - Novedades por versión</li>
+      </ul>
+      <h3>Herramientas</h3>
+      <ul>
+        <li><a href="https://visualstudio.microsoft.com/vs/community/" target="_blank" rel="noopener">Visual Studio Community 2022</a> - IDE gratuito</li>
+        <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">Visual Studio Code</a> - Editor ligero (requiere extensión C#)</li>
+        <li><a href="https://devblogs.microsoft.com/dotnet/introducing-csharp-10/" target="_blank" rel="noopener">Novedades de C# 10+</a> - Artículos sobre nuevas características</li>
+      </ul>
+      <h3>Fuentes consultadas para esta clase</h3>
+      <p><small>Se utilizó búsqueda web para verificar versiones actuales de .NET y C# (enero 2026): .NET 8 (LTS), .NET 10 (LTS), C# 14. Consultado en <a href="https://dotnet.microsoft.com/en-us/download/dotnet" target="_blank" rel="noopener">dotnet.microsoft.com</a> y <a href="https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-version-history" target="_blank" rel="noopener">Microsoft Learn</a>.</small></p>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>C# es un lenguaje moderno, orientado a objetos y type-safe para crear aplicaciones web, escritorio, servicios en la nube, videojuegos y sistemas empresariales.</li>
+        <li>.NET 8 unifica el runtime para web, desktop, mobile, cloud y gaming con un solo SDK y librerías base compartidas.</li>
+        <li>CLR ejecuta programas, maneja memoria (GC), compila IL a código máquina mediante JIT, y provee servicios como thread management.</li>
+        <li>BCL (Base Class Library) proporciona clases predefinidas para tareas comunes como String, Collections, IO, Data.</li>
+        <li>Los tipos en C# se dividen en value types (int, double, bool, struct) almacenados en stack, y reference types (class, string, array) almacenados en heap.</li>
+        <li>Nullable (?) permite que value types acepten null, útil cuando un valor puede estar ausente.</li>
+        <li>Pattern matching con switch expression proporciona código más limpio que múltiples if-else.</li>
+        <li>LINQ permite consultar colecciones de forma declarativa, similar a SQL pero dentro de C#.</li>
+        <li>Visual Studio 2022 con workloads de .NET es el IDE recomendado para desarrollo en C#.</li>
+        <li>La estructura básica de un programa C# incluye using System;, namespace, class, y el método Main como punto de entrada.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+    <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+    <p>UNAULA - Ingeniería Informática - 2026-I</p>
+  </footer>
+</body>
+</html>

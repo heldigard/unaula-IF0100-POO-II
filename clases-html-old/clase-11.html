@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -101,7 +101,7 @@
             font-size: 0.9em;
         }
         pre code { background: none; padding: 0; }
-        /* Syntax highlighting para Python */
+        /* Syntax highlighting para C# */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -397,7 +397,7 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td><strong>Implementar</strong> validación de datos con Pydantic</td>
+                        <td><strong>Implementar</strong> validación de datos con Data Annotations</td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -405,7 +405,7 @@
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td><strong>Utilizar</strong> MessageService, Inputs y Query Params</td>
+                        <td><strong>Utilizar</strong> TempData, ViewBag y ViewData</td>
                     </tr>
                     <tr>
                         <td>4</td>
@@ -432,7 +432,7 @@
                 <tbody>
                     <tr>
                         <td>20'</td>
-                        <td>Validación con Pydantic</td>
+                        <td>Validación con Data Annotations</td>
                     </tr>
                     <tr>
                         <td>10'</td>
@@ -440,7 +440,7 @@
                     </tr>
                     <tr>
                         <td>10'</td>
-                        <td>MessageService y mensajes flash</td>
+                        <td>TempData y mensajes flash</td>
                     </tr>
                     <tr>
                         <td>15'</td>
@@ -458,21 +458,21 @@
             </table>
         </section>
 
-        <!-- Pydantic -->
+        <!-- Data Annotations -->
         <section id="data-annotations" class="section">
-            <h2>1. Validación con Pydantic</h2>
+            <h2>1. Validación con Data Annotations</h2>
 
             <div class="note-box">
-                <strong>¿Por qué Pydantic?</strong>
+                <strong>¿Por qué Data Annotations?</strong>
                 <ul>
                     <li><strong>Declarativo:</strong> Las reglas de validación están en el modelo, no dispersas en el código</li>
                     <li><strong>Reusable:</strong> Mismas reglas para validación cliente y servidor</li>
                     <li><strong>Mantenible:</strong> Un solo lugar para cambiar reglas de negocio</li>
-                    <li><strong>Estándar:</strong> <abbr title="Pydantic - Sistema de atributos de validación declarativa en Python">Pydantic</abbr> es parte de Python desde versión 3.5</li>
+                    <li><strong>Estándar:</strong> <abbr title="Data Annotations - Sistema de atributos de validación declarativa en .NET">Data Annotations</abbr> es parte de .NET desde versión 3.5</li>
                 </ul>
             </div>
 
-            <h3>Atributos de validación en Python</h3>
+            <h3>Atributos de validación en .NET</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -480,63 +480,70 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiante_model.py</span>
+                    <span class="code-title">EstudianteViewModel.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56</div>
-                    <pre><code><span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> BaseModel, Field, field_validator, EmailStr
-<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
-<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> date, datetime
+                    <pre><code>using System.ComponentModel.DataAnnotations;
 
-<span class="token-keyword">class</span> <span class="token-class">EstudianteViewModel</span>(BaseModel):
-    <span class="token-comment"># VALIDACIÓN BÁSICA</span>
-    codigo: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">5</span>, max_length=<span class="token-number">10</span>,
-                          description=<span class="token-string">"Código Estudiantil"</span>)
-    nombre: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">1</span>, max_length=<span class="token-number">50</span>)
-    apellido: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">1</span>, max_length=<span class="token-number">50</span>)
+public class EstudianteViewModel
+{
+    <span class="token-comment">// VALIDACIÓN BÁSICA</span>
+    [<span class="token-type">Required</span>(ErrorMessage = <span class="token-string">&quot;El código es obligatorio&quot;</span>)]
+    [<span class="token-type">StringLength</span>(10, MinimumLength = 5,
+        ErrorMessage = <span class="token-string">&quot;El código debe tener entre 5 y 10 caracteres&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Código Estudiantil&quot;</span>)]
+    public string Codigo { get; set; }
 
-    <span class="token-comment"># VALIDACIÓN DE EMAIL</span>
-    email: EmailStr
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">StringLength</span>(50)]
+    public string Nombre { get; set; }
 
-    <span class="token-comment"># VALIDACIÓN NUMÉRICA</span>
-    edad: <span class="token-keyword">int</span> = Field(..., ge=<span class="token-number">18</span>, le=<span class="token-number">100</span>)
-    promedio: <span class="token-keyword">float</span> = Field(..., ge=<span class="token-number">0.0</span>, le=<span class="token-number">5.0</span>)
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">StringLength</span>(50)]
+    public string Apellido { get; set; }
 
-    <span class="token-comment"># VALIDACIÓN DE PATRÓN (Regex)</span>
-    telefono: <span class="token-keyword">str</span> = Field(..., pattern=<span class="token-string">r"^\d{10}$"</span>)
+    <span class="token-comment">// VALIDACIÓN DE EMAIL</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">EmailAddress</span>(ErrorMessage = <span class="token-string">&quot;El formato del email no es válido&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Correo Electrónico&quot;</span>)]
+    public string Email { get; set; }
 
-    <span class="token-comment"># VALIDACIÓN DE FECHAS</span>
-    fecha_nacimiento: <span class="token-type">date</span>
+    <span class="token-comment">// VALIDACIÓN NUMÉRICA</span>
+    [<span class="token-type">Range</span>(18, 100, ErrorMessage = <span class="token-string">&quot;La edad debe estar entre 18 y 100 años&quot;</span>)]
+    public int Edad { get; set; }
 
-    <span class="token-comment"># COMPARACIÓN</span>
-    password: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">8</span>)
-    confirmar_password: <span class="token-keyword">str</span>
+    [<span class="token-type">Range</span>(0.0, 5.0, ErrorMessage = <span class="token-string">&quot;El promedio debe estar entre 0.0 y 5.0&quot;</span>)]
+    [<span class="token-type">Display</span>Format(DataFormatString = <span class="token-string">&quot;{0:F2}&quot;</span>)]
+    public double Promedio { get; set; }
 
-    <span class="token-attribute">@field_validator</span>(<span class="token-string">'confirmar_password'</span>)
-    <span class="token-keyword">def</span> <span class="token-function">passwords_match</span>(cls, v, info):
-        <span class="token-keyword">if</span> <span class="token-string">'password'</span> <span class="token-keyword">in</span> info.data <span class="token-keyword">and</span> v != info.data[<span class="token-string">'password'</span>]:
-            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Las contraseñas no coinciden'</span>)
-        <span class="token-keyword">return</span> v
+    <span class="token-comment">// VALIDACIÓN DE PATRÓN (Regex)</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">RegularExpression</span>(@<span class="token-string">&quot;^\d{10}$&quot;</span>,
+        ErrorMessage = <span class="token-string">&quot;El teléfono debe tener 10 dígitos numéricos&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Teléfono Celular&quot;</span>)]
+    public string Telefono { get; set; }
 
-    <span class="token-attribute">@field_validator</span>(<span class="token-string">'fecha_nacimiento'</span>)
-    <span class="token-keyword">def</span> <span class="token-function">fecha_debe_ser_pasado</span>(cls, v):
-        <span class="token-keyword">if</span> v >= date.today():
-            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'La fecha debe ser en el pasado'</span>)
-        <span class="token-keyword">return</span> v
+    <span class="token-comment">// VALIDACIÓN DE FECHAS</span>
+    [<span class="token-type">DataType</span>(DataType.Date)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Fecha de Nacimiento&quot;</span>)]
+    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>)]  <span class="token-comment">// Custom</span>
+    public DateTime FechaNacimiento { get; set; }
 
-    <span class="token-attribute">@field_validator</span>(<span class="token-string">'edad'</span>)
-    <span class="token-keyword">def</span> <span class="token-function">validar_mayoria_edad</span>(cls, v):
-        <span class="token-keyword">if</span> v < <span class="token-number">18</span>:
-            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Debe ser mayor de edad (18 años)'</span>)
-        <span class="token-keyword">return</span> v
+    <span class="token-comment">// COMPARACIÓN</span>
+    [<span class="token-type">Required</span>]
+    [<span class="token-type">DataType</span>(DataType.Password)]
+    public string Password { get; set; }
 
-    <span class="token-keyword">class</span> <span class="token-class">Config</span>:
-        <span class="token-string">str</span> = <span class="token-string">"min length = 5 characters"</span>
-        <span class="token-string">str</span> = <span class="token-string">"max length = 50 characters"</span></code></pre>
+    [<span class="token-type">DataType</span>(DataType.Password)]
+    [<span class="token-type">Compare</span>(<span class="token-string">&quot;Password&quot;</span>, ErrorMessage = <span class="token-string">&quot;Las contraseñas no coinciden&quot;</span>)]
+    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Confirmar Contraseña&quot;</span>)]
+    public string ConfirmarPassword { get; set; }
+}</code></pre>
                 </div>
             </div>
 
-            <h3>Pydantic Disponibles</h3>
+            <h3>Data Annotations Disponibles</h3>
             <table class="tag-table">
                 <thead>
                     <tr>
@@ -602,55 +609,76 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">validacion_personalizada.py</span>
+                    <span class="code-title">FechaPasadaAttribute.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53</div>
-                    <pre><code><span class="token-comment"># Validación personalizada incluida en el modelo anterior</span>
-<span class="token-comment">@field_validator('fecha_nacimiento')</span>
-<span class="token-keyword">def</span> <span class="token-function">fecha_debe_ser_pasado</span>(cls, v):
-    <span class="token-keyword">if</span> v >= date.today():
-        <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'La fecha debe ser en el pasado'</span>)
-    <span class="token-keyword">return</span> v
+                    <pre><code><span class="token-comment">// Validación personalizada: Fecha debe ser en el pasado</span>
+public class FechaPasadaAttribute : ValidationAttribute
+{
+    protected override ValidationResult IsValid(object value,
+        ValidationContext validationContext)
+    {
+        if (value is DateTime fecha)
+        {
+            if (fecha &gt;= DateTime.Today)
+            {
+                return new ValidationResult(ErrorMessage ??
+                    <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>);
+            }
+        }
+        return ValidationResult.Success;
+    }
+}
 
-<span class="token-comment"># Validación de mayoría de edad incluida en el modelo anterior</span>
-<span class="token-attribute">@field_validator</span>(<span class="token-string">'edad'</span>)
-<span class="token-keyword">def</span> <span class="token-function">validar_mayoria_edad</span>(cls, v):
-    <span class="token-keyword">if</span> v < <span class="token-number">18</span>:
-        <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Debe tener al menos 18 años'</span>)
-    <span class="token-keyword">return</span> v
+<span class="token-comment">// Uso</span>
+public class EstudianteViewModel
+{
+    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha de nacimiento debe ser en el pasado&quot;</span>)]
+    public DateTime FechaNacimiento { get; set; }
+}
 
-<span class="token-comment"># Uso del modelo</span>
-<span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> ValidationError
+<span class="token-comment">// Otra validación: Mayor de edad</span>
+public class MayorDeEdadAttribute : ValidationAttribute
+{
+    private readonly int _edadMinima;
 
-<span class="token-keyword">try</span>:
-    estudiante = EstudianteViewModel(
-        codigo=<span class="token-string">"A001"</span>,
-        nombre=<span class="token-string">"Juan"</span>,
-        apellido=<span class="token-string">"Pérez"</span>,
-        email=<span class="token-string">"juan.perez@example.com"</span>,
-        edad=<span class="token-number">20</span>,
-        promedio=<span class="token-number">4.5</span>,
-        telefono=<span class="token-string">"3001234567"</span>,
-        fecha_nacimiento=date(<span class="token-number">2000</span>, <span class="token-number">5</span>, <span class="token-number">15</span>),
-        password=<span class="token-string">"SecurePass123"</span>,
-        confirmar_password=<span class="token-string">"SecurePass123"</span>
-    )
-<span class="token-keyword">except</span> ValidationError <span class="token-keyword">as</span> e:
-    <span class="token-keyword">print</span>(e)</code></pre>
+    public MayorDeEdadAttribute(int edadMinima = 18)
+    {
+        _edadMinima = edadMinima;
+    }
+
+    protected override ValidationResult IsValid(object value,
+        ValidationContext validationContext)
+    {
+        if (value is DateTime fechaNacimiento)
+        {
+            var edad = DateTime.Today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date &gt; DateTime.Today.AddYears(-edad))
+                edad--;
+
+            if (edad &lt; _edadMinima)
+            {
+                return new ValidationResult(
+                    $<span class="token-string">&quot;Debe tener al menos {_edadMinima} años&quot;</span>);
+            }
+        }
+        return ValidationResult.Success;
+    }
+}</code></pre>
                 </div>
             </div>
 
-            <h3>Pydantic y FastAPI para Validación de Formularios</h3>
-            <p><strong>Pydantic BaseModel</strong> = Clase diseñada específicamente para validación de datos con type hints. En FastAPI, los modelos Pydantic validan automáticamente los datos de entrada.</p>
-            <p><strong>Validación Automática</strong> = FastAPI valida los requests automáticamente contra el modelo Pydantic y retorna errores 422 si la validación falla.</p>
+            <h3>ModelState y <abbr title="Model-View-Controller - Patrón de arquitectura que separa la aplicación en tres componentes">MVC</abbr></h3>
+            <p><strong>ViewModel</strong> = Clase diseñada específicamente para pasar datos del Controller a la View. No es la entidad de base de datos, sino un modelo "de presentación".</p>
+            <p><strong>ModelState</strong> = Diccionario que contiene el estado de enlace de datos y validación. Se valida automáticamente con Data Annotations.</p>
 
             <div class="warning-box">
-                <strong>Errores Comunes con Pydantic</strong>
+                <strong>Errores Comunes con ModelState</strong>
                 <ul>
-                    <li><strong>No usar field_validator correctamente:</strong> Olvidar validar el tipo de dato o retornar el valor</li>
-                    <li><strong>No manejar ValidationError:</strong> Las excepciones de validación deben propagarse correctamente</li>
-                    <li><strong>Validar solo en cliente:</strong> Un usuario puede enviar requests directos sin validación en frontend</li>
+                    <li><strong>Olvidar validar ModelState.IsValid:</strong> Permite guardar datos inválidos en BD</li>
+                    <li><strong>No devolver el modelo con errores:</strong> El usuario pierde los datos que ingresó</li>
+                    <li><strong>Validar solo en cliente:</strong> Un usuario puede desactivar JavaScript y enviar datos inválidos</li>
                 </ul>
             </div>
 
@@ -662,34 +690,34 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiantes_routes.py</span>
+                    <span class="code-title">EstudiantesController.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
-                    <pre><code><span class="token-keyword">from</span> fastapi <span class="token-keyword">import</span> FastAPI, HTTPException
-<span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> BaseModel
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
+{
+    <span class="token-comment">// Validación automática basada en Data Annotations</span>
+    if (!ModelState.IsValid)
+    {
+        <span class="token-comment">// Si hay errores, retornar la vista con el modelo</span>
+        <span class="token-comment">// Los errores se mostrarán automáticamente</span>
+        return View(model);
+    }
 
-app = FastAPI()
+    <span class="token-comment">// Validación de negocio adicional</span>
+    var existe = await _service.ExisteCodigoAsync(model.Codigo);
+    if (existe)
+    {
+        ModelState.AddModelError(<span class="token-string">&quot;Codigo&quot;</span>,
+            <span class="token-string">&quot;Ya existe un estudiante con este código&quot;</span>);
+        return View(model);
+    }
 
-<span class="token-attribute">@app.post</span>(<span class="token-string">"/api/estudiantes"</span>, status_code=<span class="token-number">201</span>)
-<span class="token-keyword">async def</span> <span class="token-function">crear_estudiante</span>(
-    model: EstudianteViewModel,
-    estudiante_service: EstudianteService
-):
-    <span class="token-comment"># Validación automática basada en Pydantic</span>
-    <span class="token-comment"># Si hay errores, FastAPI retorna automáticamente 422</span>
-
-    <span class="token-comment"># Validación de negocio adicional</span>
-    existe = <span class="token-keyword">await</span> estudiante_service.existe_codigo(model.codigo)
-    <span class="token-keyword">if</span> existe:
-        <span class="token-keyword">raise</span> HTTPException(
-            status_code=<span class="token-number">400</span>,
-            detail=<span class="token-string">"Ya existe un estudiante con este código"</span>
-        )
-
-    <span class="token-comment"># Guardar</span>
-    <span class="token-keyword">await</span> estudiante_service.crear(model)
-    <span class="token-keyword">return</span> {<span class="token-string">"mensaje"</span>: <span class="token-string">"Estudiante creado exitosamente"</span>}</code></pre>
+    <span class="token-comment">// Guardar</span>
+    await _service.CrearAsync(model);
+    return RedirectToAction(nameof(Index));
+}</code></pre>
                 </div>
             </div>
         </section>
@@ -723,13 +751,13 @@ app = FastAPI()
                 <li>JavaScript valida (jQuery Validation) en navegador</li>
                 <li>Si es inválido, muestra error <strong>sin enviar al servidor</strong></li>
                 <li>Si pasa validación cliente, envía POST</li>
-                <li>Servidor valida automáticamente con Pydantic (retorna 422 si falla)</li>
+                <li>Servidor valida con ModelState (Data Annotations)</li>
                 <li>Si inválido, retorna vista con errores</li>
                 <li>Si válido, procesa y guarda</li>
             </ol>
 
             <h3>jQuery Validation</h3>
-            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por FastAPI y valida automáticamente en el navegador.</p>
+            <p><strong><abbr title="jQuery Validation - Plugin de JavaScript para validación de formularios en el cliente">jQuery Validation</abbr></strong> = Plugin que lee los atributos data-val-* generados por ASP.NET y valida automáticamente en el navegador.</p>
 
             <div class="warning-box">
                 <strong>Errores Comunes en Validación Cliente</strong>
@@ -748,59 +776,40 @@ app = FastAPI()
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiante-form.component.ts</span>
+                    <span class="code-title">_ValidationScriptsPartial.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35</div>
-                    <pre><code><span class="token-keyword">import</span> { Component } <span class="token-keyword">from</span> <span class="token-string">'@angular/core'</span>;
-<span class="token-keyword">import</span> { FormBuilder, FormGroup, Validators } <span class="token-keyword">from</span> <span class="token-string">'@angular/forms'</span>;
-<span class="token-keyword">import</span> { Router } <span class="token-keyword">from</span> <span class="token-string">'@angular/router'</span>;
-<span class="token-keyword">import</span> { EstudianteService } <span class="token-keyword">from</span> <span class="token-string">'../services/estudiante.service'</span>;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+                    <pre><code>&amp;lt;!-- Views/Shared/_ValidationScriptsPartial.cshtml --&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery/dist/jquery.min.js&quot;</span>&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery-validation/dist/jquery.validate.min.js&quot;</span>&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=<span class="token-string">&quot;~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js&quot;</span>&amp;gt;
+&amp;lt;/script&amp;gt;
 
-@Component({
-  selector: <span class="token-string">'app-estudiante-form'</span>,
-  templateUrl: <span class="token-string">'./estudiante-form.component.html'</span>
-})
-<span class="token-keyword">export class</span> EstudianteFormComponent {
-  form: FormGroup;
-  errores: string[] = [];
+&amp;lt;!-- En la vista --&amp;gt;
+&amp;lt;form asp-action=<span class="token-string">&quot;Crear&quot;</span> method=<span class="token-string">&quot;post&quot;</span>&amp;gt;
+    &amp;lt;div class=<span class="token-string">&quot;form-group&quot;</span>&amp;gt;
+        &amp;lt;label asp-for=<span class="token-string">&quot;Email&quot;</span>&amp;gt;&amp;lt;/label&amp;gt;
+        &amp;lt;input asp-for=<span class="token-string">&quot;Email&quot;</span> class=<span class="token-string">&quot;form-control&quot;</span> /&amp;gt;
+        &amp;lt;span asp-validation-for=<span class="token-string">&quot;Email&quot;</span> class=<span class="token-string">&quot;text-danger&quot;</span>&amp;gt;&amp;lt;/span&amp;gt;
+    &amp;lt;/div&amp;gt;
 
-  <span class="token-keyword">constructor</span>(
-    <span class="token-keyword">private</span> fb: FormBuilder,
-    <span class="token-keyword">private</span> service: EstudianteService,
-    <span class="token-keyword">private</span> router: Router
-  ) {
-    <span class="token-keyword">this</span>.form = <span class="token-keyword">this</span>.fb.group({
-      email: [<span class="token-string">''</span>, [Validators.required, Validators.email]],
-      nombre: [<span class="token-string">''</span>, Validators.required],
-      apellido: [<span class="token-string">''</span>, Validators.required]
-    });
-  }
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Guardar&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;
 
-  onSubmit(): <span class="token-keyword">void</span> {
-    <span class="token-keyword">if</span> (<span class="token-keyword">this</span>.form.invalid) {
-      <span class="token-keyword">this</span>.form.markAllAsTouched();
-      <span class="token-keyword">return</span>;
-    }
-
-    <span class="token-keyword">this</span>.service.crear(<span class="token-keyword">this</span>.form.value).subscribe({
-      next: () => <span class="token-keyword">this</span>.router.navigate([<span class="token-string">'/estudiantes'</span>], {
-        queryParams: { mensaje: <span class="token-string">'Creado exitosamente'</span> }
-      }),
-      error: (err) => <span class="token-keyword">this</span>.errores = err.error.detail
-    });
-  }
+@section Scripts {
+    @{await Html.RenderPartialAsync(<span class="token-string">&quot;_ValidationScriptsPartial&quot;</span>);}
 }</code></pre>
                 </div>
             </div>
         </section>
 
-        <!-- Flash Messages / State Management -->
-        <section id="flash-messages" class="section">
-            <h2>3. Mensajes Flash y Gestión de Estado</h2>
+        <!-- TempData/ViewBag -->
+        <section id="tempdata" class="section">
+            <h2>3. TempData, ViewBag y ViewData</h2>
 
             <div class="note-box">
-                <strong>¿Por qué mensajes flash?</strong>
+                <strong>¿Por qué TempData?</strong>
                 <ul>
                     <li><strong>Mensajes flash:</strong> Mostrar "Guardado exitosamente" después de un redirect</li>
                     <li><strong>Preservar input:</strong> Mantener datos del formulario cuando hay errores</li>
@@ -809,11 +818,11 @@ app = FastAPI()
             </div>
 
             <h3>Diferencias clave</h3>
-            <p><strong><abbr title="Component Input - Datos pasados de un componente padre a un componente hijo en Angular">Component Input</abbr></strong> = Propiedades @Input para pasar datos de componente padre a hijo.</p>
-            <p><strong><abbr title="Query Params - Parámetros en la URL para pasar datos entre navegaciones">Query Params</abbr></strong> = Parámetros en la URL que persisten durante navegación (útil para mensajes flash).</p>
-            <p><strong><abbr title="Service State - Estado gestionado por un servicio compartido entre componentes">Service State</abbr></strong> = Estado gestionado por un servicio RxJS/BehaviorSubject para comunicación entre componentes.</p>
+            <p><strong><abbr title="ViewData - Diccionario tipo clave-valor para pasar datos del Controller a la View (válido solo una petición)">ViewData</abbr></strong> = Diccionario para pasar datos Controller→View (una sola petición).</p>
+            <p><strong><abbr title="ViewBag - Wrapper dinámico sobre ViewData para pasar datos del Controller a la View">ViewBag</abbr></strong> = Versión dinámica de ViewData (mismo propósito, sintaxis más limpia).</p>
+            <p><strong><abbr title="TempData - Diccionario que persiste datos hasta la siguiente petición (útil después de redirects)">TempData</abbr></strong> = Diccionario que sobrevive un redirect (dura hasta la siguiente petición).</p>
 
-            <h4>Formas de pasar datos en Angular + FastAPI</h4>
+            <h4>Formas de pasar datos en MVC</h4>
             <table class="tag-table">
                 <thead>
                     <tr>
@@ -825,27 +834,27 @@ app = FastAPI()
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Component Input</td>
+                        <td>ViewData/ViewBag</td>
                         <td>Una sola petición</td>
-                        <td>Padre  Hijo</td>
-                        <td><code>@Input() mensaje: string;</code></td>
+                        <td>Controller  View</td>
+                        <td><code>ViewBag.Mensaje = "Hola"</code></td>
                     </tr>
                     <tr>
-                        <td>Query Params</td>
-                        <td>Hasta siguiente navegación</td>
-                        <td>Componente  Router  Componente</td>
-                        <td><code>router.navigate(['/', {msg: 'Guardado'}])</code></td>
+                        <td>TempData</td>
+                        <td>Hasta siguiente petición</td>
+                        <td>Controller  Redirect  Controller/View</td>
+                        <td><code>TempData["Mensaje"] = "Guardado"</code></td>
                     </tr>
                     <tr>
-                        <td>Service/BehaviorSubject</td>
-                        <td>Múltiples componentes/suscriptores</td>
-                        <td>Estado compartido entre componentes</td>
-                        <td><code>messageService.next('Hola')</code></td>
+                        <td>Sesión</td>
+                        <td>Múltiples peticiones del mismo usuario</td>
+                        <td>Datos persistentes durante sesión</td>
+                        <td><code>Session["UsuarioId"] = 123</code></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Mensajes Flash en Acción</h3>
+            <h3>TempData en Acción</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -853,59 +862,46 @@ app = FastAPI()
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">message.service.ts</span>
+                    <span class="code-title">EstudiantesController.cs</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
-                    <pre><code><span class="token-keyword">import</span> { Injectable } <span class="token-keyword">from</span> <span class="token-string">'@angular/core'</span>;
-<span class="token-keyword">import</span> { BehaviorSubject } <span class="token-keyword">from</span> <span class="token-string">'rxjs'</span>;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
+{
+    if (!ModelState.IsValid)
+        return View(model);
 
-<span class="token-keyword">interface</span> FlashMessage {
-  texto: string;
-  tipo: <span class="token-string">'success'</span> | <span class="token-string">'error'</span> | <span class="token-string">'info'</span>;
+    await _service.CrearAsync(model);
+
+    <span class="token-comment">// Mensaje que persistirá después del Redirect</span>
+    TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] = <span class="token-string">&quot;Estudiante creado exitosamente&quot;</span>;
+    TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;success&quot;</span>;  <span class="token-comment">// Para Bootstrap alert</span>
+
+    return RedirectToAction(nameof(Index));
 }
 
-@Injectable({ providedIn: <span class="token-string">'root'</span> })
-<span class="token-keyword">export class</span> MessageService {
-  <span class="token-keyword">private</span> message$ = <span class="token-keyword">new</span> BehaviorSubject&lt;FlashMessage | <span class="token-keyword">null</span>&gt;(<span class="token-keyword">null</span>);
+[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; Eliminar(int id)
+{
+    try
+    {
+        await _service.EliminarAsync(id);
+        TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] = <span class="token-string">&quot;Estudiante eliminado correctamente&quot;</span>;
+        TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;success&quot;</span>;
+    }
+    catch (Exception ex)
+    {
+        TempData[<span class="token-string">&quot;MensajeError&quot;</span>] = <span class="token-string">&quot;No se pudo eliminar el estudiante&quot;</span>;
+        TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] = <span class="token-string">&quot;danger&quot;</span>;
+    }
 
-  <span class="token-function">setMessage</span>(texto: string, tipo: <span class="token-string">'success'</span> | <span class="token-string">'error'</span> = <span class="token-string">'success'</span>): <span class="token-keyword">void</span> {
-    <span class="token-keyword">this</span>.message$.next({ texto, tipo });
-  }
-
-  <span class="token-function">getMessage</span>() {
-    <span class="token-keyword">return</span> <span class="token-keyword">this</span>.message$.asObservable();
-  }
-
-  <span class="token-function">clear</span>(): <span class="token-keyword">void</span> {
-    <span class="token-keyword">this</span>.message$.next(<span class="token-keyword">null</span>);
-  }
-}
-
-<span class="token-comment">// Uso en el componente de creación</span>
-<span class="token-keyword">async</span> <span class="token-function">crear</span>(model: EstudianteViewModel): <span class="token-keyword">Promise</span>&lt;<span class="token-keyword">void</span>&gt; {
-  <span class="token-keyword">try</span> {
-    <span class="token-keyword">await</span> <span class="token-keyword">this</span>.service.crear(model);
-    <span class="token-keyword">this</span>.messageService.setMessage(<span class="token-string">'Estudiante creado exitosamente'</span>, <span class="token-string">'success'</span>);
-    <span class="token-keyword">this</span>.router.navigate([<span class="token-string">'/estudiantes'</span>]);
-  } <span class="token-keyword">catch</span> (err) {
-    <span class="token-keyword">this</span>.messageService.setMessage(<span class="token-string">'Error al crear estudiante'</span>, <span class="token-string">'error'</span>);
-  }
-}
-
-<span class="token-comment">// Uso en el componente de eliminación</span>
-<span class="token-keyword">async</span> <span class="token-function">eliminar</span>(id: <span class="token-keyword">number</span>): <span class="token-keyword">Promise</span>&lt;<span class="token-keyword">void</span>&gt; {
-  <span class="token-keyword">try</span> {
-    <span class="token-keyword">await</span> <span class="token-keyword">this</span>.service.eliminar(id);
-    <span class="token-keyword">this</span>.messageService.setMessage(<span class="token-string">'Estudiante eliminado correctamente'</span>, <span class="token-string">'success'</span>);
-  } <span class="token-keyword">catch</span> {
-    <span class="token-keyword">this</span>.messageService.setMessage(<span class="token-string">'No se pudo eliminar el estudiante'</span>, <span class="token-string">'error'</span>);
-  }
+    return RedirectToAction(nameof(Index));
 }</code></pre>
                 </div>
             </div>
 
-            <h3>Mostrar Mensajes en el Componente</h3>
+            <h3>Mostrar Mensajes en la Vista</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -913,26 +909,26 @@ app = FastAPI()
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">app.component.html</span>
+                    <span class="code-title">Index.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23</div>
-                    <pre><code>&lt;!-- Componente raíz para mostrar mensajes flash --&gt;
-&lt;div *ngIf="message$ | async as message" class="alert-container"&gt;
-  &lt;div [class]="'alert alert-' + message.tipo + ' alert-dismissible fade show'"
-       role="alert"&gt;
-    {{ message.texto }}
-    &lt;button type="button"
-            class="btn-close"
-            (click)="messageService.clear()"&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+                    <pre><code>&amp;lt;!-- Views/Estudiantes/Index.cshtml - Mostrar mensajes --&amp;gt;
+@{
+    var mensaje = TempData[<span class="token-string">&quot;MensajeExito&quot;</span>] ?? TempData[<span class="token-string">&quot;MensajeError&quot;</span>];
+    var tipo = TempData[<span class="token-string">&quot;TipoMensaje&quot;</span>] ?? <span class="token-string">&quot;info&quot;</span>;
+}
 
-&lt;router-outlet&gt;&lt;/router-outlet&gt;
+@if (mensaje != null)
+{
+    &amp;lt;div class=<span class="token-string">&quot;alert alert-@tipo alert-dismissible fade show&quot;</span> role=<span class="token-string">&quot;alert&quot;</span>&amp;gt;
+        @mensaje
+        &amp;lt;button type=<span class="token-string">&quot;button&quot;</span> class=<span class="token-string">&quot;btn-close&quot;</span> data-bs-dismiss=<span class="token-string">&quot;alert&quot;</span>&amp;gt;&amp;lt;/button&amp;gt;
+    &amp;lt;/div&amp;gt;
+}
 
-&lt;!-- O usando un componente dedicado --&gt;
-&lt;app-flash-message&gt;&lt;/app-flash-message&gt;</code></pre>
+&amp;lt;!-- O usando Partial View --&amp;gt;
+&amp;lt;partial name=<span class="token-string">&quot;_Mensajes&quot;</span> /&amp;gt;</code></pre>
                 </div>
             </div>
         </section>
@@ -996,68 +992,54 @@ app.MapControllers();</code></pre>
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">auth_routes.py</span>
+                    <span class="code-title">AccountController.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
-                    <pre><code><span class="token-keyword">from</span> fastapi <span class="token-keyword">import</span> FastAPI, HTTPException, Depends
-<span class="token-keyword">from</span> fastapi.security <span class="token-keyword">import</span> OAuth2PasswordBearer
-<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> timedelta, datetime
+                    <pre><code>public class AccountController : Controller
+{
+    <span class="token-comment">// Guardar en sesión</span>
+    public IActionResult Login(LoginViewModel model)
+    {
+        <span class="token-comment">// Validar credenciales...</span>
 
-<span class="token-comment"># Configuración JWT (en producción usar variables de entorno)</span>
-SECRET_KEY = <span class="token-string">"tu-clave-secreta-aqui"</span>
-ALGORITHM = <span class="token-string">"HS256"</span>
-ACCESS_TOKEN_EXPIRE_MINUTES = <span class="token-number">30</span>
+        <span class="token-comment">// Guardar en sesión</span>
+        HttpContext.Session.SetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>, usuario.Id);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>, usuario.Nombre);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioEmail&quot;</span>, usuario.Email);
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="token-string">"token"</span>)
+        <span class="token-comment">// Guardar objeto completo (serializado a JSON)</span>
+        var usuarioJson = JsonSerializer.Serialize(usuario);
+        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>, usuarioJson);
 
-<span class="token-keyword">class</span> <span class="token-class">AccountController</span>:
-    <span class="token-attribute">@app.post</span>(<span class="token-string">"/api/auth/login"</span>)
-    <span class="token-keyword">async def</span> <span class="token-function">login</span>(
-        credentials: LoginViewModel,
-        auth_service: AuthService
-    ):
-        <span class="token-comment"># Validar credenciales contra BD</span>
-        usuario = <span class="token-keyword">await</span> auth_service.autenticar(credentials.email, credentials.password)
-
-        <span class="token-keyword">if</span> <span class="token-keyword">not</span> usuario:
-            <span class="token-keyword">raise</span> HTTPException(
-                status_code=<span class="token-number">401</span>,
-                detail=<span class="token-string">"Credenciales inválidas"</span>
-            )
-
-        <span class="token-comment"># Crear token JWT</span>
-        access_token_expires = timedelta(minutes=<span class="token-number">ACCESS_TOKEN_EXPIRE_MINUTES</span>)
-        expire = datetime.utcnow() + access_token_expires
-
-        <span class="token-keyword">to_encode</span> = {
-            <span class="token-string">"sub"</span>: usuario.email,
-            <span class="token-string">"exp"</span>: expire,
-            <span class="token-string">"usuario_id"</span>: usuario.id
-        }
-
-        token = <span class="token-function">create_access_token</span>(data=<span class="token-keyword">to_encode</span>, secret_key=SECRET_KEY, algorithm=ALGORITHM)
-
-        <span class="token-keyword">return</span> {
-            <span class="token-string">"access_token"</span>: token,
-            <span class="token-string">"token_type"</span>: <span class="token-string">"bearer"</span>,
-            <span class="token-string">"expires_in"</span>: access_token_expires.seconds
-        }
-
-<span class="token-attribute">@app.get</span>(<span class="token-string">/api/auth/perfil"</span>)
-<span class="token-keyword">async def</span> <span class="token-function">perfil</span>(
-    current_user: <span class="token-type">dict</span> = Depends(get_current_user)
-):
-    <span class="token-comment"># Leer del token JWT</span>
-    <span class="token-keyword">return</span> {
-        <span class="token-string">"usuario_id"</span>: current_user.get(<span class="token-string">"usuario_id"</span>),
-        <span class="token-string">"email"</span>: current_user.get(<span class="token-string">"sub"</span>)
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
     }
 
-<span class="token-attribute">@app.post</span>(<span class="token-string">/api/auth/logout"</span>)
-<span class="token-keyword">async def</span> <span class="token-function">logout</span>():
-    <span class="token-comment"># En frontend, eliminar el token</span>
-    <span class="token-keyword">return</span> {<span class="token-string">"mensaje"</span>: <span class="token-string">"Sesión cerrada exitosamente"</span>}</code></pre>
+    <span class="token-comment">// Leer de sesión</span>
+    public IActionResult Perfil()
+    {
+        var usuarioId = HttpContext.Session.GetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>);
+        var usuarioNombre = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>);
+
+        if (usuarioId == null)
+        {
+            return RedirectToAction(<span class="token-string">&quot;Login&quot;</span>);
+        }
+
+        <span class="token-comment">// Recuperar objeto</span>
+        var usuarioJson = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>);
+        var usuario = JsonSerializer.Deserialize&amp;lt;Usuario&amp;gt;(usuarioJson);
+
+        return View(usuario);
+    }
+
+    <span class="token-comment">// Cerrar sesión</span>
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();  <span class="token-comment">// Limpiar toda la sesión</span>
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
+    }
+}</code></pre>
                 </div>
             </div>
 
@@ -1087,44 +1069,42 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="token-string">"token"
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">preferencias_routes.py</span>
+                    <span class="code-title">PreferenciasController.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
-                    <pre><code>from fastapi import APIRouter, Response, Request
-from datetime import datetime, timedelta
+                    <pre><code>public class PreferenciasController : Controller
+{
+    <span class="token-comment">// Establecer cookie</span>
+    public IActionResult SetTema(string tema)
+    {
+        <span class="token-comment">// Cookie con opciones de seguridad</span>
+        Response.Cookies.Append(<span class="token-string">&quot;Tema&quot;</span>, tema, new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(30),  <span class="token-comment">// Expira en 30 días</span>
+            HttpOnly = false,  <span class="token-comment">// Accesible por JavaScript (true para datos sensibles)</span>
+            Secure = true,     <span class="token-comment">// Solo HTTPS</span>
+            SameSite = SameSiteMode.Strict  <span class="token-comment">// Previene CSRF</span>
+        });
 
-router = APIRouter()
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
+    }
 
-<span class="token-comment"># Establecer cookie</span>
-@router.post("/api/preferencias/tema")
-async def set_tema(
-    tema: str,
-    response: Response
-):
-    <span class="token-comment"># Cookie con opciones de seguridad</span>
-    expires = datetime.utcnow() + timedelta(days=30)
-    response.set_cookie(
-        key="Tema",
-        value=tema,
-        expires=expires,
-        httponly=False,  <span class="token-comment"># Accesible por JavaScript (True para datos sensibles)</span>
-        secure=True,     <span class="token-comment"># Solo HTTPS</span>
-        samesite="strict"  <span class="token-comment"># Previene CSRF</span>
-    )
-    return {"mensaje": f"Tema establecido: {tema}"}
+    <span class="token-comment">// Leer cookie</span>
+    public IActionResult Index()
+    {
+        var tema = Request.Cookies[<span class="token-string">&quot;Tema&quot;</span>] ?? <span class="token-string">&quot;claro&quot;</span>;
+        ViewBag.Tema = tema;
+        return View();
+    }
 
-<span class="token-comment"># Leer cookie</span>
-@router.get("/api/preferencias/tema")
-async def get_tema(request: Request):
-    tema = request.cookies.get("Tema", "claro")
-    return {"tema": tema}
-
-<span class="token-comment"># Eliminar cookie</span>
-@router.delete("/api/preferencias/tema")
-async def eliminar_tema(response: Response):
-    response.delete_cookie(key="Tema")
-    return {"mensaje": "Cookie eliminada"}</code></pre>
+    <span class="token-comment">// Eliminar cookie</span>
+    public IActionResult EliminarTema()
+    {
+        Response.Cookies.Delete(<span class="token-string">&quot;Tema&quot;</span>);
+        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
+    }
+}</code></pre>
                 </div>
             </div>
         </section>
@@ -1134,7 +1114,7 @@ async def eliminar_tema(response: Response):
             <h2>5. Upload de Archivos</h2>
 
             <div class="note-box">
-                <strong>¿Por qué UploadFile?</strong>
+                <strong>¿Por qué IFormFile?</strong>
                 <ul>
                     <li><strong>Abstracción:</strong> Representa un archivo recibido en una petición HTTP</li>
                     <li><strong>Stream:</strong> Permite leer el archivo sin cargarlo completo en memoria</li>
@@ -1142,13 +1122,12 @@ async def eliminar_tema(response: Response):
                 </ul>
             </div>
 
-            <h3><abbr title="UploadFile - Clase de FastAPI/Starlette que representa un archivo enviado en una petición HTTP">UploadFile</abbr></h3>
-            <p>Clase que representa un archivo recibido en una petición HTTP. Propiedades clave:</p>
+            <h3><abbr title="IFormFile - Interfaz de ASP.NET Core que representa un archivo enviado en una petición HTTP">IFormFile</abbr></h3>
+            <p>Interfaz que representa un archivo recibido en una petición HTTP. Propiedades clave:</p>
             <ul>
-                <li><code>filename</code> - Nombre original del archivo</li>
-                <li><code>size</code> - Tamaño en bytes</li>
-                <li><code>content_type</code> - Tipo MIME (ej: "image/jpeg")</li>
-                <li><code>file</code> - Objeto SpooledTemporaryFile para leer el contenido</li>
+                <li><code>FileName</code> - Nombre original del archivo</li>
+                <li><code>Length</code> - Tamaño en bytes</li>
+                <li><code>ContentType</code> - Tipo MIME (ej: "image/jpeg")</li>
             </ul>
 
             <div class="warning-box">
@@ -1156,7 +1135,7 @@ async def eliminar_tema(response: Response):
                 <ul>
                     <li><strong>No validar extensión:</strong> Permite subir archivos ejecutables (.exe, .bat)</li>
                     <li><strong>No limitar tamaño:</strong> Puede saturar el servidor</li>
-                    <li><strong>Sobrescribir archivos:</strong> <code>uuid.uuid4()</code> genera nombres únicos para evitar colisiones</li>
+                    <li><strong>Sobrescribir archivos:</strong> <code>Guid.NewGuid()</code> genera nombres únicos para evitar colisiones</li>
                     <li><strong>Olvidar enctype="multipart/form-data":</strong> El formulario NO envía archivos sin este atributo</li>
                 </ul>
             </div>
@@ -1169,38 +1148,20 @@ async def eliminar_tema(response: Response):
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">subir-foto.component.html</span>
+                    <span class="code-title">SubirFoto.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
-                    <pre><code><span class="token-comment">&lt;!-- Componente Angular con formulario para subir archivo --&gt;</span>
-&lt;div class="card"&gt;
-  &lt;div class="card-body"&gt;
-    &lt;h3 class="card-title"&gt;Foto del Estudiante&lt;/h3&gt;
-
-    &lt;form [formGroup]="uploadForm"
-          (ngSubmit)="onSubmit()"
-          enctype="multipart/form-data"&gt;
-
-      &lt;div class="mb-3"&gt;
-        &lt;label for="archivo" class="form-label"&gt;Seleccionar Foto&lt;/label&gt;
-        &lt;input type="file"
-               id="archivo"
-               class="form-control"
-               accept=".jpg,.jpeg,.png"
-               (change)="onFileSelected($event)"&gt;
-        &lt;div class="form-text"&gt;Formatos permitidos: JPG, PNG (máx. 2MB)&lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;button type="submit"
-              class="btn btn-primary"
-              [disabled]="uploadForm.invalid || uploading"&gt;
-        &lt;span *ngIf="uploading"&gt;Subiendo...&lt;/span&gt;
-        &lt;span *ngIf="!uploading"&gt;Subir&lt;/span&gt;
-      &lt;/button&gt;
-    &lt;/form&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                    <pre><code>&amp;lt;!-- Vista con formulario para subir archivo --&amp;gt;
+&amp;lt;form asp-action=<span class="token-string">&quot;SubirFoto&quot;</span> method=<span class="token-string">&quot;post&quot;</span> enctype=<span class="token-string">&quot;multipart/form-data&quot;</span>&amp;gt;
+    &amp;lt;div class=<span class="token-string">&quot;mb-3&quot;</span>&amp;gt;
+        &amp;lt;label class=<span class="token-string">&quot;form-label&quot;</span>&amp;gt;Foto del Estudiante&amp;lt;/label&amp;gt;
+        &amp;lt;input type=<span class="token-string">&quot;file&quot;</span> name=<span class="token-string">&quot;archivo&quot;</span> class=<span class="token-string">&quot;form-control&quot;</span>
+               accept=<span class="token-string">&quot;.jpg,.jpeg,.png&quot;</span> /&amp;gt;
+        &amp;lt;div class=<span class="token-string">&quot;form-text&quot;</span>&amp;gt;Formatos permitidos: JPG, PNG (máx. 2MB)&amp;lt;/div&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Subir&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;</code></pre>
                 </div>
             </div>
 
@@ -1211,51 +1172,56 @@ async def eliminar_tema(response: Response):
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiantes_routes.py</span>
+                    <span class="code-title">EstudiantesController.cs</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
-                    <pre><code>from fastapi import UploadFile, File, HTTPException
-from pathlib import Path
-import uuid
-import shutil
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; SubirFoto(IFormFile archivo, int estudianteId)
+{
+    if (archivo == null || archivo.Length == 0)
+    {
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;No se seleccionó ningún archivo&quot;</span>);
+        return View();
+    }
 
-UPLOAD_DIR = Path("uploads/fotos")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    <span class="token-comment">// Validaciones</span>
+    var extensionesPermitidas = new[] { <span class="token-string">&quot;.jpg&quot;</span>, <span class="token-string">&quot;.jpeg&quot;</span>, <span class="token-string">&quot;.png&quot;</span> };
+    var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
 
-@router.post("/api/estudiantes/{estudiante_id}/foto")
-async def subir_foto(
-    estudiante_id: int,
-    archivo: UploadFile = File(...)
-):
-    <span class="token-comment"># Validar que se seleccionó un archivo</span>
-    if not archivo or not archivo.filename:
-        raise HTTPException(status_code=400, detail="No se seleccionó ningún archivo")
+    if (!extensionesPermitidas.Contains(extension))
+    {
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;Formato de archivo no válido&quot;</span>);
+        return View();
+    }
 
-    <span class="token-comment"># Validaciones</span>
-    extensiones_permitidas = {".jpg", ".jpeg", ".png"}
-    extension = Path(archivo.filename).suffix.lower()
+    if (archivo.Length &amp;gt; 2 * 1024 * 1024)  <span class="token-comment">// 2MB</span>
+    {
+        ModelState.AddModelError(<span class="token-string">&quot;&quot;</span>, <span class="token-string">&quot;El archivo es demasiado grande (máx. 2MB)&quot;</span>);
+        return View();
+    }
 
-    if extension not in extensiones_permitidas:
-        raise HTTPException(status_code=400, detail="Formato de archivo no válido")
+    <span class="token-comment">// Generar nombre único</span>
+    var nombreArchivo = $<span class="token-string">&quot;{estudianteId}_{Guid.NewGuid()}{extension}&quot;</span>;
+    var rutaCarpeta = Path.Combine(_environment.WebRootPath, <span class="token-string">&quot;uploads&quot;</span>, <span class="token-string">&quot;fotos&quot;</span>);
+    var rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
 
-    <span class="token-comment"># Leer contenido para validar tamaño</span>
-    contenido = await archivo.read()
-    if len(contenido) > 2 * 1024 * 1024:  <span class="token-comment"># 2MB</span>
-        raise HTTPException(status_code=400, detail="El archivo es demasiado grande (máx. 2MB)")
+    <span class="token-comment">// Crear carpeta si no existe</span>
+    if (!Directory.Exists(rutaCarpeta))
+        Directory.CreateDirectory(rutaCarpeta);
 
-    <span class="token-comment"># Generar nombre único</span>
-    nombre_archivo = f"{estudiante_id}_{uuid.uuid4()}{extension}"
-    ruta_completa = UPLOAD_DIR / nombre_archivo
+    <span class="token-comment">// Guardar archivo</span>
+    using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+    {
+        await archivo.CopyToAsync(stream);
+    }
 
-    <span class="token-comment"># Guardar archivo</span>
-    with open(ruta_completa, "wb") as f:
-        f.write(contenido)
+    <span class="token-comment">// Guardar ruta en base de datos</span>
+    await _service.ActualizarFotoAsync(estudianteId, $<span class="token-string">&quot;/uploads/fotos/{nombreArchivo}&quot;</span>);
 
-    <span class="token-comment"># Guardar ruta en base de datos</span>
-    await estudiante_service.actualizar_foto(estudiante_id, f"/uploads/fotos/{nombre_archivo}")
-
-    return {"mensaje": "Foto subida correctamente", "ruta": f"/uploads/fotos/{nombre_archivo}"}</code></pre>
+    TempData[<span class="token-string">&quot;Mensaje&quot;</span>] = <span class="token-string">&quot;Foto subida correctamente&quot;</span>;
+    return RedirectToAction(<span class="token-string">&quot;Detalles&quot;</span>, new { id = estudianteId });
+}</code></pre>
                 </div>
             </div>
 
@@ -1267,42 +1233,14 @@ async def subir_foto(
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">subir-documentos.component.html</span>
+                    <span class="code-title">SubirDocumentos.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
-                    <pre><code>&lt;!-- Componente Angular para subir múltiples archivos --&gt;
-&lt;div class="card"&gt;
-  &lt;div class="card-body"&gt;
-    &lt;h3 class="card-title"&gt;Subir Documentos&lt;/h3&gt;
-
-    &lt;form (ngSubmit)="onSubmit()" enctype="multipart/form-data"&gt;
-
-      &lt;div class="mb-3"&gt;
-        &lt;label for="archivos" class="form-label"&gt;Seleccionar Archivos&lt;/label&gt;
-        &lt;input type="file"
-               id="archivos"
-               class="form-control"
-               multiple
-               (change)="onFilesSelected($event)"&gt;
-        &lt;div class="form-text"&gt;Puedes seleccionar varios archivos&lt;/div&gt;
-      &lt;/div&gt;
-
-      &lt;div *ngIf="selectedFiles.length &gt; 0" class="mb-3"&gt;
-        &lt;p&gt;Archivos seleccionados: {{ selectedFiles.length }}&lt;/p&gt;
-        &lt;ul&gt;
-          &lt;li *ngFor="let file of selectedFiles"&gt;{{ file.name }}&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/div&gt;
-
-      &lt;button type="submit"
-              class="btn btn-primary"
-              [disabled]="selectedFiles.length === 0 || uploading"&gt;
-        Subir Documentos
-      &lt;/button&gt;
-    &lt;/form&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+                    <div class="line-numbers">1<br>2<br>3<br>4</div>
+                    <pre><code>&amp;lt;form asp-action=<span class="token-string">&quot;SubirDocumentos&quot;</span> method=<span class="token-string">&quot;post&quot;</span> enctype=<span class="token-string">&quot;multipart/form-data&quot;</span>&amp;gt;
+    &amp;lt;input type=<span class="token-string">&quot;file&quot;</span> name=<span class="token-string">&quot;archivos&quot;</span> multiple class=<span class="token-string">&quot;form-control&quot;</span> /&amp;gt;
+    &amp;lt;button type=<span class="token-string">&quot;submit&quot;</span> class=<span class="token-string">&quot;btn btn-primary&quot;</span>&amp;gt;Subir Documentos&amp;lt;/button&amp;gt;
+&amp;lt;/form&amp;gt;</code></pre>
                 </div>
             </div>
 
@@ -1313,37 +1251,30 @@ async def subir_foto(
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiantes_routes.py</span>
+                    <span class="code-title">EstudiantesController.cs</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
-                    <pre><code>from fastapi import UploadFile, File
-from pathlib import Path
-from typing import List
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
+                    <pre><code>[<span class="token-type">HttpPost</span>]
+public async Task&amp;lt;IActionResult&amp;gt; SubirDocumentos(List&amp;lt;IFormFile&amp;gt; archivos)
+{
+    foreach (var archivo in archivos)
+    {
+        if (archivo.Length &amp;gt; 0)
+        {
+            var nombre = Path.GetFileName(archivo.FileName);
+            var ruta = Path.Combine(_environment.WebRootPath, <span class="token-string">&quot;uploads&quot;</span>, nombre);
 
-UPLOAD_DIR = Path("uploads/documentos")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+            using (var stream = new FileStream(ruta, FileMode.Create))
+            {
+                await archivo.CopyToAsync(stream);
+            }
+        }
+    }
 
-@router.post("/api/estudiantes/documentos")
-async def subir_documentos(archivos: List[UploadFile] = File(...)):
-    archivos_subidos = []
-
-    for archivo in archivos:
-        if archivo.filename:
-            nombre = Path(archivo.filename).name
-            ruta = UPLOAD_DIR / nombre
-
-            <span class="token-comment"># Guardar archivo</span>
-            contenido = await archivo.read()
-            with open(ruta, "wb") as f:
-                f.write(contenido)
-
-            archivos_subidos.append(nombre)
-
-    return {
-        "mensaje": f"{len(archivos_subidos)} archivos subidos",
-        "archivos": archivos_subidos
-    }</code></pre>
+    TempData[<span class="token-string">&quot;Mensaje&quot;</span>] = $<span class="token-string">&quot;{archivos.Count} archivos subidos&quot;</span>;
+    return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>);
+}</code></pre>
                 </div>
             </div>
         </section>
@@ -1383,8 +1314,8 @@ async def subir_documentos(archivos: List[UploadFile] = File(...)):
                 <li>Token generado automáticamente y válido por sesión</li>
             </ul>
 
-            <h4>Tag Helpers (átomos de HTML en Angular templates)</h4>
-            <p><strong><abbr title="Directivas Angular - Característica de Angular templates que permite usar atributos especiales para binding y eventos">Directivas Angular</abbr></strong> = Atributos especiales que permiten binding de datos y manejo de eventos. Ejemplos: <code>*ngIf</code>, <code>[ngClass]</code>, <code>(click)</code>, <code>[(ngModel)]</code>.</p>
+            <h4>Tag Helpers (átomos de HTML en Razor)</h4>
+            <p><strong><abbr title="Tag Helpers - Característica de Razor que permite usar atributos especiales para generar HTML dinámico">Tag Helpers</abbr></strong> = Atributos especiales que se convierten en HTML en el servidor. Ejemplos: <code>asp-action</code>, <code>asp-for</code>, <code>asp-validation-for</code>.</p>
 
             <h4>Implementación con Tag Helpers</h4>
             <div class="code-block">
@@ -1438,9 +1369,9 @@ $.ajax({
             <h2>Ejemplos</h2>
             <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
             <ul>
-                <li>Pydantic para validación</li>
+                <li>Data Annotations para validación</li>
                 <li>Validación en cliente y servidor</li>
-                <li>Uso de MessageService y Component Inputs</li>
+                <li>Uso de TempData y ViewBag</li>
                 <li>Manejo de sesiones y cookies</li>
                 <li>Upload de archivos</li>
                 <li>Protección CSRF</li>
@@ -1451,26 +1382,26 @@ $.ajax({
         <section id="practica" class="section">
             <h2>Práctica / Laboratorio</h2>
             <p><strong>Duración estimada:</strong> 40 minutos</p>
-            <p><strong>Objetivo:</strong> Implementar un formulario de registro con validaciones y manejo de MessageService para mensajes.</p>
+            <p><strong>Objetivo:</strong> Implementar un formulario de registro con validaciones y manejo de TempData para mensajes.</p>
 
-            <h3>Pasos en VS Code / Visual Studio Code</h3>
+            <h3>Pasos en Visual Studio 2022</h3>
             <ol>
-                <li>Abre VS Code / Visual Studio Code y crea un proyecto <strong>FastAPI + Angular</strong></li>
-                <li>Crea el modelo <code>models/registro.py</code> con Pydantic (Field, field_validator)</li>
-                <li>Añade validaciones: Field(...), EmailStr, field_validator para comparaciones</li>
-                <li>En <code>routers/auth.py</code>, crea rutas POST con FastAPI</li>
-                <li>Implementa lógica POST con validación automática de Pydantic y MessageService para mensajes</li>
-                <li>En el componente Angular, usa Reactive Forms y Directivas de validación</li>
-                <li>Prueba validaciones cliente y servidor, verifica mensajes con MessageService</li>
+                <li>Abre Visual Studio 2022 y crea un proyecto <strong>ASP.NET Core Web App (Model-View-Controller)</strong></li>
+                <li>Crea la clase <code>Models/RegistroViewModel.cs</code> con Data Annotations</li>
+                <li>Añade validaciones: [Required], [StringLength], [EmailAddress], [Compare]</li>
+                <li>En <code>Controllers/AccountController.cs</code>, crea acciones GET y POST</li>
+                <li>Implementa lógica POST con ModelState.IsValid y TempData para mensajes</li>
+                <li>En la vista, usa Tag Helpers y añade scripts de validación jQuery</li>
+                <li>Prueba validaciones cliente y servidor, verifica mensajes TempData</li>
             </ol>
 
             <h3>Checklist de verificación</h3>
             <ul>
-                <li>El modelo tiene Pydantic (Field(), EmailStr, field_validator)</li>
-                <li>Las validaciones funcionan en el navegador (Angular Reactive Forms)</li>
-                <li>FastAPI valida automáticamente con Pydantic (retorna 422 si falla)</li>
-                <li>MessageService muestra mensajes después de router.navigate</li>
-                <li>JWT tokens protegen contra CSRF/autenticación no autorizada</li>
+                <li>El modelo tiene Data Annotations ([Required], [StringLength], etc.)</li>
+                <li>Las validaciones funcionan en el navegador (jQuery Validation)</li>
+                <li>ModelState.IsValid se valida en el controller</li>
+                <li>TempData muestra mensajes después de RedirectToAction</li>
+                <li>[ValidateAntiForgeryToken] protege contra CSRF</li>
             </ul>
         </section>
         <!-- Ejercicios -->
@@ -1481,29 +1412,29 @@ $.ajax({
             <p><strong>Duración estimada:</strong> 25 minutos</p>
             <h4>Checklist:</h4>
             <ul>
-                <li>Email con validación EmailStr de Pydantic</li>
-                <li>Password con Field(..., min_length=6)</li>
-                <li>JWT tokens para guardar usuario (localStorage)</li>
-                <li>Eliminar token en logout</li>
+                <li>Email con validación [EmailAddress]</li>
+                <li>Password con [Required] y [MinLength]</li>
+                <li>Session.SetInt32/GetString para guardar usuario</li>
+                <li>Session.Clear() en logout</li>
             </ul>
             <ul>
                 <li>Validación de email</li>
                 <li>Validación de clave (mínimo 6 caracteres)</li>
-                <li>Manejo de sesión con JWT</li>
-                <li>Logout (eliminar token)</li>
+                <li>Manejo de sesión</li>
+                <li>Logout</li>
             </ul>
 
-            <h3>Ejercicio 2: Carrito con BehaviorSubject</h3>
+            <h3>Ejercicio 2: Carrito con Session</h3>
             <p><strong>Duración estimada:</strong> 20 minutos</p>
             <h4>Checklist:</h4>
             <ul>
-                <li>BehaviorSubject para guardar lista de productos</li>
-                <li>Observable para recuperar y mostrar carrito</li>
-                <li>Método vaciar carrito con next([])</li>
+                <li>Session guardar lista de productos</li>
+                <li>Session recuperar y mostrar carrito</li>
+                <li>Botón vaciar carrito con Session.Clear()</li>
             </ul>
             <ul>
-                <li>Agregar productos al carrito</li>
-                <li>Mostrar carrito con async pipe</li>
+                <li>Agregar productos a session</li>
+                <li>Mostrar carrito</li>
                 <li>Vaciar carrito</li>
             </ul>
 
@@ -1578,44 +1509,44 @@ $.ajax({
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Pydantic</strong></td>
+                        <td><strong>Data Annotations</strong></td>
                         <td>Atributos para validación de modelos</td>
                     </tr>
                     <tr>
-                        <td><strong>Pydantic validation</strong></td>
-                        <td>Validación automática de modelos en FastAPI</td>
+                        <td><strong>ModelState</strong></td>
+                        <td>Estado de validación en servidor</td>
                     </tr>
                     <tr>
-                        <td><strong>Angular Reactive Forms</strong></td>
+                        <td><strong>jQuery Validation</strong></td>
                         <td>Validación en cliente</td>
                     </tr>
                     <tr>
-                        <td><strong>MessageService</strong></td>
-                        <td>Comunicación entre componentes (BehaviorSubject)</td>
+                        <td><strong>TempData</strong></td>
+                        <td>Datos persistentes hasta siguiente petición</td>
                     </tr>
                     <tr>
-                        <td><strong>JWT Tokens</strong></td>
-                        <td>Autenticación y autorización sin estado</td>
+                        <td><strong>Session</strong></td>
+                        <td>Datos persistentes durante sesión de usuario</td>
                     </tr>
                     <tr>
                         <td><strong>Cookies</strong></td>
                         <td>Almacenamiento en navegador</td>
                     </tr>
                     <tr>
-                        <td><strong>UploadFile</strong></td>
-                        <td>Manejo de archivos subidos (FastAPI)</td>
+                        <td><strong>IFormFile</strong></td>
+                        <td>Manejo de archivos subidos</td>
                     </tr>
                     <tr>
-                        <td><strong>Async Validators</strong></td>
+                        <td><strong>Remote Validation</strong></td>
                         <td>Validación AJAX en tiempo real</td>
                     </tr>
                     <tr>
                         <td><strong>CSRF Protection</strong></td>
-                        <td>SameSite cookies para seguridad</td>
+                        <td>Token antiforgery para seguridad</td>
                     </tr>
                     <tr>
                         <td><strong>Distributed Cache</strong></td>
-                        <td>Estado escalable (Redis, Memcached)</td>
+                        <td>Sesión escalable (Redis, SQL Server)</td>
                     </tr>
                 </tbody>
             </table>
@@ -1623,7 +1554,7 @@ $.ajax({
 
         <!-- Proxima Clase -->
         <section class="section">
-            <h2>Próxima Clase: Introducción a ADOPython</h2>
+            <h2>Próxima Clase: Introducción a ADO.NET</h2>
             <table class="objectives-table">
                 <thead>
                     <tr>
@@ -1633,8 +1564,8 @@ $.ajax({
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>pyodbc</strong></td>
-                        <td>pyodbc Connection, cursor.execute(), cursor.fetchall()</td>
+                        <td><strong>ADO.NET</strong></td>
+                        <td>SqlConnection, SqlCommand, SqlDataReader</td>
                     </tr>
                     <tr>
                         <td><strong>CRUD básico</strong></td>
@@ -1653,19 +1584,11 @@ $.ajax({
         </section>
     </main>
 
-    <section id='entrega-git'>
-  <h3>Entrega con Git</h3>
-  <p>Branch: <code>feature/tema-clase-11</code></p>
-  <ul>
-    <li>Commits: setup / implementación / pruebas-docs</li>
-  </ul>
-  <p>Tag: <code>clase-11-v1</code></p>
-</section><footer class="footer">
+    <footer class="footer">
         <p><strong>Unidad 3 completada: 4/4 clases ✅</strong></p>
         <p>UNAULA - Ingeniería Informática - 2026-I</p>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
     </footer>
 </body>
 </html>
-
 

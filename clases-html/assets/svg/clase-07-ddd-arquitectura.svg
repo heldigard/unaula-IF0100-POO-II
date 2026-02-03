@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-labelledby="title desc">
+  <title id="title">Arquitectura DDD</title>
+  <desc id="desc">Capas UI, Application, Domain, Infrastructure.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8ff}
+      .layer{stroke:#cbd5f5;stroke-width:1.4;rx:10}
+      .l1{fill:#e0e7ff}
+      .l2{fill:#dcfce7}
+      .l3{fill:#fff7ed}
+      .l4{fill:#fee2e2}
+      .h{font:700 15px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .s{font:12px 'Segoe UI', Arial, sans-serif;fill:#475569}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="900" height="320" />
+
+  <rect class="layer l1" x="160" y="40" width="580" height="50" />
+  <text class="h" x="450" y="70" text-anchor="middle">UI / Presentation</text>
+
+  <rect class="layer l2" x="160" y="110" width="580" height="50" />
+  <text class="h" x="450" y="140" text-anchor="middle">Application</text>
+
+  <rect class="layer l3" x="160" y="180" width="580" height="50" />
+  <text class="h" x="450" y="210" text-anchor="middle">Domain</text>
+
+  <rect class="layer l4" x="160" y="250" width="580" height="50" />
+  <text class="h" x="450" y="280" text-anchor="middle">Infrastructure</text>
+
+  <text class="s" x="450" y="305" text-anchor="middle">Dependencias apuntan hacia el dominio</text>
+</svg>

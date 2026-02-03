@@ -1,0 +1,92 @@
+/**
+ * IF0100 - Estilos compartidos para bloques de código
+ * Agente: A-0001 (Zai) - CODESTYLE
+ * Fecha: 2026-02-02
+ */
+
+/* Bloque de código base */
+pre {
+  background: #0b1020;
+  color: #e2e8f0;
+  padding: 16px;
+  border-radius: 10px;
+  overflow-x: auto;
+  line-height: 1.45;
+  font-family: "Cascadia Code", "Consolas", "Monaco", "Courier New", monospace;
+}
+
+/* Código inline */
+code {
+  font-family: "Cascadia Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 0.95rem;
+}
+
+/* Código dentro de pre */
+pre code {
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Código inline en párrafos y listas */
+p code, li code, td code {
+  background: #313244;
+  color: #cdd6f4;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+/* Syntax highlighting para Python */
+pre code[class*="language-"],
+.code-block pre code {
+  color: #e2e8f0;
+}
+
+/* Compatible con Prism: "token keyword" (dos clases) y con HTML tokenizado estático: "token-keyword" */
+.token.keyword, .token-keyword { color: #c792ea; font-weight: 600; }
+.token.type, .token-type { color: #ffcb6b; }
+.token.string, .token-string { color: #c3e88d; }
+.token.comment, .token-comment { color: #546e7a; font-style: italic; }
+.token.number, .token-number { color: #f78c6c; }
+.token.operator, .token-operator { color: #89ddff; }
+.token.method, .token-method { color: #82aaff; }
+.token.class, .token-class { color: #ffcb6b; }
+.token.function, .token-function { color: #82aaff; }
+.token.property, .token-property { color: #b4befe; }
+.token.namespace, .token-namespace { color: #f38ba8; }
+.token.variable, .token-variable { color: #e2e8f0; }
+.token.annotation, .token-annotation { color: #cba6f7; }
+.token.builtin, .token-builtin { color: #89b4fa; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  pre {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Print */
+@media print {
+  pre {
+    background: white;
+    color: black;
+    border: 1px solid #ddd;
+  }
+  pre code {
+    color: black;
+  }
+  .token-keyword,
+  .token-type,
+  .token-string,
+  .token-comment,
+  .token-number,
+  .token-operator,
+  .token-method,
+  .token-class {
+    color: black !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+  }
+}

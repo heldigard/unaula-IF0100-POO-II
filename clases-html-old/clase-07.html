@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 07 - DDD Domain-Driven Design | IF0100 - POO II</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #1e3a8a;
+      --accent: #3b82f6;
+      --card: #ffffff;
+      --line: #d9e2ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
+      color: #fff;
+      padding: 36px 20px 28px;
+    }
+    header .wrap { max-width: 1100px; margin: 0 auto; }
+    header h1 {
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
+      font-size: 2.2rem;
+    }
+    header .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 16px;
+      border-radius: 12px;
+    }
+    header ul { margin: 8px 0 0 18px; }
+    nav {
+      max-width: 1100px;
+      margin: 18px auto 0;
+      padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px 14px;
+    }
+    nav a {
+      color: var(--brand);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #eef2ff;
+      display: block;
+    }
+    nav a:hover { background: #dbeafe; }
+    main { max-width: 1100px; margin: 18px auto 60px; padding: 0 20px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    h2 { margin-top: 0; color: var(--brand); font-size: 1.6rem; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    .note {
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+    }
+    figure {
+      margin: 0;
+      padding: 12px;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      background: #fbfbff;
+    }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 6px; }
+    figcaption { font-size: 0.95rem; color: var(--muted); margin-top: 8px; }
+    pre {
+      background: #0b1020;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
+    /* Syntax highlighting para C# */
+    .token-keyword { color: #c792ea; font-weight: 600; }
+    .token-type { color: #ffcb6b; }
+    .token-string { color: #c3e88d; }
+    .token-comment { color: #546e7a; font-style: italic; }
+    .token-number { color: #f78c6c; }
+    .token-operator { color: #89ddff; }
+    /* Accessibility */
+    abbr[title] { text-decoration: underline dotted; cursor: help; }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand);
+      color: #fff;
+      padding: 8px 16px;
+      text-decoration: none;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+    th { background: #f1f5f9; }
+    /* Print styles */
+    @media print {
+      header, nav, footer { background: white !important; color: black !important; }
+      a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      pre, code { white-space: pre-wrap; }
+    }
+
+    /* BLOQUES DE CÓDIGO MEJORADOS */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 12px;
+      margin: 16px 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: 1px solid #313244;
+    }
+
+    .code-header {
+      background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #45475a;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dot.red { background: #f38ba8; }
+    .code-dot.yellow { background: #f9e2af; }
+    .code-dot.green { background: #a6e3a1; }
+
+    .code-title {
+      color: #cdd6f4;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-left: auto;
+      font-family: 'Cascadia Code', Consolas, monospace;
+    }
+
+    .code-content {
+      display: flex;
+      background: #1e1e2e;
+    }
+
+    .line-numbers {
+      background: #181825;
+      color: #6c7086;
+      padding: 12px 10px;
+      text-align: right;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      user-select: none;
+      border-right: 1px solid #313244;
+    }
+
+    .code-block pre {
+      background: transparent;
+      margin: 0;
+      padding: 12px 16px;
+      flex: 1;
+      overflow-x: auto;
+    }
+
+    .code-block pre code {
+      color: #cdd6f4;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+    .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+    .code-block .token-type { color: #f9e2af; } /* yellow */
+    .code-block .token-string { color: #a6e3a1; } /* green */
+    .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+    .code-block .token-number { color: #fab387; } /* peach */
+    .code-block .token-operator { color: #89dceb; } /* cyan */
+    .code-block .token-method { color: #89b4fa; } /* blue */
+    .code-block .token-class { color: #f9e2af; font-weight: 600; }
+    .code-block .token-property { color: #b4befe; } /* lavender */
+    .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+    /* Código inline */
+    p code, li code {
+      background: #313244;
+      color: #cdd6f4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      border: 1px solid #45475a;
+    }
+
+    /* Tablas de código */
+    .code-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .code-comparison .code-block {
+      margin: 0;
+    }
+
+    .code-label {
+      font-size: 0.8rem;
+      color: #6c7086;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido</a>
+  <header>
+    <div class="wrap">
+      <div>IF0100 - Lenguaje de Programación OO II | Unidad 2</div>
+      <h1>Clase 07: DDD - Domain-Driven Design</h1>
+      <div>Duración: 90 minutos</div>
+      <div class="meta">
+        <div>
+          <strong>Objetivos</strong>
+          <ul>
+            <li>Comprender fundamentos de DDD.</li>
+            <li>Distinguir Entities, Value Objects y Aggregates.</li>
+            <li>Aplicar el patrón Repository.</li>
+            <li>Identificar Bounded Contexts.</li>
+            <li>Implementar arquitectura en capas.</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Prerrequisitos</strong>
+          <ul>
+            <li>Conocer conceptos de POO y capas.</li>
+            <li>Experiencia básica con C# y UML.</li>
+            <li>Comprensión de necesidades de negocio.</li>
+            <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#teoria">Teoría</a></li>
+      <li><a href="#ejemplos">Ejemplos</a></li>
+      <li><a href="#practica">Práctica / laboratorio</a></li>
+      <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#referencias">Referencias</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <section id="teoria">
+      <h2>Teoría</h2>
+
+      <h3>Qué es DDD y cuándo usarlo</h3>
+      <p><strong><abbr title="Domain-Driven Design: Diseño guiado por el dominio, enfoque de desarrollo de software que se centra en el modelo del dominio del negocio y su lógica, más que en detalles técnicos">DDD</abbr></strong> (Domain-Driven Design) modela el software según el dominio del negocio, usando un <strong>lenguaje ubicuo</strong> compartido entre expertos y equipo técnico.</p>
+
+      <div class="note">
+        <h4>¿Por qué DDD?</h4>
+        <p>DDD nació para resolver un problema crítico en proyectos complejos: <strong>la brecha entre el lenguaje del negocio y el código</strong>. En muchos proyectos, los términos y conceptos del negocio se pierden o distorsionan al traducirlos a código. DDD propone que el <strong>modelo del dominio</strong> (las clases y relaciones en el código) debe reflejar fielmente la realidad del negocio. Esto permite:</p>
+        <ul>
+          <li><strong>Comunicación precisa:</strong> Expertos y desarrolladores hablan el mismo idioma</li>
+          <li><strong>Código expresivo:</strong> El código lee como negocio, no como técnica</li>
+          <li><strong>Mantenibilidad:</strong> Los cambios en el negocio se reflejan directamente en el código</li>
+          <li><strong>Alineación estratégica:</strong> El software evoluciona con el negocio</li>
+        </ul>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h4>Usar DDD cuando</h4>
+          <ul>
+            <li>Reglas de negocio complejas.</li>
+            <li>Dominio cambiante.</li>
+            <li>Proyecto estratégico y de larga duración.</li>
+            <li>Hay expertos de dominio disponibles.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Evitar DDD cuando</h4>
+          <ul>
+            <li><abbr title="CRUD: Create-Read-Update-Delete (Crear-Leer-Actualizar-Borrar), operaciones básicas de persistencia de datos">CRUD</abbr> simple sin reglas.</li>
+            <li>Proyectos cortos o <abbr title="MVP: Minimum Viable Product (Producto Mínimo Viable), versión básica de un producto con solo las características esenciales">MVP</abbr>.</li>
+            <li>No hay expertos de dominio.</li>
+            <li>Se requiere velocidad sobre precisión.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Lenguaje ubicuo</h3>
+      <p>El <strong><abbr title="Lenguaje ubicuo: Lenguaje compartido entre expertos de dominio y desarrolladores, usado tanto en conversaciones como en el código, garantizando que los términos tengan el mismo significado en todos los contextos">lenguaje ubicuo</abbr></strong> es el pilar de DDD: es un lenguaje compartido que se usa en conversaciones, documentación y código. Regla de oro: <strong>los mismos términos se usan en todas partes</strong>.</p>
+      <table>
+        <thead>
+          <tr><th>Concepto</th><th>Término correcto</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cliente</td><td>Cliente (no User)</td></tr>
+          <tr><td>Pedido</td><td>RealizarPedido</td></tr>
+          <tr><td>Estado</td><td>PedidoPendiente</td></tr>
+          <tr><td>Pago</td><td>ConfirmarPago</td></tr>
+        </tbody>
+      </table>
+      <div class="note">Regla: los mismos términos se usan en conversaciones, documentación y código.</div>
+
+      <h3>Entities vs Value Objects</h3>
+      <p>En DDD distinguimos entre objetos que tienen <strong>identidad</strong> (Entities) y objetos definidos por sus <strong>atributos</strong> (Value Objects). Esta distinción es crucial para diseñar modelos precisos.</p>
+
+      <div class="note">
+        <h4>¿Por qué distinguir Entity vs Value Object?</h4>
+        <p>La distinción permite que el modelo refleje la realidad del negocio. Un <strong>Cliente</strong> es una Entity porque sigue siendo la misma persona aunque cambie su dirección. Un <strong>Dinero</strong> es un Value Object porque $100 es $100 sin importar de dónde venga. Esto permite:</p>
+        <ul>
+          <li><strong>Modelo preciso:</strong> El código expresa las intenciones del negocio</li>
+          <li><strong>Inmutabilidad:</strong> Los Value Objects pueden ser inmutables (más seguros)</li>
+          <li><strong>Performance:</strong> Los Value Objects se pueden copiar en lugar de referenciar</li>
+          <li><strong>Menos bugs:</strong> La comparación por valor evita errores de igualdad</li>
+        </ul>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Entity</th><th>Value Object</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Definida por</td><td>Identidad</td><td>Atributos</td></tr>
+          <tr><td>ID único</td><td>Sí</td><td>No</td></tr>
+          <tr><td>Mutabilidad</td><td>Mutable</td><td>Inmutable</td></tr>
+          <tr><td>Comparación</td><td>Por identidad</td><td>Por valor</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Aggregates y reglas</h3>
+      <p>Un <strong><abbr title="Aggregate: Grupo de objetos tratados como una unidad para propósitos de modificación de datos, con un Aggregate Root como punto de entrada único y control de invariantes">Aggregate</abbr></strong> es un conjunto de objetos que se tratan como una unidad. El <strong>Aggregate Root</strong> es la única forma externa de interactuar con el aggregate.</p>
+
+      <div class="note">
+        <h4>¿Por qué Aggregates?</h4>
+        <p>Los Aggregates resuelven dos problemas clave: <strong>consistencia transaccional</strong> y <strong>acceso controlado</strong>. Al definir límites claros:</p>
+        <ul>
+          <li><strong>Invariantes protegidos:</strong> Las reglas de negocio se aplican en el Root, nadie puede saltárselas</li>
+          <li><strong>Transacciones claras:</strong> Una transacción modifica un solo aggregate</li>
+          <li><strong>Performance:</strong> Se cargan solo los objetos necesarios</li>
+          <li><strong>Diseño intencional:</strong> Fuerza a pensar en agrupaciones naturales del dominio</li>
+        </ul>
+      </div>
+
+      <ul>
+        <li>El Aggregate Root es el único punto de entrada.</li>
+        <li>Referencias entre aggregates por ID, no por objetos completos.</li>
+        <li>Una transacción modifica un solo aggregate.</li>
+        <li>Los <strong><abbr title="Invariante: Regla de negocio que debe cumplirse siempre, un constraint que nunca se puede violar">invariantes</abbr></strong> (reglas que deben cumplirse siempre) se protegen dentro del aggregate.</li>
+      </ul>
+
+      <h3>Repository y Domain Services</h3>
+      <p>El patrón <strong><abbr title="Repository: Patrón que abstrae el acceso a datos, proporcionando una interfaz de colección-like para obtener y persistir agregados">Repository</abbr></strong> abstrae la persistencia; <strong>Domain Service</strong> encapsula lógica de negocio que cruza aggregates o no pertenece naturalmente a una entidad.</p>
+    </section>
+
+    <section id="ejemplos">
+      <h2>Ejemplos e infografías</h2>
+
+      <h3>Infografía: Arquitectura DDD</h3>
+      <figure>
+        <img src="../assets/infografias/clase-07-ddd-arquitectura.png" alt="Infografía arquitectura DDD" onerror="this.onerror=null;this.src='/assets/infografias/clase-07-ddd-arquitectura.png'" />
+        <figcaption>Figura 1: Arquitectura en capas de DDD - Presentation/UI maneja interacción con usuarios, Application/Domain coordina lógica de negocio y flujos de trabajo, Domain contiene el modelo del dominio con entidades de negocio y reglas, e Infrastructure abstrae persistencia y servicios externos; las flechas hacia el centro indican la dependencia invertida donde las capas exteriores dependen del núcleo (Domain), manteniendo el dominio puro y libre de detalles técnicos.</figcaption>
+      </figure>
+
+      <h3>Entity en C# (Cliente)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Cliente.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Cliente</span>
+{
+    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">Email</span> <span class="token-property">Email</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+
+    <span class="token-keyword">public</span> <span class="token-method">Cliente</span>(<span class="token-type">ClienteId</span> <span class="token-operator">id</span>, <span class="token-keyword">string</span> <span class="token-operator">nombre</span>, <span class="token-type">Email</span> <span class="token-operator">email</span>)
+    {
+        <span class="token-property">Id</span> <span class="token-operator">=</span> <span class="token-operator">id</span>;
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-operator">nombre</span>;
+        <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">email</span>;
+    }
+
+    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">CambiarEmail</span>(<span class="token-type">Email</span> <span class="token-operator">nuevoEmail</span>) <span class="token-operator">=></span> <span class="token-property">Email</span> <span class="token-operator">=</span> <span class="token-operator">nuevoEmail</span>;
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>Value Object en C# (Dinero)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Dinero.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Dinero</span> : <span class="token-type">IEquatable</span>&lt;<span class="token-type">Dinero</span>&gt;
+{
+    <span class="token-keyword">public</span> <span class="token-keyword">decimal</span> <span class="token-property">Monto</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public</span> <span class="token-keyword">string</span> <span class="token-property">Moneda</span> { <span class="token-keyword">get</span>; }
+
+    <span class="token-keyword">public</span> <span class="token-method">Dinero</span>(<span class="token-keyword">decimal</span> <span class="token-operator">monto</span>, <span class="token-keyword">string</span> <span class="token-operator">moneda</span>)
+    {
+        <span class="token-keyword">if</span> (<span class="token-operator">monto</span> <span class="token-operator">&lt;</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
+        <span class="token-property">Monto</span> <span class="token-operator">=</span> <span class="token-operator">monto</span>;
+        <span class="token-property">Moneda</span> <span class="token-operator">=</span> <span class="token-operator">moneda</span>;
+    }
+
+    <span class="token-keyword">public</span> <span class="token-type">Dinero</span> <span class="token-method">Sumar</span>(<span class="token-type">Dinero</span> <span class="token-operator">otro</span>)
+    {
+        <span class="token-keyword">if</span> (<span class="token-property">Moneda</span> <span class="token-operator">!=</span> <span class="token-operator">otro</span>.<span class="token-property">Moneda</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>();
+        <span class="token-keyword">return</span> <span class="token-keyword">new</span> <span class="token-method">Dinero</span>(<span class="token-property">Monto</span> <span class="token-operator">+</span> <span class="token-operator">otro</span>.<span class="token-property">Monto</span>, <span class="token-property">Moneda</span>);
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>Aggregate Root: Pedido</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Pedido.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pedido</span>
+{
+    <span class="token-keyword">public</span> <span class="token-type">PedidoId</span> <span class="token-property">Id</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public</span> <span class="token-type">ClienteId</span> <span class="token-property">ClienteId</span> { <span class="token-keyword">get</span>; <span class="token-keyword">private</span> <span class="token-keyword">set</span>; }
+    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">List</span>&lt;<span class="token-type">LineaPedido</span>&gt; <span class="token-operator">_lineas</span> <span class="token-operator">=</span> <span class="token-keyword">new</span>();
+
+    <span class="token-keyword">public</span> <span class="token-keyword">void</span> <span class="token-method">AgregarProducto</span>(<span class="token-type">ProductoId</span> <span class="token-operator">productoId</span>, <span class="token-keyword">int</span> <span class="token-operator">cantidad</span>, <span class="token-type">Dinero</span> <span class="token-operator">precio</span>)
+    {
+        <span class="token-keyword">if</span> (<span class="token-operator">cantidad</span> <span class="token-operator">&lt;=</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>();
+        <span class="token-operator">_lineas</span>.<span class="token-method">Add</span>(<span class="token-keyword">new</span> <span class="token-method">LineaPedido</span>(<span class="token-operator">productoId</span>, <span class="token-operator">cantidad</span>, <span class="token-operator">precio</span>));
+    }
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="practica">
+      <h2>Práctica / laboratorio (35 min)</h2>
+      <section class="actividad">
+        <h3>Actividad: Laboratorio DDD - Modelado de Dominio (35 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Solución .NET con modelo de dominio y Repository</p>
+        <p><strong>Tiempo estimado:</strong> 35 min</p>
+        <p><strong>Criterios de éxito:</strong> Solución compila, dominio sin referencias a infraestructura, repositorio por interfaz</p>
+        <div class="note">Objetivo: modelar un dominio simple y aplicar Repository en una solución .NET.</div>
+
+      <h3>Pasos en Windows (Visual Studio 2022)</h3>
+      <ol>
+        <li>Crear solución nueva con proyectos: <strong>Domain</strong> (Class Library) y <strong>App</strong> (Console App).</li>
+        <li>En Domain, definir Entity <code>Cliente</code> y Value Object <code>Dinero</code>.</li>
+        <li>En App, crear un servicio de aplicación que use el repositorio.</li>
+        <li>Probar flujo simple: crear pedido y agregar línea.</li>
+      </ol>
+      <div class="note">Checklist: solución compila, dominio sin referencias a infraestructura, repositorio por interfaz.</div>
+
+      <h3>Repository pattern (interface + implementación)</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">IPedidoRepository.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-class">IPedidoRepository</span>
+{
+    <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>);
+    <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>);
+}</code></pre>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">PedidoRepository.cs</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">PedidoRepository</span> : <span class="token-type">IPedidoRepository</span>
+{
+    <span class="token-keyword">private</span> <span class="token-keyword">readonly</span> <span class="token-type">AppDbContext</span> <span class="token-operator">_context</span>;
+    <span class="token-keyword">public</span> <span class="token-method">PedidoRepository</span>(<span class="token-type">AppDbContext</span> <span class="token-operator">context</span>) <span class="token-operator">=></span> <span class="token-operator">_context</span> <span class="token-operator">=</span> <span class="token-operator">context</span>;
+
+    <span class="token-keyword">public</span> <span class="token-type">Task</span>&lt;<span class="token-type">Pedido</span>&gt; <span class="token-method">ObtenerAsync</span>(<span class="token-type">PedidoId</span> <span class="token-operator">id</span>)
+        <span class="token-operator">=></span> <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">FirstOrDefaultAsync</span>(<span class="token-operator">p</span> <span class="token-operator">=></span> <span class="token-operator">p</span>.<span class="token-property">Id</span> <span class="token-operator">==</span> <span class="token-operator">id</span>);
+
+    <span class="token-keyword">public</span> <span class="token-keyword">async</span> <span class="token-type">Task</span> <span class="token-method">GuardarAsync</span>(<span class="token-type">Pedido</span> <span class="token-operator">pedido</span>)
+    {
+        <span class="token-operator">_context</span>.<span class="token-property">Pedidos</span>.<span class="token-method">Update</span>(<span class="token-operator">pedido</span>);
+        <span class="token-keyword">await</span> <span class="token-operator">_context</span>.<span class="token-method">SaveChangesAsync</span>();
+    }
+}</code></pre>
+        </div>
+      </div>
+
+      <h3>Bounded Contexts</h3>
+      <p>Un <strong><abbr title="Bounded Context: Límite conceptual dentro del cual un modelo particular aplica y tiene significado; cada contexto tiene su propio lenguaje ubicuo y modelo del dominio">Bounded Context</abbr></strong> (Contexto Delimitado) es un límite conceptual dentro del cual un modelo particular aplica. DDD divide sistemas grandes en múltiples bounded contexts, cada uno con su propio modelo.</p>
+      <ul>
+        <li>Separar Ventas, Inventario y Envíos como contextos diferentes.</li>
+        <li>El término "Producto" cambia significado según el contexto.</li>
+        <li>Definir integraciones explícitas entre contextos.</li>
+      </ul>
+
+      <h3>Checklist de consistencia</h3>
+      <ul>
+        <li>Dominio no depende de infraestructura.</li>
+        <li>Interfaces en Domain, implementaciones en Infrastructure.</li>
+        <li>Aggregate Root controla invariantes.</li>
+      </ul>
+      <div class="note">Checklist práctico: solución compila, repositorio aislado, invariantes documentadas.</div>
+    </section>
+
+    <section id="ejercicios">
+      <h2>Ejercicios</h2>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 1 - Biblioteca (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> Identificación de elementos DDD para sistema de préstamos</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> Al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service</p>
+        <p>Identificar Entities, Value Objects, Aggregates y Services para un sistema de préstamos.</p>
+      <div class="note">Checklist: al menos 2 entities, 2 value objects, 1 aggregate root y 1 domain service.</div>
+
+      <section class="actividad">
+        <h3>Actividad: Ejercicio 2 - Bounded Contexts (20 min)</h3>
+        <p><strong>Tipo:</strong> Opcional / práctica</p>
+        <p><strong>Relacionado con:</strong> Ninguno</p>
+        <p><strong>Entregable:</strong> División de tienda online en bounded contexts</p>
+        <p><strong>Tiempo estimado:</strong> 20 min</p>
+        <p><strong>Criterios de éxito:</strong> 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto</p>
+        <p>Dividir una tienda online en contextos (Ventas, Inventario, Envíos, Facturación) e indicar integraciones.</p>
+      <div class="note">Checklist: 4 contextos, mapa de relaciones, lenguaje ubicuo por contexto.</div>
+
+      <h3>Errores comunes (10 min)</h3>
+      <ul>
+        <li>Crear Entities para todo sin necesidad de identidad.</li>
+        <li>Permitir acceso directo a entidades internas del aggregate.</li>
+        <li>Acoplar Domain con EF Core o frameworks.</li>
+      </ul>
+      <div class="note">Tiempo sugerido total: 50 min (20 + 20 + 10).</div>
+    </section>
+
+    <section id="referencias">
+      <h2>Referencias</h2>
+      <ul>
+        <li><strong>Eric Evans, Domain-Driven Design (2003):</strong> <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank" rel="noopener">Libro original DDD</a> — el libro que fundó el movimiento DDD</li>
+        <li><strong>Vaughn Vernon, Implementing Domain-Driven Design:</strong> <a href="https://www.amazon.com/Implementing-Domain-Driven-Design-Vaughn-Vernon/dp/0321834577" target="_blank" rel="noopener">IDDD Book</a> — guía práctica de implementación</li>
+        <li><strong>Domain Language (Eric Evans):</strong> <a href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener">DDD Reference</a></li>
+        <li><strong>Microsoft Architecture - DDD:</strong> <a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/category/domain-driven-design" target="_blank" rel="noopener">DDD Patterns</a></li>
+        <li><strong>Repository Pattern (Martin Fowler):</strong> <a href="https://martinfowler.com/eaaCatalog/repository.html" target="_blank" rel="noopener">Repository</a></li>
+      </ul>
+    </section>
+
+    <section id="resumen">
+      <h2>Resumen de la Clase</h2>
+      <ul>
+        <li>Domain-Driven Design (DDD) es un enfoque que prioriza el dominio del problema sobre detalles técnicos.</li>
+        <li>El lenguaje ubicuo es un lenguaje compartido entre expertos del dominio y desarrolladores.</li>
+        <li>Entities tienen identidad única y lifecycle; Value Objects se identifican por sus atributos.</li>
+        <li>Aggregate Root es la única entrada para modificar un aggregate, controlando invariantes de negocio.</li>
+        <li>Repository Pattern abstrae el acceso a datos, exponiendo interfaces del dominio sin depender de infraestructura.</li>
+        <li>Domain Service contiene lógica de negocio que no pertenece naturalmente a una Entity o Value Object.</li>
+        <li>Factory encapsula la creación de objetos complejos, garantizando consistencia.</li>
+        <li>Bounded Context divide sistemas grandes en contextos delimitados con modelos independientes.</li>
+        <li>DDD separa en capas: Domain (dominio puro), Application (casos de uso), Infrastructure (persistencia).</li>
+        <li>La arquitectura en capas con inversión de dependencias permite que el dominio no dependa de infraestructura.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer style="background:#1e293b;color:#fff;text-align:center;padding:24px;margin-top:40px;">
+    <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+    <p>UNAULA - Ingeniería Informática - 2026-I</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 02 - Clases, Objetos y Encapsulamiento | IF0100 - POO II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        header .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            padding: 10px 20px;
+            color: #1e3a8a;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #e0e7ff;
+        }
+
+        section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #1e40af;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        h3 {
+            color: #1e3a8a;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #3b82f6;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background: #1e40af;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            color: inherit;
+        }
+
+        p code, li code {
+            background: #e0e7ff;
+            color: #1e40af;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .diagram {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid #e5e7eb;
+        }
+
+        figure {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        figcaption {
+            margin-top: 15px;
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-table > div {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .comparison-table h4 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e40af;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+            margin: 20px 0;
+        }
+
+        .note {
+            background: #f0f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: #52606d;
+        }
+
+        /* Syntax highlighting para C# */
+        .token-keyword { color: #c792ea; font-weight: 600; }
+        .token-type { color: #ffcb6b; }
+        .token-string { color: #c3e88d; }
+        .token-comment { color: #546e7a; font-style: italic; }
+        .token-number { color: #f78c6c; }
+        .token-operator { color: #89ddff; }
+
+        /* Accessibility */
+        abbr[title] { text-decoration: underline dotted; cursor: help; }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1e40af;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-table {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 20px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header, nav, footer { background: white !important; color: black !important; }
+            a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; }
+            pre, code { white-space: pre-wrap; }
+        }
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1e40af;
+            color: #fff;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        /* BLOQUES DE CÓDIGO MEJORADOS */
+        .code-block {
+          background: #1e1e2e;
+          border-radius: 12px;
+          margin: 16px 0;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          border: 1px solid #313244;
+        }
+
+        .code-header {
+          background: linear-gradient(90deg, #313244 0%, #45475a 100%);
+          padding: 10px 16px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          border-bottom: 1px solid #45475a;
+        }
+
+        .code-dots {
+          display: flex;
+          gap: 6px;
+        }
+
+        .code-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+        }
+
+        .code-dot.red { background: #f38ba8; }
+        .code-dot.yellow { background: #f9e2af; }
+        .code-dot.green { background: #a6e3a1; }
+
+        .code-title {
+          color: #cdd6f4;
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-left: auto;
+          font-family: 'Cascadia Code', Consolas, monospace;
+        }
+
+        .code-content {
+          display: flex;
+          background: #1e1e2e;
+        }
+
+        .line-numbers {
+          background: #181825;
+          color: #6c7086;
+          padding: 12px 10px;
+          text-align: right;
+          font-family: 'Cascadia Code', Consolas, monospace;
+          font-size: 0.9rem;
+          line-height: 1.5;
+          user-select: none;
+          border-right: 1px solid #313244;
+        }
+
+        .code-block pre {
+          background: transparent;
+          margin: 0;
+          padding: 12px 16px;
+          flex: 1;
+          overflow-x: auto;
+        }
+
+        .code-block pre code {
+          color: #cdd6f4;
+          font-size: 0.95rem;
+          line-height: 1.5;
+          display: block;
+        }
+
+        /* Syntax highlighting mejorado - Catppuccin Mocha theme */
+        .code-block .token-keyword { color: #cba6f7; font-weight: 600; } /* purple */
+        .code-block .token-type { color: #f9e2af; } /* yellow */
+        .code-block .token-string { color: #a6e3a1; } /* green */
+        .code-block .token-comment { color: #6c7086; font-style: italic; } /* gray */
+        .code-block .token-number { color: #fab387; } /* peach */
+        .code-block .token-operator { color: #89dceb; } /* cyan */
+        .code-block .token-method { color: #89b4fa; } /* blue */
+        .code-block .token-class { color: #f9e2af; font-weight: 600; }
+        .code-block .token-property { color: #b4befe; } /* lavender */
+        .code-block .token-namespace { color: #f38ba8; } /* pink */
+
+        /* Código inline */
+        p code, li code {
+          background: #313244;
+          color: #cdd6f4;
+          padding: 2px 8px;
+          border-radius: 6px;
+          font-size: 0.9em;
+          border: 1px solid #45475a;
+        }
+
+        /* Tablas de código */
+        .code-comparison {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 16px;
+          margin: 16px 0;
+        }
+
+        .code-comparison .code-block {
+          margin: 0;
+        }
+
+        .code-label {
+          font-size: 0.8rem;
+          color: #6c7086;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Saltar al contenido</a>
+    <header>
+        <h1>Clases, Objetos y Encapsulamiento</h1>
+        <div class="subtitle">IF0100 - Lenguaje de Programación OO II | 4 Semestre - Ingeniería Informática</div>
+        <div class="meta">Duración: 90 minutos | Fecha: Semana 2</div>
+    </header>
+
+    <div class="container" id="main">
+        <nav>
+            <ul>
+                <li><a href="#teoria">Teoría</a></li>
+                <li><a href="#ejemplos">Ejemplos</a></li>
+                <li><a href="#practica">Práctica / Laboratorio</a></li>
+                <li><a href="#ejercicios">Ejercicios</a></li>
+                <li><a href="#referencias">Referencias</a></li>
+            </ul>
+        </nav>
+
+        <section id="teoria">
+        <section id="objetivos">
+            <h2>Objetivos y Agenda</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Objetivos</th>
+                        <th>Agenda (90 min)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1. Entender paradigma POO</td><td>15' Qué es POO?</td></tr>
+                    <tr><td>2. Diferenciar clase vs objeto</td><td>20' Clase vs Objeto</td></tr>
+                    <tr><td>3. Aplicar encapsulamiento</td><td>25' Encapsulamiento</td></tr>
+                    <tr><td>4. Usar propiedades y constructores</td><td>20' Propiedades y Constructores</td></tr>
+                    <tr><td>5. Comprender static vs instance</td><td>10' Static y Diferencias class/struct</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="poo">
+            <h2>1. Programación Orientada a Objetos</h2>
+
+            <h3>Qué es la POO?</h3>
+            <p>La <strong><abbr title="Programación Orientada a Objetos: Paradigma de programación que organiza el software como objetos que contienen datos y código">POO</abbr></strong> (<strong>Programación Orientada a Objetos</strong>) es un <strong>paradigma</strong> de programación (estilo o enfoque para escribir código) que se basa en el concepto de "objetos", que pueden contener datos y código:</p>
+            <ul>
+                <li><strong>Datos:</strong> Atributos o propiedades (campos)</li>
+                <li><strong>Código:</strong> Comportamientos o métodos (funciones)</li>
+            </ul>
+            <p><strong>¿Por qué usar POO?</strong> Permite organizar código complejo de manera modular, reutilizable y más fácil de mantener que la programación procedural tradicional.</p>
+
+            <h3>Procedural vs POO</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Programación Procedural</th>
+                        <th>Programación Orientada a Objetos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Unidad básica</strong></td><td>Funciones/procedimientos</td><td>Clases/objetos</td></tr>
+                    <tr><td><strong>Datos</strong></td><td>Separados de funciones</td><td>Unidos con métodos</td></tr>
+                    <tr><td><strong>Organización</strong></td><td>Procedimientos que actúan sobre datos</td><td>Objetos que encapsulan datos y comportamiento</td></tr>
+                    <tr><td><strong>Mantenimiento</strong></td><td>Difícil (código acoplado)</td><td>Modular (código desacoplado)</td></tr>
+                    <tr><td><strong>Escalabilidad</strong></td><td>Limitada</td><td>Fácil de extender</td></tr>
+                    <tr><td><strong>Reutilización</strong></td><td>Baja</td><td>Alta (herencia, composición)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Comparativo</h3>
+            <div class="comparison-table">
+                <div>
+                    <h4>Enfoque Procedural (C)</h4>
+                    <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">estudiante.c</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17</div>
+    <pre><code class="language-c"><span class="token-comment">// Datos separados</span>
+<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span> {
+    <span class="token-keyword">char</span> nombre[<span class="token-number">100</span>];
+    <span class="token-keyword">int</span> edad;
+    <span class="token-keyword">double</span> promedio;
+};
+
+<span class="token-comment">// Funciones separadas</span>
+<span class="token-keyword">void</span> <span class="token-method">imprimir_estudiante</span>(<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span>* e) {
+    <span class="token-method">printf</span>(<span class="token-string">"Nombre: %s\n"</span>, e->nombre);
+}
+
+<span class="token-keyword">double</span> <span class="token-method">calcular_promedio</span>(<span class="token-keyword">struct</span> <span class="token-class">Estudiante</span>* e) {
+    <span class="token-keyword">return</span> e->promedio;
+}</code></pre>
+  </div>
+</div>
+                </div>
+                <div>
+                    <h4>Enfoque POO (C#)</h4>
+                    <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Datos y comportamiento UNIDOS</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-comment">// Datos (propiedades)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+
+    <span class="token-comment">// Comportamiento (metodos)</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Imprimir</span>() <span class="token-operator">=></span>
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Nombre: {Nombre}"</span>);
+
+    <span class="token-keyword">public bool</span> <span class="token-method">Aprobado</span>() <span class="token-operator">=></span>
+        <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
+}</code></pre>
+  </div>
+</div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <h4>Ventajas de POO</h4>
+                <ul>
+                    <li><strong>Modularidad:</strong> Código organizado en unidades lógicas (clases)</li>
+                    <li><strong>Reutilización:</strong> Código reutilizable mediante herencia y composición</li>
+                    <li><strong>Mantenibilidad:</strong> Cambios localizados en clases específicas</li>
+                    <li><strong>Extensibilidad:</strong> Fácil agregar nuevas funcionalidades</li>
+                    <li><strong>Abstracción:</strong> Oculta complejidad, expone solo lo necesario</li>
+                    <li><strong>Modelado del mundo real:</strong> Objetos representan entidades del dominio</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="pilares">
+            <h2>Los Tres Pilares de la POO</h2>
+
+            <div class="diagram" style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+              <figure>
+                <svg width="100%" viewBox="0 0 720 240" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="poo-pillars-3">
+                  <title id="poo-pillars-3">Los Tres Pilares de la Programación Orientada a Objetos</title>
+                  <style>
+                    .pillar-box { rx: 12; }
+                    .pillar-title { font: bold 16px 'Segoe UI', Arial, sans-serif; }
+                    .pillar-subtitle { font: 600 13px 'Segoe UI', Arial, sans-serif; }
+                    .pillar-desc { font: 12px 'Segoe UI', Arial, sans-serif; }
+                    .icon-text { font: bold 28px Arial, sans-serif; }
+                    
+                    /* Encapsulamiento - Azul */
+                    .enc-box { fill: #1e40af; }
+                    .enc-text { fill: #ffffff; }
+                    .enc-accent { fill: #60a5fa; }
+                    
+                    /* Herencia - Verde */
+                    .her-box { fill: #047857; }
+                    .her-text { fill: #ffffff; }
+                    .her-accent { fill: #34d399; }
+                    
+                    /* Polimorfismo - Púrpura */
+                    .pol-box { fill: #7c3aed; }
+                    .pol-text { fill: #ffffff; }
+                    .pol-accent { fill: #a78bfa; }
+                  </style>
+                  
+                  <!-- ENCAPSULAMIENTO -->
+                  <rect x="25" y="20" width="210" height="180" class="pillar-box enc-box"/>
+                  <!-- Icono de candado -->
+                  <text x="130" y="60" text-anchor="middle" class="icon-text enc-accent">🔒</text>
+                  <text x="130" y="95" text-anchor="middle" class="pillar-title enc-text">ENCAPSULAMIENTO</text>
+                  <text x="130" y="120" text-anchor="middle" class="pillar-subtitle enc-accent">Ocultar datos internos</text>
+                  <text x="130" y="140" text-anchor="middle" class="pillar-desc enc-text" style="opacity: 0.9;">Proteger información</text>
+                  <text x="130" y="158" text-anchor="middle" class="pillar-desc enc-text" style="opacity: 0.9;">Exponer solo lo necesario</text>
+                  <text x="130" y="178" text-anchor="middle" class="pillar-subtitle enc-accent" style="font-size: 11px;">private / public</text>
+
+                  <!-- HERENCIA -->
+                  <rect x="255" y="20" width="210" height="180" class="pillar-box her-box"/>
+                  <!-- Icono de flecha/arbol -->
+                  <text x="360" y="60" text-anchor="middle" class="icon-text her-accent">🌳</text>
+                  <text x="360" y="95" text-anchor="middle" class="pillar-title her-text">HERENCIA</text>
+                  <text x="360" y="120" text-anchor="middle" class="pillar-subtitle her-accent">Reutilizar código</text>
+                  <text x="360" y="140" text-anchor="middle" class="pillar-desc her-text" style="opacity: 0.9;">Clases hijas de padres</text>
+                  <text x="360" y="158" text-anchor="middle" class="pillar-desc her-text" style="opacity: 0.9;">Extender funcionalidad</text>
+                  <text x="360" y="178" text-anchor="middle" class="pillar-subtitle her-accent" style="font-size: 11px;">class Hija : Padre</text>
+
+                  <!-- POLIMORFISMO -->
+                  <rect x="485" y="20" width="210" height="180" class="pillar-box pol-box"/>
+                  <!-- Icono de formas -->
+                  <text x="590" y="60" text-anchor="middle" class="icon-text pol-accent">🎭</text>
+                  <text x="590" y="95" text-anchor="middle" class="pillar-title pol-text">POLIMORFISMO</text>
+                  <text x="590" y="120" text-anchor="middle" class="pillar-subtitle pol-accent">Múltiples formas</text>
+                  <text x="590" y="140" text-anchor="middle" class="pillar-desc pol-text" style="opacity: 0.9;">Una interfaz, varios</text>
+                  <text x="590" y="158" text-anchor="middle" class="pillar-desc pol-text" style="opacity: 0.9;">comportamientos diferentes</text>
+                  <text x="590" y="178" text-anchor="middle" class="pillar-subtitle pol-accent" style="font-size: 11px;">override / virtual</text>
+                </svg>
+                <figcaption style="font-size: 1em; color: #374151; margin-top: 15px;">
+                  <strong>Los 3 Pilares de la POO:</strong> 
+                  <span style="color: #1e40af;">Encapsulamiento</span> (hoy), 
+                  <span style="color: #047857;">Herencia</span> y 
+                  <span style="color: #7c3aed;">Polimorfismo</span> (próxima clase)
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="highlight-box">
+                <h4>1. Encapsulamiento (Clase 2 - Hoy)</h4>
+                <p>Ocultar los detalles internos de un objeto y exponer solo lo necesario a través de una interfaz pública.</p>
+                <p><strong>Beneficios:</strong> Protección de datos, control de modificaciones, flexibilidad interna.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>2. Herencia (Clase 3 - Próxima)</h4>
+                <p>Crear nuevas clases basadas en clases existentes, reutilizando codigo y extendiendo funcionalidad.</p>
+                <p><strong>Beneficios:</strong> Reutilización de código, jerarquías lógicas, extensibilidad.</p>
+            </div>
+
+            <div class="warning-box">
+                <h4>3. Polimorfismo (Clase 3 - Próxima)</h4>
+                <p>Capacidad de objetos de diferentes tipos responder al mismo mensaje de diferentes formas.</p>
+                <p><strong>Beneficios:</strong> Codigo flexible, tratamiento uniforme, facil agregar nuevos tipos.</p>
+            </div>
+        </section>
+
+        <section id="clase-vs-objeto">
+            <h2>Clase vs Objeto</h2>
+
+            <figure>
+                <img src="../assets/infografias/clase-02-clase-vs-objeto.png" alt="Infografia: Clase vs Objeto - La diferencia entre plantilla y instancia" onerror="this.onerror=null;this.src='/assets/infografias/clase-02-clase-vs-objeto.png'">
+                <figcaption>Comparación visual entre clases (plantillas abstractas que definen estructura y comportamiento) y objetos (instancias concretas que ocupan memoria con datos específicos), ilustrando el concepto fundamental de la POO.</figcaption>
+            </figure>
+
+            <h3>CLASE = Molde / Plantilla / Definición</h3>
+            <p>Una clase es una <strong>definicion</strong> o <strong>plantilla</strong> para crear objetos. Es abstracta y no ocupa memoria por si misma.</p>
+            <ul>
+                <li>Define estructura (qué datos tendrá)</li>
+                <li>Especifica comportamiento (qué podrá hacer)</li>
+                <li>NO ocupa memoria en tiempo de ejecución</li>
+                <li>Es el "tipo" o "categoria"</li>
+                <li>Escrita una vez, usada muchas veces</li>
+            </ul>
+
+            <h3>OBJETO = Instancia / Ejemplar / Creacion Concreta</h3>
+            <p>Un objeto es una <strong>instancia concreta</strong> de una clase. Ocupa memoria y tiene valores especificos.</p>
+            <ul>
+                <li>Creado a partir de una clase con <code>new</code></li>
+                <li>Ocupa memoria (heap para reference types)</li>
+                <li>Tiene valores especificos para sus atributos</li>
+                <li>Puede ejecutar sus metodos</li>
+                <li>Cada objeto es independiente</li>
+            </ul>
+
+            <h3>Comparativa Detallada</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>Clase (Molde)</th>
+                        <th>Objeto (Instancia)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Naturaleza</strong></td><td>Abstracta (definicion)</td><td>Concreta (ejecucion)</td></tr>
+                    <tr><td><strong>Memoria</strong></td><td>NO ocupa (metadata)</td><td>SI ocupa (heap)</td></tr>
+                    <tr><td><strong>Cantidad</strong></td><td>Una definicion</td><td>Multiples instancias</td></tr>
+                    <tr><td><strong>Valores</strong></td><td>Define QUÉ atributos tendrá</td><td>TIENE valores específicos</td></tr>
+                    <tr><td><strong>Declaracion</strong></td><td><code>class Galleta { ... }</code></td><td><code>new Galleta()</code></td></tr>
+                    <tr><td><strong>Relación</strong></td><td>Es un "tipo de dato"</td><td>Es una "variable" de ese tipo</td></tr>
+                    <tr><td><strong>Analogia</strong></td><td>Receta de cocina</td><td>Galleta horneada</td></tr>
+                    <tr><td><strong>Analogia</strong></td><td>Plano de arquitectura</td><td>Casa construida</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Analogía: Galletas</h3>
+            <div class="comparison-table">
+                <div>
+                    <h4>CLASE = Receta de galletas</h4>
+                    <ul>
+                        <li>Define ingredientes: harina, azucar, chocolate</li>
+                        <li>Define procedimiento: mezclar, hornear, enfriar</li>
+                        <li>NO se puede comer (es abstracta)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>OBJETO = Galleta horneada</h4>
+                    <ul>
+                        <li>Tiene cantidades especificas de ingredientes</li>
+                        <li>Se puede comer (es concreta)</li>
+                        <li>Cada galleta es unica pero sigue la receta</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Ejemplo de Código</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51</div>
+    <pre><code class="language-csharp"><span class="token-comment">// ============================================</span>
+<span class="token-comment">// CLASE: Definicion (plantilla)</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-comment">// Campos (atributos)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span>;
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span>;
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span>;
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span>;
+
+    <span class="token-comment">// Metodos (comportamiento)</span>
+    <span class="token-keyword">public void</span> <span class="token-method">MostrarInfo</span>()
+    {
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Nombre: {Nombre}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Codigo: {Codigo}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Edad: {Edad}"</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Promedio: {Promedio}"</span>);
+    }
+
+    <span class="token-keyword">public bool</span> <span class="token-method">Aprobado</span>() <span class="token-operator">=></span> <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
+}
+
+<span class="token-comment">// ============================================</span>
+<span class="token-comment">// OBJETOS: Instancias (creaciones concretas)</span>
+<span class="token-comment">// ============================================</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
+{
+    <span class="token-keyword">static void</span> <span class="token-method">Main</span>()
+    {
+        <span class="token-comment">// Crear PRIMER objeto (instancia)</span>
+        <span class="token-class">Estudiante</span> est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();
+        est1.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria Lopez"</span>;
+        est1.<span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"2024001"</span>;
+        est1.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">20</span>;
+        est1.<span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">4.2</span>;
+
+        <span class="token-comment">// Crear SEGUNDO objeto (independiente)</span>
+        <span class="token-class">Estudiante</span> est2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();
+        est2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Carlos Ruiz"</span>;
+        est2.<span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"2024002"</span>;
+        est2.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">22</span>;
+        est2.<span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">2.8</span>;
+
+        <span class="token-comment">// Cada objeto es independiente</span>
+        est1.<span class="token-method">MostrarInfo</span>();
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>();
+        est2.<span class="token-method">MostrarInfo</span>();
+    }
+}</code></pre>
+  </div>
+</div>
+        </section>
+
+        <section id="memoria">
+            <h2>Representación en Memoria</h2>
+
+            <h3>STACK vs HEAP</h3>
+            <p>En C#, los objetos (reference types) se almacenan en dos areas de memoria:</p>
+
+            <h4>STACK (Pila)</h4>
+            <p>Memoria organizada como <abbr title="LIFO: Last In, First Out - El último elemento en entrar es el primero en salir, como una pila de platos">LIFO</abbr> (Last In, First Out), ideal para variables locales y referencias.</p>
+            <ul>
+                <li>Almacena <strong>variables locales</strong> y <strong>referencias</strong> a objetos</li>
+                <li>Crece y decrece rápidamente</li>
+                <li>Limpieza automática al salir del método</li>
+                <li>Cada hilo tiene su propio stack</li>
+                <li>Almacena directamente los <strong>value types</strong> (int, double, bool, struct)</li>
+            </ul>
+
+            <h4>HEAP (Montículo)</h4>
+            <p>Memoria dinámica para objetos más grandes y con vida útil variable.</p>
+            <ul>
+                <li>Almacena <strong>objetos reales</strong> (instancias de clases)</li>
+                <li>Memoria más grande pero más lenta de gestionar</li>
+                <li>Limpieza automática por el <strong><abbr title="Garbage Collector: Mecanismo de .NET que libera automáticamente memoria de objetos que ya no se usan">GC</abbr></strong> (Garbage Collector)</li>
+                <li>Compartido por todos los hilos</li>
+                <li>Almacena los <strong>reference types</strong> (class, string, array)</li>
+            </ul>
+            <div class="note">Nota: El GC es un componente del CLR que periódicamente escanea el heap buscando objetos sin referencias y libera su memoria automáticamente.</div>
+
+            <h3>Visualización de Memoria</h3>
+            <figure>
+              <svg width="100%" viewBox="0 0 820 300" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="memoriaTitle">
+                <title id="memoriaTitle">Representación de Stack y Heap en memoria</title>
+                <style>
+                  .sbox{fill:#eef2ff;stroke:#dbeafe;rx:8}
+                  .hbox{fill:#fff1f2;stroke:#fbcfce;rx:8}
+                  .t{font:700 12px Arial, sans-serif;fill:#0b2d6b}
+                  .mut{font:12px Arial, sans-serif;fill:#475569}
+                </style>
+                <defs>
+                  <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#0b2d6b"/>
+                  </marker>
+                </defs>
+
+                <!-- STACK Area -->
+                <rect x="20" y="24" width="300" height="220" rx="8" fill="#eef2ff" stroke="#dbeafe"/>
+                <text x="170" y="44" text-anchor="middle" class="t">STACK (Referencias)</text>
+
+                <!-- HEAP Area -->
+                <rect x="420" y="24" width="380" height="220" rx="8" fill="#fff1f2" stroke="#fbcfce"/>
+                <text x="610" y="44" text-anchor="middle" class="t">HEAP (Objetos reales)</text>
+
+                <!-- est1 en STACK -->
+                <rect x="60" y="70" width="160" height="45" rx="6" fill="#fff" stroke="#cfe2ff"/>
+                <text x="140" y="92" text-anchor="middle" class="mut">est1 → 0x7F3A...</text>
+
+                <!-- est2 en STACK -->
+                <rect x="60" y="140" width="160" height="45" rx="6" fill="#fff" stroke="#cfe2ff"/>
+                <text x="140" y="162" text-anchor="middle" class="mut">est2 → 0x8B2C...</text>
+
+                <!-- Objeto Estudiante 1 en HEAP -->
+                <rect x="460" y="65" width="300" height="80" rx="8" fill="#fff" stroke="#ffd6e0"/>
+                <text x="610" y="88" text-anchor="middle" class="mut" style="font-weight:bold;">Objeto Estudiante #1</text>
+                <text x="610" y="108" text-anchor="middle" class="mut">Nombre: "María"</text>
+                <text x="610" y="125" text-anchor="middle" class="mut">Cód: "2024001" • Edad: 20 • Prom: 4.2</text>
+
+                <!-- Objeto Estudiante 2 en HEAP -->
+                <rect x="460" y="165" width="300" height="65" rx="8" fill="#fff" stroke="#ffd6e0"/>
+                <text x="610" y="188" text-anchor="middle" class="mut" style="font-weight:bold;">Objeto Estudiante #2</text>
+                <text x="610" y="208" text-anchor="middle" class="mut">Nombre: "Carlos" • Cód: "2024002"</text>
+                <text x="610" y="222" text-anchor="middle" class="mut">Edad: 22 • Prom: 2.8</text>
+
+                <!-- Flechas de referencia -->
+                <!-- est1 a Objeto 1 -->
+                <path d="M220 92 L460 92" stroke="#0b2d6b" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+                <!-- est2 a Objeto 2 -->
+                <path d="M220 162 L460 200" stroke="#0b2d6b" stroke-width="2" fill="none" marker-end="url(#arrow-blue)"/>
+              </svg>
+              <figcaption>Variables en stack contienen referencias (direcciones de memoria) que apuntan a objetos en heap; cada variable tiene su propio objeto independiente.</figcaption>
+            </figure>
+
+            <h3>Flujo de Creación de un Objeto</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Program.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Paso 1: Declaracion (stack - variable de referencia)</span>
+<span class="token-class">Estudiante</span> est1;  <span class="token-comment">// stack: est1 = null</span>
+
+<span class="token-comment">// Paso 2: Instanciacion (heap - objeto creado)</span>
+est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();  <span class="token-comment">// heap: new Estudiante object</span>
+
+<span class="token-comment">// Paso 3: Asignacion de valores</span>
+est1.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;  <span class="token-comment">// heap: Nombre = "Maria"</span>
+est1.<span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">20</span>;         <span class="token-comment">// heap: Edad = 20</span></code></pre>
+  </div>
+</div>
+
+            <div class="warning-box">
+                <h4>Puntos Clave</h4>
+                <ul>
+                    <li>La variable en el STACK contiene una <strong>direccion de memoria</strong> (referencia) al objeto en el HEAP</li>
+                    <li><strong>Multiples variables pueden referenciar el mismo objeto</strong>:
+                        <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Program.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3</div>
+    <pre><code class="language-csharp"><span class="token-class">Estudiante</span> est1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span> };
+<span class="token-class">Estudiante</span> est2 <span class="token-operator">=</span> est1;  <span class="token-comment">// Ambos referencian el MISMO objeto</span>
+est2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Carlos"</span>;   <span class="token-comment">// est1.Nombre tambien cambia</span></code></pre>
+  </div>
+</div>
+                    </li>
+                    <li>Cuando una variable sale del <abbr title="scope (ámbito): Región del código donde una variable es válida y accesible; determina la vida útil de la variable">scope</abbr> (ámbito), la referencia en el stack se elimina, pero el objeto en el heap permanece hasta que el GC lo reclama</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="encapsulamiento">
+            <h2>Encapsulamiento</h2>
+
+            <figure>
+                <img src="../assets/infografias/clase-02-encapsulamiento.png" alt="Infografia: Encapsulamiento - Proteccion de datos y exposicion de comportamiento" onerror="this.onerror=null;this.src='/assets/infografias/clase-02-encapsulamiento.png'">
+                <figcaption>Principio de encapsulamiento en POO: protección de datos internos mediante modificadores de acceso, exponiendo solo métodos y propiedades públicas para interactuar de forma controlada con el objeto.</figcaption>
+            </figure>
+
+            <h3>Qué es Encapsulamiento?</h3>
+            <p><strong>Encapsulamiento</strong> es el principio de ocultar los detalles internos de implementación de un objeto y exponer solo lo necesario a través de una interfaz pública.</p>
+            <p><em>Metáfora: Un coche tiene un encapsulamiento - tu solo interactuas con el volante, pedales y botones. No necesitas saber como funciona el motor internamente.</em></p>
+
+            <h3>Por qué es IMPORTANTE?</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Problema sin encapsulamiento</th>
+                        <th>Solucion con encapsulamiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Datos expuestos pueden modificarse a valores invalidos</td><td>Validacion controlada</td></tr>
+                    <tr><td>Dificil mantener (cambios afectan a todos)</td><td>Cambios localizados</td></tr>
+                    <tr><td>Acoplamiento alto (dependencias ocultas)</td><td>Bajo acoplamiento</td></tr>
+                    <tr><td>Codigo fragil (se rompe facil)</td><td>Codigo robusto</td></tr>
+                </tbody>
+            </table>
+
+            <h3>SIN Encapsulamiento (Frágil)</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
+{
+    <span class="token-comment">// Campos PUBLICOS = peligro</span>
+    <span class="token-keyword">public double</span> saldo;
+    <span class="token-keyword">public string</span> titular;
+}
+
+<span class="token-comment">// Uso problematico</span>
+<span class="token-keyword">var</span> cuenta <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">CuentaBancaria</span>();
+cuenta.saldo <span class="token-operator">=</span> <span class="token-operator">-</span><span class="token-number">1000</span>;  <span class="token-comment">// Valido pero INCORRECTO</span>
+cuenta.titular <span class="token-operator">=</span> <span class="token-string">""</span>;   <span class="token-comment">// Nombre vacio permitido</span></code></pre>
+  </div>
+</div>
+
+            <div class="warning-box">
+                <h4>Problemas sin encapsulamiento:</h4>
+                <ul>
+                    <li>Sin validacion de datos</li>
+                    <li>Cualquiera puede modificar</li>
+                    <li>Dificil rastrear quien modifico</li>
+                    <li>No se pueden agregar reglas de negocio</li>
+                </ul>
+            </div>
+
+            <h3>CON Encapsulamiento (Robusto)</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
+{
+    <span class="token-comment">// Campos PRIVADOS = protegidos</span>
+    <span class="token-keyword">private double</span> _saldo;
+    <span class="token-keyword">private string</span> _titular;
+
+    <span class="token-comment">// Propiedad con validacion</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titular</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _titular;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El titular no puede estar vacio"</span>);
+            _titular <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-comment">// Metodos controlados</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Depositar</span>(<span class="token-keyword">double</span> monto)
+    {
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
+        _saldo <span class="token-operator">+=</span> monto;
+    }
+
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar</span>(<span class="token-keyword">double</span> monto)
+    {
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
+        <span class="token-keyword">if</span> (monto <span class="token-operator">></span> _saldo)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">InvalidOperationException</span>(<span class="token-string">"Saldo insuficiente"</span>);
+        _saldo <span class="token-operator">-=</span> monto;
+    }
+
+    <span class="token-keyword">public double</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo;  <span class="token-comment">// Solo lectura</span>
+}</code></pre>
+  </div>
+</div>
+
+            <div class="success-box">
+                <h4>Beneficios con encapsulamiento:</h4>
+                <ul>
+                    <li>Validacion de datos en entrada</li>
+                    <li>Control sobre modificaciones</li>
+                    <li>Facil agregar logica de negocio</li>
+                    <li>Proteccion del estado interno</li>
+                </ul>
+            </div>
+
+            <h3>Principio de Minima Exposicion</h3>
+            <div class="highlight-box">
+                <h4>Regla de Oro</h4>
+                <p><strong>Expón solo lo que es necesario para usar la clase. Oculta todo lo demás.</strong></p>
+                <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-comment">// PUBLICO: Parte de la API externa</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+
+    <span class="token-comment">// PRIVADO: Implementacion interna</span>
+    <span class="token-keyword">private double</span> _promedioInterno;
+    <span class="token-keyword">private void</span> <span class="token-method">_calcularPromedioInterno</span>() { ... }
+
+    <span class="token-comment">// PUBLICO: Expone resultado calculado (no los detalles)</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> <span class="token-operator">=></span> _promedioInterno;
+}</code></pre>
+  </div>
+</div>
+            </div>
+        </section>
+
+        <section id="modificadores">
+            <h2>Modificadores de Acceso</h2>
+
+            <h3>Tabla de Modificadores en C#</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modificador</th>
+                        <th>Quien accede?</th>
+                        <th>Descripcion</th>
+                        <th>Uso tipico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>public</code></td><td>TODOS</td><td>Accesible desde cualquier lugar</td><td>API publica de la clase</td></tr>
+                    <tr><td><code>private</code></td><td>Solo la clase</td><td>Solo accesible dentro de la clase</td><td>Campos internos, metodos auxiliares</td></tr>
+                    <tr><td><code>protected</code></td><td>Clase + hijas</td><td>Accesible en la clase y sus derivadas</td><td>Miembros para herencia</td></tr>
+                    <tr><td><code>internal</code></td><td>Mismo proyecto</td><td>Accesible solo en el mismo assembly</td><td>Clases auxiliares del proyecto</td></tr>
+                    <tr><td><code>protected internal</code></td><td>Misma clase + hijas + mismo proyecto</td><td>Combinación de protected y internal</td><td>Miembros especializados</td></tr>
+                    <tr><td><code>private protected</code></td><td>Clase + hijas (mismo proyecto)</td><td>Solo hijas en el mismo proyecto</td><td>Herencia interna</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Reglas de Oro</h3>
+            <ol>
+                <li><strong>Campos SIEMPRE privados</strong> (convención <code>_camelCase</code>)</li>
+                <li><strong>Propiedades publicas</strong> para acceso controlado</li>
+                <li><strong>Metodos privados</strong> para logica interna</li>
+                <li><strong>Minimizar <code>public</code></strong> - expón solo lo necesario</li>
+            </ol>
+
+            <h3>Ejemplo Completo</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">CuentaBancaria.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">CuentaBancaria</span>
+{
+    <span class="token-comment">// PRIVADOS: Solo uso interno</span>
+    <span class="token-keyword">private double</span> _saldo;
+    <span class="token-keyword">private readonly string</span> _numeroCuenta;
+
+    <span class="token-comment">// PUBLICOS: API externa</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titular</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+
+    <span class="token-comment">// SOLO LECTURA: No se puede modificar despues de crear</span>
+    <span class="token-keyword">public string</span> <span class="token-property">NumeroCuenta</span> <span class="token-operator">=></span> _numeroCuenta;
+
+    <span class="token-comment">// PROPORCIONAL: Saldo expuesto pero sin modificacion directa</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo;
+
+    <span class="token-comment">// Constructor</span>
+    <span class="token-keyword">public</span> <span class="token-method">CuentaBancaria</span>(<span class="token-keyword">string</span> titular, <span class="token-keyword">string</span> numeroCuenta, <span class="token-keyword">double</span> saldoInicial)
+    {
+        <span class="token-property">Titular</span> <span class="token-operator">=</span> titular;
+        _numeroCuenta <span class="token-operator">=</span> numeroCuenta;
+        _saldo <span class="token-operator">=</span> saldoInicial;
+    }
+
+    <span class="token-comment">// PUBLICO: Comportamiento controlado</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Depositar</span>(<span class="token-keyword">double</span> monto)
+    {
+        <span class="token-method">_validarMontoPositivo</span>(monto);
+        _saldo <span class="token-operator">+=</span> monto;
+    }
+
+    <span class="token-comment">// PRIVADO: Validacion interna (reutilizable)</span>
+    <span class="token-keyword">private void</span> <span class="token-method">_validarMontoPositivo</span>(<span class="token-keyword">double</span> monto)
+    {
+        <span class="token-keyword">if</span> (monto <span class="token-operator"><=</span> <span class="token-number">0</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El monto debe ser positivo"</span>);
+    }
+}</code></pre>
+  </div>
+</div>
+        </section>
+
+        <section id="propiedades">
+            <h2>Propiedades</h2>
+
+            <h3>Qué son las Propiedades?</h3>
+            <p>Las propiedades son <strong><abbr title="Syntactic sugar: Sintaxis más legible que el compilador convierte a código más complejo internamente">syntactic sugar</abbr></strong> (azúcar sintáctico) para encapsulamiento. Parecen campos pero son métodos (<code>get</code> y <code>set</code>) disfrazados que el compilador traduce a llamadas de métodos.</p>
+            <p><strong>¿Por qué usarlas?</strong> Código más limpio y natural que métodos getter/setter tradicionales, con la misma capacidad de validación y control.</p>
+
+            <h3>TRADICIONAL (Java-style) - Verboso</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs (Java-style)</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>
+{
+    <span class="token-keyword">private string</span> _nombre;
+
+    <span class="token-comment">// Metodo getter</span>
+    <span class="token-keyword">public string</span> <span class="token-method">GetNombre</span>()
+    {
+        <span class="token-keyword">return</span> _nombre;
+    }
+
+    <span class="token-comment">// Metodo setter</span>
+    <span class="token-keyword">public void</span> <span class="token-method">SetNombre</span>(<span class="token-keyword">string</span> valor)
+    {
+        _nombre <span class="token-operator">=</span> valor;
+    }
+}
+
+<span class="token-comment">// Uso verboso</span>
+<span class="token-keyword">var</span> p <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Persona</span>();
+p.<span class="token-method">SetNombre</span>(<span class="token-string">"Maria"</span>);
+<span class="token-keyword">string</span> n <span class="token-operator">=</span> p.<span class="token-method">GetNombre</span>();</code></pre>
+  </div>
+</div>
+
+            <h3>MODERNO C# - Propiedades</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs (C# Moderno)</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Persona</span>
+{
+    <span class="token-keyword">private string</span> _nombre;
+
+    <span class="token-comment">// Propiedad con get y set</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span>
+    {
+        <span class="token-keyword">get</span> { <span class="token-keyword">return</span> _nombre; }
+        <span class="token-keyword">set</span> { _nombre <span class="token-operator">=</span> value; }
+    }
+}
+
+<span class="token-comment">// Uso natural</span>
+<span class="token-keyword">var</span> p <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Persona</span>();
+p.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;      <span class="token-comment">// Usa 'set'</span>
+<span class="token-keyword">string</span> n <span class="token-operator">=</span> p.<span class="token-property">Nombre</span>;     <span class="token-comment">// Usa 'get'</span></code></pre>
+  </div>
+</div>
+
+            <h3>Tipos de Propiedades</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Sintaxis</th>
+                        <th>Cuando usar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Autoimplementada</td><td><code>{ get; set; }</code></td><td>Sin validacion, simple</td></tr>
+                    <tr><td>Con backing field</td><td>get/set con logica</td><td>Con validacion</td></tr>
+                    <tr><td>Solo lectura</td><td><code>{ get; }</code></td><td>Calculado o inmutable</td></tr>
+                    <tr><td>Init-only</td><td><code>{ get; init; }</code></td><td>Solo en constructor</td></tr>
+                    <tr><td>Expresion bodied</td><td><code>=> valor</code></td><td>Propiedades calculadas</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplos Completos</h3>
+            <p><strong>Backing field:</strong> Es el campo privado (<code>_campo</code>) que almacena el valor real de una propiedad. Se usa cuando necesitas lógica en get/set.</p>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-comment">// 1. AUTOIMPLEMENTADA (sin validacion)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+
+    <span class="token-comment">// 2. CON VALIDACION (usa backing field)</span>
+    <span class="token-keyword">private double</span> _promedio;  <span class="token-comment">// Este es el "backing field"</span>
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _promedio;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (value <span class="token-operator"><</span> <span class="token-number">0.0</span> <span class="token-operator">||</span> value <span class="token-operator">></span> <span class="token-number">5.0</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Promedio"</span>, <span class="token-string">"Debe estar entre 0 y 5"</span>);
+            _promedio <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-comment">// 3. SOLO LECTURA (calculada)</span>
+    <span class="token-keyword">public bool</span> <span class="token-property">Aprobado</span> <span class="token-operator">=></span> <span class="token-property">Promedio</span> <span class="token-operator">>=</span> <span class="token-number">3.0</span>;
+
+    <span class="token-comment">// 4. INIT-ONLY (solo se asigna en constructor o inicializador)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Matricula</span> { <span class="token-keyword">get</span>; <span class="token-keyword">init</span>; }
+
+    <span class="token-comment">// 5. CON VALOR DEFAULT</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Carrera</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } <span class="token-operator">=</span> <span class="token-string">"Sin carrera"</span>;
+
+    <span class="token-comment">// 6. EXPRESION BODIED (C# 7+)</span>
+    <span class="token-keyword">public string</span> <span class="token-property">InfoCompleta</span> <span class="token-operator">=></span> <span class="token-string">$"{Nombre} ({Edad} años) - {Carrera}"</span>;
+}</code></pre>
+  </div>
+</div>
+            <div class="note">Nota: Una propiedad es <strong>inmutable</strong> cuando su valor no puede cambiar después de la creación del objeto. Se logra con <code>{ get; }</code> (solo lectura), <code>{ get; init; }</code> (solo en constructor), o <code>readonly</code> en campos.</div>
+        </section>
+
+        <section id="constructores">
+            <h2>Constructores</h2>
+
+            <h3>Qué es un Constructor?</h3>
+            <p>Un constructor es un <strong>método especial</strong> que se ejecuta automáticamente al crear una instancia de una clase con <code>new</code>.</p>
+
+            <p><strong>Proposito:</strong></p>
+            <ul>
+                <li>Inicializar valores predeterminados</li>
+                <li>Recibir parámetros obligatorios</li>
+                <li>Validar estado inicial</li>
+                <li>Establecer invariantes de clase</li>
+            </ul>
+
+            <h3>Tipos de Constructores</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Sintaxis</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Default</td><td>sin parametros</td><td><code>new Estudiante()</code></td></tr>
+                    <tr><td>Parametrizado</td><td>con parámetros</td><td><code>new Estudiante("Maria", 20)</code></td></tr>
+                    <tr><td>Object Initializer</td><td>sintaxis <code>{ }</code></td><td><code>new Estudiante { Nombre = "Maria" }</code></td></tr>
+                    <tr><td>Primary (C# 12)</td><td>parámetros en clase</td><td><code>public class Estudiante(string nombre)</code></td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Completo</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public double</span> <span class="token-property">Promedio</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+
+    <span class="token-comment">// 1. CONSTRUCTOR DEFAULT</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>()
+    {
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Sin nombre"</span>;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> <span class="token-string">"0000000"</span>;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">18</span>;
+        <span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">0.0</span>;
+    }
+
+    <span class="token-comment">// 2. CONSTRUCTOR PARAMETRIZADO</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo, <span class="token-keyword">int</span> edad)
+    {
+        <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(nombre))
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"Nombre requerido"</span>);
+        <span class="token-keyword">if</span> (edad <span class="token-operator"><</span> <span class="token-number">16</span> <span class="token-operator">||</span> edad <span class="token-operator">></span> <span class="token-number">100</span>)
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Edad"</span>);
+
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> nombre;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> codigo;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> edad;
+        <span class="token-property">Promedio</span> <span class="token-operator">=</span> <span class="token-number">0.0</span>;
+    }
+
+    <span class="token-comment">// 3. CONSTRUCTOR CON ENCADENAMIENTO (this)</span>
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(nombre, codigo, <span class="token-number">18</span>)  <span class="token-comment">// Llama al constructor de 3 params</span>
+    {
+        <span class="token-comment">// Edad ya se inicializo en 18</span>
+    }
+}
+
+<span class="token-comment">// USO</span>
+<span class="token-keyword">var</span> e1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>();                              <span class="token-comment">// Default</span>
+<span class="token-keyword">var</span> e2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Maria"</span>, <span class="token-string">"2024001"</span>, <span class="token-number">20</span>);       <span class="token-comment">// Parametrizado</span>
+<span class="token-keyword">var</span> e3 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Carlos"</span>, <span class="token-string">"2024002"</span>);          <span class="token-comment">// Encadenado (edad=18)</span></code></pre>
+  </div>
+</div>
+
+            <h3>🔄 Encadenamiento de Constructores con <code>this</code></h3>
+            <p>El encadenamiento permite que un constructor llame a otro constructor de la misma clase para evitar duplicar código. El constructor con <strong>menos parámetros</strong> delega al de <strong>más parámetros</strong>.</p>
+            
+            <div class="diagram" style="background: linear-gradient(180deg, #f8fafc 0%, #e0e7ff 100%); padding: 30px; border-radius: 16px;">
+              <figure>
+                <svg width="100%" viewBox="0 0 700 520" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="chainTitle">
+                  <title id="chainTitle">Flujo de ejecución del encadenamiento de constructores en C#</title>
+                  <style>
+                    /* Caja de código */
+                    .code-box { rx: 10; }
+                    .code-title { font: bold 14px 'Consolas', monospace; }
+                    .code-line { font: 12px 'Consolas', monospace; }
+                    .code-comment { font: italic 11px 'Consolas', monospace; }
+                    
+                    /* Números de paso */
+                    .step-num { font: bold 16px Arial, sans-serif; fill: white; }
+                    .step-circle { fill: #1e40af; }
+                    
+                    /* Flechas */
+                    .arrow-line { fill: none; stroke-width: 3; stroke-linecap: round; }
+                    .arrow-head { fill: #1e40af; }
+                    
+                    /* Colores */
+                    .bg-call { fill: #1e3a8a; }
+                    .bg-delegate { fill: #f59e0b; }
+                    .bg-main { fill: #10b981; }
+                    .bg-result { fill: #7c3aed; }
+                    
+                    .text-white { fill: #ffffff; }
+                    .text-dark { fill: #1e293b; }
+                    .text-yellow { fill: #fef3c7; }
+                    .text-green { fill: #d1fae5; }
+                    .text-purple { fill: #ede9fe; }
+                  </style>
+                  
+                  <defs>
+                    <marker id="arrowDown" markerWidth="10" markerHeight="10" refX="5" refY="9" orient="auto">
+                      <path d="M0,0 L5,9 L10,0 z" class="arrow-head"/>
+                    </marker>
+                    <marker id="arrowUp" markerWidth="10" markerHeight="10" refX="5" refY="0" orient="auto">
+                      <path d="M0,9 L5,0 L10,9 z" class="arrow-head"/>
+                    </marker>
+                  </defs>
+                  
+                  <!-- PASO 1: LLAMADA -->
+                  <g transform="translate(0, 0)">
+                    <circle cx="30" cy="35" r="18" class="step-circle"/>
+                    <text x="30" y="40" text-anchor="middle" class="step-num">1</text>
+                    <rect x="60" y="10" width="580" height="50" class="code-box bg-call"/>
+                    <text x="350" y="28" text-anchor="middle" class="code-title text-white">🚀 CÓDIGO QUE EJECUTAS</text>
+                    <text x="350" y="48" text-anchor="middle" class="code-line text-yellow">new Estudiante("Carlos", "2024002")</text>
+                  </g>
+                  
+                  <!-- Flecha 1-2 -->
+                  <path d="M350 60 L350 85" class="arrow-line" stroke="#1e40af" marker-end="url(#arrowDown)"/>
+                  <text x="430" y="78" class="code-comment" fill="#64748b">Llama al constructor de 2 parámetros</text>
+                  
+                  <!-- PASO 2: CONSTRUCTOR DELEGANTE -->
+                  <g transform="translate(0, 95)">
+                    <circle cx="30" cy="50" r="18" class="step-circle"/>
+                    <text x="30" y="55" text-anchor="middle" class="step-num">2</text>
+                    <rect x="60" y="5" width="580" height="90" class="code-box bg-delegate"/>
+                    <text x="350" y="25" text-anchor="middle" class="code-title text-dark">⚡ CONSTRUCTOR DELEGANTE (se activa primero)</text>
+                    <text x="80" y="48" text-anchor="start" class="code-line text-dark">public Estudiante(string n, string c)</text>
+                    <text x="80" y="65" text-anchor="start" class="code-line text-yellow" style="font-weight: bold;">    : this(n, c, 18)  ← Delega al otro constructor</text>
+                    <text x="80" y="82" text-anchor="start" class="code-comment text-dark" style="opacity: 0.8;">{ /* Este código se ejecuta al final */ }</text>
+                  </g>
+                  
+                  <!-- Flecha 2-3 -->
+                  <path d="M350 195 L350 220" class="arrow-line" stroke="#1e40af" marker-end="url(#arrowDown)"/>
+                  <text x="430" y="213" class="code-comment" fill="#64748b">Antes de ejecutar su cuerpo, delega con :this()</text>
+                  
+                  <!-- PASO 3: CONSTRUCTOR PRINCIPAL -->
+                  <g transform="translate(0, 230)">
+                    <circle cx="30" cy="55" r="18" class="step-circle"/>
+                    <text x="30" y="60" text-anchor="middle" class="step-num">3</text>
+                    <rect x="60" y="5" width="580" height="100" class="code-box bg-main"/>
+                    <text x="350" y="25" text-anchor="middle" class="code-title text-white">✅ CONSTRUCTOR PRINCIPAL (ejecuta primero)</text>
+                    <text x="80" y="48" text-anchor="start" class="code-line text-white">public Estudiante(string n, string c, int e)</text>
+                    <text x="80" y="65" text-anchor="start" class="code-line text-green">{</text>
+                    <text x="100" y="82" text-anchor="start" class="code-line text-white">    Nombre = n; Codigo = c; Edad = e;</text>
+                    <text x="100" y="98" text-anchor="start" class="code-line text-green">    // ← Aquí van las validaciones</text>
+                    <text x="80" y="115" text-anchor="start" class="code-line text-white">}</text>
+                  </g>
+                  
+                  <!-- Flecha 3-4 -->
+                  <path d="M350 340 L350 365" class="arrow-line" stroke="#7c3aed" marker-end="url(#arrowDown)"/>
+                  <text x="450" y="358" class="code-comment" fill="#64748b">Regresa al constructor delegante</text>
+                  
+                  <!-- PASO 4: COMPLETADO -->
+                  <g transform="translate(0, 375)">
+                    <circle cx="30" cy="35" r="18" fill="#7c3aed"/>
+                    <text x="30" y="40" text-anchor="middle" class="step-num">4</text>
+                    <rect x="60" y="10" width="580" height="50" class="code-box bg-result"/>
+                    <text x="350" y="28" text-anchor="middle" class="code-title text-white">🎯 RESULTADO: Objeto creado exitosamente</text>
+                    <text x="350" y="48" text-anchor="middle" class="code-line text-purple">e.Nombre="Carlos", e.Codigo="2024002", e.Edad=18</text>
+                  </g>
+                </svg>
+                
+                <figcaption style="margin-top: 20px; font-size: 1.05em; color: #374151; line-height: 1.6;">
+                  <strong>📋 Resumen del flujo:</strong> Cuando llamas al constructor de 2 parámetros, 
+                  éste <strong>inmediatamente delega</strong> al de 3 parámetros usando <code>: this()</code>. 
+                  El constructor principal ejecuta primero, y <strong>después</strong> se ejecuta el cuerpo del constructor delegante.
+                </figcaption>
+              </figure>
+            </div>
+            
+            <div class="success-box" style="margin-top: 25px;">
+              <h4>💡 ¿Por qué usar encadenamiento?</h4>
+              <ul>
+                <li><strong>Evita duplicar código:</strong> Las validaciones y asignaciones están en un solo lugar</li>
+                <li><strong>Valores por defecto:</strong> El constructor de 2 parámetros asigna <code>edad = 18</code> por defecto</li>
+                <li><strong>Mantenimiento:</strong> Si cambias la lógica, solo la modificas en el constructor principal</li>
+              </ul>
+            </div>
+
+            <div class="highlight-box">
+              <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Estudiante.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Ejemplo ejecutable (con salida en consola)</span>
+<span class="token-keyword">public class</span> <span class="token-class">Estudiante</span>
+{
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public string</span> <span class="token-property">Codigo</span> { <span class="token-keyword">get</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; }
+
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo, <span class="token-keyword">int</span> edad)
+    {
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"[3] Constructor con 3 parámetros: valida y asigna"</span>);
+        <span class="token-property">Nombre</span> <span class="token-operator">=</span> nombre;
+        <span class="token-property">Codigo</span> <span class="token-operator">=</span> codigo;
+        <span class="token-property">Edad</span> <span class="token-operator">=</span> edad;
+    }
+
+    <span class="token-keyword">public</span> <span class="token-method">Estudiante</span>(<span class="token-keyword">string</span> nombre, <span class="token-keyword">string</span> codigo)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(nombre, codigo, <span class="token-number">18</span>)
+    {
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"[2] Constructor delegante (2 parámetros): código del cuerpo ejecutado después"</span>);
+    }
+}
+
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> e <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Estudiante</span>(<span class="token-string">"Carlos"</span>, <span class="token-string">"2024002"</span>);</code></pre>
+  </div>
+</div>
+
+              <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Consola</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3</div>
+    <pre><code class="language-csharp"><span class="token-comment">// Salida esperada en consola</span>
+[<span class="token-number">3</span>] Constructor con 3 parámetros: valida y asigna
+[<span class="token-number">2</span>] Constructor delegante (2 parámetros): código del cuerpo ejecutado después</code></pre>
+  </div>
+</div>
+            </div>
+
+            </div>
+
+            <style>
+              .anim-btn{background:#1e40af;color:white;padding:8px 12px;border-radius:6px;border:none;cursor:pointer}
+              .anim-btn-outline{margin-left:8px;padding:8px 12px;border-radius:6px;border:1px solid #dbeafe;cursor:pointer;background:white}
+              .step-badge{display:inline-block;background:#e0e7ff;color:#1e40af;padding:6px 10px;border-radius:999px;border:1px solid #c7d2fe;margin-left:10px;font-weight:700}
+              .console-line{opacity:0; transform:translateY(4px); transition:opacity .35s, transform .35s; font-family: Consolas, monospace; color:#0b2d6b}
+              .console-line.visible{opacity:1; transform:none}
+            </style>
+
+            <script>
+              (function(){
+                const stepEls = [
+                  {rect: document.getElementById('box1'), text: document.getElementById('label1')},
+                  {rect: document.getElementById('box2'), text: document.getElementById('label2')},
+                  {rect: null, text: document.getElementById('step3')}
+                ];
+
+                const badge = document.getElementById('current-badge');
+                const cursor = document.getElementById('cursor');
+                const arrow = document.getElementById('flow-arrow');
+                const consoleLines = [document.getElementById('cl1'), document.getElementById('cl2'), document.getElementById('cl3')];
+
+                let index = 0;
+                let running = false;
+                let timer = null;
+
+                function clearActive(){
+                  stepEls.forEach(s => {
+                    if(s.rect) { s.rect.classList.remove('active-rect'); s.rect.style.transform = ''; }
+                    if(s.text) s.text.classList.remove('active-text');
+                  });
+                  if(arrow) arrow.classList.remove('arrow-glow');
+                  consoleLines.forEach(l => l && l.classList.remove('visible'));
+                  if(cursor) cursor.setAttribute('transform','translate(0,0)');
+                }
+
+                function setActive(i){
+                  clearActive();
+                  badge.textContent = 'Paso: ' + (i+1);
+                  const s = stepEls[i];
+                  if(s.rect) { s.rect.classList.add('active-rect'); s.rect.style.transform = 'scale(1.03)'; }
+                  if(s.text) s.text.classList.add('active-text');
+
+                  if(i === 0){
+                    if(cursor) cursor.setAttribute('transform','translate(0,0)');
+                    setTimeout(() => consoleLines[0] && consoleLines[0].classList.add('visible'), 220);
+                  } else if (i === 1) {
+                    if(cursor) cursor.setAttribute('transform','translate(160,0)');
+                    if(arrow) arrow.classList.add('arrow-glow');
+                    setTimeout(() => consoleLines[1] && consoleLines[1].classList.add('visible'), 300);
+                  } else if (i === 2){
+                    setTimeout(() => consoleLines[2] && consoleLines[2].classList.add('visible'), 300);
+                  }
+                }
+
+                function step(){
+                  setActive(index);
+                  index = (index + 1) % stepEls.length;
+                }
+
+                const playBtn = document.getElementById('play-btn');
+                const resetBtn = document.getElementById('reset-btn');
+
+                playBtn.addEventListener('click', () => {
+                  if(!running){
+                    running = true; playBtn.textContent = '⏸️ Pausar';
+                    step();
+                    timer = setInterval(step, 1900); // cada 1.9s
+                  } else {
+                    running = false; playBtn.textContent = '▶️ Reproducir';
+                    clearInterval(timer); timer = null;
+                  }
+                });
+
+                resetBtn.addEventListener('click', () => {
+                  clearInterval(timer); timer = null; running = false; playBtn.textContent = '▶️ Reproducir'; index = 0; clearActive(); badge.textContent = 'Paso: -';
+                });
+
+                // Accesibilidad: iniciar animación con tecla Enter cuando botón muestra foco
+                playBtn.addEventListener('keyup', (e) => { if(e.key === 'Enter') playBtn.click(); });
+              })();
+            </script>
+            </div>
+        </section>
+
+        <section id="static">
+            <h2>Static vs Instance</h2>
+
+            <h3>STATIC (Compartido)</h3>
+            <p>Los miembros <code>static</code> son <strong>compartidos por TODAS</strong> las instancias de una clase. No requieren un objeto para ser accedidos.</p>
+            <ul>
+                <li>Una sola copia en memoria (compartida)</li>
+                <li>Acceso desde la clase (no desde el objeto)</li>
+                <li>Usan la palabra clave <code>static</code></li>
+                <li>Viven durante toda la vida del programa</li>
+            </ul>
+
+            <h3>Instance (Normal)</h3>
+            <p>Los miembros de instancia son <strong>unicos para cada objeto</strong>.</p>
+            <ul>
+                <li>Una copia por cada objeto</li>
+                <li>Acceso desde el objeto</li>
+                <li>Viven mientras el objeto exista</li>
+            </ul>
+
+            <h3>Ejemplo Visual</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Contador.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Contador</span>
+{
+    <span class="token-comment">// STATIC: Compartido por todos</span>
+    <span class="token-keyword">public static int</span> <span class="token-property">Global</span> <span class="token-operator">=</span> <span class="token-number">0</span>;
+
+    <span class="token-comment">// INSTANCE: Unico por objeto</span>
+    <span class="token-keyword">public int</span> <span class="token-property">Instancia</span> <span class="token-operator">=</span> <span class="token-number">0</span>;
+
+    <span class="token-keyword">public</span> <span class="token-method">Contador</span>()
+    {
+        <span class="token-property">Global</span><span class="token-operator">++</span>;     <span class="token-comment">// Incrementa el contador compartido</span>
+        <span class="token-property">Instancia</span><span class="token-operator">++</span>; <span class="token-comment">// Incrementa el contador de este objeto</span>
+    }
+}
+
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> c1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=1, Instancia=1</span>
+<span class="token-keyword">var</span> c2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=2, Instancia=1</span>
+<span class="token-keyword">var</span> c3 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Contador</span>(); <span class="token-comment">// Global=3, Instancia=1</span>
+
+<span class="token-comment">// Static: desde la clase</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-class">Contador</span>.<span class="token-property">Global</span>); <span class="token-comment">// 3</span>
+
+<span class="token-comment">// Instance: desde el objeto</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c1.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c2.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span>
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(c3.<span class="token-property">Instancia</span>);   <span class="token-comment">// 1</span></code></pre>
+  </div>
+</div>
+
+            <h3>Cuando Usar Static</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usa static para</th>
+                        <th>NO uses static para</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Constantes (<code>Math.PI</code>)</td><td>Datos que varian por objeto</td></tr>
+                    <tr><td>Utilidades (<code>Console.WriteLine</code>)</td><td>Estado del objeto</td></tr>
+                    <tr><td>Configuraciones globales</td><td>Metodos que usan estado de instancia</td></tr>
+                    <tr><td>Contadores compartidos</td><td>Propiedades del objeto</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="class-vs-struct">
+            <h2>class vs struct</h2>
+
+            <h3>Diferencias Fundamentales</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th>class</th>
+                        <th>struct</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Tipo</strong></td><td>Reference type</td><td>Value type</td></tr>
+                    <tr><td><strong>Ubicación</strong></td><td>Heap</td><td>Stack</td></tr>
+                    <tr><td><strong>Asignacion</strong></td><td>Copia referencia</td><td>Copia valor completo</td></tr>
+                    <tr><td><strong>Herencia</strong></td><td>Soporta herencia</td><td>No soporta herencia (solo interfaces)</td></tr>
+                    <tr><td><strong>NULL</strong></td><td>Puede ser <code>null</code></td><td>No puede ser <code>null</code></td></tr>
+                    <tr><td><strong>Constructor</strong></td><td>Sin constructor default</td><td>Siempre tiene constructor default</td></tr>
+                    <tr><td><strong>Uso típico</strong></td><td>Objetos grandes, complejos</td><td>Datos pequeños, inmutables</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo Comparativo</h3>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Persona.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27</div>
+    <pre><code class="language-csharp"><span class="token-comment">// CLASS (Reference Type)</span>
+<span class="token-keyword">public class</span> <span class="token-class">PersonaClass</span>
+{
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+}
+
+<span class="token-comment">// STRUCT (Value Type)</span>
+<span class="token-keyword">public struct</span> <span class="token-class">PersonaStruct</span>
+{
+    <span class="token-keyword">public string</span> <span class="token-property">Nombre</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+    <span class="token-keyword">public int</span> <span class="token-property">Edad</span> { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
+}
+
+<span class="token-comment">// Uso</span>
+<span class="token-keyword">var</span> pc1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">PersonaClass</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Juan"</span>, <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">25</span> };
+<span class="token-keyword">var</span> pc2 <span class="token-operator">=</span> pc1;              <span class="token-comment">// Copia REFERENCIA</span>
+pc2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(pc1.<span class="token-property">Nombre</span>); <span class="token-comment">// "Maria" (!!) - ambos referencian el mismo objeto</span>
+
+<span class="token-keyword">var</span> ps1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">PersonaStruct</span> { <span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Juan"</span>, <span class="token-property">Edad</span> <span class="token-operator">=</span> <span class="token-number">25</span> };
+<span class="token-keyword">var</span> ps2 <span class="token-operator">=</span> ps1;              <span class="token-comment">// Copia VALOR completo</span>
+ps2.<span class="token-property">Nombre</span> <span class="token-operator">=</span> <span class="token-string">"Maria"</span>;
+<span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(ps1.<span class="token-property">Nombre</span>); <span class="token-comment">// "Juan" - independientes</span></code></pre>
+  </div>
+</div>
+
+            <div class="highlight-box">
+                <h4>Cuando Usar struct</h4>
+                <p>Usa <code>struct</code> cuando:</p>
+                <ul>
+                    <li>El tipo es <strong>pequeño</strong> (menos de 16 bytes)</li>
+                    <li>Es <strong>inmutable</strong> (no cambia después de crear)</li>
+                    <li>Representa <strong>un solo valor</strong> (como un primitivo)</li>
+                    <li>No necesitas <strong>herencia</strong></li>
+                </ul>
+                <p><strong>Ejemplos:</strong> <code>Point</code>, <code>Size</code>, <code>Color</code>, <code>DateTime</code> (partial)</p>
+            </div>
+        </section>
+        </section>
+
+        <section id="ejemplos">
+            <h2>Ejemplos</h2>
+            <p>Los ejemplos de código están integrados en las secciones teóricas anteriores. Consulte cada sección para ver ejemplos prácticos de:</p>
+            <ul>
+                <li>Definición de clases y objetos</li>
+                <li>Implementación de encapsulamiento</li>
+                <li>Uso de propiedades y constructores</li>
+                <li>Miembros estáticos vs de instancia</li>
+                <li>Diferencias entre class y struct</li>
+            </ul>
+        </section>
+
+        <section id="practica">
+            <h2>Práctica / Laboratorio</h2>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio Guiado - Sistema de Biblioteca (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Libro con encapsulamiento</p>
+                <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Comprensión de encapsulamiento, propiedades y constructores</p>
+                <p><strong>Objetivo:</strong> Implementar una clase <code>Libro</code> con encapsulamiento adecuado, propiedades y constructores.</p>
+
+            <h4>Requisitos</h4>
+            <ul>
+                <li>Campos privados para titulo, autor, anio y número de páginas</li>
+                <li>Propiedades publicas con validacion</li>
+                <li>Constructor parametrizado</li>
+                <li>Método <code>EstaAntiguo()</code> que retorne true si el libro es de hace más de 20 años</li>
+                <li>Constructor con encadenamiento (usando <code>this</code>)</li>
+            </ul>
+
+            <h4>Checklist de Implementacion</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Paso</th>
+                        <th>Actividad</th>
+                        <th>Tiempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Crear proyecto de consola en Visual Studio</td><td>3 min</td></tr>
+                    <tr><td>2</td><td>Definir clase <code>Libro</code> con campos privados</td><td>5 min</td></tr>
+                    <tr><td>3</td><td>Implementar propiedades con validacion</td><td>8 min</td></tr>
+                    <tr><td>4</td><td>Crear constructor parametrizado</td><td>5 min</td></tr>
+                    <tr><td>5</td><td>Implementar constructor con encadenamiento</td><td>4 min</td></tr>
+                    <tr><td>6</td><td>Implementar metodo <code>EstaAntiguo()</code></td><td>3 min</td></tr>
+                    <tr><td>7</td><td>Probar en Main con varios libros</td><td>2 min</td></tr>
+                </tbody>
+            </table>
+
+            <h4>Solucion de Referencia</h4>
+            <div class="code-block">
+  <div class="code-header">
+    <div class="code-dots">
+      <span class="code-dot red"></span>
+      <span class="code-dot yellow"></span>
+      <span class="code-dot green"></span>
+    </div>
+    <span class="code-title">Libro.cs</span>
+  </div>
+  <div class="code-content">
+    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79</div>
+    <pre><code class="language-csharp"><span class="token-keyword">public class</span> <span class="token-class">Libro</span>
+{
+    <span class="token-comment">// Campos privados (convencion _camelCase)</span>
+    <span class="token-keyword">private string</span> _titulo;
+    <span class="token-keyword">private string</span> _autor;
+    <span class="token-keyword">private int</span> _anio;
+    <span class="token-keyword">private int</span> _numeroPaginas;
+
+    <span class="token-comment">// Propiedades con validacion</span>
+    <span class="token-keyword">public string</span> <span class="token-property">Titulo</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _titulo;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El titulo no puede estar vacio"</span>);
+            _titulo <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-keyword">public string</span> <span class="token-property">Autor</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _autor;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (<span class="token-type">string</span>.<span class="token-method">IsNullOrWhiteSpace</span>(value))
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El autor no puede estar vacio"</span>);
+            _autor <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-keyword">public int</span> <span class="token-property">Anio</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _anio;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (value <span class="token-operator"><</span> <span class="token-number">1000</span> <span class="token-operator">||</span> value <span class="token-operator">></span> <span class="token-type">DateTime</span>.<span class="token-property">Now</span>.<span class="token-property">Year</span> <span class="token-operator">+</span> <span class="token-number">1</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentOutOfRangeException</span>(<span class="token-string">"Anio"</span>, <span class="token-string">"Año inválido"</span>);
+            _anio <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-keyword">public int</span> <span class="token-property">NumeroPaginas</span>
+    {
+        <span class="token-keyword">get</span> <span class="token-operator">=></span> _numeroPaginas;
+        <span class="token-keyword">set</span>
+        {
+            <span class="token-keyword">if</span> (value <span class="token-operator"><=</span> <span class="token-number">0</span>)
+                <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span>(<span class="token-string">"El número de páginas debe ser positivo"</span>);
+            _numeroPaginas <span class="token-operator">=</span> value;
+        }
+    }
+
+    <span class="token-comment">// Constructor completo</span>
+    <span class="token-keyword">public</span> <span class="token-method">Libro</span>(<span class="token-keyword">string</span> titulo, <span class="token-keyword">string</span> autor, <span class="token-keyword">int</span> anio, <span class="token-keyword">int</span> numeroPaginas)
+    {
+        <span class="token-property">Titulo</span> <span class="token-operator">=</span> titulo;
+        <span class="token-property">Autor</span> <span class="token-operator">=</span> autor;
+        <span class="token-property">Anio</span> <span class="token-operator">=</span> anio;
+        <span class="token-property">NumeroPaginas</span> <span class="token-operator">=</span> numeroPaginas;
+    }
+
+    <span class="token-comment">// Constructor con encadenamiento (this)</span>
+    <span class="token-keyword">public</span> <span class="token-method">Libro</span>(<span class="token-keyword">string</span> titulo, <span class="token-keyword">string</span> autor, <span class="token-keyword">int</span> anio)
+        <span class="token-operator">:</span> <span class="token-keyword">this</span>(titulo, autor, anio, <span class="token-number">0</span>)  <span class="token-comment">// 0 paginas por defecto</span>
+    {
+    }
+
+    <span class="token-comment">// Metodo de instancia</span>
+    <span class="token-keyword">public bool</span> <span class="token-method">EstaAntiguo</span>()
+    {
+        <span class="token-keyword">int</span> anioActual <span class="token-operator">=</span> <span class="token-type">DateTime</span>.<span class="token-property">Now</span>.<span class="token-property">Year</span>;
+        <span class="token-keyword">return</span> (anioActual <span class="token-operator">-</span> _anio) <span class="token-operator">></span> <span class="token-number">20</span>;
+    }
+
+    <span class="token-comment">// Propiedad calculada</span>
+    <span class="token-keyword">public string</span> <span class="token-property">InfoCorta</span> <span class="token-operator">=></span> <span class="token-string">$"{_titulo} ({_autor})"</span>;
+}
+
+<span class="token-comment">// Uso en Main</span>
+<span class="token-keyword">class</span> <span class="token-class">Program</span>
+{
+    <span class="token-keyword">static void</span> <span class="token-method">Main</span>()
+    {
+        <span class="token-keyword">var</span> libro1 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Libro</span>(<span class="token-string">"Cien Años de Soledad"</span>, <span class="token-string">"Gabriel García Márquez"</span>, <span class="token-number">1967</span>, <span class="token-number">417</span>);
+        <span class="token-keyword">var</span> libro2 <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Libro</span>(<span class="token-string">"Don Quijote"</span>, <span class="token-string">"Miguel de Cervantes"</span>, <span class="token-number">1605</span>);
+
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(libro1.<span class="token-property">InfoCorta</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Es antiguo? {libro1.EstaAntiguo()}"</span>);  <span class="token-comment">// True</span>
+
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(libro2.<span class="token-property">InfoCorta</span>);
+        <span class="token-namespace">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Es antiguo? {libro2.EstaAntiguo()}"</span>);  <span class="token-comment">// True</span>
+    }
+}</code></pre>
+  </div>
+</div>
+
+            <h3>Errores Comunes y Como Evitarlos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Causa</th>
+                        <th>Solucion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>ArgumentException</td><td>Titulo o autor vacio</td><td>Validar con <code>IsNullOrWhiteSpace</code></td></tr>
+                    <tr><td>ArgumentOutOfRangeException</td><td>Anio fuera de rango</td><td>Validar rango 1000 - anio actual + 1</td></tr>
+                    <tr><td>Logica incorrecta</td><td>No usar <code>DateTime.Now.Year</code></td><td>Obtener anio actual dinamicamente</td></tr>
+                    <tr><td>Encadenamiento roto</td><td>Olvidar usar <code>this</code></td><td>Siempre llamar a <code>: this(...)</code></td></tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h4>Consejo Pro</h4>
+                <p>Usa <strong>propiedades autoimplementadas</strong> cuando no necesites validacion. Solo usa backing fields (<code>_campo</code>) cuando requieras logica en get/set.</p>
+            </div>
+        </section>
+    </section>
+
+        <section id="ejercicios">
+            <h2>Ejercicios</h2>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 1 - Cuenta de Ahorros (20 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase CuentaAhorros con validaciones</p>
+                <p><strong>Tiempo estimado:</strong> 20 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Aplicación de encapsulamiento y métodos</p>
+            <p><strong>Nivel:</strong> Basico | <strong>Duracion:</strong> 20 minutos</p>
+            <p>Implementar una clase <code>CuentaAhorros</code> con:</p>
+            <ul>
+                <li>Saldo inicial obligatorio (minimo $100,000)</li>
+                <li>Tasa de interes anual (por defecto 5%)</li>
+                <li>Metodos <code>Depositar</code> y <code>Retirar</code> con validacion</li>
+                <li>Metodo <code>CalcularInteresMensual()</code> que retorne el interes del mes</li>
+                <li>Propiedad <code>Saldo</code> solo lectura</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Constructor valida saldo minimo</li>
+                    <li>[ ] Depositar rechaza montos negativos o cero</li>
+                    <li>[ ] Retirar rechaza si saldo insuficiente</li>
+                    <li>[ ] Calculo de interes es correcto (tasa / 12)</li>
+                    <li>[ ] Propiedad Saldo no tiene set</li>
+                </ul>
+            </div>
+
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 2 - Sistema de Estudiantes (30 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Estudiante con lista de notas</p>
+                <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Uso de colecciones, propiedades calculadas</p>
+            <p><strong>Nivel:</strong> Intermedio | <strong>Duracion:</strong> 30 minutos</p>
+            <p>Implementar una clase <code>Estudiante</code> con:</p>
+            <ul>
+                <li>Propiedades: Nombre, Codigo, Carrera (con valores por defecto)</li>
+                <li>Lista privada de notas (0.0 a 5.0)</li>
+                <li>Metodo <code>AgregarNota(double nota)</code> con validacion de rango</li>
+                <li>Propiedad calculada <code>Promedio</code></li>
+                <li>Propiedad calculada <code>Estado</code> que retorne "APROBADO" o "REPROBADO"</li>
+                <li>Constructor que reciba nombre y codigo (carrera por defecto "Sin definir")</li>
+                <li>Contador static <code>TotalEstudiantes</code> que se incremente en cada constructor</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Notas se validan entre 0.0 y 5.0</li>
+                    <li>[ ] Promedio se calcula correctamente (suma / cantidad)</li>
+                    <li>[ ] Estado usa Promedio >= 3.0 como umbral</li>
+                    <li>[ ] Constructor usa <code>: this()</code> para encadenamiento</li>
+                    <li>[ ] Contador static se incrementa automaticamente</li>
+                </ul>
+            </div>
+
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Ejercicio 3 - Producto con Inventario (40 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Producto para sistema de inventario</p>
+                <p><strong>Tiempo estimado:</strong> 40 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Validaciones, propiedades inmutables, constructores encadenados</p>
+            <p><strong>Nivel:</strong> Avanzado | <strong>Duracion:</strong> 40 minutos</p>
+            <p>Implementar una clase <code>Producto</code> para un sistema de inventario:</p>
+            <ul>
+                <li>Codigo (string, inmutable despues de crear)</li>
+                <li>Nombre, Descripcion, Precio, Stock</li>
+                <li>Propiedad <code>Precio</code> no permite valores negativos</li>
+                <li>Metodo <code>ActualizarStock(int cantidad)</code> que suma o resta</li>
+                <li>Metodo <code>HayStock()</code> retorne true si stock > 0</li>
+                <li>Propiedad calculada <code>ValorInventario</code> = Precio * Stock</li>
+                <li>Constructor con encadenamiento multiple</li>
+                <li>Validar que el codigo no sea vacio y tenga formato especifico (ej: "PROD-XXX")</li>
+            </ul>
+            <div class="highlight-box">
+                <h4>Checklist</h4>
+                <ul>
+                    <li>[ ] Codigo usa <code>{ get; init; }</code> para inmutabilidad</li>
+                    <li>[ ] Codigo valida formato con Regex o string operations</li>
+                    <li>[ ] Precio lanza excepcion si es negativo</li>
+                    <li>[ ] ActualizarStock acepta valores positivos y negativos</li>
+                    <li>[ ] ValorInventario es calculado (sin backing field)</li>
+                    <li>[ ] Dos constructores encadenados con <code>this</code></li>
+                </ul>
+            </div>
+
+            </section>
+
+            <section class="actividad">
+                <h3>Actividad: Tarea para Casa - Clase Película (60 min)</h3>
+                <p><strong>Tipo:</strong> Opcional / práctica</p>
+                <p><strong>Relacionado con:</strong> Ninguno</p>
+                <p><strong>Entregable:</strong> Clase Pelicula con todas las funcionalidades</p>
+                <p><strong>Tiempo estimado:</strong> 60 minutos</p>
+                <p><strong>Criterios de éxito:</strong> Integración de todos los conceptos de la clase</p>
+                <div class="warning-box">
+                <h4>Entregable: Clase <code>Pelicula</code></h4>
+                <p><strong>Fecha limite:</strong> Proxima clase | <strong>Duracion estimada:</strong> 60 minutos</p>
+                <p>Crear una clase <code>Pelicula</code> que modele una pelicula con:</p>
+                <ul>
+                    <li>Titulo, Director, Anio, Genero, Duracion (minutos)</li>
+                    <li>Lista de actores (array o List&lt;string&gt;)</li>
+                    <li>Constructor completo + constructor con encadenamiento</li>
+                    <li>Metodo <code>EsClasica()</code> (anio < 1990)</li>
+                    <li>Metodo <code>AgregarActor(string actor)</code></li>
+                    <li>Propiedad calculada <code>InfoBreve</code> = "Titulo (Director, Anio)"</li>
+                    <li>Validaciones apropiadas en todas las propiedades</li>
+                    <li>Contador static de peliculas creadas</li>
+                </ul>
+                <p><strong>Requisitos de entrega:</strong></p>
+                <ul>
+                    <li>Repositorio en GitHub con README.md</li>
+                    <li>Codigo fuente en C# con comentarios</li>
+                    <li>Programa Main que demuestre todas las funcionalidades</li>
+                    <li>Capturas de pantalla de la ejecucion</li>
+                </ul>
+            </div>
+            </section>
+        </section>
+
+        <section id="resumen">
+            <h2>Resumen de la Clase</h2>
+
+            <h3>Conceptos Clave Aprendidos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>POO</strong></td><td>Paradigma basado en objetos que unen datos y comportamiento</td></tr>
+                    <tr><td><strong>Clase</strong></td><td>Plantilla o definición abstracta para crear objetos</td></tr>
+                    <tr><td><strong>Objeto</strong></td><td>Instancia concreta de una clase que ocupa memoria</td></tr>
+                    <tr><td><strong>Encapsulamiento</strong></td><td>Ocultar detalles internos, exponer interfaz controlada</td></tr>
+                    <tr><td><strong>Propiedades</strong></td><td>Syntactic sugar para getters/setters con validación</td></tr>
+                    <tr><td><strong>Constructores</strong></td><td>Métodos especiales para inicializar objetos</td></tr>
+                    <tr><td><strong>static</strong></td><td>Miembros compartidos por todas las instancias</td></tr>
+                    <tr><td><strong>class vs struct</strong></td><td>Reference type (heap) vs Value type (stack)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Habilidades Adquiridas</h3>
+            <ul>
+                <li>Definir clases con propiedades y métodos</li>
+                <li>Crear objetos usando <code>new</code></li>
+                <li>Aplicar encapsulamiento con modificadores de acceso</li>
+                <li>Usar propiedades para acceso controlado a datos</li>
+                <li>Implementar constructores con encadenamiento</li>
+                <li>Diferenciar entre static y instance members</li>
+            </ul>
+
+            <h3>Próximos Pasos</h3>
+            <ul>
+                <li><strong>Clase 3:</strong> Herencia y Polimorfismo</li>
+                <li>Practicar creando clases del dominio</li>
+                <li>Aplicar encapsulamiento en todos los proyectos</li>
+            </ul>
+        </section>
+
+        <section id="referencias">
+            <h2>Referencias</h2>
+            <h3>Documentación oficial</h3>
+            <ul>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/" target="_blank" rel="noopener">Programación orientada a objetos en C#</a> - Guía oficial de Microsoft</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/" target="_blank" rel="noopener">Clases y structs</a> - Referencia completa</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties/" target="_blank" rel="noopener">Propiedades en C#</a> - Uso de propiedades</li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers/" target="_blank" rel="noopener">Modificadores de acceso</a> - public, private, protected</li>
+            </ul>
+            <h3>Fuentes consultadas para esta clase</h3>
+            <p><small>Contenido basado en el syllabus oficial IF0100 y documentación de Microsoft Learn. No se requirió búsqueda web adicional para esta clase.</small></p>
+        </section>
+    </div>
+
+    <a href="#inicio" class="back-to-top">&uarr;</a>
+
+    <footer>
+        <p><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+        <p>UNAULA - Ingeniería Informática - 2026-I</p>
+        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+            Contacto: [correo del docente] | Repositorio: [enlace del curso]
+        </p>
+    </footer>
+</body>
+</html>

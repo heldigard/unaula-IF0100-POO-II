@@ -181,16 +181,14 @@
         }
 
         pre {
-            background: #1e1e2e;
-            color: #cdd6f4;
-            padding: 1rem 1.1rem;
-            border-radius: 12px;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
             overflow-x: auto;
             margin: 1rem 0;
             font-size: 0.85rem;
             line-height: 1.5;
-            border: 1px solid #313244;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
         }
 
         code {
@@ -219,7 +217,7 @@
             border-radius: 8px;
             color: #52606d;
         }
-        /* Syntax highlighting para Python */
+        /* Syntax highlighting para C# */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -434,18 +432,18 @@
             <h2>Objetivos de Aprendizaje</h2>
             <p>Al finalizar esta clase, el estudiante será capaz de:</p>
             <ul>
-                <li><strong>Leer y escribir</strong> archivos de texto en Python con <code>pathlib</code> y <code>open()</code></li>
-                <li><strong>Manipular</strong> archivos CSV con el módulo <code>csv</code></li>
-                <li><strong>Serializar</strong> objetos a JSON con el módulo <code>json</code></li>
+                <li><strong>Leer y escribir</strong> archivos de texto en C# usando System.IO</li>
+                <li><strong>Manipular</strong> archivos CSV con estructuras básicas</li>
+                <li><strong>Serializar</strong> objetos a JSON usando System.Text.Json</li>
                 <li><strong>Comparar</strong> archivos planos vs bases de datos para elegir la mejor opción</li>
-                <li><strong>Implementar</strong> patrones Repository para persistencia simple</li>
-                <li><strong>Manejar</strong> configuración INI y compresión con <code>configparser</code>, <code>gzip</code> y <code>zipfile</code></li>
+                <li><strong>Implementar</strong> patrones Repository para persistencia de datos</li>
+                <li><strong>Manejar</strong> configuración INI y compresión de archivos</li>
             </ul>
 
             <h3 style="margin-top: 1.5rem;">Prerrequisitos</h3>
             <ul>
-                <li>Conocimiento básico de Python y POO</li>
-                <li>Manejo de listas/diccionarios</li>
+                <li>Conocimiento básico de C# y POO</li>
+                <li>Comprensión de generics y LINQ</li>
                 <li>Conceptos básicos de persistencia de datos</li>
             </ul>
         </section>
@@ -516,11 +514,11 @@
 
         <!-- Ejemplos -->
         <section id="ejemplos">
-            <h2>2. Python I/O - pathlib y open()</h2>
+            <h2>2. System.IO - API Base de Archivos</h2>
 
-            <p><strong>pathlib</strong> = Módulo de Python para trabajar con rutas y archivos de forma orientada a objetos.</p>
-            <p><strong><abbr title="List comprehensions - Sintaxis compacta de Python para filtrar y transformar listas">List comprehensions</abbr></strong> = Forma idiomática de filtrar/transformar colecciones.</p>
-            <p><strong><abbr title="Typing - Anotaciones de tipo opcionales para documentar y validar">Typing</abbr></strong> = Tipos opcionales para claridad y herramientas estáticas.</p>
+            <p><strong>System.IO</strong> = Namespace de .NET que contiene clases para leer/escribir archivos y directorios (<code>File</code>, <code>Directory</code>, <code>Stream</code>).</p>
+            <p><strong><abbr title="LINQ - Language Integrated Query, sintaxis de consulta integrada en C#">LINQ</abbr></strong> = Sintaxis de C# para consultar colecciones (como SQL pero en código).</p>
+            <p><strong><abbr title="Generics - Característica de C# que permite crear clases y métodos parametrizados por tipo">Generics</abbr></strong> = Clases que pueden trabajar con cualquier tipo (<code>List&lt;T&gt;</code>, <code>Dictionary&lt;K,V&gt;</code>).</p>
             <p><strong><abbr title="Serialización - Proceso de convertir objetos a formato portable (JSON, XML, binario)">Serialización</abbr></strong> = Convertir un objeto en memoria a un formato que pueda guardarse en archivo o transmitirse por red.</p>
 
             <h3>Clases Principales</h3>
@@ -534,29 +532,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>pathlib.Path</code></td>
-                        <td>Rutas y operaciones de archivos</td>
-                        <td>Crear, leer, escribir, listar</td>
+                        <td><code>File</code></td>
+                        <td>Métodos estáticos para archivos</td>
+                        <td>Operaciones simples (leer/escribir todo)</td>
                     </tr>
                     <tr>
-                        <td><code>open()</code></td>
-                        <td>Lectura/escritura de texto</td>
-                        <td>Lectura línea por línea, append</td>
+                        <td><code>Directory</code></td>
+                        <td>Métodos estáticos para directorios</td>
+                        <td>Crear, listar, eliminar carpetas</td>
                     </tr>
                     <tr>
-                        <td><code>csv</code></td>
-                        <td>Lectura/escritura de CSV</td>
-                        <td>DictReader/DictWriter</td>
+                        <td><code>StreamReader</code></td>
+                        <td>Lectura de texto</td>
+                        <td>Lectura línea por línea</td>
                     </tr>
                     <tr>
-                        <td><code>json</code></td>
-                        <td>Serialización JSON</td>
-                        <td>dump/load para APIs y config</td>
+                        <td><code>StreamWriter</code></td>
+                        <td>Escritura de texto</td>
+                        <td>Escritura con buffering</td>
                     </tr>
                     <tr>
-                        <td><code>gzip/zipfile</code></td>
-                        <td>Compresión</td>
-                        <td>Backups y distribución</td>
+                        <td><code>FileStream</code></td>
+                        <td>Lectura/escritura binaria</td>
+                        <td>Archivos binarios, locking, acceso aleatorio</td>
                     </tr>
                 </tbody>
             </table>
@@ -564,49 +562,59 @@
             <div class="warning-box">
                 <strong>Errores Comunes con Archivos</strong>
                 <ul>
-                    <li><strong>Olvidar el context manager:</strong> El archivo queda abierto y puede bloquearse</li>
-                    <li><strong>Encoding incorrecto:</strong> Caracteres especiales se corrompen</li>
-                    <li><strong>Path sin validar:</strong> Verificar existencia antes de leer</li>
-                    <li><strong>Permisos insuficientes:</strong> Error al escribir en rutas protegidas</li>
+                    <li><strong>Olvidar using:</strong> El archivo queda abierto (file lock) y otros procesos no pueden accederlo</li>
+                    <li><strong>Encoding incorrecto:</strong> Caracteres especiales (ñ, tildes) se corrompen</li>
+                    <li><strong>Path sin validar:</strong> File.Exists antes de abrir para evitar excepciones</li>
+                    <li><strong>Permisos insuficientes:</strong> Excepción "Access Denied" si no hay permisos de escritura</li>
                 </ul>
             </div>
 
             <h3>Conceptos Clave</h3>
-            <p><strong><abbr title="Modo binario - Abrir con 'rb'/'wb' para leer o escribir bytes">Modo binario</abbr></strong> = Permite lectura/escritura de bytes para imágenes o archivos comprimidos.</p>
+            <p><strong><abbr title="FileStream - Stream para lectura/escritura de archivos con acceso aleatorio (posicionarse en cualquier byte)">FileStream</abbr></strong> = Permite acceder a cualquier posición del archivo (seek), ideal para archivos binarios o acceso aleatorio.</p>
             <p><strong><abbr title="Encoding - Forma en que se representan los caracteres como bytes (UTF-8, ASCII, UTF-16)">Encoding</abbr></strong> = Mapa de caracteres a bytes. UTF-8 es el estándar web y soporta todos los caracteres del mundo.</p>
-            <p><strong><abbr title="Buffering - Técnica de acumular datos en memoria para reducir operaciones de I/O">Buffering</abbr></strong> = Python usa buffer interno para reducir llamadas al disco (lee/escribe bloques).</p>
+            <p><strong><abbr title="Buffering - Técnica de acumular datos en memoria para reducir operaciones de I/O">Buffering</abbr></strong> = StreamWriter/Reader usan buffer interno para reducir llamadas al disco (escribe/lee bloques en lugar de byte por byte).</p>
 
             <h3>Operaciones Básicas</h3>
-            <pre><code><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path
+            <pre><code><span class="keyword">using</span> System.IO;
 
-<span class="comment"># Escribir texto completo</span>
-Path(<span class="string">"datos.txt"</span>).write_text(<span class="string">"Hola UNAULA"</span>, encoding=<span class="string">"utf-8"</span>)
+<span class="comment">// Escribir texto completo</span>
+File.WriteAllText(<span class="string">"datos.txt"</span>, <span class="string">"Hola UNAULA"</span>);
 
-<span class="comment"># Leer texto completo</span>
-contenido = Path(<span class="string">"datos.txt"</span>).read_text(encoding=<span class="string">"utf-8"</span>)
+<span class="comment">// Leer texto completo</span>
+<span class="type">string</span> contenido = File.ReadAllText(<span class="string">"datos.txt"</span>);
 
-<span class="comment"># Agregar texto al final</span>
-<span class="keyword">with</span> <span class="method">open</span>(<span class="string">"log.txt"</span>, <span class="string">"a"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-    f.write(<span class="string">"Nueva entrada\n"</span>)
+<span class="comment">// Agregar texto al final</span>
+File.AppendAllText(<span class="string">"log.txt"</span>, <span class="string">"Nueva entrada\n"</span>);
 
-<span class="comment"># Verificar si existe</span>
-<span class="keyword">if</span> Path(<span class="string">"datos.txt"</span>).exists():
-    <span class="comment"># El archivo existe</span>
-    <span class="keyword">pass</span>
+<span class="comment">// Verificar si existe</span>
+<span class="keyword">if</span> (File.Exists(<span class="string">"datos.txt"</span>))
+{
+    <span class="comment">// El archivo existe</span>
+}
 
-<span class="comment"># Leer todas las líneas</span>
-lineas = Path(<span class="string">"archivo.txt"</span>).read_text(encoding=<span class="string">"utf-8"</span>).splitlines()</code></pre>
+<span class="comment">// Leer todas las líneas</span>
+<span class="type">string</span>[] lineas = File.ReadAllLines(<span class="string">"archivo.txt"</span>);</code></pre>
 
-            <h3>Lectura y escritura con context manager</h3>
-            <pre><code><span class="comment"># Escribir (mejor para archivos grandes)</span>
-<span class="keyword">with</span> <span class="method">open</span>(<span class="string">"salida.txt"</span>, <span class="string">"w"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-    f.write(<span class="string">"Línea 1\n"</span>)
-    f.write(<span class="string">"Línea 2\n"</span>)
+            <h3>StreamReader y StreamWriter</h3>
+            <pre><code><span class="keyword">using</span> System.IO;
 
-<span class="comment"># Leer línea por línea</span>
-<span class="keyword">with</span> <span class="method">open</span>(<span class="string">"entrada.txt"</span>, <span class="string">"r"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-    <span class="keyword">for</span> linea <span class="keyword">in</span> f:
-        <span class="method">print</span>(linea.strip())</code></pre>
+<span class="comment">// Escribir con StreamWriter (mejor para archivos grandes)</span>
+<span class="keyword">using</span> (<span class="type">StreamWriter</span> writer = <span class="keyword">new</span> <span class="type">StreamWriter</span>(<span class="string">"salida.txt"</span>))
+{
+    writer.WriteLine(<span class="string">"Línea 1"</span>);
+    writer.WriteLine(<span class="string">"Línea 2"</span>);
+    <span class="comment">// El using cierra automáticamente el archivo</span>
+}
+
+<span class="comment">// Leer con StreamReader</span>
+<span class="keyword">using</span> (<span class="type">StreamReader</span> reader = <span class="keyword">new</span> <span class="type">StreamReader</span>(<span class="string">"entrada.txt"</span>))
+{
+    <span class="type">string</span> linea;
+    <span class="keyword">while</span> ((linea = reader.ReadLine()) != <span class="keyword">null</span>)
+    {
+        <span class="type">Console</span>.WriteLine(linea);
+    }
+}</code></pre>
         </section>
 
         <!-- CSV -->
@@ -627,130 +635,213 @@ lineas = Path(<span class="string">"archivo.txt"</span>).read_text(encoding=<spa
 3,Monitor,450000,Pantallas</code></pre>
 
             <h3>Lectura Básica de CSV</h3>
-            <pre><code><span class="keyword">import</span> csv
+            <pre><code><span class="keyword">using</span> System.IO;
+<span class="keyword">using</span> System.Linq;
 
-<span class="keyword">with</span> <span class="method">open</span>(<span class="string">"productos.csv"</span>, newline=<span class="string">""</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-    reader = csv.DictReader(f)
-    <span class="keyword">for</span> row <span class="keyword">in</span> reader:
-        <span class="method">print</span>(<span class="string">f"{row['Id']} - {row['Nombre']}: ${row['Precio']}"</span>)</code></pre>
+<span class="type">var</span> lineas = File.ReadAllLines(<span class="string">"productos.csv"</span>);
+
+<span class="comment">// Saltar encabezado y procesar datos</span>
+<span class="keyword">foreach</span> (<span class="type">var</span> linea <span class="keyword">in</span> lineas.Skip(1))
+{
+    <span class="keyword">if</span> (<span class="type">string</span>.IsNullOrWhiteSpace(linea)) <span class="keyword">continue</span>;
+
+    <span class="type">var</span> campos = linea.Split(<span class="string">','</span>);
+
+    <span class="type">int</span> id = <span class="type">int</span>.Parse(campos[0]);
+    <span class="type">string</span> nombre = campos[1];
+    <span class="type">decimal</span> precio = <span class="type">decimal</span>.Parse(campos[2]);
+    <span class="type">string</span> categoria = campos[3];
+
+    <span class="type">Console</span>.WriteLine(<span class="string">$"{id} - {nombre}: ${precio}"</span>);
+}</code></pre>
 
             <h3>Repository CSV - Estructura Base</h3>
-            <pre><code><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass
-<span class="keyword">import</span> csv
-<span class="keyword">from</span> pathlib <span class="keyword">import</span> Path
+            <pre><code><span class="keyword">using</span> System;
+<span class="keyword">using</span> System.Collections.Generic;
+<span class="keyword">using</span> System.IO;
+<span class="keyword">using</span> System.Linq;
 
-<span class="keyword">@dataclass</span>
-<span class="keyword">class</span> <span class="type">Estudiante</span>:
-    id: int
-    codigo: str
-    nombre: str
-    apellido: str
-    email: str
-    promedio: float
-    activo: bool = <span class="keyword">True</span>
+<span class="keyword">public class</span> <span class="type">EstudianteRepositoryCSV</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">string</span> _filePath;
+    <span class="keyword">private const</span> <span class="type">char</span> SEPARADOR = <span class="string">','</span>;
 
-<span class="keyword">class</span> <span class="type">EstudianteRepositoryCSV</span>:
-    <span class="keyword">def</span> __init__(<span class="keyword">self</span>, file_path=<span class="string">"estudiantes.csv"</span>):
-        <span class="keyword">self</span>.file_path = Path(file_path)
-        <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">self</span>.file_path.exists():
-            <span class="keyword">with</span> <span class="method">open</span>(<span class="keyword">self</span>.file_path, <span class="string">"w"</span>, newline=<span class="string">""</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-                writer = csv.DictWriter(f, fieldnames=[<span class="string">"Id"</span>, <span class="string">"Codigo"</span>, <span class="string">"Nombre"</span>, <span class="string">"Apellido"</span>, <span class="string">"Email"</span>, <span class="string">"Promedio"</span>, <span class="string">"Activo"</span>])
-                writer.writeheader()
+    <span class="keyword">public</span> <span class="method">EstudianteRepositoryCSV</span>(<span class="type">string</span> filePath = <span class="string">"estudiantes.csv"</span>)
+    {
+        _filePath = filePath;
 
-    <span class="keyword">def</span> obtener_todos(<span class="keyword">self</span>) -> list[Estudiante]:
-        <span class="keyword">with</span> <span class="method">open</span>(<span class="keyword">self</span>.file_path, newline=<span class="string">""</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-            reader = csv.DictReader(f)
-            <span class="keyword">return</span> [
-                Estudiante(
-                    id=<span class="type">int</span>(row[<span class="string">"Id"</span>]),
-                    codigo=row[<span class="string">"Codigo"</span>],
-                    nombre=row[<span class="string">"Nombre"</span>],
-                    apellido=row[<span class="string">"Apellido"</span>],
-                    email=row[<span class="string">"Email"</span>],
-                    promedio=<span class="type">float</span>(row[<span class="string">"Promedio"</span>]),
-                    activo=row[<span class="string">"Activo"</span>] == <span class="string">"1"</span>,
-                )
-                <span class="keyword">for</span> row <span class="keyword">in</span> reader
-            ]
+        <span class="comment">// Crear archivo con encabezado si no existe</span>
+        <span class="keyword">if</span> (!File.Exists(_filePath))
+        {
+            File.WriteAllText(_filePath,
+                <span class="string">"Id,Codigo,Nombre,Apellido,Email,Promedio,Activo\n"</span>);
+        }
+    }
 
-    <span class="keyword">def</span> crear(<span class="keyword">self</span>, estudiante: Estudiante) -> None:
-        <span class="keyword">with</span> <span class="method">open</span>(<span class="keyword">self</span>.file_path, <span class="string">"a"</span>, newline=<span class="string">""</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-            writer = csv.DictWriter(f, fieldnames=[<span class="string">"Id"</span>, <span class="string">"Codigo"</span>, <span class="string">"Nombre"</span>, <span class="string">"Apellido"</span>, <span class="string">"Email"</span>, <span class="string">"Promedio"</span>, <span class="string">"Activo"</span>])
-            writer.writerow({
-                <span class="string">"Id"</span>: estudiante.id,
-                <span class="string">"Codigo"</span>: estudiante.codigo,
-                <span class="string">"Nombre"</span>: estudiante.nombre,
-                <span class="string">"Apellido"</span>: estudiante.apellido,
-                <span class="string">"Email"</span>: estudiante.email,
-                <span class="string">"Promedio"</span>: estudiante.promedio,
-                <span class="string">"Activo"</span>: <span class="string">"1"</span> <span class="keyword">if</span> estudiante.activo <span class="keyword">else</span> <span class="string">"0"</span>,
-            })</code></pre>
+    <span class="keyword">public void</span> <span class="method">Crear</span>(<span class="type">Estudiante</span> estudiante)
+    {
+        <span class="comment">// Generar ID automático</span>
+        <span class="type">var</span> estudiantes = ObtenerTodos();
+        estudiante.Id = estudiantes.Any()
+            ? estudiantes.Max(e => e.Id) + 1
+            : 1;
+
+        <span class="comment">// Validar código único</span>
+        <span class="keyword">if</span> (estudiantes.Any(e => e.Codigo == estudiante.Codigo))
+            <span class="keyword">throw new</span> <span class="type">Exception</span>(<span class="string">$"Ya existe estudiante con código {estudiante.Codigo}"</span>);
+
+        <span class="comment">// Agregar al final del archivo</span>
+        <span class="type">string</span> linea = EstudianteACSV(estudiante);
+        File.AppendAllText(_filePath, linea + <span class="string">"\n"</span>);
+    }
+
+    <span class="keyword">public</span> <span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt; <span class="method">ObtenerTodos</span>()
+    {
+        <span class="type">var</span> estudiantes = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt;();
+        <span class="type">string</span>[] lineas = File.ReadAllLines(_filePath);
+
+        <span class="comment">// Saltar encabezado</span>
+        <span class="keyword">for</span> (<span class="type">int</span> i = 1; i &lt; lineas.Length; i++)
+        {
+            <span class="keyword">if</span> (<span class="type">string</span>.IsNullOrWhiteSpace(lineas[i]))
+                <span class="keyword">continue</span>;
+
+            <span class="keyword">try</span>
+            {
+                <span class="type">var</span> estudiante = CSVAEstudiante(lineas[i]);
+                <span class="keyword">if</span> (estudiante.Activo)
+                    estudiantes.Add(estudiante);
+            }
+            <span class="keyword">catch</span> (<span class="type">Exception</span> ex)
+            {
+                <span class="type">Console</span>.WriteLine(<span class="string">$"Error en línea {i}: {ex.Message}"</span>);
+            }
+        }
+
+        <span class="keyword">return</span> estudiantes;
+    }
+
+    <span class="keyword">public</span> <span class="type">Estudiante</span> <span class="method">ObtenerPorId</span>(<span class="type">int</span> id)
+    {
+        <span class="keyword">return</span> ObtenerTodos().FirstOrDefault(e => e.Id == id);
+    }
+
+    <span class="keyword">private</span> <span class="type">string</span> <span class="method">EstudianteACSV</span>(<span class="type">Estudiante</span> e)
+    {
+        <span class="keyword">return</span> <span class="string">$"{e.Id}{SEPARADOR}"</span> +
+               <span class="string">$"{e.Codigo}{SEPARADOR}"</span> +
+               <span class="string">$"\"{e.Nombre}\"{SEPARADOR}"</span> +
+               <span class="string">$"\"{e.Apellido}\"{SEPARADOR}"</span> +
+               <span class="string">$"{e.Email}{SEPARADOR}"</span> +
+               <span class="string">$"{e.Promedio:F2}{SEPARADOR}"</span> +
+               <span class="string">$"{(e.Activo ? "1" : "0")}"</span>;
+    }
+
+    <span class="keyword">private</span> <span class="type">Estudiante</span> <span class="method">CSVAEstudiante</span>(<span class="type">string</span> linea)
+    {
+        <span class="type">var</span> campos = SepararCSV(linea);
+        <span class="keyword">if</span> (campos.Length &lt; 7) <span class="keyword">throw new</span> <span class="type">FormatException</span>(<span class="string">"Línea CSV incompleta"</span>);
+
+        <span class="keyword">return new</span> <span class="type">Estudiante</span>
+        {
+            Id = <span class="type">int</span>.Parse(campos[0]),
+            Codigo = campos[1],
+            Nombre = campos[2].Trim(<span class="string">'"'</span>),
+            Apellido = campos[3].Trim(<span class="string">'"'</span>),
+            Email = campos[4],
+            Promedio = <span class="type">decimal</span>.Parse(campos[5]),
+            Activo = campos[6] == <span class="string">"1"</span>
+        };
+    }
+}</code></pre>
 
             <h3>Manejo de Comillas en CSV</h3>
-            <p>El módulo <code>csv</code> maneja comillas automáticamente cuando hay comas dentro de campos.</p>
-            <pre><code>writer = csv.DictWriter(
-    f,
-    fieldnames=[...],
-    quoting=csv.QUOTE_MINIMAL
-)</code></pre>
+            <pre><code><span class="comment">// Separador que respeta comillas</span>
+<span class="keyword">private</span> <span class="type">string</span>[] <span class="method">SepararCSV</span>(<span class="type">string</span> linea)
+{
+    <span class="type">var</span> campos = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">string</span>&gt;();
+    <span class="type">bool</span> dentroComillas = <span class="keyword">false</span>;
+    <span class="type">string</span> campoActual = <span class="string">""</span>;
+
+    <span class="keyword">foreach</span> (<span class="type">char</span> c <span class="keyword">in</span> linea)
+    {
+        <span class="keyword">if</span> (c == <span class="string">'"'</span>) dentroComillas = !dentroComillas;
+        <span class="keyword">else if</span> (c == SEPARADOR && !dentroComillas)
+        {
+            campos.Add(campoActual);
+            campoActual = <span class="string">""</span>;
+        }
+        <span class="keyword">else</span>
+            campoActual += c;
+    }
+
+    campos.Add(campoActual);
+    <span class="keyword">return</span> campos.ToArray();
+}</code></pre>
         </section>
 
         <!-- JSON -->
         <section id="json">
             <h2>4. Persistencia con JSON</h2>
 
-            <h3>Módulo json</h3>
+            <h3>System.Text.Json</h3>
             <p><strong><abbr title="JSON - JavaScript Object Notation, formato ligero de intercambio de datos basado en texto">JSON</abbr></strong> = Formato ligero de intercambio de datos, legible para humanos y nativo de JavaScript. Es el estándar de facto para APIs web.</p>
             <div class="info-box">
                 <p><strong>Ventajas de JSON sobre XML:</strong> Más ligero, más fácil de parsear, soporte nativo en JavaScript.</p>
             </div>
 
             <h3>Serialización Básica</h3>
-            <pre><code><span class="keyword">import</span> json
+            <pre><code><span class="keyword">using</span> System.Text.Json;
 
-<span class="comment"># Serializar objeto a JSON</span>
-producto = {<span class="string">"id"</span>: 1, <span class="string">"nombre"</span>: <span class="string">"Teclado"</span>, <span class="string">"precio"</span>: 120000}
-json_str = json.dumps(producto)
+<span class="comment">// Serializar objeto a JSON</span>
+<span class="type">var</span> producto = <span class="keyword">new</span> <span class="type">Producto</span> { Id = 1, Nombre = <span class="string">"Teclado"</span>, Precio = 120000 };
+<span class="type">string</span> json = JsonSerializer.Serialize(producto);
+<span class="comment">// {"Id":1,"Nombre":"Teclado","Precio":120000}</span>
 
-<span class="comment"># Serializar con formato legible</span>
-json_bonito = json.dumps(producto, indent=2, ensure_ascii=<span class="keyword">False</span>)
+<span class="comment">// Serializar con formato legible</span>
+<span class="type">var</span> options = <span class="keyword">new</span> <span class="type">JsonSerializerOptions</span> { WriteIndented = <span class="keyword">true</span> };
+<span class="type">string</span> jsonBonito = JsonSerializer.Serialize(producto, options);
 
-<span class="comment"># Deserializar</span>
-producto2 = json.loads(json_str)
+<span class="comment">// Deserializar</span>
+<span class="type">var</span> producto2 = JsonSerializer.Deserialize&lt;<span class="type">Producto</span>&gt;(json);
 
-<span class="comment"># Serializar lista</span>
-productos = [producto, producto2]
-json_array = json.dumps(productos, indent=2, ensure_ascii=<span class="keyword">False</span>)</code></pre>
+<span class="comment">// Serializar lista</span>
+<span class="type">var</span> productos = <span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">Producto</span>&gt; { producto1, producto2 };
+<span class="type">string</span> jsonArray = JsonSerializer.Serialize(productos, options);</code></pre>
 
             <h3>Repository JSON - Estructura Base</h3>
             <pre><code><span class="keyword">using</span> System;
 <span class="keyword">using</span> System.Collections.Generic;
-<span class="token-keyword">import</span> json
-<span class="token-keyword">import</span> os
-<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> List
-<span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass, asdict
+<span class="keyword">using</span> System.IO;
+<span class="keyword">using</span> System.Linq;
+<span class="keyword">using</span> System.Text.Json;
 
-<span class="token-keyword">@dataclass</span>
-<span class="token-keyword">class</span> <span class="token-type">Estudiante</span>:
-    id: <span class="token-type">int</span>
-    nombre: <span class="token-type">str</span>
-    apellido: <span class="token-type">str</span>
-    email: <span class="token-type">str</span>
-    promedio: <span class="token-type">float</span>
+<span class="keyword">public class</span> <span class="type">EstudianteRepositoryJSON</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">string</span> _filePath;
+    <span class="keyword">private readonly</span> <span class="type">JsonSerializerOptions</span> _jsonOptions;
 
-<span class="token-keyword">class</span> <span class="token-type">EstudianteRepositoryJSON</span>:
-    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, file_path: <span class="token-type">str</span> = <span class="token-string">"estudiantes.json"</span>):
-        <span class="token-keyword">self</span>._file_path = file_path
+    <span class="keyword">public</span> <span class="method">EstudianteRepositoryJSON</span>(<span class="type">string</span> filePath = <span class="string">"estudiantes.json"</span>)
+    {
+        _filePath = filePath;
+        _jsonOptions = <span class="keyword">new</span> <span class="type">JsonSerializerOptions</span>
+        {
+            WriteIndented = <span class="keyword">true</span>,
+            PropertyNamingPolicy = <span class="type">JsonNamingPolicy</span>.CamelCase
+        };
 
-        <span class="token-comment"># Crear archivo vacío si no existe</span>
-        <span class="token-keyword">if</span> <span class="token-keyword">not</span> os.path.exists(<span class="token-keyword">self</span>._file_path):
-            <span class="token-keyword">with</span> <span class="token-keyword">open</span>(<span class="token-keyword">self</span>._file_path, <span class="token-string">'w'</span>) <span class="token-keyword">as</span> f:
-                json.dump([], f)
+        <span class="comment">// Crear archivo vacío si no existe</span>
+        <span class="keyword">if</span> (!File.Exists(_filePath))
+        {
+            File.WriteAllText(_filePath, <span class="string">"[]"</span>);
+        }
+    }
 
-    <span class="token-keyword">def</span> <span class="token-method">crear</span>(<span class="token-keyword">self</span>, estudiante: <span class="token-type">Estudiante</span>) -> <span class="token-keyword">None</span>:
-        estudiantes = <span class="token-keyword">self</span>.obtener_todos()
+    <span class="keyword">public void</span> <span class="method">Crear</span>(<span class="type">Estudiante</span> estudiante)
+    {
+        <span class="type">var</span> estudiantes = ObtenerTodos();
 
-        <span class="token-comment"># Generar ID automático</span>
+        <span class="comment">// Generar ID automático</span>
         estudiante.Id = estudiantes.Any()
             ? estudiantes.Max(e => e.Id) + 1
             : 1;
@@ -828,9 +919,9 @@ json_array = json.dumps(productos, indent=2, ensure_ascii=<span class="keyword">
         <section id="xml">
             <h2>5. Persistencia con XML</h2>
 
-            <h3>xml.etree.ElementTree</h3>
+            <h3>System.Xml.Serialization</h3>
             <p><strong><abbr title="XML - eXtensible Markup Language, lenguaje de marcado para documentos estructurados">XML</abbr></strong> = Lenguaje de marcado para estructurar datos con etiquetas jerárquicas. Es más pesado que JSON pero soporta schemas y metadatos.</p>
-            <p><strong><abbr title="ElementTree - Módulo estándar de Python para leer/escribir XML">ElementTree</abbr></strong> = Módulo que permite crear, leer y escribir XML desde Python.</p>
+            <p><strong><abbr title="XmlSerializer - Clase de .NET para serializar/deserializar objetos a XML">XmlSerializer</abbr></strong> = Clase que convierte objetos C# a XML y viceversa, usando atributos para configurar la serialización.</p>
 
             <div class="warning-box">
                 <strong>¿Cuándo usar XML en lugar de JSON?</strong>
@@ -840,26 +931,46 @@ json_array = json.dumps(productos, indent=2, ensure_ascii=<span class="keyword">
                     <li><strong>Metadatos:</strong> XML es mejor para documentos complejos con atributos</li>
                 </ul>
             </div>
-            <pre><code><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET
-<span class="keyword">from</span> pathlib <span class="keyword">import</span> Path
+            <pre><code><span class="keyword">using</span> System;
+<span class="keyword">using</span> System.Collections.Generic;
+<span class="keyword">using</span> System.IO;
+<span class="keyword">using</span> System.Xml.Serialization;
 
-<span class="keyword">class</span> <span class="type">EstudianteRepositoryXML</span>:
-    <span class="keyword">def</span> __init__(<span class="keyword">self</span>, file_path=<span class="string">"estudiantes.xml"</span>):
-        <span class="keyword">self</span>.file_path = Path(file_path)
-        <span class="keyword">if</span> <span class="keyword">not</span> <span class="keyword">self</span>.file_path.exists():
-            root = ET.Element(<span class="string">"estudiantes"</span>)
-            ET.ElementTree(root).write(<span class="keyword">self</span>.file_path, encoding=<span class="string">"utf-8"</span>, xml_declaration=<span class="keyword">True</span>)
+<span class="keyword">public class</span> <span class="type">EstudianteRepositoryXML</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">string</span> _filePath;
+    <span class="keyword">private readonly</span> <span class="type">XmlSerializer</span> _serializer;
 
-    <span class="keyword">def</span> obtener_todos(<span class="keyword">self</span>) -> list[dict]:
-        tree = ET.parse(<span class="keyword">self</span>.file_path)
-        root = tree.getroot()
-        <span class="keyword">return</span> [e.attrib <span class="keyword">for</span> e <span class="keyword">in</span> root.findall(<span class="string">"estudiante"</span>)]
+    <span class="keyword">public</span> <span class="method">EstudianteRepositoryXML</span>(<span class="type">string</span> filePath = <span class="string">"estudiantes.xml"</span>)
+    {
+        _filePath = filePath;
+        _serializer = <span class="keyword">new</span> <span class="type">XmlSerializer</span>(<span class="keyword">typeof</span>(<span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt;));
+        <span class="keyword">if</span> (!File.Exists(_filePath)) GuardarTodos(<span class="keyword">new</span> <span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt;());
+    }
 
-    <span class="keyword">def</span> crear(<span class="keyword">self</span>, estudiante: dict) -> None:
-        tree = ET.parse(<span class="keyword">self</span>.file_path)
-        root = tree.getroot()
-        ET.SubElement(root, <span class="string">"estudiante"</span>, attrib=estudiante)
-        tree.write(<span class="keyword">self</span>.file_path, encoding=<span class="string">"utf-8"</span>, xml_declaration=<span class="keyword">True</span>)</code></pre>
+    <span class="keyword">public void</span> <span class="method">Crear</span>(<span class="type">Estudiante</span> estudiante)
+    {
+        <span class="type">var</span> estudiantes = ObtenerTodos();
+        estudiante.Id = estudiantes.Any() ? estudiantes.Max(e => e.Id) + 1 : 1;
+        estudiantes.Add(estudiante);
+        GuardarTodos(estudiantes);
+    }
+
+    <span class="keyword">public</span> <span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt; <span class="method">ObtenerTodos</span>()
+    {
+        <span class="keyword">using</span> (<span class="type">var</span> stream = File.OpenRead(_filePath))
+        {
+            <span class="type">var</span> estudiantes = (<span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt;)_serializer.Deserialize(stream);
+            <span class="keyword">return</span> estudiantes.Where(e => e.Activo).ToList();
+        }
+    }
+
+    <span class="keyword">private</span> <span class="type">void</span> <span class="method">GuardarTodos</span>(<span class="type">List</span>&lt;<span class="type">Estudiante</span>&gt; estudiantes)
+    {
+        <span class="keyword">using</span> (<span class="type">var</span> stream = File.Create(_filePath))
+            _serializer.Serialize(stream, estudiantes);
+    }
+}</code></pre>
         </section>
 
         <!-- Comparación -->
@@ -941,22 +1052,6 @@ json_array = json.dumps(productos, indent=2, ensure_ascii=<span class="keyword">
             </table>
         </section>
 
-        <section id="equivalencia-datos-desconectados">
-            <h2>Equivalencia: DataSet/DataAdapter → Python + Angular</h2>
-            <p>En ADO.NET, <strong>DataSet</strong> y <strong>DataAdapter</strong> permiten trabajar con datos desconectados y sincronizar cambios. En el stack actual, la equivalencia se logra con DTOs, estado local y sincronización explícita.</p>
-            <div class="note">
-                <strong>Equivalencias clave</strong>
-                <ul>
-                    <li><code>DataSet</code> → Estado local en Angular (signals/BehaviorSubject)</li>
-                    <li><code>DataTable</code> → Listas de DTOs en memoria</li>
-                    <li><code>DataAdapter.Fill()</code> → GET a la API + carga en estado</li>
-                    <li><code>DataAdapter.Update()</code> → POST/PUT para sincronizar cambios</li>
-                    <li><code>AcceptChanges()</code> → Confirmar cambios locales</li>
-                    <li><code>RejectChanges()</code> → Revertir cambios locales</li>
-                </ul>
-            </div>
-        </section>
-
         <!-- Avanzado -->
         <section id="avanzado">
             <h2>7. Temas Avanzados</h2>
@@ -977,14 +1072,30 @@ Theme=Dark
 Language=es-CO
 PageSize=20</code></pre>
 
-            <pre><code><span class="keyword">import</span> configparser
+            <pre><code><span class="keyword">public class</span> <span class="type">IniFile</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">string</span> _filePath;
+    <span class="keyword">private readonly</span> <span class="type">Dictionary</span>&lt;<span class="type">string</span>, <span class="type">Dictionary</span>&lt;<span class="type">string</span>, <span class="type">string</span>&gt;&gt; _data;
 
-config = configparser.ConfigParser()
-config.read(<span class="string">"config.ini"</span>, encoding=<span class="string">"utf-8"</span>)
+    <span class="keyword">public</span> <span class="type">string</span> <span class="method">GetValue</span>(<span class="type">string</span> section, <span class="type">string</span> key, <span class="type">string</span> defaultValue = <span class="string">""</span>)
+    {
+        <span class="keyword">if</span> (_data.ContainsKey(section) && _data[section].ContainsKey(key))
+            <span class="keyword">return</span> _data[section][key];
+        <span class="keyword">return</span> defaultValue;
+    }
 
-servidor = config.get(<span class="string">"Database"</span>, <span class="string">"Server"</span>, fallback=<span class="string">"localhost"</span>)
-puerto = config.getint(<span class="string">"Database"</span>, <span class="string">"Port"</span>, fallback=1433)
-db = config.get(<span class="string">"Database"</span>, <span class="string">"Database"</span>, fallback=<span class="string">"UniversidadDB"</span>)</code></pre>
+    <span class="keyword">public void</span> <span class="method">SetValue</span>(<span class="type">string</span> section, <span class="type">string</span> key, <span class="type">string</span> value)
+    {
+        <span class="keyword">if</span> (!_data.ContainsKey(section))
+            _data[section] = <span class="keyword">new</span> <span class="type">Dictionary</span>&lt;<span class="type">string</span>, <span class="type">string</span>&gt;();
+        _data[section][key] = value;
+    }
+}
+
+<span class="comment">// Uso</span>
+<span class="type">var</span> config = <span class="keyword">new</span> <span class="type">IniFile</span>(<span class="string">"config.ini"</span>);
+<span class="type">var</span> servidor = config.GetValue(<span class="string">"Database"</span>, <span class="string">"Server"</span>, <span class="string">"localhost"</span>);
+<span class="type">var</span> puerto = config.GetInt(<span class="string">"Database"</span>, <span class="string">"Port"</span>, 1433);</code></pre>
 
             <h3>Compresión de Archivos</h3>
             <p><strong><abbr title="GZIP - Formato de compresión GNU ZIP (algoritmo DEFLATE)">GZIP</abbr></strong> = Formato de compresión que reduce el tamaño de archivos individuales. Es estándar en Linux y para archivos web (.gz).</p>
@@ -1000,37 +1111,54 @@ db = config.get(<span class="string">"Database"</span>, <span class="string">"Da
             </div>
 
             <h4>GZIP - Compresión individual</h4>
-            <pre><code><span class="keyword">import</span> gzip
-<span class="keyword">import</span> shutil
-<span class="keyword">import</span> zipfile
-<span class="keyword">from</span> pathlib <span class="keyword">import</span> Path
+            <pre><code><span class="keyword">using</span> System.IO.Compression;
 
-<span class="keyword">def</span> <span class="method">compress_gzip</span>(source_path: str, compressed_path: str) -> None:
-    <span class="keyword">with</span> <span class="method">open</span>(source_path, <span class="string">"rb"</span>) <span class="keyword">as</span> f_in, gzip.open(compressed_path, <span class="string">"wb"</span>) <span class="keyword">as</span> f_out:
-        shutil.copyfileobj(f_in, f_out)
+<span class="keyword">public static</span> <span class="type">void</span> <span class="method">CompressGzip</span>(<span class="type">string</span> sourcePath, <span class="type">string</span> compressedPath)
+{
+    <span class="keyword">using</span> <span class="type">var</span> originalStream = File.OpenRead(sourcePath);
+    <span class="keyword">using</span> <span class="type">var</span> compressedStream = File.Create(compressedPath);
+    <span class="keyword">using</span> <span class="type">var</span> gzipStream = <span class="keyword">new</span> <span class="type">GZipStream</span>(compressedStream, <span class="type">CompressionMode</span>.Compress);
 
-<span class="comment"># Crear ZIP con múltiples archivos</span>
-<span class="keyword">def</span> <span class="method">create_zip</span>(zip_path: str, files_to_include: list[str]) -> None:
-    <span class="keyword">with</span> zipfile.ZipFile(zip_path, <span class="string">"w"</span>, compression=zipfile.ZIP_DEFLATED) <span class="keyword">as</span> zf:
-        <span class="keyword">for</span> file_path <span class="keyword">in</span> files_to_include:
-            path = Path(file_path)
-            <span class="keyword">if</span> path.exists():
-                zf.write(path, arcname=path.name)</code></pre>
+    originalStream.CopyTo(gzipStream);
+
+    <span class="type">var</span> ratio = (1 - (<span class="type">double</span>)compressedStream.Length / originalStream.Length) * 100;
+    <span class="type">Console</span>.WriteLine(<span class="string">$"Ratio de compresión: {ratio:F1}%"</span>);
+}
+
+<span class="comment">// Crear ZIP con múltiples archivos</span>
+<span class="keyword">public static</span> <span class="type">void</span> <span class="method">CreateZip</span>(<span class="type">string</span> zipPath, <span class="keyword">params</span> <span class="type">string</span>[] filesToInclude)
+{
+    <span class="keyword">using</span> <span class="type">var</span> archive = <span class="type">ZipFile</span>.Open(zipPath, <span class="type">ZipArchiveMode</span>.Create);
+
+    <span class="keyword">foreach</span> (<span class="type">var</span> filePath <span class="keyword">in</span> filesToInclude)
+    {
+        <span class="keyword">if</span> (!File.Exists(filePath)) <span class="keyword">continue</span>;
+        <span class="type">var</span> entryName = <span class="type">Path</span>.GetFileName(filePath);
+        archive.CreateEntryFromFile(filePath, entryName);
+    }
+}</code></pre>
 
             <h3>Logger de Auditoría</h3>
-            <pre><code><span class="keyword">import</span> logging
+            <pre><code><span class="keyword">public class</span> <span class="type">FileLogger</span>
+{
+    <span class="keyword">private readonly</span> <span class="type">string</span> _logPath;
 
-logging.basicConfig(
-    filename=<span class="string">"auditoria.log"</span>,
-    level=logging.INFO,
-    format=<span class="string">"%(asctime)s - %(message)s"</span>,
-)
+    <span class="keyword">public</span> <span class="method">FileLogger</span>(<span class="type">string</span> logPath = <span class="string">"auditoria.log"</span>)
+    {
+        _logPath = logPath;
+    }
 
-<span class="keyword">def</span> <span class="method">log_operacion</span>(operacion: str, detalles: str, usuario: str) -> None:
-    logging.info(<span class="string">f"{operacion} - {detalles} por {usuario}"</span>)
+    <span class="keyword">public void</span> <span class="method">Log</span>(<span class="type">string</span> operacion, <span class="type">string</span> detalles, <span class="type">string</span> usuario)
+    {
+        <span class="type">var</span> linea = <span class="string">$"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] "</span> +
+                     <span class="string">$"{operacion} - {detalles} por {usuario}"</span>;
+        File.AppendAllText(_logPath, linea + <span class="type">Environment</span>.NewLine);
+    }
+}
 
-<span class="comment"># Ejemplo de salida:</span>
-<span class="comment"># 2026-02-01 18:30:15,123 - CREATE - Estudiante EST004 creado por Usuario1</span></code></pre>
+<span class="comment">// Salida example:</span>
+<span class="comment">// [2026-02-01 18:30:15] CREATE - Estudiante EST004 creado por Usuario1</span>
+<span class="comment">// [2026-02-01 18:32:20] UPDATE - Estudiante EST002 actualizado por Usuario1</span></code></pre>
         </section>
 
         <!-- Práctica / Laboratorio -->
@@ -1073,24 +1201,25 @@ logging.basicConfig(
 
             <h3>Ejercicio 3: Logger con Timestamp</h3>
             <p>Implementar un logger que escriba en archivo de texto con timestamp.</p>
-            <pre><code><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime
-
-<span class="keyword">def</span> <span class="method">log</span>(mensaje: str) -> None:
-    linea = <span class="string">f"[{datetime.now():%Y-%m-%d %H:%M:%S}] {mensaje}"</span>
-    <span class="keyword">with</span> <span class="method">open</span>(<span class="string">"log.txt"</span>, <span class="string">"a"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-        f.write(linea + <span class="string">"\n"</span>)</code></pre>
+            <pre><code><span class="keyword">public void</span> <span class="method">Log</span>(<span class="type">string</span> mensaje)
+{
+    <span class="type">var</span> linea = <span class="string">$"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {mensaje}"</span>;
+    File.AppendAllText(<span class="string">"log.txt"</span>, linea + <span class="type">Environment</span>.NewLine);
+}</code></pre>
 
             <h3>Ejercicio 4: Migración de Formatos</h3>
             <p>Implementar un método que convierta datos entre CSV ↔ JSON ↔ XML.</p>
-            <pre><code><span class="keyword">import</span> csv
-<span class="keyword">import</span> json
+            <pre><code><span class="keyword">public class</span> <span class="type">MigradorDatos</span>
+{
+    <span class="keyword">public void</span> <span class="method">CSVaJSON</span>(<span class="type">string</span> csvPath, <span class="type">string</span> jsonPath)
+    {
+        <span class="type">var</span> repoCSV = <span class="keyword">new</span> <span class="type">EstudianteRepositoryCSV</span>(csvPath);
+        <span class="type">var</span> estudiantes = repoCSV.ObtenerTodos();
 
-<span class="keyword">def</span> <span class="method">csv_a_json</span>(csv_path: str, json_path: str) -> None:
-    <span class="keyword">with</span> <span class="method">open</span>(csv_path, newline=<span class="string">""</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-        reader = csv.DictReader(f)
-        datos = [row <span class="keyword">for</span> row <span class="keyword">in</span> reader]
-    <span class="keyword">with</span> <span class="method">open</span>(json_path, <span class="string">"w"</span>, encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:
-        json.dump(datos, f, indent=2, ensure_ascii=<span class="keyword">False</span>)</code></pre>
+        <span class="type">var</span> repoJSON = <span class="keyword">new</span> <span class="type">EstudianteRepositoryJSON</span>(jsonPath);
+        <span class="comment">// TODO: Guardar estudiantes en JSON</span>
+    }
+}</code></pre>
 
             <h3>Actividad Final (10 min)</h3>
             <p>En parejas:</p>
@@ -1106,7 +1235,7 @@ logging.basicConfig(
                 <ul>
                     <li>¿Cuándo elegir CSV vs JSON vs XML para persistencia?</li>
                     <li>¿Por qué es importante usar UTF-8 al escribir archivos?</li>
-                    <li>¿Qué pasa si olvidas cerrar un archivo (sin context manager)?</li>
+                    <li>¿Qué pasa si olvidas cerrar un archivo (sin using)?</li>
                 </ul>
             </div>
         </section>
@@ -1123,7 +1252,7 @@ logging.basicConfig(
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>pathlib / open()</strong></td>
+                        <td><strong>System.IO</strong></td>
                         <td>API base para operaciones de archivos</td>
                     </tr>
                     <tr>
@@ -1140,7 +1269,7 @@ logging.basicConfig(
                     </tr>
                     <tr>
                         <td><strong>Repository Pattern</strong></td>
-                        <td>Abstracción de acceso a datos en archivos</td>
+                        <td>Abstracción de acceso a datos</td>
                     </tr>
                     <tr>
                         <td><strong>Compresión</strong></td>
@@ -1151,31 +1280,21 @@ logging.basicConfig(
         </section>
 
         <!-- Referencias -->
-        <section id="entrega-git">
-            <h2>Entrega con Git</h2>
-            <pre><code>git checkout -b feature/archivos-planos-clase-14
-git add src/ data/
-git commit -m "chore: estructura inicial archivos planos"
-git commit -m "feat: lectura/escritura CSV JSON XML"
-git commit -m "docs: agrega notas y ejercicios"
-git tag -a clase-14-v1 -m "Entrega clase 14 - archivos planos"</code></pre>
-        </section>
-
         <section id="referencias">
             <h2>Referencias y Recursos Adicionales</h2>
             <h3>Documentación Oficial</h3>
             <ul>
-                <li><a href="https://docs.python.org/3/library/pathlib.html" target="_blank" style="color: #1e40af;">pathlib - Python Docs</a></li>
-                <li><a href="https://docs.python.org/3/library/csv.html" target="_blank" style="color: #1e40af;">csv - Python Docs</a></li>
-                <li><a href="https://docs.python.org/3/library/json.html" target="_blank" style="color: #1e40af;">json - Python Docs</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/io/" target="_blank" style="color: #1e40af;">System.IO - Microsoft Docs</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-overview" target="_blank" style="color: #1e40af;">System.Text.Json - Microsoft Docs</a></li>
+                <li><a href="https://learn.microsoft.com/en-us/dotnet/standard/linq/" target="_blank" style="color: #1e40af;">LINQ - Microsoft Docs</a></li>
             </ul>
 
             <h3>Próxima Clase</h3>
-            <p><strong>Clase 15: Repositorios y Unit of Work con SQL Server</strong></p>
+            <p><strong>Clase 15: DataSet y DataAdapter</strong></p>
             <ul>
-                <li>Patrón repositorio con pyodbc</li>
-                <li>Unidad de trabajo y transacciones</li>
-                <li>Sincronización de cambios</li>
+                <li>Datos desconectados</li>
+                <li>Navegación y edición en memoria</li>
+                <li>Integración con ADO.NET</li>
             </ul>
         </section>
     </main>
@@ -1183,11 +1302,16 @@ git tag -a clase-14-v1 -m "Entrega clase 14 - archivos planos"</code></pre>
     <section id="resumen">
       <h2>Resumen de la Clase</h2>
       <ul>
-        <li>Archivos planos son útiles para configuraciones, logs y exportaciones.</li>
-        <li>Python ofrece módulos estándar: pathlib, csv, json, xml.etree.</li>
-        <li>El context manager evita fugas de recursos al trabajar con archivos.</li>
-        <li>CSV es ideal para datos tabulares; JSON para APIs; XML para integraciones legacy.</li>
-        <li>gzip/zipfile permiten compresión para backups y distribución.</li>
+        <li>Entity Framework es un ORM que mapea objetos C# a tablas de base de datos.</li>
+        <li>DbContext es la unidad de trabajo que rastrea cambios en entidades.</li>
+        <li>DbSet<T> representa colecciones de entidades de una tabla (similar a Repository).</li>
+        <li>EF Core soporta LINQ to Entities, Change Tracking, Lazy Loading, y Migrations.</li>
+        <li>Connection String configura conexión a base de datos (SQL Server, SQLite, PostgreSQL).</li>
+        <li>OnModelCreating configura mapeos entidad-tabla, relaciones y restricciones con Fluent API.</li>
+        <li>Las relaciones se configuran con HasOne/HasMany y WithOne/WithMany para propiedades de navegación.</li>
+        <li>Migrations (Add-Migration, Update-Database) versionan el esquema de base de datos.</li>
+        <li>Include() y ThenInclude() permiten Eager Loading de entidades relacionadas.</li>
+        <li>AsNoTracking() deshabilita tracking para consultas de solo lectura (mejora rendimiento).</li>
       </ul>
     </section>
 

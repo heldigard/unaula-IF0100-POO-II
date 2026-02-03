@@ -112,7 +112,7 @@
     table { width: 100%; border-collapse: collapse; margin: 10px 0; }
     th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
     th { background: #f1f5f9; }
-    /* Syntax highlighting para Python */
+    /* Syntax highlighting para C# */
     .token-keyword { color: #c792ea; font-weight: 600; }
     .token-type { color: #ffcb6b; }
     .token-string { color: #c3e88d; }
@@ -252,7 +252,7 @@ p code, li code {
           <ul>
             <li>Distinguir entre TDD y BDD.</li>
             <li>Escribir escenarios en lenguaje Gherkin.</li>
-            <li>Implementar pruebas de comportamiento con behave.</li>
+            <li>Implementar pruebas de comportamiento con SpecFlow.</li>
             <li>Aplicar el formato Given-When-Then.</li>
             <li>Comunicar requisitos de forma comprensible para todos.</li>
           </ul>
@@ -262,7 +262,7 @@ p code, li code {
           <ul>
             <li>Conocer conceptos básicos de pruebas unitarias.</li>
             <li>Entender historias de usuario y requisitos.</li>
-            <li>Python 3.11+ instalado con pip.</li>
+            <li>Windows 10/11 con Visual Studio 2022 o .NET 8 SDK instalado.</li>
           </ul>
         </div>
       </div>
@@ -326,7 +326,7 @@ p code, li code {
         <p>Gherkin es el corazón de BDD porque crea un <strong>formato estándar</strong> que tanto personas como herramientas pueden procesar:</p>
         <ul>
           <li><strong>Legible por no-programadores:</strong> Clientes y POs entienden los escenarios sin aprender código</li>
-          <li><strong>Procesable por herramientas:</strong> behave convierte .feature en pruebas automatizadas</li>
+          <li><strong>Procesable por herramientas:</strong> SpecFlow/Cucumber convierten .feature en pruebas automatizadas</li>
           <li><strong>Estructura clara:</strong> Given-When-Then guía a pensar en contexto-acción-resultado</li>
           <li><strong>Reutilizable:</strong> Los pasos se pueden reutilizar entre escenarios similares</li>
         </ul>
@@ -405,25 +405,19 @@ p code, li code {
 
       <h3>Infografía: TDD vs BDD</h3>
       <figure>
-        <object data="../assets/svg/clase-06-tdd-vs-bdd.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-          <img src="../assets/svg/clase-06-tdd-vs-bdd.svg" alt="Infografia comparacion TDD vs BDD" />
-        </object>
+        <img src="../assets/infografias/clase-06-tdd-vs-bdd.png" alt="Infografía comparación TDD vs BDD" onerror="this.onerror=null;this.src='/assets/infografias/clase-06-tdd-vs-bdd.png'" />
         <figcaption>Figura 1: Comparación TDD vs BDD - TDD se enfoca en pruebas técnicas a nivel de código con audiencia de desarrolladores, mientras BDD se enfoca en comportamiento del negocio con lenguaje natural (Gherkin) comprensible para todos los interesados (desarrolladores, QA, clientes), transformando especificaciones en pruebas ejecutables que sirven como documentación viva.</figcaption>
       </figure>
 
       <h3>Infografía: Given-When-Then</h3>
       <figure>
-        <object data="../assets/svg/clase-06-bdd-given-when-then.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-          <img src="../assets/svg/clase-06-bdd-given-when-then.svg" alt="Infografia formato Given-When-Then" />
-        </object>
+        <img src="../assets/infografias/clase-06-bdd-given-when-then.png" alt="Infografía formato Given-When-Then" onerror="this.onerror=null;this.src='/assets/infografias/clase-06-bdd-given-when-then.png'" />
         <figcaption>Figura 2: Formato Given-When-Then (Dado-Cuando-Entonces) - estructura del lenguaje Gherkin donde Given (Dado) establece el contexto y precondiciones del escenario, When (Cuándo) describe la acción principal que ejecuta el usuario o sistema, y Then (Entonces) especifica el resultado esperado o postcondición que debe verificarse, permitiendo escribir especificaciones ejecutables legibles por humanos y máquinas.</figcaption>
       </figure>
 
       <h3>Infografía: Three Amigos</h3>
       <figure>
-        <object data="../assets/svg/clase-06-three-amigos.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-          <img src="../assets/svg/clase-06-three-amigos.svg" alt="Infografia de los tres amigos en BDD" />
-        </object>
+        <img src="../assets/infografias/clase-06-three-amigos.png" alt="Infografía de los tres amigos en BDD" onerror="this.onerror=null;this.src='/assets/infografias/clase-06-three-amigos.png'" />
         <figcaption>Figura 3: Three Amigos (Los Tres Amigos) - patrón de colaboración BDD donde negocio (Product Owner/Cliente), desarrollo (programadores) y QA (analistas de prueba) se reúnen para clarificar requisitos antes de implementar, combinando diferentes perspectivas: el negocio aporta el "qué" (valor), el desarrollo aporta el "cómo" (factibilidad técnica), y el QA aporta los "casos límite" (validación), resultando en escenarios Gherkin completos y bien definidos.</figcaption>
       </figure>
 
@@ -458,8 +452,8 @@ p code, li code {
     <section id="practica">
       <h2>Práctica / laboratorio (35 min)</h2>
 
-      <h3>Instalación y estructura behave</h3>
-      <div class="note">VS Code con Python: instalar behave vía pip para BDD.</div>
+      <h3>Instalación y estructura SpecFlow</h3>
+      <div class="note">Alternativa Windows: usar Visual Studio 2022 con plantilla de SpecFlow o CLI con .NET 8 SDK.</div>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -467,30 +461,25 @@ p code, li code {
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">instalar-behave.sh</span>
+          <span class="code-title">instalar.sh</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8</div>
-          <pre><code><span class="token-comment"># Instalar behave (framework BDD para Python)</span>
-pip <span class="token-method">install</span> behave
+          <pre><code><span class="token-operator">dotnet</span> <span class="token-method">new</span> <span class="token-string">specflowproject</span> <span class="token-operator">-n</span> <span class="token-string">MiApp.Specs</span> <span class="token-operator">--framework</span> <span class="token-string">xunit</span>
+<span class="token-comment"># o manual</span>
 
-<span class="token-comment"># Opcional: para assertions más expresivas</span>
-pip <span class="token-method">install</span> pytest
-
-<span class="token-comment"># Estructura del proyecto</span>
-mi_proyecto_bdd/
-├── features/
-│   ├── prestamo.feature
-│   └── steps/
-│       └── prestamo_steps.py
-└── environment.py</code></pre>
+<span class="token-operator">dotnet</span> <span class="token-method">new</span> <span class="token-string">classlib</span> <span class="token-operator">-n</span> <span class="token-string">MiApp.Specs</span>
+<span class="token-operator">dotnet</span> <span class="token-method">add</span> <span class="token-string">package</span> <span class="token-string">SpecFlow.xUnit</span>
+<span class="token-operator">dotnet</span> <span class="token-method">add</span> <span class="token-string">package</span> <span class="token-string">SpecFlow.Tools.MsBuild.Generation</span>
+<span class="token-operator">dotnet</span> <span class="token-method">add</span> <span class="token-string">package</span> <span class="token-string">FluentAssertions</span>
+<span class="token-operator">dotnet</span> <span class="token-method">add</span> <span class="token-string">package</span> <span class="token-string">xunit</span></code></pre>
         </div>
       </div>
 
       <h3>Estructura de proyecto</h3>
       <figure>
         <svg width="100%" viewBox="0 0 720 160" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="specsTree">
-          <title id="specsTree">Estructura del proyecto behave (BDD Python)</title>
+          <title id="specsTree">Estructura del proyecto SpecFlow</title>
           <style>
             .n{font:600 13px Arial, sans-serif; fill:#0b2d6b}
             .s{font:12px Arial, sans-serif; fill:#475569}
@@ -502,55 +491,55 @@ mi_proyecto_bdd/
           <text x="200" y="98" text-anchor="middle" class="s">Features/ (*.feature)</text>
 
           <rect x="320" y="80" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
-          <text x="400" y="98" text-anchor="middle" class="s">StepDefinitions/ (Python)</text>
+          <text x="400" y="98" text-anchor="middle" class="s">StepDefinitions/ (C#)</text>
 
           <rect x="520" y="80" width="160" height="28" fill="#fff" stroke="#dbeafe"/>
           <text x="600" y="98" text-anchor="middle" class="s">Hooks/ · Drivers/</text>
         </svg>
-        <figcaption>Estructura típica de un proyecto behave: `features/`, `steps/`, y `environment.py` para hooks.</figcaption>
+        <figcaption>Estructura típica de un proyecto SpecFlow: `Features/`, `StepDefinitions/`, y hooks/drivers de soporte.</figcaption>
       </figure>
 
-      <h3>Pasos con behave (Python)</h3>
+      <h3>Pasos en Windows (Visual Studio 2022)</h3>
       <ol>
-        <li>Crear carpeta <code>features/</code> y archivo <code>*.feature</code> con escenarios Gherkin.</li>
-        <li>Crear carpeta <code>features/steps/</code> con archivos Python para los steps.</li>
-        <li>Usar los decoradores <code>@given</code>, <code>@when</code>, <code>@then</code> de behave.</li>
-        <li>Ejecutar pruebas con <code>behave</code> en la terminal.</li>
+        <li>Crear solución nueva &gt; plantilla <strong>SpecFlow Project</strong> (xUnit).</li>
+        <li>Si no aparece la plantilla, instalar la extensión SpecFlow en VS y reiniciar.</li>
+        <li>Crear un archivo <code>Prestamo.feature</code> en la carpeta <code>Features</code>.</li>
+        <li>Generar los Steps desde el menú de SpecFlow.</li>
+        <li>Ejecutar pruebas con <strong>Test Explorer</strong>.</li>
       </ol>
-      <div class="note">Checklist: behave instalado, 1 escenario ejecuta en verde, pasos Given/When/Then enlazados.</div>
+      <div class="note">Checklist: proyecto compila, 1 escenario ejecuta en verde, pasos Given/When/Then enlazados.</div>
 
-            <h3>Step Definitions con behave (Python)</h3>
-      <div class="code-block">
-        <div class="code-header">
-          <div class="code-dots">
-            <span class="code-dot red"></span>
-            <span class="code-dot yellow"></span>
-            <span class="code-dot green"></span>
-          </div>
-          <span class="code-title">calificaciones_steps.py</span>
-        </div>
-        <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
-          <pre><code><span class="token-keyword">from</span> behave <span class="token-keyword">import</span> given, when, then
-<span class="token-keyword">from</span> estudiante <span class="token-keyword">import</span> Estudiante
+      <h3>Step Definitions básicos</h3>
+      <pre><code class="language-csharp">[Binding]
+public class CalificacionesSteps
+{
+    private Estudiante _estudiante;
+    private double _promedio;
 
-<span class="token-keyword">@given</span>(<span class="token-string">'el estudiante con codigo "{codigo}"'</span>)
-<span class="token-keyword">def</span> <span class="token-method">step_estudiante_codigo</span>(context, codigo):
-    context.estudiante = Estudiante(codigo=codigo)
+    [Given(@"el estudiante con código \"([^\"]*)\"")]
+    public void DadoElEstudianteConCodigo(string codigo)
+    {
+        _estudiante = new Estudiante { Codigo = codigo };
+    }
 
-<span class="token-keyword">@when</span>(<span class="token-string">'registro las notas'</span>)
-<span class="token-keyword">def</span> <span class="token-method">step_registro_notas</span>(context):
-    <span class="token-keyword">for</span> fila <span class="token-keyword">in</span> context.table:
-        parcial = <span class="token-method">int</span>(fila[<span class="token-string">'Parcial'</span>])
-        nota = <span class="token-method">float</span>(fila[<span class="token-string">'Nota'</span>])
-        context.estudiante.registrar_nota(parcial, nota)
-    context.promedio = context.estudiante.calcular_promedio()
+    [When(@"registro las notas:")]
+    public void CuandoRegistroLasNotas(Table tabla)
+    {
+        foreach (var fila in tabla.Rows)
+        {
+            int parcial = int.Parse(fila["Parcial"]);
+            double nota = double.Parse(fila["Nota"]);
+            _estudiante.RegistrarNota(parcial, nota);
+        }
+        _promedio = _estudiante.CalcularPromedio();
+    }
 
-<span class="token-keyword">@then</span>(<span class="token-string">'el promedio debe ser {esperado:f}'</span>)
-<span class="token-keyword">def</span> <span class="token-method">step_promedio_esperado</span>(context, esperado):
-    <span class="token-keyword">assert</span> <span class="token-method">abs</span>(context.promedio - esperado) < <span class="token-number">0.01</span>,         <span class="token-string">f"Esperado {esperado}, obtenido {context.promedio}"</span></code></pre>
-        </div>
-      </div>
+    [Then(@"el promedio debe ser (.*)")]
+    public void EntoncesElPromedioDebeSer(double esperado)
+    {
+        _promedio.Should().BeApproximately(esperado, 0.01);
+    }
+}</code></pre>
 
       <h3>Buenas prácticas</h3>
       <ul>
@@ -601,47 +590,14 @@ mi_proyecto_bdd/
       <p><strong>Detalle:</strong> Consultar plataforma del curso para información completa sobre evaluación calificable.</p>
     </section>
 
-    <section id="entrega-git">
-      <h2>Entrega con Git</h2>
-      <p>Para esta clase de BDD, sigue el flujo de trabajo:</p>
-      <div class="code-block">
-        <div class="code-header">
-          <div class="code-dots">
-            <div class="code-dot red"></div>
-            <div class="code-dot yellow"></div>
-            <div class="code-dot green"></div>
-          </div>
-          <div class="code-title">git-commands.sh</div>
-        </div>
-        <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11</div>
-          <pre><code><span class="token-comment"># 1. Crear rama feature</span>
-git checkout -b feature/bdd-clase-06
-
-<span class="token-comment"># 2. Commit 1: Setup</span>
-git add requirements.txt features/
-git commit -m "chore: setup behave y estructura features/"
-
-<span class="token-comment"># 3. Commit 2: Implementación</span>
-git commit -am "feat: implementa steps para escenarios Gherkin"
-
-<span class="token-comment"># 4. Commit 3: Pruebas y docs</span>
-git commit -am "test: agrega escenarios y documentación behave"
-
-<span class="token-comment"># 5. Tag de entrega</span>
-git tag -a clase-06-v1 -m "Entrega clase 06 - BDD con behave"</code></pre>
-        </div>
-      </div>
-    </section>
-
     <section id="referencias">
       <h2>Referencias</h2>
       <ul>
-        <li><strong>behave (BDD para Python):</strong> <a href="https://behave.readthedocs.io/" target="_blank" rel="noopener">https://behave.readthedocs.io/</a></li>
+        <li><strong>SpecFlow (documentación oficial):</strong> <a href="https://specflow.org/" target="_blank" rel="noopener">https://specflow.org/</a></li>
         <li><strong>Gherkin Reference (Cucumber):</strong> <a href="https://cucumber.io/docs/gherkin/reference/" target="_blank" rel="noopener">Gherkin Reference</a></li>
         <li><strong>Introducción a BDD (Dan North - inventor):</strong> <a href="https://dannorth.net/introducing-bdd/" target="_blank" rel="noopener">Introducing BDD</a></li>
         <li><strong>Three Amigos (Melissa Niemann):</strong> <a href="https://www.pluralsight.com/blog/tutorials/three-amigos-bdd" target="_blank" rel="noopener">The Three Amigos</a></li>
-        <li><strong>pytest-bdd (alternativa):</strong> <a href="https://pytest-bdd.readthedocs.io/" target="_blank" rel="noopener">pytest-bdd Documentation</a></li>
+        <li><strong>SpecFlow para .NET:</strong> <a href="https://specflow.org/specflow/" target="_blank" rel="noopener">Getting Started with SpecFlow</a></li>
       </ul>
     </section>
 
@@ -652,11 +608,11 @@ git tag -a clase-06-v1 -m "Entrega clase 06 - BDD con behave"</code></pre>
         <li>BDD mantiene el lenguaje ubicuo compartido por negocio y desarrollo, permitiendo especificaciones ejecutables.</li>
         <li>Gherkin es un lenguaje legible por humanos y máquinas con palabras clave: Feature, Scenario, Given, When, Then.</li>
         <li>Given-When-Then estructura los escenarios: Dado (precondiciones), Cuándo (acción), Entonces (resultado esperado).</li>
-        <li>behave es el framework BDD para Python que ejecuta archivos .feature con steps definidos en Python.</li>
+        <li>SpecFlow es la herramienta BDD para .NET que convierte archivos .feature en pruebas automatizadas.</li>
         <li>Los Three Amigos (Negocio + Desarrollo + QA) se reúnen para definir escenarios antes de implementar.</li>
         <li>Background define pasos comunes a todos los escenarios de una feature, evitando duplicación.</li>
         <li>Scenario Outline con Examples permite ejecutar el mismo escenario con múltiples conjuntos de datos.</li>
-        <li>Los Step Definitions (@given, @when, @then) conectan Gherkin con código Python usando decoradores de behave.</li>
+        <li>Los Step Definitions ([Given], [When], [Then]) conectan Gherkin con código C# usando expresiones regulares.</li>
         <li>BDD produce documentación viva que siempre está actualizada porque si no pasa, se arregla.</li>
       </ul>
     </section>

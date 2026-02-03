@@ -101,7 +101,7 @@
             font-size: 0.9em;
         }
         pre code { background: none; padding: 0; }
-        /* Syntax highlighting para HTML/CSS */
+        /* Syntax highlighting para C# */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -368,7 +368,7 @@
         <h1>Clase 09 - HTML5 y Bootstrap</h1>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 3</p>
         <div style="margin-top: 1rem;">
-            <strong>Prerrequisitos:</strong> Conocimientos básicos de HTML/CSS, editor (VS Code) y navegador moderno.
+            <strong>Prerrequisitos:</strong> Conocimientos básicos de HTML/CSS, Visual Studio 2022 instalado, Windows 10/11.
         </div>
     </header>
 
@@ -414,7 +414,7 @@
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td><strong>Utilizar</strong> componentes Bootstrap en páginas HTML5</td>
+                        <td><strong>Utilizar</strong> componentes Bootstrap en Vistas ASP.NET</td>
                     </tr>
                     <tr>
                         <td>5</td>
@@ -453,7 +453,7 @@
                     </tr>
                     <tr>
                         <td>15'</td>
-                        <td>Integración HTML5 + Bootstrap</td>
+                        <td>Integración ASP.NET + Bootstrap</td>
                     </tr>
                     <tr>
                         <td>5'</td>
@@ -632,19 +632,19 @@
 
             <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Introducción a Angular<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Introducción a ASP.NET Core<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
                     <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Publicado el <span class="token-operator">&lt;</span><span class="token-keyword">time</span> <span class="token-property">datetime</span>=<span class="token-string">"2026-01-15"</span><span class="token-operator">&gt;</span>
                         15 de enero de 2026<span class="token-operator">&lt;/</span><span class="token-keyword">time</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Angular es el framework frontend de Google para aplicaciones web modernas...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>ASP.NET Core es el framework moderno de Microsoft...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/articulos/angular"</span><span class="token-operator">&gt;</span>Leer más<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/artículos/aspnet"</span><span class="token-operator">&gt;</span>Leer más<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
             <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
 
             <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Componentes en TypeScript<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Los componentes son la base de las aplicaciones Angular...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Patrones de Diseño en C#<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Los patrones de diseño son soluciones...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
             <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
         <span class="token-operator">&lt;/</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
 
@@ -672,74 +672,61 @@
             <h2>2. Formularios HTML5</h2>
 
             <h3>Inputs Modernos y Validación</h3>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                    </div>
-                    <span class="code-title">formulario.html</span>
-                </div>
-                <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45</div>
-                          <pre><code>&lt;form action="/registro" method="post"&gt;
+            <pre><code><form action="/registro" method="post">
 
-                &lt;!-- Texto básico --&gt;
-                &lt;label for="nombre"&gt;Nombre completo:&lt;/label&gt;
-                &lt;input type="text" id="nombre" name="nombre"
-                    required minlength="3" maxlength="50"
-                    placeholder="Ej: María López"&gt;
+    <!-- Texto básico -->
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" name="nombre"
+           required minlength="3" maxlength="50"
+           placeholder="Ej: María López">
 
-                &lt;!-- Email con validación automática --&gt;
-                &lt;label for="email"&gt;Correo electrónico:&lt;/label&gt;
-                &lt;input type="email" id="email" name="email"
-                    required placeholder="maria@ejemplo.com"&gt;
+    <!-- Email con validación automática -->
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email"
+           required placeholder="maria@ejemplo.com">
 
-                &lt;!-- Teléfono --&gt;
-                &lt;label for="telefono"&gt;Teléfono:&lt;/label&gt;
-                &lt;input type="tel" id="telefono" name="telefono"
-                    pattern="[0-9]{10}"
-                    placeholder="3001234567"&gt;
+    <!-- Teléfono -->
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono"
+           pattern="[0-9]{10}"
+           placeholder="3001234567">
 
-                &lt;!-- Números con rango --&gt;
-                &lt;label for="edad"&gt;Edad:&lt;/label&gt;
-                &lt;input type="number" id="edad" name="edad"
-                    min="18" max="100" value="18"&gt;
+    <!-- Números con rango -->
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad"
+           min="18" max="100" value="18">
 
-                &lt;!-- Fecha --&gt;
-                &lt;label for="fechaNacimiento"&gt;Fecha de nacimiento:&lt;/label&gt;
-                &lt;input type="date" id="fechaNacimiento" name="fechaNacimiento"
-                    min="1950-01-01" max="2006-12-31"&gt;
+    <!-- Fecha -->
+    <label for="fechaNacimien">Fecha de nacimiento:</label>
+    <input type="date" id="fechaNacimien" name="fechaNacimien"
+           min="1950-01-01" max="2006-12-31">
 
-                &lt;!-- Lista desplegable --&gt;
-                &lt;label for="carrera"&gt;Carrera:&lt;/label&gt;
-                &lt;select id="carrera" name="carrera" required&gt;
-                 &lt;option value=""&gt;Seleccione...&lt;/option&gt;
-                 &lt;option value="informatica"&gt;Ingeniería Informática&lt;/option&gt;
-                 &lt;option value="sistemas"&gt;Ingeniería de Sistemas&lt;/option&gt;
-                 &lt;option value="software"&gt;Ingeniería de Software&lt;/option&gt;
-                &lt;/select&gt;
+    <!-- Lista desplegable -->
+    <label for="carrera">Carrera:</label>
+    <select id="carrera" name="carrera" required>
+        <option value="">Seleccione...</option>
+        <option value="informatica">Ingeniería Informática</option>
+        <option value="sistemas">Ingeniería de Sistemas</option>
+        <option value="software">Ingeniería de Software</option>
+    </select>
 
-                &lt;!-- Checkbox --&gt;
-                &lt;label&gt;
-                 &lt;input type="checkbox" name="aceptaTerminos" required&gt;
-                 Acepto los términos y condiciones
-                &lt;/label&gt;
+    <!-- Checkbox -->
+    <label>
+        <input type="checkbox" name="aceptaTerminos" required>
+        Acepto los términos y condiciones
+    </label>
 
-                &lt;!-- Radio buttons --&gt;
-                &lt;fieldset&gt;
-                 &lt;legend&gt;Género:&lt;/legend&gt;
-                 &lt;label&gt;&lt;input type="radio" name="genero" value="F"&gt; Femenino&lt;/label&gt;
-                 &lt;label&gt;&lt;input type="radio" name="genero" value="M"&gt; Masculino&lt;/label&gt;
-                 &lt;label&gt;&lt;input type="radio" name="genero" value="O"&gt; Otro&lt;/label&gt;
-                &lt;/fieldset&gt;
+    <!-- Radio buttons -->
+    <fieldset>
+        <legend>Género:</legend>
+        <label><input type="radio" name="genero" value="F"> Femenino</label>
+        <label><input type="radio" name="genero" value="M"> Masculino</label>
+        <label><input type="radio" name="genero" value="O"> Otro</label>
+    </fieldset>
 
-                &lt;button type="submit"&gt;Registrarse&lt;/button&gt;
-                &lt;button type="reset"&gt;Limpiar&lt;/button&gt;
-            &lt;/form&gt;</code></pre>
-                </div>
-            </div>
+    <button type="submit">Registrarse</button>
+    <button type="reset">Limpiar</button>
+</form></code></pre>
 
             <h3>Nuevos Tipos de Input</h3>
             <div class="badge-list">
@@ -753,49 +740,36 @@
                 <span class="badge badge-purple">week</span>
                 <span class="badge badge-green">file</span>
             </div>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                    </div>
-                    <span class="code-title">inputs_avanzados.html</span>
-                </div>
-                <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21</div>
-                    <pre><code>&lt;!-- URL --&gt;
-&lt;input type="url" placeholder="https://ejemplo.com"&gt;
+            <pre><code><!-- URL -->
+<input type="url" placeholder="https://ejemplo.com">
 
-&lt;!-- Búsqueda --&gt;
-&lt;input type="search" placeholder="Buscar..."&gt;
+<!-- Búsqueda -->
+<input type="search" placeholder="Buscar...">
 
-&lt;!-- Color --&gt;
-&lt;input type="color" value="#ff0000"&gt;
+<!-- Color -->
+<input type="color" value="#ff0000">
 
-&lt;!-- Rango (slider) --&gt;
-&lt;input type="range" min="0" max="100" value="50"&gt;
+<!-- Rango (slider) -->
+<input type="range" min="0" max="100" value="50">
 
-&lt;!-- Hora --&gt;
-&lt;input type="time"&gt;
+<!-- Hora -->
+<input type="time">
 
-&lt;!-- Fecha y hora local --&gt;
-&lt;input type="datetime-local"&gt;
+<!-- Fecha y hora local -->
+<input type="datetime-local">
 
-&lt;!-- Mes --&gt;
-&lt;input type="month"&gt;
+<!-- Mes -->
+<input type="month">
 
-&lt;!-- Semana --&gt;
-&lt;input type="week"&gt;
+<!-- Semana -->
+<input type="week">
 
-&lt;!-- Archivo --&gt;
-&lt;input type="file" accept=".pdf,.doc,.docx"&gt;
+<!-- Archivo -->
+<input type="file" accept=".pdf,.doc,.docx">
 
-&lt;!-- Área de texto --&gt;
-&lt;textarea rows="4" cols="50" maxlength="500"
-          placeholder="Escribe tu mensaje..."&gt;&lt;/textarea&gt;</code></pre>
-                </div>
-            </div>
+<!--  área de texto -->
+<textarea rows="4" cols="50" maxlength="500"
+          placeholder="Escribe tu mensaje..."></textarea></code></pre>
         </section>
 
         <!-- Bootstrap -->
@@ -824,9 +798,7 @@
             </ul>
 
             <figure class="figure-container">
-                <object data="../assets/svg/clase-09-bootstrap-grid.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-                  <img src="../assets/svg/clase-09-bootstrap-grid.svg" alt="Sistema de Grillas Bootstrap" />
-                </object>
+                <img src="../assets/infografias/clase-09-Bootstrap-grid.png" alt="Sistema de Grillas Bootstrap" onerror="this.onerror=null;this.src='/assets/infografias/clase-09-Bootstrap-grid.png'">
                 <figcaption>Sistema de Grillas Bootstrap - 12 columnas con breakpoints responsivos</figcaption>
             </figure>
         </section>
@@ -892,52 +864,39 @@
                 </div>
             </div>
 
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                    </div>
-                    <span class="code-title">grid_example.html</span>
-                </div>
-                <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
-                    <pre><code>&lt;!-- ESTRUCTURA BÁSICA --&gt;
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col"&gt;Columna 1&lt;/div&gt;
-        &lt;div class="col"&gt;Columna 2&lt;/div&gt;
-        &lt;div class="col"&gt;Columna 3&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+            <pre><code><!-- ESTRUCTURA BÁSICA -->
+<div class="container">
+    <div class="row">
+        <div class="col">Columna 1</div>
+        <div class="col">Columna 2</div>
+        <div class="col">Columna 3</div>
+    </div>
+</div>
 
-&lt;!-- TAMAÑOS RESPONSIVOS --&gt;
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;!-- Móvil: 100%, Tablet: 50%, Desktop: 33% --&gt;
-        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 1&lt;/div&gt;
-        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 2&lt;/div&gt;
-        &lt;div class="col-12 col-md-6 col-lg-4"&gt;Card 3&lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+<!-- TAMA OS RESPONSIVOS -->
+<div class="container">
+    <div class="row">
+        <!-- Móvil: 100%, Tablet: 50%, Desktop: 33% -->
+        <div class="col-12 col-md-6 col-lg-4">Card 1</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 2</div>
+        <div class="col-12 col-md-6 col-lg-4">Card 3</div>
+    </div>
+</div>
 
-&lt;!-- SIDEBAR + CONTENIDO --&gt;
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;aside class="col-12 col-md-3"&gt;Menú lateral&lt;/aside&gt;
-        &lt;main class="col-12 col-md-9"&gt;Contenido principal&lt;/main&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
+<!-- SIDEBAR + CONTENIDO -->
+<div class="container">
+    <div class="row">
+        <aside class="col-12 col-md-3">Menú lateral</aside>
+        <main class="col-12 col-md-9">Contenido principal</main>
+    </div>
+</div>
 
-&lt;!-- OFFSET (margen para centrar) --&gt;
-&lt;div class="row"&gt;
-    &lt;div class="col-md-6 offset-md-3"&gt;
+<!-- OFFSET (margen para centrar) -->
+<div class="row">
+    <div class="col-md-6 offset-md-3">
         Contenido centrado (6 columnas + offset de 3)
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-                </div>
-            </div>
+    </div>
+</div></code></pre>
         </section>
 
         <!-- Componentes -->
@@ -945,136 +904,122 @@
             <h2>5. Componentes Bootstrap</h2>
 
             <h3>Botones</h3>
-            <div class="code-block">
-                <div class="code-header">
-                    <div class="code-dots">
-                        <span class="code-dot red"></span>
-                        <span class="code-dot yellow"></span>
-                        <span class="code-dot green"></span>
-                    </div>
-                    <span class="code-title">botones.html</span>
-                </div>
-                <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
-                    <pre><code>&lt;!-- Colores --&gt;
-&lt;button class="button button-primary"&gt;Primario&lt;/button&gt;
-&lt;button class="button button-secondary"&gt;Secundario&lt;/button&gt;
-&lt;button class="button button-success"&gt;Éxito&lt;/button&gt;
-&lt;button class="button button-danger"&gt;Peligro&lt;/button&gt;
-&lt;button class="button button-warning"&gt;Advertencia&lt;/button&gt;
-&lt;button class="button button-info"&gt;Información&lt;/button&gt;
+            <pre><code><!-- Colores -->
+<button class="button button-primary">Primario</button>
+<button class="button button-secondary">Secundario</button>
+<button class="button button-success">Éxito</button>
+<button class="button button-danger">Peligro</button>
+<button class="button button-warning">Advertencia</button>
+<button class="button button-info">Información</button>
 
-&lt;!-- Tamaños --&gt;
-&lt;button class="button button-primary button-lg"&gt;Grande&lt;/button&gt;
-&lt;button class="button button-primary"&gt;Normal&lt;/button&gt;
-&lt;button class="button button-primary button-sm"&gt;Pequeño&lt;/button&gt;
+<!-- Tamaños -->
+<button class="button button-primary button-lg">Grande</button>
+<button class="button button-primary">Normal</button>
+<button class="button button-primary button-sm">Pequeño</button>
 
-&lt;!-- Outline --&gt;
-&lt;button class="button button-outline-primary"&gt;Outline&lt;/button&gt;</code></pre>
-                </div>
-            </div>
+<!-- Outline -->
+<button class="button button-outline-primary">Outline</button></code></pre>
 
-              <h3>Alertas</h3>
-              <pre><code>&lt;div class="alert alert-success" role="alert"&gt;
-        Operación completada exitosamente
-    &lt;/div&gt;
-    &lt;div class="alert alert-danger" role="alert"&gt;
-        Ha ocurrido un error
-    &lt;/div&gt;
-    &lt;div class="alert alert-warning alert-dismissible fade show"&gt;
-        Atención: revise los datos
-        &lt;button type="button" class="button-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
-    &lt;/div&gt;</code></pre>
+            <h3>Alertas</h3>
+            <pre><code><div class="alert alert-success" role="alert">
+     Operación completada exitosamente
+</div>
+<div class="alert alert-danger" role="alert">
+     Ha ocurrido un error
+</div>
+<div class="alert alert-warning alert-dismissible fade show">
+     Atención: revise los datos
+    <button type="button" class="button-close" data-bs-dismiss="alert"></button>
+</div></code></pre>
 
             <h3>Tarjetas (Cards)</h3>
-            <pre><code>&lt;div class="card" style="width: 18rem;"&gt;
-    &lt;img src="ejemplo.jpg" class="card-img-top" alt="Estudiante"&gt;
-    &lt;div class="card-body"&gt;
-        &lt;h5 class="card-title"&gt;María López&lt;/h5&gt;
-        &lt;p class="card-text"&gt;Ingeniería Informática - 4 semestre&lt;/p&gt;
-        &lt;a href="#" class="button button-primary"&gt;Ver perfil&lt;/a&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
+            <pre><code><div class="card" style="width: 18rem;">
+    <img src="ejemplo.jpg" class="card-img-top" alt="Estudiante">
+    <div class="card-body">
+        <h5 class="card-title">María López</h5>
+        <p class="card-text">Ingeniería Informática - 4 semestre</p>
+        <a href="#" class="button button-primary">Ver perfil</a>
+    </div>
+</div></code></pre>
 
             <h3>Navbar (Menú de navegación)</h3>
-            <pre><code>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
-    &lt;div class="container"&gt;
-        &lt;a class="navbar-brand" href="#"&gt;UNAULA&lt;/a&gt;
-        &lt;button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarNav"&gt;
-            &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
-        &lt;/button&gt;
-        &lt;div class="collapse navbar-collapse" id="navbarNav"&gt;
-            &lt;ul class="navbar-nav"&gt;
-                &lt;li class="nav-item"&gt;
-                    &lt;a class="nav-link active" href="#"&gt;Inicio&lt;/a&gt;
-                &lt;/li&gt;
-                &lt;li class="nav-item"&gt;
-                    &lt;a class="nav-link" href="#"&gt;Estudiantes&lt;/a&gt;
-                &lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/nav&gt;</code></pre>
+            <pre><code><nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">UNAULA</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Estudiantes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav></code></pre>
 
             <h3>Tablas Estilizadas</h3>
-            <pre><code>&lt;table class="table table-striped table-hover"&gt;
-    &lt;thead class="table-dark"&gt;
-        &lt;tr&gt;
-            &lt;th&gt;Código&lt;/th&gt;
-            &lt;th&gt;Nombre&lt;/th&gt;
-            &lt;th&gt;Promedio&lt;/th&gt;
-            &lt;th&gt;Acciones&lt;/th&gt;
-        &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-        &lt;tr&gt;
-            &lt;td&gt;2024001&lt;/td&gt;
-            &lt;td&gt;María López&lt;/td&gt;
-            &lt;td&gt;&lt;span class="badge bg-success"&gt;4.5&lt;/span&gt;&lt;/td&gt;
-            &lt;td&gt;
-                &lt;button class="button button-sm button-info"&gt;Editar&lt;/button&gt;
-                &lt;button class="button button-sm button-danger"&gt;Eliminar&lt;/button&gt;
-            &lt;/td&gt;
-        &lt;/tr&gt;
-    &lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
+            <pre><code><table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Promedio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2024001</td>
+            <td>María López</td>
+            <td><span class="badge bg-success">4.5</span></td>
+            <td>
+                <button class="button button-sm button-info">Editar</button>
+                <button class="button button-sm button-danger">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table></code></pre>
 
             <h3>Utilidades Bootstrap</h3>
             <h4>Spacing</h4>
             <p><code>m</code> = margin, <code>p</code> = padding</p>
             <p><code>t</code> = top, <code>b</code> = bottom, <code>s</code> = start, <code>e</code> = end, <code>x</code> = horizontales, <code>y</code> = vertical</p>
             <p>Valores 0-5: 0, 0.25rem, 0.5rem, 1rem, 1.5rem, 3rem</p>
-            <pre><code>&lt;div class="m-3"&gt;Margin 3 en dos lados&lt;/div&gt;
-&lt;div class="mt-2 mb-4"&gt;Margin top 2, bottom 4&lt;/div&gt;
-&lt;div class="px-5 py-3"&gt;Padding horizontales 5, vertical 3&lt;/div&gt;
-&lt;div class="mx-auto"&gt;Centrado horizontales (auto)&lt;/div&gt;</code></pre>
+            <pre><code><div class="m-3">Margin 3 en dos lados</div>
+<div class="mt-2 mb-4">Margin top 2, bottom 4</div>
+<div class="px-5 py-3">Padding horizontales 5, vertical 3</div>
+<div class="mx-auto">Centrado horizontales (auto)</div></code></pre>
 
             <h4>Colores y Display</h4>
-            <pre><code>&lt;!-- Colores de texto --&gt;
-&lt;p class="text-primary"&gt;Texto primario (azul)&lt;/p&gt;
-&lt;p class="text-success"&gt;Texto éxito (verde)&lt;/p&gt;
-&lt;p class="text-danger"&gt;Texto peligro (rojo)&lt;/p&gt;
+            <pre><code><!-- Colores de texto -->
+<p class="text-primary">Texto primario (azul)</p>
+<p class="text-success">Texto éxito (verde)</p>
+<p class="text-danger">Texto peligro (rojo)</p>
 
-&lt;!-- Colores de fondo --&gt;
-&lt;div class="bg-primary text-white p-3"&gt;Fondo azul, texto blanco&lt;/div&gt;
-&lt;div class="bg-light p-3"&gt;Fondo gris claro&lt;/div&gt;
+<!-- Colores de fondo -->
+<div class="bg-primary text-white p-3">Fondo azul, texto blanco</div>
+<div class="bg-light p-3">Fondo gris claro</div>
 
-&lt;!-- Display --&gt;
-&lt;div class="d-none"&gt;Oculto&lt;/div&gt;
-&lt;div class="d-block"&gt;Block&lt;/div&gt;
-&lt;div class="d-flex"&gt;Flexbox&lt;/div&gt;
+<!-- Display -->
+<div class="d-none">Oculto</div>
+<div class="d-block">Block</div>
+<div class="d-flex">Flexbox</div>
 
-&lt;!-- Responsivo --&gt;
-&lt;div class="d-none d-md-block"&gt;Solo visible en tablet+&lt;/div&gt;</code></pre>
+<!-- Responsivo -->
+<div class="d-none d-md-block">Solo visible en tablet+</div></code></pre>
         </section>
 
-        <!-- HTML5 + Bootstrap Integration -->
-        <section id="html5-bootstrap" class="section">
-            <h2>6. Integración HTML5 + Bootstrap</h2>
+        <!-- ASP.NET Integration -->
+        <section id="aspnet" class="section">
+            <h2>6. Integración ASP.NET + Bootstrap</h2>
 
-            <h3>Plantilla HTML5 con Bootstrap 5 (CDN)</h3>
-            <p>Estructura base para cualquier proyecto web usando HTML5 semántico y Bootstrap 5 vía CDN.</p>
+            <h3>Plantilla Razor (_Layout.cshtml)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -1082,77 +1027,75 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">index.html</span>
+                    <span class="code-title">_Layout.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72</div>
-                    <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="es"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;UNAULA - Sistema de Estudiantes&lt;/title&gt;
-    
-    &lt;!-- Bootstrap 5 CSS CDN --&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
-    
-    &lt;!-- Estilos personalizados --&gt;
-    &lt;link rel="stylesheet" href="css/estilos.css"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;!-- Navbar responsive --&gt;
-    &lt;header&gt;
-        &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
-            &lt;div class="container"&gt;
-                &lt;a class="navbar-brand" href="index.html"&gt;
-                    &lt;strong&gt;UNAULA&lt;/strong&gt;
-                &lt;/a&gt;
-                &lt;button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#menuPrincipal"&gt;
-                    &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
-                &lt;/button&gt;
-                &lt;div class="collapse navbar-collapse" id="menuPrincipal"&gt;
-                    &lt;ul class="navbar-nav me-auto"&gt;
-                        &lt;li class="nav-item"&gt;
-                            &lt;a class="nav-link active" href="index.html"&gt;Inicio&lt;/a&gt;
-                        &lt;/li&gt;
-                        &lt;li class="nav-item"&gt;
-                            &lt;a class="nav-link" href="estudiantes.html"&gt;Estudiantes&lt;/a&gt;
-                        &lt;/li&gt;
-                        &lt;li class="nav-item"&gt;
-                            &lt;a class="nav-link" href="contacto.html"&gt;Contacto&lt;/a&gt;
-                        &lt;/li&gt;
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/nav&gt;
-    &lt;/header&gt;
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61</div>
+                    <pre><code><span class="token-comment">@* Views/Shared/_Layout.cshtml *@</span>
+&lt;!DOCTYPE html<span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">html</span> <span class="token-property">lang</span>=<span class="token-string">&quot;es&quot;</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> charset=&quot;utf-8&quot; /<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">ViewData</span>[&quot;Title&quot;] - UNAULA<span class="token-operator">&lt;/</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span>
 
-    &lt;!-- Contenido principal --&gt;
-    &lt;main class="container mt-4"&gt;
-        &lt;h1&gt;Bienvenido al Sistema&lt;/h1&gt;
-        &lt;p class="lead"&gt;Gestión de estudiantes UNAULA&lt;/p&gt;
-    &lt;/main&gt;
+    <span class="token-comment">@* Bootstrap CSS *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">link</span> href=&quot;https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/css/Bootstrap.min.css&quot;
+          rel=&quot;stylesheet&quot;<span class="token-operator">&gt;</span>
 
-    &lt;!-- Footer --&gt;
-    &lt;footer class="border-top text-muted mt-5 py-3"&gt;
-        &lt;div class="container text-center"&gt;
-            &amp;copy; 2026 UNAULA - Ingeniería Informática
-        &lt;/div&gt;
-    &lt;/footer&gt;
+    <span class="token-comment">@* Estilos personalizados *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">link</span> rel=&quot;stylesheet&quot; href=&quot;~/css/site.css&quot; /<span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
+    <span class="token-comment">@* Navbar *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">nav</span> <span class="token-property">class</span>=<span class="token-string">&quot;navbar navbar-expand-lg navbar-dark bg-primary&quot;</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container&quot;<span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;navbar-brand&quot;</span> asp-controller=&quot;Home&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>
+                     UNAULA
+                <span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">button</span> class=&quot;navbar-toggler&quot; data-bs-toggle=&quot;collapse&quot;
+                        <span class="token-property">data-bs-target</span>=<span class="token-string">&quot;#navbarNav&quot;</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">span</span> class=&quot;navbar-toggler-icon&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">button</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;collapse navbar-collapse&quot; <span class="token-property">id</span>=<span class="token-string">&quot;navbarNav&quot;</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">ul</span> class=&quot;navbar-nav me-auto&quot;<span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">li</span> class=&quot;nav-item&quot;<span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;nav-link&quot;</span> asp-controller=&quot;Home&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>Inicio<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">li</span> class=&quot;nav-item&quot;<span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;nav-link&quot;</span> asp-controller=&quot;Estudiantes&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>Estudiantes<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
 
-    &lt;!-- Bootstrap 5 JS CDN --&gt;
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-    
-    &lt;!-- Scripts personalizados --&gt;
-    &lt;script src="js/app.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+    <span class="token-comment">@* Contenido *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container mt-4&quot;<span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">main</span> <span class="token-property">role</span>=<span class="token-string">&quot;main&quot;</span><span class="token-operator">&gt;</span>
+            <span class="token-namespace">@</span><span class="token-property">RenderBody</span>()
+        <span class="token-operator">&lt;/</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+    <span class="token-comment">@* Footer *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">footer</span> class=&quot;border-top footer text-muted mt-5 py-3&quot;<span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container&quot;<span class="token-operator">&gt;</span>
+             &amp;amp;copy; 2026 - UNAULA Ingeniería Informática
+        <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+
+    <span class="token-comment">@* Bootstrap JS *@</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">script</span> src=&quot;https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/js/Bootstrap.bundle.min.js&quot;<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">script</span><span class="token-operator">&gt;</span>
+    <span class="token-namespace">@</span><span class="token-property">await</span> RenderSectionAsync(&quot;Scripts&quot;, required: false)
+<span class="token-operator">&lt;/</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">html</span><span class="token-operator">&gt;</span>&lt;</code></pre>
                 </div>
             </div>
 
-            <h3>Tabla de Estudiantes con Bootstrap</h3>
-            <p>Ejemplo de tabla responsive con badges de colores según el promedio.</p>
+            <h3>Vista con Bootstrap - CRUD de Estudiantes</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -1160,79 +1103,75 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">estudiantes.html</span>
+                    <span class="code-title">Index.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63</div>
-                    <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="es"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Lista de Estudiantes&lt;/title&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="container mt-4"&gt;
-        
-        &lt;!-- Encabezado --&gt;
-        &lt;div class="d-flex justify-content-between align-items-center mb-4"&gt;
-            &lt;h1&gt;Estudiantes&lt;/h1&gt;
-            &lt;a href="nuevo-estudiante.html" class="btn btn-primary"&gt;
-                + Nuevo Estudiante
-            &lt;/a&gt;
-        &lt;/div&gt;
-        
-        &lt;!-- Tabla responsive --&gt;
-        &lt;div class="card shadow"&gt;
-            &lt;div class="card-body"&gt;
-                &lt;div class="table-responsive"&gt;
-                    &lt;table class="table table-striped table-hover"&gt;
-                        &lt;thead class="table-dark"&gt;
-                            &lt;tr&gt;
-                                &lt;th&gt;Código&lt;/th&gt;
-                                &lt;th&gt;Nombre&lt;/th&gt;
-                                &lt;th&gt;Carrera&lt;/th&gt;
-                                &lt;th&gt;Promedio&lt;/th&gt;
-                                &lt;th&gt;Acciones&lt;/th&gt;
-                            &lt;/tr&gt;
-                        &lt;/thead&gt;
-                        &lt;tbody&gt;
-                            &lt;tr&gt;
-                                &lt;td&gt;2024001&lt;/td&gt;
-                                &lt;td&gt;María López&lt;/td&gt;
-                                &lt;td&gt;Ingeniería Informática&lt;/td&gt;
-                                &lt;td&gt;&lt;span class="badge bg-success"&gt;4.5&lt;/span&gt;&lt;/td&gt;
-                                &lt;td&gt;
-                                    &lt;a href="#" class="btn btn-sm btn-warning"&gt;Editar&lt;/a&gt;
-                                    &lt;a href="#" class="btn btn-sm btn-danger"&gt;Eliminar&lt;/a&gt;
-                                &lt;/td&gt;
-                            &lt;/tr&gt;
-                            &lt;tr&gt;
-                                &lt;td&gt;2024002&lt;/td&gt;
-                                &lt;td&gt;Carlos Ruiz&lt;/td&gt;
-                                &lt;td&gt;Ingeniería de Software&lt;/td&gt;
-                                &lt;td&gt;&lt;span class="badge bg-warning text-dark"&gt;3.2&lt;/span&gt;&lt;/td&gt;
-                                &lt;td&gt;
-                                    &lt;a href="#" class="btn btn-sm btn-warning"&gt;Editar&lt;/a&gt;
-                                    &lt;a href="#" class="btn btn-sm btn-danger"&gt;Eliminar&lt;/a&gt;
-                                &lt;/td&gt;
-                            &lt;/tr&gt;
-                        &lt;/tbody&gt;
-                    &lt;/table&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61</div>
+                    <pre><code><span class="token-comment">@* Views/Estudiantes/Index.cshtml *@</span>
+<span class="token-namespace">@</span><span class="token-property">model</span> IEnumerable<span class="token-operator">&lt;</span><span class="token-keyword">Estudiante</span><span class="token-operator">&gt;</span>
+
+@{
+    ViewData[&quot;Title&quot;] = &quot;Lista de Estudiantes&quot;;
+}
+
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;d-flex justify-content-between align-items-center mb-4&quot;<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">h1</span><span class="token-operator">&gt;</span> Estudiantes<span class="token-operator">&lt;/</span><span class="token-keyword">h1</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">asp-action</span>=<span class="token-string">&quot;Crear&quot;</span> class=&quot;button button-primary&quot;<span class="token-operator">&gt;</span>
+         Nuevo Estudiante
+    <span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;card shadow&quot;<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;card-body&quot;<span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">table</span> class=&quot;table table-striped table-hover&quot;<span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">thead</span> class=&quot;table-dark&quot;<span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">tr</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">Html</span>.DisplayNameFor(m =<span class="token-operator">&gt;</span> m.Codigo)<span class="token-operator">&lt;/</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">Html</span>.DisplayNameFor(m =<span class="token-operator">&gt;</span> m.Nombre)<span class="token-operator">&lt;/</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">Html</span>.DisplayNameFor(m =<span class="token-operator">&gt;</span> m.Carrera)<span class="token-operator">&lt;/</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>Promedio<span class="token-operator">&lt;/</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>Acciones<span class="token-operator">&lt;/</span><span class="token-keyword">th</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">tr</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">thead</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">tbody</span><span class="token-operator">&gt;</span>
+                <span class="token-namespace">@</span><span class="token-property">foreach</span> (var item in Model)
+                {
+                    <span class="token-operator">&lt;</span><span class="token-keyword">tr</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Codigo<span class="token-operator">&lt;/</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Nombre<span class="token-operator">&lt;/</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Carrera<span class="token-operator">&lt;/</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                            <span class="token-namespace">@</span><span class="token-property">if</span> (item.Promedio <span class="token-operator">&gt;</span>= 3.5)
+                            {
+                                <span class="token-operator">&lt;</span><span class="token-keyword">span</span> class=&quot;badge bg-success&quot;<span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Promedio<span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                            }
+                            else if (item.Promedio <span class="token-operator">&gt;</span>= 3.0)
+                            {
+                                <span class="token-operator">&lt;</span><span class="token-keyword">span</span> <span class="token-property">class</span>=<span class="token-string">&quot;badge bg-warning&quot;</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Promedio<span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                            }
+                            else
+                            {
+                                <span class="token-operator">&lt;</span><span class="token-keyword">span</span> <span class="token-property">class</span>=<span class="token-string">&quot;badge bg-danger&quot;</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">item</span>.Promedio<span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                            }
+                        <span class="token-operator">&lt;/</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> asp-action=&quot;Editar&quot; asp-route-id=&quot;<span class="token-namespace">@</span><span class="token-property">item</span>.Id&quot;
+                               class=&quot;button button-sm button-warning&quot;<span class="token-operator">&gt;</span> Editar<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> asp-action=&quot;Detalles&quot; asp-route-id=&quot;<span class="token-namespace">@</span><span class="token-property">item</span>.Id&quot;
+                               class=&quot;button button-sm button-info&quot;<span class="token-operator">&gt;</span> Detalles<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">asp-action</span>=<span class="token-string">&quot;Eliminar&quot;</span> asp-route-id=&quot;<span class="token-namespace">@</span><span class="token-property">item</span>.Id&quot;
+                               class=&quot;button button-sm button-danger&quot;<span class="token-operator">&gt;</span> Eliminar<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;/</span><span class="token-keyword">td</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">tr</span><span class="token-operator">&gt;</span>
+                }
+            <span class="token-operator">&lt;/</span><span class="token-keyword">tbody</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">table</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>&lt;</code></pre>
                 </div>
             </div>
 
-            <h3>Formulario con Bootstrap 5</h3>
-            <p>Ejemplo completo de formulario con validación HTML5 y estilos Bootstrap.</p>
+            <h3>Formulario con Bootstrap</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -1240,87 +1179,67 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">nuevo-estudiante.html</span>
+                    <span class="code-title">Crear.cshtml</span>
                 </div>
                 <div class="code-content">
-                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63</div>
-                    <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="es"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
-    &lt;title&gt;Nuevo Estudiante&lt;/title&gt;
-    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div class="container mt-4"&gt;
-        &lt;div class="row justify-content-center"&gt;
-            &lt;div class="col-md-8 col-lg-6"&gt;
-                &lt;div class="card shadow"&gt;
-                    &lt;div class="card-header bg-primary text-white"&gt;
-                        &lt;h4 class="mb-0"&gt;Nuevo Estudiante&lt;/h4&gt;
-                    &lt;/div&gt;
-                    &lt;div class="card-body"&gt;
-                        &lt;form action="/guardar-estudiante" method="POST"&gt;
-                            
-                            &lt;!-- Código --&gt;
-                            &lt;div class="mb-3"&gt;
-                                &lt;label for="codigo" class="form-label"&gt;Código&lt;/label&gt;
-                                &lt;input type="text" id="codigo" name="codigo"
-                                       class="form-control" placeholder="Ej: 2024001"
-                                       required minlength="7" maxlength="10"&gt;
-                            &lt;/div&gt;
-                            
-                            &lt;!-- Nombre --&gt;
-                            &lt;div class="mb-3"&gt;
-                                &lt;label for="nombre" class="form-label"&gt;Nombre completo&lt;/label&gt;
-                                &lt;input type="text" id="nombre" name="nombre"
-                                       class="form-control" required minlength="3"&gt;
-                            &lt;/div&gt;
-                            
-                            &lt;!-- Carrera --&gt;
-                            &lt;div class="mb-3"&gt;
-                                &lt;label for="carrera" class="form-label"&gt;Carrera&lt;/label&gt;
-                                &lt;select id="carrera" name="carrera" 
-                                        class="form-select" required&gt;
-                                    &lt;option value=""&gt;Seleccione...&lt;/option&gt;
-                                    &lt;option&gt;Ingeniería Informática&lt;/option&gt;
-                                    &lt;option&gt;Ingeniería de Software&lt;/option&gt;
-                                    &lt;option&gt;Ingeniería de Sistemas&lt;/option&gt;
-                                &lt;/select&gt;
-                            &lt;/div&gt;
-                            
-                            &lt;!-- Email --&gt;
-                            &lt;div class="mb-3"&gt;
-                                &lt;label for="email" class="form-label"&gt;Correo electrónico&lt;/label&gt;
-                                &lt;input type="email" id="email" name="email"
-                                       class="form-control" placeholder="estudiante@unaula.edu.co"
-                                       required&gt;
-                            &lt;/div&gt;
-                            
-                            &lt;!-- Botones --&gt;
-                            &lt;div class="d-grid gap-2 d-md-flex justify-content-md-end"&gt;
-                                &lt;a href="estudiantes.html" class="btn btn-secondary"&gt;Cancelar&lt;/a&gt;
-                                &lt;button type="submit" class="btn btn-primary"&gt;Guardar&lt;/button&gt;
-                            &lt;/div&gt;
-                        &lt;/form&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-    
-    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+                    <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53</div>
+                    <pre><code><span class="token-comment">@* Views/Estudiantes/Crear.cshtml *@</span>
+<span class="token-namespace">@</span><span class="token-property">model</span> Estudiante
+
+@{
+    ViewData[&quot;Title&quot;] = &quot;Nuevo Estudiante&quot;;
+}
+
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;row justify-content-center&quot;<span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;col-md-8 col-lg-6&quot;<span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;card shadow&quot;<span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;card-header bg-primary text-white&quot;<span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">h4</span> <span class="token-property">class</span>=<span class="token-string">&quot;mb-0&quot;</span><span class="token-operator">&gt;</span> Nuevo Estudiante<span class="token-operator">&lt;/</span><span class="token-keyword">h4</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;card-body&quot;<span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">form</span> <span class="token-property">asp-action</span>=<span class="token-string">&quot;Crear&quot;</span> method=&quot;post&quot;<span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> asp-validation-summary=&quot;ModelOnly&quot; class=&quot;text-danger&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+                    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">&quot;mb-3&quot;</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">label</span> asp-for=&quot;Codigo&quot; class=&quot;form-label&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">label</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">input</span> asp-for=&quot;Codigo&quot; class=&quot;form-control&quot;
+                               <span class="token-property">placeholder</span>=<span class="token-string">&quot;Ej: 2024001&quot;</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">span</span> asp-validation-for=&quot;Codigo&quot; class=&quot;text-danger&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+                    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">&quot;mb-3&quot;</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">label</span> asp-for=&quot;Nombre&quot; class=&quot;form-label&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">label</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">input</span> asp-for=&quot;Nombre&quot; class=&quot;form-control&quot;<span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">span</span> asp-validation-for=&quot;Nombre&quot; class=&quot;text-danger&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+                    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">&quot;mb-3&quot;</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">label</span> <span class="token-property">asp-for</span>=<span class="token-string">&quot;Carrera&quot;</span> class=&quot;form-label&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">label</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">select</span> <span class="token-property">asp-for</span>=<span class="token-string">&quot;Carrera&quot;</span> class=&quot;form-select&quot;<span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">option</span> <span class="token-property">value</span>=<span class="token-string">&quot;&quot;</span><span class="token-operator">&gt;</span>Seleccione...<span class="token-operator">&lt;/</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>Ingeniería Informática<span class="token-operator">&lt;/</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>Ingeniería de Software<span class="token-operator">&lt;/</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>
+                            <span class="token-operator">&lt;</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>Ingeniería de Sistemas<span class="token-operator">&lt;/</span><span class="token-keyword">option</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;/</span><span class="token-keyword">select</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+                    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;d-grid gap-2 d-md-flex justify-content-md-end&quot;<span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span> class=&quot;button button-secondary&quot;<span class="token-operator">&gt;</span>Cancelar<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">button</span> type=&quot;submit&quot; class=&quot;button button-primary&quot;<span class="token-operator">&gt;</span>Guardar<span class="token-operator">&lt;/</span><span class="token-keyword">button</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">form</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+<span class="token-namespace">@</span><span class="token-property">section</span> Scripts {
+    @{await Html.RenderPartialAsync(&quot;_ValidationScriptsPartial&quot;);}
+}&lt;</code></pre>
                 </div>
-            </div>
-            
-            <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;">
-                <strong>Tip:</strong> Usa las clases <code>form-control</code> para inputs, <code>form-select</code> para selects, 
-                y <code>form-label</code> para labels. Las validaciones HTML5 funcionan automáticamente con Bootstrap.
             </div>
         </section>
+
         <!-- Responsive Design -->
         <section id="responsive" class="section">
             <h2>7. Responsive Design - Mobile-First</h2>
@@ -1330,7 +1249,7 @@
 
             <div class="grid-demo">
                 <div class="grid-row">
-                    <div class="grid-col" style="flex:1;">MÓVIL<br>&lt;576px<br>col-12<br>100%</div>
+                    <div class="grid-col" style="flex:1;">MÓVIL<br><576px<br>col-12<br>100%</div>
                 </div>
                 <div class="grid-row">
                     <div class="grid-col" style="flex:1;">TABLET</div>
@@ -1344,36 +1263,36 @@
                 </div>
             </div>
 
-            <pre><code>&lt;!--Ejemplo: Mobile-First --&gt;
-&lt;div class="col-12 col-md-6 col-lg-4"&gt;
+            <pre><code><!--Ejemplo: Mobile-First -->
+<div class="col-12 col-md-6 col-lg-4">
     → Móvil:  12/12 = 100%
     → Tablet:  6/12 = 50%
     → Desktop: 4/12 = 33%
-&lt;/div&gt;</code></pre>
+</div></code></pre>
 
             <h3>Accesibilidad - ARIA Labels</h3>
             <p>Importante para usuarios con discapacidades. <strong><abbr title="ARIA: Accessible Rich Internet Applications, conjunto de atributos HTML que mejoran la accesibilidad de aplicaciones web para usuarios con discapacidades">ARIA</abbr></strong> = Accessible Rich Internet Applications</p>
-            <pre><code>&lt;!-- ARIA-LABEL - Descripción para elementos sin texto --&gt;
-&lt;input type="search" aria-label="Buscar ejemplos"&gt;
-&lt;button aria-label="Cerrar ventana"&gt;&amp;times;&lt;/button&gt;
+            <pre><code><!-- ARIA-LABEL - Descripción para elementos sin texto -->
+<input type="search" aria-label="Buscar ejemplos">
+<button aria-label="Cerrar ventana">&amp;times;</button>
 
-&lt;!-- ARIA-LABELEDBY - Relacionar con otro elemento --&gt;
-&lt;input type="text" id="nombre" aria-labelledby="lbl-nombre"&gt;
-&lt;label id="lbl-nombre"&gt;Nombre completo:&lt;/label&gt;
+<!-- ARIA-LABELEDBY - Relacionar con otro elemento -->
+<input type="text" id="nombre" aria-labelledby="lbl-nombre">
+<label id="lbl-nombre">Nombre completo:</label>
 
-&lt;!-- ARIA-DESCRIBEDBY - Descripción adicional --&gt;
-&lt;input type="password" aria-describedby="pwd-help"&gt;
-&lt;small id="pwd-help"&gt;Mínimo 8 caracteres, una mayúscula y un número&lt;/small&gt;
+<!-- ARIA-DESCRIBEDBY - Descripción adicional -->
+<input type="password" aria-describedby="pwd-help">
+<small id="pwd-help">Mínimo 8 caracteres, una mayúscula y un número</small>
 
-&lt;!-- ARIA-HIDDEN - Ocultar a lectores de pantalla --&gt;
-&lt;span aria-hidden="true"&gt;&lt;/span&gt;
+<!-- ARIA-HIDDEN - Ocultar a lectores de pantalla -->
+<span aria-hidden="true"></span>
 
-&lt;!-- ROLES ARIA - Semántica adicional --&gt;
-&lt;nav role="navigation" aria-label="Menú principal"&gt;...&lt;/nav&gt;
-&lt;main role="main"&gt;...&lt;/main&gt;
-&lt;div role="alert" class="alert alert-danger"&gt;
+<!-- ROLES ARIA - Semántica adicional -->
+<nav role="navigation" aria-label="Menú principal">...</nav>
+<main role="main">...</main>
+<div role="alert" class="alert alert-danger">
     Operación fallida
-&lt;/div&gt;</code></pre>
+</div></code></pre>
         </section>
         </section>
 
@@ -1386,7 +1305,7 @@
                 <li>Formularios modernos</li>
                 <li>Grid system de Bootstrap</li>
                 <li>Componentes Bootstrap</li>
-                <li>Integración HTML5 + Bootstrap</li>
+                <li>Integración con ASP.NET</li>
             </ul>
         </section>
 
@@ -1403,13 +1322,13 @@
                 <p><strong>Criterios de éxito:</strong> Proyecto compila, Bootstrap cargando, página responsive en móvil y desktop</p>
                 <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Objetivo:</strong> Crear una landing page responsive con Bootstrap 5.</div>
 
-            <h3>Pasos en VS Code</h3>
+            <h3>Pasos en Visual Studio 2022</h3>
             <ol>
-                <li>Crear una carpeta de proyecto y un archivo <code>index.html</code>.</li>
-                <li>Agregar Bootstrap 5 vía <abbr title="CDN: Content Delivery Network, red de servidores distribuidos globalmente que entregan contenido web (CSS, JS, imágenes) desde el servidor más cercano al usuario">CDN</abbr> en la etiqueta <code>&lt;head&gt;</code>.</li>
-                <li>Construir la estructura con <code>container</code>, <code>row</code> y <code>col-*</code>.</li>
-                <li>Probar responsive con las herramientas de desarrollador (F12).</li>
-                <li>Opcional: usar extensión Live Server para recarga automática.</li>
+                <li>Abrir Visual Studio 2022 y crear un proyecto <strong>ASP.NET Core Web App</strong>.</li>
+                <li>En el Explorador de Soluciones, clic derecho en <code>Pages</code> > <strong>Agregar > Nuevo elemento > Razor Page</strong>.</li>
+                <li>Nombre: <code>Index</code> en la carpeta Pages (sobrescribir el existente).</li>
+                <li>Agregar Bootstrap 5 via <abbr title="CDN: Content Delivery Network, red de servidores distribuidos globalmente que entregan contenido web (CSS, JS, imágenes) desde el servidor más cercano al usuario">CDN</abbr> o NuGet en <code>Pages/Shared/_Layout.cshtml</code>.</li>
+                <li>Ejecutar con F5 y probar la responsive con las herramientas de desarrollador (F12).</li>
             </ol>
             <div class="example-box" style="background: #f0fdf4; border-left-color: #16a34a;"><strong>Checklist:</strong> Proyecto compila sin errores, Bootstrap cargando correctamente, página responsive en móvil y desktop.</div>
 
@@ -1516,30 +1435,6 @@
             <div class="example-box" style="background: #fef3c7; border-left-color: #f59e0b;"><strong>Tiempo sugerido total:</strong> 75 min (20 + 25 + 30).</div>
         </section>
 
-        <!-- Entrega con Git -->
-        <section id="entrega-git" class="section">
-            <h2>Entrega con Git</h2>
-            <p>Para el proyecto de interfaz con HTML5/Bootstrap:</p>
-            <pre><code># Crear rama feature
-git checkout -b feature/html-bootstrap-clase-09
-
-# Commit 1: Estructura HTML
-git add index.html css/
-git commit -m "chore: estructura base HTML5 y Bootstrap"
-
-# Commit 2: Componentes visuales
-git commit -am "feat: agrega cards, formularios y tablas responsive"
-
-# Commit 3: Estilos y documentación
-git commit -am "style: personaliza CSS y agrega README"
-
-# Tag de entrega
-git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
-            <div class="note">
-                <strong>Nota:</strong> Si integras con Angular, los templates HTML de componentes Angular usan las mismas estructuras semánticas HTML5 y pueden estilizarse con Bootstrap.
-            </div>
-        </section>
-
         <!-- Referencias -->
         <section id="referencias" class="section">
             <h2>Referencias y Recursos</h2>
@@ -1612,8 +1507,8 @@ git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
                         <td>Mobile-first, breakpoints</td>
                     </tr>
                     <tr>
-                        <td><strong>CDN Bootstrap</strong></td>
-                        <td>CSS y JS vía CDN de jsDelivr</td>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td><code>asp-controller</code>, <code>asp-action</code>, <code>asp-for</code></td>
                     </tr>
                     <tr>
                         <td><strong>Accesibilidad</strong></td>
@@ -1625,7 +1520,7 @@ git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
 
         <!-- Próxima Clase -->
         <section class="section">
-            <h2>Próxima Clase: Angular - Componentes, Servicios y Routing</h2>
+            <h2>Próxima Clase: MVC y Razor Pages</h2>
             <table class="objectives-table">
                 <thead>
                     <tr>
@@ -1635,20 +1530,20 @@ git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Componentes</strong></td>
-                        <td>Templates, binding y ciclo de vida</td>
+                        <td><strong>MVC profundo</strong></td>
+                        <td>Routing avanzado, Model Binding, Validación</td>
                     </tr>
                     <tr>
-                        <td><strong>Servicios</strong></td>
-                        <td>Inyección de dependencias, HttpClient</td>
+                        <td><strong>Razor Pages</strong></td>
+                        <td>Page Models, Handlers (OnGet, OnPost)</td>
                     </tr>
                     <tr>
-                        <td><strong>Routing</strong></td>
-                        <td>Navegación SPA, rutas protegidas</td>
+                        <td><strong>Tag Helpers</strong></td>
+                        <td>Form, Anchor, Custom tag helpers</td>
                     </tr>
                     <tr>
-                        <td><strong>Formularios</strong></td>
-                        <td>Template-driven vs reactivos</td>
+                        <td><strong>Partial Views</strong></td>
+                        <td>ViewComponents</td>
                     </tr>
                 </tbody>
             </table>
@@ -1658,11 +1553,16 @@ git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
     <section id="resumen">
       <h2>Resumen de la Clase</h2>
       <ul>
-        <li>HTML5 semántico aporta significado y estructura al contenido.</li>
-        <li>Bootstrap simplifica layout responsive y componentes UI.</li>
-        <li>El grid system organiza columnas en 12 unidades.</li>
-        <li>Formularios HTML5 + Bootstrap mejoran usabilidad y validación.</li>
-        <li>ARIA mejora accesibilidad para lectores de pantalla.</li>
+        <li>ADO.NET es la API de .NET para acceso a datos con SqlConnection, SqlCommand, SqlDataReader.</li>
+        <li>El patrón conectado mantiene conexión abierta durante lectura (SqlDataReader es forward-only).</li>
+        <li>Parameters previenen SQL Injection y manejan tipos de datos correctamente.</li>
+        <li>Transacciones (SqlTransaction) garantizan atomicidad: Commit confirma, Rollback revierte.</li>
+        <li>DELETE físico elimina filas; DELETE lógico marca como inactivo (soft delete).</li>
+        <li>Paginación con OFFSET/FETCH mejora rendimiento en datasets grandes.</li>
+        <li>SqlBulkCopy permite inserción masiva de miles de filas en segundos.</li>
+        <li>LINQ to SQL y Entity Framework son ORMs que abstraen SQL, pero ADO.NET directo es más rápido.</li>
+        <li>Connection String contiene servidor, base de datos, autenticación (Windows o SQL Server).</li>
+        <li>Using statements aseguran liberación de recursos (Dispose pattern) incluso con excepciones.</li>
       </ul>
     </section>
 

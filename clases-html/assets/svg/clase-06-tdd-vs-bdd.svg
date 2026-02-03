@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" role="img" aria-labelledby="title desc">
+  <title id="title">TDD vs BDD</title>
+  <desc id="desc">Comparacion visual entre TDD y BDD.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8ff}
+      .card{fill:#ffffff;stroke:#cbd5f5;stroke-width:1.4;rx:12}
+      .h{font:700 16px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .s{font:12px 'Segoe UI', Arial, sans-serif;fill:#475569}
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="900" height="320" />
+
+  <rect class="card" x="60" y="50" width="360" height="220" />
+  <text class="h" x="240" y="80" text-anchor="middle">TDD</text>
+  <text class="s" x="90" y="110">- prueba antes del codigo</text>
+  <text class="s" x="90" y="135">- foco tecnico</text>
+  <text class="s" x="90" y="160">- ciclos cortos</text>
+  <text class="s" x="90" y="185">- red / green / refactor</text>
+
+  <rect class="card" x="480" y="50" width="360" height="220" />
+  <text class="h" x="660" y="80" text-anchor="middle">BDD</text>
+  <text class="s" x="510" y="110">- escenarios de negocio</text>
+  <text class="s" x="510" y="135">- lenguaje ubicuo</text>
+  <text class="s" x="510" y="160">- colaboracion (PO, dev, QA)</text>
+  <text class="s" x="510" y="185">- given / when / then</text>
+</svg>

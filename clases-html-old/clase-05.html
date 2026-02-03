@@ -281,7 +281,7 @@
             color: #52606d;
         }
 
-        /* Syntax highlighting para Python */
+        /* Syntax highlighting para C# */
         .token-keyword { color: #c792ea; font-weight: 600; }
         .token-type { color: #ffcb6b; }
         .token-string { color: #c3e88d; }
@@ -454,7 +454,7 @@
                 </thead>
                 <tbody>
                     <tr><td>1. Entender TDD</td><td>20' Qué es TDD?</td></tr>
-                    <tr><td>2. Usar pytest</td><td>25' pytest Framework</td></tr>
+                    <tr><td>2. Usar xUnit</td><td>25' xUnit Framework</td></tr>
                     <tr><td>3. Aplicar patrón AAA</td><td>20' Patrón AAA</td></tr>
                     <tr><td>4. Conocer Test Doubles</td><td>15' Test Doubles</td></tr>
                     <tr><td>5. Practicar con ejemplos</td><td>10' Ejercicios</td></tr>
@@ -463,9 +463,9 @@
             <div class="highlight-box">
                 <h4>Prerrequisitos</h4>
                 <ul>
-                    <li>VS Code instalado (Windows 10/11).</li>
-                    <li>Python 3.11+ instalado y conocimientos básicos de Python.</li>
-                    <li>Acceso a consola o terminal integrada de VS Code.</li>
+                    <li>Visual Studio 2022 Community instalado (Windows 10/11).</li>
+                    <li>.NET 8 SDK (incluido con VS) y conocimientos básicos de C#.</li>
+                    <li>Acceso a consola o terminal integrada de Visual Studio.</li>
                 </ul>
             </div>
         </section>
@@ -489,9 +489,7 @@
             </div>
 
             <figure>
-                <object data="../assets/svg/clase-05-tdd-ciclo.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-                  <img src="../assets/svg/clase-05-tdd-ciclo.svg" alt="Ciclo TDD Red-Green-Refactor" />
-                </object>
+                <img src="../assets/infografias/clase-05-tdd-ciclo.png" alt="Ciclo TDD Red-Green-Refactor" onerror="this.onerror=null;this.src='/assets/infografias/clase-05-tdd-ciclo.png'">
                 <figcaption>Figura 1: Ciclo de TDD Red-Green-Refactor - el flujo iterativo donde primero se escribe una prueba que falla (Red), luego se implementa el código mínimo para pasarla (Green), y finalmente se refactoriza para mejorar el diseño sin cambiar el comportamiento (Refactor), repitiéndose este ciclo continuamente para construir software de calidad incremental.</figcaption>
             </figure>
 
@@ -537,11 +535,11 @@
             </div>
         </section>
 
-        <section id="pytest">
-            <h2>3. pytest Framework</h2>
+        <section id="xunit">
+            <h2>3. xUnit Framework</h2>
 
-            <h3>Qué es pytest?</h3>
-            <p><strong><abbr title="pytest: Framework de pruebas unitarias para Python, open source, con gran comunidad">pytest</abbr></strong> es un framework de pruebas unitarias para Python. Es open source y ampliamente utilizado en la comunidad Python.</p>
+            <h3>Qué es xUnit?</h3>
+            <p><strong><abbr title="xUnit: Framework de pruebas unitarias para .NET, open source, creado por los inventores originales de NUnit">xUnit</abbr></strong> es un framework de pruebas unitarias para .NET. Es open source y ampliamente utilizado en la comunidad .NET.</p>
 
             <h3>Atributos Principales</h3>
             <table>
@@ -553,9 +551,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code><abbr title="test_*: convención de nombres para descubrir pruebas">test_*()</abbr></code></td><td>Descubrimiento de pruebas</td><td><code>def test_suma():</code></td></tr>
-                    <tr><td><code><abbr title="@pytest.mark.parametrize: parametriza casos de prueba">@pytest.mark.parametrize</abbr></code></td><td>Pruebas parametrizadas</td><td>Múltiples casos con datos diferentes</td></tr>
-                    <tr><td><code><abbr title="@pytest.fixture: datos/objetos compartidos entre pruebas">@pytest.fixture</abbr></code></td><td>Fixtures reutilizables</td><td>Preparación de datos o mocks</td></tr>
+                    <tr><td><code><abbr title="[Fact]: Atributo de xUnit que define una prueba unitaria sin parámetros, ejecutada como un caso de prueba específico">[Fact]</abbr></code></td><td>Prueba sin parámetros</td><td>Un caso de prueba específico</td></tr>
+                    <tr><td><code><abbr title="[Theory]: Atributo de xUnit que permite pruebas parametrizadas con múltiples conjuntos de datos">[Theory]</abbr></code></td><td>Prueba parametrizada</td><td>Múltiples casos con datos diferentes</td></tr>
+                    <tr><td><code><abbr title="[InlineData]: Atributo que proporciona valores de prueba para un método [Theory]">[InlineData(...)]</abbr></code></td><td>Datos para [Theory]</td><td>Proporciona valores para los parámetros</td></tr>
                 </tbody>
             </table>
 
@@ -571,22 +569,20 @@
               </div>
               <div class="code-content">
                 <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9</div>
-                <pre><code><span class="token-comment"># Crear entorno virtual</span>
-<span class="token-keyword">python</span> -m venv .venv
+                <pre><code><span class="token-comment"># Crear proyecto de pruebas</span>
+<span class="token-keyword">dotnet</span> new xunit -n MiProyecto.Tests
 
-<span class="token-comment"># Activar e instalar pytest</span>
-<span class="token-keyword">.venv\\Scripts\\activate</span>
-<span class="token-keyword">pip</span> install pytest
+<span class="token-comment"># Agregar referencia al proyecto principal</span>
+<span class="token-keyword">cd</span> MiProyecto.Tests
+<span class="token-keyword">dotnet</span> add reference ../MiProyecto/MiProyecto.csproj
 
 <span class="token-comment"># Ejecutar pruebas</span>
-<span class="token-keyword">pytest</span> -q</code></pre>
+<span class="token-keyword">dotnet</span> test</code></pre>
               </div>
             </div>
 
             <figure>
-                <object data="../assets/svg/clase-05-testing-pyramid.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
-                  <img src="../assets/svg/clase-05-testing-pyramid.svg" alt="Testing Pyramid - Unit, Integration, E2E Tests" />
-                </object>
+                <img src="../assets/infografias/clase-05-testing-pyramid.png" alt="Testing Pyramid - Unit, Integration, E2E Tests" onerror="this.onerror=null;this.src='/assets/infografias/clase-05-testing-pyramid.png'">
                 <figcaption>Figura 2: Pirámide de Testing - estrategia de estratificación de pruebas donde la base amplia contiene muchas pruebas unitarias rápidas y aisladas, el nivel intermedio tiene menos pruebas de integración que verifican interacciones entre componentes, y la cima contiene muy pocas pruebas end-to-end lentas pero críticas, equilibrando cobertura, velocidad y costo de mantenimiento.</figcaption>
             </figure>
         </section>
@@ -660,20 +656,23 @@
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">test_calculadora.py</span>
+                <span class="code-title">CalculadoraTests.cs</span>
               </div>
               <div class="code-content">
                 <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
-                <pre><code><span class="token-keyword">def</span> <span class="token-method">test_sumar_dos_numeros</span><span class="token-operator">():</span>
-    <span class="token-comment"># Arrange - Configurar</span>
-    calc <span class="token-operator">=</span> <span class="token-type">Calculadora</span><span class="token-operator">()</span>
-    esperado <span class="token-operator">=</span> <span class="token-number">8</span>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_DosNumeros_RetornaSuma</span><span class="token-operator">()</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange - Configurar</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
+    <span class="token-keyword">int</span> esperado <span class="token-operator">=</span> <span class="token-number">8</span><span class="token-operator">;</span>
 
-    <span class="token-comment"># Act - Ejecutar</span>
-    resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">)</span>
+    <span class="token-comment">// Act - Ejecutar</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">);</span>
 
-    <span class="token-comment"># Assert - Verificar</span>
-    <span class="token-keyword">assert</span> resultado <span class="token-operator">==</span> esperado</code></pre>
+    <span class="token-comment">// Assert - Verificar</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span>esperado<span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
 
@@ -687,11 +686,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><code>assert a == b</code></td><td>Compara igualdad</td><td><code>assert resultado == 8</code></td></tr>
-                    <tr><td><code>assert cond</code></td><td>Booleano</td><td><code>assert condicion</code></td></tr>
-                    <tr><td><code>is not None</code></td><td>No es None</td><td><code>assert obj is not None</code></td></tr>
-                    <tr><td><code>pytest.raises</code></td><td>Excepción esperada</td><td><code>with pytest.raises(Exception): metodo()</code></td></tr>
-                    <tr><td><code>in</code></td><td>Colección contiene</td><td><code>assert valor in lista</code></td></tr>
+                    <tr><td><code>Equal()</code></td><td>Compara igualdad</td><td><code>Assert.Equal(8, resultado)</code></td></tr>
+                    <tr><td><code>True()/False()</code></td><td>Booleano</td><td><code>Assert.True(condicion)</code></td></tr>
+                    <tr><td><code>NotNull()</code></td><td>No es null</td><td><code>Assert.NotNull(obj)</code></td></tr>
+                    <tr><td><code>Throws()</code></td><td>Excepción esperada</td><td><code>Assert.Throws&lt;Exception&gt;(() => metodo())</code></td></tr>
+                    <tr><td><code>Contains()</code></td><td>Colección contiene</td><td><code>Assert.Contains(lista, valor)</code></td></tr>
                 </tbody>
             </table>
         </section>
@@ -757,14 +756,14 @@
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">dummy_example.py</span>
+                        <span class="code-title">DummyExample.cs</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4</div>
-                        <pre><code># Solo para llenar parámetros
-def probar(servicio_dummy):
-    # El servicio no se usa
-    pass</code></pre>
+                        <pre><code><span class="token-comment">// Solo para llenar parámetros</span>
+<span class="token-keyword">public void</span> <span class="token-method">Probar</span><span class="token-operator">(</span><span class="token-type">DummyServicio</span> servicio<span class="token-operator">)</span> <span class="token-operator">{</span>
+    <span class="token-comment">// El servicio no se usa</span>
+<span class="token-operator">}</span></code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando no necesitas interactuar con el objeto.</em></p>
@@ -778,18 +777,16 @@ def probar(servicio_dummy):
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">stub_example.py</span>
+                        <span class="code-title">StubExample.cs</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                        <pre><code># Respuestas predefinidas
-class RepoStub:
-    def obtener(self, id_):
-        return {"id": id_, "nombre": "Ana"}
+                        <pre><code><span class="token-comment">// Respuestas predefinidas</span>
+<span class="token-keyword">var</span> stub <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">StubRepo</span><span class="token-operator">();</span>
+stub<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">).</span><span class="token-method">Returns</span><span class="token-operator">(</span><span class="token-keyword">new</span> <span class="token-type">Estudiante</span><span class="token-operator">());</span>
 
-# Test usa el stub
-repo = RepoStub()
-estudiante = repo.obtener(1)</code></pre>
+<span class="token-comment">// Test usa el stub</span>
+<span class="token-keyword">var</span> estudiante <span class="token-operator">=</span> repo<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">);</span></code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando necesitas respuestas controladas.</em></p>
@@ -806,20 +803,16 @@ estudiante = repo.obtener(1)</code></pre>
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">fake_repository.py</span>
+                        <span class="code-title">FakeRepository.cs</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                        <pre><code># Implementación simplificada
-class FakeRepo:
-    def __init__(self):
-        self._datos = []
-
-    def guardar(self, e):
-        self._datos.append(e)
-
-    def obtener(self, id_):
-        return self._datos[0] if self._datos else None</code></pre>
+                        <pre><code><span class="token-comment">// Implementación simplificada</span>
+<span class="token-keyword">public class</span> <span class="token-class">FakeRepo</span> <span class="token-operator">:</span> <span class="token-type">IRepositorio</span> <span class="token-operator">{</span>
+    <span class="token-keyword">private</span> <span class="token-type">List</span><span class="token-operator">&lt;</span><span class="token-type">Estudiante</span><span class="token-operator">&gt;</span> _datos <span class="token-operator">=</span> <span class="token-keyword">new</span><span class="token-operator">();</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Guardar</span><span class="token-operator">(</span><span class="token-type">Estudiante</span> e<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">Add</span><span class="token-operator">(</span>e<span class="token-operator">);</span>
+    <span class="token-keyword">public</span> <span class="token-type">Estudiante</span> <span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-keyword">int</span> id<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">FirstOrDefault</span><span class="token-operator">();</span>
+<span class="token-operator">}</span></code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando necesitas lógica real pero simple.</em></p>
@@ -833,19 +826,17 @@ class FakeRepo:
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">mock_example.py</span>
+                        <span class="code-title">MockExample.cs</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
-                        <pre><code><span class="token-comment"># Verifica comportamiento</span>
-<span class="token-keyword">from</span> <span class="token-namespace">unittest.mock</span> <span class="token-keyword">import</span> <span class="token-type">Mock</span>
+                        <pre><code><span class="token-comment">// Verifica comportamiento</span>
+<span class="token-keyword">var</span> mock <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Mock</span><span class="token-operator">&lt;</span><span class="token-type">IRepositorio</span><span class="token-operator">&gt;();</span>
+mock<span class="token-operator">.</span><span class="token-method">Setup</span><span class="token-operator">(</span>x <span class="token-operator">=></span> x<span class="token-operator">.</span><span class="token-method">Guardar</span><span class="token-operator">(</span><span class="token-type">It</span><span class="token-operator">.</span><span class="token-property">IsAny</span><span class="token-operator">&lt;&gt;()))</span>
+    <span class="token-operator">.</span><span class="token-method">Verifiable</span><span class="token-operator">();</span>
 
-repo <span class="token-operator">=</span> <span class="token-type">Mock</span><span class="token-operator">()</span>
-repo<span class="token-operator">.</span><span class="token-method">guardar</span><span class="token-operator">.</span><span class="token-property">return_value</span> <span class="token-operator">=</span> <span class="token-keyword">True</span>
-
-<span class="token-comment"># Test ejecuta...</span>
-repo<span class="token-operator">.</span><span class="token-method">guardar</span><span class="token-operator">({</span><span class="token-string">"id"</span><span class="token-operator">:</span> <span class="token-number">1</span><span class="token-operator">})</span>
-repo<span class="token-operator">.</span><span class="token-method">guardar</span><span class="token-operator">.</span><span class="token-method">assert_called_once</span><span class="token-operator">()</span></code></pre>
+<span class="token-comment">// Test ejecuta...</span>
+mock<span class="token-operator">.</span><span class="token-method">Verify</span><span class="token-operator">();</span> <span class="token-comment">// Confirma llamada</span></code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando necesitas verificar interacciones.</em></p>
@@ -867,19 +858,22 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">test_calculadora.py</span>
+                <span class="code-title">CalculadoraTests.cs</span>
               </div>
               <div class="code-content">
                 <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
-                <pre><code><span class="token-keyword">def</span> <span class="token-method">test_sumar_dos_numeros</span><span class="token-operator">():</span>
-    <span class="token-comment"># Arrange</span>
-    calc <span class="token-operator">=</span> <span class="token-type">Calculadora</span><span class="token-operator">()</span>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_DosNumeros_RetornaSuma</span><span class="token-operator">()</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
 
-    <span class="token-comment"># Act</span>
-    resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">)</span>
+    <span class="token-comment">// Act</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">);</span>
 
-    <span class="token-comment"># Assert</span>
-    <span class="token-keyword">assert</span> resultado <span class="token-operator">==</span> <span class="token-number">8</span></code></pre>
+    <span class="token-comment">// Assert</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">8</span><span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
 
@@ -891,13 +885,14 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">calculadora.py</span>
+                <span class="code-title">Calculadora.cs</span>
               </div>
               <div class="code-content">
                 <div class="line-numbers">1<br>2<br>3<br>4</div>
-                <pre><code><span class="token-keyword">class</span> <span class="token-class">Calculadora</span><span class="token-operator">:</span>
-    <span class="token-keyword">def</span> <span class="token-method">sumar</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> a<span class="token-operator">,</span> b<span class="token-operator">)</span><span class="token-operator">:</span>
-        <span class="token-keyword">return</span> a <span class="token-operator">+</span> b  <span class="token-comment"># Minimo para pasar</span></code></pre>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">Calculadora</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">public int</span> <span class="token-method">Sumar</span><span class="token-operator">(</span><span class="token-keyword">int</span> a<span class="token-operator">,</span> <span class="token-keyword">int</span> b<span class="token-operator">)</span> <span class="token-operator">=></span> a <span class="token-operator">+</span> b<span class="token-operator">;</span> <span class="token-comment">// Minimo para pasar</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
 
@@ -909,11 +904,11 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">refactor.py</span>
+                <span class="code-title">Refactor.cs</span>
               </div>
               <div class="code-content">
                 <div class="line-numbers">1</div>
-                <pre><code><span class="token-comment"># El código ya es simple, no hay refactor necesario</span></code></pre>
+                <pre><code><span class="token-comment">// El código ya es simple, no hay refactor necesario</span></code></pre>
               </div>
             </div>
 
@@ -927,25 +922,32 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">billetera.py</span>
+                <span class="code-title">Billetera.cs</span>
               </div>
               <div class="code-content">
                 <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
-                <pre><code><span class="token-keyword">class</span> <span class="token-class">Billetera</span><span class="token-operator">:</span>
-    <span class="token-keyword">def</span> <span class="token-method">__init__</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">)</span><span class="token-operator">:</span>
-        self<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">=</span> <span class="token-number">0</span>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">Billetera</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">private decimal</span> _saldo<span class="token-operator">;</span>
 
-    <span class="token-keyword">def</span> <span class="token-method">agregar</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> monto<span class="token-operator">)</span><span class="token-operator">:</span>
-        <span class="token-keyword">if</span> monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">:</span>
-            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">)</span>
-        self<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">+=</span> monto
+    <span class="token-keyword">public decimal</span> <span class="token-property">Saldo</span> <span class="token-operator">=></span> _saldo<span class="token-operator">;</span>
 
-    <span class="token-keyword">def</span> <span class="token-method">retirar</span><span class="token-operator">(</span><span class="token-keyword">self</span><span class="token-operator">,</span> monto<span class="token-operator">)</span><span class="token-operator">:</span>
-        <span class="token-keyword">if</span> monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">:</span>
-            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">)</span>
-        <span class="token-keyword">if</span> monto <span class="token-operator">></span> self<span class="token-operator">.</span><span class="token-property">saldo</span><span class="token-operator">:</span>
-            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Saldo insuficiente"</span><span class="token-operator">)</span>
-        self<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">-=</span> monto</code></pre>
+    <span class="token-keyword">public void</span> <span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-keyword">decimal</span> monto<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">);</span>
+        _saldo <span class="token-operator">+=</span> monto<span class="token-operator">;</span>
+    <span class="token-operator">}</span>
+
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-keyword">decimal</span> monto<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">&lt;=</span> <span class="token-number">0</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Monto debe ser positivo"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>monto <span class="token-operator">></span> _saldo<span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">InvalidOperationException</span><span class="token-operator">(</span><span class="token-string">"Saldo insuficiente"</span><span class="token-operator">);</span>
+        _saldo <span class="token-operator">-=</span> monto<span class="token-operator">;</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
 
@@ -957,37 +959,50 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">test_billetera.py</span>
+                <span class="code-title">BilleteraTests.cs</span>
               </div>
               <div class="code-content">
-                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23</div>
-                <pre><code><span class="token-keyword">import</span> <span class="token-namespace">pytest</span>
-<span class="token-keyword">from</span> <span class="token-namespace">billetera</span> <span class="token-keyword">import</span> <span class="token-type">Billetera</span>
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36</div>
+                <pre><code><span class="token-keyword">public class</span> <span class="token-class">BilleteraTests</span>
+<span class="token-operator">{</span>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Saldo_Inicialmente_EsCero</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">0</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-<span class="token-keyword">def</span> <span class="token-method">test_saldo_inicialmente_es_cero</span><span class="token-operator">():</span>
-    billetera <span class="token-operator">=</span> <span class="token-type">Billetera</span><span class="token-operator">()</span>
-    <span class="token-keyword">assert</span> billetera<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">==</span> <span class="token-number">0</span>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Agregar_MontoPositivo_IncrementaSaldo</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-<span class="token-keyword">def</span> <span class="token-method">test_agregar_monto_positivo_incrementa_saldo</span><span class="token-operator">():</span>
-    billetera <span class="token-operator">=</span> <span class="token-type">Billetera</span><span class="token-operator">()</span>
-    billetera<span class="token-operator">.</span><span class="token-method">agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">)</span>
-    <span class="token-keyword">assert</span> billetera<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">==</span> <span class="token-number">100</span>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar_SaldoSuficiente_DecrementaSaldo</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">);</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-number">30</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span><span class="token-number">70</span><span class="token-operator">,</span> billetera<span class="token-operator">.</span><span class="token-property">Saldo</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
 
-<span class="token-keyword">def</span> <span class="token-method">test_retirar_saldo_suficiente_decrementa_saldo</span><span class="token-operator">():</span>
-    billetera <span class="token-operator">=</span> <span class="token-type">Billetera</span><span class="token-operator">()</span>
-    billetera<span class="token-operator">.</span><span class="token-method">agregar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">)</span>
-    billetera<span class="token-operator">.</span><span class="token-method">retirar</span><span class="token-operator">(</span><span class="token-number">30</span><span class="token-operator">)</span>
-    <span class="token-keyword">assert</span> billetera<span class="token-operator">.</span><span class="token-property">saldo</span> <span class="token-operator">==</span> <span class="token-number">70</span>
-
-<span class="token-keyword">def</span> <span class="token-method">test_retirar_saldo_insuficiente_lanza_excepcion</span><span class="token-operator">():</span>
-    billetera <span class="token-operator">=</span> <span class="token-type">Billetera</span><span class="token-operator">()</span>
-    billetera<span class="token-operator">.</span><span class="token-method">agregar</span><span class="token-operator">(</span><span class="token-number">50</span><span class="token-operator">)</span>
-    <span class="token-keyword">with</span> pytest<span class="token-operator">.</span><span class="token-method">raises</span><span class="token-operator">(</span><span class="token-type">ValueError</span><span class="token-operator">)</span><span class="token-operator">:</span>
-        billetera<span class="token-operator">.</span><span class="token-method">retirar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">)</span></code></pre>
+    <span class="token-operator">[</span><span class="token-method">Fact</span><span class="token-operator">]</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Retirar_SaldoInsuficiente_LanzaExcepcion</span><span class="token-operator">()</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">var</span> billetera <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Billetera</span><span class="token-operator">();</span>
+        billetera<span class="token-operator">.</span><span class="token-method">Agregar</span><span class="token-operator">(</span><span class="token-number">50</span><span class="token-operator">);</span>
+        <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Throws</span><span class="token-operator">&lt;</span><span class="token-type">InvalidOperationException</span><span class="token-operator">&gt;(</span>
+            <span class="token-operator">()</span> <span class="token-operator">=></span> billetera<span class="token-operator">.</span><span class="token-method">Retirar</span><span class="token-operator">(</span><span class="token-number">100</span><span class="token-operator">)</span>
+        <span class="token-operator">);</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
 
-            <h3>Ejemplo 3: Parametrización con pytest.mark.parametrize</h3>
+            <h3>Ejemplo 3: Parametrización con [Theory]</h3>
             <div class="code-block">
               <div class="code-header">
                 <div class="code-dots">
@@ -995,23 +1010,28 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                   <span class="code-dot yellow"></span>
                   <span class="code-dot green"></span>
                 </div>
-                <span class="code-title">test_calculadora_param.py</span>
+                <span class="code-title">CalculadoraTheoryTests.cs</span>
               </div>
               <div class="code-content">
-                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
-                <pre><code><span class="token-keyword">import</span> <span class="token-namespace">pytest</span>
+                <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18</div>
+                <pre><code><span class="token-operator">[</span><span class="token-method">Theory</span><span class="token-operator">]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">2</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">,</span> <span class="token-number">8</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">)]</span>
+<span class="token-operator">[</span><span class="token-type">InlineData</span><span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">3</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">8</span><span class="token-operator">)]</span>
+<span class="token-keyword">public void</span> <span class="token-method">Sumar_VariosNumeros_RetornaSuma</span><span class="token-operator">(</span>
+    <span class="token-keyword">int</span> a<span class="token-operator">,</span> <span class="token-keyword">int</span> b<span class="token-operator">,</span> <span class="token-keyword">int</span> esperado<span class="token-operator">)</span>
+<span class="token-operator">{</span>
+    <span class="token-comment">// Arrange</span>
+    <span class="token-keyword">var</span> calc <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">Calculadora</span><span class="token-operator">();</span>
 
-<span class="token-keyword">@</span><span class="token-namespace">pytest</span><span class="token-operator">.</span><span class="token-property">mark</span><span class="token-operator">.</span><span class="token-method">parametrize</span><span class="token-operator">(</span><span class="token-string">"a, b, esperado"</span><span class="token-operator">,</span> <span class="token-operator">[</span>
-    <span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">2</span><span class="token-operator">),</span>
-    <span class="token-operator">(</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-number">3</span><span class="token-operator">,</span> <span class="token-number">8</span><span class="token-operator">),</span>
-    <span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">1</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">),</span>
-    <span class="token-operator">(</span><span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">,</span> <span class="token-number">0</span><span class="token-operator">),</span>
-    <span class="token-operator">(</span><span class="token-operator">-</span><span class="token-number">5</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">3</span><span class="token-operator">,</span> <span class="token-operator">-</span><span class="token-number">8</span><span class="token-operator">),</span>
-<span class="token-operator">]</span><span class="token-operator">)</span>
-<span class="token-keyword">def</span> <span class="token-method">test_sumar_varios_numeros</span><span class="token-operator">(</span>a<span class="token-operator">,</span> b<span class="token-operator">,</span> esperado<span class="token-operator">)</span><span class="token-operator">:</span>
-    calc <span class="token-operator">=</span> <span class="token-type">Calculadora</span><span class="token-operator">()</span>
-    resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">sumar</span><span class="token-operator">(</span>a<span class="token-operator">,</span> b<span class="token-operator">)</span>
-    <span class="token-keyword">assert</span> resultado <span class="token-operator">==</span> esperado</code></pre>
+    <span class="token-comment">// Act</span>
+    <span class="token-keyword">int</span> resultado <span class="token-operator">=</span> calc<span class="token-operator">.</span><span class="token-method">Sumar</span><span class="token-operator">(</span>a<span class="token-operator">,</span> b<span class="token-operator">);</span>
+
+    <span class="token-comment">// Assert</span>
+    <span class="token-type">Assert</span><span class="token-operator">.</span><span class="token-method">Equal</span><span class="token-operator">(</span>esperado<span class="token-operator">,</span> resultado<span class="token-operator">);</span>
+<span class="token-operator">}</span></code></pre>
               </div>
             </div>
         </section>
@@ -1019,39 +1039,29 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
         <section id="practica">
             <h2>7. Práctica / Laboratorio (35 min)</h2>
             <section class="actividad">
-                <h3>Actividad: Práctica TDD con pytest (35 min)</h3>
+                <h3>Actividad: Práctica TDD con xUnit (35 min)</h3>
                 <p><strong>Tipo:</strong> Opcional / práctica</p>
                 <p><strong>Relacionado con:</strong> Ninguno</p>
-                <p><strong>Entregable:</strong> Proyecto con módulo y pruebas pytest</p>
+                <p><strong>Entregable:</strong> Solución con librería de clases y proyecto de pruebas xUnit</p>
                 <p><strong>Tiempo estimado:</strong> 35 min</p>
-                <p><strong>Criterios de éxito:</strong> Al menos 1 prueba en verde, ciclo RED/GREEN completado</p>
-                <p><strong>Objetivo:</strong> crear un proyecto Python con módulo principal y pruebas pytest en VS Code.</p>
-            <h3>Pasos en Windows (VS Code)</h3>
+                <p><strong>Criterios de éxito:</strong> Solución compila, al menos 1 prueba en verde, ciclo RED/GREEN completado</p>
+                <p><strong>Objetivo:</strong> crear una solución con una librería de clases y un proyecto de pruebas xUnit en Visual Studio 2022.</p>
+            <h3>Pasos en Windows (Visual Studio 2022)</h3>
             <ol>
-                <li>Crear carpeta del proyecto y activar entorno virtual.</li>
-                <li>Instalar pytest con <code>pip install pytest</code>.</li>
-                <li>Crear módulo <code>calculadora.py</code> con función <code>sumar</code>.</li>
-                <li>Crear archivo <code>test_calculadora.py</code> con pruebas <code>test_*</code>.</li>
-                <li>Ejecutar <code>pytest -q</code> desde la terminal de VS Code.</li>
+                <li>Crear una solución nueva &gt; plantilla <strong>Biblioteca de clases (.NET)</strong>.</li>
+                <li>Agregar un proyecto de pruebas: <strong>xUnit Test Project (.NET)</strong>.</li>
+                <li>Agregar referencia del proyecto de pruebas a la biblioteca.</li>
+                <li>Crear clase <code>Calculadora</code> con método <code>Sumar</code>.</li>
+                <li>Escribir pruebas con <code>[Fact]</code> y ejecutar <strong><abbr title="Test Explorer: Ventana de Visual Studio que muestra y permite ejecutar todas las pruebas unitarias del proyecto">Test Explorer</abbr></strong>.</li>
             </ol>
             <div class="highlight-box">
                 <h4>Checklist</h4>
                 <ul>
-                    <li>Proyecto ejecuta sin errores.</li>
+                    <li>Solución compila sin errores.</li>
                     <li>Se ejecuta al menos 1 prueba en verde.</li>
                     <li>Una prueba falla primero (RED) y luego pasa (GREEN).</li>
                 </ul>
             </div>
-        </section>
-
-        <section id="entrega-git">
-            <h2>Entrega con Git</h2>
-            <p>Entrega mínima por clase usando control de versiones:</p>
-            <ul>
-                <li>Branch: <code>feature/tdd-pytest-clase-05</code></li>
-                <li>Commits: <code>setup</code> / <code>implementacion</code> / <code>pruebas-docs</code></li>
-                <li>Tag: <code>clase-05-v1</code></li>
-            </ul>
         </section>
 
         <section id="ejercicios">
@@ -1097,17 +1107,22 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                       <span class="code-dot yellow"></span>
                       <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">validador_contrasenas.py</span>
+                    <span class="code-title">ValidadorContrasenas.cs</span>
                   </div>
                   <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12</div>
-                    <pre><code><span class="token-keyword">def</span> <span class="token-method">validar_contrasena</span><span class="token-operator">(</span>contrasena<span class="token-operator">)</span><span class="token-operator">:</span>
-    <span class="token-keyword">if</span> <span class="token-method">len</span><span class="token-operator">(</span>contrasena<span class="token-operator">)</span> <span class="token-operator">&lt;</span> <span class="token-number">8</span><span class="token-operator">:</span>
-        <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Mínimo 8 caracteres"</span><span class="token-operator">)</span>
-    <span class="token-keyword">if</span> <span class="token-keyword">not</span> <span class="token-method">any</span><span class="token-operator">(</span>c<span class="token-operator">.</span><span class="token-method">isupper</span><span class="token-operator">()</span> <span class="token-keyword">for</span> c <span class="token-keyword">in</span> contrasena<span class="token-operator">)</span><span class="token-operator">:</span>
-        <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Al menos una mayúscula"</span><span class="token-operator">)</span>
-    <span class="token-keyword">if</span> <span class="token-keyword">not</span> <span class="token-method">any</span><span class="token-operator">(</span>c<span class="token-operator">.</span><span class="token-method">isdigit</span><span class="token-operator">()</span> <span class="token-keyword">for</span> c <span class="token-keyword">in</span> contrasena<span class="token-operator">)</span><span class="token-operator">:</span>
-        <span class="token-keyword">raise</span> <span class="token-type">ValueError</span><span class="token-operator">(</span><span class="token-string">"Al menos un número"</span><span class="token-operator">)</span></code></pre>
+                    <pre><code><span class="token-keyword">public class</span> <span class="token-class">ValidadorContrasenas</span>
+<span class="token-operator">{</span>
+    <span class="token-keyword">public void</span> <span class="token-method">Validar</span><span class="token-operator">(</span><span class="token-keyword">string</span> contrasena<span class="token-operator">)</span>
+    <span class="token-operator">{</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(</span>contrasena<span class="token-operator">.</span><span class="token-property">Length</span> <span class="token-operator">&lt;</span> <span class="token-number">8</span><span class="token-operator">)</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Mínimo 8 caracteres"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(!</span>contrasena<span class="token-operator">.</span><span class="token-method">Any</span><span class="token-operator">(</span><span class="token-keyword">char</span><span class="token-operator">.</span><span class="token-property">IsUpper</span><span class="token-operator">))</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Al menos una mayúscula"</span><span class="token-operator">);</span>
+        <span class="token-keyword">if</span> <span class="token-operator">(!</span>contrasena<span class="token-operator">.</span><span class="token-method">Any</span><span class="token-operator">(</span><span class="token-keyword">char</span><span class="token-operator">.</span><span class="token-property">IsDigit</span><span class="token-operator">))</span>
+            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-type">ArgumentException</span><span class="token-operator">(</span><span class="token-string">"Al menos un número"</span><span class="token-operator">);</span>
+    <span class="token-operator">}</span>
+<span class="token-operator">}</span></code></pre>
                   </div>
                 </div>
 
@@ -1154,7 +1169,7 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
                 </thead>
                 <tbody>
                     <tr><td><strong>TDD</strong></td><td>Escribir pruebas antes del código (Red-Green-Refactor)</td></tr>
-                    <tr><td><strong>pytest</strong></td><td>Framework de pruebas para Python (test_*, fixtures, parametrización)</td></tr>
+                    <tr><td><strong>xUnit</strong></td><td>Framework de pruebas para .NET ([Fact], [Theory])</td></tr>
                     <tr><td><strong>AAA</strong></td><td>Patrón Arrange-Act-Assert para pruebas</td></tr>
                     <tr><td><strong>Test Doubles</strong></td><td>Dummy, Stub, Fake, Mock para aislar pruebas</td></tr>
                 </tbody>
@@ -1162,25 +1177,25 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
 
             <h3>Habilidades Adquiridas</h3>
             <ul>
-                <li>Crear proyecto de pruebas pytest</li>
-                <li>Escribir pruebas con <code>test_*</code> y <code>@pytest.mark.parametrize</code></li>
+                <li>Crear proyecto de pruebas xUnit</li>
+                <li>Escribir pruebas usando [Fact] y [Theory]</li>
                 <li>Aplicar patrón AAA</li>
-                <li>Usar <code>assert</code> para verificar resultados</li>
-                <li>Probar excepciones con <code>pytest.raises</code></li>
+                <li>Usar Assert para verificar resultados</li>
+                <li>Probar excepciones con Assert.Throws</li>
             </ul>
 
             <h3>Próximos Pasos</h3>
             <ul>
                 <li><strong>Clase 6:</strong> BDD (Behavior-Driven Development)</li>
                 <li>Practicar TDD en proyectos reales</li>
-                <li>Explorar <code>unittest.mock</code> o <code>pytest-mock</code> para mocks</li>
+                <li>Explorar Moq para mocks avanzados</li>
             </ul>
 
             <h3>Referencias y Recursos</h3>
             <ul>
-                <li><strong>Documentación oficial de pytest:</strong> <a href="https://docs.pytest.org/" target="_blank" rel="noopener">https://docs.pytest.org/</a></li>
-                <li><strong>Guía de pytest (inicio rápido):</strong> <a href="https://docs.pytest.org/en/stable/getting-started.html" target="_blank" rel="noopener">Getting Started</a></li>
-                <li><strong>Mocks en Python:</strong> <a href="https://docs.python.org/3/library/unittest.mock.html" target="_blank" rel="noopener">unittest.mock</a></li>
+                <li><strong>Documentación oficial de xUnit:</strong> <a href="https://xunit.net/" target="_blank" rel="noopener">https://xunit.net/</a></li>
+                <li><strong>Guía de xUnit en Microsoft Learn:</strong> <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test" target="_blank" rel="noopener">Unit testing with C#</a></li>
+                <li><strong>Moq (mocking library):</strong> <a href="https://github.com/moq/moq4" target="_blank" rel="noopener">https://github.com/moq/moq4</a></li>
                 <li><strong>TDD por Kent Beck (inventor):</strong> <em>Test-Driven Development: By Example</em> (libro)</li>
                 <li><strong>Three Laws of TDD (Uncle Bob):</strong> <a href="https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html" target="_blank" rel="noopener">The Cycles of TDD</a></li>
                 <li><strong>Pirámide de testing (Martin Fowler):</strong> <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener">The Practical Test Pyramid</a></li>
@@ -1190,9 +1205,9 @@ repo<span class="token-operator">.</span><span class="token-method">guardar</spa
         <section id="referencias">
             <h2>Referencias</h2>
             <ul>
-                <li><strong>Documentación oficial de pytest:</strong> <a href="https://docs.pytest.org/" target="_blank" rel="noopener">https://docs.pytest.org/</a></li>
-                <li><strong>Guía de pytest (inicio rápido):</strong> <a href="https://docs.pytest.org/en/stable/getting-started.html" target="_blank" rel="noopener">Getting Started</a></li>
-                <li><strong>Mocks en Python:</strong> <a href="https://docs.python.org/3/library/unittest.mock.html" target="_blank" rel="noopener">unittest.mock</a></li>
+                <li><strong>Documentación oficial de xUnit:</strong> <a href="https://xunit.net/" target="_blank" rel="noopener">https://xunit.net/</a></li>
+                <li><strong>Guía de xUnit en Microsoft Learn:</strong> <a href="https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test" target="_blank" rel="noopener">Unit testing with C#</a></li>
+                <li><strong>Moq (mocking library):</strong> <a href="https://github.com/moq/moq4" target="_blank" rel="noopener">https://github.com/moq/moq4</a></li>
                 <li><strong>TDD por Kent Beck (inventor):</strong> <em>Test-Driven Development: By Example</em> (libro)</li>
                 <li><strong>Three Laws of TDD (Uncle Bob):</strong> <a href="https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html" target="_blank" rel="noopener">The Cycles of TDD</a></li>
                 <li><strong>Pirámide de testing (Martin Fowler):</strong> <a href="https://martinfowler.com/articles/practical-test-pyramid.html" target="_blank" rel="noopener">The Practical Test Pyramid</a></li>

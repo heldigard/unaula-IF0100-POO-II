@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-labelledby="title desc">
+  <title id="title">Ecosistema Python</title>
+  <desc id="desc">Mapa visual de áreas donde se usa Python: Web, Data Science, AI/ML, Automatización, Testing, Desktop, Cloud y Educación.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f6f8ff}
+      .card{fill:#ffffff;stroke:#cbd5f5;stroke-width:1.2;rx:14}
+      .title{font:700 22px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .label{font:600 14px 'Segoe UI', Arial, sans-serif;fill:#0b2d6b}
+      .chip{font:12px 'Segoe UI', Arial, sans-serif;fill:#1f2933}
+      .pill{fill:#e2e8f0;stroke:#cbd5f5;stroke-width:1}
+      .accent{fill:#2563eb}
+      .accentText{font:700 12px 'Segoe UI', Arial, sans-serif;fill:#ffffff}
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="900" height="420" />
+
+  <text class="title" x="450" y="40" text-anchor="middle">Ecosistema Python</text>
+  <text class="chip" x="450" y="64" text-anchor="middle">Lenguaje multiproposito con comunidades y librerias especializadas</text>
+
+  <g transform="translate(40,90)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Web</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">FastAPI</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">Django / Flask</text>
+  </g>
+
+  <g transform="translate(260,90)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Data Science</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">NumPy</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">Pandas</text>
+  </g>
+
+  <g transform="translate(480,90)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">AI / ML</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">PyTorch</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">TensorFlow</text>
+  </g>
+
+  <g transform="translate(700,90)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Automatizacion</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">Scripting</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">DevOps</text>
+  </g>
+
+  <g transform="translate(40,240)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Testing</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">pytest</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">unittest</text>
+  </g>
+
+  <g transform="translate(260,240)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Desktop</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">Tkinter</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">PyQt</text>
+  </g>
+
+  <g transform="translate(480,240)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Cloud</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">AWS / GCP</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">Azure</text>
+  </g>
+
+  <g transform="translate(700,240)">
+    <rect class="card" x="0" y="0" width="200" height="120" />
+    <text class="label" x="100" y="30" text-anchor="middle">Educacion</text>
+    <rect class="pill" x="26" y="48" width="148" height="24" />
+    <text class="chip" x="100" y="65" text-anchor="middle">Aprendizaje</text>
+    <rect class="pill" x="26" y="80" width="148" height="24" />
+    <text class="chip" x="100" y="97" text-anchor="middle">Prototipos</text>
+  </g>
+
+  <rect class="accent" x="360" y="370" width="180" height="30" rx="15" />
+  <text class="accentText" x="450" y="389" text-anchor="middle">Python 3.11+</text>
+</svg>

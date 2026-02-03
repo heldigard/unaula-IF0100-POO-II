@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Clase 03 — Herencia y Polimorfismo (POO II)</title>
+  <title>Clase 03 — Herencia y Polimorfismo en Python (POO II)</title>
   <style>
     :root {
       --bg: #f7f7f4;
@@ -19,24 +19,24 @@
     }
     * { box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
+      font-family: "IBM Plex Sans", "Segoe UI", Tahoma, sans-serif;
       margin: 0;
-      padding: 0;
       color: var(--ink);
       background: var(--bg);
+      line-height: 1.65;
     }
     header {
-      background: linear-gradient(135deg, #0b5a3c, #10b981);
-      padding: 36px 20px 28px;
+      background: linear-gradient(135deg, #0b2d6b, #1e40af);
       color: #fff;
+      padding: 36px 20px 28px;
     }
     header .wrap {
       max-width: 1100px;
       margin: 0 auto;
     }
     header h1 {
-      margin: 8px 0 10px 0;
+      font-family: "Merriweather", Georgia, serif;
+      margin: 8px 0 10px;
       font-size: 2.2rem;
     }
     header .meta {
@@ -85,29 +85,18 @@
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 12px;
-      padding: 28px;
-      margin: 20px 0;
+      padding: 22px;
+      margin: 18px 0;
     }
     h2 {
-      color: #0b5a3c;
-      font-size: 1.8rem;
       margin-top: 0;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 3px solid #10b981;
+      color: var(--brand);
+      font-size: 1.6rem;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 6px;
     }
-    h3 {
-      color: #047857;
-      font-size: 1.4rem;
-      margin-top: 28px;
-      margin-bottom: 15px;
-    }
-    h4 {
-      color: #059669;
-      font-size: 1.15rem;
-      margin-top: 22px;
-      margin-bottom: 12px;
-    }
+    h3 { color: #0b2d6b; margin-top: 20px; }
+    h4 { color: #2f4b7c; margin-top: 16px; }
     pre {
       background: #0b1020;
       color: #e2e8f0;
@@ -116,15 +105,14 @@
       overflow-x: auto;
       margin: 15px 0;
     }
-    code {
-      font-family: 'Consolas', 'Monaco', monospace;
-      font-size: 0.9em;
-    }
+    code { font-family: "Cascadia Code", Consolas, monospace; font-size: 0.95rem; }
     p code, li code {
-      background: #d1fae5;
-      color: #065f46;
-      padding: 2px 6px;
-      border-radius: 4px;
+      background: #313244;
+      color: #cdd6f4;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      border: 1px solid #45475a;
     }
     figure {
       margin: 24px 0;
@@ -146,13 +134,13 @@
       font-style: italic;
     }
     .diagram {
-      font-family: 'Consolas', 'Monaco', monospace;
-      background: #f0fdf4;
-      padding: 20px;
+      font-family: "Cascadia Code", Consolas, monospace;
+      background: #f0f4ff;
+      padding: 16px;
       border-radius: 10px;
-      margin: 20px 0;
+      margin: 16px 0;
       overflow-x: auto;
-      border: 2px solid #10b981;
+      border: 1px dashed var(--line);
     }
     table {
       width: 100%;
@@ -165,12 +153,12 @@
       border: 1px solid var(--line);
     }
     th {
-      background: #0b5a3c;
-      color: white;
+      background: #f1f5f9;
+      color: var(--brand);
       font-weight: 600;
     }
     tr:nth-child(even) {
-      background: #f0fdf4;
+      background: #f8fafc;
     }
     ul, ol {
       margin-left: 25px;
@@ -196,40 +184,43 @@
       color: var(--warning);
     }
     .highlight-box {
-      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-      padding: 20px;
-      border-radius: 10px;
-      border-left: 4px solid #10b981;
-      margin: 20px 0;
+      background: #f0f4ff;
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      margin: 16px 0;
     }
     .warning-box {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      padding: 20px;
-      border-radius: 10px;
-      border-left: 4px solid var(--warning);
-      margin: 20px 0;
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #991b1b;
+      margin: 16px 0;
     }
     .info-box {
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-      padding: 20px;
-      border-radius: 10px;
+      background: #f0f4ff;
       border-left: 4px solid var(--accent);
-      margin: 20px 0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 16px 0;
     }
     .comparison-table {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+      align-items: start;
     }
     .comparison-table > div {
-      background: #f0fdf4;
-      padding: 20px;
+      background: var(--card);
+      padding: 16px;
       border-radius: 10px;
-      border: 1px solid #10b981;
+      border: 1px solid var(--line);
     }
     .comparison-table h4 {
-      color: #065f46;
+      color: var(--brand);
       margin-top: 0;
     }
     @media (max-width: 768px) {
@@ -249,18 +240,22 @@
     }
     .note {
       background: #f0f4ff;
-      border-left: 4px solid #3b82f6;
+      border-left: 4px solid var(--accent);
       padding: 10px 12px;
       border-radius: 8px;
-      color: #52606d;
+      color: var(--muted);
+      margin: 16px 0;
     }
-    /* Syntax highlighting para C# */
+    /* Syntax highlighting para Python */
+    pre code[class*="language-"] { color: #e2e8f0; }
     .token-keyword { color: #c792ea; font-weight: 600; }
     .token-type { color: #ffcb6b; }
     .token-string { color: #c3e88d; }
     .token-comment { color: #546e7a; font-style: italic; }
     .token-number { color: #f78c6c; }
     .token-operator { color: #89ddff; }
+    .token-method { color: #82aaff; }
+    .token-class { color: #ffcb6b; }
 
 /* BLOQUES DE CÓDIGO MEJORADOS */
 .code-block {
@@ -385,25 +380,25 @@ p code, li code {
   <header>
     <div class="wrap">
       <div>IF0100 - Lenguaje de Programación OO II | Unidad 2</div>
-      <h1>Clase 03: Herencia y Polimorfismo</h1>
+      <h1>Clase 03: Herencia y Polimorfismo en Python</h1>
       <div>Duración: 90 minutos | Semana 3</div>
       <div class="meta">
         <div>
           <strong>Objetivos de Aprendizaje</strong>
           <ul>
-            <li>Comprender el concepto de herencia y la relación "es-un"</li>
-            <li>Aplicar tipos de herencia (simple, jerárquica) en C#</li>
-            <li>Implementar polimorfismo mediante override y virtual</li>
-            <li>Utilizar <code>base</code> para invocar constructores padre</li>
-            <li>Aplicar el principio de sustitución de Liskov</li>
+            <li>Comprender el concepto de herencia y la relación "es-un" en Python</li>
+            <li>Aplicar tipos de herencia (simple, jerárquica) en Python</li>
+            <li>Implementar polimorfismo mediante herencia y super()</li>
+            <li>Utilizar <code>super()</code> para invocar métodos/constructores padre</li>
+            <li>Aplicar el principio de sustitución de Liskov en Python</li>
           </ul>
         </div>
         <div>
           <strong>Prerrequisitos</strong>
           <ul>
             <li>Clase 02: Clases, objetos y encapsulamiento</li>
-            <li>Visual Studio 2022 con .NET 8 instalado</li>
-            <li>Conocimiento de modificadores de acceso</li>
+            <li>VS Code o PyCharm con Python 3.11+ instalado</li>
+            <li>Conocimiento de convenciones Python (público/_privado)</li>
             <li>Windows 10/11 con permisos de desarrollo</li>
           </ul>
         </div>
@@ -476,11 +471,11 @@ p code, li code {
       <div class="comparison-table">
         <div>
           <h4>🔷 Superclase / Clase Base</h4>
-          <p>La clase que proporciona los miembros (campos, métodos, propiedades) que serán heredados.</p>
+          <p>La clase que proporciona los atributos y métodos que serán heredados.</p>
           <ul>
             <li>Define el comportamiento común</li>
             <li>Puede ser <code><abbr title="Clase abstracta no puede instanciarse directamente, sirve como plantilla para otras clases">abstract</abbr></code> (no se instancia)</li>
-            <li>Usa <code><abbr title="virtual indica que un método puede ser sobreescrito por clases derivadas">virtual</abbr></code> para métodos sobreescribibles</li>
+            <li>Todos los métodos son <code>sobreescribibles</code> por defecto en Python</li>
           </ul>
           <div class="code-block">
             <div class="code-header">
@@ -489,15 +484,16 @@ p code, li code {
                 <span class="code-dot yellow"></span>
                 <span class="code-dot green"></span>
               </div>
-              <span class="code-title">Empleado.cs</span>
+              <span class="code-title">empleado.py</span>
             </div>
             <div class="code-content">
-              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>() { }
-}</code></pre>
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Empleado</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, nombre: <span class="token-type">str</span>):
+        <span class="token-keyword">self</span>.nombre <span class="token-operator">=</span> nombre
+
+    <span class="token-keyword">def</span> <span class="token-method">trabajar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">pass</span></code></pre>
             </div>
           </div>
         </div>
@@ -505,9 +501,9 @@ p code, li code {
           <h4>🔶 Subclase / Clase Derivada</h4>
           <p>La clase que hereda de la superclase y puede añadir o modificar comportamiento.</p>
           <ul>
-            <li>Usa <code>:</code> para heredar</li>
-            <li>Usa <code>override</code> para modificar comportamiento</li>
-            <li>Accede a miembros heredados</li>
+            <li>Usa <code>(ClaseBase)</code> para heredar</li>
+            <li>Redefine métodos con el mismo nombre</li>
+            <li>Accede a miembros heredados con <code>super()</code></li>
           </ul>
           <div class="code-block">
             <div class="code-header">
@@ -516,23 +512,20 @@ p code, li code {
                 <span class="code-dot yellow"></span>
                 <span class="code-dot green"></span>
               </div>
-              <span class="code-title">Gerente.cs</span>
+              <span class="code-title">gerente.py</span>
             </div>
             <div class="code-content">
-              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7</div>
-              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
-    {
-        <span class="token-comment">// Comportamiento específico</span>
-    }
-}</code></pre>
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Gerente</span>(<span class="token-class">Empleado</span>):
+    <span class="token-keyword">def</span> <span class="token-method">trabajar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-comment"># Comportamiento específico</span>
+        <span class="token-type">print</span>(<span class="token-string">f"Gerente </span><span class="token-keyword">{</span><span class="token-keyword">self</span>.nombre<span class="token-keyword">}</span><span class="token-string"> supervisando"</span>)</code></pre>
             </div>
           </div>
         </div>
       </div>
 
-      <h3>Sobrescritura (Override) vs Sobrecarga (Overload)</h3>
+      <h3>Sobrescritura vs Sobrecarga</h3>
       <table>
         <thead>
           <tr>
@@ -549,8 +542,8 @@ p code, li code {
           </tr>
           <tr>
             <td><strong>Requisito</strong></td>
-            <td>Requiere herencia y método marcado como <code>virtual</code></td>
-            <td>Mismo alcance, diferente firma (parámetros)</td>
+            <td>Requiere herencia (mismo nombre y firma)</td>
+            <td>Mismo alcance, diferentes parámetros</td>
           </tr>
           <tr>
             <td><strong>Enlace</strong></td>
@@ -559,66 +552,64 @@ p code, li code {
           </tr>
           <tr>
             <td><strong>Sintaxis</strong></td>
-            <td><code>override</code> + mismo nombre y firma</td>
+            <td>Mismo nombre y parámetros, redefinir en hija</td>
             <td>Mismo nombre, diferentes parámetros</td>
           </tr>
         </tbody>
       </table>
 
-      <figure>
-        <svg width="100%" viewBox="0 0 760 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="polimorfismoTitle">
-          <title id="polimorfismoTitle">Comparación: polimorfismo en tiempo de compilación (sobrecarga) vs tiempo de ejecución (sobrescritura)</title>
-          <style>
-            .col{font:700 13px Arial, sans-serif; fill:#0b2d6b}
-            .mono{font:12px monospace; fill:#0b2d6b}
-            rect{rx:8}
-          </style>
-          <rect x="20" y="20" width="340" height="180" fill="#f1f5f9" stroke="#dbeafe"/>
-          <text x="190" y="44" text-anchor="middle" class="col">COMPILE-TIME (Sobrecarga)</text>
-          <text x="190" y="72" text-anchor="middle" class="mono">void Procesar(int x)</text>
-          <text x="190" y="96" text-anchor="middle" class="mono">void Procesar(string s)</text>
-          <text x="190" y="120" text-anchor="middle" class="mono">void Procesar(int x, string s)</text>
-
-          <rect x="400" y="20" width="340" height="180" fill="#f8fafc" stroke="#cfe2ff"/>
-          <text x="570" y="44" text-anchor="middle" class="col">RUNTIME (Sobrescritura)</text>
-          <text x="470" y="72" class="mono">class Animal { public virtual void Hablar() { } }</text>
-          <text x="470" y="96" class="mono">class Perro : Animal { public override void Hablar() { /* Guau! */ } }</text>
-          <text x="470" y="120" class="mono">Animal a = new Perro(); a.Hablar(); // Se decide en runtime</text>
-        </svg>
-        <figcaption>Polimorfismo estático (sobrecarga) vs dinámico (sobrescritura): el primero decide en compilación según la firma, el segundo en runtime según el tipo real del objeto.</figcaption>
-      </figure>
+      <div class="note">Nota: Python no soporta sobrecarga de métodos de forma nativa. Se logra usando parámetros por defecto o *args/**kwargs.</div>
     </section>
 
     <section id="tipos-herencia">
       <h2>2. Tipos de Herencia</h2>
 
       <h3>Herencia Simple</h3>
-      <p>C# solo permite <strong>herencia simple de clases</strong>: una clase puede heredar directamente de <strong>una única</strong> clase base. Esto evita la ambigüedad del "diamante" que ocurre en herencia múltiple.</p>
+      <p>Python permite <strong>herencia simple de clases</strong>: una clase puede heredar directamente de <strong>una única</strong> clase base. Esto evita la ambigüedad del "diamante" que ocurre en herencia múltiple.</p>
 
       <div class="diagram">
         <figure>
-          <svg width="100%" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herenciaSimple">
-            <title id="herenciaSimple">Herencia simple en C#: Persona → Empleado → Gerente</title>
-            <style>
-              .box{fill:#fff;stroke:#dbeafe;rx:8}
-              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
-              .s{font:12px Arial, sans-serif; fill:#475569}
-            </style>
-            <rect x="260" y="18" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="360" y="38" text-anchor="middle" class="h">Persona</text>
-            <text x="360" y="54" text-anchor="middle" class="s">- Nombre · - Edad</text>
+          <svg width="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herenciaSimple">
+            <title id="herenciaSimple">Herencia simple en Python: Persona → Empleado → Gerente</title>
+            <defs>
+              <linearGradient id="boxGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+              </linearGradient>
+              <filter id="shadow1" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                <feOffset dx="0" dy="2" result="offsetblur"/>
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.3"/>
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#1E40AF"/>
+              </marker>
+            </defs>
 
-            <rect x="260" y="96" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="360" y="116" text-anchor="middle" class="h">Empleado</text>
-            <text x="360" y="132" text-anchor="middle" class="s">- Salario · - Cargo</text>
+            <!-- Persona -->
+            <rect x="100" y="20" width="200" height="60" rx="10" fill="url(#boxGrad1)" filter="url(#shadow1)"/>
+            <text x="200" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Persona</text>
+            <text x="200" y="65" text-anchor="middle" font-family="monospace" font-size="12" fill="#E0E7FF">- nombre: str</text>
 
-            <rect x="260" y="174" width="200" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="360" y="194" text-anchor="middle" class="h">Gerente</text>
-            <text x="360" y="210" text-anchor="middle" class="s">- Bonos · - Equipo</text>
+            <!-- Empleado -->
+            <rect x="100" y="110" width="200" height="60" rx="10" fill="url(#boxGrad1)" filter="url(#shadow1)"/>
+            <text x="200" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Empleado</text>
+            <text x="200" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#E0E7FF">- salario: float</text>
 
-            <path d="M360 70 L360 96" stroke="#0b2d6b" stroke-width="2" marker-end="url(#arrow)"/>
-            <path d="M360 150 L360 174" stroke="#0b2d6b" stroke-width="2" marker-end="url(#arrow)"/>
-            <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L6,4 L0,8 z" fill="#0b2d6b"/></marker></defs>
+            <!-- Gerente -->
+            <rect x="100" y="200" width="200" height="60" rx="10" fill="url(#boxGrad1)" filter="url(#shadow1)"/>
+            <text x="200" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Gerente</text>
+            <text x="200" y="245" text-anchor="middle" font-family="monospace" font-size="12" fill="#E0E7FF">- equipo: List[str]</text>
+
+            <!-- Flechas -->
+            <line x1="200" y1="80" x2="200" y2="110" stroke="#1E40AF" stroke-width="2" marker-end="url(#arrow1)"/>
+            <line x1="200" y1="170" x2="200" y2="200" stroke="#1E40AF" stroke-width="2" marker-end="url(#arrow1)"/>
           </svg>
         </figure>
       </div>
@@ -628,32 +619,53 @@ p code, li code {
 
       <div class="diagram">
         <figure>
-          <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herarqTitle">
+          <svg width="100%" viewBox="0 0 760 300" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="herarqTitle">
             <title id="herarqTitle">Herencia jerárquica: Figura → Rectángulo / Círculo / Triángulo</title>
-            <style>
-              .box{fill:#fff;stroke:#dbeafe;rx:8}
-              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
-              .s{font:12px Arial, sans-serif; fill:#475569}
-            </style>
-            <rect x="300" y="20" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="380" y="46" text-anchor="middle" class="h">Figura (abstract)</text>
-            <text x="380" y="64" text-anchor="middle" class="s">+ Area()</text>
+            <defs>
+              <linearGradient id="boxGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#6D28D9;stop-opacity:1" />
+              </linearGradient>
+              <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                <feOffset dx="0" dy="2" result="offsetblur"/>
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.3"/>
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#6D28D9"/>
+              </marker>
+            </defs>
 
-            <rect x="60" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="140" y="146" text-anchor="middle" class="h">Rectángulo</text>
-            <text x="140" y="164" text-anchor="middle" class="s">- Ancho · - Alto</text>
+            <!-- Figura (base) -->
+            <rect x="300" y="20" width="160" height="60" rx="10" fill="url(#boxGrad2)" filter="url(#shadow2)"/>
+            <text x="380" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="white">Figura</text>
+            <text x="380" y="70" text-anchor="middle" font-family="monospace" font-size="11" fill="#E9D5FF">abstractmethod</text>
 
-            <rect x="300" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="380" y="146" text-anchor="middle" class="h">Círculo</text>
-            <text x="380" y="164" text-anchor="middle" class="s">- Radio</text>
+            <!-- Rectángulo -->
+            <rect x="60" y="140" width="160" height="60" rx="10" fill="url(#boxGrad2)" filter="url(#shadow2)"/>
+            <text x="140" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Rectángulo</text>
+            <text x="140" y="185" text-anchor="middle" font-family="monospace" font-size="11" fill="#E9D5FF">- ancho, alto</text>
 
-            <rect x="540" y="120" width="160" height="60" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="620" y="146" text-anchor="middle" class="h">Triángulo</text>
-            <text x="620" y="164" text-anchor="middle" class="s">- Base · - Altura</text>
+            <!-- Círculo -->
+            <rect x="300" y="140" width="160" height="60" rx="10" fill="url(#boxGrad2)" filter="url(#shadow2)"/>
+            <text x="380" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Círculo</text>
+            <text x="380" y="185" text-anchor="middle" font-family="monospace" font-size="11" fill="#E9D5FF">- radio</text>
 
-            <path d="M380 80 L140 120" stroke="#0b2d6b" stroke-width="2"/>
-            <path d="M380 80 L380 120" stroke="#0b2d6b" stroke-width="2"/>
-            <path d="M380 80 L620 120" stroke="#0b2d6b" stroke-width="2"/>
+            <!-- Triángulo -->
+            <rect x="540" y="140" width="160" height="60" rx="10" fill="url(#boxGrad2)" filter="url(#shadow2)"/>
+            <text x="620" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Triángulo</text>
+            <text x="620" y="185" text-anchor="middle" font-family="monospace" font-size="11" fill="#E9D5FF">- base, altura</text>
+
+            <!-- Flechas -->
+            <line x1="380" y1="80" x2="140" y2="140" stroke="#6D28D9" stroke-width="2" marker-end="url(#arrow2)"/>
+            <line x1="380" y1="80" x2="380" y2="140" stroke="#6D28D9" stroke-width="2" marker-end="url(#arrow2)"/>
+            <line x1="380" y1="80" x2="620" y2="140" stroke="#6D28D9" stroke-width="2" marker-end="url(#arrow2)"/>
           </svg>
         </figure>
       </div>
@@ -663,36 +675,56 @@ p code, li code {
 
       <div class="diagram">
         <figure>
-          <svg width="100%" viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="multiHerTitle">
+          <svg width="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="multiHerTitle">
             <title id="multiHerTitle">Herencia multinivel: Vehiculo → Auto → AutoEléctrico</title>
-            <style>
-              .box{fill:#fff;stroke:#dbeafe;rx:8}
-              .h{font:700 13px Arial, sans-serif; fill:#0b2d6b}
-              .s{font:12px Arial, sans-serif; fill:#475569}
-            </style>
-            <rect x="300" y="20" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="380" y="40" text-anchor="middle" class="h">Vehículo</text>
-            <text x="380" y="56" text-anchor="middle" class="s">- Marca · - Modelo</text>
+            <defs>
+              <linearGradient id="boxGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#0891B2;stop-opacity:1" />
+              </linearGradient>
+              <filter id="shadow3" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                <feOffset dx="0" dy="2" result="offsetblur"/>
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.3"/>
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#0891B2"/>
+              </marker>
+            </defs>
 
-            <rect x="300" y="112" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="380" y="132" text-anchor="middle" class="h">Auto</text>
-            <text x="380" y="148" text-anchor="middle" class="s">- Puertas</text>
+            <!-- Vehículo -->
+            <rect x="100" y="20" width="200" height="60" rx="10" fill="url(#boxGrad3)" filter="url(#shadow3)"/>
+            <text x="200" y="45" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Vehículo</text>
+            <text x="200" y="65" text-anchor="middle" font-family="monospace" font-size="12" fill="#CFFAFE">- marca: str</text>
 
-            <rect x="300" y="204" width="160" height="52" rx="8" fill="#fff" stroke="#dbeafe"/>
-            <text x="380" y="224" text-anchor="middle" class="h">AutoEléctrico</text>
-            <text x="380" y="240" text-anchor="middle" class="s">- Batería · - Autonomía</text>
+            <!-- Auto -->
+            <rect x="100" y="110" width="200" height="60" rx="10" fill="url(#boxGrad3)" filter="url(#shadow3)"/>
+            <text x="200" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Auto</text>
+            <text x="200" y="155" text-anchor="middle" font-family="monospace" font-size="12" fill="#CFFAFE">- puertas: int</text>
 
-            <path d="M380 72 L380 112" stroke="#0b2d6b" stroke-width="2"/>
-            <path d="M380 172 L380 204" stroke="#0b2d6b" stroke-width="2"/>
+            <!-- AutoEléctrico -->
+            <rect x="100" y="200" width="200" height="60" rx="10" fill="url(#boxGrad3)" filter="url(#shadow3)"/>
+            <text x="200" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">AutoEléctrico</text>
+            <text x="200" y="245" text-anchor="middle" font-family="monospace" font-size="12" fill="#CFFAFE">- bateria: float</text>
+
+            <!-- Flechas -->
+            <line x1="200" y1="80" x2="200" y2="110" stroke="#0891B2" stroke-width="2" marker-end="url(#arrow3)"/>
+            <line x1="200" y1="170" x2="200" y2="200" stroke="#0891B2" stroke-width="2" marker-end="url(#arrow3)"/>
           </svg>
         </figure>
       </div>
 
       <div class="warning-box">
-        <h4>⚠️ Herencia Múltiple de Interfaces</h4>
-        <p>Una <strong><abbr title="Interface define un contrato sin implementación, especifica qué debe hacer una clase pero no cómo">interface</abbr></strong> es un contrato que define qué métodos debe tener una clase, pero no cómo implementarlos.</p>
-        <p><strong>¿Por qué usar interfaces?</strong> Permiten polimorfismo múltiple sin los problemas de la herencia múltiple de clases. Una clase puede implementar múltiples interfaces.</p>
-        <p>Aunque C# no permite herencia múltiple de <strong>clases</strong>, sí permite implementar <strong>múltiples interfaces</strong>:</p>
+        <h4>⚠️ Protocolos (Interfaces en Python)</h4>
+        <p>Un <strong><abbr title="Protocol define un contrato sin implementación, especifica qué debe hacer una clase pero no cómo">Protocol</abbr></strong> es un contrato que define qué métodos debe tener una clase, pero no cómo implementarlos.</p>
+        <p><strong>¿Por qué usar protocolos?</strong> Permiten polimorfismo múltiple sin los problemas de la herencia múltiple de clases. Una clase puede implementar múltiples protocolos.</p>
+        <p>En Python, los protocolos se implementan usando <code>typing.Protocol</code> o herencia múltiple:</p>
         <div class="code-block">
           <div class="code-header">
             <div class="code-dots">
@@ -700,17 +732,17 @@ p code, li code {
               <span class="code-dot yellow"></span>
               <span class="code-dot green"></span>
             </div>
-            <span class="code-title">Pato.cs</span>
+            <span class="code-title">pato.py</span>
           </div>
           <div class="code-content">
-            <div class="line-numbers">1<br>2<br>3<br>4</div>
-            <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pato</span> : <span class="token-class">Animal</span>, <span class="token-type">IVolador</span>, <span class="token-type">INadador</span>, <span class="token-type">ICaminador</span>
-{
-    <span class="token-comment">// Implementa todos los métodos de las interfaces</span>
-}</code></pre>
+            <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+            <pre><code><span class="token-keyword">from</span> abc <span class="token-keyword">import</span> ABC, <span class="token-type">abstractmethod</span>
+
+<span class="token-keyword">class</span> <span class="token-class">Pato</span>(<span class="token-class">Animal</span>, <span class="token-class">Volador</span>, <span class="token-class">Nadador</span>):
+    <span class="token-comment"># Implementa todos los métodos de las clases/interfaces</span></code></pre>
           </div>
         </div>
-        <div class="note">Nota: Las interfaces en C# solo pueden contener firmas de métodos, propiedades y eventos, sin implementación (a partir de C# 8, pueden tener miembros default).</div>
+        <div class="note">Nota: Los protocolos en Python se pueden definir con <code>typing.Protocol</code> o usando <code>ABC</code> con métodos abstractos.</div>
       </div>
     </section>
 
@@ -737,30 +769,24 @@ p code, li code {
                 <span class="code-dot yellow"></span>
                 <span class="code-dot green"></span>
               </div>
-              <span class="code-title">Rectangulo.cs</span>
+              <span class="code-title">rectangulo.py</span>
             </div>
             <div class="code-content">
-              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
-              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Rectangulo</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">int</span> Ancho { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">int</span> Alto { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">int</span> Area <span class="token-operator">=></span> Ancho <span class="token-operator">*</span> Alto;
-}
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Rectangulo</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, ancho: <span class="token-type">float</span>, alto: <span class="token-type">float</span>):
+        <span class="token-keyword">self</span>.ancho <span class="token-operator">=</span> ancho
+        <span class="token-keyword">self</span>.alto <span class="token-operator">=</span> alto
 
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Cuadrado</span> : <span class="token-class">Rectangulo</span>
-{
-    <span class="token-comment">// Cuadrado ES un Rectangulo especial</span>
-    <span class="token-comment">// donde Ancho == Alto</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">int</span> Ancho 
-    { 
-        <span class="token-keyword">set</span> { <span class="token-keyword">base</span>.Ancho <span class="token-operator">=</span> <span class="token-keyword">base</span>.Alto <span class="token-operator">=</span> <span class="token-keyword">value</span>; }
-    }
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">int</span> Alto 
-    { 
-        <span class="token-keyword">set</span> { <span class="token-keyword">base</span>.Ancho <span class="token-operator">=</span> <span class="token-keyword">base</span>.Alto <span class="token-operator">=</span> <span class="token-keyword">value</span>; }
-    }
-}</code></pre>
+    <span class="token-keyword">def</span> <span class="token-method">area</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span>.ancho <span class="token-operator">*</span> <span class="token-keyword">self</span>.alto
+
+
+<span class="token-keyword">class</span> <span class="token-class">Cuadrado</span>(<span class="token-class">Rectangulo</span>):
+    <span class="token-comment"># Cuadrado ES un Rectangulo especial</span>
+    <span class="token-comment"># donde ancho == alto</span>
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, lado: <span class="token-type">float</span>):
+        <span class="token-keyword">super</span>().<span class="token-method">__init__</span>(lado, lado)</code></pre>
             </div>
           </div>
         </div>
@@ -773,25 +799,20 @@ p code, li code {
                 <span class="code-dot yellow"></span>
                 <span class="code-dot green"></span>
               </div>
-              <span class="code-title">Pajaro.cs</span>
+              <span class="code-title">pajaro.py</span>
             </div>
             <div class="code-content">
-              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
-              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pajaro</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Volar</span>() { }
-}
+              <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+              <pre><code><span class="token-keyword">class</span> <span class="token-class">Pajaro</span>:
+    <span class="token-keyword">def</span> <span class="token-method">volar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">pass</span>
 
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pinguino</span> : <span class="token-class">Pajaro</span>
-{
-    <span class="token-comment">// PROBLEMA: Un pingüino ES un pájaro</span>
-    <span class="token-comment">// pero NO puede volar</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Volar</span>()
-    {
-        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(
-            <span class="token-string">"Los pingüinos no vuelan!"</span>);
-    }
-}</code></pre>
+
+<span class="token-keyword">class</span> <span class="token-class">Pinguino</span>(<span class="token-class">Pajaro</span>):
+    <span class="token-comment"># PROBLEMA: Un pingüino ES un pájaro</span>
+    <span class="token-comment"># pero NO puede volar</span>
+    <span class="token-keyword">def</span> <span class="token-method">volar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">raise</span> <span class="token-type">NotImplementedError</span>(<span class="token-string">"Los pingüinos no vuelan!"</span>)</code></pre>
             </div>
           </div>
         </div>
@@ -815,39 +836,29 @@ p code, li code {
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">CuentaBancaria.cs</span>
+          <span class="code-title">cuenta_bancaria.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29</div>
-          <pre><code><span class="token-comment">// Clase base</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">CuentaBancaria</span>
-{
-    <span class="token-keyword">protected</span> <span class="token-type">double</span> _saldo;
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Retirar</span>(<span class="token-type">double</span> monto)
-    {
-        <span class="token-keyword">if</span> (monto <span class="token-operator">></span> _saldo)
-            <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(<span class="token-string">"Saldo insuficiente"</span>);
-        _saldo <span class="token-operator">-=</span> monto;
-    }
-}
+          <pre><code class="language-python">class CuentaBancaria:
+    def __init__(self, saldo: float) -> None:
+        self._saldo = saldo
 
-<span class="token-comment">// Subclase que VIOLA LSP</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">CuentaCongelada</span> : <span class="token-class">CuentaBancaria</span>
-{
-    <span class="token-comment">// PROBLEMA: Cambia el comportamiento esperado</span>
-    <span class="token-comment">// Los clientes esperan poder retirar de cualquier cuenta</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Retirar</span>(<span class="token-type">double</span> monto)
-    {
-        <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">InvalidOperationException</span>(
-            <span class="token-string">"Esta cuenta está congelada, no se permiten retiros"</span>);
-    }
-}
+    def retirar(self, monto: float) -> None:
+        if monto > self._saldo:
+            raise ValueError("Saldo insuficiente")
+        self._saldo -= monto
 
-<span class="token-comment">// Uso que falla:</span>
-<span class="token-class">CuentaBancaria</span> cuenta <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-method">CuentaCongelada</span>();
-cuenta.<span class="token-method">Depositar</span>(<span class="token-number">1000</span>);
-cuenta.<span class="token-method">Retirar</span>(<span class="token-number">100</span>); <span class="token-comment">// ¡EXCEPCIÓN INESPERADA!</span></code></pre>
+
+class CuentaCongelada(CuentaBancaria):
+    # PROBLEMA: cambia el contrato esperado
+    def retirar(self, monto: float) -> None:
+        raise ValueError("Esta cuenta esta congelada, no se permiten retiros")
+
+
+# Uso que falla:
+cuenta: CuentaBancaria = CuentaCongelada(1000)
+cuenta.retirar(100)  # Excepcion inesperada</code></pre>
         </div>
       </div>
 
@@ -875,123 +886,67 @@ cuenta.<span class="token-method">Retirar</span>(<span class="token-number">100<
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Empleado.cs</span>
+          <span class="code-title">empleado.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>83<br>84<br>85<br>86<br>87<br>88<br>89<br>90<br>91<br>92<br>93<br>94<br>95<br>96<br>97<br>98<br>99<br>100<br>101<br>102<br>103<br>104<br>105<br>106<br>107<br>108<br>109<br>110<br>111<br>112</div>
-          <pre><code><span class="token-comment">// ============================================</span>
-<span class="token-comment">// CLASE BASE: Empleado</span>
-<span class="token-comment">// ============================================</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
-{
-    <span class="token-comment">// Propiedades comunes a todos los empleados</span>
-    <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">int</span> Id { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">double</span> SalarioBase { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    
-    <span class="token-comment">// Constructor de la clase base</span>
-    <span class="token-keyword">public</span> <span class="token-method">Empleado</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase)
-    {
-        Nombre <span class="token-operator">=</span> nombre;
-        Id <span class="token-operator">=</span> id;
-        SalarioBase <span class="token-operator">=</span> salarioBase;
-    }
-    
-    <span class="token-comment">// Método virtual: puede ser sobreescrito</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está trabajando."</span>);
-    }
-    
-    <span class="token-comment">// Método virtual para calcular salario</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
-    {
-        <span class="token-keyword">return</span> SalarioBase;
-    }
-    
-    <span class="token-comment">// Método virtual para mostrar información</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"ID: {Id}, Nombre: {Nombre}"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Base: ${SalarioBase:F2}"</span>);
-    }
-}
+          <pre><code class="language-python">from dataclasses import dataclass
 
-<span class="token-comment">// ============================================</span>
-<span class="token-comment">// CLASE DERIVADA: Gerente</span>
-<span class="token-comment">// ============================================</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">int</span> CantidadSubordinados { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">double</span> Bono { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    
-    <span class="token-comment">// Constructor que llama al base con 'base'</span>
-    <span class="token-keyword">public</span> <span class="token-method">Gerente</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase, 
-                   <span class="token-type">int</span> subordinados, <span class="token-type">double</span> bono) 
-        : <span class="token-keyword">base</span>(nombre, id, salarioBase)
-    {
-        CantidadSubordinados <span class="token-operator">=</span> subordinados;
-        Bono <span class="token-operator">=</span> bono;
-    }
-    
-    <span class="token-comment">// Sobreescribimos el comportamiento</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está supervisando a {CantidadSubordinados} empleados."</span>);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
-    {
-        <span class="token-keyword">return</span> SalarioBase <span class="token-operator">+</span> Bono;
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-    {
-        <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>(); <span class="token-comment">// Reutilizamos código del padre</span>
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Cargo: Gerente"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Subordinados: {CantidadSubordinados}"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Bono: ${Bono:F2}"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Total: ${CalcularSalario():F2}"</span>);
-    }
-}
 
-<span class="token-comment">// ============================================</span>
-<span class="token-comment">// CLASE DERIVADA: Desarrollador</span>
-<span class="token-comment">// ============================================</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Desarrollador</span> : <span class="token-class">Empleado</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">string</span> LenguajePrincipal { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">int</span> HorasExtra { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">double</span> TarifaHoraExtra { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    
-    <span class="token-keyword">public</span> <span class="token-method">Desarrollador</span>(<span class="token-type">string</span> nombre, <span class="token-type">int</span> id, <span class="token-type">double</span> salarioBase,
-                         <span class="token-type">string</span> lenguaje, <span class="token-type">int</span> horasExtra, <span class="token-type">double</span> tarifa)
-        : <span class="token-keyword">base</span>(nombre, id, salarioBase)
-    {
-        LenguajePrincipal <span class="token-operator">=</span> lenguaje;
-        HorasExtra <span class="token-operator">=</span> horasExtra;
-        TarifaHoraExtra <span class="token-operator">=</span> tarifa;
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">Trabajar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{Nombre} está programando en {LenguajePrincipal}."</span>);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularSalario</span>()
-    {
-        <span class="token-keyword">return</span> SalarioBase <span class="token-operator">+</span> (HorasExtra <span class="token-operator">*</span> TarifaHoraExtra);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-    {
-        <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Cargo: Desarrollador"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Lenguaje: {LenguajePrincipal}"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Horas Extra: {HorasExtra}"</span>);
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Salario Total: ${CalcularSalario():F2}"</span>);
-    }
-}</code></pre>
+@dataclass
+class Empleado:
+    nombre: str
+    id: int
+    salario_base: float
+
+    def trabajar(self) -> None:
+        print(f"{self.nombre} esta trabajando.")
+
+    def calcular_salario(self) -> float:
+        return self.salario_base
+
+    def mostrar_info(self) -> None:
+        print(f"ID: {self.id}, Nombre: {self.nombre}")
+        print(f"Salario Base: ${self.salario_base:.2f}")
+
+
+@dataclass
+class Gerente(Empleado):
+    subordinados: int
+    bono: float
+
+    def trabajar(self) -> None:
+        print(f"{self.nombre} esta supervisando a {self.subordinados} empleados.")
+
+    def calcular_salario(self) -> float:
+        return self.salario_base + self.bono
+
+    def mostrar_info(self) -> None:
+        super().mostrar_info()
+        print("Cargo: Gerente")
+        print(f"Subordinados: {self.subordinados}")
+        print(f"Bono: ${self.bono:.2f}")
+        print(f"Salario Total: ${self.calcular_salario():.2f}")
+
+
+@dataclass
+class Desarrollador(Empleado):
+    lenguaje: str
+    horas_extra: int
+    tarifa_hora_extra: float
+
+    def trabajar(self) -> None:
+        print(f"{self.nombre} esta programando en {self.lenguaje}.")
+
+    def calcular_salario(self) -> float:
+        return self.salario_base + (self.horas_extra * self.tarifa_hora_extra)
+
+    def mostrar_info(self) -> None:
+        super().mostrar_info()
+        print("Cargo: Desarrollador")
+        print(f"Lenguaje: {self.lenguaje}")
+        print(f"Horas Extra: {self.horas_extra}")
+        print(f"Salario Total: ${self.calcular_salario():.2f}")</code></pre>
         </div>
       </div>
 
@@ -1003,42 +958,26 @@ cuenta.<span class="token-method">Retirar</span>(<span class="token-number">100<
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Program.cs</span>
+          <span class="code-title">main.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
-          <pre><code><span class="token-keyword">class</span> <span class="token-class">Program</span>
-{
-    <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
-    {
-        <span class="token-comment">// Creamos un array de la clase base</span>
-        <span class="token-class">Empleado</span>[] empleados <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">Empleado</span>[]
-        {
-            <span class="token-keyword">new</span> <span class="token-method">Gerente</span>(<span class="token-string">"Ana García"</span>, <span class="token-number">101</span>, <span class="token-number">5000</span>, <span class="token-number">5</span>, <span class="token-number">1500</span>),
-            <span class="token-keyword">new</span> <span class="token-method">Desarrollador</span>(<span class="token-string">"Carlos Ruiz"</span>, <span class="token-number">102</span>, <span class="token-number">4000</span>, <span class="token-string">"C#"</span>, <span class="token-number">20</span>, <span class="token-number">25</span>),
-            <span class="token-keyword">new</span> <span class="token-method">Gerente</span>(<span class="token-string">"María López"</span>, <span class="token-number">103</span>, <span class="token-number">5500</span>, <span class="token-number">8</span>, <span class="token-number">2000</span>),
-            <span class="token-keyword">new</span> <span class="token-method">Desarrollador</span>(<span class="token-string">"Juan Pérez"</span>, <span class="token-number">104</span>, <span class="token-number">3800</span>, <span class="token-string">"Java"</span>, <span class="token-number">15</span>, <span class="token-number">20</span>)
-        };
-        
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== NÓMINA DE EMPLEADOS ===\n"</span>);
-        
-        <span class="token-comment">// Polimorfismo: tratamos todos como Empleado</span>
-        <span class="token-keyword">foreach</span> (<span class="token-class">Empleado</span> emp <span class="token-keyword">in</span> empleados)
-        {
-            emp.<span class="token-method">MostrarInfo</span>();
-            emp.<span class="token-method">Trabajar</span>();  <span class="token-comment">// Se ejecuta la versión específica</span>
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"------------------------\n"</span>);
-        }
-        
-        <span class="token-comment">// Calcular total de nómina</span>
-        <span class="token-type">double</span> totalNomina <span class="token-operator">=</span> <span class="token-number">0</span>;
-        <span class="token-keyword">foreach</span> (<span class="token-class">Empleado</span> emp <span class="token-keyword">in</span> empleados)
-        {
-            totalNomina <span class="token-operator">+=</span> emp.<span class="token-method">CalcularSalario</span>();
-        }
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Total Nómina: ${totalNomina:F2}"</span>);
-    }
-}</code></pre>
+          <pre><code class="language-python">empleados = [
+    Gerente("Ana Garcia", 101, 5000, 5, 1500),
+    Desarrollador("Carlos Ruiz", 102, 4000, "Python", 20, 25),
+    Gerente("Maria Lopez", 103, 5500, 8, 2000),
+    Desarrollador("Juan Perez", 104, 3800, "JavaScript", 15, 20),
+]
+
+print("=== NOMINA DE EMPLEADOS ===\n")
+
+for emp in empleados:
+    emp.mostrar_info()
+    emp.trabajar()
+    print("------------------------\n")
+
+total_nomina = sum(emp.calcular_salario() for emp in empleados)
+print(f"Total Nomina: ${total_nomina:.2f}")</code></pre>
         </div>
       </div>
 
@@ -1047,35 +986,35 @@ cuenta.<span class="token-method">Retirar</span>(<span class="token-number">100<
 <pre>
 SALIDA DEL PROGRAMA:
 
-=== NÓMINA DE EMPLEADOS ===
+=== NOMINA DE EMPLEADOS ===
 
-ID: 101, Nombre: Ana García
+ID: 101, Nombre: Ana Garcia
 Salario Base: $5000.00
 Cargo: Gerente
 Subordinados: 5
 Bono: $1500.00
 Salario Total: $6500.00
-Ana García está supervisando a 5 empleados.
+Ana Garcia esta supervisando a 5 empleados.
 ------------------------
 
 ID: 102, Nombre: Carlos Ruiz
 Salario Base: $4000.00
 Cargo: Desarrollador
-Lenguaje: C#
+Lenguaje: Python
 Horas Extra: 20
 Salario Total: $4500.00
-Carlos Ruiz está programando en C#.
+Carlos Ruiz esta programando en Python.
 ------------------------
 
 ...
-Total Nómina: $20800.00
+Total Nomina: $20800.00
 </pre>
         </div>
         <figcaption>Salida esperada del ejemplo polimórfico con jerarquía de empleados</figcaption>
       </figure>
 
-      <h3>Ejemplo 2: Uso de la Palabra Clave <code>base</code></h3>
-      <p>La palabra clave <code>base</code> se utiliza para acceder a miembros de la clase base desde la clase derivada:</p>
+      <h3>Ejemplo 2: Uso de la Palabra Clave <code>super()</code></h3>
+      <p>La palabra clave <code>super()</code> se utiliza para acceder a miembros de la clase base desde la clase derivada:</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -1084,56 +1023,37 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Vehiculo.cs</span>
+          <span class="code-title">vehiculo.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37</div>
-          <pre><code><span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Vehiculo</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">string</span> Marca { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">string</span> Modelo { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    <span class="token-keyword">public</span> <span class="token-type">int</span> Año { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    
-    <span class="token-keyword">public</span> <span class="token-method">Vehiculo</span>(<span class="token-type">string</span> marca, <span class="token-type">string</span> modelo, <span class="token-type">int</span> año)
-    {
-        Marca <span class="token-operator">=</span> marca;
-        Modelo <span class="token-operator">=</span> modelo;
-        Año <span class="token-operator">=</span> año;
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">string</span> <span class="token-method">ObtenerDescripcion</span>()
-    {
-        <span class="token-keyword">return</span> <span class="token-string">$"{Marca} {Modelo} ({Año})"</span>;
-    }
-}
+          <pre><code class="language-python">class Vehiculo:
+    def __init__(self, marca: str, modelo: str, anio: int) -> None:
+        self.marca = marca
+        self.modelo = modelo
+        self.anio = anio
 
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Auto</span> : <span class="token-class">Vehiculo</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">int</span> NumPuertas { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-    
-    <span class="token-comment">// 'base' llama al constructor del padre</span>
-    <span class="token-keyword">public</span> <span class="token-method">Auto</span>(<span class="token-type">string</span> marca, <span class="token-type">string</span> modelo, <span class="token-type">int</span> año, <span class="token-type">int</span> puertas)
-        : <span class="token-keyword">base</span>(marca, modelo, año)  <span class="token-comment">// ← Constructor base</span>
-    {
-        NumPuertas <span class="token-operator">=</span> puertas;
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">string</span> <span class="token-method">ObtenerDescripcion</span>()
-    {
-        <span class="token-comment">// 'base' llama al método del padre</span>
-        <span class="token-type">string</span> descripcionBase <span class="token-operator">=</span> <span class="token-keyword">base</span>.<span class="token-method">ObtenerDescripcion</span>();
-        <span class="token-keyword">return</span> <span class="token-string">$"{descripcionBase} - {NumPuertas} puertas"</span>;
-    }
-}</code></pre>
+    def obtener_descripcion(self) -> str:
+        return f"{self.marca} {self.modelo} ({self.anio})"
+
+
+class Auto(Vehiculo):
+    def __init__(self, marca: str, modelo: str, anio: int, puertas: int) -> None:
+        super().__init__(marca, modelo, anio)
+        self.puertas = puertas
+
+    def obtener_descripcion(self) -> str:
+        descripcion_base = super().obtener_descripcion()
+        return f"{descripcion_base} - {self.puertas} puertas"</code></pre>
         </div>
       </div>
 
-      <h3>Ejemplo 3: Clases <code>sealed</code> (Selladas)</h3>
-      <p>Una clase sellada <code>sealed</code> no puede ser heredada. Se usa para:</p>
+      <h3>Ejemplo 3: Convención de clases "finales" (no heredables)</h3>
+      <p>En Python no existe <code>sealed</code>, pero se usa la <strong>convención de nombres</strong> para indicar que una clase no debe ser heredada:</p>
       <ul>
-        <li>Prevenir la modificación de comportamiento crítico</li>
-        <li>Mejorar el rendimiento (el compilador puede optimizar)</li>
-        <li>Crear clases de utilidad o constantes</li>
+        <li>Nombre de clase con <strong>prefijo _</strong> (ej: <code>_Calculadora</code>)</li>
+        <li>Métodos privados con <strong>doble guion bajo</strong> (ej: <code>__metodo_privado</code>)</li>
+        <li>Documentación explícita en docstrings</li>
       </ul>
 
       <div class="code-block">
@@ -1143,58 +1063,49 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">CalculadoraCientifica.cs</span>
+          <span class="code-title">calculadora.py</span>
         </div>
         <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
-          <pre><code><span class="token-comment">// Clase que NO puede ser heredada</span>
-<span class="token-keyword">public</span> <span class="token-keyword">sealed</span> <span class="token-keyword">class</span> <span class="token-class">CalculadoraCientifica</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">Potencia</span>(<span class="token-type">double</span> baseNum, <span class="token-type">double</span> exponente)
-    {
-        <span class="token-keyword">return</span> <span class="token-class">Math</span>.<span class="token-method">Pow</span>(baseNum, exponente);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">LogaritmoNatural</span>(<span class="token-type">double</span> numero)
-    {
-        <span class="token-keyword">return</span> <span class="token-class">Math</span>.<span class="token-method">Log</span>(numero);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">double</span> <span class="token-method">Factorial</span>(<span class="token-type">int</span> n)
-    {
-        <span class="token-keyword">if</span> (n <span class="token-operator"><</span> <span class="token-number">0</span>) <span class="token-keyword">throw</span> <span class="token-keyword">new</span> <span class="token-method">ArgumentException</span>(<span class="token-string">"n debe ser positivo"</span>);
-        <span class="token-keyword">if</span> (n <span class="token-operator"><=</span> <span class="token-number">1</span>) <span class="token-keyword">return</span> <span class="token-number">1</span>;
-        <span class="token-keyword">return</span> n <span class="token-operator">*</span> <span class="token-method">Factorial</span>(n <span class="token-operator">-</span> <span class="token-number">1</span>);
-    }
-}
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22</div>
+          <pre><code><span class="token-keyword">import</span> math
 
-<span class="token-comment">// ERROR: No se puede derivar de una clase sealed</span>
-<span class="token-comment">// public class CalculadoraAvanzada : CalculadoraCientifica { }</span>
+<span class="token-comment"># Clase que NO debe ser heredada (convención)</span>
+<span class="token-keyword">class</span> <span class="token-class">_CalculadoraCientifica</span>:
+    <span class="token-string">"""Calculadora científica con métodos utilitarios estáticos.</span>
+    <span class="token-string">"""</span>
 
-<span class="token-comment">// También podemos sellar métodos individuales</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Empleado</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">double</span> <span class="token-method">CalcularBono</span>() { <span class="token-keyword">return</span> <span class="token-number">0</span>; }
-}
+    <span class="token-keyword">def</span> <span class="token-method">potencia</span>(base_num: <span class="token-type">float</span>, exponente: <span class="token-type">float</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> math.<span class="token-method">pow</span>(base_num, exponente)
 
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Gerente</span> : <span class="token-class">Empleado</span>
-{
-    <span class="token-comment">// Este método ya no puede ser sobreescrito más</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">sealed</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularBono</span>()
-    {
-        <span class="token-keyword">return</span> Salario <span class="token-operator">*</span> <span class="token-number">0.20</span>;
-    }
-}
+    <span class="token-keyword">def</span> <span class="token-method">logaritmo_natural</span>(numero: <span class="token-type">float</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> math.<span class="token-method">log</span>(numero)
 
-<span class="token-comment">// ERROR: No se puede sobreescribir un método sealed</span>
-<span class="token-comment">// public class Director : Gerente</span>
-<span class="token-comment">// {</span>
-<span class="token-comment">//     public override double CalcularBono() { ... } // ¡Error!</span>
-<span class="token-comment">// }</span></code></pre>
+    <span class="token-keyword">def</span> <span class="token-method">factorial</span>(n: <span class="token-type">int</span>) <span class="token-operator">-></span> <span class="token-type">int</span>:
+        <span class="token-keyword">if</span> n <span class="token-operator"><</span> <span class="token-number">0</span>:
+            <span class="token-keyword">raise</span> <span class="token-type">ValueError</span>(<span class="token-string">"n debe ser positivo"</span>)
+        <span class="token-keyword">if</span> n <span class="token-operator"><=</span> <span class="token-number">1</span>:
+            <span class="token-keyword">return</span> <span class="token-number">1</span>
+        <span class="token-keyword">return</span> n <span class="token-operator">*</span> <span class="token-method">factorial</span>(n <span class="token-operator">-</span> <span class="token-number">1</span>)
+
+
+<span class="token-comment"># ERROR: No se debe derivar de una clase con prefijo _</span>
+<span class="token-comment"># class CalculadoraAvanzada(_CalculadoraCientifica):  # ¡No hacer esto!</span>
+
+
+<span class="token-comment"># Para métodos que no deben ser sobreescritos</span>
+<span class="token-keyword">class</span> <span class="token-class">Empleado</span>:
+    <span class="token-keyword">def</span> <span class="token-method">calcular_bono</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> <span class="token-number">0</span>
+
+
+<span class="token-keyword">class</span> <span class="token-class">Gerente</span>(<span class="token-class">Empleado</span>):
+    <span class="token-comment">Este método no debe ser sobreescrito (convención)</span>
+    <span class="token-keyword">def</span> <span class="token-method">_calcular_bono_interno</span>(<span class="token-keyword">self</span>) <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span>.salario <span class="token-operator">*</span> <span class="token-number">0.20</span></code></pre>
         </div>
       </div>
 
-      <h3>Ejemplo 4: Herencia con Interfaces</h3>
+      <h3>Ejemplo 4: Herencia Múltiple (ABC + Protocolos)</h3>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1202,89 +1113,86 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Pato.cs</span>
+          <span class="code-title">pato.py</span>
         </div>
         <div class="code-content">
-          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58</div>
-          <pre><code><span class="token-comment">// Definición de interfaces</span>
-<span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-type">IVolador</span>
-{
-    <span class="token-type">void</span> <span class="token-method">Despegar</span>();
-    <span class="token-type">void</span> <span class="token-method">Aterrizar</span>();
-    <span class="token-type">int</span> AlturaMaxima { <span class="token-keyword">get</span>; }
-}
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
+          <pre><code><span class="token-keyword">from</span> abc <span class="token-keyword">import</span> ABC, <span class="token-type">abstractmethod</span>
 
-<span class="token-keyword">public</span> <span class="token-keyword">interface</span> <span class="token-type">INadador</span>
-{
-    <span class="token-type">void</span> <span class="token-method">Nadar</span>();
-    <span class="token-type">int</span> ProfundidadMaxima { <span class="token-keyword">get</span>; }
-}
+<span class="token-comment"># Definición de clases abstractas (interfaces en Python)</span>
+<span class="token-keyword">class</span> <span class="token-class">Volador</span>(ABC):
+    <span class="token-keyword">@abstractmethod</span>
+    <span class="token-keyword">def</span> <span class="token-method">despegar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>: <span class="token-keyword">pass</span>
 
-<span class="token-comment">// Clase que hereda de una clase e implementa múltiples interfaces</span>
-<span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Pato</span> : <span class="token-class">Animal</span>, <span class="token-type">IVolador</span>, <span class="token-type">INadador</span>
-{
-    <span class="token-keyword">public</span> <span class="token-type">int</span> AlturaMaxima <span class="token-operator">=></span> <span class="token-number">1000</span>; <span class="token-comment">// metros</span>
-    <span class="token-keyword">public</span> <span class="token-type">int</span> ProfundidadMaxima <span class="token-operator">=></span> <span class="token-number">2</span>; <span class="token-comment">// metros</span>
-    
-    <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">HacerSonido</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"¡Cuac cuac!"</span>);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Despegar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está despegando..."</span>);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Aterrizar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está aterrizando en el agua..."</span>);
-    }
-    
-    <span class="token-keyword">public</span> <span class="token-type">void</span> <span class="token-method">Nadar</span>()
-    {
-        <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"El pato está nadando graciosamente."</span>);
-    }
-}
+    <span class="token-keyword">@abstractmethod</span>
+    <span class="token-keyword">def</span> <span class="token-method">aterrizar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>: <span class="token-keyword">pass</span>
 
-<span class="token-comment">// Uso polimórfico con interfaces</span>
-<span class="token-keyword">class</span> <span class="token-class">Program</span>
-{
-    <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
-    {
-        <span class="token-class">Pato</span> pato <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-method">Pato</span>();
-        
-        <span class="token-comment">// Polimorfismo con interfaces</span>
-        <span class="token-type">IVolador</span> volador <span class="token-operator">=</span> pato;
-        <span class="token-type">INadador</span> nadador <span class="token-operator">=</span> pato;
-        <span class="token-class">Animal</span> animal <span class="token-operator">=</span> pato;
-        
-        volador.<span class="token-method">Despegar</span>();      <span class="token-comment">// Comportamiento de IVolador</span>
-        nadador.<span class="token-method">Nadar</span>();          <span class="token-comment">// Comportamiento de INadador</span>
-        animal.<span class="token-method">HacerSonido</span>();     <span class="token-comment">// Comportamiento de Animal</span>
-    }
-}</code></pre>
+
+<span class="token-keyword">class</span> <span class="token-class">Nadador</span>(ABC):
+    <span class="token-keyword">@abstractmethod</span>
+    <span class="token-keyword">def</span> <span class="token-method">nadar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>: <span class="token-keyword">pass</span>
+
+
+<span class="token-comment"># Clase que hereda de una clase e implementa múltiples interfaces</span>
+<span class="token-keyword">class</span> <span class="token-class">Animal</span>:
+    <span class="token-keyword">def</span> <span class="token-method">hacer_sonido</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-type">print</span>(<span class="token-string">"Sonido de animal"</span>)
+
+
+<span class="token-keyword">class</span> <span class="token-class">Pato</span>(<span class="token-class">Animal</span>, <span class="token-class">Volador</span>, <span class="token-class">Nadador</span>):
+    altura_maxima: <span class="token-type">float</span> <span class="token-operator">=</span> <span class="token-number">1000.0</span>  <span class="token-comment"># metros</span>
+    profundidad_maxima: <span class="token-type">float</span> <span class="token-operator">=</span> <span class="token-number">2.0</span>  <span class="token-comment"># metros</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">hacer_sonido</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-type">print</span>(<span class="token-string">"¡Cuac cuac!"</span>)
+
+    <span class="token-keyword">def</span> <span class="token-method">despegar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-type">print</span>(<span class="token-string">"El pato está despegando..."</span>)
+
+    <span class="token-keyword">def</span> <span class="token-method">aterrizar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-type">print</span>(<span class="token-string">"El pato está aterrizando en el agua..."</span>)
+
+    <span class="token-keyword">def</span> <span class="token-method">nadar</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-type">print</span>(<span class="token-string">"El pato está nadando graciosamente."</span>)
+
+
+<span class="token-comment"># Uso polimórfico</span>
+<span class="token-keyword">if</span> <span class="token-keyword">__name__</span> <span class="token-operator">==</span> <span class="token-string">"__main__"</span>:
+    pato <span class="token-operator">=</span> <span class="token-class">Pato</span>()
+
+    <span class="token-comment"># Polimorfismo con interfaces</span>
+    volador: <span class="token-type">Volador</span> <span class="token-operator">=</span> pato
+    nadador: <span class="token-type">Nadador</span> <span class="token-operator">=</span> pato
+    animal: <span class="token-class">Animal</span> <span class="token-operator">=</span> pato
+
+    volador.<span class="token-method">despegar</span>()       <span class="token-comment"># Comportamiento de Volador</span>
+    nadador.<span class="token-method">nadar</span>()         <span class="token-comment"># Comportimiento de Nadador</span>
+    animal.<span class="token-method">hacer_sonido</span>()   <span class="token-comment"># Comportamiento de Animal</span></code></pre>
         </div>
       </div>
 
       <figure>
-        <img src="../assets/infografias/clase-03-herencia.png" alt="Infografía: herencia" onerror="this.onerror=null;this.src='/assets/infografias/clase-03-herencia.png'" />
-        <figcaption>Diagrama de herencia simple mostrando la relación 'es-un' entre clases base y derivadas, con ejemplos de propiedades y métodos heredados en C#.</figcaption>
+        <object data="../assets/svg/clase-03-herencia.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
+          <img src="../assets/svg/clase-03-herencia.svg" alt="Infografia: Herencia en Python" />
+        </object>
+        <figcaption>Diagrama de herencia simple mostrando la relación 'es-un' entre clases base y derivadas, con ejemplos de atributos y métodos heredados en Python.</figcaption>
       </figure>
 
       <figure>
-        <img src="../assets/infografias/clase-03-polimorfismo.png" alt="Infografía: polimorfismo" onerror="this.onerror=null;this.src='/assets/infografias/clase-03-polimorfismo.png'" />
-        <figcaption>Ilustración del polimorfismo en tiempo de ejecución en C#, donde objetos de diferentes subclases responden al mismo método virtual de forma específica.</figcaption>
+        <object data="../assets/svg/clase-03-polimorfismo.svg" type="image/svg+xml" style="max-width: 100%; height: auto; border-radius: 6px;">
+          <img src="../assets/svg/clase-03-polimorfismo.svg" alt="Infografia: Polimorfismo en Python" />
+        </object>
+        <figcaption>Ilustración del polimorfismo en tiempo de ejecución en Python, donde objetos de diferentes subclases responden al mismo método de forma específica.</figcaption>
       </figure>
 
       <div class="checklist">
         <strong>Errores Comunes a Evitar</strong>
         <ul>
-          <li>No marcar métodos como <code>virtual</code> en la clase base y esperar poder sobreescribirlos</li>
-          <li>Olvidar usar <code>override</code> (usar <code>new</code> por accidente cambia el comportamiento)</li>
+          <li>Olvidar que en Python todos los métodos son "virtuales" por defecto (se pueden sobreescribir)</li>
+          <li>No llamar a <code>super().__init__()</code> cuando la clase base lo requiere</li>
           <li>Usar herencia donde la composición sería más apropiada (relación "tiene-un" vs "es-un")</li>
           <li>Romper el principio de Liskov al cambiar comportamientos de manera incompatible</li>
-          <li>Olvidar llamar al constructor base con <code>base()</code> cuando es necesario</li>
+          <li>Olvidar decorar con <code>@abstractmethod</code> los métodos que deben implementarse</li>
           <li>Crear jerarquías demasiado profundas (más de 3-4 niveles es difícil de mantener)</li>
         </ul>
       </div>
@@ -1314,15 +1222,15 @@ Total Nómina: $20800.00
 
       <h3>Paso 1: Crear el Proyecto (5 minutos)</h3>
       <ol>
-        <li>Abre <strong>Visual Studio 2022</strong></li>
-        <li>Haz clic en <strong>Crear un proyecto nuevo</strong></li>
-        <li>Selecciona <strong>Aplicación de consola</strong> (.NET 8.0)</li>
-        <li>Nombra el proyecto: <code>SistemaFiguras</code></li>
-        <li>Haz clic en <strong>Crear</strong></li>
+        <li>Abre <strong>VS Code</strong> o tu editor preferido</li>
+        <li>Crea una nueva carpeta para el proyecto</li>
+        <li>Crea un entorno virtual: <code>python -m venv venv</code></li>
+        <li>Crea los archivos <code>figura.py</code>, <code>rectangulo.py</code>, <code>circulo.py</code>, <code>triangulo.py</code></li>
+        <li>Ejecuta con <code>python main.py</code></li>
       </ol>
 
       <h3>Paso 2: Crear la Clase Base Abstracta (10 minutos)</h3>
-      <p>Crea un nuevo archivo <code>Figura.cs</code>:</p>
+      <p>Crea un nuevo archivo <code>figura.py</code>:</p>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1330,48 +1238,36 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Figura.cs</span>
+          <span class="code-title">figura.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
-          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+          <pre><code class="language-python">from abc import ABC, abstractmethod
 
-<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
-{
-    <span class="token-comment">// Clase abstracta: no se puede instanciar directamente</span>
-    <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-keyword">class</span> <span class="token-class">Figura</span>
-    {
-        <span class="token-comment">// Propiedad común a todas las figuras</span>
-        <span class="token-keyword">public</span> <span class="token-type">string</span> Color { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; } <span class="token-operator">=</span> <span class="token-string">"Negro"</span>;
-        <span class="token-keyword">public</span> <span class="token-type">string</span> Nombre { <span class="token-keyword">get</span>; <span class="token-keyword">protected</span> <span class="token-keyword">set</span>; }
-        
-        <span class="token-comment">// Constructor protegido</span>
-        <span class="token-keyword">protected</span> <span class="token-method">Figura</span>(<span class="token-type">string</span> nombre)
-        {
-            Nombre <span class="token-operator">=</span> nombre;
-        }
-        
-        <span class="token-comment">// Método abstracto: DEBE ser implementado por las subclases</span>
-        <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>();
-        
-        <span class="token-comment">// Método abstracto para perímetro</span>
-        <span class="token-keyword">public</span> <span class="token-keyword">abstract</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>();
-        
-        <span class="token-comment">// Método virtual: puede ser sobreescrito opcionalmente</span>
-        <span class="token-keyword">public</span> <span class="token-keyword">virtual</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-        {
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Figura: {Nombre}"</span>);
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Color: {Color}"</span>);
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Área: {CalcularArea():F2}"</span>);
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Perímetro: {CalcularPerimetro():F2}"</span>);
-        }
-    }
-}</code></pre>
+
+class Figura(ABC):
+    def __init__(self, nombre: str, color: str = "Negro") -> None:
+        self.nombre = nombre
+        self.color = color
+
+    @abstractmethod
+    def calcular_area(self) -> float:
+        raise NotImplementedError
+
+    @abstractmethod
+    def calcular_perimetro(self) -> float:
+        raise NotImplementedError
+
+    def mostrar_info(self) -> None:
+        print(f"Figura: {self.nombre}")
+        print(f"Color: {self.color}")
+        print(f"Area: {self.calcular_area():.2f}")
+        print(f"Perimetro: {self.calcular_perimetro():.2f}")</code></pre>
         </div>
       </div>
 
       <h3>Paso 3: Implementar Subclases (15 minutos)</h3>
-      <p>Crea <code>Rectangulo.cs</code>:</p>
+      <p>Crea <code>rectangulo.py</code>:</p>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1379,44 +1275,29 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Rectangulo.cs</span>
+          <span class="code-title">rectangulo.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30</div>
-          <pre><code><span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Rectangulo</span> : <span class="token-class">Figura</span>
-    {
-        <span class="token-keyword">public</span> <span class="token-type">double</span> Ancho { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        <span class="token-keyword">public</span> <span class="token-type">double</span> Alto { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        
-        <span class="token-keyword">public</span> <span class="token-method">Rectangulo</span>(<span class="token-type">double</span> ancho, <span class="token-type">double</span> alto) : <span class="token-keyword">base</span>(<span class="token-string">"Rectángulo"</span>)
-        {
-            Ancho <span class="token-operator">=</span> ancho;
-            Alto <span class="token-operator">=</span> alto;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
-        {
-            <span class="token-keyword">return</span> Ancho <span class="token-operator">*</span> Alto;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
-        {
-            <span class="token-keyword">return</span> <span class="token-number">2</span> <span class="token-operator">*</span> (Ancho <span class="token-operator">+</span> Alto);
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-        {
-            <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Dimensiones: {Ancho} x {Alto}"</span>);
-        }
-    }
-}</code></pre>
+          <pre><code class="language-python">class Rectangulo(Figura):
+    def __init__(self, ancho: float, alto: float, color: str = "Negro") -> None:
+        super().__init__("Rectangulo", color)
+        self.ancho = ancho
+        self.alto = alto
+
+    def calcular_area(self) -> float:
+        return self.ancho * self.alto
+
+    def calcular_perimetro(self) -> float:
+        return 2 * (self.ancho + self.alto)
+
+    def mostrar_info(self) -> None:
+        super().mostrar_info()
+        print(f"Dimensiones: {self.ancho} x {self.alto}")</code></pre>
         </div>
       </div>
 
-      <p>Crea <code>Circulo.cs</code>:</p>
+      <p>Crea <code>circulo.py</code>:</p>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1424,45 +1305,31 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Circulo.cs</span>
+          <span class="code-title">circulo.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31</div>
-          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+          <pre><code><span class="token-keyword">import</span> math
 
-<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Circulo</span> : <span class="token-class">Figura</span>
-    {
-        <span class="token-keyword">public</span> <span class="token-type">double</span> Radio { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        
-        <span class="token-keyword">public</span> <span class="token-method">Circulo</span>(<span class="token-type">double</span> radio) : <span class="token-keyword">base</span>(<span class="token-string">"Círculo"</span>)
-        {
-            Radio <span class="token-operator">=</span> radio;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
-        {
-            <span class="token-keyword">return</span> <span class="token-class">Math</span>.PI <span class="token-operator">*</span> Radio <span class="token-operator">*</span> Radio;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
-        {
-            <span class="token-keyword">return</span> <span class="token-number">2</span> <span class="token-operator">*</span> <span class="token-class">Math</span>.PI <span class="token-operator">*</span> Radio;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">void</span> <span class="token-method">MostrarInfo</span>()
-        {
-            <span class="token-keyword">base</span>.<span class="token-method">MostrarInfo</span>();
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Radio: {Radio}"</span>);
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"Diámetro: {2 * Radio}"</span>);
-        }
-    }
-}</code></pre>
+<span class="token-keyword">class</span> <span class="token-class">Circulo</span>(<span class="token-class">Figura</span>):
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, radio: <span class="token-type">float</span>, color: <span class="token-type">str</span> = <span class="token-string">"Negro"</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">super</span>().<span class="token-method">__init__</span>(<span class="token-string">"Circulo"</span>, color)
+        <span class="token-keyword">self</span>.radio <span class="token-operator">=</span> radio
+
+    <span class="token-keyword">def</span> <span class="token-method">calcular_area</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> math.<span class="token-method">pi</span> <span class="token-operator">*</span> <span class="token-keyword">self</span>.radio <span class="token-operator">**</span> <span class="token-number">2</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">calcular_perimetro</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> <span class="token-number">2</span> <span class="token-operator">*</span> math.<span class="token-method">pi</span> <span class="token-operator">*</span> <span class="token-keyword">self</span>.radio
+
+    <span class="token-keyword">def</span> <span class="token-method">mostrar_info</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">super</span>().<span class="token-method">mostrar_info</span>()
+        <span class="token-type">print</span>(<span class="token-string">f"Radio: </span><span class="token-keyword">{</span><span class="token-keyword">self</span>.radio<span class="token-keyword">}</span><span class="token-string">"</span>)
+        <span class="token-type">print</span>(<span class="token-string">f"Diametro: </span><span class="token-keyword">{</span><span class="token-number">2</span> <span class="token-operator">*</span> <span class="token-keyword">self</span>.radio<span class="token-keyword">}</span><span class="token-string">"</span>)</code></pre>
         </div>
       </div>
 
-      <p>Crea <code>Triangulo.cs</code> (desafío adicional):</p>
+      <p>Crea <code>triangulo.py</code> (desafío adicional):</p>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1470,48 +1337,31 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Triangulo.cs</span>
+          <span class="code-title">triangulo.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</div>
-          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
+          <pre><code><span class="token-keyword">class</span> <span class="token-class">Triangulo</span>(<span class="token-class">Figura</span>):
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, base_tri: <span class="token-type">float</span>, altura: <span class="token-type">float</span>,
+                 lado_a: <span class="token-type">float</span>, lado_b: <span class="token-type">float</span>, lado_c: <span class="token-type">float</span>,
+                 color: <span class="token-type">str</span> = <span class="token-string">"Negro"</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+        <span class="token-keyword">super</span>().<span class="token-method">__init__</span>(<span class="token-string">"Triangulo"</span>, color)
+        <span class="token-keyword">self</span>.base <span class="token-operator">=</span> base_tri
+        <span class="token-keyword">self</span>.altura <span class="token-operator">=</span> altura
+        <span class="token-keyword">self</span>.lado_a <span class="token-operator">=</span> lado_a
+        <span class="token-keyword">self</span>.lado_b <span class="token-operator">=</span> lado_b
+        <span class="token-keyword">self</span>.lado_c <span class="token-operator">=</span> lado_c
 
-<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
-{
-    <span class="token-keyword">public</span> <span class="token-keyword">class</span> <span class="token-class">Triangulo</span> : <span class="token-class">Figura</span>
-    {
-        <span class="token-keyword">public</span> <span class="token-type">double</span> Base { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        <span class="token-keyword">public</span> <span class="token-type">double</span> Altura { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoA { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoB { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        <span class="token-keyword">public</span> <span class="token-type">double</span> LadoC { <span class="token-keyword">get</span>; <span class="token-keyword">set</span>; }
-        
-        <span class="token-keyword">public</span> <span class="token-method">Triangulo</span>(<span class="token-type">double</span> baseTri, <span class="token-type">double</span> altura, 
-                         <span class="token-type">double</span> a, <span class="token-type">double</span> b, <span class="token-type">double</span> c) : <span class="token-keyword">base</span>(<span class="token-string">"Triángulo"</span>)
-        {
-            Base <span class="token-operator">=</span> baseTri;
-            Altura <span class="token-operator">=</span> altura;
-            LadoA <span class="token-operator">=</span> a;
-            LadoB <span class="token-operator">=</span> b;
-            LadoC <span class="token-operator">=</span> c;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularArea</span>()
-        {
-            <span class="token-keyword">return</span> (Base <span class="token-operator">*</span> Altura) <span class="token-operator">/</span> <span class="token-number">2</span>;
-        }
-        
-        <span class="token-keyword">public</span> <span class="token-keyword">override</span> <span class="token-type">double</span> <span class="token-method">CalcularPerimetro</span>()
-        {
-            <span class="token-keyword">return</span> LadoA <span class="token-operator">+</span> LadoB <span class="token-operator">+</span> LadoC;
-        }
-    }
-}</code></pre>
+    <span class="token-keyword">def</span> <span class="token-method">calcular_area</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> (<span class="token-keyword">self</span>.base <span class="token-operator">*</span> <span class="token-keyword">self</span>.altura) <span class="token-operator">/</span> <span class="token-number">2</span>
+
+    <span class="token-keyword">def</span> <span class="token-method">calcular_perimetro</span>(<span class="token-keyword">self</span>) <span class="token-operator">-></span> <span class="token-type">float</span>:
+        <span class="token-keyword">return</span> <span class="token-keyword">self</span>.lado_a <span class="token-operator">+</span> <span class="token-keyword">self</span>.lado_b <span class="token-operator">+</span> <span class="token-keyword">self</span>.lado_c</code></pre>
         </div>
       </div>
 
       <h3>Paso 4: Programa Principal con Polimorfismo (10 minutos)</h3>
-      <p>Modifica <code>Program.cs</code>:</p>
+      <p>Modifica <code>main.py</code>:</p>
       <div class="code-block">
         <div class="code-header">
           <div class="code-dots">
@@ -1519,82 +1369,73 @@ Total Nómina: $20800.00
             <span class="code-dot yellow"></span>
             <span class="code-dot green"></span>
           </div>
-          <span class="code-title">Program.cs</span>
+          <span class="code-title">main.py</span>
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
-          <pre><code><span class="token-keyword">using</span> <span class="token-namespace">System</span>;
-<span class="token-keyword">using</span> <span class="token-namespace">System.Collections.Generic</span>;
+          <pre><code><span class="token-keyword">from</span> typing <span class="token-keyword">import</span> List
 
-<span class="token-keyword">namespace</span> <span class="token-namespace">SistemaFiguras</span>
-{
-    <span class="token-keyword">class</span> <span class="token-class">Program</span>
-    {
-        <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">Main</span>(<span class="token-type">string</span>[] args)
-        {
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"=== SISTEMA DE FIGURAS GEOMÉTRICAS ===\n"</span>);
-            
-            <span class="token-comment">// Lista polimórfica de figuras</span>
-            <span class="token-class">List</span>&lt;<span class="token-class">Figura</span>&gt; figuras <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">List</span>&lt;<span class="token-class">Figura</span>&gt;
-            {
-                <span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">5</span>, <span class="token-number">3</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Azul"</span> },
-                <span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">4</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Rojo"</span> },
-                <span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">10</span>, <span class="token-number">2</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Verde"</span> },
-                <span class="token-keyword">new</span> <span class="token-method">Triangulo</span>(<span class="token-number">6</span>, <span class="token-number">4</span>, <span class="token-number">5</span>, <span class="token-number">5</span>, <span class="token-number">6</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Amarillo"</span> },
-                <span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">2.5</span>) { Color <span class="token-operator">=</span> <span class="token-string">"Naranja"</span> }
-            };
-            
-            <span class="token-comment">// Procesar todas las figuras polimórficamente</span>
-            <span class="token-type">double</span> areaTotal <span class="token-operator">=</span> <span class="token-number">0</span>;
-            <span class="token-keyword">foreach</span> (<span class="token-class">Figura</span> figura <span class="token-keyword">in</span> figuras)
-            {
-                figura.<span class="token-method">MostrarInfo</span>();
-                areaTotal <span class="token-operator">+=</span> figura.<span class="token-method">CalcularArea</span>();
-                <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-keyword">new</span> <span class="token-type">string</span>(<span class="token-string">'-'</span>, <span class="token-number">40</span>));
-            }
-            
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"\nÁREA TOTAL DE TODAS LAS FIGURAS: {areaTotal:F2}"</span>);
-            
-            <span class="token-comment">// Demostrar polimorfismo con un método genérico</span>
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">"\n=== USANDO MÉTODO GENÉRICO ==="</span>);
-            <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-keyword">new</span> <span class="token-method">Circulo</span>(<span class="token-number">3</span>));
-            <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-keyword">new</span> <span class="token-method">Rectangulo</span>(<span class="token-number">4</span>, <span class="token-number">5</span>));
-        }
-        
-        <span class="token-comment">// Método que acepta cualquier tipo de Figura</span>
-        <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">MostrarAreaDuplicada</span>(<span class="token-class">Figura</span> figura)
-        {
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{figura.Nombre}: Área normal = {figura.CalcularArea():F2}"</span>);
-            <span class="token-class">Console</span>.<span class="token-method">WriteLine</span>(<span class="token-string">$"{figura.Nombre}: Área duplicada = {figura.CalcularArea() * 2:F2}"</span>);
-        }
-    }
-}</code></pre>
+<span class="token-keyword">def</span> <span class="token-method">mostrar_area_duplicada</span>(figura: <span class="token-class">Figura</span>) <span class="token-operator">-></span> <span class="token-type">None</span>:
+    <span class="token-string">"""Método que acepta cualquier tipo de Figura."""</span>
+    <span class="token-type">print</span>(<span class="token-string">f"</span><span class="token-keyword">{</span>figura.nombre<span class="token-keyword">}</span><span class="token-string">: Area normal = </span><span class="token-keyword">{</span>figura.<span class="token-method">calcular_area</span>():.2f<span class="token-keyword">}</span><span class="token-string">"</span>)
+    <span class="token-type">print</span>(<span class="token-string">f"</span><span class="token-keyword">{</span>figura.nombre<span class="token-keyword">}</span><span class="token-string">: Area duplicada = </span><span class="token-keyword">{</span>figura.<span class="token-method">calcular_area</span>() <span class="token-operator">*</span> <span class="token-number">2</span>:.2f<span class="token-keyword">}</span><span class="token-string">"</span>)
+
+
+<span class="token-keyword">def</span> <span class="token-method">main</span>() <span class="token-operator">-></span> <span class="token-type">None</span>:
+    <span class="token-type">print</span>(<span class="token-string">"=== SISTEMA DE FIGURAS GEOMETRICAS ===\n"</span>)
+
+    <span class="token-comment"># Lista polimorfica de figuras</span>
+    figuras: <span class="token-class">List</span>[<span class="token-class">Figura</span>] <span class="token-operator">=</span> [
+        <span class="token-class">Rectangulo</span>(<span class="token-number">5</span>, <span class="token-number">3</span>, <span class="token-string">"Azul"</span>),
+        <span class="token-class">Circulo</span>(<span class="token-number">4</span>, <span class="token-string">"Rojo"</span>),
+        <span class="token-class">Rectangulo</span>(<span class="token-number">10</span>, <span class="token-number">2</span>, <span class="token-string">"Verde"</span>),
+        <span class="token-class">Triangulo</span>(<span class="token-number">6</span>, <span class="token-number">4</span>, <span class="token-number">5</span>, <span class="token-number">5</span>, <span class="token-number">6</span>, <span class="token-string">"Amarillo"</span>),
+        <span class="token-class">Circulo</span>(<span class="token-number">2.5</span>, <span class="token-string">"Naranja"</span>)
+    ]
+
+    <span class="token-comment"># Procesar todas las figuras polimorficamente</span>
+    area_total <span class="token-operator">=</span> <span class="token-number">0.0</span>
+    <span class="token-keyword">for</span> figura <span class="token-keyword">in</span> figuras:
+        figura.<span class="token-method">mostrar_info</span>()
+        area_total <span class="token-operator">+=</span> figura.<span class="token-method">calcular_area</span>()
+        <span class="token-type">print</span>(<span class="token-string">"-"</span> <span class="token-operator">*</span> <span class="token-number">40</span>)
+
+    <span class="token-type">print</span>(<span class="token-string">f"\nAREA TOTAL DE TODAS LAS FIGURAS: </span><span class="token-keyword">{</span>area_total:.2f<span class="token-keyword">}</span><span class="token-string">"</span>)
+
+    <span class="token-comment"># Demostrar polimorfismo con funcion generica</span>
+    <span class="token-type">print</span>(<span class="token-string">"\n=== USANDO FUNCION GENERICA ==="</span>)
+    <span class="token-method">mostrar_area_duplicada</span>(<span class="token-class">Circulo</span>(<span class="token-number">3</span>))
+    <span class="token-method">mostrar_area_duplicada</span>(<span class="token-class">Rectangulo</span>(<span class="token-number">4</span>, <span class="token-number">5</span>))
+
+
+<span class="token-keyword">if</span> <span class="token-keyword">__name__</span> <span class="token-operator">==</span> <span class="token-string">"__main__"</span>:
+    <span class="token-method">main</span>()</code></pre>
         </div>
       </div>
 
       <div class="checklist">
         <strong>Checklist de Verificación del Laboratorio</strong>
         <ul>
-          <li>Proyecto creado correctamente en Visual Studio</li>
-          <li>Clase <code>Figura</code> marcada como <code>abstract</code></li>
-          <li>Métodos <code>CalcularArea()</code> y <code>CalcularPerimetro()</code> marcados como <code>abstract</code></li>
+          <li>Proyecto creado correctamente en VS Code</li>
+          <li>Clase <code>Figura</code> marcada como <code>ABC, abstractmethod</code></li>
+          <li>Métodos <code>calcular_area()</code> y <code>calcular_perimetro()</code> marcados con <code>@abstractmethod</code></li>
           <li>Clases <code>Rectangulo</code>, <code>Circulo</code> y <code>Triangulo</code> heredan de <code>Figura</code></li>
           <li>Todas las subclases implementan los métodos abstractos</li>
-          <li>Uso de <code>override</code> en lugar de <code>new</code></li>
-          <li>Lista <code>List&lt;Figura&gt;</code> contiene diferentes tipos de figuras</li>
+          <li>Sobreescritura correcta usando <code>def</code> con mismo nombre</li>
+          <li>Lista <code>List[Figura]</code> contiene diferentes tipos de figuras</li>
           <li>El programa calcula áreas correctamente usando polimorfismo</li>
-          <li>No hay errores de compilación</li>
-          <li>El programa ejecuta y muestra resultados correctos</li>
+          <li>No hay errores de sintaxis</li>
+          <li>El programa se ejecuta y muestra resultados correctos</li>
         </ul>
       </div>
 
       <div class="warning-box">
         <h4>Errores Comunes en el Laboratorio</h4>
         <ul>
-          <li><strong>Error:</strong> Intentar crear <code>new Figura()</code> → <strong>Solución:</strong> Figura es abstracta, no se instancia</li>
-          <li><strong>Error:</strong> Olvidar implementar todos los métodos abstractos → <strong>Solución:</strong> Implementar <code>CalcularArea()</code> y <code>CalcularPerimetro()</code> en cada subclase</li>
-          <li><strong>Error:</strong> Usar <code>new</code> en lugar de <code>override</code> → <strong>Solución:</strong> Siempre usar <code>override</code> para polimorfismo</li>
-          <li><strong>Error:</strong> Fórmula incorrecta del área del círculo → <strong>Solución:</strong> Usar <code>Math.PI * Radio * Radio</code></li>
+          <li><strong>Error:</strong> Intentar crear <code>Figura()</code> directamente → <strong>Solución:</strong> Figura es abstracta, no se instancia</li>
+          <li><strong>Error:</strong> Olvidar implementar todos los métodos abstractos → <strong>Solución:</strong> Implementar <code>calcular_area()</code> y <code>calcular_perimetro()</code> en cada subclase</li>
+          <li><strong>Error:</strong> No llamar a <code>super().__init__()</code> cuando es necesario → <strong>Solución:</strong> Siempre llamar al constructor padre si la clase lo requiere</li>
+          <li><strong>Error:</strong> Fórmula incorrecta del área del círculo → <strong>Solución:</strong> Usar <code>math.pi * radio ** 2</code></li>
         </ul>
       </div>
     </section>
@@ -1656,13 +1497,13 @@ Total Nómina: $20800.00
         <strong>Checklist del Ejercicio 1</strong>
         <ul>
           <li>Clase <code>Vehiculo</code> con constructor y propiedades básicas</li>
-          <li>Método <code>Conducir()</code> marcado como <code>virtual</code></li>
+          <li>Método <code>conducir()</code> definido en clase base</li>
           <li>Clases <code>Auto</code> y <code>Moto</code> heredan correctamente</li>
           <li><code>AutoElectrico</code> hereda de <code>Auto</code> (herencia multinivel)</li>
-          <li>Todos los constructores usan <code>base()</code> apropiadamente</li>
-          <li>Uso de <code>override</code> en los métodos sobreescritos</li>
-          <li>Array polimórfico que demuestra sustitución de Liskov</li>
-          <li>Programa compila y ejecuta correctamente</li>
+          <li>Todos los constructores usan <code>super().__init__()</code> apropiadamente</li>
+          <li>Sobreescritura correcta de métodos en cada subclase</li>
+          <li>Lista polimórfica que demuestra sustitución de Liskov</li>
+          <li>Programa se ejecuta correctamente</li>
         </ul>
       </div>
 
@@ -1686,7 +1527,7 @@ Total Nómina: $20800.00
         <li>Agregar clase <code>Trapecio</code> con: BaseMayor, BaseMenor, Altura</li>
         <li>Crear interfaz <code>IDibujable</code> con método <code>Dibujar()</code> que imprima la figura con asteriscos</li>
         <li>Implementar <code>IDibujable</code> en <code>Rectangulo</code> y <code>Triangulo</code></li>
-        <li>Agregar método estático <code>Figura CrearFiguraAleatoria()</code> que devuelva una figura aleatoria</li>
+        <li>Agregar método estático <code>def crear_figura_aleatoria() -&gt; Figura</code> que devuelva una figura aleatoria</li>
         <li>Crear lista de 10 figuras aleatorias y calcular área total</li>
       </ol>
 
@@ -1701,12 +1542,12 @@ Total Nómina: $20800.00
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11</div>
-          <pre><code><span class="token-comment">// Ejemplo de IDibujable para Rectángulo 3x4:</span>
+          <pre><code><span class="token-comment"># Ejemplo de IDibujable para Rectangulo 3x4:</span>
 ****
 ****
 ****
 
-<span class="token-comment">// Ejemplo de IDibujable para Triángulo de altura 4:</span>
+<span class="token-comment"># Ejemplo de IDibujable para Triangulo de altura 4:</span>
    *
   ***
  *****
@@ -1721,7 +1562,7 @@ Total Nómina: $20800.00
           <li><code>Trapecio</code> implementa correctamente <code>CalcularArea()</code></li>
           <li>Interfaz <code>IDibujable</code> definida correctamente</li>
           <li>Implementación de <code>Dibujar()</code> usando ciclos anidados</li>
-          <li>Método <code>CrearFiguraAleatoria()</code> usa <code>Random</code></li>
+          <li>Método <code>crear_figura_aleatoria()</code> usa <code>random</code></li>
           <li>Lista de 10 figuras generada correctamente</li>
           <li>Cálculo de área total funciona con todas las figuras</li>
         </ul>
@@ -1746,29 +1587,29 @@ Total Nómina: $20800.00
         <li>Crear clase abstracta <code>MetodoPago</code> con:
           <ul>
             <li>Propiedades: Titular, Monto</li>
-            <li>Método abstracto: <code>bool ProcesarPago()</code></li>
-            <li>Método abstracto: <code>string ObtenerResibo()</code></li>
-            <li>Método virtual: <code>void Validar()</code> que verifique Monto > 0</li>
+            <li>Método abstracto: <code>def procesar_pago() -&gt; bool</code></li>
+            <li>Método abstracto: <code>def obtener_recibo() -&gt; str</code></li>
+            <li>Método base: <code>def validar()</code> que verifique Monto &gt; 0</li>
           </ul>
         </li>
         <li>Crear <code>PagoTarjetaCredito</code> que herede de <code>MetodoPago</code>:
           <ul>
             <li>Propiedades: NumeroTarjeta (ocultar últimos 4 dígitos), FechaVencimiento, CVV</li>
-            <li><code>ProcesarPago()</code>: Validar tarjeta no vencida, simular procesamiento</li>
+            <li><code>procesar_pago()</code>: Validar tarjeta no vencida, simular procesamiento</li>
             <li>Agregar comisión del 2.5% al monto</li>
           </ul>
         </li>
         <li>Crear <code>PagoPayPal</code> que herede de <code>MetodoPago</code>:
           <ul>
             <li>Propiedades: Email, AutenticacionDosFactores</li>
-            <li><code>ProcesarPago()</code>: Verificar 2FA si está habilitado</li>
+            <li><code>procesar_pago()</code>: Verificar 2FA si está habilitado</li>
             <li>Sin comisión</li>
           </ul>
         </li>
-        <li>Crear <code>PagoTransferenciaBancaria</code> (sellada) que herede de <code>MetodoPago</code>:
+        <li>Crear <code>PagoTransferenciaBancaria</code> (final por convencion) que herede de <code>MetodoPago</code>:
           <ul>
             <li>Propiedades: NumeroCuenta, Banco, CLABE</li>
-            <li><code>ProcesarPago()</code>: Validar CLABE (18 dígitos)</li>
+            <li><code>procesar_pago()</code>: Validar CLABE (18 dígitos)</li>
             <li>Agregar comisión fija de $15</li>
           </ul>
         </li>
@@ -1780,11 +1621,13 @@ Total Nómina: $20800.00
                 <span class="code-dot yellow"></span>
                 <span class="code-dot green"></span>
               </div>
-              <span class="code-title">ProcesadorPagos.cs</span>
+              <span class="code-title">procesador_pagos.py</span>
             </div>
             <div class="code-content">
               <div class="line-numbers">1</div>
-              <pre><code><span class="token-keyword">public</span> <span class="token-keyword">static</span> <span class="token-type">void</span> <span class="token-method">ProcesarMultiplesPagos</span>(<span class="token-class">List</span>&lt;<span class="token-class">MetodoPago</span>&gt; pagos)</span></code></pre>
+              <pre><code class="language-python">def procesar_multiples_pagos(pagos: list["MetodoPago"]) -> None:
+    for pago in pagos:
+        pago.procesar_pago()</code></pre>
             </div>
           </div>
         </li>
@@ -1802,34 +1645,32 @@ Total Nómina: $20800.00
         </div>
         <div class="code-content">
           <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16</div>
-          <pre><code><span class="token-comment">// Estructura esperada:</span>
-<span class="token-class">MetodoPago</span> (<span class="token-keyword">abstract</span>)
-    │
-    ├── <span class="token-class">PagoTarjetaCredito</span>
-    ├── <span class="token-class">PagoPayPal</span>
-    └── <span class="token-class">PagoTransferenciaBancaria</span> (<span class="token-keyword">sealed</span>)
+          <pre><code class="language-python"># Estructura esperada:
+MetodoPago (ABC)
+  - PagoTarjetaCredito
+  - PagoPayPal
+  - PagoTransferenciaBancaria (final por convencion)
 
-<span class="token-comment">// Uso esperado:</span>
-<span class="token-type">var</span> pagos <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-class">List</span>&lt;<span class="token-class">MetodoPago</span>&gt;
-{
-    <span class="token-keyword">new</span> <span class="token-method">PagoTarjetaCredito</span>(<span class="token-string">"Juan"</span>, <span class="token-number">1000</span>, <span class="token-string">"4111111111111111"</span>, ...),
-    <span class="token-keyword">new</span> <span class="token-method">PagoPayPal</span>(<span class="token-string">"Maria"</span>, <span class="token-number">500</span>, <span class="token-string">"maria@email.com"</span>, <span class="token-keyword">true</span>),
-    <span class="token-keyword">new</span> <span class="token-method">PagoTransferenciaBancaria</span>(<span class="token-string">"Pedro"</span>, <span class="token-number">2000</span>, <span class="token-string">"012345678901234567"</span>, ...)
-};
+# Uso esperado:
+pagos = [
+    PagoTarjetaCredito("Juan", 1000, "4111111111111111", ...),
+    PagoPayPal("Maria", 500, "maria@email.com", True),
+    PagoTransferenciaBancaria("Pedro", 2000, "012345678901234567", ...),
+]
 
-<span class="token-class">ProcesadorPagos</span>.<span class="token-method">ProcesarMultiplesPagos</span>(pagos);</code></pre>
+procesar_multiples_pagos(pagos)</code></pre>
         </div>
       </div>
 
       <div class="checklist">
         <strong>Checklist del Ejercicio 3</strong>
         <ul>
-          <li>Clase <code>MetodoPago</code> es <code>abstract</code></li>
-          <li>Métodos <code>ProcesarPago()</code> y <code>ObtenerResibo()</code> son <code>abstract</code></li>
+          <li>Clase <code>MetodoPago</code> es <code>ABC, abstractmethod</code></li>
+          <li>Métodos <code>procesar_pago()</code> y <code>obtener_recibo()</code> son <code>ABC, abstractmethod</code></li>
           <li>Validaciones implementadas en cada tipo de pago</li>
           <li>Ocultamiento de datos sensibles (tarjeta, CLABE)</li>
           <li>Cálculo de comisiones correcto en cada tipo</li>
-          <li>Clase <code>PagoTransferenciaBancaria</code> marcada como <code>sealed</code></li>
+          <li>Clase <code>PagoTransferenciaBancaria</code> con convención <code>_final</code> o documentación de no heredar</li>
           <li>Procesador de pagos funciona con lista polimórfica</li>
           <li>Generación de recibos con formato adecuado</li>
           <li>Manejo de errores con excepciones personalizadas</li>
@@ -1840,47 +1681,143 @@ Total Nómina: $20800.00
     </section>
 
     <section id="referencias">
-      <h2>7. Referencias y Recursos</h2>
+      <h2>9. Referencias y Recursos</h2>
 
+      
       <h3>Documentación Oficial</h3>
       <ul>
-        <li><a href="https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/classes-and-structs/inheritance" target="_blank">Microsoft Docs - Herencia en C#</a></li>
-        <li><a href="https://docs.microsoft.com/es-es/dotnet/csharp/programming-guide/classes-and-structs/polymorphism" target="_blank">Microsoft Docs - Polimorfismo en C#</a></li>
-        <li><a href="https://docs.microsoft.com/es-es/dotnet/csharp/language-reference/keywords/base" target="_blank">Palabra clave base (C#)</a></li>
-        <li><a href="https://docs.microsoft.com/es-es/dotnet/csharp/language-reference/keywords/sealed" target="_blank">Palabra clave sealed (C#)</a></li>
+        <li><a href="https://docs.python.org/es/3/tutorial/classes.html" target="_blank">Python Docs - Herencia</a></li>
+        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">Python Docs - Clases Abstractas (ABC)</a></li>
+        <li><a href="https://docs.python.org/es/3/reference/datamodel.html" target="_blank">Python Docs - Modelo de Datos</a></li>
+        <li><a href="https://docs.python.org/es/3/glossary.html#term-protocol" target="_blank">Python Docs - Protocol (interface)</a></li>
       </ul>
 
       <h3>Libros Recomendados</h3>
       <ul>
-        <li><em>"C# 10 in a Nutshell"</em> - Joseph Albahari (Capítulos 3 y 6)</li>
-        <li><em>"Head First Design Patterns"</em> - Eric Freeman (Patrones con herencia)</li>
-        <li><em>"Clean Code"</em> - Robert C. Martin (Capítulo sobre herencia vs composición)</li>
+        <li><em>"Fluent Python"</em> - Luciano Ramalho (Capítulos 11 y 12)</li>
+        <li><em>"Python Cookbook"</em> - David Beazley (Capítulo 8)</li>
+        <li><em>"Design Patterns in Python"</em> - György Balassy</li>
       </ul>
 
       <h3>Recursos Online</h3>
       <ul>
-        <li><a href="https://refactoring.guru/es/design-patterns" target="_blank">Refactoring Guru - Patrones de Diseño</a></li>
-        <li><a href="https://www.csharptutorial.net/csharp-oop/" target="_blank">C# Tutorial - OOP en C#</a></li>
-        <li><a href="https://www.tutorialsteacher.com/csharp/csharp-inheritance" target="_blank">TutorialsTeacher - Herencia C#</a></li>
+        <li><a href="https://refactoring.guru/es/design-patterns" target="_blank">Refactoring Guru - Patrones de Diseño en Python</a></li>
+        <li><a href="https://realpython.com/python3-object-oriented-programming/" target="_blank">Real Python - OOP en Python</a></li>
+        <li><a href="https://python.swaroopch.com/oop.html" target="_blank">A Byte of Python - POO</a></li>
       </ul>
 
       <h3>Videos Relacionados</h3>
       <ul>
-        <li>Canal de YouTube: <em>"DotNet"</em> - Serie de POO en C#</li>
-        <li>Platzi: Curso de Programación Orientada a Objetos con C#</li>
+        <li>Canal de YouTube: <em>"Pycoders"</em> - Serie de POO en Python</li>
+        <li>Platzi: Curso de Python: POO y Algoritmos</li>
       </ul>
 
       <div class="highlight-box">
-        <h4>Próxima Clase: Clase 04 - Interfaces y Clases Abstractas</h4>
+        <h4>Próxima Clase: Clase 04 - Protocolos y Clases Abstractas</h4>
         <p>En la próxima clase profundizaremos en:</p>
         <ul>
-          <li>Diferencias entre interfaces y clases abstractas</li>
-          <li>Implementación explícita de interfaces</li>
-          <li>Herencia múltiple de interfaces</li>
+          <li>Diferencias entre Protocolos y clases abstractas</li>
+          <li>Protocolos y typing.Protocol</li>
+          <li>Herencia múltiple en Python</li>
           <li>Patrones de diseño: Strategy, Repository</li>
         </ul>
       </div>
     </section>
+    <section id="entrega-git">
+      <h2>8. Entrega con Git</h2>
+
+      <h3>Requisitos de Entrega</h3>
+      <p>Esta actividad debe entregarse utilizando Git con el siguiente flujo de trabajo:</p>
+
+      <div class="highlight-box">
+        <h4>Flujo de Trabajo Git</h4>
+        <ol>
+          <li><strong>Crear rama feature:</strong> <code>git checkout -b feature/herencia-clase-03</code></li>
+          <li><strong>Hacer commits:</strong> Mínimo 3 commits significativos</li>
+          <li><strong>Crear tag:</strong> <code>git tag clase-03-v1</code></li>
+          <li><strong>Merge a main:</strong> <code>git checkout main && git merge feature/herencia-clase-03</code></li>
+          <li><strong>Push:</strong> <code>git push origin main --tags</code></li>
+        </ol>
+      </div>
+
+      <h3>Estructura de Commits Sugerida</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="code-dot red"></span>
+            <span class="code-dot yellow"></span>
+            <span class="code-dot green"></span>
+          </div>
+          <span class="code-title">Commits</span>
+        </div>
+        <div class="code-content">
+          <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13</div>
+          <pre><code><span class="token-comment"># Commit 1: Estructura base</span>
+git add figura.py rectangulo.py
+git commit -m "feat: crear clase base Figura y Rectangulo"
+
+<span class="token-comment"># Commit 2: Agregar más figuras</span>
+git add circulo.py triangulo.py
+git commit -m "feat: implementar Circulo y Triangulo con polimorfismo"
+
+<span class="token-comment"># Commit 3: Programa principal</span>
+git add main.py README.md
+git commit -m "feat: agregar main.py con demostracion polimorfica"
+
+<span class="token-comment"># Crear tag</span>
+git tag clase-03-v1</code></pre>
+        </div>
+      </div>
+
+      <h3>Verificación de Entrega</h3>
+      <div class="checklist">
+        <strong>Checklist de Verificación Git</strong>
+        <ul>
+          <li>Rama <code>feature/herencia-clase-03</code> creada y usada</li>
+          <li>Mínimo 3 commits con mensajes claros (feat:, fix:, docs:)</li>
+          <li>Tag <code>clase-03-v1</code> creado en el commit final</li>
+          <li>Código funciona correctamente (prueba de ejecución)</li>
+          <li>README.md con descripción del proyecto</li>
+          <li>Branch mergeado a main sin conflictos</li>
+          <li>Tags pushados al remoto: <code>git push origin --tags</code></li>
+        </ul>
+      </div>
+
+      <div class="warning-box">
+        <h4>Comandos Útiles de Git</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Comando</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>git branch</code></td>
+              <td>Listar todas las ramas</td>
+            </tr>
+            <tr>
+              <td><code>git log --oneline</code></td>
+              <td>Ver historial de commits resumido</td>
+            </tr>
+            <tr>
+              <td><code>git tag</code></td>
+              <td>Listar todos los tags</td>
+            </tr>
+            <tr>
+              <td><code>git show clase-03-v1</code></td>
+              <td>Ver detalles del tag</td>
+            </tr>
+            <tr>
+              <td><code>git status</code></td>
+              <td>Ver estado del working directory</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
 
   </main>
 
@@ -1890,20 +1827,20 @@ Total Nómina: $20800.00
       <li>La herencia permite crear nuevas clases basadas en clases existentes, reutilizando código y estableciendo relaciones "es-un" (Animal -> Perro).</li>
       <li>Herencia multinivel permite cadenas de herencia (Vehiculo -> Auto -> AutoElectrico) donde cada nivel añade funcionalidad específica.</li>
       <li>El Principio de Sustitución de Liskov (LSP) establece que una clase derivada debe poder sustituir a su clase base sin alterar el programa.</li>
-      <li>El polimorfismo permite que objetos de diferentes tipos respondan al mismo mensaje de manera diferente a través de override.</li>
-      <li>virtual/override permite modificar el comportamiento de métodos en clases derivadas mientras se mantiene la firma.</li>
-      <li>new oculta el método de la clase base (no es polimorfismo, solo cambia qué método se llama).</li>
-      <li>sealed previene que una clase o método sea heredado o sobreescrito.</li>
-      <li>Las interfaces definen contratos sin implementación y permiten "herencia múltiple" de comportamientos.</li>
-      <li>abstract class puede tener implementación parcial mientras interface solo define firmas.</li>
-      <li>El polimorfismo se logra mediante herencia (override) o interfaces, permitiendo código flexible y extensible.</li>
+      <li>El polimorfismo permite que objetos de diferentes tipos respondan al mismo mensaje mediante sobrescritura.</li>
+      <li>En Python todos los métodos son "virtuales" por defecto; la sobreescritura se hace redefiniendo el método con el mismo nombre.</li>
+      <li><code>super()</code> permite acceder a métodos de la clase base desde la clase derivada.</li>
+      <li>La convención de prefijo <code>_</code> o documentacion explicita indica que una clase no debe heredarse.</li>
+      <li>Los Protocolos (<code>typing.Protocol</code>) o clases abstractas (<code>ABC</code>) definen contratos sin implementación completa.</li>
+      <li>Las clases abstractas pueden tener implementación parcial mientras los Protocolos solo definen firmas.</li>
+      <li>El polimorfismo se logra mediante herencia (sobrescritura) o protocolos/ABC, permitiendo codigo flexible y extensible.</li>
     </ul>
   </section>
 
   <footer>
     <p><strong>IF0100 - Lenguaje de Programación Orientada a Objetos II</strong></p>
     <p>UNAULA - Ingeniería Informática - 2026-I</p>
-    <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Clase 03 - Herencia y Polimorfismo</p>
+    <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">Clase 03 - Herencia y Polimorfismo en Python</p>
   </footer>
 </body>
 </html>
