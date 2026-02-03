@@ -1,0 +1,25 @@
+agent_id: A-QA02
+agent_name: KimiCLI
+tool: KimiCLI
+started_at: 2026-02-03T04:50:00Z
+completed_at: 2026-02-03T05:05:00Z
+phase: QA-LOOP-COMPLETED-C08-C17-COMMIT-PUSH
+heartbeat: 2026-02-03T05:05:00Z
+objective: Revisar clases 08-17, corregir issues, luego commit y push
+status: COMPLETED
+classes_reviewed: 12
+issues_found: 7
+issues_fixed: 7
+summary: |
+  CORRECCIONES APLICADAS (ADOPython → pyodbc):
+  
+  1. clase-11.html: "Introducción a ADOPython" → "Introducción a pyodbc"
+  2. clase-15.html: "Modelo de ADOPython" → "Modelo de Python/pyodbc"
+  3. clase-16.html: "Conceptos de ADOPython" → "Conceptos de pyodbc"
+  4. clase-16.html: "DataBinding con ADOPython" → "DataBinding con Python/pyodbc"
+  5. clase-17.html: "CRUD con ADOPython" → "CRUD con pyodbc"
+  6. index.html: "Introducción a ADOPython" → "Introducción a pyodbc"
+  7. index.html: Comentario "Persistencia con ADOPython" → "Persistencia con pyodbc"
+  
+  Validación: grep "ADOPython" = 0 matches
+  Estado: Listo para commit y push
