@@ -757,14 +757,14 @@
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">DummyExample.cs</span>
+                        <span class="code-title">dummy_example.py</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4</div>
-                        <pre><code><span class="token-comment">// Solo para llenar parámetros</span>
-<span class="token-keyword">public void</span> <span class="token-method">Probar</span><span class="token-operator">(</span><span class="token-type">DummyServicio</span> servicio<span class="token-operator">)</span> <span class="token-operator">{</span>
-    <span class="token-comment">// El servicio no se usa</span>
-<span class="token-operator">}</span></code></pre>
+                        <pre><code># Solo para llenar parámetros
+def probar(servicio_dummy):
+    # El servicio no se usa
+    pass</code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando no necesitas interactuar con el objeto.</em></p>
@@ -778,16 +778,18 @@
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">StubExample.cs</span>
+                        <span class="code-title">stub_example.py</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                        <pre><code><span class="token-comment">// Respuestas predefinidas</span>
-<span class="token-keyword">var</span> stub <span class="token-operator">=</span> <span class="token-keyword">new</span> <span class="token-type">StubRepo</span><span class="token-operator">();</span>
-stub<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">).</span><span class="token-method">Returns</span><span class="token-operator">(</span><span class="token-keyword">new</span> <span class="token-type">Estudiante</span><span class="token-operator">());</span>
+                        <pre><code># Respuestas predefinidas
+class RepoStub:
+    def obtener(self, id_):
+        return {"id": id_, "nombre": "Ana"}
 
-<span class="token-comment">// Test usa el stub</span>
-<span class="token-keyword">var</span> estudiante <span class="token-operator">=</span> repo<span class="token-operator">.</span><span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-number">1</span><span class="token-operator">);</span></code></pre>
+# Test usa el stub
+repo = RepoStub()
+estudiante = repo.obtener(1)</code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando necesitas respuestas controladas.</em></p>
@@ -804,16 +806,20 @@ stub<span class="token-operator">.</span><span class="token-method">Obtener</spa
                           <span class="code-dot yellow"></span>
                           <span class="code-dot green"></span>
                         </div>
-                        <span class="code-title">FakeRepository.cs</span>
+                        <span class="code-title">fake_repository.py</span>
                       </div>
                       <div class="code-content">
                         <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6</div>
-                        <pre><code><span class="token-comment">// Implementación simplificada</span>
-<span class="token-keyword">public class</span> <span class="token-class">FakeRepo</span> <span class="token-operator">:</span> <span class="token-type">IRepositorio</span> <span class="token-operator">{</span>
-    <span class="token-keyword">private</span> <span class="token-type">List</span><span class="token-operator">&lt;</span><span class="token-type">Estudiante</span><span class="token-operator">&gt;</span> _datos <span class="token-operator">=</span> <span class="token-keyword">new</span><span class="token-operator">();</span>
-    <span class="token-keyword">public void</span> <span class="token-method">Guardar</span><span class="token-operator">(</span><span class="token-type">Estudiante</span> e<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">Add</span><span class="token-operator">(</span>e<span class="token-operator">);</span>
-    <span class="token-keyword">public</span> <span class="token-type">Estudiante</span> <span class="token-method">Obtener</span><span class="token-operator">(</span><span class="token-keyword">int</span> id<span class="token-operator">)</span> <span class="token-operator">=></span> _datos<span class="token-operator">.</span><span class="token-method">FirstOrDefault</span><span class="token-operator">();</span>
-<span class="token-operator">}</span></code></pre>
+                        <pre><code># Implementación simplificada
+class FakeRepo:
+    def __init__(self):
+        self._datos = []
+
+    def guardar(self, e):
+        self._datos.append(e)
+
+    def obtener(self, id_):
+        return self._datos[0] if self._datos else None</code></pre>
                       </div>
                     </div>
                     <p><em>Usar cuando necesitas lógica real pero simple.</em></p>

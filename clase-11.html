@@ -480,66 +480,59 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudianteViewModel.cs</span>
+                    <span class="code-title">estudiante_model.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56</div>
-                    <pre><code>using System.ComponentModel.DataAnnotations;
+                    <pre><code><span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> BaseModel, Field, field_validator, EmailStr
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> Optional
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> date, datetime
 
-public class EstudianteViewModel
-{
-    <span class="token-comment">// VALIDACIÓN BÁSICA</span>
-    [<span class="token-type">Required</span>(ErrorMessage = <span class="token-string">&quot;El código es obligatorio&quot;</span>)]
-    [<span class="token-type">StringLength</span>(10, MinimumLength = 5,
-        ErrorMessage = <span class="token-string">&quot;El código debe tener entre 5 y 10 caracteres&quot;</span>)]
-    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Código Estudiantil&quot;</span>)]
-    public string Codigo { get; set; }
+<span class="token-keyword">class</span> <span class="token-class">EstudianteViewModel</span>(BaseModel):
+    <span class="token-comment"># VALIDACIÓN BÁSICA</span>
+    codigo: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">5</span>, max_length=<span class="token-number">10</span>,
+                          description=<span class="token-string">"Código Estudiantil"</span>)
+    nombre: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">1</span>, max_length=<span class="token-number">50</span>)
+    apellido: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">1</span>, max_length=<span class="token-number">50</span>)
 
-    [<span class="token-type">Required</span>]
-    [<span class="token-type">StringLength</span>(50)]
-    public string Nombre { get; set; }
+    <span class="token-comment"># VALIDACIÓN DE EMAIL</span>
+    email: EmailStr
 
-    [<span class="token-type">Required</span>]
-    [<span class="token-type">StringLength</span>(50)]
-    public string Apellido { get; set; }
+    <span class="token-comment"># VALIDACIÓN NUMÉRICA</span>
+    edad: <span class="token-keyword">int</span> = Field(..., ge=<span class="token-number">18</span>, le=<span class="token-number">100</span>)
+    promedio: <span class="token-keyword">float</span> = Field(..., ge=<span class="token-number">0.0</span>, le=<span class="token-number">5.0</span>)
 
-    <span class="token-comment">// VALIDACIÓN DE EMAIL</span>
-    [<span class="token-type">Required</span>]
-    [<span class="token-type">EmailAddress</span>(ErrorMessage = <span class="token-string">&quot;El formato del email no es válido&quot;</span>)]
-    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Correo Electrónico&quot;</span>)]
-    public string Email { get; set; }
+    <span class="token-comment"># VALIDACIÓN DE PATRÓN (Regex)</span>
+    telefono: <span class="token-keyword">str</span> = Field(..., pattern=<span class="token-string">r"^\d{10}$"</span>)
 
-    <span class="token-comment">// VALIDACIÓN NUMÉRICA</span>
-    [<span class="token-type">Range</span>(18, 100, ErrorMessage = <span class="token-string">&quot;La edad debe estar entre 18 y 100 años&quot;</span>)]
-    public int Edad { get; set; }
+    <span class="token-comment"># VALIDACIÓN DE FECHAS</span>
+    fecha_nacimiento: <span class="token-type">date</span>
 
-    [<span class="token-type">Range</span>(0.0, 5.0, ErrorMessage = <span class="token-string">&quot;El promedio debe estar entre 0.0 y 5.0&quot;</span>)]
-    [<span class="token-type">Display</span>Format(DataFormatString = <span class="token-string">&quot;{0:F2}&quot;</span>)]
-    public double Promedio { get; set; }
+    <span class="token-comment"># COMPARACIÓN</span>
+    password: <span class="token-keyword">str</span> = Field(..., min_length=<span class="token-number">8</span>)
+    confirmar_password: <span class="token-keyword">str</span>
 
-    <span class="token-comment">// VALIDACIÓN DE PATRÓN (Regex)</span>
-    [<span class="token-type">Required</span>]
-    [<span class="token-type">RegularExpression</span>(@<span class="token-string">&quot;^\d{10}$&quot;</span>,
-        ErrorMessage = <span class="token-string">&quot;El teléfono debe tener 10 dígitos numéricos&quot;</span>)]
-    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Teléfono Celular&quot;</span>)]
-    public string Telefono { get; set; }
+    <span class="token-attribute">@field_validator</span>(<span class="token-string">'confirmar_password'</span>)
+    <span class="token-keyword">def</span> <span class="token-function">passwords_match</span>(cls, v, info):
+        <span class="token-keyword">if</span> <span class="token-string">'password'</span> <span class="token-keyword">in</span> info.data <span class="token-keyword">and</span> v != info.data[<span class="token-string">'password'</span>]:
+            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Las contraseñas no coinciden'</span>)
+        <span class="token-keyword">return</span> v
 
-    <span class="token-comment">// VALIDACIÓN DE FECHAS</span>
-    [<span class="token-type">DataType</span>(DataType.Date)]
-    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Fecha de Nacimiento&quot;</span>)]
-    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>)]  <span class="token-comment">// Custom</span>
-    public DateTime FechaNacimiento { get; set; }
+    <span class="token-attribute">@field_validator</span>(<span class="token-string">'fecha_nacimiento'</span>)
+    <span class="token-keyword">def</span> <span class="token-function">fecha_debe_ser_pasado</span>(cls, v):
+        <span class="token-keyword">if</span> v >= date.today():
+            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'La fecha debe ser en el pasado'</span>)
+        <span class="token-keyword">return</span> v
 
-    <span class="token-comment">// COMPARACIÓN</span>
-    [<span class="token-type">Required</span>]
-    [<span class="token-type">DataType</span>(DataType.Password)]
-    public string Password { get; set; }
+    <span class="token-attribute">@field_validator</span>(<span class="token-string">'edad'</span>)
+    <span class="token-keyword">def</span> <span class="token-function">validar_mayoria_edad</span>(cls, v):
+        <span class="token-keyword">if</span> v < <span class="token-number">18</span>:
+            <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Debe ser mayor de edad (18 años)'</span>)
+        <span class="token-keyword">return</span> v
 
-    [<span class="token-type">DataType</span>(DataType.Password)]
-    [<span class="token-type">Compare</span>(<span class="token-string">&quot;Password&quot;</span>, ErrorMessage = <span class="token-string">&quot;Las contraseñas no coinciden&quot;</span>)]
-    [<span class="token-type">Display</span>(Name = <span class="token-string">&quot;Confirmar Contraseña&quot;</span>)]
-    public string ConfirmarPassword { get; set; }
-}</code></pre>
+    <span class="token-keyword">class</span> <span class="token-class">Config</span>:
+        <span class="token-string">str</span> = <span class="token-string">"min length = 5 characters"</span>
+        <span class="token-string">str</span> = <span class="token-string">"max length = 50 characters"</span></code></pre>
                 </div>
             </div>
 
@@ -609,76 +602,55 @@ public class EstudianteViewModel
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">FechaPasadaAttribute.cs</span>
+                    <span class="code-title">validacion_personalizada.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53</div>
-                    <pre><code><span class="token-comment">// Validación personalizada: Fecha debe ser en el pasado</span>
-public class FechaPasadaAttribute : ValidationAttribute
-{
-    protected override ValidationResult IsValid(object value,
-        ValidationContext validationContext)
-    {
-        if (value is DateTime fecha)
-        {
-            if (fecha &gt;= DateTime.Today)
-            {
-                return new ValidationResult(ErrorMessage ??
-                    <span class="token-string">&quot;La fecha debe ser en el pasado&quot;</span>);
-            }
-        }
-        return ValidationResult.Success;
-    }
-}
+                    <pre><code><span class="token-comment"># Validación personalizada incluida en el modelo anterior</span>
+<span class="token-comment">@field_validator('fecha_nacimiento')</span>
+<span class="token-keyword">def</span> <span class="token-function">fecha_debe_ser_pasado</span>(cls, v):
+    <span class="token-keyword">if</span> v >= date.today():
+        <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'La fecha debe ser en el pasado'</span>)
+    <span class="token-keyword">return</span> v
 
-<span class="token-comment">// Uso</span>
-public class EstudianteViewModel
-{
-    [FechaPasada(ErrorMessage = <span class="token-string">&quot;La fecha de nacimiento debe ser en el pasado&quot;</span>)]
-    public DateTime FechaNacimiento { get; set; }
-}
+<span class="token-comment"># Validación de mayoría de edad incluida en el modelo anterior</span>
+<span class="token-attribute">@field_validator</span>(<span class="token-string">'edad'</span>)
+<span class="token-keyword">def</span> <span class="token-function">validar_mayoria_edad</span>(cls, v):
+    <span class="token-keyword">if</span> v < <span class="token-number">18</span>:
+        <span class="token-keyword">raise</span> <span class="token-exception">ValueError</span>(<span class="token-string">'Debe tener al menos 18 años'</span>)
+    <span class="token-keyword">return</span> v
 
-<span class="token-comment">// Otra validación: Mayor de edad</span>
-public class MayorDeEdadAttribute : ValidationAttribute
-{
-    private readonly int _edadMinima;
+<span class="token-comment"># Uso del modelo</span>
+<span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> ValidationError
 
-    public MayorDeEdadAttribute(int edadMinima = 18)
-    {
-        _edadMinima = edadMinima;
-    }
-
-    protected override ValidationResult IsValid(object value,
-        ValidationContext validationContext)
-    {
-        if (value is DateTime fechaNacimiento)
-        {
-            var edad = DateTime.Today.Year - fechaNacimiento.Year;
-            if (fechaNacimiento.Date &gt; DateTime.Today.AddYears(-edad))
-                edad--;
-
-            if (edad &lt; _edadMinima)
-            {
-                return new ValidationResult(
-                    $<span class="token-string">&quot;Debe tener al menos {_edadMinima} años&quot;</span>);
-            }
-        }
-        return ValidationResult.Success;
-    }
-}</code></pre>
+<span class="token-keyword">try</span>:
+    estudiante = EstudianteViewModel(
+        codigo=<span class="token-string">"A001"</span>,
+        nombre=<span class="token-string">"Juan"</span>,
+        apellido=<span class="token-string">"Pérez"</span>,
+        email=<span class="token-string">"juan.perez@example.com"</span>,
+        edad=<span class="token-number">20</span>,
+        promedio=<span class="token-number">4.5</span>,
+        telefono=<span class="token-string">"3001234567"</span>,
+        fecha_nacimiento=date(<span class="token-number">2000</span>, <span class="token-number">5</span>, <span class="token-number">15</span>),
+        password=<span class="token-string">"SecurePass123"</span>,
+        confirmar_password=<span class="token-string">"SecurePass123"</span>
+    )
+<span class="token-keyword">except</span> ValidationError <span class="token-keyword">as</span> e:
+    <span class="token-keyword">print</span>(e)</code></pre>
                 </div>
             </div>
 
-            <h3>ModelState y <abbr title="Model-View-Controller - Patrón de arquitectura que separa la aplicación en tres componentes">MVC</abbr></h3>
-            <p><strong>ViewModel</strong> = Clase diseñada específicamente para pasar datos del Controller a la View. No es la entidad de base de datos, sino un modelo "de presentación".</p>
-            <p><strong>ModelState</strong> = Diccionario que contiene el estado de enlace de datos y validación. Se valida automáticamente con Data Annotations.</p>
+            <h3>Pydantic y FastAPI para Validación de Formularios</h3>
+            <p><strong>Pydantic BaseModel</strong> = Clase diseñada específicamente para validación de datos con type hints. En FastAPI, los modelos Pydantic validan automáticamente los datos de entrada.</p>
+            <p><strong>Validación Automática</strong> = FastAPI valida los requests automáticamente contra el modelo Pydantic y retorna errores 422 si la validación falla.</p>
 
             <div class="warning-box">
-                <strong>Errores Comunes con ModelState</strong>
+                <strong>Errores Comunes con Pydantic</strong>
                 <ul>
-                    <li><strong>Olvidar validar ModelState.IsValid:</strong> Permite guardar datos inválidos en BD</li>
-                    <li><strong>No devolver el modelo con errores:</strong> El usuario pierde los datos que ingresó</li>
-                    <li><strong>Validar solo en cliente:</strong> Un usuario puede desactivar JavaScript y enviar datos inválidos</li>
+                    <li><strong>No usar field_validator correctamente:</strong> Olvidar validar el tipo de dato o retornar el valor</li>
+                    <li><strong>No manejar ValidationError:</strong> Las excepciones de validación deben propagarse correctamente</li>
+                    <li><strong>Validar solo en cliente:</strong> Un usuario puede enviar requests directos sin validación en frontend</li>
                 </ul>
             </div>
 
@@ -690,34 +662,34 @@ public class MayorDeEdadAttribute : ValidationAttribute
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudiantesController.cs</span>
+                    <span class="code-title">estudiantes_routes.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24</div>
-                    <pre><code>[<span class="token-type">HttpPost</span>]
-public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
-{
-    <span class="token-comment">// Validación automática basada en Data Annotations</span>
-    if (!ModelState.IsValid)
-    {
-        <span class="token-comment">// Si hay errores, retornar la vista con el modelo</span>
-        <span class="token-comment">// Los errores se mostrarán automáticamente</span>
-        return View(model);
-    }
+                    <pre><code><span class="token-keyword">from</span> fastapi <span class="token-keyword">import</span> FastAPI, HTTPException
+<span class="token-keyword">from</span> pydantic <span class="token-keyword">import</span> BaseModel
 
-    <span class="token-comment">// Validación de negocio adicional</span>
-    var existe = await _service.ExisteCodigoAsync(model.Codigo);
-    if (existe)
-    {
-        ModelState.AddModelError(<span class="token-string">&quot;Codigo&quot;</span>,
-            <span class="token-string">&quot;Ya existe un estudiante con este código&quot;</span>);
-        return View(model);
-    }
+app = FastAPI()
 
-    <span class="token-comment">// Guardar</span>
-    await _service.CrearAsync(model);
-    return RedirectToAction(nameof(Index));
-}</code></pre>
+<span class="token-attribute">@app.post</span>(<span class="token-string">"/api/estudiantes"</span>, status_code=<span class="token-number">201</span>)
+<span class="token-keyword">async def</span> <span class="token-function">crear_estudiante</span>(
+    model: EstudianteViewModel,
+    estudiante_service: EstudianteService
+):
+    <span class="token-comment"># Validación automática basada en Pydantic</span>
+    <span class="token-comment"># Si hay errores, FastAPI retorna automáticamente 422</span>
+
+    <span class="token-comment"># Validación de negocio adicional</span>
+    existe = <span class="token-keyword">await</span> estudiante_service.existe_codigo(model.codigo)
+    <span class="token-keyword">if</span> existe:
+        <span class="token-keyword">raise</span> HTTPException(
+            status_code=<span class="token-number">400</span>,
+            detail=<span class="token-string">"Ya existe un estudiante con este código"</span>
+        )
+
+    <span class="token-comment"># Guardar</span>
+    <span class="token-keyword">await</span> estudiante_service.crear(model)
+    <span class="token-keyword">return</span> {<span class="token-string">"mensaje"</span>: <span class="token-string">"Estudiante creado exitosamente"</span>}</code></pre>
                 </div>
             </div>
         </section>
@@ -862,7 +834,7 @@ public async Task&amp;lt;IActionResult&amp;gt; Crear(EstudianteViewModel model)
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudiantesController.cs</span>
+                    <span class="code-title">estudiantes_routes.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32</div>
@@ -992,54 +964,68 @@ app.MapControllers();</code></pre>
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">AccountController.cs</span>
+                    <span class="code-title">auth_routes.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44</div>
-                    <pre><code>public class AccountController : Controller
-{
-    <span class="token-comment">// Guardar en sesión</span>
-    public IActionResult Login(LoginViewModel model)
-    {
-        <span class="token-comment">// Validar credenciales...</span>
+                    <pre><code><span class="token-keyword">from</span> fastapi <span class="token-keyword">import</span> FastAPI, HTTPException, Depends
+<span class="token-keyword">from</span> fastapi.security <span class="token-keyword">import</span> OAuth2PasswordBearer
+<span class="token-keyword">from</span> datetime <span class="token-keyword">import</span> timedelta, datetime
 
-        <span class="token-comment">// Guardar en sesión</span>
-        HttpContext.Session.SetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>, usuario.Id);
-        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>, usuario.Nombre);
-        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioEmail&quot;</span>, usuario.Email);
+<span class="token-comment"># Configuración JWT (en producción usar variables de entorno)</span>
+SECRET_KEY = <span class="token-string">"tu-clave-secreta-aqui"</span>
+ALGORITHM = <span class="token-string">"HS256"</span>
+ACCESS_TOKEN_EXPIRE_MINUTES = <span class="token-number">30</span>
 
-        <span class="token-comment">// Guardar objeto completo (serializado a JSON)</span>
-        var usuarioJson = JsonSerializer.Serialize(usuario);
-        HttpContext.Session.SetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>, usuarioJson);
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=<span class="token-string">"token"</span>)
 
-        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
-    }
+<span class="token-keyword">class</span> <span class="token-class">AccountController</span>:
+    <span class="token-attribute">@app.post</span>(<span class="token-string">"/api/auth/login"</span>)
+    <span class="token-keyword">async def</span> <span class="token-function">login</span>(
+        credentials: LoginViewModel,
+        auth_service: AuthService
+    ):
+        <span class="token-comment"># Validar credenciales contra BD</span>
+        usuario = <span class="token-keyword">await</span> auth_service.autenticar(credentials.email, credentials.password)
 
-    <span class="token-comment">// Leer de sesión</span>
-    public IActionResult Perfil()
-    {
-        var usuarioId = HttpContext.Session.GetInt32(<span class="token-string">&quot;UsuarioId&quot;</span>);
-        var usuarioNombre = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioNombre&quot;</span>);
+        <span class="token-keyword">if</span> <span class="token-keyword">not</span> usuario:
+            <span class="token-keyword">raise</span> HTTPException(
+                status_code=<span class="token-number">401</span>,
+                detail=<span class="token-string">"Credenciales inválidas"</span>
+            )
 
-        if (usuarioId == null)
-        {
-            return RedirectToAction(<span class="token-string">&quot;Login&quot;</span>);
+        <span class="token-comment"># Crear token JWT</span>
+        access_token_expires = timedelta(minutes=<span class="token-number">ACCESS_TOKEN_EXPIRE_MINUTES</span>)
+        expire = datetime.utcnow() + access_token_expires
+
+        <span class="token-keyword">to_encode</span> = {
+            <span class="token-string">"sub"</span>: usuario.email,
+            <span class="token-string">"exp"</span>: expire,
+            <span class="token-string">"usuario_id"</span>: usuario.id
         }
 
-        <span class="token-comment">// Recuperar objeto</span>
-        var usuarioJson = HttpContext.Session.GetString(<span class="token-string">&quot;UsuarioCompleto&quot;</span>);
-        var usuario = JsonSerializer.Deserialize&amp;lt;Usuario&amp;gt;(usuarioJson);
+        token = <span class="token-function">create_access_token</span>(data=<span class="token-keyword">to_encode</span>, secret_key=SECRET_KEY, algorithm=ALGORITHM)
 
-        return View(usuario);
+        <span class="token-keyword">return</span> {
+            <span class="token-string">"access_token"</span>: token,
+            <span class="token-string">"token_type"</span>: <span class="token-string">"bearer"</span>,
+            <span class="token-string">"expires_in"</span>: access_token_expires.seconds
+        }
+
+<span class="token-attribute">@app.get</span>(<span class="token-string">/api/auth/perfil"</span>)
+<span class="token-keyword">async def</span> <span class="token-function">perfil</span>(
+    current_user: <span class="token-type">dict</span> = Depends(get_current_user)
+):
+    <span class="token-comment"># Leer del token JWT</span>
+    <span class="token-keyword">return</span> {
+        <span class="token-string">"usuario_id"</span>: current_user.get(<span class="token-string">"usuario_id"</span>),
+        <span class="token-string">"email"</span>: current_user.get(<span class="token-string">"sub"</span>)
     }
 
-    <span class="token-comment">// Cerrar sesión</span>
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Clear();  <span class="token-comment">// Limpiar toda la sesión</span>
-        return RedirectToAction(<span class="token-string">&quot;Index&quot;</span>, <span class="token-string">&quot;Home&quot;</span>);
-    }
-}</code></pre>
+<span class="token-attribute">@app.post</span>(<span class="token-string">/api/auth/logout"</span>)
+<span class="token-keyword">async def</span> <span class="token-function">logout</span>():
+    <span class="token-comment"># En frontend, eliminar el token</span>
+    <span class="token-keyword">return</span> {<span class="token-string">"mensaje"</span>: <span class="token-string">"Sesión cerrada exitosamente"</span>}</code></pre>
                 </div>
             </div>
 
@@ -1172,7 +1158,7 @@ app.MapControllers();</code></pre>
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudiantesController.cs</span>
+                    <span class="code-title">estudiantes_routes.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46</div>
@@ -1251,7 +1237,7 @@ public async Task&amp;lt;IActionResult&amp;gt; SubirFoto(IFormFile archivo, int 
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">EstudiantesController.cs</span>
+                    <span class="code-title">estudiantes_routes.py</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20</div>
