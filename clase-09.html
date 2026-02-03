@@ -414,7 +414,7 @@
                     </tr>
                     <tr>
                         <td>4</td>
-                        <td><strong>Utilizar</strong> componentes Bootstrap en Vistas ASP.NET</td>
+                        <td><strong>Utilizar</strong> componentes Bootstrap en Componentes Angular</td>
                     </tr>
                     <tr>
                         <td>5</td>
@@ -453,7 +453,7 @@
                     </tr>
                     <tr>
                         <td>15'</td>
-                        <td>Integración ASP.NET + Bootstrap</td>
+                        <td>Integración Angular + Bootstrap</td>
                     </tr>
                     <tr>
                         <td>5'</td>
@@ -632,19 +632,19 @@
 
             <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Introducción a ASP.NET Core<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Introducción a Angular<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
                     <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Publicado el <span class="token-operator">&lt;</span><span class="token-keyword">time</span> <span class="token-property">datetime</span>=<span class="token-string">"2026-01-15"</span><span class="token-operator">&gt;</span>
                         15 de enero de 2026<span class="token-operator">&lt;/</span><span class="token-keyword">time</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>ASP.NET Core es el framework moderno de Microsoft...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Angular es el framework frontend de Google para aplicaciones web modernas...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/artículos/aspnet"</span><span class="token-operator">&gt;</span>Leer más<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">href</span>=<span class="token-string">"/articulos/angular"</span><span class="token-operator">&gt;</span>Leer más<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
                 <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
             <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
 
             <span class="token-operator">&lt;</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Patrones de Diseño en C#<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Los patrones de diseño son soluciones...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>Componentes en TypeScript<span class="token-operator">&lt;/</span><span class="token-keyword">h3</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>Los componentes son la base de las aplicaciones Angular...<span class="token-operator">&lt;/</span><span class="token-keyword">p</span><span class="token-operator">&gt;</span>
             <span class="token-operator">&lt;/</span><span class="token-keyword">article</span><span class="token-operator">&gt;</span>
         <span class="token-operator">&lt;/</span><span class="token-keyword">section</span><span class="token-operator">&gt;</span>
 
@@ -1069,11 +1069,11 @@
 &lt;div class="d-none d-md-block"&gt;Solo visible en tablet+&lt;/div&gt;</code></pre>
         </section>
 
-        <!-- ASP.NET Integration -->
-        <section id="aspnet" class="section">
-            <h2>6. Integración ASP.NET + Bootstrap</h2>
+        <!-- Angular Integration -->
+        <section id="angular" class="section">
+            <h2>6. Integración Angular + Bootstrap</h2>
 
-            <h3>Plantilla Razor (_Layout.cshtml)</h3>
+            <h3>Componente Principal (app.component.html)</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -1081,75 +1081,53 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">_Layout.cshtml</span>
+                    <span class="code-title">app.component.html</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61</div>
-                    <pre><code><span class="token-comment">@* Views/Shared/_Layout.cshtml *@</span>
-&lt;!DOCTYPE html<span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;</span><span class="token-keyword">html</span> <span class="token-property">lang</span>=<span class="token-string">&quot;es&quot;</span><span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> charset=&quot;utf-8&quot; /<span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">meta</span> name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /<span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span><span class="token-namespace">@</span><span class="token-property">ViewData</span>[&quot;Title&quot;] - UNAULA<span class="token-operator">&lt;/</span><span class="token-keyword">title</span><span class="token-operator">&gt;</span>
-
-    <span class="token-comment">@* Bootstrap CSS *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">link</span> href=&quot;https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/css/Bootstrap.min.css&quot;
-          rel=&quot;stylesheet&quot;<span class="token-operator">&gt;</span>
-
-    <span class="token-comment">@* Estilos personalizados *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">link</span> rel=&quot;stylesheet&quot; href=&quot;~/css/site.css&quot; /<span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;/</span><span class="token-keyword">head</span><span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
-    <span class="token-comment">@* Navbar *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-        <span class="token-operator">&lt;</span><span class="token-keyword">nav</span> <span class="token-property">class</span>=<span class="token-string">&quot;navbar navbar-expand-lg navbar-dark bg-primary&quot;</span><span class="token-operator">&gt;</span>
-            <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container&quot;<span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;navbar-brand&quot;</span> asp-controller=&quot;Home&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>
-                     UNAULA
-                <span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">button</span> class=&quot;navbar-toggler&quot; data-bs-toggle=&quot;collapse&quot;
-                        <span class="token-property">data-bs-target</span>=<span class="token-string">&quot;#navbarNav&quot;</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">span</span> class=&quot;navbar-toggler-icon&quot;<span class="token-operator">&gt;</span><span class="token-operator">&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;/</span><span class="token-keyword">button</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;collapse navbar-collapse&quot; <span class="token-property">id</span>=<span class="token-string">&quot;navbarNav&quot;</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;</span><span class="token-keyword">ul</span> class=&quot;navbar-nav me-auto&quot;<span class="token-operator">&gt;</span>
-                        <span class="token-operator">&lt;</span><span class="token-keyword">li</span> class=&quot;nav-item&quot;<span class="token-operator">&gt;</span>
-                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;nav-link&quot;</span> asp-controller=&quot;Home&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>Inicio<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
-                        <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
-                        <span class="token-operator">&lt;</span><span class="token-keyword">li</span> class=&quot;nav-item&quot;<span class="token-operator">&gt;</span>
-                            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">class</span>=<span class="token-string">&quot;nav-link&quot;</span> asp-controller=&quot;Estudiantes&quot; <span class="token-property">asp-action</span>=<span class="token-string">&quot;Index&quot;</span><span class="token-operator">&gt;</span>Estudiantes<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
-                        <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
-                    <span class="token-operator">&lt;/</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
-                <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+                    <pre><code><span class="token-comment">&lt;!-- src/app/app.component.html --&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">nav</span> <span class="token-property">class</span>=<span class="token-string">"navbar navbar-expand-lg navbar-dark bg-primary"</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">"container"</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">routerLink</span>=<span class="token-string">"/"</span> <span class="token-property">class</span>=<span class="token-string">"navbar-brand"</span><span class="token-operator">&gt;</span>
+                 UNAULA
+            <span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">button</span> <span class="token-property">class</span>=<span class="token-string">"navbar-toggler"</span> <span class="token-property">type</span>=<span class="token-string">"button"</span>
+                    <span class="token-property">data-bs-toggle</span>=<span class="token-string">"collapse"</span>
+                    <span class="token-property">data-bs-target</span>=<span class="token-string">"#navbarNav"</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">span</span> <span class="token-property">class</span>=<span class="token-string">"navbar-toggler-icon"</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">span</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;/</span><span class="token-keyword">button</span><span class="token-operator">&gt;</span>
+            <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">"collapse navbar-collapse"</span> <span class="token-property">id</span>=<span class="token-string">"navbarNav"</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;</span><span class="token-keyword">ul</span> <span class="token-property">class</span>=<span class="token-string">"navbar-nav me-auto"</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">li</span> <span class="token-property">class</span>=<span class="token-string">"nav-item"</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">routerLink</span>=<span class="token-string">"/"</span> <span class="token-property">class</span>=<span class="token-string">"nav-link"</span><span class="token-operator">&gt;</span>Inicio<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;</span><span class="token-keyword">li</span> <span class="token-property">class</span>=<span class="token-string">"nav-item"</span><span class="token-operator">&gt;</span>
+                        <span class="token-operator">&lt;</span><span class="token-keyword">a</span> <span class="token-property">routerLink</span>=<span class="token-string">"/estudiantes"</span> <span class="token-property">class</span>=<span class="token-string">"nav-link"</span><span class="token-operator">&gt;</span>Estudiantes<span class="token-operator">&lt;/</span><span class="token-keyword">a</span><span class="token-operator">&gt;</span>
+                    <span class="token-operator">&lt;/</span><span class="token-keyword">li</span><span class="token-operator">&gt;</span>
+                <span class="token-operator">&lt;/</span><span class="token-keyword">ul</span><span class="token-operator">&gt;</span>
             <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
-        <span class="token-operator">&lt;/</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
-
-    <span class="token-comment">@* Contenido *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container mt-4&quot;<span class="token-operator">&gt;</span>
-        <span class="token-operator">&lt;</span><span class="token-keyword">main</span> <span class="token-property">role</span>=<span class="token-string">&quot;main&quot;</span><span class="token-operator">&gt;</span>
-            <span class="token-namespace">@</span><span class="token-property">RenderBody</span>()
-        <span class="token-operator">&lt;/</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
-
-    <span class="token-comment">@* Footer *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">footer</span> class=&quot;border-top footer text-muted mt-5 py-3&quot;<span class="token-operator">&gt;</span>
-        <span class="token-operator">&lt;</span><span class="token-keyword">div</span> class=&quot;container&quot;<span class="token-operator">&gt;</span>
-             &amp;amp;copy; 2026 - UNAULA Ingeniería Informática
         <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">nav</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">header</span><span class="token-operator">&gt;</span>
 
-    <span class="token-comment">@* Bootstrap JS *@</span>
-    <span class="token-operator">&lt;</span><span class="token-keyword">script</span> src=&quot;https://cdn.jsdelivr.net/npm/Bootstrap@5.3.2/dist/js/Bootstrap.bundle.min.js&quot;<span class="token-operator">&gt;</span>
-    <span class="token-operator">&lt;/</span><span class="token-keyword">script</span><span class="token-operator">&gt;</span>
-    <span class="token-namespace">@</span><span class="token-property">await</span> RenderSectionAsync(&quot;Scripts&quot;, required: false)
-<span class="token-operator">&lt;/</span><span class="token-keyword">body</span><span class="token-operator">&gt;</span>
-<span class="token-operator">&lt;/</span><span class="token-keyword">html</span><span class="token-operator">&gt;</span>&lt;</code></pre>
+<span class="token-comment">&lt;!-- Contenido principal --&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">"container mt-4"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+        <span class="token-operator">&lt;</span><span class="token-keyword">router-outlet</span><span class="token-operator">&gt;&lt;/</span><span class="token-keyword">router-outlet</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;/</span><span class="token-keyword">main</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+
+<span class="token-comment">&lt;!-- Footer --&gt;</span>
+<span class="token-operator">&lt;</span><span class="token-keyword">footer</span> <span class="token-property">class</span>=<span class="token-string">"border-top footer text-muted mt-5 py-3"</span><span class="token-operator">&gt;</span>
+    <span class="token-operator">&lt;</span><span class="token-keyword">div</span> <span class="token-property">class</span>=<span class="token-string">"container"</span><span class="token-operator">&gt;</span>
+         &amp;copy; 2026 - UNAULA Ingeniería Informática
+    <span class="token-operator">&lt;/</span><span class="token-keyword">div</span><span class="token-operator">&gt;</span>
+<span class="token-operator">&lt;/</span><span class="token-keyword">footer</span><span class="token-operator">&gt;</span>&lt;/code></pre>
                 </div>
             </div>
 
-            <h3>Vista con Bootstrap - CRUD de Estudiantes</h3>
+            <h3>Componente Angular - Lista de Estudiantes</h3>
             <div class="code-block">
                 <div class="code-header">
                     <div class="code-dots">
@@ -1157,7 +1135,7 @@
                         <span class="code-dot yellow"></span>
                         <span class="code-dot green"></span>
                     </div>
-                    <span class="code-title">Index.cshtml</span>
+                    <span class="code-title">estudiantes.component.html</span>
                 </div>
                 <div class="code-content">
                     <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61</div>
@@ -1359,7 +1337,7 @@
                 <li>Formularios modernos</li>
                 <li>Grid system de Bootstrap</li>
                 <li>Componentes Bootstrap</li>
-                <li>Integración con ASP.NET</li>
+                <li>Integración HTML5 + Bootstrap</li>
             </ul>
         </section>
 
@@ -1585,8 +1563,8 @@ git tag -a clase-09-v1 -m "Entrega clase 09 - HTML5 y Bootstrap"</code></pre>
                         <td>Mobile-first, breakpoints</td>
                     </tr>
                     <tr>
-                        <td><strong>Tag Helpers</strong></td>
-                        <td><code>asp-controller</code>, <code>asp-action</code>, <code>asp-for</code></td>
+                        <td><strong>CDN Bootstrap</strong></td>
+                        <td>CSS y JS vía CDN de jsDelivr</td>
                     </tr>
                     <tr>
                         <td><strong>Accesibilidad</strong></td>
