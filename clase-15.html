@@ -467,107 +467,159 @@ filaEliminar.Delete();
 dtEstudiantes.AcceptChanges(); // Confirma cambios
 // dtEstudiantes.RejectChanges(); // Revierte cambios</code></pre>
 
-            <h3>DataAdapter - Puente con la BD</h3>
-            <p><strong><abbr title="Implementación específica de DataAdapter para SQL Server que maneja conexiones, comandos y parámetros automáticamente">SqlDataAdapter</abbr></strong> = Adaptador específico para SQL Server que facilita el llenado de DataSet y sincronización de cambios.</p>
-            <p>Cargar datos desde BD (Fill):</p>
-            <pre><code>using System.Data.SqlClient;
+            <h3>pyodbc - Puente con la BD</h3>
+            <p><strong><abbr title="Módulo Python para conectarse a bases de datos SQL usando ODBC">pyodbc</abbr></strong> = Biblioteca para conectar a bases de datos SQL usando ODBC, facilitando la ejecución de consultas y recuperación de datos.</p>
+            <p>Cargar datos desde BD:</p>
+            <pre><code><span class="token-keyword">import</span> pyodbc
+<span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass, asdict
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> List
 
-public class EstudianteDataAdapter
-{
-    private string connectionString = 
-        "Server=localhost;Database=Universidad;Trusted_Connection=True;";
-    
-    public DataSet CargarEstudiantes()
-    {
-        DataSet ds = new DataSet("Universidad");
-        
-        string query = "SELECT Id, Nombre, Apellido, Cedula, Email FROM Estudiantes";
-        
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-            adapter.Fill(ds, "Estudiantes");
-        }
-        
-        return ds;
-    }
-}</code></pre>
+<span class="token-keyword">@dataclass</span>
+<span class="token-keyword">class</span> <span class="token-type">Estudiante</span>:
+    id: <span class="token-type">int</span>
+    nombre: <span class="token-type">str</span>
+    apellido: <span class="token-type">str</span>
+    cedula: <span class="token-type">str</span>
+    email: <span class="token-type">str</span>
 
-            <p>Sincronizar cambios con BD (Update):</p>
-            <p><strong><abbr title="Clase que genera automáticamente los comandos INSERT, UPDATE, DELETE basándose en la consulta SELECT del DataAdapter">SqlCommandBuilder</abbr></strong> = Generador automático de comandos CRUD que analiza la consulta SELECT y crea los comandos correspondientes para sincronizar cambios.</p>
-            <pre><code>public int GuardarCambios(DataTable dt)
-{
-    int filasAfectadas = 0;
+<span class="token-keyword">class</span> <span class="token-type">EstudianteRepository</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>):
+        <span class="token-keyword">self</span>.connection_string = (
+            <span class="token-string">"DRIVER={ODBC Driver 17 for SQL Server};"</span>
+            <span class="token-string">"Server=localhost;"</span>
+            <span class="token-string">"Database=Universidad;"</span>
+            <span class="token-string">"Trusted_Connection=yes;"</span>
+        )
 
-    using (SqlConnection conn = new SqlConnection(connectionString))
-    {
-        string selectQuery = "SELECT * FROM Estudiantes";
-        SqlDataAdapter adapter = new SqlDataAdapter(selectQuery, conn);
+    <span class="token-keyword">def</span> <span class="token-method">cargar_estudiantes</span>(<span class="token-keyword">self</span>) -> List[<span class="token-type">Estudiante</span>]:
+        query = <span class="token-string">"SELECT Id, Nombre, Apellido, Cedula, Email FROM Estudiantes"</span>
 
-        SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-        filasAfectadas = adapter.Update(dt);
-    }
+        <span class="token-keyword">with</span> pyodbc.connect(<span class="token-keyword">self</span>.connection_string) <span class="token-keyword">as</span> conn:
+            cursor = conn.cursor()
+            cursor.execute(query)
 
-    return filasAfectadas;
-}</code></pre>
+            estudiantes = []
+            <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+                est = Estudiante(
+                    id=row.Id,
+                    nombre=row.Nombre,
+                    apellido=row.Apellido,
+                    cedula=row.Cedula,
+                    email=row.Email
+                )
+                estudiantes.append(est)
+
+            <span class="token-keyword">return</span> estudiantes
+</code></pre>
+
+            <p>Sincronizar cambios con BD (Update/Insert/Delete):</p>
+            <p><strong><abbr title="En Python, usamos parámetros y consultas SQL explícitas para INSERT, UPDATE, DELETE">SQL con Parámetros</abbr></strong> = Consultas SQL con parámetros para prevenir SQL injection y ejecutar operaciones CRUD.</p>
+            <pre><code><span class="token-keyword">def</span> <span class="token-method">guardar_cambios</span>(<span class="token-keyword">self</span>, estudiantes: List[<span class="token-type">Estudiante</span>]) -> <span class="token-type">int</span>:
+    filas_afectadas = 0
+
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-keyword">self</span>.connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+
+        <span class="token-keyword">for</span> est <span class="token-keyword">in</span> estudiantes:
+            <span class="token-keyword">if</span> est.id:  <span class="token-comment"># UPDATE para existentes</span>
+                query = <span class="token-string">"""UPDATE Estudiantes
+                          SET Nombre=?, Apellido=?, Cedula=?, Email=?
+                          WHERE Id=?"</span>
+                cursor.execute(query, est.nombre, est.apellido,
+                              est.cedula, est.email, est.id)
+            <span class="token-keyword">else</span>:  <span class="token-comment"># INSERT para nuevos</span>
+                query = <span class="token-string">"""INSERT INTO Estudiantes (Nombre, Apellido, Cedula, Email)
+                          VALUES (?, ?, ?, ?)"</span>
+                cursor.execute(query, est.nombre, est.apellido,
+                              est.cedula, est.email)
+
+            filas_afectadas += cursor.rowcount
+
+        conn.commit()
+
+    <span class="token-keyword">return</span> filas_afectadas
+</code></pre>
 
             <div class="prerequisites" style="background-color: #fff3cd; border-left-color: #ffc107;">
-                <strong>Errores Comunes con SqlCommandBuilder</strong>
+                <strong>Errores Comunes con pyodbc</strong>
                 <ul>
-                    <li><strong>No incluir columna PRIMARY KEY:</strong> SqlCommandBuilder necesita la PK en el SELECT para generar WHERE del UPDATE/DELETE</li>
-                    <li><strong>Consultas complejas:</strong> Solo funciona con SELECT simple de una tabla (no JOINs, no GROUP BY)</li>
-                    <li><strong>Olvidar llamar a Update():</strong> Los cambios no se persisten hasta llamar adapter.Update()</li>
-                    <li><strong>No aceptar cambios después de Update:</strong> Debe llamar AcceptChanges() después de sincronizar para resetear RowState</li>
+                    <li><strong>No usar parámetros (?):</strong> Siempre usar parámetros para prevenir SQL injection</li>
+                    <li><strong>Olvidar commit():</strong> Los cambios no se persisten hasta llamar conn.commit()</li>
+                    <li><strong>Consultas complejas:</strong> Para JOINs o GROUP BY, considerar SQLAlchemy ORM</li>
+                    <li><strong>Cerrar conexión:</strong> Usar 'with' para asegurar que la conexión se cierre correctamente</li>
                 </ul>
             </div>
 
-            <h3>Tracking de Cambios</h3>
-            <p><strong><abbr title="Propiedad de DataRow que indica el estado actual de la fila: Unchanged (sin cambios), Added (nueva), Modified (modificada), Deleted (marcada para borrar), Detached (creada pero no agregada)">RowState</abbr></strong> = Propiedad que indica el estado de cada fila para tracking automático de cambios:</p>
+            <h3>Tracking de Cambios con Dataclasses</h3>
+            <p><strong><abbr title="En Python, usamos dataclasses con __post_init__ y atributos para tracking de estado de objetos">Estado de Objetos</abbr></strong> = Propiedad que indica el estado de cada objeto para tracking de cambios:</p>
             <ul>
-                <li><strong>Unchanged:</strong> Sin cambios (fila original o después de AcceptChanges)</li>
-                <li><strong>Added:</strong> Nueva fila agregada (pendiente de INSERT)</li>
-                <li><strong>Modified:</strong> Fila modificada (pendiente de UPDATE)</li>
-                <li><strong>Deleted:</strong> Fila eliminada (pendiente de DELETE)</li>
-                <li><strong>Detached:</strong> Fila creada pero no agregada al DataTable</li>
+                <li><strong>Objeto sin cambios:</strong> Datos originales de la BD</li>
+                <li><strong>Objeto nuevo (id=None):</strong> Pendiente de INSERT</li>
+                <li><strong>Objeto modificado:</strong> Pendiente de UPDATE</li>
+                <li><strong>Objeto marcado para borrar:</strong> Pendiente de DELETE</li>
             </ul>
 
-            <p><strong><abbr title="Método que confirma todos los cambios pendientes en el DataTable, reseteando RowState a Unchanged para todas las filas">AcceptChanges()</abbr></strong> = Confirma cambios pendientes, reseteando RowState.</p>
-            <p><strong><abbr title="Método que revierte todos los cambios pendientes en el DataTable, restaurando los valores originales">RejectChanges()</abbr></strong> = Revierte cambios pendientes, restaurando valores originales.</p>
+            <p><strong>Commit:</strong> Confirma cambios pendientes enviándolos a la BD.</p>
+            <p><strong>Rollback:</strong> Revierte cambios pendientes, recargando desde la BD.</p>
 
-            <h3>DataSet con Múltiples Tablas</h3>
-            <pre><code>public DataSet CargarUniversidadCompleta()
-{
-    DataSet ds = new DataSet("Universidad");
-    
-    using (SqlConnection conn = new SqlConnection(connectionString))
-    {
-        SqlDataAdapter adapterEst = new SqlDataAdapter(
-            "SELECT * FROM Estudiantes", conn);
-        adapterEst.Fill(ds, "Estudiantes");
-        
-        SqlDataAdapter adapterCursos = new SqlDataAdapter(
-            "SELECT * FROM Cursos", conn);
-        adapterCursos.Fill(ds, "Cursos");
+            <h3>Cargar Múltiples Tablas con pyodbc</h3>
+            <pre><code><span class="token-keyword">def</span> <span class="token-method">cargar_universidad_completa</span>(<span class="token-keyword">self</span>) -> dict:
+    universidad = {
+        <span class="token-string">"estudiantes"</span>: [],
+        <span class="token-string">"cursos"</span>: [],
+        <span class="token-string">"matriculas"</span>: []
     }
-    
-    // Definir relaciones
-    DataColumn pkEstudiante = ds.Tables["Estudiantes"].Columns["Id"];
-    DataColumn fkMatricula = ds.Tables["Matriculas"].Columns["EstudianteId"];
-    
-    DataRelation relEstudianteMatricula = new DataRelation(
-        "Estudiante_Matriculas", pkEstudiante, fkMatricula);
-    
-    ds.Relations.Add(relEstudianteMatricula);
-    
-    return ds;
-}</code></pre>
+
+    <span class="token-keyword">with</span> pyodbc.connect(<span class="token-keyword">self</span>.connection_string) <span class="token-keyword">as</span> conn:
+        cursor = conn.cursor()
+
+        <span class="token-comment"># Cargar Estudiantes</span>
+        cursor.execute(<span class="token-string">"SELECT * FROM Estudiantes"</span>)
+        <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+            universidad[<span class="token-string">"estudiantes"</span>].append({
+                <span class="token-string">"id"</span>: row.Id,
+                <span class="token-string">"nombre"</span>: row.Nombre,
+                <span class="token-string">"apellido"</span>: row.Apellido,
+                <span class="token-string">"cedula"</span>: row.Cedula,
+                <span class="token-string">"email"</span>: row.Email
+            })
+
+        <span class="token-comment"># Cargar Cursos</span>
+        cursor.execute(<span class="token-string">"SELECT * FROM Cursos"</span>)
+        <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+            universidad[<span class="token-string">"cursos"</span>].append({
+                <span class="token-string">"id"</span>: row.Id,
+                <span class="token-string">"nombre"</span>: row.Nombre,
+                <span class="token-string">"creditos"</span>: row.Creditos
+            })
+
+        <span class="token-comment"># Cargar Matrículas (con JOIN para obtener nombres)</span>
+        cursor.execute(<span class="token-string">"""
+            SELECT m.Id, m.EstudianteId, m.CursoId,
+                   e.Nombre as EstudianteNombre,
+                   c.Nombre as CursoNombre
+            FROM Matriculas m
+            JOIN Estudiantes e ON m.EstudianteId = e.Id
+            JOIN Cursos c ON m.CursoId = c.Id
+        """</span>)
+        <span class="token-keyword">for</span> row <span class="token-keyword">in</span> cursor:
+            universidad[<span class="token-string">"matriculas"</span>].append({
+                <span class="token-string">"id"</span>: row.Id,
+                <span class="token-string">"estudiante_id"</span>: row.EstudianteId,
+                <span class="token-string">"curso_id"</span>: row.CursoId,
+                <span class="token-string">"estudiante_nombre"</span>: row.EstudianteNombre,
+                <span class="token-string">"curso_nombre"</span>: row.CursoNombre
+            })
+
+    <span class="token-keyword">return</span> universidad
+</code></pre>
 
             <h3>Comparación: Conectado vs Desconectado</h3>
             <table>
                 <tr>
                     <th>Aspecto</th>
-                    <th>Conectado (SqlDataReader)</th>
-                    <th>Desconectado (DataSet)</th>
+                    <th>Conectado (Cursor)</th>
+                    <th>Desconectado (Listas/Dicts)</th>
                 </tr>
                 <tr>
                     <td>Conexión</td>

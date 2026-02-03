@@ -725,36 +725,32 @@ json_array = json.dumps(productos, indent=2, ensure_ascii=<span class="keyword">
             <h3>Repository JSON - Estructura Base</h3>
             <pre><code><span class="keyword">using</span> System;
 <span class="keyword">using</span> System.Collections.Generic;
-<span class="keyword">using</span> System.IO;
-<span class="keyword">using</span> System.Linq;
-<span class="keyword">using</span> System.Text.Json;
+<span class="token-keyword">import</span> json
+<span class="token-keyword">import</span> os
+<span class="token-keyword">from</span> typing <span class="token-keyword">import</span> List
+<span class="token-keyword">from</span> dataclasses <span class="token-keyword">import</span> dataclass, asdict
 
-<span class="keyword">public class</span> <span class="type">EstudianteRepositoryJSON</span>
-{
-    <span class="keyword">private readonly</span> <span class="type">string</span> _filePath;
-    <span class="keyword">private readonly</span> <span class="type">JsonSerializerOptions</span> _jsonOptions;
+<span class="token-keyword">@dataclass</span>
+<span class="token-keyword">class</span> <span class="token-type">Estudiante</span>:
+    id: <span class="token-type">int</span>
+    nombre: <span class="token-type">str</span>
+    apellido: <span class="token-type">str</span>
+    email: <span class="token-type">str</span>
+    promedio: <span class="token-type">float</span>
 
-    <span class="keyword">public</span> <span class="method">EstudianteRepositoryJSON</span>(<span class="type">string</span> filePath = <span class="string">"estudiantes.json"</span>)
-    {
-        _filePath = filePath;
-        _jsonOptions = <span class="keyword">new</span> <span class="type">JsonSerializerOptions</span>
-        {
-            WriteIndented = <span class="keyword">true</span>,
-            PropertyNamingPolicy = <span class="type">JsonNamingPolicy</span>.CamelCase
-        };
+<span class="token-keyword">class</span> <span class="token-type">EstudianteRepositoryJSON</span>:
+    <span class="token-keyword">def</span> <span class="token-method">__init__</span>(<span class="token-keyword">self</span>, file_path: <span class="token-type">str</span> = <span class="token-string">"estudiantes.json"</span>):
+        <span class="token-keyword">self</span>._file_path = file_path
 
-        <span class="comment">// Crear archivo vacío si no existe</span>
-        <span class="keyword">if</span> (!File.Exists(_filePath))
-        {
-            File.WriteAllText(_filePath, <span class="string">"[]"</span>);
-        }
-    }
+        <span class="token-comment"># Crear archivo vacío si no existe</span>
+        <span class="token-keyword">if</span> <span class="token-keyword">not</span> os.path.exists(<span class="token-keyword">self</span>._file_path):
+            <span class="token-keyword">with</span> <span class="token-keyword">open</span>(<span class="token-keyword">self</span>._file_path, <span class="token-string">'w'</span>) <span class="token-keyword">as</span> f:
+                json.dump([], f)
 
-    <span class="keyword">public void</span> <span class="method">Crear</span>(<span class="type">Estudiante</span> estudiante)
-    {
-        <span class="type">var</span> estudiantes = ObtenerTodos();
+    <span class="token-keyword">def</span> <span class="token-method">crear</span>(<span class="token-keyword">self</span>, estudiante: <span class="token-type">Estudiante</span>) -> <span class="token-keyword">None</span>:
+        estudiantes = <span class="token-keyword">self</span>.obtener_todos()
 
-        <span class="comment">// Generar ID automático</span>
+        <span class="token-comment"># Generar ID automático</span>
         estudiante.Id = estudiantes.Any()
             ? estudiantes.Max(e => e.Id) + 1
             : 1;

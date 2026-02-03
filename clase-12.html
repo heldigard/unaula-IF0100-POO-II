@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 12 - Introducción a ADOPython | IF0100 POO II</title>
+    <title>Clase 12 - Introducción a pyodbc | IF0100 POO II</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -467,7 +467,7 @@
 <body>
     <a href="#main" class="skip-link">Saltar al contenido</a>
     <header class="header">
-        <h1>Clase 12 - Introducción a ADOPython</h1>
+        <h1>Clase 12 - Introducción a pyodbc</h1>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II | Unidad 4 - Persistencia de Datos</p>
     </header>
 
@@ -501,7 +501,7 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td><strong>Comprender</strong> la arquitectura de ADOPython</td>
+                        <td><strong>Comprender</strong> la arquitectura de pyodbc</td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -509,7 +509,7 @@
                     </tr>
                     <tr>
                         <td>3</td>
-                        <td><strong>Implementar</strong> operaciones CRUD con ADOPython</td>
+                        <td><strong>Implementar</strong> operaciones CRUD con pyodbc</td>
                     </tr>
                     <tr>
                         <td>4</td>
@@ -536,7 +536,7 @@
                 <tbody>
                     <tr>
                         <td>10'</td>
-                        <td> Qué es ADOPython?</td>
+                        <td> Qué es pyodbc?</td>
                     </tr>
                     <tr>
                         <td>15'</td>
@@ -562,22 +562,22 @@
             </table>
         </section>
 
-        <!-- Que es ADOPython -->
+        <!-- Que es pyodbc -->
         <section id="que-es" class="section">
-            <h2>1. Qué es ADOPython?</h2>
+            <h2>1. Qué es pyodbc?</h2>
 
             <div class="note-box">
-                <strong>¿Por qué aprender ADOPython?</strong>
+                <strong>¿Por qué aprender pyodbc?</strong>
                 <ul>
                     <li><strong>Control total:</strong> Escribe SQL exacto para máximo rendimiento en queries complejas</li>
                     <li><strong>Comprensión profunda:</strong> Entender cómo funciona el acceso a datos bajo el capó</li>
-                    <li><strong>Stored Procedures:</strong> ADOPython es ideal para trabajar con procedimientos almacenados</li>
-                    <li><strong>Fundamento:</strong> Entity Framework y otros ORMs se construyen sobre ADOPython</li>
+                    <li><strong>Stored Procedures:</strong> pyodbc es ideal para trabajar con procedimientos almacenados</li>
+                    <li><strong>Fundamento:</strong> Entity Framework y otros ORMs se construyen sobre pyodbc</li>
                 </ul>
             </div>
 
             <h3>Acceso a datos en Python</h3>
-            <p><strong><abbr title="ADOPython - ActiveX Data Objects for Python, tecnología de acceso a datos de Microsoft">ADOPython</abbr></strong> es un conjunto de clases que permite a las aplicaciones Python acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
+            <p><strong><abbr title="pyodbc - ActiveX Data Objects for Python, tecnología de acceso a datos de Microsoft">pyodbc</abbr></strong> es un conjunto de clases que permite a las aplicaciones Python acceder a fuentes de datos como SQL Server, Oracle, MySQL, PostgreSQL, SQLite, archivos XML, entre otros.</p>
 
             <h4>Características principales:</h4>
             <div class="badge-list">
@@ -596,20 +596,20 @@
             </div>
 
             <h4>Proveedores de datos (Data Providers):</h4>
-            <p><strong>Data Provider</strong> = Conjunto de clases específicas para un motor de base de datos (SqlConnection para SQL Server, OracleConnection para Oracle, etc.)</p>
+            <p><strong>Data Provider</strong> = Conjunto de módulos específicos para un motor de base de datos (pyodbc para SQL Server, psycopg2 para PostgreSQL, mysql-connector-python para MySQL, etc.)</p>
             <ul>
-                <li><strong>SqlClient:</strong> SQL Server</li>
-                <li><strong>OracleClient:</strong> Oracle</li>
-                <li><strong>MySql.Data:</strong> MySQL</li>
-                <li><strong>Npgsql:</strong> PostgreSQL</li>
+                <li><strong>pyodbc:</strong> SQL Server (usando ODBC)</li>
+                <li><strong>psycopg2:</strong> PostgreSQL</li>
+                <li><strong>mysql-connector-python:</strong> MySQL</li>
+                <li><strong>sqlite3:</strong> SQLite (incluido en Python)</li>
             </ul>
 
-            <h3>ADOPython vs Entity Framework</h3>
+            <h3>pyodbc vs Entity Framework</h3>
             <table class="tag-table">
                 <thead>
                     <tr>
                         <th>Característica</th>
-                        <th>ADOPython</th>
+                        <th>pyodbc</th>
                         <th>EF Core</th>
                     </tr>
                 </thead>
@@ -637,12 +637,12 @@
                 </tbody>
             </table>
 
-            <p><em>En este curso: Ambos (ADOPython primero, luego EF)</em></p>
+            <p><em>En este curso: Ambos (pyodbc primero, luego EF)</em></p>
         </section>
 
         <!-- Arquitectura -->
         <section id="arquitectura" class="section">
-            <h2>2. Arquitectura ADOPython</h2>
+            <h2>2. Arquitectura pyodbc</h2>
 
             <h3>Componentes principales</h3>
             <figure class="figure-container">
@@ -665,7 +665,7 @@
             </ul>
 
             <div class="note-box">
-                <strong>Mini-Chequeo: Arquitectura ADOPython</strong>
+                <strong>Mini-Chequeo: Arquitectura pyodbc</strong>
                 <ul>
                     <li>¿Qué diferencia hay entre modo conectado y desconectado?</li>
                     <li>¿Cuándo usarías DataReader vs DataSet?</li>
@@ -1078,7 +1078,7 @@ columns = [desc[<span class="token-number">0</span>] <span class="token-keyword"
                 </ul>
             </div>
 
-            <h3>Transacciones en ADOPython</h3>
+            <h3>Transacciones en pyodbc</h3>
             <p><strong><abbr title="Transaction - Unidad de trabajo compuesta por múltiples operaciones que deben ejecutarse todas o ninguna">Transaction</abbr></strong> = Unidad de trabajo compuesta por múltiples operaciones SQL que deben ejecutarse todas o ninguna (ACID).</p>
             <p><strong>Commit</strong> = Confirmar la transacción (aplicar todos los cambios permanentemente).</p>
             <p><strong>Rollback</strong> = Deshacer la transacción (revertir todos los cambios si algo falla).</p>
@@ -1217,7 +1217,7 @@ cursor.<span class="token-method">execute</span>(<span class="token-string">"SEL
             </div>
 
             <h3>Connection Pooling</h3>
-            <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, ADOPython mantiene un "pool" de conexiones disponibles.</p>
+            <p><strong><abbr title="Connection Pooling - Mecanismo que reutiliza conexiones físicas existentes en lugar de crear nuevas">Connection Pooling</abbr></strong> = Reutilización automática de conexiones físicas para mejorar rendimiento. En lugar de abrir/cerrar conexiones reales, pyodbc mantiene un "pool" de conexiones disponibles.</p>
             <p><strong>¿Por qué Connection Pooling?</strong> Abrir una conexión física es costoso (miles de milisegundos). Reutilizar conexiones existentes toma microsegundos.</p>
             <div class="code-block">
                 <div class="code-header">
@@ -1330,10 +1330,10 @@ cursor.<span class="token-method">execute</span>(query, (codigo,))
 
         <!-- Práctica / Laboratorio -->
         <section id="practica" class="section actividad">
-            <h3>Actividad: Repositorio ADOPython CRUD</h3>
+            <h3>Actividad: Repositorio pyodbc CRUD</h3>
             <p><strong>Tipo:</strong> Opcional / práctica</p>
             <p><strong>Relacionado con:</strong> Ninguno</p>
-            <p><strong>Entregable:</strong> Repositorio ADOPython con operaciones CRUD para Estudiantes</p>
+            <p><strong>Entregable:</strong> Repositorio pyodbc con operaciones CRUD para Estudiantes</p>
             <p><strong>Tiempo estimado:</strong> 40 min</p>
             <p><strong>Criterios de éxito:</strong> Comprensión de pyodbc.connect(), cursor.execute(), cursor.fetchall()</p>
             <h2>Práctica / Laboratorio</h2>
@@ -1500,7 +1500,7 @@ cursor.<span class="token-method">execute</span>(query, (codigo,))
                 </thead>
                 <tbody>
                     <tr>
-                        <td>ADOPython Docs</td>
+                        <td>pyodbc Docs</td>
                         <td><a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/index" target="_blank">docs.microsoft.com/dotnet/framework/data/adonet</a></td>
                     </tr>
                     <tr>
@@ -1603,7 +1603,7 @@ cursor.<span class="token-method">execute</span>(query, (codigo,))
                     </tr>
                     <tr>
                         <td><strong>Comparación</strong></td>
-                        <td>ADOPython vs EF Core</td>
+                        <td>pyodbc vs EF Core</td>
                     </tr>
                 </tbody>
             </table>
@@ -1625,7 +1625,7 @@ cursor.<span class="token-method">execute</span>(query, (codigo,))
   </ul>
   <p>Tag: <code>clase-12-v1</code></p>
 </section><footer class="footer">
-        <p><strong>"ADOPython: Control total sobre tus datos"</strong></p>
+        <p><strong>"pyodbc: Control total sobre tus datos"</strong></p>
         <p>UNAULA - Ingeniería Informática - 2026-I</p>
         <p>IF0100 - Lenguaje de Programación Orientada a Objetos II</p>
     </footer>

@@ -298,7 +298,7 @@
             <div class="objectives">
                 <p>Al finalizar esta clase, el estudiante será capaz de:</p>
                 <ul>
-                    <li>Implementar data binding bidireccional en Windows Forms</li>
+                    <li>Implementar data binding bidireccional en Tkinter</li>
                     <li>Utilizar archivos XML como fuente de datos</li>
                     <li>Exportar e importar datos usando DataSet y XML</li>
                     <li>Aplicar BindingSource para sincronización de controles</li>
@@ -311,7 +311,7 @@
             <div class="prerequisites">
                 <p>Para comprender esta clase, se requiere:</p>
                 <ul>
-                    <li>Conocimientos básicos de Windows Forms</li>
+                    <li>Conocimientos básicos de Tkinter</li>
                     <li>Entendimiento de DataSet y DataAdapter</li>
                     <li>Familiaridad con XML básico</li>
                     <li>Conceptos de ADOPython</li>
@@ -333,11 +333,11 @@
             </div>
 
             <h3>¿Qué es Data Binding?</h3>
-            <p><strong><abbr title="Mecanismo que enlaza automáticamente controles visuales (TextBox, DataGridView, ComboBox) con fuentes de datos (DataTable, List, objetos), sincronizando cambios bidireccionalmente">Data Binding</abbr></strong> = Enlace automático entre controles visuales y fuentes de datos que sincroniza cambios bidireccionalmente sin código manual.</p>
-            <p>Enlazar automáticamente controles visuales (TextBox, DataGridView, ComboBox) con fuentes de datos (DataTable, List, etc.).</p>
+            <p><strong><abbr title="Mecanismo que enlaza automáticamente controles visuales (TextBox, Treeview, ComboBox) con fuentes de datos (DataTable, List, objetos), sincronizando cambios bidireccionalmente">Data Binding</abbr></strong> = Enlace automático entre controles visuales y fuentes de datos que sincroniza cambios bidireccionalmente sin código manual.</p>
+            <p>Enlazar automáticamente controles visuales (TextBox, Treeview, ComboBox) con fuentes de datos (DataTable, List, etc.).</p>
 
             <h3>BindingSource (Recomendado)</h3>
-            <p><strong><abbr title="Componente de Windows Forms que actúa como intermediario entre la fuente de datos y los controles UI, proporcionando navegación, filtrado, ordenamiento y notificación de cambios">BindingSource</abbr></strong> = Componente intermediario entre datos y controles UI.</p>
+            <p><strong><abbr title="Componente de Tkinter que actúa como intermediario entre la fuente de datos y los controles UI, proporcionando navegación, filtrado, ordenamiento y notificación de cambios">BindingSource</abbr></strong> = Componente intermediario entre datos y controles UI.</p>
 
             <h4>Ventajas de BindingSource:</h4>
             <ul>
@@ -347,9 +347,9 @@
                 <li>✅ Notificación de cambios</li>
             </ul>
 
-            <h3>Windows Forms y DataGridView</h3>
-            <p><strong><abbr title="Framework de UI para aplicaciones de escritorio en Python con controles visuales pre-construidos como TextBox, Button, DataGridView">Windows Forms</abbr></strong> = Framework de UI para aplicaciones de escritorio en Python.</p>
-            <p><strong><abbr title="Control de Windows Forms que muestra datos en formato de tabla (filas y columnas) con soporte para selección, edición, ordenamiento y paginación">DataGridView</abbr></strong> = Control de tabla para mostrar y editar datos.</p>
+            <h3>Tkinter y Treeview</h3>
+            <p><strong><abbr title="Framework de UI para aplicaciones de escritorio en Python con controles visuales pre-construidos como TextBox, Button, Treeview">Tkinter</abbr></strong> = Framework de UI para aplicaciones de escritorio en Python.</p>
+            <p><strong><abbr title="Control de Tkinter que muestra datos en formato de tabla (filas y columnas) con soporte para selección, edición, ordenamiento y paginación">Treeview</abbr></strong> = Control de tabla para mostrar y editar datos.</p>
 
             <h3>DataSet y XML</h3>
             <p><strong><abbr title="Lenguaje de Marcado Extensible, formato de texto para almacenar y transportar datos de manera estructurada y legible por humanos">XML</abbr></strong> = Formato de texto para almacenar y transportar datos estructurados.</p>
@@ -391,133 +391,109 @@
         <section id="ejemplos">
             <h2>💻 Ejemplos Prácticos</h2>
             
-            <h3>Ejemplo completo de DataBinding con Windows Forms</h3>
-            <pre><code>using System.Windows.Forms;
+            <h3>Ejemplo completo de DataBinding con Tkinter</h3>
+            <pre><code>import tkinter as tk
+from tkinter import ttk, messagebox
 
-public class FormEstudiantes : Form
-{
-    private DataTable dtEstudiantes;
-    private BindingSource bindingSource;
-    private DataGridView dgvEstudiantes;
-    private TextBox txtNombre, txtApellido, txtEmail;
-    private Button btnGuardar, btnEliminar, btnNuevo;
+class EstudianteForm:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Gestión de Estudiantes")
+        self.root.geometry("600x500")
 
-    public FormEstudiantes()
-    {
-        InicializarComponentes();
-        CargarDatos();
-    }
+        # Datos (en producción vendrían de BD)
+        self.estudiantes = [
+            {"id": 1, "nombre": "Juan", "apellido": "Pérez", "email": "juan@unaula.edu.co"},
+            {"id": 2, "nombre": "María", "apellido": "García", "email": "maria@unaula.edu.co"},
+            {"id": 3, "nombre": "Carlos", "apellido": "López", "email": "carlos@unaula.edu.co"},
+        ]
 
-    private void InicializarComponentes()
-    {
-        // Crear controles
-        dgvEstudiantes = new DataGridView
-        {
-            Dock = DockStyle.Top,
-            Height = 300,
-            SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        };
+        self._inicializar_componentes()
+        self._cargar_datos()
 
-        txtNombre = new TextBox { Location = new Point(100, 320), Width = 200 };
-        txtApellido = new TextBox { Location = new Point(100, 350), Width = 200 };
-        txtEmail = new TextBox { Location = new Point(100, 380), Width = 200 };
+    def _inicializar_componentes(self):
+        # Treeview (tabla)
+        columns = ("id", "nombre", "apellido", "email")
+        self.tree = ttk.Treeview(self.root, columns=columns, show="headings", height=10)
+        self.tree.heading("id", text="ID")
+        self.tree.heading("nombre", text="Nombre")
+        self.tree.heading("apellido", text="Apellido")
+        self.tree.heading("email", text="Email")
+        self.tree.column("id", width=50)
+        self.tree.column("nombre", width=150)
+        self.tree.column("apellido", width=150)
+        self.tree.column("email", width=200)
+        self.tree.pack(pady=10, padx=10, fill=tk.BOTH)
+        self.tree.bind("<<TreeviewSelect>>", self._on_seleccion)
 
-        btnNuevo = new Button
-        {
-            Text = "Nuevo",
-            Location = new Point(100, 420),
-            Width = 80
-        };
-        btnNuevo.Click += BtnNuevo_Click;
+        # Formulario de entrada
+        frame = ttk.Frame(self.root)
+        frame.pack(pady=10, padx=10, fill=tk.X)
 
-        btnGuardar = new Button
-        {
-            Text = "Guardar",
-            Location = new Point(190, 420),
-            Width = 80
-        };
-        btnGuardar.Click += BtnGuardar_Click;
+        ttk.Label(frame, text="Nombre:").grid(row=0, column=0, sticky=tk.W, pady=5)
+        self.txt_nombre = ttk.Entry(frame, width=30)
+        self.txt_nombre.grid(row=0, column=1, pady=5)
 
-        btnEliminar = new Button
-        {
-            Text = "Eliminar",
-            Location = new Point(280, 420),
-            Width = 80
-        };
-        btnEliminar.Click += BtnEliminar_Click;
+        ttk.Label(frame, text="Apellido:").grid(row=1, column=0, sticky=tk.W, pady=5)
+        self.txt_apellido = ttk.Entry(frame, width=30)
+        self.txt_apellido.grid(row=1, column=1, pady=5)
 
-        // Agregar labels
-        Controls.Add(new Label { Text = "Nombre:", Location = new Point(20, 323) });
-        Controls.Add(new Label { Text = "Apellido:", Location = new Point(20, 353) });
-        Controls.Add(new Label { Text = "Email:", Location = new Point(20, 383) });
+        ttk.Label(frame, text="Email:").grid(row=2, column=0, sticky=tk.W, pady=5)
+        self.txt_email = ttk.Entry(frame, width=30)
+        self.txt_email.grid(row=2, column=1, pady=5)
 
-        // Agregar controles al form
-        Controls.Add(dgvEstudiantes);
-        Controls.Add(txtNombre);
-        Controls.Add(txtApellido);
-        Controls.Add(txtEmail);
-        Controls.Add(btnNuevo);
-        Controls.Add(btnGuardar);
-        Controls.Add(btnEliminar);
+        # Botones
+        frame_btn = ttk.Frame(self.root)
+        frame_btn.pack(pady=10)
 
-        Text = "Gestión de Estudiantes";
-        Width = 600;
-        Height = 500;
-    }
+        ttk.Button(frame_btn, text="Nuevo", command=self._btn_nuevo).pack(side=tk.LEFT, padx=5)
+        ttk.Button(frame_btn, text="Guardar", command=self._btn_guardar).pack(side=tk.LEFT, padx=5)
+        ttk.Button(frame_btn, text="Eliminar", command=self._btn_eliminar).pack(side=tk.LEFT, padx=5)
 
-    private void CargarDatos()
-    {
-        // Crear DataTable (en producción vendría de BD)
-        dtEstudiantes = new DataTable("Estudiantes");
-        dtEstudiantes.Columns.Add("Id", typeof(int));
-        dtEstudiantes.Columns.Add("Nombre", typeof(string));
-        dtEstudiantes.Columns.Add("Apellido", typeof(string));
-        dtEstudiantes.Columns.Add("Email", typeof(string));
-        dtEstudiantes.PrimaryKey = new DataColumn[] { dtEstudiantes.Columns["Id"] };
+    def _cargar_datos(self):
+        # Limpiar treeview
+        for item in self.tree.get_children():
+            self.tree.delete(item)
 
-        // Datos de ejemplo
-        dtEstudiantes.Rows.Add(1, "Juan", "Pérez", "juan@unaula.edu.co");
-        dtEstudiantes.Rows.Add(2, "María", "García", "maria@unaula.edu.co");
-        dtEstudiantes.Rows.Add(3, "Carlos", "López", "carlos@unaula.edu.co");
+        # Cargar estudiantes
+        for est in self.estudiantes:
+            self.tree.insert("", tk.END, values=(est["id"], est["nombre"], est["apellido"], est["email"]))
 
-        // Configurar BindingSource
-        bindingSource = new BindingSource();
-        bindingSource.DataSource = dtEstudiantes;
+    def _on_seleccion(self, event):
+        # Cargar datos del estudiante seleccionado en los campos
+        seleccion = self.tree.selection()
+        if seleccion:
+            item = self.tree.item(seleccion[0])
+            values = item["values"]
+            self.txt_nombre.delete(0, tk.END)
+            self.txt_nombre.insert(0, values[1])
+            self.txt_apellido.delete(0, tk.END)
+            self.txt_apellido.insert(0, values[2])
+            self.txt_email.delete(0, tk.END)
+            self.txt_email.insert(0, values[3])
 
-        // Enlazar DataGridView
-        dgvEstudiantes.DataSource = bindingSource;
+    def _btn_nuevo(self):
+        # Limpiar campos
+        self.txt_nombre.delete(0, tk.END)
+        self.txt_apellido.delete(0, tk.END)
+        self.txt_email.delete(0, tk.END)
+        self.txt_nombre.focus()
 
-        // Enlazar TextBoxes individuales
-        txtNombre.DataBindings.Add("Text", bindingSource, "Nombre", true);
-        txtApellido.DataBindings.Add("Text", bindingSource, "Apellido", true);
-        txtEmail.DataBindings.Add("Text", bindingSource, "Email", true);
-    }
+    def _btn_guardar(self):
+        # En producción: guardar en BD
+        messagebox.showinfo("Éxito", "Cambios guardados")
 
-    private void BtnNuevo_Click(object sender, EventArgs e)
-    {
-        bindingSource.AddNew();
-        txtNombre.Focus();
-    }
+    def _btn_eliminar(self):
+        seleccion = self.tree.selection()
+        if seleccion:
+            if messagebox.askyesno("Confirmar", "¿Eliminar registro?"):
+                self.tree.delete(seleccion[0])
 
-    private void BtnGuardar_Click(object sender, EventArgs e)
-    {
-        bindingSource.EndEdit();
-        dtEstudiantes.AcceptChanges();
-        MessageBox.Show("Cambios guardados", "Éxito");
-    }
-
-    private void BtnEliminar_Click(object sender, EventArgs e)
-    {
-        if (bindingSource.Current != null)
-        {
-            if (MessageBox.Show("¿Eliminar registro?", "Confirmar",
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                bindingSource.RemoveCurrent();
-            }
-        }
-    }
-}</code></pre>
+# Ejecutar
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = EstudianteForm(root)
+    root.mainloop()</code></pre>
 
             <h3>Exportar e importar XML</h3>
             <p>Usamos <code>xml.etree.ElementTree</code> para serializar listas de DTOs a XML y leerlas de vuelta.</p>
