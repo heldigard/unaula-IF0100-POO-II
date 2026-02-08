@@ -3,426 +3,990 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IF0100 - POO II | Curso Completo</title>
+    <meta name="description" content="IF0100 - Lenguaje de Programación OO II - Curso de Programación Orientada a Objetos con Python y FastAPI">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>IF0100 - Lenguaje de Programación OO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            min-height: 100vh;
-            padding: 20px;
+            line-height: 1.7;
+            color: var(--dark-text);
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* Header Styles */
         header {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        h1 {
-            color: #1e3a8a;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #555;
-            font-size: 1.5em;
-            font-weight: normal;
-            margin-bottom: 20px;
-        }
-
-        .course-info {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
             color: white;
-            border-radius: 10px;
-            font-size: 1.1em;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .progress-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 40px;
-            background: #e0e0e0;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 20px 0;
+        header h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.95;
         }
 
-        .progress-fill {
+        header h3 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 2rem 2rem;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             height: 100%;
-            background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            font-weight: 600;
+            padding: 1rem 1.25rem;
+        }
+
+        .card-header.unit-0 { background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); }
+        .card-header.unit-1 { background: linear-gradient(135deg, #198754 0%, #146c43 100%); }
+        .card-header.unit-2 { background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%); }
+        .card-header.unit-3 { background: linear-gradient(135deg, #fd7e14 0%, #e8600c 100%); }
+        .card-header.project { background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%); }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Class List */
+        .class-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .class-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .class-list a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.2em;
-            width: 100%;
+            border-radius: 4px;
+            transition: all 0.2s ease;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        .class-list a:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+            padding-left: 1rem;
         }
 
-        .stat-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #1e3a8a;
+        .class-list .bi {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
         }
 
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #1e3a8a;
+        .class-list .badge {
+            margin-left: auto;
+            font-size: 0.75rem;
         }
 
-        .stat-label {
-            color: #555;
-            font-size: 0.9em;
-        }
-
-        .units-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .units-section h2 {
-            color: #1e3a8a;
-            font-size: 2em;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #3b82f6;
-            font-weight: 600;
-        }
-
-        .unit-block {
-            margin-bottom: 40px;
-        }
-
-        .unit-title {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .class-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .class-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .class-card:hover {
-            border-color: #1e3a8a;
-            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .class-card.professor-card {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-color: #3b82f6;
-        }
-
-        .class-card.professor-card:hover {
-            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-        }
-
-        .class-number {
-            display: inline-block;
-            background: #1e3a8a;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .class-number.professor-badge {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-        }
-
-        .class-title {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .class-description {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 3px 10px;
+        /* Section Styles */
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: white;
             border-radius: 12px;
-            font-size: 0.75em;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
             font-weight: 600;
-            margin-left: 8px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
         }
 
-        .badge-exam {
-            background: #ffebee;
-            color: #c62828;
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .badge-review {
-            background: #fff3e0;
-            color: #ef6c00;
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
         }
 
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--light-bg);
+        }
+
+        /* Footer */
         footer {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            color: #555;
+            background-color: var(--dark-text);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 4rem;
         }
 
+        footer a {
+            color: var(--info-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Badges */
+        .badge-python { background-color: #3776ab; color: white; }
+        .badge-fastapi { background-color: #009688; color: white; }
+        .badge-testing { background-color: #6f42c1; color: white; }
+        .badge-poo { background-color: #198754; color: white; }
+
+        /* Additional badge colors */
+        .text-purple { color: #6f42c1; }
+        .bg-purple { background-color: #6f42c1; color: white; }
+        .text-orange { color: #fd7e14; }
+        .bg-orange { background-color: #fd7e14; color: white; }
+
+        /* Quick Links */
+        .quick-link-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .quick-link-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-link-card h5 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-link-card p {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0;
+        }
+
+        /* Progress indicator */
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 1.8em; }
-            h2 { font-size: 1.3em; }
-            .class-grid { grid-template-columns: 1fr; }
+            header h1 {
+                font-size: 1.75rem;
+            }
+
+            header h2 {
+                font-size: 1.2rem;
+            }
+
+            .hero-section {
+                padding: 2rem 0;
+                border-radius: 0 0 1rem 1rem;
+            }
+
+            .quick-link-card i {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
+    <!-- Header -->
+    <header>
+        <div class="container">
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Curso Completo en HTML</h2>
-            <div class="course-info">
-                <strong>4° Semestre - Ingeniería Informática</strong><br>
-                UNAULA - 2026-I
-            </div>
-        </header>
+            <h2>Programación Orientada a Objetos con Python y FastAPI</h2>
+            <h3>Periodo 2026-1 | Universidad Autónoma Latinoamericana</h3>
+        </div>
+    </header>
 
-        <section class="progress-section">
-            <h2 style="color: #1e3a8a; font-weight: 600;">Progreso del Curso</h2>
-            <div class="progress-bar">
-                <div class="progress-fill">100% COMPLETADO ✅</div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#objetivos">Objetivos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#metodologia">Metodología</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#evaluacion">Evaluación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#proyecto">Proyecto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bibliografia">Bibliografía</a>
+                    </li>
+                </ul>
             </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">17</div>
-                    <div class="stat-label">Clases Totales</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">17</div>
-                    <div class="stat-label">Clases Generadas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">Unidades</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">34+</div>
-                    <div class="stat-label">Infografías</div>
-                </div>
-            </div>
-        </section>
+        </div>
+    </nav>
 
-        <section class="units-section">
-            <h2>📚 Contenido del Curso</h2>
-
-            <!-- Presentación del Docente -->
-            <div class="unit-block">
-                <div class="unit-title">👨‍🏫 Presentación del Docente</div>
-                <div class="class-grid">
-                    <a href="presentacion-docente.html" class="class-card professor-card">
-                        <span class="class-number professor-badge">👨‍🏫 Docente</span>
-                        <div class="class-title">Presentación del Docente</div>
-                        <div class="class-description">Conoce a tu docente, metodología, evaluaciones y recursos del curso</div>
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Quick Links -->
+        <section id="recursos" class="mb-4">
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <a href="docs/cronograma.md" class="card quick-link-card text-decoration-none">
+                        <i class="bi bi-calendar-event text-primary"></i>
+                        <h5 class="text-dark">Cronograma</h5>
+                        <p class="text-muted">Fechas importantes</p>
                     </a>
                 </div>
-            </div>
-
-            <!-- Unidad 1: Conceptos Avanzados de POO -->
-            <div class="unit-block">
-                <div class="unit-title">Unidad 1: Conceptos Avanzados de POO</div>
-                <div class="class-grid">
-                    <a href="clase-01.html" class="class-card">
-                        <span class="class-number">Clase 01</span>
-                        <div class="class-title">Introducción a Python y su ecosistema</div>
-                        <div class="class-description">Historia, arquitectura, tipos de datos, estructura básica</div>
-                    </a>
-                    <a href="clase-02.html" class="class-card">
-                        <span class="class-number">Clase 02</span>
-                        <div class="class-title">Clases, Objetos y Encapsulamiento</div>
-                        <div class="class-description">Definición de clases, propiedades, métodos, modificadores de acceso</div>
-                    </a>
-                    <a href="clase-03.html" class="class-card">
-                        <span class="class-number">Clase 03</span>
-                        <div class="class-title">Herencia y Polimorfismo</div>
-                        <div class="class-description">Clases base y derivadas, sobrescritura y polimorfismo</div>
-                    </a>
-                    <a href="clase-04.html" class="class-card">
-                        <span class="class-number">Clase 04</span>
-                        <div class="class-title">Sobrecarga, Sobreescritura y Modelado BD</div>
-                        <div class="class-description">Sobrecarga, sobreescritura y modelado de bases de datos</div>
+                <div class="col-md-3 col-6">
+                    <a href="docs/rubricas.md" class="card quick-link-card text-decoration-none">
+                        <i class="bi bi-clipboard-check text-success"></i>
+                        <h5 class="text-dark">Rubricas</h5>
+                        <p class="text-muted">Criterios de evaluación</p>
                     </a>
                 </div>
-            </div>
-
-            <!-- Unidad 2: Técnicas de Desarrollo -->
-            <div class="unit-block">
-                <div class="unit-title">Unidad 2: Técnicas de Desarrollo de Software</div>
-                <div class="class-grid">
-                    <a href="clase-05.html" class="class-card">
-                        <span class="class-number">Clase 05</span>
-                        <div class="class-title">TDD y Pruebas Unitarias</div>
-                        <div class="class-description">Ciclo Red-Green-Refactor, pytest y pruebas unitarias</div>
-                    </a>
-                    <a href="clase-06.html" class="class-card">
-                        <span class="class-number">Clase 06</span>
-                        <div class="class-title">BDD - Behavior-Driven Development</div>
-                        <div class="class-description">Given-When-Then, especificaciones y escenarios</div>
-                    </a>
-                    <a href="clase-07.html" class="class-card">
-                        <span class="class-number">Clase 07</span>
-                        <div class="class-title">Domain Driven Design (DDD)</div>
-                        <div class="class-description">Entidades, value objects, repositorios, bounded contexts</div>
+                <div class="col-md-3 col-6">
+                    <a href="https://colab.research.google.com" target="_blank" class="card quick-link-card text-decoration-none">
+                        <i class="bi bi-laptop text-warning"></i>
+                        <h5 class="text-dark">Google Colab</h5>
+                        <p class="text-muted">Notebooks interactivos</p>
                     </a>
                 </div>
-            </div>
-
-            <!-- Unidad 3: Desarrollo Web -->
-            <div class="unit-block">
-            <div class="unit-title">Unidad 3: Desarrollo Web con Angular + FastAPI</div>
-                <div class="class-grid">
-                    <a href="clase-08.html" class="class-card">
-                        <span class="class-number">Clase 08</span>
-                        <div class="class-title">Introducción a Angular + FastAPI</div>
-                        <div class="class-description">Componentes, routing, servicios y APIs</div>
-                    </a>
-                    <a href="clase-09.html" class="class-card">
-                        <span class="class-number">Clase 09</span>
-                        <div class="class-title">HTML5 y Bootstrap</div>
-                        <div class="class-description">Estructura semántica, sistema de grillas, componentes UI</div>
-                    </a>
-                    <a href="clase-10.html" class="class-card">
-                        <span class="class-number">Clase 10</span>
-                        <div class="class-title">Angular: Componentes, Servicios y Routing</div>
-                        <div class="class-description">Componentes, servicios, rutas, binding y validación</div>
-                    </a>
-                    <a href="clase-11.html" class="class-card">
-                        <span class="class-number">Clase 11</span>
-                        <div class="class-title">Formularios, Validación y Sesiones</div>
-                        <div class="class-description">Reactive forms, validadores y manejo de sesiones</div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Unidad 4: Persistencia con pyodbc -->
-            <div class="unit-block">
-            <div class="unit-title">Unidad 4: Persistencia con pyodbc + SQL Server</div>
-                <div class="class-grid">
-                    <a href="clase-12.html" class="class-card">
-                        <span class="class-number">Clase 12</span>
-                        <div class="class-title">Introducción a pyodbc</div>
-                        <div class="class-description">Conexiones y patrones de acceso a datos en Python</div>
-                    </a>
-                    <a href="clase-13.html" class="class-card">
-                        <span class="class-number">Clase 13</span>
-                        <div class="class-title">CRUD con Python, pyodbc y SQL Server</div>
-                        <div class="class-description">Create, Read, Update, Delete, parámetros y transacciones</div>
-                    </a>
-                    <a href="clase-14.html" class="class-card">
-                        <span class="class-number">Clase 14</span>
-                        <div class="class-title">Archivos Planos</div>
-                        <div class="class-description">Lectura/escritura, serialización CSV/JSON/XML</div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Unidad 5: Datos Desconectados -->
-            <div class="unit-block">
-                <div class="unit-title">Unidad 5: Datos Desconectados y Proyecto Final</div>
-                <div class="class-grid">
-                    <a href="clase-15.html" class="class-card">
-                        <span class="class-number">Clase 15</span>
-                        <div class="class-title">Datos desconectados y sincronización</div>
-                        <div class="class-description">Estado local, DTOs y sincronización</div>
-                    </a>
-                    <a href="clase-16.html" class="class-card">
-                        <span class="class-number">Clase 16</span>
-                        <div class="class-title">Data binding y XML</div>
-                        <div class="class-description">Binding Angular y serialización XML</div>
-                    </a>
-                    <a href="clase-17.html" class="class-card">
-                        <span class="class-number">Clase 17 <span class="badge badge-exam">Final</span></span>
-                        <div class="class-title">Proyecto Final e Integración</div>
-                        <div class="class-description">Aplicación empresarial completa, arquitectura en capas</div>
+                <div class="col-md-3 col-6">
+                    <a href="https://code.visualstudio.com" target="_blank" class="card quick-link-card text-decoration-none">
+                        <i class="bi bi-code-square text-info"></i>
+                        <h5 class="text-dark">VSCode</h5>
+                        <p class="text-muted">Editor de código</p>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="entrega-git">
-            <h3>Entrega con Git</h3>
-            <pre><code>git checkout -b feature/indice-curso
-git add index.html
-git commit -m "chore: estructura base indice"
-git commit -m "feat: actualiza unidades y enlaces"
-git commit -m "docs: revisa descripciones"
-git tag -a clase-indice-v1 -m "Entrega indice del curso"</code></pre>
+        <!-- Objetivos -->
+        <section id="objetivos">
+            <h2>Objetivos del Curso</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Objetivo General</h4>
+                    <p>Desarrollar habilidades avanzadas en programación orientada a objetos utilizando Python como lenguaje principal, incorporando técnicas modernas de desarrollo de software como TDD, BDD y principios de Domain-Driven Design.</p>
+                </div>
+                <div class="col-md-6">
+                    <h4>Objetivos Específicos</h4>
+                    <ul>
+                        <li>Comprender y aplicar los pilares de la POO: encapsulamiento, herencia, polimorfismo y abstracción</li>
+                        <li>Dominar la sintaxis y características avanzadas de Python</li>
+                        <li>Implementar pruebas automatizadas con TDD y BDD</li>
+                        <li>Desarrollar APIs RESTful con FastAPI</li>
+                        <li>Aplicar principios de arquitectura de software y Domain-Driven Design</li>
+                        <li>Desarrollar un proyecto integrador aplicando todas las competencias</li>
+                    </ul>
+                </div>
+            </div>
         </section>
-        <footer>
-            <p><strong>IF0100 - Lenguaje de Programación Orientada a Objetos II</strong></p>
-            <p>UNAULA - Ingeniería Informática - 2026-I</p>
-            <p style="margin-top: 10px; color: #999;">Docente: Eldigardo Camacho | eldigardo.camacho3380@unaula.edu.com</p>
-        </footer>
-    </div>
+
+        <!-- Metodología -->
+        <section id="metodologia">
+            <h2>Metodología</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-book text-primary me-2"></i>Teoría</h5>
+                            <p class="card-text">Sesiones presenciales con exposición de conceptos, ejemplos prácticos y discusión de casos de estudio.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-laptop-code text-success me-2"></i>Práctica</h5>
+                            <p class="card-text">Laboratorios guiados con ejercicios progresivos para aplicar los conceptos aprendidos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-people text-warning me-2"></i>Colaboración</h5>
+                            <p class="card-text">Trabajo en equipo con Pair Programming y Code Reviews.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema de Evaluación -->
+        <section id="evaluacion">
+            <h2>Sistema de Evaluación</h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th>Porcentaje</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Proyecto Integrador (TaskFlow)</strong></td>
+                            <td><span class="badge bg-danger fs-6">30%</span></td>
+                            <td>Desarrollo progresivo de un sistema de gestión de tareas con FastAPI</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parcial 1</strong></td>
+                            <td><span class="badge bg-primary fs-6">20%</span></td>
+                            <td>Fundamentos Python y POO (Semana 7)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Parcial 2</strong></td>
+                            <td><span class="badge bg-primary fs-6">20%</span></td>
+                            <td>Técnicas de Desarrollo y Backend (Semana 11)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Laboratorios</strong></td>
+                            <td><span class="badge bg-success fs-6">20%</span></td>
+                            <td>Ejercicios prácticos semanales con pruebas automatizadas (4 laboratorios de 5% cada uno)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Seguimiento</strong></td>
+                            <td><span class="badge bg-info fs-6">10%</span></td>
+                            <td>Evaluaciones cortas y talleres en clase</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-active">
+                            <td><strong>Total</strong></td>
+                            <td><span class="badge bg-dark fs-5">100%</span></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="alert-tip mt-3">
+                <strong>Nota aprobatoria:</strong> 3.0 sobre 5.0. Se requiere aprobar por separado el proyecto integrador (minimo 3.0) para aprobar el curso.
+            </div>
+        </section>
+
+        <!-- Clases por Unidad -->
+        <section id="clases">
+            <h2>Contenido del Curso</h2>
+
+            <!-- Unidad 0 -->
+            <div class="card mb-4">
+                <div class="card-header unit-0 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-gem me-2"></i>Unidad 0: Fundamentos de Python</span>
+                    <span class="badge bg-light text-dark">4 clases</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-00/clase-00-introduccion.html">
+                                        <i class="bi bi-play-circle text-primary"></i>
+                                        Clase 00: Introducción a Python
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-00/clase-01-variables-tipos.html">
+                                        <i class="bi bi-code-slash text-secondary"></i>
+                                        Clase 01: Variables y Tipos de Datos
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-00/clase-02-estructuras-control.html">
+                                        <i class="bi bi-diagram-2 text-success"></i>
+                                        Clase 02: Estructuras de Control
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-00/clase-03-estructuras-datos.html">
+                                        <i class="bi bi-collection text-warning"></i>
+                                        Clase 03: Estructuras de Datos
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unidad 1 -->
+            <div class="card mb-4">
+                <div class="card-header unit-1 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-box-seam me-2"></i>Unidad 1: Programación Orientada a Objetos</span>
+                    <span class="badge bg-light text-dark">4 clases</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-01/clase-01-clases-objetos.html">
+                                        <i class="bi bi-gear text-success"></i>
+                                        Clase 01: Clases y Objetos
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-01/clase-02-encapsulamiento.html">
+                                        <i class="bi bi-shield-lock text-success"></i>
+                                        Clase 02: Encapsulamiento
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-01/clase-03-herencia-polimorfismo.html">
+                                        <i class="bi bi-diagram-3 text-success"></i>
+                                        Clase 03: Herencia y Polimorfismo
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-01/clase-04-clases-abstractas.html">
+                                        <i class="bi bi-gem text-success"></i>
+                                        Clase 04: Clases Abstractas e Interfaces
+                                        <span class="badge bg-secondary">VSCode</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unidad 2 -->
+            <div class="card mb-4">
+                <div class="card-header unit-2 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-bug me-2"></i>Unidad 2: Técnicas de Desarrollo</span>
+                    <span class="badge bg-light text-dark">4 clases</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-02/clase-01-tdd-intro.html">
+                                        <i class="bi bi-check-circle text-purple"></i>
+                                        Clase 01: Introducción al TDD
+                                        <span class="badge bg-purple">pytest</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-02/clase-02-pytest-avanzado.html">
+                                        <i class="bi bi-lightning text-purple"></i>
+                                        Clase 02: pytest Avanzado
+                                        <span class="badge bg-purple">pytest</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-02/clase-03-bdd-intro.html">
+                                        <i class="bi bi-chat-quote text-purple"></i>
+                                        Clase 03: Behavior-Driven Development
+                                        <span class="badge bg-purple">BDD</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-02/clase-04-ddd-intro.html">
+                                        <i class="bi bi-building text-purple"></i>
+                                        Clase 04: Domain-Driven Design
+                                        <span class="badge bg-purple">DDD</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unidad 3 -->
+            <div class="card mb-4">
+                <div class="card-header unit-3 d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-hdd-network me-2"></i>Unidad 3: Desarrollo Backend con FastAPI</span>
+                    <span class="badge bg-light text-dark">5 clases</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-03/clase-01-fastapi-intro.html">
+                                        <i class="bi bi-lightning-charge text-orange"></i>
+                                        Clase 01: Introducción a FastAPI
+                                        <span class="badge bg-orange">FastAPI</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-03/clase-02-pydantic-validacion.html">
+                                        <i class="bi bi-patch-check text-orange"></i>
+                                        Clase 02: Pydantic y Validación
+                                        <span class="badge bg-orange">Pydantic</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-03/clase-03-dependencias.html">
+                                        <i class="bi bi-diagram-2 text-orange"></i>
+                                        Clase 03: Sistema de Dependencias
+                                        <span class="badge bg-orange">DI</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="class-list">
+                                <li>
+                                    <a href="unidad-03/clase-04-testing-fastapi.html">
+                                        <i class="bi bi-check2-circle text-orange"></i>
+                                        Clase 04: Testing en FastAPI
+                                        <span class="badge bg-orange">pytest</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="unidad-03/clase-05-persistencia-datos.html">
+                                        <i class="bi bi-database text-orange"></i>
+                                        Clase 05: Persistencia de Datos
+                                        <span class="badge bg-orange">SQLAlchemy</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proyecto Integrador -->
+        <section id="proyecto">
+            <h2>Proyecto Integrador: TaskFlow</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <p class="lead">El proyecto integrador del curso es <strong>TaskFlow</strong>, un sistema de gestión de tareas desarrollado progresivamente a lo largo del semestre.</p>
+
+                    <h4>Características del Proyecto</h4>
+                    <ul>
+                        <li><strong>API RESTful</strong> con FastAPI para gestión de tareas</li>
+                        <li><strong>Arquitectura DDD</strong> con dominio, aplicación e infraestructura</li>
+                        <li><strong>Pruebas automatizadas</strong> con pytest y BDD (Behave)</li>
+                        <li><strong>Validación robusta</strong> con Pydantic</li>
+                        <li><strong>Documentación automática</strong> con Swagger UI</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Repositorio:</strong> <a href="https://github.com/your-username/taskflow" target="_blank">github.com/your-username/taskflow</a>
+                    </div>
+
+                    <h4>Fases del Proyecto</h4>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Fase</th>
+                                    <th>Entrega</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fase 1</td>
+                                    <td>Semana 4</td>
+                                    <td>Configuración del entorno y estructura del proyecto</td>
+                                </tr>
+                                <tr>
+                                    <td>Fase 2</td>
+                                    <td>Semana 8</td>
+                                    <td>Modelos de dominio y entidades Task</td>
+                                </tr>
+                                <tr>
+                                    <td>Fase 3</td>
+                                    <td>Semana 12</td>
+                                    <td>API REST con FastAPI y pruebas TDD</td>
+                                </tr>
+                                <tr>
+                                    <td>Fase 4</td>
+                                    <td>Semana 16</td>
+                                    <td>Integración final y documentación</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <i class="bi bi-list-task display-1 mb-3"></i>
+                            <h4 class="card-title">TaskFlow</h4>
+                            <p class="card-text">Sistema de Gestión de Tareas</p>
+                            <hr>
+                            <p class="mb-1"><strong>35%</strong> de la nota final</p>
+                            <small>MVP funcional con pruebas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Herramientas y Recursos -->
+        <section id="recursos">
+            <h2>Herramientas y Recursos</h2>
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-filetype-py display-4 text-primary"></i>
+                            <h5 class="card-title mt-3">Python 3.12+</h5>
+                            <p class="card-text small">Lenguaje de programación</p>
+                            <a href="https://python.org/downloads" target="_blank" class="btn btn-outline-primary btn-sm">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-code-slash display-4 text-primary"></i>
+                            <h5 class="card-title mt-3">VSCode</h5>
+                            <p class="card-text small">Editor de código</p>
+                            <a href="https://code.visualstudio.com" target="_blank" class="btn btn-outline-primary btn-sm">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-git display-4 text-warning"></i>
+                            <h5 class="card-title mt-3">Git</h5>
+                            <p class="card-text small">Control de versiones</p>
+                            <a href="https://git-scm.com" target="_blank" class="btn btn-outline-warning btn-sm">Descargar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="bi bi-cloud display-4 text-success"></i>
+                            <h5 class="card-title mt-3">GitHub</h5>
+                            <p class="card-text small">Alojamiento de código</p>
+                            <a href="https://github.com" target="_blank" class="btn btn-outline-success btn-sm">Visitar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="mt-4">Bibliotecas Python Requeridas</h4>
+            <div class="alert-tip">
+                <pre class="mb-0"><code class="language-bash"># Instalación de dependencias
+pip install fastapi uvicorn pytest pytest-asyncio behave pydantic
+
+# Para desarrollo
+pip install black flake8 mypy pre-commit</code></pre>
+            </div>
+        </section>
+
+        <!-- Bibliografía -->
+        <section id="bibliografia">
+            <h2>Referencias Bibliográficas</h2>
+
+            <h4>Libros Principales</h4>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="alert-note">
+                        <strong>Python Crash Course</strong>
+                        <p class="mb-1 small">Eric Matthes</p>
+                        <p class="mb-0 small text-muted">2ª edición, No Starch Press, 2019</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert-note">
+                        <strong>Fluent Python</strong>
+                        <p class="mb-1 small">Luciano Ramalho</p>
+                        <p class="mb-0 small text-muted">O'Reilly, 2015</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert-note">
+                        <strong>Test-Driven Development with Python</strong>
+                        <p class="mb-1 small">Harry Percival</p>
+                        <p class="mb-0 small text-muted">O'Reilly, 2014</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="alert-note">
+                        <strong>Implementing Domain-Driven Design</strong>
+                        <p class="mb-1 small">Vaughn Vernon</p>
+                        <p class="mb-0 small text-muted">Addison-Wesley, 2013</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Documentación Oficial</h4>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="https://docs.python.org/es/3/" target="_blank">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Documentación Oficial de Python 3
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://fastapi.tiangolo.com/" target="_blank">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Documentación de FastAPI
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://docs.pytest.org/" target="_blank">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Documentación de pytest
+                    </a>
+                </li>
+                <li class="list-group-item">
+                    <a href="https://behave.readthedocs.io/" target="_blank">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Documentación de behave (BDD)
+                    </a>
+                </li>
+            </ul>
+
+            <h4 class="mt-4">Recursos Online</h4>
+            <ul>
+                <li><a href="https://realpython.com/" target="_blank">Real Python</a> - Tutoriales en profundidad</li>
+                <li><a href="https://www.w3schools.com/python/" target="_blank">W3Schools Python</a> - Referencia rápida</li>
+                <li><a href="https://exercism.org/tracks/python" target="_blank">Exercism Python</a> - Ejercicios prácticos</li>
+                <li><a href="https://peps.python.org/" target="_blank">PEPs de Python</a> - Mejores prácticas</li>
+            </ul>
+        </section>
+
+        <!-- Información del Docente -->
+        <section id="docente">
+            <h2>Información del Curso</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Docente</h4>
+                    <p><strong>Nombre:</strong> [Nombre del Docente]</p>
+                    <p><strong>Correo:</strong> [correo@univ.edu]</p>
+                    <p><strong>Oficina:</strong> [Ubicación]</p>
+                    <p><strong>Horario de atención:</strong> [Días y horas]</p>
+                </div>
+                <div class="col-md-6">
+                    <h4>Políticas del Curso</h4>
+                    <ul>
+                        <li>Se permite trabajo en parejas (Pair Programming)</li>
+                        <li>El plagio tiene nota 0 en la actividad</li>
+                        <li>Las entregas tardías tienen penalización del 10% por día</li>
+                        <li>Se requiere 80% de asistencia para aprobar</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>IF0100 - POO II</h5>
+                    <p>Universidad Autónoma Latinoamericana</p>
+                    <p>Periodo 2026-1</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Recursos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://docs.python.org/es/3/">Documentación Python</a></li>
+                        <li><a href="https://fastapi.tiangolo.com/">FastAPI Docs</a></li>
+                        <li><a href="https://docs.pytest.org/">pytest Docs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p>Correo: [correo@univ.edu]</p>
+                    <p>GitHub: <a href="https://github.com/your-username/taskflow">TaskFlow Project</a></p>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2);">
+            <p class="text-center mb-0">&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p class="text-center text-muted small mb-0">Ultima actualización: 2026-02-08</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
 </body>
 </html>
-
