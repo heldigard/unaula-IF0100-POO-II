@@ -1,0 +1,223 @@
+{
+  "meta": {
+    "fecha": "2026-02-07",
+    "fase": "9 de 10 - QA y Validación",
+    "proyecto": "TaskFlow (IF0100-POO-II)",
+    "agente": "QA Agent 1 - Ejecución de Tests y Coverage"
+  },
+  "estadisticas": {
+    "total_tests": 159,
+    "tests_pasados": 138,
+    "tests_fallidos": 4,
+    "tests_con_error": 17,
+    "coverage_porcentaje": 74,
+    "lineas_cubiertas": 846,
+    "lineas_totales": 1145
+  },
+  "status": {
+    "tests_pasados_porcentaje": 86.8,
+    "tests_fallidos_porcentaje": 2.5,
+    "tests_con_error_porcentaje": 10.7,
+    "calificacion": "REGULAR",
+    "objetivo_cumplido": false
+  },
+  "modulos_criticos": [
+    {
+      "modulo": "src/taskflow/templates_utils/filters.py",
+      "coverage": 0,
+      "lineas_cubiertas": 0,
+      "lineas_totales": 65,
+      "prioridad": "URGENTE"
+    },
+    {
+      "modulo": "src/taskflow/repositories/comentario_repo.py",
+      "coverage": 38,
+      "lineas_cubiertas": 17,
+      "lineas_totales": 45,
+      "prioridad": "ALTA"
+    },
+    {
+      "modulo": "src/taskflow/api/routes/usuarios.py",
+      "coverage": 38,
+      "lineas_cubiertas": 20,
+      "lineas_totales": 52,
+      "prioridad": "ALTA"
+    },
+    {
+      "modulo": "src/taskflow/repositories/proyecto_repo.py",
+      "coverage": 46,
+      "lineas_cubiertas": 21,
+      "lineas_totales": 46,
+      "prioridad": "ALTA"
+    },
+    {
+      "modulo": "src/taskflow/repositories/tarea_repo.py",
+      "coverage": 46,
+      "lineas_cubiertas": 27,
+      "lineas_totales": 59,
+      "prioridad": "ALTA"
+    },
+    {
+      "modulo": "src/taskflow/api/routes/proyectos.py",
+      "coverage": 49,
+      "lineas_cubiertas": 21,
+      "lineas_totales": 43,
+      "prioridad": "MEDIA"
+    }
+  ],
+  "modulos_excelentes": [
+    {
+      "modulo": "src/taskflow/api/app.py",
+      "coverage": 100,
+      "lineas_cubiertas": 19,
+      "lineas_totales": 19
+    },
+    {
+      "modulo": "src/taskflow/api/config.py",
+      "coverage": 100,
+      "lineas_cubiertas": 14,
+      "lineas_totales": 14
+    },
+    {
+      "modulo": "src/taskflow/models/usuario.py",
+      "coverage": 100,
+      "lineas_cubiertas": 58,
+      "lineas_totales": 58
+    },
+    {
+      "modulo": "src/taskflow/schemas/auth.py",
+      "coverage": 100,
+      "lineas_cubiertas": 29,
+      "lineas_totales": 29
+    },
+    {
+      "modulo": "src/taskflow/services/usuario_service.py",
+      "coverage": 97,
+      "lineas_cubiertas": 58,
+      "lineas_totales": 60
+    },
+    {
+      "modulo": "src/taskflow/api/routes/auth.py",
+      "coverage": 97,
+      "lineas_cubiertas": 32,
+      "lineas_totales": 33
+    },
+    {
+      "modulo": "src/taskflow/services/tarea_service.py",
+      "coverage": 93,
+      "lineas_cubiertas": 80,
+      "lineas_totales": 86
+    }
+  ],
+  "tests_fallidos": [
+    {
+      "test": "tests/test_api.py::TestAuthEndpoints::test_registro_username_repetido_falla",
+      "error": "assert 422 == 400",
+      "descripcion": "El endpoint retorna 422 (ValidationError) en lugar de 400 (Bad Request) cuando el username ya existe"
+    },
+    {
+      "test": "tests/test_api.py::TestAuthEndpoints::test_registro_email_repetido_falla",
+      "error": "assert 422 == 400",
+      "descripcion": "El endpoint retorna 422 (ValidationError) en lugar de 400 (Bad Request) cuando el email ya existe"
+    },
+    {
+      "test": "tests/test_api.py::TestTareaEndpoints::test_listar_por_vencer",
+      "error": "assert 422 == 200",
+      "descripcion": "El endpoint /api/tareas/?por_vencer=true retorna error de validación"
+    },
+    {
+      "test": "tests/test_api.py::TestTareaEndpoints::test_listar_por_vencer_con_parametro_dias",
+      "error": "assert 422 == 200",
+      "descripcion": "El endpoint /api/tareas/?por_vencer=true&dias=7 retorna error de validación"
+    }
+  ],
+  "tests_con_error": [
+    {
+      "test": "tests/test_api.py::TestAuthEndpoints::test_obtener_perfil_autenticado",
+      "error": "AssertionError: Fallo al registrar usuario de prueba (400 != 201)",
+      "causa_raiz": "Fixture auth_token reusa username/email entre tests"
+    },
+    {
+      "descripcion": "16 tests adicionales con el mismo error de aislamiento",
+      "tests_afectados": [
+        "tests/test_api.py::TestProyectoEndpoints::*",
+        "tests/test_api.py::TestTareaEndpoints::*"
+      ]
+    }
+  ],
+  "recomendaciones": [
+    {
+      "prioridad": "URGENTE",
+      "accion": "Implementar limpieza de repositorios antes de cada test",
+      "archivo": "tests/conftest.py"
+    },
+    {
+      "prioridad": "ALTA",
+      "accion": "Crear tests para templates_utils/filters.py",
+      "archivo": "tests/test_filters.py (crear)"
+    },
+    {
+      "prioridad": "ALTA",
+      "accion": "Corregir tests fallidos de validación",
+      "archivos": ["tests/test_api.py", "src/taskflow/api/routes/*.py"]
+    },
+    {
+      "prioridad": "MEDIA",
+      "accion": "Mejorar coverage de repositories",
+      "archivos": ["tests/test_*_repo.py"]
+    },
+    {
+      "prioridad": "MEDIA",
+      "accion": "Migrar a Pydantic V2 (ConfigDict)",
+      "archivos": ["src/taskflow/schemas/*.py"]
+    },
+    {
+      "prioridad": "BAJA",
+      "accion": "Alcanzar 80%+ coverage total",
+      "objetivo": "mejora continua"
+    }
+  ],
+  "warnings_deprecation": [
+    {
+      "tipo": "PydanticDeprecatedSince20",
+      "descripcion": "Support for class-based config is deprecated, use ConfigDict instead",
+      "archivos": [
+        "src/taskflow/schemas/usuario.py:43",
+        "src/taskflow/schemas/proyecto.py:35",
+        "src/taskflow/schemas/proyecto.py:48",
+        "src/taskflow/schemas/tarea.py:49",
+        "src/taskflow/schemas/tarea.py:66",
+        "src/taskflow/schemas/comentario.py:38",
+        "src/taskflow/api/config.py:9"
+      ]
+    },
+    {
+      "tipo": "DeprecationWarning",
+      "descripcion": "datetime.datetime.utcnow() is deprecated",
+      "archivos": [
+        "src/taskflow/api/security.py:22"
+      ]
+    }
+  ],
+  "conclusiones": {
+    "resumen": "El proyecto tiene una base solida de tests (86.8% pasados) pero problemas de aislamiento causan 17 errores. El coverage de 74% es aceptable pero necesita mejora en modulos criticos.",
+    "logros": [
+      "138 tests pasados - Base solida de funcionalidad testeada",
+      "Services con 85-97% coverage - Logica de negocio bien probada",
+      "Models con 100% coverage - Validaciones completas",
+      "Auth endpoints con 97% coverage - Seguridad bien testeada"
+    ],
+    "problemas": [
+      "17 tests con error por aislamiento - Requieren fix urgente",
+      "0% coverage en templates_utils/filters.py - Codigo sin probar",
+      "4 tests fallidos por expectativas incorrectas - Requieren correccion",
+      "7 warnings de deprecation - Requieren migracion a Pydantic V2"
+    ]
+  },
+  "archivos_generados": {
+    "reporte_markdown": "docs/reporte-qa-tests.md",
+    "reporte_html": "htmlcov/index.html",
+    "coverage_json": "coverage.json",
+    "metrics_json": "docs/qa-metrics.json"
+  }
+}

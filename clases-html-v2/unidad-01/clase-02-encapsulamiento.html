@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Domina el encapsulamiento en Python. Aprende convenciones _ y __, @property para getters/setters pythonicos, y dataclasses. Aplicación al modelo Usuario de TaskFlow.">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Encapsulamiento y Propiedades | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 1: POO Avanzada</h2>
+            <h3>Clase 2: Encapsulamiento y Propiedades</h3>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clase-01-clases-objetos.html">Anterior: Clases y Objetos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guidado</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender el concepto de encapsulamiento y su importancia en POO</li>
+                        <li>Aplicar las convenciones de Python para atributos privados (<code>_</code> y <code>__</code>)</li>
+                        <li>Usar <code>@property</code> para crear getters pythonicos</li>
+                        <li>Implementar setters con <code>@atributo.setter</code></li>
+                        <li>Entender la diferencia entre atributos "protegidos" y "privados" en Python</li>
+                        <li>Usar <code>dataclasses</code> con <code>frozen=True</code> para objetos inmutables</li>
+                        <li>Aplicar encapsulamiento apropiado en el modelo Usuario de TaskFlow</li>
+                    </ul>
+                </section>
+
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es el Encapsulamiento?</h3>
+                    <p>El encapsulamiento es el principio de agrupar datos (atributos) y métodos que operan sobre esos datos, ocultando los detalles internos de la implementación.</p>
+
+                    <div class="alert-note">
+                        <strong>📝 Analogía:</strong> Cuando conduces un auto, usas el pedal del acelerador para aumentar la velocidad. No necesitas saber cómo funciona el motor internamente. El encapsulamiento oculta esa complejidad.
+                    </div>
+
+                    <h3>Beneficios del Encapsulamiento</h3>
+                    <ul>
+                        <li><strong>Protección de datos:</strong> Evita modificaciones accidentales o no válidas</li>
+                        <li><strong>Flexibilidad:</strong> Puedes cambiar la implementación interna sin afectar el código que usa la clase</li>
+                        <li><strong>Validación:</strong> Puedes validar datos antes de modificarlos</li>
+                        <li><strong>Mantenimiento:</strong> El código es más fácil de mantener y entender</li>
+                    </ul>
+
+                    <h3>Convenciones de Python para Atributos</h3>
+
+                    <h4>1. Atributos Públicos (sin prefijo)</h4>
+                    <pre><code class="language-python">class Ejemplo:
+    def __init__(self):
+        self.publico = "Accesible desde cualquier lugar"
+
+# Uso
+e = Ejemplo()
+print(e.publico)  # ✅ Acceso directo
+e.publico = "Nuevo valor"  # ✅ Modificación directa</code></pre>
+
+                    <h4>2. Atributos Protegidos (prefijo <code>_</code>)</h4>
+                    <p>El guion bajo simple indica que el atributo es "protegido" y no debería accederse directamente desde fuera de la clase. Es una <strong>convención</strong>, no una restricción técnica.</p>
+                    <pre><code class="language-python">class Ejemplo:
+    def __init__(self):
+        self._protegido = "No acceder directamente"
+
+    def obtener_valor(self):
+        return self._protegido
+
+# Uso
+e = Ejemplo()
+print(e._protegido)  # ⚠️ Funciona, pero no es recomendado
+print(e.obtener_valor())  # ✅ Forma correcta</code></pre>
+
+                    <h4>3. Atributos Privados (prefijo <code>__</code>)</h4>
+                    <p>El doble guion bajo activa el <strong>name mangling</strong>, lo que hace más difícil (pero no imposible) acceder al atributo desde fuera.</p>
+                    <pre><code class="language-python">class Ejemplo:
+    def __init__(self):
+        self.__privado = "Difícil de acceder externamente"
+
+    def obtener_valor(self):
+        return self.__privado
+
+# Uso
+e = Ejemplo()
+# print(e.__privado)  # ❌ AttributeError
+print(e.obtener_valor())  # ✅ Forma correcta
+
+# Name mangling: Python renombra el atributo internamente
+print(e._Ejemplo__privado)  # ⚠️ Funciona, pero es un hack</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>⚠️ Importante:</strong> Python no tiene verdaderos atributos privados como Java o C++. El doble guion bajo es una convención para indicar "no usar esto fuera de la clase", pero no es una restricción de seguridad.
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Convención</th>
+                                <th>Significado</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>nombre</code></td>
+                                <td>Público</td>
+                                <td><code>self.nombre</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>_nombre</code></td>
+                                <td>Protegido (uso interno)</td>
+                                <td><code>self._password</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>__nombre</code></td>
+                                <td>Privado (con name mangling)</td>
+                                <td><code>self.__password_hash</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>__nombre__</code></td>
+                                <td>Métodos especiales (magic methods)</td>
+                                <td><code>__init__</code>, <code>__str__</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Propiedades con @property</h3>
+                    <p>Las propiedades permiten definir métodos que se acceden como atributos, proporcionando control sobre lectura, escritura y eliminación.</p>
+
+                    <h4>@property - Getter</h4>
+                    <pre><code class="language-python">class Temperatura:
+    def __init__(self, celsius):
+        self._celsius = celsius
+
+    @property
+    def celsius(self):
+        """Obtiene la temperatura en Celsius."""
+        return self._celsius
+
+    @property
+    def fahrenheit(self):
+        """Obtiene la temperatura en Fahrenheit (calculada)."""
+        return (self._celsius * 9/5) + 32
+
+# Uso
+t = Temperatura(25)
+print(t.celsius)  # 25 (se accede como atributo, no como método)
+print(t.fahrenheit)  # 77.0 (propiedad calculada)</code></pre>
+
+                    <h4>@atributo.setter - Setter</h4>
+                    <pre><code class="language-python">class Temperatura:
+    def __init__(self, celsius):
+        self._celsius = celsius
+
+    @property
+    def celsius(self):
+        return self._celsius
+
+    @celsius.setter
+    def celsius(self, valor):
+        """Valida antes de asignar."""
+        if valor < -273.15:
+            raise ValueError("Temperatura no puede ser menor al cero absoluto")
+        self._celsius = valor
+
+# Uso
+t = Temperatura(25)
+t.celsius = 30  # Usa el setter
+# t.celsius = -300  # ❌ ValueError</code></pre>
+
+                    <h4>@atributo.deleter - Deleter</h4>
+                    <pre><code class="language-python">class Ejemplo:
+    def __init__(self):
+        self._valor = None
+
+    @property
+    def valor(self):
+        return self._valor
+
+    @valor.setter
+    def valor(self, nuevo):
+        self._valor = nuevo
+
+    @valor.deleter
+    def valor(self):
+        """Se llama cuando se hace 'del obj.valor'"""
+        print("Eliminando valor")
+        self._valor = None
+
+# Uso
+e = Ejemplo()
+e.valor = 10
+print(e.valor)  # 10
+del e.valor     # Imprime: "Eliminando valor"</code></pre>
+
+                    <h3>Propiedades Read-Only</h3>
+                    <p>Para crear una propiedad de solo lectura, simplemente no definas el setter:</p>
+                    <pre><code class="language-python">class Usuario:
+    def __init__(self, fecha_nacimiento):
+        self._fecha_nacimiento = fecha_nacimiento
+
+    @property
+    def edad(self):
+        """Edad es de solo lectura (calculada)."""
+        from datetime import date
+        hoy = date.today()
+        años = hoy.year - self._fecha_nacimiento.year
+        # Ajustar si aún no es el cumpleaños este año
+        if (hoy.month, hoy.day) < (self._fecha_nacimiento.month, self._fecha_nacimiento.day):
+            años -= 1
+        return años
+
+# Uso
+u = Usuario(date(1990, 5, 15))
+print(u.edad)  # Calcula edad actual
+# u.edad = 25  # ❌ AttributeError: can't set attribute</code></pre>
+
+                    <h3>Dataclasses Inmutables</h3>
+                    <p>Para crear objetos inmutables con dataclasses, usa <code>frozen=True</code>:</p>
+                    <pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Punto:
+    """Punto inmutable en el espacio 2D."""
+    x: float
+    y: float
+
+# Uso
+p = Punto(10, 20)
+print(p.x, p.y)  # 10 20
+# p.x = 15  # ❌ FrozenInstanceError: cannot assign to field 'x'</code></pre>
+                </section>
+
+                <section id="ejemplos">
+                    <h2>Ejemplos Prácticos</h2>
+
+                    <h3>Ejemplo 1: Cuenta Bancaria con Validación</h3>
+                    <pre><code class="language-python">class CuentaBancaria:
+    """Cuenta bancaria con encapsulamiento."""
+
+    def __init__(self, saldo_inicial: float = 0):
+        self._saldo = saldo_inicial  # Atributo protegido
+
+    @property
+    def saldo(self) -> float:
+        """Obtiene el saldo actual."""
+        return self._saldo
+
+    def depositar(self, monto: float) -> None:
+        """Deposita dinero en la cuenta."""
+        if monto <= 0:
+            raise ValueError("El monto debe ser positivo")
+        self._saldo += monto
+        print(f"Depositado: ${monto:.2f}. Nuevo saldo: ${self._saldo:.2f}")
+
+    def retirar(self, monto: float) -> None:
+        """Retira dinero de la cuenta."""
+        if monto <= 0:
+            raise ValueError("El monto debe ser positivo")
+        if monto > self._saldo:
+            raise ValueError("Saldo insuficiente")
+        self._saldo -= monto
+        print(f"Retirado: ${monto:.2f}. Nuevo saldo: ${self._saldo:.2f}")
+
+# Uso
+cuenta = CuentaBancaria(1000)
+print(f"Saldo: ${cuenta.saldo:.2f}")  # Acceso vía propiedad
+
+cuenta.depositar(500)
+cuenta.retirar(200)
+# cuenta.retirar(2000)  # ❌ ValueError: Saldo insuficiente</code></pre>
+
+                    <h3>Ejemplo 2: Usuario con Email Validado</h3>
+                    <pre><code class="language-python">import re
+
+class Usuario:
+    """Usuario con validación de email usando propiedades."""
+
+    def __init__(self, username: str, email: str):
+        self.username = username
+        self.email = email  # Usa el setter
+
+    @property
+    def email(self) -> str:
+        """Obtiene el email del usuario."""
+        return self._email
+
+    @email.setter
+    def email(self, nuevo_email: str) -> None:
+        """Valida y establece el email."""
+        if not self._email_valido(nuevo_email):
+            raise ValueError(f"Email inválido: {nuevo_email}")
+        self._email = nuevo_email.lower()
+
+    @staticmethod
+    def _email_valido(email: str) -> bool:
+        """Valida formato de email usando regex."""
+        patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(patron, email) is not None
+
+    @property
+    def dominio_email(self) -> str:
+        """Propiedad calculada: dominio del email."""
+        return self._email.split('@')[1]
+
+# Uso
+try:
+    u = Usuario("juan", "juan@example.com")
+    print(f"Email: {u.email}")
+    print(f"Dominio: {u.dominio_email}")
+
+    u.email = "nuevo@example.com"
+    print(f"Email actualizado: {u.email}")
+
+    # u.email = "invalido"  # ❌ ValueError: Email inválido
+except ValueError as e:
+    print(f"Error: {e}")</code></pre>
+
+                    <h3>Ejemplo 3: Rectángulo con Área Calculada</h3>
+                    <pre><code class="language-python">class Rectangulo:
+    """Rectángulo con propiedades para base, altura y área."""
+
+    def __init__(self, base: float, altura: float):
+        self.base = base
+        self.altura = altura
+
+    @property
+    def base(self) -> float:
+        """Obtiene la base."""
+        return self._base
+
+    @base.setter
+    def base(self, valor: float) -> None:
+        """Valida y establece la base."""
+        if valor <= 0:
+            raise ValueError("La base debe ser positiva")
+        self._base = valor
+
+    @property
+    def altura(self) -> float:
+        """Obtiene la altura."""
+        return self._altura
+
+    @altura.setter
+    def altura(self, valor: float) -> None:
+        """Valida y establece la altura."""
+        if valor <= 0:
+            raise ValueError("La altura debe ser positiva")
+        self._altura = valor
+
+    @property
+    def area(self) -> float:
+        """Calcula el área (propiedad de solo lectura)."""
+        return self._base * self._altura
+
+    @property
+    def perimetro(self) -> float:
+        """Calcula el perímetro (propiedad de solo lectura)."""
+        return 2 * (self._base + self._altura)
+
+# Uso
+r = Rectangulo(5, 3)
+print(f"Área: {r.area}")  # 15
+print(f"Perímetro: {r.perimetro}")  # 16
+
+# Modificar dimensiones
+r.base = 10
+print(f"Nueva área: {r.area}")  # 30</code></pre>
+                </section>
+
+                <section id="buenas-practicas">
+                    <h2>Buenas Prácticas</h2>
+
+                    <h3>Cuándo Usar Propiedades</h3>
+                    <pre><code class="language-python"># ✅ Usar propiedades cuando:
+# 1. Necesitas validación
+@property
+def edad(self, valor):
+    if valor < 0:
+        raise ValueError("Edad no puede ser negativa")
+    self._edad = valor
+
+# 2. El valor es calculado
+@property
+def edad(self):
+    return self.calcular_edad()
+
+# 3. Necesitas ejecutar código cuando se lee/escribe
+@property
+def ultimo_acceso(self):
+    self._actualizar_estadisticas()
+    return self._ultimo_acceso</code></pre>
+
+                    <h3>No Ocultar Demasiado</h3>
+                    <pre><code class="language-python"># ✅ Bien: Atributos simples son públicos
+class Usuario:
+    def __init__(self, nombre):
+        self.nombre = nombre  # Simple, sin validación necesaria
+
+# ❌ Evitar: Encapsular excesivamente
+class Usuario:
+    def __init__(self, nombre):
+        self._nombre = nombre
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, valor):
+        self._nombre = valor  # Sin validación, innecesario</code></pre>
+
+                    <h3>Usar _ para Atributos Internos</h3>
+                    <pre><code class="language-python"># ✅ Bien: Atributos de uso interno con _
+class Usuario:
+    def __init__(self):
+        self._cache_calculos = {}
+        self._conexion_bd = None
+
+    def _limpiar_cache(self):
+        """Método interno (no parte de la API pública)."""
+        self._cache_calculos.clear()
+
+# ❌ Evitar: Atributos internos sin _
+class Usuario:
+    def __init__(self):
+        self.cache_calculos = {}  # Parece público pero es interno</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2>Ejercicio Guidido</h2>
+
+                    <h3>🎯 Ejercicio: Usuario con Propiedades para TaskFlow</h3>
+                    <p>Vamos a mejorar la clase Usuario usando propiedades para validar y controlar el acceso a los atributos.</p>
+
+                    <pre><code class="language-python">#_usuario_propiedades.py
+"""
+Modelo de Usuario con encapsulamiento y propiedades
+para el proyecto TaskFlow.
+"""
+
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Optional, List
+from enum import Enum
+import re
+
+class EstadoUsuario(Enum):
+    """Estados posibles de un usuario."""
+    PENDIENTE = "pendiente"
+    ACTIVO = "activo"
+    BLOQUEADO = "bloqueado"
+
+class Usuario:
+    """Usuario con propiedades para validación y control."""
+
+    _MIN_LONGITUD_USERNAME = 3
+    _MAX_LONGITUD_USERNAME = 50
+    _MIN_LONGITUD_PASSWORD = 8
+
+    def __init__(
+        self,
+        username: str,
+        email: str,
+        password: str,
+        nombre_completo: Optional[str] = None,
+        estado: EstadoUsuario = EstadoUsuario.PENDIENTE
+    ):
+        """Inicializa un nuevo usuario."""
+        self._id = None  # Se asigna al guardar en BD
+        self._username = None  # Se asigna vía setter
+        self._email = None  # Se asigna vía setter
+        self._password_hash = None  # Se asigna vía setter
+        self._nombre_completo = nombre_completo
+        self._estado = estado
+        self._creado_en = datetime.now()
+        self._actualizado_en = datetime.now()
+        self._intentos_fallidos = 0  # Para tracking de login
+
+        # Usar setters para validación
+        self.username = username
+        self.email = email
+        self.password = password
+
+    # ===== ID =====
+    @property
+    def id(self) -> Optional[int]:
+        """Obtiene el ID del usuario."""
+        return self._id
+
+    @id.setter
+    def id(self, valor: Optional[int]) -> None:
+        """Establece el ID (solo se puede asignar una vez)."""
+        if self._id is not None:
+            raise ValueError("El ID no puede modificarse")
+        self._id = valor
+
+    # ===== USERNAME =====
+    @property
+    def username(self) -> str:
+        """Obtiene el nombre de usuario."""
+        return self._username
+
+    @username.setter
+    def username(self, valor: str) -> None:
+        """Valida y establece el username."""
+        if not isinstance(valor, str):
+            raise TypeError("Username debe ser string")
+        if len(valor) < self._MIN_LONGITUD_USERNAME:
+            raise ValueError(f"Username debe tener al menos {self._MIN_LONGITUD_USERNAME} caracteres")
+        if len(valor) > self._MAX_LONGITUD_USERNAME:
+            raise ValueError(f"Username no puede exceder {self._MAX_LONGITUD_USERNAME} caracteres")
+        if not self._username_valido(valor):
+            raise ValueError("Username solo puede contener letras, números y _")
+        self._username = valor
+
+    @staticmethod
+    def _username_valido(username: str) -> bool:
+        """Verifica si el username solo contiene caracteres válidos."""
+        return all(c.isalnum() or c == "_" for c in username)
+
+    # ===== EMAIL =====
+    @property
+    def email(self) -> str:
+        """Obtiene el email."""
+        return self._email
+
+    @email.setter
+    def email(self, valor: str) -> None:
+        """Valida y establece el email."""
+        if not isinstance(valor, str):
+            raise TypeError("Email debe ser string")
+        if not self._email_valido(valor):
+            raise ValueError("Email inválido")
+        self._email = valor.lower()
+        self._actualizado_en = datetime.now()
+
+    @staticmethod
+    def _email_valido(email: str) -> bool:
+        """Valida formato de email usando regex."""
+        patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(patron, email) is not None
+
+    @property
+    def dominio_email(self) -> str:
+        """Propiedad calculada: dominio del email."""
+        return self._email.split('@')[1]
+
+    # ===== PASSWORD =====
+    @property
+    def password(self) -> str:
+        """⚠️ ADVERTENCIA: Retorna el hash, no el password original."""
+        return self._password_hash
+
+    @password.setter
+    def password(self, valor: str) -> None:
+        """Hashea y establece el password."""
+        if not isinstance(valor, str):
+            raise TypeError("Password debe ser string")
+        if len(valor) < self._MIN_LONGITUD_PASSWORD:
+            raise ValueError(f"Password debe tener al menos {self._MIN_LONGITUD_PASSWORD} caracteres")
+        self._password_hash = self._hashear_password(valor)
+
+    @staticmethod
+    def _hashear_password(password: str) -> str:
+        """Hashea el password (simplificado para demostración)."""
+        # NOTA: En producción, usar bcrypt o argon2
+        return f"hash_{password}"
+
+    def verificar_password(self, password: str) -> bool:
+        """Verifica si el password proporcionado coincide."""
+        return self._password_hash == self._hashear_password(password)
+
+    def cambiar_password(self, password_actual: str, nuevo_password: str) -> None:
+        """Cambia el password si el actual es correcto."""
+        if not self.verificar_password(password_actual):
+            raise ValueError("Password actual incorrecto")
+        self.password = nuevo_password
+
+    # ===== NOMBRE COMPLETO =====
+    @property
+    def nombre_completo(self) -> Optional[str]:
+        """Obtiene el nombre completo."""
+        return self._nombre_completo
+
+    @nombre_completo.setter
+    def nombre_completo(self, valor: Optional[str]) -> None:
+        """Valida y establece el nombre completo."""
+        if valor is not None:
+            if not isinstance(valor, str):
+                raise TypeError("Nombre completo debe ser string")
+            if len(valor) > 100:
+                raise ValueError("Nombre completo no puede exceder 100 caracteres")
+            if len(valor.strip()) == 0:
+                raise ValueError("Nombre completo no puede estar vacío")
+        self._nombre_completo = valor.strip() if valor else None
+
+    # ===== ESTADO =====
+    @property
+    def estado(self) -> EstadoUsuario:
+        """Obtiene el estado del usuario."""
+        return self._estado
+
+    @estado.setter
+    def estado(self, valor: EstadoUsuario) -> None:
+        """Valida y establece el estado."""
+        if not isinstance(valor, EstadoUsuario):
+            raise TypeError("Estado debe ser un EstadoUsuario")
+        self._estado = valor
+        self._actualizado_en = datetime.now()
+
+    def activar(self) -> None:
+        """Activa el usuario."""
+        self.estado = EstadoUsuario.ACTIVO
+
+    def desactivar(self) -> None:
+        """Desactiva el usuario."""
+        self.estado = EstadoUsuario.BLOQUEADO
+
+    @property
+    def esta_activo(self) -> bool:
+        """Verifica si el usuario está activo."""
+        return self._estado == EstadoUsuario.ACTIVO
+
+    # ===== INTENTOS FALLIDOS =====
+    @property
+    def intentos_fallidos(self) -> int:
+        """Obtiene el número de intentos fallidos de login."""
+        return self._intentos_fallidos
+
+    def registrar_intento_fallido(self) -> None:
+        """Registra un intento fallido de login."""
+        self._intentos_fallidos += 1
+        if self._intentos_fallidos >= 3:
+            self.desactivar()
+
+    def reiniciar_intentos(self) -> None:
+        """Reinicia el contador de intentos fallidos."""
+        self._intentos_fallidos = 0
+
+    # ===== REPRESENTACIONES =====
+    def __str__(self) -> str:
+        """Representación string amigable."""
+        return f"@{self._username}"
+
+    def __repr__(self) -> str:
+        """Representación para debugging."""
+        return (f"Usuario(id={self._id}, username='{self._username}', "
+                f"email='{self._email}', estado={self._estado.value})")
+
+    # ===== MÉTODOS DE UTILIDAD =====
+    def validar(self) -> List[str]:
+        """Valida todos los campos del usuario."""
+        errores = []
+
+        if not self._username:
+            errores.append("Username es requerido")
+
+        if not self._email:
+            errores.append("Email es requerido")
+
+        if not self._password_hash:
+            errores.append("Password es requerido")
+
+        return errores
+
+    def es_valido(self) -> bool:
+        """Verifica si el usuario es válido."""
+        return len(self.validar()) == 0
+
+    def to_dict(self) -> dict:
+        """Convierte el usuario a diccionario (sin datos sensibles)."""
+        return {
+            "id": self._id,
+            "username": self._username,
+            "email": self._email,
+            "nombre_completo": self._nombre_completo,
+            "estado": self._estado.value,
+            "creado_en": self._creado_en.isoformat(),
+            "actualizado_en": self._actualizado_en.isoformat()
+        }
+
+# ===== EJEMPLO DE USO =====
+if __name__ == "__main__":
+    print("=== Creando Usuario con Propiedades ===\n")
+
+    try:
+        # Crear usuario válido
+        usuario = Usuario(
+            username="juan123",
+            email="juan@example.com",
+            password="MiPassword123",
+            nombre_completo="Juan Pérez"
+        )
+
+        print(f"✅ Usuario creado: {usuario}")
+        print(f"   Email: {usuario.email}")
+        print(f"   Dominio: {usuario.dominio_email}")
+        print(f"   Estado: {usuario.estado.value}")
+        print(f"   ¿Activo?: {usuario.esta_activo}")
+
+        # Verificar password
+        print(f"\n¿Password correcto?: {usuario.verificar_password('MiPassword123')}")
+
+        # Cambiar password
+        usuario.cambiar_password("MiPassword123", "NuevoPassword456")
+        print(f"✅ Password cambiado")
+        print(f"¿Nuevo password correcto?: {usuario.verificar_password('NuevoPassword456')}")
+
+        # Activar usuario
+        usuario.activar()
+        print(f"\nEstado tras activar: {usuario.estado.value}")
+
+        # Intentos fallidos
+        print("\n=== Simulando Intentos Fallidos ===")
+        for i in range(3):
+            usuario.registrar_intento_fallido()
+            print(f"Intento {i+1}: {usuario.intentos_fallidos} fallidos")
+
+        print(f"¿Activo después de 3 intentos?: {usuario.esta_activo}")
+
+    except (ValueError, TypeError) as e:
+        print(f"❌ Error: {e}")
+
+    # Validación de username
+    print("\n=== Validando Username ===")
+    try:
+        usuario2 = Usuario(
+            username="ab",  # Muy corto
+            email="test@example.com",
+            password="Password123"
+        )
+    except (ValueError, TypeError) as e:
+        print(f"❌ Error esperado: {e}")
+
+    # Validación de email
+    print("\n=== Validando Email ===")
+    try:
+        usuario3 = Usuario(
+            username="valido123",
+            email="invalido",  # Email inválido
+            password="Password123"
+        )
+    except (ValueError, TypeError) as e:
+        print(f"❌ Error esperado: {e}")</code></pre>
+
+                    <h4>Paso 1: Ejecuta el Código</h4>
+                    <pre><code class="language-bash">python usuario_propiedades.py</code></pre>
+
+                    <h4>Paso 2: Prueba las Funcionalidades</h4>
+                    <ul>
+                        <li>Crear un usuario válido con todos los campos</li>
+                        <li>Intentar crear usuarios inválidos (username corto, email sin @)</li>
+                        <li>Verificar el password correcto e incorrecto</li>
+                        <li>Cambiar el password (correcto e incorrecto)</li>
+                        <li>Activar y desactivar el usuario</li>
+                        <li>Simular intentos fallidos de login</li>
+                        <li>Verificar el bloqueo automático después de 3 intentos</li>
+                    </ul>
+
+                    <div class="alert-warning-custom">
+                        <strong>⚠️ Reto adicional:</strong> Agrega una propiedad <code>@property</code> llamada <code>antiguedad_dias</code> que calcule los días desde que el usuario se creó. También agrega un método <code>actualizar_ultimo_login()</code>.
+                    </div>
+
+                    <h3>🚀 Conexión con el Proyecto TaskFlow</h3>
+                    <p>El encapsulamiento aplicado en esta clase protege:</p>
+                    <ul>
+                        <li><strong>Password:</strong> Nunca se expone el password original, solo el hash</li>
+                        <li><strong>Email:</strong> Se valida y normaliza a minúsculas automáticamente</li>
+                        <li><strong>Username:</strong> Se valida formato y longitud antes de asignar</li>
+                        <li><strong>Estado:</strong> Se registra automáticamente la fecha de actualización</li>
+                        <li><strong>Intentos fallidos:</strong> Se controla el acceso tras múltiples fallos</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>📝 Próximos pasos:</strong> En las siguientes clases aprenderás sobre herencia y composición para crear jerarquías de modelos más complejas.
+                    </div>
+                </section>
+
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li><a href="https://docs.python.org/es/3/tutorial/classes.html#private-variables" target="_blank">Variables Privadas - Tutorial Oficial</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/functions.html#property" target="_blank">@property - Documentación Oficial</a></li>
+                        <li><a href="https://realpython.com/python-property/" target="_blank">Real Python - Guía Completa de @property</a></li>
+                        <li><a href="https://docs.python.org/es/3/glossary.html#term-name-mangling" target="_blank">Name Mangling - Glosario Python</a></li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Última actualización: 2026-02-07</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>
