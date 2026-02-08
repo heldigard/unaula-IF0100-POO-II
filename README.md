@@ -24,30 +24,36 @@ Este curso utiliza un enfoque practico centrado en el proyecto integrador:
 
 ## Caracteristicas
 
-### MVP (Semana 4)
-- Gestion de usuarios y autenticacion
-- Creacion de proyectos
-- Gestion de tareas basicas
-- Persistencia en JSON
+### M1: Configuracion (Semana 9-10)
+- Estructura del proyecto Clean Architecture
+- Entorno de desarrollo configurado
+- Repositorio Git inicializado
 
-### v1.0 (Semana 8)
-- Autenticacion JWT
-- Base de datos PostgreSQL
-- API REST completa
-- Suite de tests (pytest)
+### M2: Modelos (Semana 11-12)
+- Entidades de dominio (User, Task, Project)
+- Value Objects con Pydantic
+- Repositories basicos
 
-### v2.0 (Semana 12)
-- Interfaz web con Jinja2/HTMX
-- Filtrado y busqueda de tareas
-- Dashboard con estadisticas
+### M3: API Core (Semana 13-14)
+- Endpoints CRUD funcionando
+- Validacion con Pydantic
+- Sistema de dependencias
 
-### Final (Semana 16)
-- Todas las caracteristicas v2.0
-- Dashboard con estadisticas avanzadas
-- Notificaciones
-- Archivo de tareas completadas
-- Exportacion a PDF/CSV
-- Documentacion completa
+### M4: Testing (Semana 15) - 15% Proyecto Parcial
+- Tests con >80% cobertura
+- pytest fixtures y mocks
+- BDD con Behave
+
+### M5: Persistencia (Semana 16)
+- SQLAlchemy integrado
+- Migraciones de base de datos
+- Seeds de datos
+
+### M6: Entrega Final (Semana 17) - 20% Proyecto Final
+- Sistema completo documentado
+- API REST funcional
+- Tests automatizados
+- Dashboard web
 
 ---
 
@@ -416,14 +422,14 @@ erDiagram
 
 ### Unidades del Curso
 
-| Unidad | Semanas | Nombre | Enfoque |
-|--------|---------|--------|---------|
-| 0 | 1-2 | Fundamentos de Python | Repaso intensivo |
-| 1 | 3-6 | POO Avanzada con Python | Clases, herencia, polimorfismo |
-| 2 | 7-9 | Tecnicas de Desarrollo | TDD, BDD, DDD |
-| 3 | 10-12 | Desarrollo Backend | FastAPI, PostgreSQL |
-| 4 | 13-15 | Desarrollo Frontend | Jinja2, HTMX, CSS |
-| 5 | 16-17 | Proyecto Final | Integracion y despliegue |
+| Unidad | Clases | Nombre | Enfoque |
+|--------|--------|--------|---------|
+| 0 | 4 | Fundamentos de Python | Repaso intensivo |
+| 1 | 4 | POO Avanzada con Python | Clases, herencia, polimorfismo |
+| 2 | 4 | Tecnicas de Desarrollo | TDD, BDD, DDD |
+| 3 | 5 | Desarrollo Backend con FastAPI | API REST, Pydantic, Testing |
+
+**Total:** 17 clases de 2 horas (16 efectivas + 1 cancelada por Semana Santa)
 
 ### Ver Clases Online
 
@@ -435,18 +441,30 @@ Las 17 clases del curso estan disponibles en formato HTML interactivo:
 
 ## Sistema de Evaluacion
 
+### Estructura Oficial (2026-I)
+
 ```
-E1 (15%) + E2 (15%) + E3 (20%) + E4 (15%) + E5 (15%) + Final (20%) = 100%
+Primer Seguimiento (50%): 15% + 15% + 20% antes de Semana Santa
+Segundo Seguimiento (80%): +15% + 15% antes del 15 de mayo
+Tercer Seguimiento (100%): +20% antes del 28 de mayo
 ```
 
-| Evaluacion | Peso | Semana | Tema |
-|------------|------|--------|------|
-| E1 | 15% | 4 | Conceptos de POO |
-| E2 | 15% | 7 | Tecnicas de Desarrollo |
-| E3 (Parcial) | 20% | 10 | Desarrollo Backend |
-| E4 | 15% | 14 | Desarrollo Frontend |
-| E5 | 15% | 16 | Proyecto Integrador |
-| Final | 20% | 17 | Sustentacion Final |
+| Seguimiento | Evaluacion | Peso | Fecha | Tema |
+|-------------|------------|------|-------|------|
+| **Primer (50%)** | Quiz 1 | 15% | 17/02/2026 | Fundamentos Python |
+| **Primer (50%)** | Taller 1 | 15% | 10/03/2026 | Modelado OO |
+| **Primer (50%)** | Parcial 1 | 20% | 17/03/2026 | Python + POO |
+| **Segundo (80%)** | Taller 2 | 15% | 14/04/2026 | TDD + Testing |
+| **Segundo (80%)** | Proyecto Parcial | 15% | 12/05/2026 | TaskFlow API CRUD |
+| **Tercer (100%)** | Proyecto Final | 20% | 26/05/2026 | TaskFlow Completo |
+
+### Fechas Limite Oficiales
+
+| Seguimiento | Porcentaje Acumulado | Fecha Limite |
+|-------------|----------------------|--------------|
+| Primer Seguimiento | 50% | 27/03/2026 (antes de Semana Santa) |
+| Segundo Seguimiento | 80% | 15/05/2026 |
+| Tercer Seguimiento | 100% | 28/05/2026 |
 
 ---
 

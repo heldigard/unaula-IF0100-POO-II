@@ -467,53 +467,77 @@
         <!-- Sistema de Evaluación -->
         <section id="evaluacion">
             <h2>Sistema de Evaluación</h2>
+
+            <h4 class="mb-3">Estructura de Seguimientos</h4>
+            <div class="alert-note mb-4">
+                <p class="mb-1"><strong>Primer Seguimiento (50%)</strong> - Límite: 27/03/2026 (antes de Semana Santa)</p>
+                <p class="mb-1"><strong>Segundo Seguimiento (80%)</strong> - Límite: 15/05/2026</p>
+                <p class="mb-0"><strong>Tercer Seguimiento (100%)</strong> - Límite: 28/05/2026</p>
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Componente</th>
+                            <th>Seguimiento</th>
+                            <th>Evaluación</th>
                             <th>Porcentaje</th>
+                            <th>Fecha</th>
                             <th>Descripción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><strong>Proyecto Integrador (TaskFlow)</strong></td>
-                            <td><span class="badge bg-danger fs-6">30%</span></td>
-                            <td>Desarrollo progresivo de un sistema de gestión de tareas con FastAPI</td>
+                        <tr class="table-info">
+                            <td rowspan="3"><strong>Primer (50%)</strong></td>
+                            <td><strong>Quiz 1</strong></td>
+                            <td><span class="badge bg-primary fs-6">15%</span></td>
+                            <td>17/02/2026</td>
+                            <td>Fundamentos Python</td>
                         </tr>
-                        <tr>
+                        <tr class="table-info">
+                            <td><strong>Taller 1</strong></td>
+                            <td><span class="badge bg-primary fs-6">15%</span></td>
+                            <td>10/03/2026</td>
+                            <td>Modelado OO</td>
+                        </tr>
+                        <tr class="table-info">
                             <td><strong>Parcial 1</strong></td>
-                            <td><span class="badge bg-primary fs-6">20%</span></td>
-                            <td>Fundamentos Python y POO (Semana 7)</td>
+                            <td><span class="badge bg-danger fs-6">20%</span></td>
+                            <td>17/03/2026</td>
+                            <td>Python + POO</td>
                         </tr>
-                        <tr>
-                            <td><strong>Parcial 2</strong></td>
-                            <td><span class="badge bg-primary fs-6">20%</span></td>
-                            <td>Técnicas de Desarrollo y Backend (Semana 11)</td>
+                        <tr class="table-warning">
+                            <td rowspan="2"><strong>Segundo (80%)</strong></td>
+                            <td><strong>Taller 2</strong></td>
+                            <td><span class="badge bg-success fs-6">15%</span></td>
+                            <td>14/04/2026</td>
+                            <td>TDD + Testing</td>
                         </tr>
-                        <tr>
-                            <td><strong>Laboratorios</strong></td>
-                            <td><span class="badge bg-success fs-6">20%</span></td>
-                            <td>Ejercicios prácticos semanales con pruebas automatizadas (4 laboratorios de 5% cada uno)</td>
+                        <tr class="table-warning">
+                            <td><strong>Proyecto Parcial</strong></td>
+                            <td><span class="badge bg-success fs-6">15%</span></td>
+                            <td>12/05/2026</td>
+                            <td>TaskFlow API CRUD</td>
                         </tr>
-                        <tr>
-                            <td><strong>Seguimiento</strong></td>
-                            <td><span class="badge bg-info fs-6">10%</span></td>
-                            <td>Evaluaciones cortas y talleres en clase</td>
+                        <tr class="table-danger">
+                            <td><strong>Tercer (100%)</strong></td>
+                            <td><strong>Proyecto Final</strong></td>
+                            <td><span class="badge bg-dark fs-6">20%</span></td>
+                            <td>26/05/2026</td>
+                            <td>TaskFlow Completo</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr class="table-active">
-                            <td><strong>Total</strong></td>
+                            <td colspan="2"><strong>Total</strong></td>
                             <td><span class="badge bg-dark fs-5">100%</span></td>
-                            <td></td>
+                            <td colspan="2"></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="alert-tip mt-3">
-                <strong>Nota aprobatoria:</strong> 3.0 sobre 5.0. Se requiere aprobar por separado el proyecto integrador (minimo 3.0) para aprobar el curso.
+                <strong>Nota aprobatoria:</strong> 3.0 sobre 5.0. Se requiere aprobar por separado el proyecto integrador (mínimo 3.0) para aprobar el curso.
             </div>
         </section>
 
@@ -747,30 +771,41 @@
                             <thead>
                                 <tr>
                                     <th>Fase</th>
-                                    <th>Entrega</th>
+                                    <th>Fecha</th>
+                                    <th>Evaluación</th>
                                     <th>Descripción</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>Fase 1</td>
-                                    <td>Semana 4</td>
+                                    <td>Semana 9-10 (07-14 abr)</td>
+                                    <td>-</td>
                                     <td>Configuración del entorno y estructura del proyecto</td>
                                 </tr>
                                 <tr>
                                     <td>Fase 2</td>
-                                    <td>Semana 8</td>
-                                    <td>Modelos de dominio y entidades Task</td>
+                                    <td>Semana 11-12 (21-28 abr)</td>
+                                    <td>-</td>
+                                    <td>Modelos de dominio y entidades con Pydantic</td>
                                 </tr>
                                 <tr>
                                     <td>Fase 3</td>
-                                    <td>Semana 12</td>
-                                    <td>API REST con FastAPI y pruebas TDD</td>
+                                    <td>Semana 13-14 (05-12 may)</td>
+                                    <td>-</td>
+                                    <td>API REST con FastAPI y endpoints CRUD</td>
                                 </tr>
-                                <tr>
+                                <tr class="table-warning">
                                     <td>Fase 4</td>
-                                    <td>Semana 16</td>
-                                    <td>Integración final y documentación</td>
+                                    <td>Semana 15 (12 may)</td>
+                                    <td><strong>15%</strong></td>
+                                    <td><strong>Proyecto Parcial</strong>: Tests con >80% cobertura</td>
+                                </tr>
+                                <tr class="table-danger">
+                                    <td>Fase 5</td>
+                                    <td>Semana 17 (26 may)</td>
+                                    <td><strong>20%</strong></td>
+                                    <td><strong>Proyecto Final</strong>: Integración completa con documentación</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -783,8 +818,9 @@
                             <h4 class="card-title">TaskFlow</h4>
                             <p class="card-text">Sistema de Gestión de Tareas</p>
                             <hr>
-                            <p class="mb-1"><strong>35%</strong> de la nota final</p>
-                            <small>MVP funcional con pruebas</small>
+                            <p class="mb-1"><strong>35%</strong> de la nota total</p>
+                            <p class="small mb-0">15% Parcial + 20% Final</p>
+                            <small class="mt-2 d-block">MVP funcional con pruebas</small>
                         </div>
                     </div>
                 </div>
