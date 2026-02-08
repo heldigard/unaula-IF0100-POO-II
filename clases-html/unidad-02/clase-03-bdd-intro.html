@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introducción a BDD con Gherkin, behave y pytest-bdd. Curso IF0100 - POO II">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Introducción a BDD | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Blocks */
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Gherkin Feature Box */
+        .gherkin-feature {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .gherkin-feature .gherkin-keyword {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .gherkin-feature .gherkin-step {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table td {
+            vertical-align: middle;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 2: Técnicas de Desarrollo</h2>
+            <h3>Clase 03: Introducción a BDD</h3>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#gherkin">Lenguaje Gherkin</a></li>
+                        <li><a href="#behave">behave Framework</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-lg-9">
+                <!-- Sección 1: Objetivos -->
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender qué es Behavior Driven Development (BDD)</li>
+                        <li>Identificar diferencias entre TDD y BDD</li>
+                        <li>Escribir escenarios en lenguaje Gherkin (Given-When-Then)</li>
+                        <li>Implementar pasos (steps) de BDD con Python</li>
+                        <li>Usar behave para ejecutar tests BDD</li>
+                        <li>Conectar escenarios BDD con código Python</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 2: Conceptos Teóricos -->
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es BDD?</h3>
+                    <p>
+                        <strong>Behavior Driven Development (BDD)</strong> o Desarrollo Guiado por
+                        Comportamiento es una metodología de desarrollo ágil que busca:
+                    </p>
+                    <ul>
+                        <li><strong>Colaboración:</strong> Desarrolladores, QA y stakeholders hablando el mismo idioma</li>
+                        <li><strong>Valor de negocio:</strong> Enfocarse en comportamientos que agregan valor</li>
+                        <li><strong>Documentación viva:</strong> Los escenarios son documentación ejecutable</li>
+                        <li><strong>Testing comprensible:</strong> Tests que todos pueden entender</li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>Idea clave:</strong> BDD transforma especificaciones técnicas en
+                        escenarios de negocio comprensibles para todos los stakeholders.
+                    </div>
+
+                    <h3>TDD vs BDD</h3>
+
+                    <table class="table table-striped comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>TDD</th>
+                                <th>BDD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Enfoque</strong></td>
+                                <td>Tests unitarios técnicos</td>
+                                <td>Comportamiento del sistema</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lenguaje</strong></td>
+                                <td>Código (Python, Java, etc.)</td>
+                                <td>Gherkin (lenguaje natural)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audiencia</strong></td>
+                                <td>Desarrolladores</td>
+                                <td>Todos: Dev, QA, Negocio</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Perspectiva</strong></td>
+                                <td>Cómo funciona internamente</td>
+                                <td>Cómo se comporta para el usuario</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ejemplo</strong></td>
+                                <td><code>test_usuario_es_valido()</code></td>
+                                <td><code>Given un usuario válido When se registra Then es exitoso</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>El Triángulo de BDD</h3>
+
+                    <div class="row mt-4">
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">📝 Especificación</h5>
+                                    <p class="card-text">
+                                        Los stakeholders describen el comportamiento del sistema
+                                        en un lenguaje comprensible.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">🔧 Automatización</h5>
+                                    <p class="card-text">
+                                        Los desarrolladores traducen las especificaciones a
+                                        tests automatizados ejecutables.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">📋 Documentación</h5>
+                                    <p class="card-text">
+                                        Los escenarios se convierten en documentación viva
+                                        que siempre está actualizada.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Flujo de Trabajo BDD</h3>
+
+                    <ol class="mt-4">
+                        <li><strong>Discover:</strong> Conversar con stakeholders para entender el comportamiento</li>
+                        <li><strong>Formulate:</strong> Escribir escenarios Gherkin que capturen el comportamiento</li>
+                        <li><strong>Automate:</strong> Implementar los pasos que ejecutan los escenarios</li>
+                        <li><strong>Demonstrate:</strong> Ejecutar los escenarios y demostrar el comportamiento</li>
+                        <li><strong>Document:</strong> Los escenarios sirven como documentación</li>
+                    </ol>
+                </section>
+
+                <!-- Sección 3: Lenguaje Gherkin -->
+                <section id="gherkin">
+                    <h2>Lenguaje Gherkin</h2>
+
+                    <h3>¿Qué es Gherkin?</h3>
+                    <p>
+                        <strong>Gherkin</strong> es un lenguaje específico de dominio (DSL) que permite
+                        describir comportamientos del software en un lenguaje natural estructurado.
+                    </p>
+
+                    <h3>Palabras Clave de Gherkin</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Palabra Clave</th>
+                                <th>Purpose</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Feature</code></td>
+                                <td>Describe la funcionalidad</td>
+                                <td>Feature: Registro de usuarios</td>
+                            </tr>
+                            <tr>
+                                <td><code>Scenario</code></td>
+                                <td>Describe un caso específico</td>
+                                <td>Scenario: Registro exitoso</td>
+                            </tr>
+                            <tr>
+                                <td><code>Given</code></td>
+                                <td>Contexto inicial (Dado)</td>
+                                <td>Given un usuario no registrado</td>
+                            </tr>
+                            <tr>
+                                <td><code>When</code></td>
+                                <td>Acción (Cuando)</td>
+                                <td>When se registra con datos válidos</td>
+                            </tr>
+                            <tr>
+                                <td><code>Then</code></td>
+                                <td>Resultado esperado (Entonces)</td>
+                                <td>Then el registro es exitoso</td>
+                            </tr>
+                            <tr>
+                                <td><code>And</code></td>
+                                <td>Y (adicional)</td>
+                                <td>And recibe email de confirmación</td>
+                            </tr>
+                            <tr>
+                                <td><code>But</code></td>
+                                <td>Pero (negación)</td>
+                                <td>But no puede acceder hasta verificar</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Estructura de un Feature</h3>
+
+                    <div class="gherkin-feature">
+                        <pre><code><span class="gherkin-keyword">Feature:</span> Inicio de Sesión en TaskFlow
+  <span class="gherkin-keyword">Como</span> usuario registrado
+  <span class="gherkin-keyword">Quiero</span> poder iniciar sesión
+  <span class="gherkin-keyword">Para</span> acceder a mis proyectos y tareas
+
+  <span class="gherkin-keyword">Scenario:</span> Login exitoso con credenciales válidas
+    <span class="gherkin-keyword">Given</span> un usuario registrado con username "testuser" y password "pass123"
+    <span class="gherkin-keyword">When</span> ingresa username "testuser" y password "pass123"
+    <span class="gherkin-keyword">Then</span> el login es exitoso
+    <span class="gherkin-keyword">And</span> es redirigido al dashboard
+
+  <span class="gherkin-keyword">Scenario:</span> Login fallido con password incorrecto
+    <span class="gherkin-keyword">Given</span> un usuario registrado con username "testuser" y password "pass123"
+    <span class="gherkin-keyword">When</span> ingresa username "testuser" y password "incorrecto"
+    <span class="gherkin-keyword">Then</span> el login falla
+    <span class="gherkin-keyword">And</span> ve el mensaje "Credenciales inválidas"</code></pre>
+                    </div>
+
+                    <h3>Mejores Prácticas en Gherkin</h3>
+
+                    <div class="alert-tip">
+                        <strong>DO's:</strong>
+                        <ul>
+                            <li>Usar lenguaje de negocio, no técnico</li>
+                            <li>Un escenario, un comportamiento</li>
+                            <li>Escenarios cortos y enfocados</li>
+                            <li>Usar Background para contexto compartido</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-error">
+                        <strong>DON'T's:</strong>
+                        <ul>
+                            <li>No incluir detalles de implementación</li>
+                            <li No escenarios muy largos (más de 10 pasos)</li>
+                            <li>No hacer asserts técnicos en Gherkin</li>
+                            <li>No mezclar múltiples comportamientos</li>
+                        </ul>
+                    </div>
+
+                    <h3>Background: Contexto Compartido</h3>
+
+                    <pre><code class="language-gherkin"><span class="gherkin-keyword">Feature:</span> Gestión de Proyectos
+
+  <span class="gherkin-keyword">Background:</span>
+    <span class="gherkin-keyword">Given</span> un usuario autenticado como "admin"
+    <span class="gherkin-keyword">And</span> el usuario tiene permisos de creación
+
+  <span class="gherkin-keyword">Scenario:</span> Crear proyecto exitosamente
+    <span class="gherkin-keyword">When</span> crea un proyecto con nombre "Mi Proyecto"
+    <span class="gherkin-keyword">Then</span> el proyecto se crea exitosamente
+
+  <span class="gherkin-keyword">Scenario:</span> Crear proyecto con nombre duplicado
+    <span class="gherkin-keyword">Given</span> existe un proyecto con nombre "Mi Proyecto"
+    <span class="gherkin-keyword">When</span> crea un proyecto con nombre "Mi Proyecto"
+    <span class="gherkin-keyword">Then</span> ve el error "El proyecto ya existe"</code></pre>
+
+                    <h3>Scenario Outline: Datos Parametrizados</h3>
+
+                    <pre><code class="language-gherkin"><span class="gherkin-keyword">Scenario Outline:</span> Validación de nombres de proyecto
+    <span class="gherkin-keyword">Given</span> un usuario autenticado
+    <span class="gherkin-keyword">When</span> intenta crear un proyecto con nombre "&lt;nombre&gt;"
+    <span class="gherkin-keyword">Then</span> el sistema responde "&lt;resultado&gt;"
+
+    <span class="gherkin-keyword">Examples:</span> | nombre             | resultado                |
+      | Valido             | Proyecto creado         |
+      | P                  | Nombre muy corto        |
+      |                    | Nombre es requerido     |
+      | Proyecto Muy Largo Nombre Excedido | Nombre muy largo |</code></pre>
+                </section>
+
+                <!-- Sección 4: behave Framework -->
+                <section id="behave">
+                    <h2>behave Framework en Python</h2>
+
+                    <h3>¿Qué es behave?</h3>
+                    <p>
+                        <strong>behave</strong> es un framework BDD para Python que permite ejecutar
+                        escenarios Gherkin como tests automatizados. Es similar a Cucumber en Java.
+                    </p>
+
+                    <h3>Instalación</h3>
+
+                    <pre><code class="language-bash"># Instalar behave
+pip install behave
+
+# Instalar con dependencias útiles
+pip install behave pytest-bdd</code></pre>
+
+                    <h3>Estructura de Directorios</h3>
+
+                    <pre><code class="language-text">proyecto/
+├── features/                  # Archivos .feature con escenarios Gherkin
+│   ├── __init__.py
+│   ├── login.feature        # Escenarios de login
+│   ├── registro.feature     # Escenarios de registro
+│   └── steps/               # Implementación de pasos (steps)
+│       ├── __init__.py
+│       ├── login_steps.py   # Pasos de login
+│       └── registro_steps.py
+├── tests/                    # Tests unitarios tradicionales
+└── src/                      # Código de producción</code></pre>
+
+                    <h3>Implementar Pasos (Steps)</h3>
+
+                    <pre><code class="language-python"># features/steps/login_steps.py
+
+from behave import given, when, then
+from taskflow.services.auth_service import AuthService
+from taskflow.models.usuario import Usuario
+
+# Servicio para testing
+auth_service = AuthService()
+
+@given('un usuario registrado con username "{username}" y password "{password}"')
+def step_given_usuario_registrado(context, username, password):
+    """Paso que registra un usuario para el test."""
+    # Crear usuario en contexto para usar en pasos siguientes
+    context.usuario = Usuario(
+        username=username,
+        email=f"{username}@example.com"
+    )
+    context.usuario.set_password(password)
+
+    # Guardar en BD de prueba
+    auth_service.registrar(context.usuario)
+
+@when('ingresa username "{username}" y password "{password}"')
+def step_when_ingresa_credenciales(context, username, password):
+    """Paso que intenta login."""
+    context.resultado = auth_service.login(username, password)
+
+@then('el login es exitoso')
+def step_then_login_exitoso(context):
+    """Verifica que el login fue exitoso."""
+    assert context.resultado['exitoso'] == True
+
+@then('es redirigido al dashboard')
+def step_then_redirigido_dashboard(context):
+    """Verifica redirección al dashboard."""
+    assert context.resultado['redirect'] == '/dashboard'
+
+@then('el login falla')
+def step_then_login_falla(context):
+    """Verifica que el login falló."""
+    assert context.resultado['exitoso'] == False
+
+@then('ve el mensaje "{mensaje}"')
+def step_then_ve_mensaje(context, mensaje):
+    """Verifica el mensaje de error."""
+    assert mensaje in context.resultado['mensaje']</code></pre>
+
+                    <h3>Contexto en behave</h3>
+
+                    <p>El objeto <code>context</code> permite compartir datos entre pasos:</p>
+
+                    <pre><code class="language-python">@given('un producto con precio {precio:d}')
+def step_given_producto(context, precio):
+    """Crea un producto y lo guarda en context."""
+    context.producto = {'nombre': 'Test', 'precio': precio}
+
+@when('aplico un descuento del {descuento:d}%')
+def step_when_descuento(context, descuento):
+    """Usa el producto del context."""
+    context.precio_final = context.producto['precio'] * (1 - descuento/100)
+
+@then('el precio final es {esperado:d}')
+def step_then_precio_final(context, esperado):
+    """Verifica el resultado."""
+    assert context.precio_final == esperado</code></pre>
+
+                    <h3>Ejecutar behave</h3>
+
+                    <pre><code class="language-bash"># Ejecutar todos los features
+behave
+
+# Ejecutar un feature específico
+behave features/login.feature
+
+# Ejecutar con formato bonito
+behave --format pretty
+
+# Ejecutar con colores
+behave --color
+
+# Mostrar ayuda
+behave --help</code></pre>
+
+                    <h3>pytest-bdd: Alternativa a behave</h3>
+
+                    <p>
+                        <strong>pytest-bdd</strong> integra BDD con pytest, permitiendo usar las
+                        fixtures de pytest con escenarios Gherkin.
+                    </p>
+
+                    <pre><code class="language-python"># tests/test_bdd/test_login.py
+
+from pytest_bdd import scenario, given, when, then
+from pytest import fixture
+
+# Escenario definido en features/login.feature
+@scenario('features/login.feature', 'Login exitoso')
+def test_login_exitoso():
+    """Test que ejecuta el escenario BDD."""
+    pass
+
+@given('un usuario registrado con username "testuser"')
+def usuario_registrado():
+    """Fixture que crea usuario."""
+    return Usuario(username="testuser", email="test@example.com")
+
+@when('ingresa credenciales válidas')
+def ingresa_credenciales(usuario_registrado):
+    """Intenta login."""
+    return AuthService().login(usuario_registrado.username, "pass123")
+
+@then('el login es exitoso')
+def login_exitoso(ingresa_credenciales):
+    """Verifica login exitoso."""
+    assert ingresa_credenciales['exitoso'] == True</code></pre>
+                </section>
+
+                <!-- Sección 5: Ejemplos Prácticos -->
+                <section id="ejemplos">
+                    <h2>Ejemplos Prácticos</h2>
+
+                    <h3>Ejemplo 1: Feature de Registro de Usuario</h3>
+
+                    <div class="gherkin-feature">
+                        <pre><code><span class="gherkin-keyword">Feature:</span> Registro de Usuarios
+  Como usuario no registrado
+  Quiero poder crear una cuenta
+  Para poder usar TaskFlow
+
+  <span class="gherkin-keyword">Background:</span>
+    <span class="gherkin-keyword">Given</span> el sistema está configurado
+    <span class="gherkin-keyword">And</span> la página de registro está accesible
+
+  <span class="gherkin-keyword">Scenario:</span> Registro exitoso con datos válidos
+    <span class="gherkin-keyword">Given</span> estoy en la página de registro
+    <span class="gherkin-keyword">When</span> completo el formulario con:
+      | campo           | valor            |
+      | username        | newuser          |
+      | email           | new@example.com  |
+      | password        | pass123          |
+      | confirm_password | pass123          |
+    <span class="gherkin-keyword">And</span> hago clic en "Registrarse"
+    <span class="gherkin-keyword">Then</span> veo "Registro exitoso"
+    <span class="gherkin-keyword">And</span> soy redirigido al login
+
+  <span class="gherkin-keyword">Scenario:</span> Registro falla con password corto
+    <span class="gherkin-keyword">Given</span> estoy en la página de registro
+    <span class="gherkin-keyword">When</span> completo el formulario con:
+      | campo           | valor            |
+      | username        | newuser          |
+      | email           | new@example.com  |
+      | password        | abc              |
+      | confirm_password | abc              |
+    <span class="gherkin-keyword">And</span> hago clic en "Registrarse"
+    <span class="gherkin-keyword">Then</span> veo "Password muy corto"
+    <span class="gherkin-keyword">And</span> permanezco en la página de registro</code></pre>
+                    </div>
+
+                    <h3>Steps para Registro</h3>
+
+                    <pre><code class="language-python"># features/steps/registro_steps.py
+
+from behave import given, when, then
+from taskflow.models.usuario import Usuario
+from taskflow.services.usuario_service import UsuarioService
+
+@given('estoy en la página de registro')
+def step_pagina_registro(context):
+    """Navega a la página de registro."""
+    context.response = context.client.get('/registro')
+    assert context.response.status_code == 200
+
+@when('completo el formulario con:')
+def step_completar_formulario(context):
+    """Completa el formulario con los datos de la tabla."""
+    tabla = context.table
+    context.datos_form = {row['campo']: row['valor'] for row in tabla}
+
+@when('hago clic en "{boton}"')
+def step_hacer_clic(context, boton):
+    """Envía el formulario."""
+    context.response = context.client.post('/registro', json=context.datos_form)
+
+@then('veo "{mensaje}"')
+def step_ver_mensaje(context, mensaje):
+    """Verifica que el mensaje esté en la respuesta."""
+    assert mensaje in context.response.json()['mensaje']
+
+@then('soy redirigido al login')
+def step_redirigido_login(context):
+    """Verifica redirección."""
+    assert context.response.status_code == 302
+    assert '/login' in context.response.headers['Location']
+
+@then('permanezco en la página de registro')
+def step_permanecer_registro(context):
+    """Verifica que NO hubo redirección."""
+    assert context.response.status_code == 200</code></pre>
+
+                    <h3>Ejemplo 2: Gestión de Tareas</h3>
+
+                    <div class="gherkin-feature">
+                        <pre><code><span class="gherkin-keyword">Feature:</span> Gestión de Tareas
+  Como usuario de TaskFlow
+  Quiero poder crear y gestionar tareas
+  Para organizar mi trabajo
+
+  <span class="gherkin-keyword">Scenario:</span> Crear tarea en proyecto existente
+    <span class="gherkin-keyword">Given</span> soy usuario autenticado como "juan"
+    <span class="gherkin-keyword">And</span> tengo un proyecto llamado "Mi Proyecto"
+    <span class="gherkin-keyword">When</span> creo una tarea con:
+      | campo      | valor               |
+      | titulo     | Implementar login   |
+      | descripcion | Crear endpoint POST |
+      | prioridad  | alta                |
+    <span class="gherkin-keyword">Then</span> la tarea se crea exitosamente
+    <span class="gherkin-keyword">And</span> aparece en la lista de tareas del proyecto
+
+  <span class="gherkin-keyword">Scenario:</span> Marcar tarea como completada
+    <span class="gherkin-keyword">Given</span> soy usuario autenticado como "juan"
+    <span class="gherkin-keyword">And</span> tengo una tarea "Implementar login" en estado "pendiente"
+    <span class="gherkin-keyword">When</span> marco la tarea como completada
+    <span class="gherkin-keyword">Then</span> la tarea cambia a estado "completada"
+    <span class="gherkin-keyword">And</span> la fecha de completado se registra</code></pre>
+                    </div>
+
+                    <h3>Steps para Tareas</h3>
+
+                    <pre><code class="language-python"># features/steps/tarea_steps.py
+
+from behave import given, when, then
+from taskflow.models.tarea import Tarea
+from taskflow.services.tarea_service import TareaService
+
+@given('soy usuario autenticado como "{username}"')
+def step_usuario_autenticado(context, username):
+    """Simula usuario autenticado."""
+    context.usuario = Usuario.objects.get(username=username)
+    context.client.force_login(context.usuario)
+
+@given('tengo un proyecto llamado "{nombre}"')
+def step_proyecto_existe(context, nombre):
+    """Crea un proyecto para el usuario."""
+    proyecto = Proyecto.objects.create(
+        nombre=nombre,
+        usuario_id=context.usuario.id
+    )
+    context.proyecto = proyecto
+
+@when('creo una tarea con:')
+def step_crear_tarea(context):
+    """Crea una tarea con los datos de la tabla."""
+    datos = {row['campo']: row['valor'] for row in context.table}
+    tarea = TareaService().crear_tarea(
+        proyecto_id=context.proyecto.id,
+        **datos
+    )
+    context.tarea = tarea
+
+@then('la tarea se crea exitosamente')
+def step_tarea_creada(context):
+    """Verifica que la tarea se creó."""
+    assert context.tarea.id is not None
+
+@then('aparece en la lista de tareas del proyecto')
+def step_tarea_en_lista(context):
+    """Verifica que la tarea está en el proyecto."""
+    tareas = Tarea.objects.filter(proyecto_id=context.proyecto.id)
+    assert context.tarea in tareas</code></pre>
+                </section>
+
+                <!-- Sección 6: Buenas Prácticas -->
+                <section id="buenas-practicas">
+                    <h2>Buenas Prácticas</h2>
+
+                    <h3>Escribiendo Buenos Escenarios</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert-error">
+                                <strong>❌ Mal:</strong>
+                                <pre><code class="language-gherkin">Scenario: Registro
+  Given completo el formulario
+  When hago clic
+  Then veo "OK"</code></pre>
+                                <p><em>Demasiado vago, no documenta el comportamiento real.</em></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert-tip">
+                                <strong>✅ Bien:</strong>
+                                <pre><code class="language-gherkin">Scenario: Registro exitoso
+  Given un usuario nuevo en la página de registro
+  When completa todos los campos válidos
+  Then recibe confirmación por email</code></pre>
+                                <p><em>Claro, específico, describe el valor de negocio.</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Organización de Features</h3>
+
+                    <ul>
+                        <li><strong>Un feature por archivo:</strong> features/login.feature, features/registro.feature</li>
+                        <li><strong>Nombre descriptivo:</strong> Describe la capacidad de negocio</li>
+                        <li><strong>Escenarios independientes:</strong> Cada escenario debe ser autónomo</li>
+                        <li><strong>Uso de Background:</strong> Para contexto compartido entre escenarios</li>
+                    </ul>
+
+                    <h3>Nomenclatura de Steps</h3>
+
+                    <ul>
+                        <li><strong>Ser descriptivo:</strong> step_when_usuario_selecciona_proyecto (no step_cuando)</li>
+                        <li><strong>Usar parámetros:</strong> 'Cuando crea "{nombre}"' en vez de 'Cuando crea proyecto'</li>
+                        <li><strong>Reutilizar steps:</strong> Un mismo step puede usarse en múltiples escenarios</li>
+                        <li><strong>Evitar duplicación:</strong> Extraer lógica compartida a funciones auxiliares</li>
+                    </ul>
+
+                    <h3>Tests BDD vs Tests Unitarios</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Cuándo usar BDD</th>
+                                <th>Cuándo usar Tests Unitarios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Flujos de usuario completos</td>
+                                <td>Lógica de negocio aislada</td>
+                            </tr>
+                            <tr>
+                                <td>Integración entre componentes</td>
+                                <td>Algoritmos y cálculos</td>
+                            </tr>
+                            <tr>
+                                <td>Casos de uso del negocio</td>
+                                <td>Validaciones técnicas</td>
+                            </tr>
+                            <tr>
+                                <td>Documentación para stakeholders</td>
+                                <td>Cobertura de código</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Integración BDD + TDD</h3>
+
+                    <div class="alert-note">
+                        <strong>Enfoque Híbrido:</strong>
+                        <p>
+                            No es TDD vs BDD, sino TDD + BDD. Usa BDD para escenarios de usuario
+                            y TDD para la implementación detallada de cada componente.
+                        </p>
+                        <ul>
+                            <li><strong>BDD:</strong> Escenarios Gherkin definen el "qué"</li>
+                            <li><strong>TDD:</strong> Tests unitarios definen el "cómo"</li>
+                            <li><strong>Resultado:</strong> Código documentado y probado en múltiples niveles</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Sección 7: Ejercicio Guido -->
+                <section id="ejercicio">
+                    <h2>Ejercicio Guido: Escenario BDD para Login</h2>
+
+                    <h3>Objetivo</h3>
+                    <p>
+                        Crear un escenario BDD completo para el flujo de login en TaskFlow,
+                        desde el feature Gherkin hasta la implementación de pasos.
+                    </p>
+
+                    <h3>Instrucciones Paso a Paso</h3>
+
+                    <h4>Paso 1: Crear Directorio de Features (2 min)</h4>
+                    <pre><code class="language-bash"># Crear estructura de directorios
+mkdir -p features/steps
+touch features/__init__.py
+touch features/steps/__init__.py</code></pre>
+
+                    <h4>Paso 2: Escribir Feature (5 min)</h4>
+                    <p>Crear <code>features/login.feature</code>:</p>
+
+                    <pre><code class="language-gherkin"><span class="gherkin-keyword">Feature:</span> Login de Usuarios en TaskFlow
+  Como usuario registrado
+  Quiero poder iniciar sesión
+  Para acceder a mis proyectos y tareas
+
+  <span class="gherkin-keyword">Scenario:</span> Login exitoso
+    <span class="gherkin-keyword">Given</span> un usuario registrado con username "testuser" y password "pass123"
+    <span class="gherkin-keyword">When</span> ingresa username "testuser" y password "pass123"
+    <span class="gherkin-keyword">Then</span> el login es exitoso
+    <span class="gherkin-keyword">And</span> recibe un token de autenticación
+
+  <span class="gherkin-keyword">Scenario:</span> Login fallido con password incorrecto
+    <span class="gherkin-keyword">Given</span> un usuario registrado con username "testuser" y password "pass123"
+    <span class="gherkin-keyword">When</span> ingresa username "testuser" y password "incorrecto"
+    <span class="gherkin-keyword">Then</span> el login falla
+    <span class="gherkin-keyword">And</span> ve el error "Credenciales inválidas"</code></pre>
+
+                    <h4>Paso 3: Crear Environment (3 min)</h4>
+                    <p>Crear <code>features/environment.py</code>:</p>
+
+                    <pre><code class="language-python"># features/environment.py
+
+from behave import fixture
+
+@fixture
+def browser(context):
+    """Fixture que inicializa el navegador para UI tests."""
+    from selenium import webdriver
+    context.browser = webdriver.Chrome()
+    yield context.browser
+    context.browser.quit()
+
+@fixture
+def client(context):
+    """Fixture que inicializa el cliente de API."""
+    from fastapi.testclient import TestClient
+    from taskflow.api.app import app
+    context.client = TestClient(app)
+    yield context.client</code></pre>
+
+                    <h4>Paso 4: Implementar Steps (15 min)</h4>
+                    <p>Crear <code>features/steps/login_steps.py</code>:</p>
+
+                    <pre><code class="language-python"># features/steps/login_steps.py
+
+from behave import given, when, then
+from taskflow.models.usuario import Usuario
+from taskflow.services.usuario_service import UsuarioService
+
+@given('un usuario registrado con username "{username}" y password "{password}"')
+def step_usuario_registrado(context, username, password):
+    """Crea un usuario de prueba."""
+    # Crear usuario si no existe
+    service = UsuarioService()
+    try:
+        usuario = service.crear_usuario(
+            username=username,
+            email=f"{username}@example.com",
+            password=password
+        )
+        context.usuario = usuario
+    except:
+        # El usuario ya puede existir
+        context.usuario = service.obtener_por_username(username)
+
+@when('ingresa username "{username}" y password "{password}"')
+def step_ingresa_credenciales(context, username, password):
+    """Intenta login con las credenciales."""
+    from taskflow.services.auth_service import AuthService
+
+    auth_service = AuthService()
+    context.resultado = auth_service.login(username, password)
+
+@then('el login es exitoso')
+def step_login_exitoso(context):
+    """Verifica que el login fue exitoso."""
+    assert context.resultado['exitoso'] == True
+
+@then('recibe un token de autenticación')
+def step_token_autenticacion(context):
+    """Verifica que recibió token."""
+    assert 'token' in context.resultado
+    assert context.resultado['token'] is not None
+
+@then('el login falla')
+def step_login_falla(context):
+    """Verifica que el login falló."""
+    assert context.resultado['exitoso'] == False
+
+@then('ve el error "{mensaje}"')
+def step_ve_mensaje_error(context, mensaje):
+    """Verifica el mensaje de error."""
+    assert mensaje in context.resultado.get('mensaje', '')</code></pre>
+
+                    <h4>Paso 5: Ejecutar behave (3 min)</h4>
+                    <pre><code class="language-bash"># Ejecutar los escenarios
+behave features/login.feature
+
+# Salida esperada:
+# Feature: Login de Usuarios
+#   Scenario: Login exitoso
+#     Given un usuario registrado ... PASSED
+#     When ingresa username ... PASSED
+#     Then el login es exitoso ... PASSED
+#     And recibe token ... PASSED
+#
+#   Scenario: Login fallido
+#     Given un usuario registrado ... PASSED
+#     When ingresa password incorrecto ... PASSED
+#     Then el login falla ... PASSED
+#     And ve el error ... PASSED
+#
+# 2 features passed, 0 failed, 0 skipped</code></pre>
+
+                    <h4>Paso 6: Agregar Más Escenarios (5 min)</h4>
+                    <pre><code class="language-gherkin"><span class="gherkin-keyword">Scenario:</span> Login falla con usuario inexistente
+    <span class="gherkin-keyword">Given</span> ningún usuario con username "ghostuser"
+    <span class="gherkin-keyword">When</span> ingresa username "ghostuser" y password "pass123"
+    <span class="gherkin-keyword">Then</span> el login falla
+    <span class="gherkin-keyword">And</span> ve el error "Usuario no encontrado"</code></pre>
+
+                    <h3>Conexión con TaskFlow</h3>
+                    <p>
+                        Los escenarios BDD que estás creando para login son la base de la documentación
+                        viviente del proyecto TaskFlow. Estos escenarios:
+                    </p>
+                    <ul>
+                        <li>Documentan el comportamiento esperado del sistema</li>
+                        <li>Prueban la integración entre frontend y backend</li>
+                        <li>Sirven como casos de prueba para QA</li>
+                        <li>Pueden mostrarse a stakeholders para validación</li>
+                    </ul>
+
+                    <h3>Resultado Esperado</h3>
+                    <p>Al finalizar este ejercicio, tendrás:</p>
+                    <ul>
+                        <li>✅ Feature de login con múltiples escenarios</li>
+                        <li>✅ Steps implementados en Python</li>
+                        <li>✅ Tests BDD ejecutables con behave</li>
+                        <li>✅ Base para agregar más escenarios BDD</li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> Ejecuta <code>behave --format=pretty</code> para ver
+                        una salida más detallada de la ejecución de los escenarios.
+                    </div>
+                </section>
+
+                <!-- Sección 8: Referencias -->
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li>
+                            <a href="https://behave.readthedocs.io/" target="_blank">
+                                Documentación Oficial de behave
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://cucumber.io/docs/gherkin/" target="_blank">
+                                Gherkin Reference - Cucumber Docs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pytest-bdd.readthedocs.io/" target="_blank">
+                                pytest-bdd Documentation
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/watch?v=uE0e3G4d8IU" target="_blank">
+                                Video: BDD con Python y behave
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/behave/behave" target="_blank">
+                                behave en GitHub
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h3>Comandos Útiles de behave</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Comando</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>behave</code></td>
+                                <td>Ejecutar todos los features</td>
+                            </tr>
+                            <tr>
+                                <td><code>behave features/login.feature</code></td>
+                                <td>Ejecutar un feature específico</td>
+                            </tr>
+                            <tr>
+                                <td><code>behave --format=pretty</code></td>
+                                <td>Salida detallada con colores</td>
+                            </tr>
+                            <tr>
+                                <td><code>behave --no-snippets</code></td>
+                                <td>No sugerir snippets para steps faltantes</td>
+                            </tr>
+                            <tr>
+                                <td><code>behave --stop</code></td>
+                                <td>Detenerse al primer fallo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Última actualización: 2026-02-07</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

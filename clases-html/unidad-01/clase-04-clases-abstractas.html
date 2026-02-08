@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Domina las clases abstractas en Python. Aprende ABC, @abstractmethod, interfaces y el Patrón Template Method. Preparación para Domain-Driven Design.">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Clases Abstractas y ABC | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h3>Clase 4: Clases Abstractas</h3>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clase-03-herencia-polimorfismo.html">Anterior: Herencia y Polimorfismo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guiado</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                        <li><a href="#taskflow">Conexión con TaskFlow</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender qué son las clases abstractas y su propósito en POO</li>
+                        <li>Implementar Abstract Base Classes (ABC) en Python usando el modulo <code>abc</code></li>
+                        <li>Usar el decorador <code>@abstractmethod</code> para definir contratos</li>
+                        <li>Distinguir entre interfaces y clases abstractas en Python</li>
+                        <li>Aplicar el Patrón Template Method con clases abstractas</li>
+                        <li>Preparar los fundamentos conceptuales para Domain-Driven Design (DDD)</li>
+                    </ul>
+                </section>
+
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es una Clase Abstracta?</h3>
+                    <p>Una clase abstracta es una clase que no puede instanciarse directamente y esta diseñada para ser heredada por otras clases. Sirve como <strong>plantilla o contrato</strong> que define qué métodos deben implementar las subclases, pero no proporciona la implementacion completa.</p>
+
+                    <div class="alert-note">
+                        <strong>Analogia:</strong> Piensa en una clase abstracta "Vehiculo". Un vehiculo tiene un metodo abstracto "mover()", pero la forma具体a de moverse depende del tipo de vehiculo: un auto usa ruedas, un avion alas, un barco propulsion. La clase abstracta define "existe mover()", pero cada subclase decide como implementarlo.
+                    </div>
+
+                    <h3>ABC (Abstract Base Classes) en Python</h3>
+                    <p>Python proporciona el modulo <code>abc</code> para crear clases abstractas de manera formal. Una ABC se crea heredando de <code>ABC</code> y usando <code>@abstractmethod</code> para marcar metodos que deben ser implementados.</p>
+
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Figura(ABC):
+    """Clase abstracta base para figuras geometricas."""
+
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+    @abstractmethod
+    def area(self) -> float:
+        """Metodo abstracto que debe ser implementado por subclases."""
+        pass
+
+    @abstractmethod
+    def perimetro(self) -> float:
+        """Metodo abstracto que debe ser implementado por subclases."""
+        pass
+
+    def __str__(self) -> str:
+        """Metodo concreto: todas las figuras tienen un nombre."""
+        return f"{self.nombre} (area: {self.area():.2f})"
+
+
+# ❌ NO se puede instanciar una clase abstracta
+# figura = Figura("figura")  # TypeError: Can't instantiate abstract class
+
+# ✅ SI se puede heredar e instanciar la subclase
+class Circulo(Figura):
+    """Circulo concreto que implementa los metodos abstractos."""
+
+    def __init__(self, radio: float):
+        super().__init__("Circulo")
+        self.radio = radio
+
+    @abstractmethod
+    def area(self) -> float:  # Implementacion obligatoria
+        return 3.14159 * self.radio ** 2
+
+    @abstractmethod
+    def perimetro(self) -> float:  # Implementacion obligatoria
+        return 2 * 3.14159 * self.radio
+
+
+# Uso
+circulo = Circulo(5)
+print(circulo)  # Circulo (area: 78.54)
+print(f"Perimetro: {circulo.perimetro():.2f}")  # 31.42</code></pre>
+
+                    <h3>@abstractmethod vs @cached_property</h3>
+                    <p>Es importante distinguir entre diferentes decoradores disponibles en el modulo <code>abc</code>:</p>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Decorador</th>
+                                <th>Proposito</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>@abstractmethod</code></td>
+                                <td>Obliga a implementar en subclases</td>
+                                <td>Metodos que deben definirse</td>
+                            </tr>
+                            <tr>
+                                <td><code>@abstractproperty</code></td>
+                                <td>Property abstracta (deprecated)</td>
+                                <td>Usar <code>@property</code> + <code>@abstractmethod</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>@abstractclassmethod</code></td>
+                                <td>classmethod abstracto (deprecated)</td>
+                                <td>Usar <code>@classmethod</code> + <code>@abstractmethod</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Modelo(ABC):
+    """Ejemplo de diferentes tipos de metodos abstractos."""
+
+    @abstractmethod
+    def guardar(self) -> None:
+        """Metodo abstracto obligatorio."""
+        pass
+
+    @property
+    @abstractmethod
+    def identificador(self) -> str:
+        """Property abstracta: debe implementarse como property."""
+        pass
+
+    @classmethod
+    @abstractmethod
+    def crear_vacio(cls) -> "Modelo":
+        """classmethod abstracto para factory."""
+        pass</code></pre>
+
+                    <h3>Diferencia entre Clase Abstracta e Interface</h3>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Caracteristica</th>
+                                <th>Clase Abstracta</th>
+                                <th>Interface</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Proposito</strong></td>
+                                <td>Plantilla con implementacion parcial</td>
+                                <td>Contrato puro (solo firmas)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Metodos concretos</strong></td>
+                                <td>Permitidos</td>
+                                <td>No permitidos (Python 3.8+ con Protocol)</td>
+                            </tr>
+                            <td><strong>Atributos</strong></td>
+                            <td>Puede tener atributos</td>
+                            <td>Solo constantes (Python 3.8+)</td>
+                            <tr>
+                                <td><strong>Herencia multiple</strong></td>
+                                <td>Problemas de diamante</td>
+                                <td>Ideal para mixins</td>
+                            </tr>
+                            <tr>
+                                <td><strong>En Python</strong></td>
+                                <td><code>class Figura(ABC)</code></td>
+                                <td><code>class Figura(Protocol)</code> (typing)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-tip">
+                        <strong> Consejo:</strong> En Python, la distincion es menos formal que en Java o C#. Las ABC pueden actuar como interfaces si no definen metodos concretos, y desde Python 3.8, <code>typing.Protocol</code> proporciona herencia tipica de interfaces.
+                    </div>
+
+                    <h3>Cuándo Usar Clases Abstractas</h3>
+                    <ul>
+                        <li><strong>Jerarquias de clases:</strong> Cuando tienes un concepto base con comportamiento comun y variaciones</li>
+                        <li><strong>Contratos obligatorios:</strong> Cuando ciertas operaciones deben implementarse obligatoriamente</li>
+                        <li><strong>Patron Template Method:</strong> Cuando tienes un algoritmo con pasos que deben personalizarse</li>
+                        <li><strong>Plugins y extensiones:</strong> Cuando terceros deben implementar interfaces especificas</li>
+                        <li><strong>Framework development:</strong> Cuando creas un framework que otros extenderan</li>
+                    </ul>
+
+                    <h3>Patron Template Method</h3>
+                    <p>El Patron Template Method define el esqueleto de un algoritmo en un metodo, delegando pasos variables a subclases. La clase abstracta proporciona la estructura, las subclases personalizan detalles.</p>
+
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import List
+
+class ReporteGenerator(ABC):
+    """Clase abstracta base para generar reportes con Template Method."""
+
+    def generar_reporte(self, datos: List[dict]) -> str:
+        """Template Method: define el algoritmo completo."""
+        titulo = self.obtener_titulo()
+        cabecera = self.generar_cabecera()
+        contenido = self.generar_contenido(datos)
+        pie = self.generar_pie()
+
+        return f"{titulo}\n{cabecera}\n{contenido}\n{pie}"
+
+    @abstractmethod
+    def obtener_titulo(self) -> str:
+        """Paso abstracto: cada reporte tiene su titulo."""
+        pass
+
+    @abstractmethod
+    def generar_cabecera(self) -> str:
+        """Paso abstracto: cada reporte tiene su cabecera."""
+        pass
+
+    @abstractmethod
+    def generar_contenido(self, datos: List[dict]) -> str:
+        """Paso abstracto: el contenido varia por tipo de reporte."""
+        pass
+
+    def generar_pie(self) -> str:
+        """Paso concreto: el pie es igual para todos los reportes."""
+        return f"--- Generado el {datetime.now().strftime('%Y-%m-%d %H:%M')} ---"
+
+
+class ReporteVentas(ReporteGenerator):
+    """Reporte concreto de ventas."""
+
+    def obtener_titulo(self) -> str:
+        return "=== REPORTE DE VENTAS ==="
+
+    def generar_cabecera(self) -> str:
+        return "Fecha    | Producto     | Cantidad | Total"
+
+    def generar_contenido(self, datos: List[dict]) -> str:
+        lineas = []
+        total_general = 0
+        for item in datos:
+            linea = f"{item['fecha']} | {item['producto']:<11} | {item['cantidad']:>8} | ${item['total']:.2f}"
+            lineas.append(linea)
+            total_general += item['total']
+        lineas.append(f"{'TOTAL':>45} | ${total_general:.2f}")
+        return "\n".join(lineas)
+
+
+class ReporteUsuarios(ReporteGenerator):
+    """Reporte concreto de usuarios."""
+
+    def obtener_titulo(self) -> str:
+        return "=== REPORTE DE USUARIOS ==="
+
+    def generar_cabecera(self) -> str:
+        return "ID  | Username     | Email              | Estado"
+
+    def generar_contenido(self, datos: List[dict]) -> str:
+        return "\n".join(
+            f"{u['id']:>3} | {u['username']:<12} | {u['email']:<18} | {u['estado']}"
+            for u in datos
+        )
+
+
+# Uso
+datos_ventas = [
+    {"fecha": "2024-01-15", "producto": "Laptop", "cantidad": 2, "total": 2500},
+    {"fecha": "2024-01-15", "producto": "Mouse", "cantidad": 5, "total": 150},
+    {"fecha": "2024-01-16", "producto": "Teclado", "cantidad": 3, "total": 450},
+]
+
+datos_usuarios = [
+    {"id": 1, "username": "juan_perez", "email": "juan@example.com", "activo": True},
+    {"id": 2, "username": "maria_garcia", "email": "maria@example.com", "activo": True},
+    {"id": 3, "username": "carlos_lopez", "email": "carlos@example.com", "activo": False},
+]
+
+reporte_ventas = ReporteVentas()
+print(reporte_ventas.generar_reporte(datos_ventas))
+
+print("\n" + "="*50 + "\n")
+
+reporte_usuarios = ReporteUsuarios()
+print(reporte_usuarios.generar_reporte(datos_usuarios))</code></pre>
+                </section>
+
+                <section id="ejemplos">
+                    <h2>Ejemplos Praticos</h2>
+
+                    <h3>Ejemplo 1: Figura Abstracta con Subclases Concretas</h3>
+                    <pre><code class="language-python">#_figura_abstracta.py
+"""
+Sistema de figuras geometricas usando clases abstractas.
+Ejemplo clasico de ABC en Python.
+"""
+
+from abc import ABC, abstractmethod
+from math import pi
+
+class Figura(ABC):
+    """Clase abstracta base para todas las figuras geometricas."""
+
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+    @abstractmethod
+    def area(self) -> float:
+        """Calcular area - obligatorio implementar."""
+        pass
+
+    @abstractmethod
+    def perimetro(self) -> float:
+        """Calcular perimetro - obligatorio implementar."""
+        pass
+
+    def describir(self) -> str:
+        """Metodo concreto: todas las figuras se pueden describir."""
+        return f"{self.nombre}: area={self.area():.2f}, perimetro={self.perimetro():.2f}"
+
+
+class Circulo(Figura):
+    """Circulo concreto."""
+
+    def __init__(self, radio: float):
+        super().__init__("Circulo")
+        self.radio = radio
+
+    def area(self) -> float:
+        return pi * self.radio ** 2
+
+    def perimetro(self) -> float:
+        return 2 * pi * self.radio
+
+
+class Rectangulo(Figura):
+    """Rectangulo concreto."""
+
+    def __init__(self, ancho: float, alto: float):
+        super().__init__("Rectangulo")
+        self.ancho = ancho
+        self.alto = alto
+
+    def area(self) -> float:
+        return self.ancho * self.alto
+
+    def perimetro(self) -> float:
+        return 2 * (self.ancho + self.alto)
+
+
+class Triangulo(Figura):
+    """Triangulo equilatero concreto."""
+
+    def __init__(self, lado: float):
+        super().__init__("Triangulo Equilatero")
+        self.lado = lado
+
+    def area(self) -> float:
+        return (self.lado ** 2) * (3 ** 0.5) / 4
+
+    def perimetro(self) -> float:
+        return 3 * self.lado
+
+
+# Uso
+figuras: list[Figura] = [
+    Circulo(radio=5),
+    Rectangulo(ancho=4, alto=6),
+    Triangulo(lado=3)
+]
+
+for figura in figuras:
+    print(figura.describir())
+
+print("\n--- Polimorfismo en accion ---")
+for figura in figuras:
+    print(f"{figura.nombre}: area={figura.area():.4f}")</code></pre>
+
+                    <h3>Ejemplo 2: Plugin System con ABC</h3>
+                    <pre><code class="language-python">#_plugin_system.py
+"""
+Sistema de plugins extensible usando clases abstractas.
+Permite que terceros desarrollen extensiones para tu aplicacion.
+"""
+
+from abc import ABC, abstractmethod
+from typing import Any, Dict, List
+
+class Plugin(ABC):
+    """Clase abstracta base para todos los plugins."""
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre unico del plugin."""
+        pass
+
+    @property
+    @abstractmethod
+    def version(self) -> str:
+        """Version del plugin."""
+        pass
+
+    @property
+    @abstractmethod
+    def descripcion(self) -> str:
+        """Descripcion breve del plugin."""
+        pass
+
+    @abstractmethod
+    def inicializar(self, config: Dict[str, Any]) -> None:
+        """Inicializar el plugin con configuracion."""
+        pass
+
+    @abstractmethod
+    def ejecutar(self) -> Any:
+        """Ejecutar la funcion principal del plugin."""
+        pass
+
+    def __str__(self) -> str:
+        return f"{self.nombre} v{self.version}: {self.descripcion}"
+
+
+class PluginManager:
+    """Gestor de plugins para la aplicacion."""
+
+    def __init__(self):
+        self._plugins: Dict[str, Plugin] = {}
+        self._configuracion: Dict[str, Any] = {}
+
+    def registrar_plugin(self, plugin: Plugin) -> None:
+        """Registra un nuevo plugin."""
+        if plugin.nombre in self._plugins:
+            raise ValueError(f"Plugin '{plugin.nombre}' ya registrado")
+        self._plugins[plugin.nombre] = plugin
+        print(f"Plugin registrado: {plugin}")
+
+    def configurar_plugins(self, config: Dict[str, Any]) -> None:
+        """Configura todos los plugins."""
+        self._configuracion = config
+        for plugin in self._plugins.values():
+            if plugin.nombre in config:
+                plugin.inicializar(config[plugin.nombre])
+
+    def ejecutar_plugins(self) -> Dict[str, Any]:
+        """Ejecuta todos los plugins."""
+        resultados = {}
+        for nombre, plugin in self._plugins.items():
+            print(f"Ejecutando: {plugin.nombre}")
+            resultados[nombre] = plugin.ejecutar()
+        return resultados
+
+    def listar_plugins(self) -> List[str]:
+        """Lista nombres de plugins registrados."""
+        return list(self._plugins.keys())
+
+
+# Ejemplo de plugins concretos
+
+class LoggerPlugin(Plugin):
+    """Plugin para logging de eventos."""
+
+    @property
+    def nombre(self) -> str:
+        return "logger_plugin"
+
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+
+    @property
+    def descripcion(self) -> str:
+        return "Plugin de logging para la aplicacion"
+
+    def inicializar(self, config: Dict[str, Any]) -> None:
+        self._formato = config.get("formato", "[%(asctime)s] %(message)s")
+        self._archivo = config.get("archivo", "app.log")
+
+    def ejecutar(self) -> str:
+        return f"Logging configurado: formato='{self._formato}', archivo='{self._archivo}'"
+
+
+class AnalyticsPlugin(Plugin):
+    """Plugin para analytics y metricas."""
+
+    @property
+    def nombre(self) -> str:
+        return "analytics_plugin"
+
+    @property
+    def version(self) -> str:
+        return "2.1.0"
+
+    @property
+    def descripcion(self) -> str:
+        return "Plugin de metricas y analisis de uso"
+
+    def inicializar(self, config: Dict[str, Any]) -> None:
+        self._api_key = config.get("api_key", "")
+        self._tracking_id = config.get("tracking_id", "")
+
+    def ejecutar(self) -> str:
+        return f"Analytics inicializado: tracking_id='{self._tracking_id}'"
+
+
+# Uso
+if __name__ == "__main__":
+    print("=== Sistema de Plugins ===\n")
+
+    manager = PluginManager()
+
+    # Registrar plugins
+    logger = LoggerPlugin()
+    analytics = AnalyticsPlugin()
+
+    manager.registrar_plugin(logger)
+    manager.registrar_plugin(analytics)
+
+    # Configurar plugins
+    config = {
+        "logger_plugin": {
+            "formato": "[%(levelname)s] %(name)s: %(message)s",
+            "archivo": "logs/app.log"
+        },
+        "analytics_plugin": {
+            "api_key": "ak_12345",
+            "tracking_id": "UA-123456-1"
+        }
+    }
+    manager.configurar_plugins(config)
+
+    # Ejecutar plugins
+    print("\n--- Ejecucion de Plugins ---")
+    resultados = manager.ejecutar_plugins()</code></pre>
+
+                    <h3>Ejemplo 3: TaskFlow - Entity Base Abstracta</h3>
+                    <pre><code class="language-python">#_base_entity.py
+"""
+BaseEntity abstracta para TaskFlow.
+Fundamento para Domain-Driven Design (DDD).
+"""
+
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Optional, Dict, Any
+import uuid
+
+
+class Entity(ABC):
+    """
+    Clase base abstracta para todas las entidades del dominio.
+    Implementa el patron de Entity del DDD.
+    """
+
+    def __init__(self):
+        self._id: Optional[uuid.UUID] = None
+        self._creado_en: Optional[datetime] = None
+        self._actualizado_en: Optional[datetime] = None
+
+    @property
+    @abstractmethod
+    def entity_type(self) -> str:
+        """Tipo de entidad para identificacion."""
+        pass
+
+    @property
+    def id(self) -> Optional[uuid.UUID]:
+        """Obtiene el identificador unico de la entidad."""
+        return self._id
+
+    @id.setter
+    def id(self, valor: uuid.UUID) -> None:
+        """Establece el ID (solo se puede asignar una vez)."""
+        if self._id is not None:
+            raise ValueError("El ID ya ha sido asignado")
+        self._id = valor
+
+    @property
+    def creado_en(self) -> Optional[datetime]:
+        """Fecha de creacion de la entidad."""
+        return self._creado_en
+
+    def _marcar_como_creado(self) -> None:
+        """Marca la entidad como creada (uso interno)."""
+        if self._creado_en is None:
+            self._creado_en = datetime.now()
+            self._actualizado_en = datetime.now()
+
+    @property
+    def actualizado_en(self) -> Optional[datetime]:
+        """Ultima fecha de actualizacion."""
+        return self._actualizado_en
+
+    def _marcar_como_actualizado(self) -> None:
+        """Actualiza la marca de tiempo."""
+        self._actualizado_en = datetime.now()
+
+    @abstractmethod
+    def to_dict(self) -> Dict[str, Any]:
+        """Convierte la entidad a diccionario."""
+        pass
+
+    @abstractmethod
+    def validar(self) -> bool:
+        """Valida el estado de la entidad."""
+        pass
+
+    def __eq__(self, otro: object) -> bool:
+        """Dos entidades son iguales si tienen el mismo ID."""
+        if not isinstance(otro, Entity):
+            return False
+        return self._id == otro._id
+
+    def __hash__(self) -> int:
+        """Las entidades son hasheables por su ID."""
+        return hash(self._id) if self._id else id(self)
+
+    def __repr__(self) -> str:
+        return f"<{self.entity_type} id={self._id}>"
+
+
+class AggregateRoot(Entity):
+    """
+    Raiz de agregado del DDD.
+    Controla el acceso a todas las entidades dentro del agregado.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self._version: int = 0
+
+    @property
+    def version(self) -> int:
+        """Version del agregado para control de concurrencia."""
+        return self._version
+
+    def _incrementar_version(self) -> None:
+        """Incrementa la version del agregado."""
+        self._version += 1
+        self._marcar_como_actualizado()
+
+    @abstractmethod
+    def obtener_eventos(self) -> list:
+        """
+        Obtiene eventos de dominio ocurridos.
+        Para implementacion de Event Sourcing.
+        """
+        pass
+
+    @abstractmethod
+    def limpiar_eventos(self) -> None:
+        """Limpia eventos despues de procesarlos."""
+        pass
+
+
+# Ejemplo de entidad concreta
+
+class Usuario(Entity):
+    """Usuario del sistema TaskFlow."""
+
+    def __init__(self, username: str, email: str):
+        super().__init__()
+        self._username = username
+        self._email = email
+
+    @property
+    def entity_type(self) -> str:
+        return "Usuario"
+
+    @property
+    def username(self) -> str:
+        return self._username
+
+    @property
+    def email(self) -> str:
+        return self._email
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "id": str(self._id) if self._id else None,
+            "username": self._username,
+            "email": self._email,
+            "creado_en": self._creado_en.isoformat() if self._creado_en else None,
+            "actualizado_en": self._actualizado_en.isoformat() if self._actualizado_en else None
+        }
+
+    def validar(self) -> bool:
+        """Valida que el usuario tenga datos correctos."""
+        return (
+            self._username is not None and len(self._username) >= 3
+            and self._email is not None and "@" in self._email
+        )
+
+    def __str__(self) -> str:
+        return f"@{self._username}"
+
+
+# Uso
+if __name__ == "__main__":
+    print("=== BaseEntity para TaskFlow ===\n")
+
+    usuario = Usuario("juan123", "juan@example.com")
+    usuario.id = uuid.uuid4()
+    usuario._marcar_como_creado()
+
+    print(f"Usuario: {usuario}")
+    print(f"ID: {usuario.id}")
+    print(f"Valido: {usuario.validar()}")
+    print(f"Diccionario: {usuario.to_dict()}")</code></pre>
+                </section>
+
+                <section id="buenas-practicas">
+                    <h2>Buenas Prácticas</h2>
+
+                    <h3>ABC para Contratos</h3>
+                    <pre><code class="language-python"># ✅ BIEN: ABC para definir contratos claros
+from abc import ABC, abstractmethod
+
+class Persistable(ABC):
+    """Contrato para objetos que pueden persistir en almacenamiento."""
+
+    @abstractmethod
+    def save(self, connection) -> bool:
+        """Guardar el objeto."""
+        pass
+
+    @abstractmethod
+    def load(self, connection, id) -> None:
+        """Cargar el objeto por ID."""
+        pass
+
+    @abstractmethod
+    def delete(self, connection) -> bool:
+        """Eliminar el objeto."""
+        pass
+
+
+# ❌ EVITAR: Clases "abstractas" sin usar ABC
+class PersistableMal:
+    """Mal ejemplo: deberia usar ABC si es un contrato."""
+    def save(self, connection):
+        raise NotImplementedError</code></pre>
+
+                    <h3>No Instanciar Clases Abstractas</h3>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Figura(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+# ❌ MAL: Intentar instanciar
+# figura = Figura()  # TypeError
+
+# ✅ BIEN: Solo crear subclases concretas
+class Circulo(Figura):
+    def area(self):
+        return 3.14
+
+circulo = Circulo()
+
+# ✅ Usar type() para verificar
+if isinstance(circulo, Figura):
+    print("Circulo es una Figura")
+
+if type(circulo) is Circulo:
+    print("Circulo es exactamente la clase Circulo")</code></pre>
+
+                    <h3>Metodos vs Propiedades Abstractas</h3>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Calculadora(ABC):
+    """Decidir correctamente entre metodo y propiedad abstracta."""
+
+    # Usar @property + @abstractmethod cuando:
+    # - El valor es computado/derivado
+    # - Se accede como atributo semanticamente
+    @property
+    @abstractmethod
+    def total(self) -> float:
+        """El total es un valor derivado, se accede como atributo."""
+        pass
+
+    # Usar @abstractmethod (metodo) cuando:
+    # - Hay parametros necesarios
+    # - La operacion tiene efectos secundarios
+    # - Se llama con frecuencia y quiere controlarse la llamadas
+    @abstractmethod
+    def calcular_con_descuento(self, porcentaje: float) -> float:
+        """Necesita parametros, por eso es metodo."""
+        pass
+
+    # Usar @abstractmethod con parametros opcionales
+    @abstractmethod
+    def reiniciar(self, valor_inicial: float = 0) -> None:
+        """Operacion con parametros."""
+        pass</code></pre>
+
+                    <h3>Jerarquias de Clases Abstractas</h3>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+# ✅ BIEN: Herencia multiple de ABCs
+class Versionable(ABC):
+    @abstractmethod
+    def get_version(self) -> str:
+        pass
+
+class Serializable(ABC):
+    @abstractmethod
+    def serialize(self) -> dict:
+        pass
+
+class Entidad(Versionable, Serializable):
+    """Combina contratos de Versionable y Serializable."""
+    @abstractmethod
+    def get_id(self) -> str:
+        pass
+
+    def get_version(self) -> str:
+        return "1.0"
+
+    def serialize(self) -> dict:
+        return {"id": self.get_id(), "version": self.get_version()}
+
+
+# ❌ EVITAR: Herencia profunda de abstracciones
+class Base1(ABC): pass
+class Base2(Base1, ABC): pass
+class Base3(Base2, ABC): pass  # Demasiada complejidad</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2>Ejercicio Guiado</h2>
+
+                    <h3>Sistema de Notificaciones con ABC</h3>
+                    <p>Vamos a construir un sistema de notificaciones extensible usando clases abstractas. Este patron permite agregar nuevos tipos de notificaciones sin modificar el codigo existente (principio Open/Closed).</p>
+
+                    <pre><code class="language-python">#_sistema_notificaciones.py
+"""
+Sistema de notificaciones extensible con ABC.
+"""
+
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Dict, Any, List
+import json
+
+
+# === INTERFAZ ABSTRACTA ===
+
+class Notificador(ABC):
+    """Clase abstracta base para todos los notificadores."""
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre del canal de notificacion."""
+        pass
+
+    @abstractmethod
+    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
+        """
+        Envia una notificacion.
+        Returns: True si fue exitoso, False en caso contrario.
+        """
+        pass
+
+    @abstractmethod
+    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
+        """Formatea el mensaje para este canal."""
+        pass
+
+
+# === IMPLEMENTACIONES CONCRETAS ===
+
+class NotificadorEmail(Notificador):
+    """Notificador por correo electronico."""
+
+    @property
+    def nombre(self) -> str:
+        return "Email"
+
+    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
+        asunto = kwargs.get("asunto", "Notificacion")
+        return f"Subject: {asunto}\n\n{mensaje}"
+
+    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
+        """Simula envio de email."""
+        print(f"[EMAIL] Enviando a {destinatario}: {mensaje[:50]}...")
+        # Simular exito
+        return "@" in destinatario
+
+
+class NotificadorSMS(Notificador):
+    """Notificador por SMS."""
+
+    @property
+    def nombre(self) -> str:
+        return "SMS"
+
+    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
+        # SMS tiene limite de caracteres
+        return mensaje[:160]
+
+    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
+        """Simula envio de SMS."""
+        print(f"[SMS] Enviando a {destinatario}: {mensaje[:30]}...")
+        # SMS solo acepta numeros
+        return destinatario.isdigit() and len(destinatario) >= 10
+
+
+class NotificadorPush(Notificador):
+    """Notificador por push notification."""
+
+    @property
+    def nombre(self) -> str:
+        return "Push Notification"
+
+    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
+        titulo = kwargs.get("titulo", "TaskFlow")
+        return json.dumps({
+            "title": titulo,
+            "body": mensaje,
+            "icon": kwargs.get("icono", "default.png")
+        })
+
+    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
+        """Simula envio de push notification."""
+        print(f"[PUSH] Enviando a {destinatario}: {mensaje[:30]}...")
+        # Push necesita token
+        return destinatario.startswith("token_")
+
+
+class NotificadorSlack(Notificador):
+    """Notificador por Slack."""
+
+    @property
+    def nombre(self) -> str:
+        return "Slack"
+
+    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
+        canal = kwargs.get("canal", "#general")
+        emoji = kwargs.get("emoji", ":bell:")
+        return f"{emoji} {mensaje}"
+
+    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
+        """Simula envio a Slack."""
+        canal = kwargs.get("canal", "#general")
+        print(f"[SLACK] Enviando a {canal}: {mensaje[:30]}...")
+        # Slack siempre funciona si el canal es valido
+        return canal.startswith("#")
+
+
+# === SISTEMA DE NOTIFICACIONES ===
+
+class SistemaNotificaciones:
+    """Gestor central de notificaciones."""
+
+    def __init__(self):
+        self._notificadores: Dict[str, Notificador] = {}
+
+    def registrar_notificador(self, nombre: str, notificador: Notificador) -> None:
+        """Registra un nuevo tipo de notificador."""
+        self._notificadores[nombre] = notificador
+        print(f"Sistema: Registrado notificador '{nombre}'")
+
+    def obtener_notificador(self, nombre: str) -> Notificador:
+        """Obtiene un notificador por nombre."""
+        if nombre not in self._notificadores:
+            raise ValueError(f"Notificador '{nombre}' no encontrado")
+        return self._notificadores[nombre]
+
+    def listar_notificadores(self) -> List[str]:
+        """Lista todos los notificadores disponibles."""
+        return list(self._notificadores.keys())
+
+    def notificar(
+        self,
+        canal: str,
+        destinatario: str,
+        mensaje: str,
+        **kwargs
+    ) -> bool:
+        """Envia una notificacion por el canal especificado."""
+        try:
+            notificador = self.obtener_notificador(canal)
+            mensaje_formateado = notificador.formato_mensaje(mensaje, **kwargs)
+            return notificador.enviar(destinatario, mensaje_formateado, **kwargs)
+        except ValueError as e:
+            print(f"Error: {e}")
+            return False
+
+    def notificar_multi_canal(
+        self,
+        canales: List[str],
+        destinatario: str,
+        mensaje: str,
+        **kwargs
+    ) -> Dict[str, bool]:
+        """Envia la misma notificacion por multiples canales."""
+        resultados = {}
+        for canal in canales:
+            resultados[canal] = self.notificar(canal, destinatario, mensaje, **kwargs)
+        return resultados
+
+
+# === PRUEBA DEL SISTEMA ===
+
+if __name__ == "__main__":
+    print("=== Sistema de Notificaciones ===\n")
+
+    # Crear sistema
+    sistema = SistemaNotificaciones()
+
+    # Registrar notificadores
+    sistema.registrar_notificador("email", NotificadorEmail())
+    sistema.registrar_notificador("sms", NotificadorSMS())
+    sistema.registrar_notificador("push", NotificadorPush())
+    sistema.registrar_notificador("slack", NotificadorSlack())
+
+    # Listar disponibles
+    print(f"\nNotificadores disponibles: {sistema.listar_notificadores()}")
+
+    # Enviar notificaciones individuales
+    print("\n--- Envios Individuales ---")
+    sistema.notificar("email", "juan@example.com", "Tu tarea ha sido actualizada")
+    sistema.notificar("sms", "1234567890", "Recordatorio: reunion en 15 min")
+    sistema.notificar("push", "token_abc123", "Nuevo comentario en tu tarea", titulo="TaskFlow")
+    sistema.notificar("slack", "#desarrollo", "Build completado exitosamente", emoji=":white_check_mark:")
+
+    # Enviar por multiples canales
+    print("\n--- Envio Multi-Canal ---")
+    resultados = sistema.notificar_multi_canal(
+        canales=["email", "push"],
+        destinatario="maria@example.com",
+        mensaje="Tu tarea 'Diseno UI' ha sido completada",
+        asunto="Tarea Completada",
+        titulo="TaskFlow"
+    )
+    print(f"Resultados: {resultados}")
+
+    # Probar errores
+    print("\n--- Casos de Error ---")
+    sistema.notificar("whatsapp", "1234567890", "Este canal no existe")
+
+    print("\n=== Sistema funcionando correctamente ===")</code></pre>
+
+                    <h4>Ejecucion del Codigo</h4>
+                    <pre><code class="language-bash">python _sistema_notificaciones.py</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Reto adicional:</strong> Agrega un nuevo notificador <code>NotificadorDiscord</code> que use webhooks de Discord. No necesitas modificar el resto del codigo, solo registrar el nuevo notificador.
+                    </div>
+                </section>
+
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">Documentacion Oficial del Modulo abc</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/collections.abc.html" target="_blank">Colecciones Abstractas (collections.abc)</a></li>
+                        <li><a href="https://refactoring.guru/es/design-patterns/template-method" target="_blank">Patron Template Method - Refactoring Guru</a></li>
+                        <li><a href="https://realpython.com/python-interface/" target="_blank">Real Python - Abstract Base Classes</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/typing.html#typing.Protocol" target="_blank">Protocolos (typing.Protocol) - Interfaces en Python</a></li>
+                    </ul>
+                </section>
+
+                <section id="taskflow">
+                    <h2>Conexion con TaskFlow</h2>
+
+                    <h3>BaseEntity Abstracta</h3>
+                    <p>En el proyecto TaskFlow, las entidades del dominio heredan de una clase base abstracta que proporciona:</p>
+                    <ul>
+                        <li><strong>Gestion de ID:</strong> Control sobre la asignacion del identificador unico</li>
+                        <li><strong>Auditoria:</strong> Seguimiento de creado_en y actualizado_en</li>
+                        <li><strong>Validacion:</strong> Metodo abstracto para validar el estado</li>
+                        <li><strong>Serializacion:</strong> Metodo to_dict para convertir a diccionario</li>
+                    </ul>
+
+                    <h3>Repository Interfaces</h3>
+                    <p>Los repositorios definen contratos ABC para las operaciones de persistencia:</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+from typing import Generic, TypeVar, Optional, List
+from ..entities import Entity
+
+E = TypeVar('E', bound=Entity)
+
+class Repository(ABC, Generic[E]):
+    """Interfaz abstracta para repositorios de entidades."""
+
+    @abstractmethod
+    def save(self, entity: E) -> E:
+        """Guarda o actualiza una entidad."""
+        pass
+
+    @abstractmethod
+    def find_by_id(self, id) -> Optional[E]:
+        """Busca una entidad por ID."""
+        pass
+
+    @abstractmethod
+    def find_all(self) -> List[E]:
+        """Obtiene todas las entidades."""
+        pass
+
+    @abstractmethod
+    def delete(self, entity: E) -> bool:
+        """Elimina una entidad."""
+        pass
+
+    @abstractmethod
+    def count(self) -> int:
+        """Cuenta el total de entidades."""
+        pass</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Proxima clase:</strong> En la proxima clase sobre el Patron Repository, profundizaremos en la implementacion de repositorios concretos para TaskFlow usando SQLAlchemy.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Ultima actualizacion: 2026-02-08</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

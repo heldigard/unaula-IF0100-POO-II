@@ -3,6 +3,7 @@ evaluaciones/
 
 # Documentos internos del docente (notas, seguimiento, tareas pendientes)
 memory-bank/
+docs/
 
 # Configuración sensible de MCP / Claude
 **/.claude/
