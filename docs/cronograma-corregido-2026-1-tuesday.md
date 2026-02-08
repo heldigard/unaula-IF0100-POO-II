@@ -82,7 +82,7 @@
 | 03 | 10 feb | Estructuras de control: condicionales (if/else) y bucles (for/while) |
 | 04 | 17 feb | Estructuras de datos: listas, diccionarios, tuplas y sets |
 
-**Evaluación:** Quiz corto al final de la unidad
+**Evaluación:** Quiz 1 (15%) - Fundamentos Python | **Primer Seguimiento**
 
 ---
 
@@ -96,7 +96,7 @@
 | 07 | 10 mar | Herencia simple y múltiple, super() |
 | 08 | 17 mar | Polimorfismo, clases abstractas (ABC) e interfaces |
 
-**Evaluación:** Taller práctico de modelado OO
+**Evaluación:** Taller 1 (15%) - Modelado OO + Parcial 1 (20%) - Python + POO | **Primer Seguimiento (50%)**
 
 ---
 
@@ -111,7 +111,7 @@
 | 11 | 14 abr | BDD (Behavior Driven Development) con Behave |
 | 12 | 21 abr | Introducción a DDD (Domain Driven Design) |
 
-**Evaluación:** Parcial 1 (20%) - Fundamentos Python + POO + TDD
+**Evaluación:** Taller 2 (15%) - TDD + Testing | **Segundo Seguimiento**
 
 ---
 
@@ -126,7 +126,7 @@
 | 16 | 19 may | Testing de APIs con pytest y httpx |
 | 17 | 26 may | Persistencia de datos con SQLAlchemy (ORM) |
 
-**Evaluación:** Proyecto TaskFlow (entrega final 30%)
+**Evaluación:** Proyecto Parcial (15%) - TaskFlow API CRUD | Proyecto Final (20%) - TaskFlow Completo | **Segundo + Tercer Seguimiento**
 
 ---
 
@@ -141,26 +141,35 @@
 
 ## 6. Fechas de Evaluación
 
-| Evaluación | Semana | Fecha | Porcentaje | Tema |
-|------------|--------|-------|------------|------|
-| **Quiz 1** | 4 | 17 feb | 5% | Fundamentos Python |
-| **Taller 1** | 8 | 17 mar | 10% | Modelado OO |
-| **Parcial 1** | 12 | 21 abr | 20% | Python + POO + TDD |
-| **Proyecto Final** | 17 | 26 may | 30% | Proyecto TaskFlow completo |
-| **Participación** | Continuo | - | 35% | Talleres, quizes, participación |
+| Seguimiento | Evaluación | Semana | Fecha | Porcentaje | Tema |
+|-------------|------------|--------|-------|------------|------|
+| **Primer (50%)** | Quiz 1 | 4 | 17 feb | 15% | Fundamentos Python |
+| **Primer (50%)** | Taller 1 | 7 | 10 mar | 15% | Modelado OO |
+| **Primer (50%)** | Parcial 1 | 8 | 17 mar | 20% | Python + POO |
+| **Segundo (80%)** | Taller 2 | 11 | 14 abr | 15% | TDD + Testing |
+| **Segundo (80%)** | Proyecto Parcial | 15 | 12 may | 15% | TaskFlow (API CRUD) |
+| **Tercer (100%)** | Proyecto Final | 17 | 26 may | 20% | TaskFlow Completo |
+
+### Fechas Límite Oficiales
+
+| Seguimiento | Porcentaje Acumulado | Fecha Límite | Estado |
+|-------------|----------------------|--------------|--------|
+| **Primer Seguimiento** | 50% | 27/03/2026 | Antes de Semana Santa ✅ |
+| **Segundo Seguimiento** | 80% | 15/05/2026 | ✅ |
+| **Tercer Seguimiento** | 100% | 28/05/2026 | ✅ |
 
 ---
 
 ## 7. Hitos del Proyecto TaskFlow
 
-| Milestone | Semana | Fecha | Entregable |
-|-----------|--------|-------|------------|
-| **M1: Configuración** | 9-10 | 07-14 abr | Repo Git configurado, estructura base |
-| **M2: Modelos** | 11-12 | 21-28 abr | Entidades de dominio con Pydantic |
-| **M3: API Core** | 13-14 | 05-12 may | Endpoints CRUD funcionando |
-| **M4: Testing** | 15-16 | 19 may | Tests con >80% cobertura |
-| **M5: Persistencia** | 17 | 26 may | SQLAlchemy integrado |
-| **M6: Entrega Final** | 17 | 26 may | Proyecto completo documentado |
+| Milestone | Semana | Fecha | Porcentaje | Entregable |
+|-----------|--------|-------|------------|------------|
+| **M1: Configuración** | 9-10 | 07-14 abr | - | Repo Git configurado, estructura base |
+| **M2: Modelos** | 11-12 | 21-28 abr | - | Entidades de dominio con Pydantic |
+| **M3: API Core** | 13-14 | 05-12 may | - | Endpoints CRUD funcionando |
+| **M4: Testing** | 15 | 12 may | 15% | Tests con >80% cobertura (Proyecto Parcial) |
+| **M5: Persistencia** | 16 | 19 may | - | SQLAlchemy integrado |
+| **M6: Entrega Final** | 17 | 26 may | 20% | Proyecto completo documentado (Proyecto Final) |
 
 ---
 

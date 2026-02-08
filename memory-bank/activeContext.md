@@ -29,6 +29,11 @@
 - ✅ 159+ tests pytest
 - ✅ Proyecto completo (backend + frontend)
 
+**Estructura de Evaluaciones (Oficial - ACTUALIZADA 2026-02-08):**
+- ✅ Primer Seguimiento (50%): Quiz 1 (15%) + Taller 1 (15%) + Parcial 1 (20%) antes del 27/03/2026
+- ✅ Segundo Seguimiento (80%): Taller 2 (15%) + Proyecto Parcial (15%) antes del 15/05/2026
+- ✅ Tercer Seguimiento (100%): Proyecto Final (20%) antes del 28/05/2026
+
 ---
 
 ## 🎯 Decisiones Tomadas (Revisión Final 2026-02-08)

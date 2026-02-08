@@ -93,36 +93,42 @@
 
 ## 4. Tabla de Fechas con Entregas
 
-| Semana | Fecha | Evento | Porcentaje |
-|--------|-------|--------|------------|
-| 4 | 17/02/2026 | Quiz 1: Fundamentos Python | 5% |
-| 8 | 17/03/2026 | Taller 1: Modelado OO | 10% |
-| 12 | 21/04/2026 | **Parcial 1** | 20% |
-| 17 | 26/05/2026 | **Proyecto Final (TaskFlow)** | 30% |
-| Continuo | - | Participación, Talleres, Quices | 35% |
+| Semana | Fecha | Evento | Porcentaje | Seguimiento |
+|--------|-------|--------|------------|-------------|
+| 4 | 17/02/2026 | Quiz 1: Fundamentos Python | 15% | Primer Seguimiento |
+| 7 | 10/03/2026 | Taller 1: Modelado OO | 15% | Primer Seguimiento |
+| 8 | 17/03/2026 | Parcial 1: Python + POO | 20% | Primer Seguimiento |
+| 11 | 14/04/2026 | Taller 2: TDD + Testing | 15% | Segundo Seguimiento |
+| 15 | 12/05/2026 | Proyecto Parcial: TaskFlow (API) | 15% | Segundo Seguimiento |
+| 17 | 26/05/2026 | **Proyecto Final (TaskFlow Completo)** | 20% | Tercer Seguimiento |
+
+**NOTA:** Esta distribución cumple con los porcentajes oficiales de evaluación:
+- **Primer Seguimiento (50%)**: 15% + 15% + 20% antes de Semana Santa (límite 27/03/2026) ✅
+- **Segundo Seguimiento (80%)**: +15% + 15% antes del 15/05/2026 ✅
+- **Tercer Seguimiento (100%)**: +20% antes del 28/05/2026 ✅
 
 ---
 
 ## 5. Fechas Críticas de Evaluación
 
-### Evaluación del Curso
+### Evaluación del Curso (Estructura Oficial)
 
-| Evaluación | Semana | Fecha | Porcentaje | Descripción |
-|------------|--------|-------|------------|-------------|
-| **Quiz 1** | 4 | 17/02/2026 | 5% | Fundamentos Python |
-| **Taller 1** | 8 | 17/03/2026 | 10% | Modelado OO |
-| **Parcial 1** | 12 | 21/04/2026 | 20% | Python + POO + TDD |
-| **Proyecto Final** | 17 | 26/05/2026 | 30% | Sistema TaskFlow completo |
-| **Participación** | Todas | Continuo | 35% | Talleres, quices, participación |
+| Seguimiento | Evaluación | Semana | Fecha | Porcentaje | Descripción |
+|-------------|------------|--------|-------|------------|-------------|
+| **Primer (50%)** | Quiz 1 | 4 | 17/02/2026 | 15% | Fundamentos Python |
+| **Primer (50%)** | Taller 1 | 7 | 10/03/2026 | 15% | Modelado OO |
+| **Primer (50%)** | Parcial 1 | 8 | 17/03/2026 | 20% | Python + POO |
+| **Segundo (80%)** | Taller 2 | 11 | 14/04/2026 | 15% | TDD + Testing |
+| **Segundo (80%)** | Proyecto Parcial | 15 | 12/05/2026 | 15% | TaskFlow (API CRUD) |
+| **Tercer (100%)** | Proyecto Final | 17 | 26/05/2026 | 20% | TaskFlow Completo |
 
-### Desglose de Participación (35%)
+### Fechas Límite Oficiales
 
-| Componente | Porcentaje |
-|------------|------------|
-| Quiz 1: Fundamentos Python | 5% |
-| Taller 1: Modelado OO | 10% |
-| Quices adicionales | 10% |
-| Participación y tareas | 10% |
+| Seguimiento | Porcentaje Acumulado | Fecha Límite | Estado |
+|-------------|----------------------|--------------|--------|
+| **Primer Seguimiento** | 50% | 27/03/2026 | Antes de Semana Santa ✅ |
+| **Segundo Seguimiento** | 80% | 15/05/2026 | ✅ |
+| **Tercer Seguimiento** | 100% | 28/05/2026 | ✅ |
 
 ---
 
@@ -133,22 +139,22 @@
 | 1 | 27 Ene | 01 | - | 0% |
 | 2 | 03 Feb | 02 | - | 0% |
 | 3 | 10 Feb | 03 | - | 0% |
-| 4 | 17 Feb | 04 | Quiz 1 (5%) | 5% |
-| 5 | 24 Feb | 05 | - | 5% |
-| 6 | 03 Mar | 06 | - | 5% |
-| 7 | 10 Mar | 07 | - | 5% |
-| 8 | 17 Mar | 08 | Taller 1 (10%) | 15% |
-| 9 | 24 Mar | 09 | - | 15% |
-| - | **31 Mar** | - | **RECESO** | 15% |
-| 10 | 07 Abr | 10 | - | 15% |
-| 11 | 14 Abr | 11 | - | 15% |
-| 12 | 21 Abr | 12 | **Parcial 1 (20%)** | 35% |
-| 13 | 28 Abr | 13 | - | 35% |
-| 14 | 05 May | 14 | - | 35% |
-| 15 | 12 May | 15 | - | 35% |
-| 16 | 19 May | 16 | - | 35% |
-| 17 | 26 May | 17 | **Proyecto Final (30%)** | 65% |
-| 18 | 02 Jun | Extra | Cierre | 65% |
+| 4 | 17 Feb | 04 | Quiz 1 (15%) | 15% |
+| 5 | 24 Feb | 05 | - | 15% |
+| 6 | 03 Mar | 06 | - | 15% |
+| 7 | 10 Mar | 07 | Taller 1 (15%) | 30% |
+| 8 | 17 Mar | 08 | Parcial 1 (20%) | **50%** ✅ |
+| 9 | 24 Mar | 09 | - | 50% |
+| - | **31 Mar** | - | **RECESO** | 50% |
+| 10 | 07 Abr | 10 | - | 50% |
+| 11 | 14 Abr | 11 | Taller 2 (15%) | 65% |
+| 12 | 21 Abr | 12 | - | 65% |
+| 13 | 28 Abr | 13 | - | 65% |
+| 14 | 05 May | 14 | - | 65% |
+| 15 | 12 May | 15 | Proyecto Parcial (15%) | **80%** ✅ |
+| 16 | 19 May | 16 | - | 80% |
+| 17 | 26 May | 17 | Proyecto Final (20%) | **100%** ✅ |
+| 18 | 02 Jun | Extra | Cierre | 100% |
 
 ---
 
@@ -158,14 +164,14 @@ El proyecto **TaskFlow** es el componente central del curso. A continuación se 
 
 ### Milestones del Proyecto
 
-| Milestone | Semana | Descripción | Entregable |
-|-----------|--------|-------------|------------|
-| **M1: Configuración** | 10 | Setup del proyecto, arquitectura base | Repositorio Git configurado |
-| **M2: Modelos** | 11-12 | Entidades de dominio, Pydantic | Modelos de datos completos |
-| **M3: API Core** | 13-14 | CRUD básico, validación | Endpoints de tareas |
-| **M4: Testing** | 15-16 | Cobertura de tests, BDD | Tests passing (>80%) |
-| **M5: Persistencia** | 17 | SQLAlchemy integrado | Base de datos funcionando |
-| **M6: Entrega Final** | 17 | Documentación, despliegue | Proyecto completo |
+| Milestone | Semana | Fecha | Porcentaje | Entregable |
+|-----------|--------|-------|------------|------------|
+| **M1: Configuración** | 10 | 07 abr | - | Repo Git configurado, estructura base |
+| **M2: Modelos** | 11-12 | 21-28 abr | - | Entidades de dominio con Pydantic |
+| **M3: API Core** | 13-14 | 05-12 may | - | Endpoints CRUD funcionando |
+| **M4: Testing** | 15 | 12 may | 15% | Tests con >80% cobertura (Proyecto Parcial) |
+| **M5: Persistencia** | 16 | 19 may | - | SQLAlchemy integrado |
+| **M6: Entrega Final** | 17 | 26 may | 20% | Proyecto completo documentado (Proyecto Final) |
 
 ### Arquitectura del Proyecto
 

@@ -42,6 +42,15 @@ Se ha completado una revisión integral del curso IF0100 - Lenguaje de Programac
 | Entity Framework | SQLAlchemy | ORM Python estándar |
 | Visual Studio | VS Code | Editor multiplataforma |
 
+### 1.3 Estructura de Evaluaciones (Oficial)
+
+| Seguimiento | Evaluaciones | Porcentaje | Fecha Límite |
+|-------------|--------------|------------|--------------|
+| **Primer** | Quiz 1 + Taller 1 + Parcial 1 | 50% (15%+15%+20%) | 27/03/2026 |
+| **Segundo** | Taller 2 + Proyecto Parcial | 30% (15%+15%) | 15/05/2026 |
+| **Tercer** | Proyecto Final | 20% | 28/05/2026 |
+| **TOTAL** | | **100%** | |
+
 ---
 
 ## 2. Cambios Realizados
