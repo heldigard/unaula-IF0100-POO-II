@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="100%" height="100%">
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#845ef7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7950f2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="derived1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22b8cf;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#15aabf;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="derived2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#20c997;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#12b886;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="derived3Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fd7e14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fab005;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#868e96" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="40" font-family="Segoe UI, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#212529">
+    Herencia y Polimorfismo
+  </text>
+
+  <!-- Base Class -->
+  <g transform="translate(350, 80)">
+    <rect width="200" height="100" rx="8" fill="url(#baseGrad)" stroke="#7950f2" stroke-width="2"/>
+    <text x="100" y="35" font-family="Consolas, monospace" font-size="16" font-weight="bold" text-anchor="middle" fill="white">
+      Empleado
+    </text>
+    <line x1="20" y1="50" x2="180" y2="50" stroke="white" stroke-width="1"/>
+    <text x="100" y="75" font-family="Consolas, monospace" font-size="12" text-anchor="middle" fill="white">
+      + calcular_salario()
+    </text>
+  </g>
+
+  <!-- Inheritance arrows (triangle pointing to base) -->
+  <g fill="none" stroke="#868e96" stroke-width="2">
+    <!-- From EmpleadoTiempoCompleto -->
+    <path d="M 150 230 L 250 230 L 250 160 L 350 160"/>
+    <!-- From EmpleadoPorHoras -->
+    <path d="M 450 230 L 450 180"/>
+    <!-- From EmpleadoComision -->
+    <path d="M 750 230 L 650 230 L 650 180 L 550 180"/>
+  </g>
+
+  <!-- Derived Classes -->
+  <g transform="translate(50, 230)">
+    <rect width="200" height="120" rx="8" fill="url(#derived1Grad)" stroke="#15aabf" stroke-width="2"/>
+    <text x="100" y="30" font-family="Consolas, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="white">
+      EmpleadoTiempoCompleto
+    </text>
+    <line x1="20" y1="50" x2="180" y2="50" stroke="white" stroke-width="1"/>
+    <text x="100" y="70" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + bonificacion: float
+    </text>
+    <text x="100" y="95" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + calcular_salario()
+    </text>
+  </g>
+
+  <g transform="translate(350, 230)">
+    <rect width="200" height="120" rx="8" fill="url(#derived2Grad)" stroke="#12b886" stroke-width="2"/>
+    <text x="100" y="30" font-family="Consolas, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="white">
+      EmpleadoPorHoras
+    </text>
+    <line x1="20" y1="50" x2="180" y2="50" stroke="white" stroke-width="1"/>
+    <text x="100" y="70" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + tarifa: float
+    </text>
+    <text x="100" y="95" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + calcular_salario()
+    </text>
+  </g>
+
+  <g transform="translate(650, 230)">
+    <rect width="200" height="120" rx="8" fill="url(#derived3Grad)" stroke="#fab005" stroke-width="2"/>
+    <text x="100" y="30" font-family="Consolas, monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="white">
+      EmpleadoComision
+    </text>
+    <line x1="20" y1="50" x2="180" y2="50" stroke="white" stroke-width="1"/>
+    <text x="100" y="70" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + ventas: float
+    </text>
+    <text x="100" y="95" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="white">
+      + calcular_salario()
+    </text>
+  </g>
+
+  <!-- Polymorphism example -->
+  <g transform="translate(100, 400)">
+    <rect width="700" height="150" rx="8" fill="#fff" stroke="#dee2e6" stroke-width="2"/>
+    <text x="350" y="30" font-family="Segoe UI, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#495057">
+      Ejemplo de Polimorfismo
+    </text>
+
+    <g font-family="Consolas, monospace" font-size="12" fill="#212529">
+      <text x="30" y="65" fill="#7950f2">
+        empleados: list[Empleado] = [
+      </text>
+      <text x="50" y="85" fill="#15aabf">
+        EmpleadoTiempoCompleto(),
+      </text>
+      <text x="50" y="105" fill="#12b886">
+        EmpleadoPorHoras(), EmpleadoComision()
+      </text>
+      <text x="30" y="125" fill="#7950f2">
+        ]
+      </text>
+    </g>
+
+    <g font-family="Segoe UI, sans-serif" font-size="12" fill="#868e96">
+      <text x="350" y="140" text-anchor="middle">
+        Cada empleado.calcular_salario() retorna un resultado diferente según su tipo
+      </text>
+    </g>
+  </g>
+
+  <!-- Key concepts -->
+  <g transform="translate(100, 575)">
+    <text x="0" y="0" font-family="Segoe UI, sans-serif" font-size="13" fill="#495057">
+      <tspan font-weight="bold">Herencia:</tspan> Las clases derivadas heredan atributos y métodos de la clase base |
+      <tspan font-weight="bold">Polimorfismo:</tspan> Misma interfaz, diferentes implementaciones
+    </text>
+  </g>
+</svg>

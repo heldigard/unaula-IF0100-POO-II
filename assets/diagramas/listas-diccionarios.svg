@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="100%" height="100%">
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="listGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#66d9e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dictGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f9ca24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0932b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="40" font-family="Segoe UI, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#212529">
+    Listas vs Diccionarios
+  </text>
+
+  <!-- LIST -->
+  <g transform="translate(50, 100)">
+    <rect width="380" height="250" rx="8" fill="url(#listGrad)" opacity="0.1" stroke="#4ecdc4" stroke-width="3"/>
+    <text x="190" y="40" font-family="Segoe UI, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2d3436">
+      LISTA (list)
+    </text>
+
+    <!-- List visualization -->
+    <g transform="translate(40, 80)">
+      <!-- Index labels -->
+      <text x="30" y="25" font-family="Consolas, monospace" font-size="12" fill="#636e72">0</text>
+      <text x="80" y="25" font-family="Consolas, monospace" font-size="12" fill="#636e72">1</text>
+      <text x="130" y="25" font-family="Consolas, monospace" font-size="12" fill="#636e72">2</text>
+      <text x="180" y="25" font-family="Consolas, monospace" font-size="12" fill="#636e72">3</text>
+      <text x="230" y="25" font-family="Consolas, monospace" font-size="12" fill="#636e72">4</text>
+
+      <!-- Cells -->
+      <rect x="10" y="35" width="40" height="40" rx="4" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>
+      <text x="30" y="60" font-family="Consolas, monospace" font-size="14" text-anchor="middle" fill="#2d3436">A</text>
+
+      <rect x="60" y="35" width="40" height="40" rx="4" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>
+      <text x="80" y="60" font-family="Consolas, monospace" font-size="14" text-anchor="middle" fill="#2d3436">B</text>
+
+      <rect x="110" y="35" width="40" height="40" rx="4" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>
+      <text x="130" y="60" font-family="Consolas, monospace" font-size="14" text-anchor="middle" fill="#2d3436">C</text>
+
+      <rect x="160" y="35" width="40" height="40" rx="4" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>
+      <text x="180" y="60" font-family="Consolas, monospace" font-size="14" text-anchor="middle" fill="#2d3436">D</text>
+
+      <rect x="210" y="35" width="40" height="40" rx="4" fill="#fff" stroke="#4ecdc4" stroke-width="2"/>
+      <text x="230" y="60" font-family="Consolas, monospace" font-size="14" text-anchor="middle" fill="#2d3436">E</text>
+    </g>
+
+    <!-- Characteristics -->
+    <g font-family="Segoe UI, sans-serif" font-size="13" fill="#2d3436">
+      <text x="30" y="170">
+        <tspan font-weight="bold">✓ Ordenada:</tspan> Mantiene orden de inserción
+      </text>
+      <text x="30" y="195">
+        <tspan font-weight="bold">✓ Indexada:</tspan> Acceso por posición [0]
+      </text>
+      <text x="30" y="220">
+        <tspan font-weight="bold">✓ Permite duplicados:</tspan> ["a", "a", "b"]
+      </text>
+    </g>
+  </g>
+
+  <!-- DICTIONARY -->
+  <g transform="translate(470, 100)">
+    <rect width="380" height="250" rx="8" fill="url(#dictGrad)" opacity="0.1" stroke="#f0932b" stroke-width="3"/>
+    <text x="190" y="40" font-family="Segoe UI, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2d3436">
+      DICCIONARIO (dict)
+    </text>
+
+    <!-- Dict visualization -->
+    <g transform="translate(30, 80)">
+      <!-- Key-Value pairs -->
+      <rect x="0" y="10" width="100" height="35" rx="4" fill="#fff" stroke="#f0932b" stroke-width="2"/>
+      <text x="50" y="32" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#e17055">
+        "nombre"
+      </text>
+      <text x="120" y="32" font-family="Segoe UI, sans-serif" font-size="16" fill="#636e72">→</text>
+      <rect x="140" y="10" width="80" height="35" rx="4" fill="#ffeaa7" stroke="#f0932b" stroke-width="1"/>
+      <text x="180" y="32" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#2d3436">
+        "Juan"
+      </text>
+
+      <rect x="0" y="55" width="100" height="35" rx="4" fill="#fff" stroke="#f0932b" stroke-width="2"/>
+      <text x="50" y="77" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#e17055">
+        "edad"
+      </text>
+      <text x="120" y="77" font-family="Segoe UI, sans-serif" font-size="16" fill="#636e72">→</text>
+      <rect x="140" y="55" width="80" height="35" rx="4" fill="#ffeaa7" stroke="#f0932b" stroke-width="1"/>
+      <text x="180" y="77" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#2d3436">
+        25
+      </text>
+
+      <rect x="0" y="100" width="100" height="35" rx="4" fill="#fff" stroke="#f0932b" stroke-width="2"/>
+      <text x="50" y="122" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#e17055">
+        "activo"
+      </text>
+      <text x="120" y="122" font-family="Segoe UI, sans-serif" font-size="16" fill="#636e72">→</text>
+      <rect x="140" y="100" width="80" height="35" rx="4" fill="#ffeaa7" stroke="#f0932b" stroke-width="1"/>
+      <text x="180" y="122" font-family="Consolas, monospace" font-size="11" text-anchor="middle" fill="#2d3436">
+        True
+      </text>
+    </g>
+
+    <!-- Characteristics -->
+    <g font-family="Segoe UI, sans-serif" font-size="13" fill="#2d3436">
+      <text x="30" y="170">
+        <tspan font-weight="bold">✓ Clave-Valor:</tspan> {"key": value}
+      </text>
+      <text x="30" y="195">
+        <tspan font-weight="bold">✓ Acceso por clave:</tspan> dict["nombre"]
+      </text>
+      <text x="30" y="220">
+        <tspan font-weight="bold">✓ Claves únicas:</tspan> No duplica keys
+      </text>
+    </g>
+  </g>
+
+  <!-- Comparison Table -->
+  <g transform="translate(50, 390)">
+    <rect width="800" height="230" rx="8" fill="#fff" stroke="#dee2e6" stroke-width="2"/>
+    <text x="400" y="30" font-family="Segoe UI, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#495057">
+      ¿Cuándo usar cada uno?
+    </text>
+
+    <!-- Headers -->
+    <text x="250" y="70" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4ecdc4">
+      LISTA
+    </text>
+    <text x="550" y="70" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f0932b">
+      DICCIONARIO
+    </text>
+
+    <line x1="400" y1="50" x2="400" y2="210" stroke="#dee2e6" stroke-width="2"/>
+
+    <!-- Use cases -->
+    <g font-family="Segoe UI, sans-serif" font-size="12" fill="#495057">
+      <text x="50" y="100">✓ Secuencia ordenada de elementos</text>
+      <text x="450" y="100">✓ Datos con etiquetas/claves</text>
+
+      <text x="50" y="130">✓ Búsqueda por posición</text>
+      <text x="450" y="130">✓ Búsqueda rápida por clave</text>
+
+      <text x="50" y="160">✓ Colección de items similares</text>
+      <text x="450" y="160">✓ Objetos con propiedades</text>
+
+      <text x="50" y="190">✓ ["Juan", "María", "Pedro"]</text>
+      <text x="450" y="190">✓ {"nombre": "Juan", "edad": 25}</text>
+    </g>
+  </g>
+
+  <!-- Bottom note -->
+  <text x="450" y="640" font-family="Segoe UI, sans-serif" font-size="13" text-anchor="middle" fill="#868e96">
+    Listas: O(1) acceso por índice, O(n) búsqueda | Diccionarios: O(1) búsqueda por clave
+  </text>
+</svg>
