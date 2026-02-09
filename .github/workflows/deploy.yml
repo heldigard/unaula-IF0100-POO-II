@@ -21,16 +21,16 @@ jobs:
       - name: Copy clases HTML
         run: |
           cp -r clases-html/*.html output/ 2>/dev/null || true
+          cp -r clases-html/unidad-* output/ 2>/dev/null || true
+          cp -r clases-html/assets output/ 2>/dev/null || true
 
       - name: Copy assets
         run: |
           mkdir -p output/assets/infografias
           cp -r assets/infografias/* output/assets/infografias/ 2>/dev/null || true
 
-      - name: Copy clases-html assets and index
+      - name: Copy index
         run: |
-          mkdir -p output/assets
-          cp -r clases-html/assets/* output/assets/ 2>/dev/null || true
           cp clases-html/index.html output/index.html 2>/dev/null || true
 
       - name: Deploy to gh-pages branch
