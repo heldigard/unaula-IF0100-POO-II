@@ -416,15 +416,15 @@ sudo apt install python3 python3-pip python3-venv</code></pre>
                     <h3>Variables y Asignación</h3>
                     <p>Una variable es un nombre que referencia un valor en memoria. En Python, las variables se crean mediante asignación:</p>
                     <pre><code class="language-python"># Asignación básica
-nombre = "Juan"
-edad = 25
-altura = 1.75
-es_estudiante = True</code></pre>
+nombre: str = "Juan"
+edad: int = 25
+altura: float = 1.75
+es_estudiante: bool = True</code></pre>
 
                     <p>Python usa <strong>tipado dinámico</strong>, lo que significa que el tipo de una variable se determina en tiempo de ejecución:</p>
-                    <pre><code class="language-python">x = 10        # x es int
-x = "Hola"    # ahora x es str
-x = 3.14      # ahora x es float</code></pre>
+                    <pre><code class="language-python">x: int = 10        # x es int
+x = "Hola"          # ahora x es str (Python infiere el tipo)
+x = 3.14            # ahora x es float</code></pre>
 
                     <div class="alert-note">
                         <strong>📝 Nota:</strong> Aunque Python permite cambiar el tipo de una variable, esto se considera una mala práctica. Mantén tipos consistentes.
@@ -837,11 +837,20 @@ python3 imc.py</code></pre>
         </div>
     </div>
 
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U0C00-INTRO"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-07</p>
+            <p>Última actualización: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
         </div>
     </footer>
 

@@ -25,31 +25,74 @@
 
 ---
 
-## 2. xUnit Framework
+## 2. pytest Framework
 
-### Atributos Principales
+### Fixtures y Funciones de Prueba
 
-| Atributo | Uso |
-|----------|-----|
-| `[Fact]` | Prueba sin parámetros |
-| `[Theory]` | Prueba parametrizada |
-| `[InlineData(...)]` | Datos para [Theory] |
+| Decorador/Función | Uso |
+|-------------------|-----|
+| `def test_*()` | Prueba básica |
+| `@pytest.fixture` | Configuración reutilizable |
+| `@pytest.mark.parametrize` | Prueba parametrizada |
 
 ### Patrón AAA
 
-```csharp
-[Fact]
-public void Sumar_DosNumeros_RetornaSuma()
-{
-    // Arrange - Configurar
-    var calc = new Calculadora();
+```python
+# test_calculadora.py
+import pytest
+from calculadora import Calculadora
 
-    // Act - Ejecutar
-    int resultado = calc.Sumar(5, 3);
 
-    // Assert - Verificar
-    Assert.Equal(8, resultado);
-}
+def test_sumar_dos_numeros_retorna_suma():
+    # Arrange - Configurar
+    calc = Calculadora()
+
+    # Act - Ejecutar
+    resultado = calc.sumar(5, 3)
+
+    # Assert - Verificar
+    assert resultado == 8
+
+
+# Versión con fixture
+@pytest.fixture
+def calculadora():
+    return Calculadora()
+
+
+def test_sumar_con_fixture(calculadora):
+    # Act
+    resultado = calculadora.sumar(5, 3)
+    
+    # Assert
+    assert resultado == 8
+
+
+# Versión parametrizada
+@pytest.mark.parametrize("a, b, esperado", [
+    (5, 3, 8),
+    (10, 20, 30),
+    (-1, 1, 0),
+])
+def test_sumar_parametrizado(calculadora, a, b, esperado):
+    assert calculadora.sumar(a, b) == esperado
+```
+
+### Clase de Ejemplo
+
+```python
+# calculadora.py
+class Calculadora:
+    def sumar(self, a: int, b: int) -> int:
+        return a + b
+
+    def restar(self, a: int, b: int) -> int:
+        return a - b
+
+    def dividir(self, a: int, b: int) -> float:
+        if b == 0:
+            raise ValueError("No se puede dividir por cero")
+        return a / b
 ```
 
 ---
@@ -62,6 +105,41 @@ public void Sumar_DosNumeros_RetornaSuma()
 | **Stub** | Respuestas predefinidas |
 | **Fake** | Implementación simplificada |
 | **Mock** | Verifica comportamiento |
+
+### Ejemplo con Mock (unittest.mock)
+
+```python
+# test_con_mock.py
+from unittest.mock import Mock, patch
+import pytest
+
+
+def test_enviar_notificacion():
+    # Arrange
+    servicio_mock = Mock()
+    servicio_mock.enviar.return_value = True
+    
+    notificador = Notificador(servicio_mock)
+    
+    # Act
+    resultado = notificador.notificar("Hola")
+    
+    # Assert
+    assert resultado is True
+    servicio_mock.enviar.assert_called_once_with("Hola")
+
+
+# Usando patch
+@patch("modulo.ServicioEmail")
+def test_procesar_pedido(mock_email_class):
+    mock_email = Mock()
+    mock_email_class.return_value = mock_email
+    
+    procesador = ProcesadorPedidos()
+    procesador.procesar("cliente@email.com")
+    
+    mock_email.enviar_confirmacion.assert_called_once()
+```
 
 ---
 

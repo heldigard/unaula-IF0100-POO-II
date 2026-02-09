@@ -625,7 +625,7 @@ class UsuarioCreate(BaseModel):
         min_length=8,
         description="Password (mínimo 8 caracteres)",
         json_schema_extra={
-            "examples": ["pass1234", "SecurePass!2024"]
+            "examples": ["pass1234", "SecurePass!2026"]
         }
     )
 
@@ -1357,6 +1357,13 @@ curl -X POST http://localhost:8000/usuarios \
                 </section>
             </main>
         </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U3C02-PYDANT" target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
     </div>
 
     <!-- Footer -->

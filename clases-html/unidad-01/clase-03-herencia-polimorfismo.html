@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aprende herencia y polimorfismo en Python POO. Domina super(), override, clases base y derivadas. Implementa User Admin y RegularUser para TaskFlow.">
+    <meta name="description" content="Aprende herencia y polimorfismo en Python. Domina herencia simple, override de métodos, super() y aplica estos conceptos en el proyecto TaskFlow.">
     <meta name="author" content="IF0100 - UNAULA">
     <title>Herencia y Polimorfismo | IF0100 - POO II</title>
 
@@ -275,7 +275,7 @@
     <header>
         <div class="container">
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h2>Unidad 1: POO Avanzada</h2>
             <h3>Clase 3: Herencia y Polimorfismo</h3>
         </div>
     </header>
@@ -296,7 +296,7 @@
                         <a class="nav-link" href="clase-02-encapsulamiento.html">Anterior: Encapsulamiento</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="clase-04-sobrecarga-sobreescritura.html">Siguiente: Sobrecarga y Sobreescritura</a>
+                        <a class="nav-link" href="clase-04-clases-abstractas.html">Siguiente: Clases Abstractas</a>
                     </li>
                 </ul>
             </div>
@@ -314,8 +314,8 @@
                         <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
                         <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
                         <li><a href="#ejercicio">Ejercicio Guiado</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
                         <li><a href="#taskflow">Conexión con TaskFlow</a></li>
+                        <li><a href="#referencias">Referencias</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -326,12 +326,12 @@
                     <p>Al finalizar esta clase, usted será capaz de:</p>
                     <ul>
                         <li>Comprender el concepto de herencia en POO y su importancia</li>
-                        <li>Implementar herencia de clases en Python (herencia simple y múltiple)</li>
-                        <li>Aplicar el principio de polimorfismo en código real</li>
-                        <li>Utilizar <code>super()</code> correctamente para llamar métodos de la clase padre</li>
-                        <li>Distinguir entre sobreescritura (override) y sobrecarga (overload)</li>
-                        <li>Aplicar herencia al proyecto TaskFlow (User → AdminUser, RegularUser)</li>
-                        <li>Decidir cuándo usar herencia vs composición</li>
+                        <li>Implementar herencia simple y jerarquías de clases en Python</li>
+                        <li>Aplicar override de métodos para modificar comportamiento heredado</li>
+                        <li>Usar <code>super()</code> correctamente para llamar a la clase padre</li>
+                        <li>Comprender y aplicar polimorfismo en el código</li>
+                        <li>Utilizar <code>isinstance()</code> y <code>issubclass()</code> para verificación de tipos</li>
+                        <li>Implementar herencia en el modelo TaskFlow (Usuario → UsuarioAdmin, Tarea → Subtarea)</li>
                     </ul>
                 </section>
 
@@ -339,1304 +339,879 @@
                     <h2>Conceptos Teóricos</h2>
 
                     <h3>¿Qué es la Herencia?</h3>
-                    <p>La <strong>herencia</strong> es uno de los pilares fundamentales de la POO que permite crear nuevas clases basadas en clases existentes. La clase existente se denomina <strong>clase padre, base o superclase</strong>, y la nueva clase se llama <strong>clase hija, derivada o subclase</strong>.</p>
-                    <p>La herencia establece una relación "es-un" (is-a) entre las clases:</p>
+                    <p>La <strong>herencia</strong> es uno de los pilares fundamentales de la POO que permite crear nuevas clases basadas en clases existentes. La clase existente se llama <strong>clase padre</strong>, <strong>superclase</strong> o <strong>clase base</strong>, y la nueva clase se llama <strong>clase hija</strong>, <strong>subclase</strong> o <strong>clase derivada</strong>.</p>
 
                     <div class="alert-note">
-                        <strong>Analogia:</strong> Piensa en la herencia como en la biologica. Un Perro hereda características de Animal (nombre, edad, comer()) pero también tiene sus propias características específicas (ladrar(), morder()). De igual manera, un Gato hereda de Animal pero implementa maullar().
+                        <strong>Analogía:</strong> Piensa en la herencia como en la genética. Un hijo hereda características de sus padres (color de ojos, estatura), pero también puede tener características propias. De igual manera, una clase hija hereda atributos y métodos de la clase padre, pero puede agregar otros nuevos o modificar los existentes.
                     </div>
 
-                    <pre><code class="language-python"># Clase padre (superclase)
-class Animal:
-    """Clase base que representa un animal."""
-
-    def __init__(self, nombre: str, edad: int):
-        self.nombre = nombre
-        self.edad = edad
-
-    def comer(self) -> str:
-        """Método que todas las subclases heredan."""
-        return f"{self.nombre} está comiendo."
-
-    def emitir_sonido(self) -> str:
-        """Método que las subclases sobreescribirán."""
-        return "Sonido genérico de animal"
-
-
-# Clase hija (subclase)
-class Perro(Animal):
-    """Perro hereda de Animal."""
-
-    def __init__(self, nombre: str, raza: str):
-        # super() llama al __init__ de la clase padre
-        super().__init__(nombre, edad)
-        self.raza = raza
-
-    def emitir_sonido(self) -> str:
-        # Override: sobreescribe el comportamiento del padre
-        return "Guau guau!"
-
-    def ladrar(self) -> str:
-        """Método específico de Perro."""
-        return f"{self.nombre} está ladrando."
-
-
-# Uso
-perro = Perro("Fido", "Golden Retriever")
-print(perro.comer())         # Heredado de Animal: Fido está comiendo.
-print(perro.emitir_sonido()) # Sobreescrito en Perro: Guau guau!
-print(perro.ladrar())        # Específico de Perro: Fido está ladrando.</code></pre>
-
                     <h3>Herencia Simple vs Múltiple</h3>
-                    <p>Python soporta tanto herencia simple como múltiple:</p>
-
                     <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Tipo</th>
-                                <th>Descripcion</th>
-                                <th>Ejemplo</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo Python</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><strong>Herencia Simple</strong></td>
-                                <td>Una sola clase padre</td>
+                                <td>Una clase hija hereda de una sola clase padre</td>
                                 <td><code>class Perro(Animal)</code></td>
                             </tr>
                             <tr>
-                                <td><strong>Herencia Multiple</strong></td>
-                                <td>Multiple clases padre</td>
-                                <td><code>class Clase(A, B, C)</code></td>
+                                <td><strong>Herencia Múltiple</strong></td>
+                                <td>Una clase hija hereda de múltiples clases padre</td>
+                                <td><code>class Pato(Animal, Volador)</code></td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <pre><code class="language-python"># Herencia multiple
-class Volador:
-    """Clase que define comportamiento de vuelo."""
-    def volar(self) -> str:
-        return "Volando..."
-
-
-class Nadador:
-    """Clase que define comportamiento de natacion."""
-    def nadar(self) -> str:
-        return "Nadando..."
-
-
-class Pato(Volador, Nadador):
-    """Pato hereda de Volador y Nadador (MRO: Method Resolution Order)."""
-    def __init__(self, nombre: str):
-        self.nombre = nombre
-
-    def presentar(self) -> str:
-        return f"Soy {self.nombre} y puedo:"
-
-
-pato = Pato("Donald")
-print(pato.presentar())
-print(f"  - {pato.volar()}")   # Heredado de Volador
-print(f"  - {pato.nadar()}")   # Heredado de Nadador
-
-# Ver MRO (Method Resolution Order)
-print("\nOrden de resolucion de metodos (MRO):")
-for cls in Pato.__mro__:
-    print(f"  - {cls.__name__}")</code></pre>
-
                     <div class="alert-warning-custom">
-                        <strong>Nota sobre MRO:</strong> Python usa el algoritmo C3 para determinar el orden de busqueda de metodos en herencia multiple. Puedes verificarlo con <code>Clase.__mro__</code> o <code>Clase.mro()</code>.
+                        <strong>Nota:</strong> Python soporta herencia múltiple, pero debe usarse con precaución. Si hay métodos con el mismo nombre en múltiples padres, Python usa el MRO (Method Resolution Order) para determinar cuál llamar.
                     </div>
 
-                    <h3>La Clase Base object</h3>
-                    <p>En Python 3, todas las clases heredan implicitamente de <code>object</code> si no se especifica otra clase padre. Esto proporciona los metodos especiales basicos como <code>__str__</code>, <code>__repr__</code>, etc.</p>
-
-                    <pre><code class="language-python"># Equivalentes en Python 3
-class MiClase:
+                    <h3>Jerarquía de Herencia</h3>
+                    <p>Las clases pueden organizarse en jerarquías donde una clase padre tiene múltiples clases hija, y estas a su vez pueden ser padres de otras clases.</p>
+                    <pre><code class="language-python"># Clase base (nivel 1)
+class Animal:
     pass
 
-class MiClase(object):
+# Clases intermedias (nivel 2)
+class Mamifero(Animal):
     pass
 
-# Ambas son identicas porque Python 3 hace que hereden de object implicitamente
+class Ave(Animal):
+    pass
 
-# Verificar la jerarquia
-print(MiClase.__mro__)
-# Salida: (&lt;class '__main__.MiClase'>, &lt;class 'object'>)</code></pre>
+# Clases hoja (nivel 3)
+class Perro(Mamifero):
+    pass
 
-                    <h3>Constructores en Herencia (super())</h3>
-                    <p>La funcion <code>super()</code> permite llamar metodos de la clase padre de manera segura, especialmente util en herencia multiple.</p>
+class Gato(Mamifero):
+    pass
 
-                    <pre><code class="language-python">class Persona:
-    """Clase base Persona."""
+class Pato(Ave):
+    pass</code></pre>
 
-    def __init__(self, nombre: str, edad: int):
+                    <h3>Override de Métodos</h3>
+                    <p>El <strong>override</strong> (sobreescritura) permite que una clase hija proporcione una implementación diferente de un método que ya existe en la clase padre.</p>
+                    <pre><code class="language-python">class Animal:
+    def hacer_sonido(self):
+        print("Sonido genérico de animal")
+
+class Perro(Animal):
+    def hacer_sonido(self):  # Override del método
+        print("Guau guau!")
+
+class Gato(Animal):
+    def hacer_sonido(self):  # Override del método
+        print("Miau!")
+
+# Uso
+animal = Animal()
+perro = Perro()
+gato = Gato()
+
+animal.hacer_sonido()  # Sonido genérico de animal
+perro.hacer_sonido()   # Guau guau!
+gato.hacer_sonido()    # Miau!</code></pre>
+
+                    <h3>La Función super()</h3>
+                    <p><code>super()</code> permite llamar a métodos de la clase padre desde la clase hija. Es especialmente útil cuando sobreescribimos métodos y queremos extender, no reemplazar, el comportamiento del padre.</p>
+                    <pre><code class="language-python">class Animal:
+    def __init__(self, nombre):
         self.nombre = nombre
-        self.edad = edad
-        print(f"  [Persona __init__] Creando: {nombre}")
 
-    def presentar(self) -> str:
-        return f"Soy {self.nombre}, tengo {self.edad} años"
+    def hacer_sonido(self):
+        print("Sonido genérico")
 
+class Perro(Animal):
+    def __init__(self, nombre, raza):
+        # Llamar al constructor del padre con super()
+        super().__init__(nombre)
+        self.raza = raza
 
-class Empleado(Persona):
-    """Empleado hereda de Persona."""
+    def hacer_sonido(self):
+        # Llamar al método del padre y agregar comportamiento extra
+        super().hacer_sonido()
+        print("Guau guau!")
 
-    def __init__(self, nombre: str, edad: int, salario: float):
-        # Llamar al __init__ del padre
-        super().__init__(nombre, edad)
-        self.salario = salario
-        print(f"  [Empleado __init__] Salario: ${salario}")
+# Uso
+perro = Perro("Fido", "Labrador")
+print(perro.nombre)   # Fido
+print(perro.raza)      # Labrador
+perro.hacer_sonido()   # Sonido genérico\nGuau guau!</code></pre>
 
-    def presentar(self) -> str:
-        # Llamar al metodo del padre y extenderlo
-        base = super().presentar()
-        return f"{base} y gano ${self.salario}"
+                    <h3>Polimorfismo</h3>
+                    <p>El <strong>polimorfismo</strong> es la capacidad de que diferentes clases respondan al mismo mensaje (llamada a método) de maneras diferentes. Python es naturalmente polimórfico debido a su tipado dinámico.</p>
+                    <pre><code class="language-python">class Perro:
+    def hablar(self):
+        print("Guau!")
 
+class Gato:
+    def hablar(self):
+        print("Miau!")
 
-# Crear instancias
-print("=== Creando Persona ===")
-persona = Persona("Ana", 30)
-print(persona.presentar())
+class Vaca:
+    def hablar(self):
+        print("Muuu!")
 
-print("\n=== Creando Empleado ===")
-empleado = Empleado("Carlos", 25, 50000)
-print(empleado.presentar())</code></pre>
+# Lista de objetos de diferentes clases
+animales = [Perro(), Gato(), Vaca()]
 
-                    <h4>super() sin argumentos (Python 3)</h4>
-                    <pre><code class="language-python"># Python 3 permite super() sin argumentos
-class ClaseHija(ClasePadre):
-    def metodo(self):
-        # Equivalente a super().metodo() en Python 3
-        return super().metodo() + " extendida"
-
-# Anterior a Python 2, debias usar: super(ClaseHija, self).metodo()</code></pre>
-
-                    <h3>Sobreescritura de Metodos (Override)</h3>
-                    <p>La <strong>sobreescritura</strong> (override) ocurre cuando una subclase proporciona una implementacion diferente de un metodo que ya existe en la clase padre.</p>
-
-                    <pre><code class="language-python">class Vehiculo:
-    """Clase base de vehiculos."""
-
-    def __init__(self, marca: str, modelo: str):
-        self.marca = marca
-        self.modelo = modelo
-
-    def describir(self) -> str:
-        """Descripcion basica."""
-        return f"{self.marca} {self.modelo}"
-
-    def mover(self) -> str:
-        """Comportamiento generico de movimiento."""
-        return "El vehiculo se esta moviendo"
-
-
-class Coche(Vehiculo):
-    """Coche sobreescribe comportamientos de Vehiculo."""
-
-    def __init__(self, marca: str, modelo: str, num_puertas: int):
-        super().__init__(marca, modelo)
-        self.num_puertas = num_puertas
-
-    def describir(self) -> str:
-        """Override: descripcion personalizada para Coche."""
-        return f"{super().describir()} ({self.num_puertas} puertas)"
-
-    def mover(self) -> str:
-        """Override: comportamiento especifico."""
-        return "El coche esta conducirdo por la carretera"
-
-
-class Bicicleta(Vehiculo):
-    """Bicicleta sobreescribe comportamientos de Vehiculo."""
-
-    def mover(self) -> str:
-        """Override: comportamiento especifico."""
-        return "La bicicleta esta pedaleando"
-
-
-# Polimorfismo en accion
-vehiculos = [
-    Coche("Toyota", "Corolla", 4),
-    Bicicleta("Trek", "FX")
-]
-
-for vehiculo in vehiculos:
-    print(f"Descripcion: {vehiculo.describir()}")
-    print(f"Movimiento: {vehiculo.mover()}")
-    print("-" * 40)</code></pre>
-
-                    <h3>Polimorfismo en Python</h3>
-                    <p>El <strong>polimorfismo</strong> permite que objetos de diferentes clases sean tratados de la misma manera a través de una interfaz común. Python aplica polimorfismo de forma natural gracias al "duck typing".</p>
-
-                    <div class="alert-note">
-                        <strong>Principio Duck Typing:</strong> "Si camina como un pato y grazna como un pato, entonces es un pato". En Python, lo que importa es que un objeto tenga los metodos necesarios, no su tipo exacto.
-                    </div>
-
-                    <pre><code class="language-python">class Pato:
-    def graznar(self) -> str:
-        return "Cuac cuac!"
-
-
-class Ganso:
-    def graznar(self) -> str:
-        return " graznido de ganso!"
-
-
-class Persona:
-    def graznar(self) -> str:
-        return "La persona imita: cuac!"
-
-
-# Polimorfismo: todos tienen el metodo graznar()
-animales: list[Pato | Ganso | Persona] = [Pato(), Ganso(), Persona()]
-
+# El mismo método, diferentes comportamientos
 for animal in animales:
-    print(animal.graznar())
+    animal.hablar()
 # Salida:
-# Cuac cuac!
-# graznido de ganso!
-# La persona imita: cuac!</code></pre>
+# Guau!
+# Miau!
+# Muuu!</code></pre>
 
-                    <h3>Polimorfismo con Funciones</h3>
-                    <pre><code class="language-python">def hacer_sonar(animal):
-    """Funcion polimorfica que acepta cualquier objeto con metodo graznar()."""
-    print(f"El animal hace: {animal.graznar()}")
-
-
-# Diferentes tipos, misma interfaz
-hacer_sonar(Pato())       # El animal hace: Cuac cuac!
-hacer_sonar(Ganso())      # El animal hace: graznido de ganso!
-hacer_sonar(Persona())    # El animal hace: La persona imita: cuac!</code></pre>
-
-                    <h3>Herencia vs Composicion</h3>
+                    <h3>isinstance() y issubclass()</h3>
+                    <p>Estas funciones son esenciales para verificar tipos en jerarquías de herencia:</p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Aspecto</th>
-                                <th>Herencia</th>
-                                <th>Composicion</th>
+                                <th>Función</th>
+                                <th>Propósito</th>
+                                <th>Ejemplo</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Relacion</strong></td>
-                                <td>"Es-un" (is-a)</td>
-                                <td>"Tiene-un" (has-a)</td>
+                                <td><code>isinstance(obj, Clase)</code></td>
+                                <td>Verifica si un objeto es instancia de una clase</td>
+                                <td><code>isinstance(perro, Animal)</code> → True</td>
                             </tr>
                             <tr>
-                                <td><strong>Acoplamiento</strong></td>
-                                <td>Alto (clase hija depende del padre)</td>
-                                <td>Bajo (componentes independientes)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Flexibilidad</strong></td>
-                                <td>Menos flexible (jerarquia rigida)</td>
-                                <td>Mas flexible (combinar comportamientos)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Ejemplo</strong></td>
-                                <td>Perro es un Animal</td>
-                                <td>Coche tiene un Motor</td>
+                                <td><code>issubclass(ClaseHija, ClasePadre)</code></td>
+                                <td>Verifica si una clase es subclase de otra</td>
+                                <td><code>issubclass(Perro, Animal)</code> → True</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <pre><code class="language-python"># HERENCIA: "Es-un"
-class Animal:
-    def __init__(self, nombre: str):
-        self.nombre = nombre
-
-    def respirar(self) -> str:
-        return f"{self.nombre} respira"
-
+                    <pre><code class="language-python">class Animal:
+    pass
 
 class Perro(Animal):
-    def ladrar(self) -> str:
-        return f"{self.nombre} ladra"
+    pass
 
+class Gato(Animal):
+    pass
 
-# COMPOSICION: "Tiene-un"
-class Motor:
-    def iniciar(self) -> str:
-        return "Motor iniciado"
+perro = Perro()
 
-    def detener(self) -> str:
-        return "Motor detenido"
+# Verificar instancia
+print(isinstance(perro, Perro))      # True
+print(isinstance(perro, Animal))      # True (herencia)
+print(isinstance(perro, Gato))        # False
 
+# Verificar subclase
+print(issubclass(Perro, Animal))     # True
+print(issubclass(Perro, Gato))       # False
 
-class Coche:
-    """Coche TIENE un Motor (composicion)."""
-    def __init__(self, marca: str):
-        self.marca = marca
-        self.motor = Motor()  # Componte
-
-    def conducir(self) -> str:
-        self.motor.iniciar()
-        return f"{self.marca} conduciendo"
-
-    def estacionar(self) -> str:
-        self.motor.detener()
-        return f"{self.marca} estacionado"</code></pre>
-
-                    <div class="alert-tip">
-                        <strong>Regla de Oro:</strong> "Favor composition over inheritance" (Preferir composicion sobre herencia). Usa herencia cuando exista una verdadera relacion "es-un" clara, de lo contrario, usa composicion.
-                    </div>
-
-                    <h3>Clases Abstractas (Preview)</h3>
-                    <p>Las <strong>clases abstractas</strong> son clases que no pueden ser instanciadas directamente y sirven como plantillas para otras clases. Se definen usando el modulo <code>abc</code>.</p>
-
-                    <div class="alert-note">
-                        <strong>Preview:</strong> En la proxima clase profundizaremos en clases abstractas e interfaces. Por ahora, conocemos su existencia y proposito.
-                    </div>
-
-                    <pre><code class="language-python">from abc import ABC, abstractmethod
-
-
-class Figura(ABC):
-    """Clase abstracta para figuras geometricas."""
-
-    @abstractmethod
-    def area(self) -> float:
-        """Metodo abstracto: debe ser implementado por subclases."""
-        pass
-
-    @abstractmethod
-    def perimetro(self) -> float:
-        """Metodo abstracto: debe ser implementado por subclases."""
-        pass
-
-
-# No se puede instanciar directamente:
-# figura = Figura()  # ERROR: Can't instantiate abstract class
-
-class Cuadrado(Figura):
-    """Cuadrado implementa los metodos abstractos."""
-
-    def __init__(self, lado: float):
-        self.lado = lado
-
-    def area(self) -> float:
-        return self.lado ** 2
-
-    def perimetro(self) -> float:
-        return 4 * self.lado
-
-
-# Ahora si podemos crear instancias
-cuadrado = Cuadrado(5)
-print(f"Area: {cuadrado.area()}")       # 25
-print(f"Perimetro: {cuadrado.perimetro()}")  # 20</code></pre>
+# Verificar con tuplas (cualquiera de las clases)
+print(isinstance(perro, (Gato, Perro)))  # True
+print(isinstance(perro, (Gato, Animal))) # True</code></pre>
                 </section>
 
                 <section id="ejemplos">
-                    <h2>Ejemplos Practicos</h2>
+                    <h2>Ejemplos Prácticos</h2>
 
-                    <h3>Ejemplo 1: Sistema de Empleados con Herencia</h3>
+                    <h3>Ejemplo 1: Herencia Básica (Animal → Perro, Gato)</h3>
                     <pre><code class="language-python">"""
-Sistema de empleados con herencia jerarquica.
+Ejemplo 1: Herencia básica con animales
+Demuestra herencia simple y override de métodos.
 """
 
+class Animal:
+    """Clase base para todos los animales."""
 
-class Empleado:
-    """Clase base para todos los empleados."""
-
-    # Atributo de clase
-    incremento_salario = 1.05  # 5% de incremento anual
-
-    def __init__(self, nombre: str, email: str, salario_base: float):
+    def __init__(self, nombre: str, edad: int):
         self.nombre = nombre
-        self.email = email
-        self.salario_base = salario_base
+        self.edad = edad
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__}: {self.nombre}"
+        return f"{self.nombre} ({self.edad} años)"
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(nombre='{self.nombre}', salario={self.salario_base})"
-
-    def calcular_salario_mensual(self) -> float:
-        """Salario mensual basico."""
-        return self.salario_base
-
-    def obtener_info(self) -> str:
-        """Informacion basica del empleado."""
-        return f"{self.nombre} - {self.email} - ${self.calcular_salario_mensual():,.2f}"
-
-
-class EmpleadoTiempoCompleto(Empleado):
-    """Empleado con salario mensual fijo + beneficios."""
-
-    def __init__(self, nombre: str, email: str, salario_base: float, bono_mensual: float):
-        super().__init__(nombre, email, salario_base)
-        self.bono_mensual = bono_mensual
-
-    def calcular_salario_mensual(self) -> float:
-        """Override: salario + bono."""
-        return super().calcular_salario_mensual() + self.bono_mensual
-
-
-class EmpleadoPorHoras(Empleado):
-    """Empleado con pago por horas trabajadas."""
-
-    def __init__(self, nombre: str, email: str, tarifa_hora: float, horas_mes: int):
-        super().__init__(nombre, email, 0)  # No tiene salario base
-        self.tarifa_hora = tarifa_hora
-        self.horas_mes = horas_mes
-
-    def calcular_salario_mensual(self) -> float:
-        """Override: tarifa * horas."""
-        return self.tarifa_hora * self.horas_mes
-
-
-class EmpleadoComision(Empleado):
-    """Empleado con salario base + comision por ventas."""
-
-    def __init__(self, nombre: str, email: str, salario_base: float, porcentaje_comision: float):
-        super().__init__(nombre, email, salario_base)
-        self.porcentaje_comision = porcentaje_comision
-        self.ventas_mes = 0.0
-
-    def registrar_venta(self, monto: float) -> None:
-        """Registrar una venta."""
-        self.ventas_mes += monto
-
-    def calcular_salario_mensual(self) -> float:
-        """Override: salario base + comision."""
-        return self.salario_base + (self.ventas_mes * self.porcentaje_comision)
-
-
-# Uso del sistema
-print("=== Sistema de Empleados ===\n")
-
-# Lista polimorfica
-empleados: list[Empleado] = [
-    EmpleadoTiempoCompleto("Juan Perez", "juan@empresa.com", 3000, 500),
-    EmpleadoPorHoras("Maria Garcia", "maria@empresa.com", 25, 160),
-    EmpleadoComision("Carlos Lopez", "carlos@empresa.com", 2000, 0.10)
-]
-
-# Registrar algunas ventas para el empleado por comision
-empleados[2].registrar_venta(5000)
-empleados[2].registrar_vista(3000)
-
-# Polimorfismo en accion
-for emp in empleados:
-    print(emp.obtener_info())
-    print(f"   Salario mensual: ${emp.calcular_salario_mensual():,.2f}\n")
-
-# Comparar tipos
-print("=== Tipos de empleados ===")
-for emp in empleados:
-    print(f"{emp.nombre}: {type(emp).__name__}")</code></pre>
-
-                    <h3>Ejemplo 2: Jerarquia de Vehiculos</h3>
-                    <pre><code class="language-python">"""
-Jerarquia de vehiculos con herencia multiple.
-"""
-
-
-class Serializable:
-    """Capacidad de serializar a JSON."""
-
-    def to_json(self) -> str:
-        import json
-        return json.dumps(self.__dict__)
-
-
-class Deserializable:
-    """Capacidad de deserializar desde JSON."""
-
-    @classmethod
-    def from_json(cls, json_str: str) -> "Deserializable":
-        import json
-        data = json.loads(json_str)
-        return cls(**data)
-
-
-class Vehiculo(Serializable):
-    """Clase base para todos los vehiculos."""
-
-    def __init__(self, marca: str, modelo: str, año: int):
-        self.marca = marca
-        self.modelo = modelo
-        self.año = año
-
-    def __str__(self) -> str:
-        return f"{self.año} {self.marca} {self.modelo}"
+    def hacer_sonido(self) -> str:
+        return "Sonido genérico de animal"
 
     def describir(self) -> str:
-        return f"Vehiculo: {self}"
+        return f"Soy {self.nombre}, un animal de {self.edad} años"
 
 
-class VehiculoTerrestre(Vehiculo):
-    """Vehiculo que se mueve por tierra."""
+class Perro(Animal):
+    """Clase derivada para perros."""
 
-    def __init__(self, marca: str, modelo: str, año: int, num_ruedas: int):
-        super().__init__(marca, modelo, año)
-        self.num_ruedas = num_ruedas
+    def __init__(self, nombre: str, edad: int, raza: str):
+        # Llamar al constructor del padre
+        super().__init__(nombre, edad)
+        self.raza = raza
 
-    def mover(self) -> str:
-        return f"El vehiculo transita por la carretera"
+    def __str__(self) -> str:
+        return f"{self.nombre} ({self.raza}, {self.edad} años)"
 
+    def hacer_sonido(self) -> str:
+        return "Guau guau!"
 
-class VehiculoAcuatico(Vehiculo):
-    """Vehiculo que se mueve por agua."""
-
-    def __init__(self, marca: str, modelo: str, año: int, eslora: float):
-        super().__init__(marca, modelo, año)
-        self.eslora = eslora  # Longitud en metros
-
-    def mover(self) -> str:
-        return "El vehiculo navega por el agua"
+    def buscar(self) -> str:
+        return f"{self.nombre} busca la pelota"
 
 
-class VehiculoAereo(Vehiculo):
-    """Vehiculo que vuela."""
+class Gato(Animal):
+    """Clase derivada para gatos."""
 
-    def __init__(self, marca: str, modelo: str, año: int, altitud_max: int):
-        super().__init__(marca, modelo, año)
-        self.altitud_max = altitud_max
+    def hacer_sonido(self) -> str:
+        return "Miau miau!"
 
-    def mover(self) -> str:
-        return f"El vehiculo vuela a {self.altitud_max}m de altitud"
-
-
-# Herencia multiple: terrestres + serializables
-class Coche(VehiculoTerrestre, Deserializable):
-    """Coche - terrestre y deserializable."""
-
-    def __init__(self, marca: str, modelo: str, año: int, num_ruedas: int, tipo_combustible: str):
-        super().__init__(marca, modelo, año, num_ruedas)
-        self.tipo_combustible = tipo_combustible
-
-    def mover(self) -> str:
-        return f"El coche conduce ({self.tipo_combustible})"
-
-
-class Barco(VehiculoAcuatico, Deserializable):
-    """Barco - acuatico y deserializable."""
-
-    def __init__(self, marca: str, modelo: str, año: int, eslora: int, capacidad: int):
-        super().__init__(marca, modelo, año, eslora)
-        self.capacidad = capacidad
-
-    def mover(self) -> str:
-        return f"El barco navega (capacidad: {self.capacidad} personas)"
+    def ronronear(self) -> str:
+        return f"{self.nombre} está ronroneando"
 
 
 # Uso
-print("=== Jerarquia de Vehiculos ===\n")
+if __name__ == "__main__":
+    animal = Animal("General", 5)
+    perro = Perro("Fido", 3, "Labrador")
+    gato = Gato("Michi", 2)
 
-vehiculos = [
-    Coche("Toyota", "Corolla", 2023, 4, "Gasolina"),
-    Barco("Yamaha", "242X", 2022, 7, 12)
-]
+    print("=== Animales ===")
+    print(f"Animal: {animal}")
+    print(f"Perro: {perro}")
+    print(f"Gato: {gato}")
 
-for v in vehiculos:
-    print(f"Tipo: {type(v).__name__}")
-    print(f"Descripcion: {v.describir()}")
-    print(f"Movimiento: {v.mover()}")
+    print("\n=== Sonidos ===")
+    print(f"Animal: {animal.hacer_sonido()}")
+    print(f"Perro: {perro.hacer_sonido()}")
+    print(f"Gato: {gato.hacer_sonido()}")
 
-    # Serializacion
-    json_str = v.to_json()
-    print(f"JSON: {json_str}\n")</code></pre>
+    print("\n=== Comportamientos específicos ===")
+    print(perro.buscar())
+    print(gato.ronronear())</code></pre>
 
-                    <h3>Ejemplo 3: TaskFlow - Clase Base User y Subclases</h3>
+                    <h3>Ejemplo 2: Override de Métodos en TaskFlow</h3>
                     <pre><code class="language-python">"""
-TaskFlow - Sistema de usuarios con herencia.
-User como clase base, AdminUser y RegularUser como subclases.
+Ejemplo 2: Override de métodos en el modelo TaskFlow
+Demuestra cómo usar override para extender comportamiento.
 """
 
-
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
-from enum import Enum
-
-
-class RolUsuario(Enum):
-    """Roles disponibles en el sistema."""
-    ADMIN = "admin"
-    REGULAR = "regular"
-    VISITANTE = "visitante"
-
-
-class EstadoUsuario(Enum):
-    """Estados posibles de un usuario."""
-    ACTIVO = "activo"
-    INACTIVO = "inactivo"
-    BLOQUEADO = "bloqueado"
 
 
 @dataclass
-class User:
-    """Clase base para todos los usuarios del sistema TaskFlow.
-
-    Attributes:
-        id: Identificador unico del usuario.
-        username: Nombre de usuario unico.
-        email: Correo electronico.
-        rol: Rol del usuario en el sistema.
-        estado: Estado actual del usuario.
-        creado_en: Fecha de creacion.
-        ultimo_acceso: Ultimo acceso al sistema.
-    """
-
-    username: str
-    email: str
-    rol: RolUsuario
-    id: Optional[int] = None
-    estado: EstadoUsuario = EstadoUsuario.ACTIVO
-    creado_en: Optional[datetime] = None
-    ultimo_acceso: Optional[datetime] = None
+class Tarea:
+    """Clase base para tareas."""
+    titulo: str
+    descripcion: str
+    completada: bool = False
+    creada_en: Optional[datetime] = None
 
     def __post_init__(self):
-        if self.creado_en is None:
-            self.creado_en = datetime.now()
+        if self.creada_en is None:
+            self.creada_en = datetime.now()
 
     def __str__(self) -> str:
-        return f"[{self.rol.value}] {self.username}"
+        estado = "completada" if self.completada else "pendiente"
+        return f"[{estado.upper()}] {self.titulo}"
 
-    def __repr__(self) -> str:
-        return (f"User(id={self.id}, username='{self.username}', "
-                f"rol={self.rol.value}, estado={self.estado.value})")
-
-    # ============================================
-    # Metodos heredados por todas las subclases
-    # ============================================
-
-    def esta_activo(self) -> bool:
-        """Verifica si el usuario esta activo."""
-        return self.estado == EstadoUsuario.ACTIVO
-
-    def registrar_acceso(self) -> None:
-        """Registra el acceso al sistema."""
-        self.ultimo_acceso = datetime.now()
-
-    def tiene_permiso(self, permiso: str) -> bool:
-        """Verifica si tiene un permiso basico."""
-        # Por defecto, solo los activos tienen permisos basicos
-        return self.esta_activo()
-
-    def to_dict(self) -> dict:
-        """Convierte a diccionario."""
-        return {
-            "id": self.id,
-            "username": self.username,
-            "email": self.email,
-            "rol": self.rol.value,
-            "estado": self.estado.value,
-            "creado_en": self.creado_en.isoformat() if self.creado_en else None,
-            "ultimo_acceso": self.ultimo_acceso.isoformat() if self.ultimo_acceso else None
-        }
+    def marcar_como_completada(self) -> None:
+        """Marca la tarea como completada."""
+        self.completada = True
+        print(f"'{self.titulo}' ha sido completada")
 
 
 @dataclass
-class RegularUser(User):
-    """Usuario regular con permisos basicos."""
+class Subtarea(Tarea):
+    """Tarea hija que representa una subtarea."""
 
-    tareas_asignadas: int = 0
-    tareas_completadas: int = 0
+    tarea_padre_id: int
 
-    def __post_init__(self):
-        super().__post_init__()
-        self.rol = RolUsuario.REGULAR
-
-    def tiene_permiso(self, permiso: str) -> bool:
-        """Override: permisos limitados para usuarios regulares."""
-        permisos_permitidos = ["ver_tareas", "crear_tareas", "completar_tareas"]
-        return super().tiene_permiso(permiso) and permiso in permisos_permitidos
-
-    def estadisticas(self) -> dict:
-        """Estadisticas del usuario."""
-        total = self.tareas_asignadas
-        completadas = self.tareas_completadas
-        return {
-            "total": total,
-            "completadas": completadas,
-            "pendientes": total - completadas,
-            "porcentaje": (completadas / total * 100) if total > 0 else 0
-        }
+    def __str__(self) -> str:
+        # Usar super() para obtener el string del padre y agregar info
+        base_str = super().__str__()
+        return f"{base_str} (Subtarea de ID: {self.tarea_padre_id})"
 
 
 @dataclass
-class AdminUser(User):
-    """Administrador con todos los permisos."""
+class TareaUrgente(Tarea):
+    """Tarea hija con prioridad urgente."""
 
-    usuarios_bloqueados: int = 0
-    sistema_auditoria: bool = True
+    prioridad: int = 1  # 1 = muy urgente, 5 = menos urgente
 
-    def __post_init__(self):
-        super().__post_init__()
-        self.rol = RolUsuario.ADMIN
+    def __str__(self) -> str:
+        base_str = super().__str__()
+        return f"{base_str} [URGENTE: prioridad {self.prioridad}]"
 
-    def tiene_permiso(self, permiso: str) -> bool:
-        """Override: administradores tienen todos los permisos."""
-        # Si esta activo, tiene todos los permisos
-        return self.esta_activo()
-
-    def bloquear_usuario(self, usuario: User) -> str:
-        """Bloquea un usuario del sistema."""
-        usuario.estado = EstadoUsuario.BLOQUEADO
-        self.usuarios_bloqueados += 1
-        return f"Usuario {usuario.username} bloqueado"
-
-    def ver_estadisticas_sistema(self) -> dict:
-        """Estadisticas globales del sistema (simulado)."""
-        return {
-            "usuarios_bloqueados": self.usuarios_bloqueados,
-            "auditoria_activa": self.sistema_auditoria,
-            "estado": "Operativo"
-        }
+    def marcar_como_completada(self) -> None:
+        # Override completo sin usar super()
+        if self.prioridad == 1:
+            print(f"!!! URGENTE: {self.titulo} completado !!!")
+        self.completada = True
 
 
-# ============================================
-# USO DEL SISTEMA
-# ============================================
-
+# Uso
 if __name__ == "__main__":
-    print("=== TaskFlow - Sistema de Usuarios ===\n")
+    print("=== Sistema de Tareas ===")
 
-    # Crear usuarios
-    admin = AdminUser(
-        username="admin_master",
-        email="admin@taskflow.com",
-        rol=RolUsuario.ADMIN
-    )
+    tarea = Tarea("Estudiar POO", "Repasar herencia y polimorfismo")
+    subtarea = Subtarea("Estudiar override", "Ver ejemplos", tarea_padre_id=1)
+    urgente = TareaUrgente("Entregar proyecto", "Terminar TaskFlow", prioridad=1)
 
-    regular1 = RegularUser(
-        username="juan_dev",
-        email="juan@taskflow.com",
-        rol=RolUsuario.REGULAR
-    )
-    regular1.tareas_asignadas = 10
-    regular1.tareas_completadas = 7
+    print("\n--- Strings personalizados ---")
+    print(f"Tarea: {tarea}")
+    print(f"Subtarea: {subtarea}")
+    print(f"Urgente: {urgente}")
 
-    regular2 = RegularUser(
-        username="maria_design",
-        email="maria@taskflow.com",
-        rol=RolUsuario.REGULAR
-    )
+    print("\n--- Completar tareas ---")
+    subtarea.marcar_como_completada()
+    urgente.marcar_como_completada()
 
-    usuarios: list[User] = [admin, regular1, regular2]
+    print("\n--- Verificar tipos ---")
+    print(f"subtarea es Tarea: {isinstance(subtarea, Tarea)}")
+    print(f"urgente es Tarea: {isinstance(urgente, Tarea)}")</code></pre>
 
-    # Polimorfismo: misma interfaz para todos
-    print("=== Usuarios en el sistema ===")
-    for usuario in usuarios:
-        print(f"\n{usuario}")
-        print(f"   Tipo: {type(usuario).__name__}")
-        print(f"   Activo: {usuario.esta_activo()}")
-        print(f"   Permiso 'crear_tareas': {usuario.tiene_permiso('crear_tareas')}")
-        print(f"   Permiso 'eliminar_usuarios': {usuario.tiene_permiso('eliminar_usuarios')}")
+                    <h3>Ejemplo 3: super() en Cadena de Herencia</h3>
+                    <pre><code class="language-python">"""
+Ejemplo 3: Cadena de herencia con super()
+Demuestra el uso de super() en múltiples niveles de herencia.
+"""
 
-        # Metodos especificos de subclases
-        if isinstance(usuario, RegularUser):
-            stats = usuario.estadisticas()
-            print(f"   Tareas: {stats['completadas']}/{stats['total']} ({stats['porcentaje']:.1f}%)")
-        elif isinstance(usuario, AdminUser):
-            stats = usuario.ver_estadisticas_sistema()
-            print(f"   Sistema: {stats['estado']}")
+class Dispositivo:
+    """Clase base para dispositivos electrónicos."""
 
-    # Admin bloquea a un usuario
-    print("\n=== Accion de Administrador ===")
-    resultado = admin.bloquear_usuario(regular2)
-    print(resultado)
-    print(f"Estado de {regular2.username}: {regular2.estado.value}")
+    def __init__(self, marca: str):
+        self.marca = marca
+        print(f"Dispositivo {marca} creado")
 
-    print("\n=== Resumen ===")
-    print(f"Total usuarios: {len(usuarios)}")
-    print(f"Admin: {admin.username}")
-    print(f"Usuarios regulares: {len([u for u in usuarios if isinstance(u, RegularUser)])}")</code></pre>
+    def encender(self) -> str:
+        return f"Dispositivo {self.marca} encendido"
+
+
+class Computadora(Dispositivo):
+    """Computadora hereda de Dispositivo."""
+
+    def __init__(self, marca: str, ram: int):
+        # Llamar al constructor del padre
+        super().__init__(marca)
+        self.ram = ram
+        print(f"Computadora {marca} con {ram}GB RAM inicializada")
+
+    def iniciar_sistema(self) -> str:
+        return f"Sistema operativo iniciando en {self.marca}"
+
+    def encender(self) -> str:
+        # Extender el comportamiento del padre
+        resultado = super().encender()
+        return f"{resultado} - Sistema cargándose"
+
+
+class Laptop(Computadora):
+    """Laptop hereda de Computadora."""
+
+    def __init__(self, marca: str, ram: int, bateria: int):
+        # Llamar al constructor de Computadora (padre inmediato)
+        super().__init__(marca, ram)
+        self.bateria = bateria
+        print(f"Laptop {marca} con {bateria}% de batería")
+
+    def iniciar_sistema(self) -> str:
+        # Extender el comportamiento de Computadora
+        resultado = super().iniciar_sistema()
+        return f"{resultado} (Modo ahorro energía)"
+
+    def cerrar_pantalla(self) -> str:
+        return f"Pantalla de {self.marca} cerrada"
+
+
+# Uso
+if __name__ == "__main__":
+    print("=== Cadena de Herencia ===")
+
+    print("\n1. Creando dispositivo:")
+    telefono = Dispositivo("Samsung")
+
+    print("\n2. Creando computadora:")
+    pc = Computadora("Dell", 16)
+
+    print("\n3. Creando laptop:")
+    laptop = Laptop("MacBook", 32, 85)
+
+    print("\n=== Métodos en cadena ===")
+    print(f"Dispositivo: {telefono.encender()}")
+    print(f"Computadora: {pc.encender()}")
+    print(f"  + {pc.iniciar_sistema()}")
+    print(f"Laptop: {laptop.encender()}")
+    print(f"  + {laptop.iniciar_sistema()}")
+    print(f"  + {laptop.cerrar_pantalla()}")</code></pre>
+
+                    <h3>Ejemplo 4: Polimorfismo con Lista de Objetos</h3>
+                    <pre><code class="language-python">"""
+Ejemplo 4: Polimorfismo completo
+Demuestra el uso de polimorfismo con una lista heterogénea de objetos.
+"""
+
+from dataclasses import dataclass
+
+
+@dataclass
+class Empleado:
+    """Clase base para empleados."""
+    nombre: str
+    salario: float
+
+    def calcular_bono(self) -> float:
+        """Bono base para todos los empleados."""
+        return self.salario * 0.05
+
+    def __str__(self) -> str:
+        return f"{self.nombre} - ${self.salario:,.2f}"
+
+
+@dataclass
+class Gerente(Empleado):
+    """Gerente con bono adicional."""
+
+    def calcular_bono(self) -> float:
+        # Bono del padre + bono adicional de gerente
+        bono_base = super().calcular_bono()
+        return bono_base + 500
+
+    def __str__(self) -> str:
+        return f"GERENTE: {super().__str__()}"
+
+
+@dataclass
+class Desarrollador(Empleado):
+    """Desarrollador con bono por tecnologías."""
+
+    tecnologias: list[str]
+
+    def calcular_bono(self) -> float:
+        bono = super().calcular_bono()
+        # Bono extra por cada tecnología
+        return bono + (50 * len(self.tecnologias))
+
+    def __str__(self) -> str:
+        tech = ", ".join(self.tecnologias)
+        return f"DEV: {super().__str__()} [{tech}]"
+
+
+def mostrar_info_empleados(empleados: list[Empleado]) -> None:
+    """Muestra información de todos los empleados de forma polimórfica."""
+    print("\n=== Lista de Empleados ===")
+    print(f"{'Nombre':<25} {'Salario':>15} {'Bono':>12}")
+    print("-" * 55)
+
+    for emp in empleados:
+        bono = emp.calcular_bono()
+        print(f"{emp.nombre:<25} ${emp.salario:>13,.2f} ${bono:>10,.2f}")
+
+    print()
+
+
+# Uso
+if __name__ == "__main__":
+    print("=== Sistema de Recursos Humanos ===")
+
+    # Crear lista heterogénea de empleados
+    empleados = [
+        Empleado("Juan Pérez", 3000),
+        Gerente("Ana García", 5000),
+        Desarrollador("Carlos López", 3500, ["Python", "JavaScript"]),
+        Desarrollador("María Díaz", 4000, ["Java", "Spring"]),
+    ]
+
+    # Usar polimorfismo
+    mostrar_info_empleados(empleados)
+
+    print("=== Verificación de tipos ===")
+    for emp in empleados:
+        tipo = type(emp).__name__
+        es_gerente = isinstance(emp, Gerente)
+        print(f"{emp.nombre}: {tipo} - ¿Es gerente? {es_gerente}")</code></pre>
                 </section>
 
                 <section id="buenas-practicas">
-                    <h2>Buenas Practicas</h2>
+                    <h2>Buenas Prácticas</h2>
 
                     <h3>Favor Composition over Inheritance</h3>
-                    <pre><code class="language-python"># ❌ Evitar: Herencia profunda/incorrecta
-class AudioBook(Libro, Reproducible, Descargable, Comprimible):
-    # Jerarquia confusa y fragil
+                    <p>Este es un principio fundamental que sugiere preferir la composición (tener objetos) sobre la herencia (ser objetos). La herencia crea acoplamiento fuerte entre clases.</p>
+                    <pre><code class="language-python"># ❌ Evitar: Herencia profunda
+class A:
     pass
 
-# ✅ Preferir: Composicion con interfaces claras
-class AudioBook:
-    def __init__(self, titulo: str, reproductor: Reproducible, descargador: Descargable):
-        self.titulo = titulo
-        self.reproductor = reproductor  # Componente
-        self.descargador = descargador  # Componente
+class B(A):
+    pass
 
-    def reproducir(self):
-        return self.reproductor.reproducir()
+class C(B):
+    pass
 
-    def descargar(self):
-        return self.descargador.descargar()</code></pre>
+class D(C):
+    pass  # D es un A... ¿realmente?
 
-                    <h3>Cuando Usar Herencia</h3>
-                    <pre><code class="language-python"># ✅ Bien: Herencia cuando existe "es-un" verdadera
-class Shape:  # ABC - asegura implementacion de metodos
-    @abstractmethod
-    def area(self) -> float:
-        pass
 
-class Circle(Shape):  # "Circle es-un Shape"
-    def __init__(self, radio: float):
-        self.radio = radio
+# ✅ Preferir: Composición
+class Motor:
+    def iniciar(self):
+        print("Motor iniciado")
 
-    def area(self) -> float:  # Override obligatorio
-        return 3.14159 * self.radio ** 2
+class Auto:
+    def __init__(self):
+        self.motor = Motor()  # Tiene un motor
 
-# ❌ Evitar: Herencia por conveniencia
-class DatabaseModel(User):  # "DatabaseModel NO es-un User"
-    # Esto esta mal conceptualizado
+    def iniciar(self):
+        self.motor.iniciar()</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Cuándo usar herencia:</strong> La herencia es apropiada cuando hay una verdadera relación "es-un" (is-a) y las subclases son verdaderas especializaciones de la superclase. Por ejemplo, un Perro ES-UN Animal.
+                    </div>
+
+                    <h3>No Abusar de la Herencia Profunda</h3>
+                    <p>Las jerarquías de herencia muy profundas son difíciles de mantener y entender.</p>
+                    <pre><code class="language-python"># ❌ Evitar: Jerarquía muy profunda
+class Animal:
+    pass
+
+class Mamifero(Animal):
+    pass
+
+class Terrestre(Mamifero):
+    pass
+
+class Domestico(Terrestre):
+    pass
+
+class Perro(Domestico):
+    pass  # ¿Perro es realmente un Doméstico Terrestre Mamífero Animal?
+
+
+# ✅ Mejor: Jerarquía plana o composición
+class Animal:
+    def __init__(self, tipo: str, ambiente: str = "terrestre"):
+        self.tipo = tipo
+        self.ambiente = ambiente
+
+class Mascota:
+    def __init__(self, nombre: str, dueno: str):
+        self.nombre = nombre
+        self.dueno = dueno
+
+class Perro(Animal, Mascota):
+    """Perro usa herencia múltiple con cuidado."""
     pass</code></pre>
 
-                    <h3>Uso Correcto de super()</h3>
-                    <pre><code class="language-python"># ✅ Bien: super() en __init__
+                    <h3>Usar super() en Override</h3>
+                    <p>Cuando sobreescribas métodos, usa <code>super()</code> para extender el comportamiento del padre en lugar de reemplazarlo completamente.</p>
+                    <pre><code class="language-python"># ❌ Evitar: Reemplazo completo
 class Padre:
-    def __init__(self, nombre: str):
-        self.nombre = nombre
+    def metodo(self):
+        print("Lógica importante del padre")
 
 class Hijo(Padre):
-    def __init__(self, nombre: str, edad: int):
-        super().__init__(nombre)  # Llama al __init__ del padre
-        self.edad = edad
-
-# ✅ Bien: super() en metodos
-class Animal:
-    def hacer_sonido(self) -> str:
-        return "Sonido"
-
-class Perro(Animal):
-    def hacer_sonido(self) -> str:
-        base = super().hacer_sonido()
-        return f"{base} + Guau!"  # Extiende, no reemplaza
-
-# ❌ Evitar: super() sin argumentos en Python 2
-# class Hijo(Padre):
-#     def __init__(self, nombre):
-#         super(Hijo, self).__init__(nombre)  # Python 2 style, obsoleto</code></pre>
-
-                    <h3>Nombres de Clases</h3>
-                    <pre><code class="language-python"># ✅ Bien: Nombres descriptivos en PascalCase
-class TaskManager:
-    """Gestiona tareas del sistema."""
+    def metodo(self):
+        print("Nueva lógica")
+        # Se pierde la lógica del padre
 
 
-class UserAuthentication:
-    """Maneja autenticacion de usuarios."""
+# ✅ Preferir: Extensión con super()
+class Padre:
+    def metodo(self):
+        print("Lógica importante del padre")
 
+class Hijo(Padre):
+    def metodo(self):
+        super().metodo()  # Primero ejecuta el padre
+        print("Nueva lógica después")  # Luego agrega lo suyo</code></pre>
 
-class DatabaseConnectionPool:
-    """Pool de conexiones a base de datos."""
-
-
-# ❌ Evitar: Nombres confusos o inconsistentes
-class manager:  # Debe ser PascalCase
-    pass
-
-class userAuth:  # Mezcla de estilos
-    pass
-
-class DB_pool:  # snake_case para clases
-    pass</code></pre>
-
-                    <h3>Documentar la Herencia</h3>
-                    <pre><code class="language-python">class BaseValidator:
-    """Clase base para validadores.
-
-    Subclasses must implement:
-        validate(data: dict) -> bool: Valida los datos.
-        get_errors() -> list[str]: Retorna errores de validacion.
-    """
-
-
-class EmailValidator(BaseValidator):
-    """Validador de direcciones de email.
-
-    Hereda de:
-        BaseValidator: Interfaz comun para todos los validadores.
-
-    Example:
-        validator = EmailValidator()
-        if validator.validate({"email": "test@test.com"}):
-            print("Valido")
-    """</code></pre>
+                    <div class="alert-note">
+                        <strong>Consejo:</strong> El orden de override importa. Si necesitas que el padre haga algo primero, llama a <code>super().metodo()</code> al inicio. Si necesitas que haga algo después, llámalo al final.
+                    </div>
                 </section>
 
                 <section id="ejercicio">
                     <h2>Ejercicio Guiado</h2>
 
-                    <h3>Sistema de Figuras Geometricas con Herencia</h3>
-                    <p>Vamos a crear un sistema de figuras geometricas que demuestra herencia, polimorfismo y clases abstractas.</p>
+                    <h3>Ejercicio: Sistema de Proyectos con Herencia</h3>
+                    <p>Vamos a crear un sistema de gestión de proyectos usando herencia. Crearemos una clase base <code>Proyecto</code> y dos subclases: <code>ProyectoUrgente</code> y <code>ProyectoPersonal</code>.</p>
 
                     <pre><code class="language-python">"""
-Ejercicio Guiado: Sistema de Figuras Geometricas
-Demonstra herencia, polimorfismo y clases abstractas.
+Ejercicio Guiado: Sistema de Proyectos con Herencia
+
+Objetivos:
+1. Crear jerarquía: Proyecto → ProyectoUrgente, ProyectoPersonal
+2. Aplicar override de métodos
+3. Usar polimorfismo con lista de proyectos
 """
 
-from abc import ABC, abstractmethod
-from math import pi
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
+from enum import Enum
 
 
-# ============================================
-# CLASE ABSTRACTA BASE
-# ============================================
+class EstadoProyecto(Enum):
+    """Estados posibles de un proyecto."""
+    PLANIFICACION = "planificacion"
+    ACTIVO = "activo"
+    COMPLETADO = "completado"
 
-class Figura(ABC):
-    """Clase abstracta base para todas las figuras geometricas.
 
-    Attributes:
-        color: Color de la figura.
-    """
+@dataclass
+class Proyecto:
+    """Clase base para proyectos."""
 
-    def __init__(self, color: str = "sin color"):
-        self.color = color
+    titulo: str
+    descripcion: str
+    fecha_inicio: Optional[datetime] = None
+    estado: EstadoProyecto = EstadoProyecto.PLANIFICACION
+
+    def __post_init__(self):
+        if self.fecha_inicio is None:
+            self.fecha_inicio = datetime.now()
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__} ({self.color})"
+        return f"[{self.estado.value.upper()}] {self.titulo}"
 
-    @abstractmethod
-    def area(self) -> float:
-        """Calcula el area de la figura. Debe ser implementada por subclases."""
-        pass
+    def calcular_duracion_dias(self) -> int:
+        """Calcula los días desde el inicio."""
+        delta = datetime.now() - self.fecha_inicio
+        return delta.days
 
-    @abstractmethod
-    def perimetro(self) -> float:
-        """Calcula el perimetro. Debe ser implementada por subclases."""
-        pass
-
-    @abstractmethod
-    def describir(self) -> str:
-        """Describe la figura."""
-        pass
+    def obtener_informe(self) -> dict:
+        """Retorna un informe del proyecto."""
+        return {
+            "titulo": self.titulo,
+            "estado": self.estado.value,
+            "dias_activo": self.calcular_duracion_dias()
+        }
 
 
-# ============================================
-# FIGURAS 2D
-# ============================================
+@dataclass
+class ProyectoUrgente(Proyecto):
+    """Proyecto con prioridad urgente."""
 
-class Circulo(Figura):
-    """Circulo con radio."""
+    prioridad: int = 1  # 1 = muy urgente
 
-    def __init__(self, radio: float, color: str = "rojo"):
-        super().__init__(color)
-        self.radio = radio
+    def __str__(self) -> str:
+        base = super().__str__()
+        return f"{base} [URGENTE nivel {self.prioridad}]"
 
-    def area(self) -> float:
-        """Override: area del circulo = pi * r^2"""
-        return pi * self.radio ** 2
+    def calcular_duracion_dias(self) -> int:
+        """Override: muestra días con urgencia."""
+        dias_base = super().calcular_duracion_dias()
+        return dias_base  # + urgencia
 
-    def perimetro(self) -> float:
-        """Override: perimetro = 2 * pi * r"""
-        return 2 * pi * self.radio
-
-    def describir(self) -> str:
-        return f"Circulo de radio {self.radio}"
-
-
-class Rectangulo(Figura):
-    """Rectangulo con ancho y alto."""
-
-    def __init__(self, ancho: float, alto: float, color: str = "azul"):
-        super().__init__(color)
-        self.ancho = ancho
-        self.alto = alto
-
-    def area(self) -> float:
-        """Override: area = ancho * alto"""
-        return self.ancho * self.alto
-
-    def perimetro(self) -> float:
-        """Override: perimetro = 2 * (ancho + alto)"""
-        return 2 * (self.ancho + self.alto)
-
-    def describir(self) -> str:
-        return f"Rectangulo de {self.ancho}x{self.alto}"
+    def obtener_informe(self) -> dict:
+        """Override: incluye prioridad en el informe."""
+        informe = super().obtener_informe()
+        informe["prioridad"] = self.prioridad
+        informe["es_urgente"] = True
+        return informe
 
 
-class Cuadrado(Rectangulo):
-    """Cuadrado es un rectangulo con lados iguales."""
+@dataclass
+class ProyectoPersonal(Proyecto):
+    """Proyecto personal con metas opcionales."""
 
-    def __init__(self, lado: float, color: str = "verde"):
-        # super().__init__(lado, lado, color)  # Equivalente
-        super().__init__(ancho=lado, alto=lado, color=color)
-        self.lado = lado
+    meta_dias: Optional[int] = None
 
-    def describir(self) -> str:
-        return f"Cuadrado de lado {self.lado}"
+    def __str__(self) -> str:
+        base = super().__str__()
+        meta_info = f" (meta: {self.meta_dias} días)" if self.meta_dias else ""
+        return f"{base}{meta_info}"
 
+    def calcular_duracion_dias(self) -> int:
+        """Override: compara con la meta."""
+        dias = super().calcular_duracion_dias()
+        if self.meta_dias and dias > self.meta_dias:
+            print(f"Advertencia: Has excedido tu meta de {self.meta_dias} días")
+        return dias
 
-class Triangulo(Figura):
-    """Triangulo con base y altura."""
-
-    def __init__(self, base: float, altura: float, color: str = "amarillo"):
-        super().__init__(color)
-        self.base = base
-        self.altura = altura
-
-    def area(self) -> float:
-        """Override: area = (base * altura) / 2"""
-        return (self.base * self.altura) / 2
-
-    def perimetro(self) -> float:
-        """Perimetro con lados iguales (isosceles)."""
-        return 2 * self.altura + self.base  # Simplificado
-
-    def describir(self) -> str:
-        return f"Triangulo base {self.base}, altura {self.altura}"
+    def obtener_informe(self) -> dict:
+        """Override: incluye meta."""
+        informe = super().obtener_informe()
+        informe["meta_dias"] = self.meta_dias
+        return informe
 
 
-# ============================================
-# FIGURAS 3D (HERENCIA DE LA MISMA JERARQUIA)
-# ============================================
-
-class Figura3D(Figura):
-    """Clase base para figuras 3D."""
-
-    @abstractmethod
-    def volumen(self) -> float:
-        """Calcula el volumen. Debe ser implementada."""
-        pass
-
-
-class Esfera(Figura3D):
-    """Esfera (circulo en 3D)."""
-
-    def __init__(self, radio: float, color: str = "cian"):
-        super().__init__(color)
-        self.radio = radio
-
-    def area(self) -> float:
-        """Area superficial = 4 * pi * r^2"""
-        return 4 * pi * self.radio ** 2
-
-    def perimetro(self) -> float:
-        """Perimetro en 3D = circunferencia maxima"""
-        return 2 * pi * self.radio
-
-    def volumen(self) -> float:
-        """Volumen = (4/3) * pi * r^3"""
-        return (4/3) * pi * self.radio ** 3
-
-    def describir(self) -> str:
-        return f"Esfera de radio {self.radio}"
-
-
-class Cubo(Figura3D):
-    """Cubo (cuadrado en 3D)."""
-
-    def __init__(self, lado: float, color: str = "magenta"):
-        super().__init__(color)
-        self.lado = lado
-
-    def area(self) -> float:
-        """Area superficial = 6 * lado^2"""
-        return 6 * self.lado ** 2
-
-    def perimetro(self) -> float:
-        """Perimetro total de todas las aristas = 12 * lado"""
-        return 12 * self.lado
-
-    def volumen(self) -> float:
-        """Volumen = lado^3"""
-        return self.lado ** 3
-
-    def describir(self) -> str:
-        return f"Cubo de lado {self.lado}"
-
-
-# ============================================
-# FUNCION POLIMORFICA
-# ============================================
-
-def mostrar_info(figura: Figura) -> None:
-    """Funcion polimorfica que acepta cualquier Figura."""
-    print(f"\n{'='*50}")
-    print(f"Figura: {figura}")
-    print(f"Descripcion: {figura.describir()}")
-    print(f"Color: {figura.color}")
-    print(f"Area: {figura.area():.4f}")
-    print(f"Perimetro: {figura.perimetro():.4f}")
-
-    # Verificar si es 3D
-    if isinstance(figura, Figura3D):
-        print(f"Volumen: {figura.volumen():.4f}")
-
-
-# ============================================
-# EJECUCION
-# ============================================
-
+# Ejemplo de uso completo
 if __name__ == "__main__":
-    print("=== Sistema de Figuras Geometricas ===")
-    print("Demonstra herencia, polimorfismo y clases abstractas\n")
+    print("=== Sistema de Gestión de Proyectos ===\n")
 
-    # Lista polimorfica de figuras 2D
-    figuras_2d: list[Figura] = [
-        Circulo(radio=5, color="rojo"),
-        Rectangulo(ancho=4, alto=6, color="azul"),
-        Cuadrado(lado=3, color="verde"),
-        Triangulo(base=5, altura=4, color="amarillo")
+    # Crear proyectos
+    proyectos = [
+        Proyecto("Desarrollo API", "Crear API REST para TaskFlow"),
+        ProyectoUrgente("Bug Fix", "Error crítico en producción", prioridad=1),
+        ProyectoPersonal("Aprender Guitarra", "Progreso personal", meta_dias=30)
     ]
 
-    # Lista polimorfica de figuras 3D
-    figuras_3d: list[Figura3D] = [
-        Esfera(radio=3, color="cian"),
-        Cubo(lado=2, color="magenta")
-    ]
+    # 1. Mostrar todos los proyectos (polimorfismo)
+    print("--- Lista de Proyectos ---")
+    for proyecto in proyectos:
+        print(proyecto)
 
-    # Polimorfismo: misma funcion para diferentes tipos
-    print("\n--- Figuras 2D ---")
-    for fig in figuras_2d:
-        mostrar_info(fig)
+    # 2. Obtener informes individualizados (polimorfismo)
+    print("\n--- Informes Individualizados ---")
+    for proyecto in proyectos:
+        informe = proyecto.obtener_informe()
+        print(f"\n{proyecto.titulo}:")
+        for clave, valor in informe.items():
+            print(f"  {clave}: {valor}")
 
-    print("\n--- Figuras 3D ---")
-    for fig in figuras_3d:
-        mostrar_info(fig)
+    print("\n=== Ejercicio Completado ===")
+</code></pre>
 
-    # Resumen
-    print("\n" + "="*50)
-    print("RESUMEN")
-    print("="*50)
-    print(f"Total figuras 2D: {len(figuras_2d)}")
-    print(f"Total figuras 3D: {len(figuras_3d)}")
-    print(f"Total general: {len(figuras_2d) + len(figuras_3d)}")
+                    <h4>Instrucciones para Ejecutar</h4>
+                    <ol>
+                        <li>Guarda el código en un archivo llamado <code>proyectos.py</code></li>
+                        <li>Ejecuta con: <code>python proyectos.py</code></li>
+                        <li>Observa cómo cada tipo de proyecto se comporta de manera diferente</li>
+                        <li>Experimenta modificando los atributos y estados</li>
+                    </ol>
 
-    # MRO de una clase
-    print("\n--- Method Resolution Order (MRO) ---")
-    print(f"Cubo: {Cubo.__mro__}")</code></pre>
+                    <div class="alert-warning-custom">
+                        <strong>Retos adicionales:</strong>
+                        <ul>
+                            <li>Agrega una clase <code>ProyectoCompartido</code> que herede de <code>Proyecto</code> y maneje múltiples propietarios</li>
+                            <li>Implementa un método <code>calcular_costo()</code> en cada subclase con diferentes lógicas</li>
+                        </ul>
+                    </div>
+                </section>
 
-                    <h4>Ejecuta el Codigo</h4>
-                    <pre><code class="language-bash">python figuras.py</code></pre>
+                <section id="taskflow">
+                    <h2>Conexión con TaskFlow</h2>
+                    <p>La herencia es fundamental para modelar las relaciones en TaskFlow. Veamos cómo aplicar estos conceptos:</p>
 
-                    <h4>Mejoras Propuestas</h4>
-                    <ul>
-                        <li>Agregar triangulo equilatero con calculo de lados</li>
-                        <li>Agregar clase Cilindro que herede de Figura3D</li>
-                        <li>Implementar comparacion de areas (>)</li>
-                        <li>Agregar validacion de valores positivos</li>
-                    </ul>
+                    <h3>Jerarquía de Usuarios</h3>
+                    <pre><code class="language-python"># MODELO DE TASKFLOW - Herencia de Usuarios
+
+from dataclasses import dataclass
+from datetime import datetime
+from enum import Enum
+
+
+class RolUsuario(Enum):
+    USUARIO = "usuario"
+    ADMIN = "admin"
+
+
+@dataclass
+class Usuario:
+    """Clase base para usuarios."""
+    id: int
+    username: str
+    email: str
+
+    def __post_init__(self):
+        self.creado_en = datetime.now()
+        self.rol = RolUsuario.USUARIO
+
+    def puede_crear_proyecto(self) -> bool:
+        return True
+
+    def puede_eliminar_usuarios(self) -> bool:
+        return False
+
+    def __str__(self):
+        return f"@{self.username}"
+
+
+@dataclass
+class UsuarioAdmin(Usuario):
+    """Administrador hereda de Usuario."""
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.rol = RolUsuario.ADMIN
+
+    def puede_eliminar_usuarios(self) -> bool:
+        return True
+
+    def banear_usuario(self, usuario: Usuario) -> str:
+        return f"Admin {self.username} ha bannear a {usuario.username}"</code></pre>
+
+                    <h3>Jerarquía de Tareas</h3>
+                    <pre><code class="language-python"># MODELO DE TASKFLOW - Herencia de Tareas
+
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
+
+
+@dataclass
+class Tarea:
+    """Clase base para tareas."""
+    id: int
+    titulo: str
+    completada: bool = False
+
+    def __str__(self):
+        estado = "✓" if self.completada else "○"
+        return f"{estado} {self.titulo}"
+
+    def completar(self) -> None:
+        self.completada = True
+
+
+@dataclass
+class Subtarea(Tarea):
+    """Subtarea hereda de Tarea."""
+    tarea_padre_id: int
+
+    def __str__(self):
+        return f"  ↳ {super().__str__()}"
+
+
+@dataclass
+class TareaConDeadline(Tarea):
+    """Tarea con fecha límite."""
+    deadline: datetime
+
+    def esta_atrasada(self) -> bool:
+        return not self.completada and datetime.now() > self.deadline</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Consejo:</strong> Observa como el metodo <code>mostrar_info()</code> funciona para CUALQUIER subclase de Figura. Esto es polimorfismo en su maxima expresion.
+                        <strong>Aplicación en TaskFlow:</strong> Con esta estructura, puedes crear un sistema donde:
+                        <ul>
+                            <li><code>Usuario</code> es la clase base para todos los usuarios</li>
+                            <li><code>UsuarioAdmin</code> hereda de <code>Usuario</code> y añade permisos</li>
+                            <li>Las <code>Tarea</code> se especializan según el tipo de gestión requerida</li>
+                        </ul>
                     </div>
                 </section>
 
                 <section id="referencias">
-                    <h2>Para Profundizar</h2>
+                    <h2>Referencias para Profundizar</h2>
                     <ul>
                         <li><a href="https://docs.python.org/es/3/tutorial/classes.html#inheritance" target="_blank">Herencia - Tutorial Oficial de Python</a></li>
-                        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">ABC (Abstract Base Classes) - Documentacion Oficial</a></li>
-                        <li><a href="https://realpython.com/inheritance-composition-python/" target="_blank">Real Python - Inheritance vs Composition</a></li>
-                        <li><a href="https://docs.python.org/es/3/library/stdtypes.html#class.__mro__" target="_blank">MRO - Documentacion Oficial</a></li>
-                        <li><a href="https://peps.python.org/pep-0008/" target="_blank">PEP 8 - Guia de Estilo Python</a></li>
-                        <li><a href="https://realpython.com/python-super/" target="_blank">Real Python - Python's super()</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/functions.html#super" target="_blank">Función super() - Documentación Oficial</a></li>
+                        <li><a href="https://realpython.com/inheritance-composition-python/" target="_blank">Real Python - Herencia vs Composición</a></li>
+                        <li><a href="https://pythontutor.com/" target="_blank">Python Tutor - Visualiza ejecución de código</a></li>
+                        <li><a href="https://python-course.eu/oop/python_inheritance.php" target="_blank">Python Course - Inheritance Tutorial</a></li>
                     </ul>
-                </section>
-
-                <section id="taskflow">
-                    <h2>Conexion con TaskFlow</h2>
-                    <p>La herencia y el polimorfismo son fundamentales para el proyecto TaskFlow:</p>
-
-                    <h3>User y sus Subclases</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Clase</th>
-                                <th>Herencia</th>
-                                <th>Proposito</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>User</code></td>
-                                <td>Clase base</td>
-                                <td>Propiedades comunes: username, email, estado</td>
-                            </tr>
-                            <tr>
-                                <td><code>RegularUser</code></td>
-                                <td>Hereda de User</td>
-                                <td>Permisos basicos: ver/crear/completar tareas</td>
-                            </tr>
-                            <tr>
-                                <td><code>AdminUser</code></td>
-                                <td>Hereda de User</td>
-                                <td>Permisos totales: bloquear usuarios, ver estadisticas</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Task y sus Subclases (Proxima Clase)</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Clase</th>
-                                <th>Herencia</th>
-                                <th>Proposito</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>Task</code></td>
-                                <td>Clase base</td>
-                                <td>Tarea basica: titulo, descripcion, estado</td>
-                            </tr>
-                            <tr>
-                                <td><code>SubTask</code></td>
-                                <td>Hereda de Task</td>
-                                <td>Subtarea con referencia a tarea padre</td>
-                            </tr>
-                            <tr>
-                                <td><code>RecurringTask</code></td>
-                                <td>Hereda de Task</td>
-                                <td>Tarea recurrente con frecuencia y fecha fin</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="alert-note">
-                        <strong>Estructura del Proyecto:</strong>
-                        <pre>taskflow/
-├── models/
-│   ├── user.py       # User, RegularUser, AdminUser
-│   ├── task.py      # Task, SubTask, RecurringTask
-│   └── ...
-├── services/
-│   └── user_service.py  # Polimorfismo en operaciones</pre>
-                    </div>
-
-                    <h3>Polimorfismo en TaskFlow</h3>
-                    <pre><code class="language-python"># Ejemplo: Funcion que opera con cualquier tipo de usuario
-def mostrar_dashboard(usuario: User) -> None:
-    """Muestra el dashboard segun el tipo de usuario."""
-    print(f"\nDashboard de {usuario.username} ({type(usuario).__name__})")
-
-    # Mismo metodo, diferente comportamiento
-    if usuario.tiene_permiso("ver_estadisticas"):
-        if isinstance(usuario, AdminUser):
-            stats = usuario.ver_estadisticas_sistema()
-            print(f"  Usuarios bloqueados: {stats['usuarios_bloqueados']}")
-        elif isinstance(usuario, RegularUser):
-            stats = usuario.estadisticas()
-            print(f"  Tareas completadas: {stats['completadas']}/{stats['total']}")
-
-# Polimorfismo en accion
-mostrar_dashboard(admin)       # Dashboard de admin
-mostrar_dashboard(regular1)    # Dashboard de usuario regular</code></pre>
-
-                    <div class="alert-warning-custom">
-                        <strong>Nota:</strong> En la proxima clase aprenderas sobre encapsulamiento, donde mejoraremos el acceso a los atributos usando propiedades (@property) y protected members (_atributo).
-                    </div>
                 </section>
             </main>
         </div>
     </div>
 
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U1C03-HERPOL"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Ultima actualizacion: 2026-02-08</p>
+            <p>Última actualización: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
         </div>
     </footer>
 

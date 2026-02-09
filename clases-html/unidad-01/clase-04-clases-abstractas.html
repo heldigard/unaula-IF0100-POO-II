@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Domina las clases abstractas en Python. Aprende ABC, @abstractmethod, interfaces y el Patrón Template Method. Preparación para Domain-Driven Design.">
+    <meta name="description" content="Aprende sobre clases abstractas e interfaces en Python. Domina ABC, @abstractmethod, @property abstract y Protocols. Implementa BaseModel abstracto para TaskFlow.">
     <meta name="author" content="IF0100 - UNAULA">
-    <title>Clases Abstractas y ABC | IF0100 - POO II</title>
+    <title>Clases Abstractas e Interfaces | IF0100 - POO II</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -274,9 +274,9 @@
 <body>
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 1: Programación Orientada a Objetos</h2>
-            <h3>Clase 4: Clases Abstractas</h3>
+            <h1>IF0100 - Lenguaje de Programacion OO II</h1>
+            <h2>Unidad 1: POO Avanzada</h2>
+            <h3>Clase 4: Clases Abstractas e Interfaces</h3>
         </div>
     </header>
 
@@ -295,6 +295,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="clase-03-herencia-polimorfismo.html">Anterior: Herencia y Polimorfismo</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../unidad-02/clase-01-tdd-intro.html">Siguiente: TDD</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -307,12 +310,12 @@
                     <h5>Contenido</h5>
                     <ul>
                         <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#teoria">Conceptos Teoricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Practicos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Practicas</a></li>
                         <li><a href="#ejercicio">Ejercicio Guiado</a></li>
+                        <li><a href="#taskflow">Conexion con TaskFlow</a></li>
                         <li><a href="#referencias">Para Profundizar</a></li>
-                        <li><a href="#taskflow">Conexión con TaskFlow</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -320,316 +323,340 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <p>Al finalizar esta clase, usted sera capaz de:</p>
                     <ul>
-                        <li>Comprender qué son las clases abstractas y su propósito en POO</li>
-                        <li>Implementar Abstract Base Classes (ABC) en Python usando el modulo <code>abc</code></li>
-                        <li>Usar el decorador <code>@abstractmethod</code> para definir contratos</li>
-                        <li>Distinguir entre interfaces y clases abstractas en Python</li>
-                        <li>Aplicar el Patrón Template Method con clases abstractas</li>
-                        <li>Preparar los fundamentos conceptuales para Domain-Driven Design (DDD)</li>
+                        <li>Comprender que son las clases abstractas y su proposito en el diseno de software</li>
+                        <li>Implementar clases abstractas utilizando el modulo ABC (Abstract Base Classes)</li>
+                        <li>Definir metodos abstractos con el decorador <code>@abstractmethod</code></li>
+                        <li>Crear propiedades abstractas con <code>@property</code> y <code>@abstractmethod</code></li>
+                        <li>Entender y aplicar Protocols para tipado estructural en Python 3.8+</li>
+                        <li>Diferenciar entre Abstract Base Classes e Interfaces</li>
+                        <li>Aplicar clases abstractas en el proyecto TaskFlow (entidades base abstractas)</li>
+                        <li>Disenar jerarquias de clases con contratos bien definidos</li>
                     </ul>
                 </section>
 
                 <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
+                    <h2>Conceptos Teoricos</h2>
 
-                    <h3>¿Qué es una Clase Abstracta?</h3>
-                    <p>Una clase abstracta es una clase que no puede instanciarse directamente y esta diseñada para ser heredada por otras clases. Sirve como <strong>plantilla o contrato</strong> que define qué métodos deben implementar las subclases, pero no proporciona la implementacion completa.</p>
+                    <h3>¿Que es una Clase Abstracta?</h3>
+                    <p>Una <strong>clase abstracta</strong> es una clase que no puede ser instanciada directamente y esta disenada para ser heredada por otras clases. Sirve como <strong>plantilla</strong> o <strong>contrato</strong> que define que metodos y propiedades deben implementar las subclases, pero no proporciona la implementacion completa.</p>
 
                     <div class="alert-note">
-                        <strong>Analogia:</strong> Piensa en una clase abstracta "Vehiculo". Un vehiculo tiene un metodo abstracto "mover()", pero la forma具体a de moverse depende del tipo de vehiculo: un auto usa ruedas, un avion alas, un barco propulsion. La clase abstracta define "existe mover()", pero cada subclase decide como implementarlo.
+                        <strong>Analogia:</strong> Piensa en una clase abstracta como el plano de una casa. El plano define que la casa debe tener puertas, ventanas y un techo, pero no construye una casa habitable por si mismo. Los constructores (subclases) usan el plano para construir casas reales.
                     </div>
 
-                    <h3>ABC (Abstract Base Classes) en Python</h3>
-                    <p>Python proporciona el modulo <code>abc</code> para crear clases abstractas de manera formal. Una ABC se crea heredando de <code>ABC</code> y usando <code>@abstractmethod</code> para marcar metodos que deben ser implementados.</p>
-
+                    <h3>ABC (Abstract Base Classes)</h3>
+                    <p>Python proporciona el modulo <code>abc</code> para crear clases abstractas. Una clase se convierte en abstracta cuando hereda de <code>ABC</code>.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 
+# Clase abstracta base
 class Figura(ABC):
-    """Clase abstracta base para figuras geometricas."""
+    """Clase abstracta para figuras geometricas."""
 
-    def __init__(self, nombre: str):
-        self.nombre = nombre
+    def __init__(self, color: str):
+        self.color = color
 
+    # Metodo abstracto (debe ser implementado por las subclases)
     @abstractmethod
     def area(self) -> float:
-        """Metodo abstracto que debe ser implementado por subclases."""
+        """Calcula el area de la figura."""
         pass
 
+    # Metodo concreto (opcional, tiene implementacion)
+    def descripcion(self) -> str:
+        """Descripcion de la figura."""
+        return f"Figura de color {self.color}"
+
+    @property
     @abstractmethod
-    def perimetro(self) -> float:
-        """Metodo abstracto que debe ser implementado por subclases."""
-        pass
+    def nombre(self) -> str:
+        """Nombre de la figura (propiedad abstracta)."""
+        pass</code></pre>
 
-    def __str__(self) -> str:
-        """Metodo concreto: todas las figuras tienen un nombre."""
-        return f"{self.nombre} (area: {self.area():.2f})"
+                    <div class="alert-warning-custom">
+                        <strong>Importante:</strong> Si una clase tiene al menos un metodo abstracto, no se puede instanciar directamente. Las subclases DEBEN implementar todos los metodos abstractos.
+                    </div>
 
-
-# ❌ NO se puede instanciar una clase abstracta
-# figura = Figura("figura")  # TypeError: Can't instantiate abstract class
-
-# ✅ SI se puede heredar e instanciar la subclase
-class Circulo(Figura):
-    """Circulo concreto que implementa los metodos abstractos."""
-
-    def __init__(self, radio: float):
-        super().__init__("Circulo")
-        self.radio = radio
-
-    @abstractmethod
-    def area(self) -> float:  # Implementacion obligatoria
-        return 3.14159 * self.radio ** 2
-
-    @abstractmethod
-    def perimetro(self) -> float:  # Implementacion obligatoria
-        return 2 * 3.14159 * self.radio
-
-
-# Uso
-circulo = Circulo(5)
-print(circulo)  # Circulo (area: 78.54)
-print(f"Perimetro: {circulo.perimetro():.2f}")  # 31.42</code></pre>
-
-                    <h3>@abstractmethod vs @cached_property</h3>
-                    <p>Es importante distinguir entre diferentes decoradores disponibles en el modulo <code>abc</code>:</p>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Decorador</th>
-                                <th>Proposito</th>
-                                <th>Ejemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>@abstractmethod</code></td>
-                                <td>Obliga a implementar en subclases</td>
-                                <td>Metodos que deben definirse</td>
-                            </tr>
-                            <tr>
-                                <td><code>@abstractproperty</code></td>
-                                <td>Property abstracta (deprecated)</td>
-                                <td>Usar <code>@property</code> + <code>@abstractmethod</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>@abstractclassmethod</code></td>
-                                <td>classmethod abstracto (deprecated)</td>
-                                <td>Usar <code>@classmethod</code> + <code>@abstractmethod</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <h3>El Decorador @abstractmethod</h3>
+                    <p>El decorador <code>@abstractmethod</code> marca un metodo como abstracto, lo que significa que debe ser implementado por cualquier subclase concreta.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 
-class Modelo(ABC):
-    """Ejemplo de diferentes tipos de metodos abstractos."""
+class Vehiculo(ABC):
+    @abstractmethod
+    def arrancar(self) -> None:
+        """Metodo abstracto: todos los vehiculos deben poder arrancar."""
+        pass
 
     @abstractmethod
-    def guardar(self) -> None:
-        """Metodo abstracto obligatorio."""
+    def detenerse(self) -> None:
+        """Metodo abstracto: todos los vehiculos deben poder detenerse."""
+        pass
+
+    # Metodo concreto opcional
+    def describir(self) -> str:
+        return "Vehiculo de transporte"
+
+# Intentar instanciar una clase abstracta falla
+try:
+    vehiculo = Vehiculo()  # TypeError!
+except TypeError as e:
+    print(f"Error: {e}")  # No se puede instanciar una clase abstracta
+
+# Las subclases deben implementar los metodos abstractos
+class Coche(Vehiculo):
+    def __init__(self, marca: str):
+        self.marca = marca
+
+    def arrancar(self) -> None:
+        print(f"Coche {self.marca} arrancando...")
+
+    def detenerse(self) -> None:
+        print(f"Coche {self.marca} deteniendo...")
+
+# Ahora si se puede instanciar
+coche = Coche("Toyota")
+coche.arrancar()  # Coche Toyota arrancando...</code></pre>
+
+                    <h3>Propiedades Abstractas</h3>
+                    <p>Las propiedades también pueden ser abstractas, combinando <code>@property</code> con <code>@abstractmethod</code>.</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class SerVivo(ABC):
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre del ser vivo (obligatorio)."""
         pass
 
     @property
     @abstractmethod
-    def identificador(self) -> str:
-        """Property abstracta: debe implementarse como property."""
+    def edad(self) -> int:
+        """Edad del ser vivo (obligatorio)."""
         pass
 
-    @classmethod
-    @abstractmethod
-    def crear_vacio(cls) -> "Modelo":
-        """classmethod abstracto para factory."""
-        pass</code></pre>
+    def vivir_un_anio(self) -> None:
+        """Metodo concreto que usa las propiedades abstractas."""
+        print(f"{self.nombre} envejecimiento un ano. Ahora tiene {self.edad + 1} anos.")
 
-                    <h3>Diferencia entre Clase Abstracta e Interface</h3>
+class Persona(SerVivo):
+    def __init__(self, nombre: str, edad: int):
+        self._nombre = nombre
+        self._edad = edad
 
-                    <table class="table">
+    @property
+    def nombre(self) -> str:
+        return self._nombre
+
+    @property
+    def edad(self) -> int:
+        return self._edad
+
+persona = Persona("Juan", 25)
+print(f"{persona.nombre} tiene {persona.edad} anos")  # Juan tiene 25 anos</code></pre>
+
+                    <h3>Protocols en Python 3.8+</h3>
+                    <p>Los <strong>Protocols</strong> son una forma de lograr tipado estructural en Python. Definen una interfaz sin usar herencia. Un tipo es compatible con un Protocol si tiene todos los metodos requeridos, sin importar su jerarquia de clases.</p>
+                    <pre><code class="language-python">from typing import Protocol, runtime_checkable
+
+# Definicion de un Protocol
+class Dibujable(Protocol):
+    """Protocolo para objetos que pueden ser dibujados."""
+
+    def dibujar(self) -> None:
+        ...
+
+    @property
+    def color(self) -> str:
+        ...
+
+# Clases que implementan el Protocol (sin heredar de el)
+class Circulo:
+    def __init__(self, radio: float, color: str):
+        self.radio = radio
+        self._color = color
+
+    def dibujar(self) -> None:
+        print(f"Draw circle with radius {self.radio} and color {self._color}")
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+class Rectangulo:
+    def __init__(self, ancho: float, alto: float, color: str):
+        self.ancho = ancho
+        self.alto = alto
+        self._color = color
+
+    def dibujar(self) -> None:
+        print(f"Draw rectangle {self.ancho}x{self.alto} in color {self._color}")
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+# Uso con type hints
+def dibujar_figura(figura: Dibujable) -> None:
+    """Funcion que acepta cualquier objeto que implemente Dibujable."""
+    figura.dibujar()
+
+# Tanto Circulo como Rectangulo son compatibles con Dibujable
+circulo = Circulo(5.0, "rojo")
+rectangulo = Rectangulo(10, 5, "azul")
+
+dibujar_figura(circulo)    # Draw circle with radius 5.0 and color rojo
+dibujar_figura(rectangulo)  # Draw rectangle 10x5 in color azul
+
+# Verificar compatibilidad en tiempo de ejecucion
+@runtime_checkable
+class Verificable(Protocol):
+    def guardar(self) -> bool:
+        ...
+
+class Persona:
+    def guardar(self) -> bool:
+        return True
+
+class Coche:
+    pass
+
+print(isinstance(Persona(), Verificable))  # True (tiene guardar)
+print(isinstance(Coche(), Verificable))    # False (no tiene guardar)</code></pre>
+
+                    <h3>Cuándo Usar ABC vs Protocol</h3>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Caracteristica</th>
-                                <th>Clase Abstracta</th>
-                                <th>Interface</th>
+                                <th>Criterio</th>
+                                <th>ABC (Abstract Base Class)</th>
+                                <th>Protocol</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Proposito</strong></td>
-                                <td>Plantilla con implementacion parcial</td>
-                                <td>Contrato puro (solo firmas)</td>
+                                <td><strong>Herencia de codigo</strong></td>
+                                <td>Si, puedes compartir implementacion</td>
+                                <td>No, solo define estructura</td>
                             </tr>
                             <tr>
-                                <td><strong>Metodos concretos</strong></td>
-                                <td>Permitidos</td>
-                                <td>No permitidos (Python 3.8+ con Protocol)</td>
+                                <td><strong>Tipado</strong></td>
+                                <td>Nominal (herencia)</td>
+                                <td>Estructural (duck typing)</td>
                             </tr>
-                            <td><strong>Atributos</strong></td>
-                            <td>Puede tener atributos</td>
-                            <td>Solo constantes (Python 3.8+)</td>
-                            <tr>
-                                <td><strong>Herencia multiple</strong></td>
-                                <td>Problemas de diamante</td>
-                                <td>Ideal para mixins</td>
+                            <td><strong>Instanciacion</strong></td>
+                                <td>No se puede instanciar directamente</td>
+                                <td>No es una clase, es un Protocol</td>
                             </tr>
                             <tr>
-                                <td><strong>En Python</strong></td>
-                                <td><code>class Figura(ABC)</code></td>
-                                <td><code>class Figura(Protocol)</code> (typing)</td>
+                                <td><strong>Uso principal</strong></td>
+                                <td>Diseno de jerarquias con codigo compartido</td>
+                                <td>Validacion de tipos y contratos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flexibilidad</strong></td>
+                                <td>Menos flexible (necesita herencia)</td>
+                                <td>Mas flexible (duck typing)</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div class="alert-tip">
-                        <strong> Consejo:</strong> En Python, la distincion es menos formal que en Java o C#. Las ABC pueden actuar como interfaces si no definen metodos concretos, y desde Python 3.8, <code>typing.Protocol</code> proporciona herencia tipica de interfaces.
+                        <strong>Regla practica:</strong> Usa <strong>ABC</strong> cuando necesitas compartir implementacion entre clases relacionadas. Usa <strong>Protocol</strong> cuando solo necesitas definir un contrato de tipos sin importar la jerarquia de clases.
                     </div>
 
-                    <h3>Cuándo Usar Clases Abstractas</h3>
-                    <ul>
-                        <li><strong>Jerarquias de clases:</strong> Cuando tienes un concepto base con comportamiento comun y variaciones</li>
-                        <li><strong>Contratos obligatorios:</strong> Cuando ciertas operaciones deben implementarse obligatoriamente</li>
-                        <li><strong>Patron Template Method:</strong> Cuando tienes un algoritmo con pasos que deben personalizarse</li>
-                        <li><strong>Plugins y extensiones:</strong> Cuando terceros deben implementar interfaces especificas</li>
-                        <li><strong>Framework development:</strong> Cuando creas un framework que otros extenderan</li>
-                    </ul>
-
-                    <h3>Patron Template Method</h3>
-                    <p>El Patron Template Method define el esqueleto de un algoritmo en un metodo, delegando pasos variables a subclases. La clase abstracta proporciona la estructura, las subclases personalizan detalles.</p>
-
+                    <h3>Mixins y Herencia Multiple</h3>
+                    <p>Los <strong>mixins</strong> son clases diseadas para ser heredadas junto con otras, proporcionando funcionalidad adicional especifica.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import List
 
-class ReporteGenerator(ABC):
-    """Clase abstracta base para generar reportes con Template Method."""
+# Mixin para logging
+class LoggeableMixin:
+    """Mixin que anade capacidades de logging."""
 
-    def generar_reporte(self, datos: List[dict]) -> str:
-        """Template Method: define el algoritmo completo."""
-        titulo = self.obtener_titulo()
-        cabecera = self.generar_cabecera()
-        contenido = self.generar_contenido(datos)
-        pie = self.generar_pie()
+    def log(self, mensaje: str) -> None:
+        """Registra un mensaje con timestamp."""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{timestamp}] {self.__class__.__name__}: {mensaje}")
 
-        return f"{titulo}\n{cabecera}\n{contenido}\n{pie}"
+# Mixin para validacion
+class ValidableMixin:
+    """Mixin que anade validacion generica."""
 
+    def validar(self) -> bool:
+        """Valida el objeto. Debe ser implementado."""
+        return True
+
+# Clase abstracta base
+class Entidad(ABC, LoggeableMixin, ValidableMixin):
+    """Entidad base abstracta."""
+
+    @property
     @abstractmethod
-    def obtener_titulo(self) -> str:
-        """Paso abstracto: cada reporte tiene su titulo."""
+    def id(self):
+        """ID unico de la entidad."""
         pass
 
-    @abstractmethod
-    def generar_cabecera(self) -> str:
-        """Paso abstracto: cada reporte tiene su cabecera."""
-        pass
+# Implementacion concreta
+class Usuario(Entidad):
+    def __init__(self, id: int, username: str):
+        self._id = id
+        self._username = username
 
-    @abstractmethod
-    def generar_contenido(self, datos: List[dict]) -> str:
-        """Paso abstracto: el contenido varia por tipo de reporte."""
-        pass
+    @property
+    def id(self):
+        return self._id
 
-    def generar_pie(self) -> str:
-        """Paso concreto: el pie es igual para todos los reportes."""
-        return f"--- Generado el {datetime.now().strftime('%Y-%m-%d %H:%M')} ---"
-
-
-class ReporteVentas(ReporteGenerator):
-    """Reporte concreto de ventas."""
-
-    def obtener_titulo(self) -> str:
-        return "=== REPORTE DE VENTAS ==="
-
-    def generar_cabecera(self) -> str:
-        return "Fecha    | Producto     | Cantidad | Total"
-
-    def generar_contenido(self, datos: List[dict]) -> str:
-        lineas = []
-        total_general = 0
-        for item in datos:
-            linea = f"{item['fecha']} | {item['producto']:<11} | {item['cantidad']:>8} | ${item['total']:.2f}"
-            lineas.append(linea)
-            total_general += item['total']
-        lineas.append(f"{'TOTAL':>45} | ${total_general:.2f}")
-        return "\n".join(lineas)
-
-
-class ReporteUsuarios(ReporteGenerator):
-    """Reporte concreto de usuarios."""
-
-    def obtener_titulo(self) -> str:
-        return "=== REPORTE DE USUARIOS ==="
-
-    def generar_cabecera(self) -> str:
-        return "ID  | Username     | Email              | Estado"
-
-    def generar_contenido(self, datos: List[dict]) -> str:
-        return "\n".join(
-            f"{u['id']:>3} | {u['username']:<12} | {u['email']:<18} | {u['estado']}"
-            for u in datos
-        )
-
+    @property
+    def username(self) -> str:
+        return self._username
 
 # Uso
-datos_ventas = [
-    {"fecha": "2024-01-15", "producto": "Laptop", "cantidad": 2, "total": 2500},
-    {"fecha": "2024-01-15", "producto": "Mouse", "cantidad": 5, "total": 150},
-    {"fecha": "2024-01-16", "producto": "Teclado", "cantidad": 3, "total": 450},
-]
-
-datos_usuarios = [
-    {"id": 1, "username": "juan_perez", "email": "juan@example.com", "activo": True},
-    {"id": 2, "username": "maria_garcia", "email": "maria@example.com", "activo": True},
-    {"id": 3, "username": "carlos_lopez", "email": "carlos@example.com", "activo": False},
-]
-
-reporte_ventas = ReporteVentas()
-print(reporte_ventas.generar_reporte(datos_ventas))
-
-print("\n" + "="*50 + "\n")
-
-reporte_usuarios = ReporteUsuarios()
-print(reporte_usuarios.generar_reporte(datos_usuarios))</code></pre>
+usuario = Usuario(1, "juan123")
+usuario.log("Usuario creado")  # [2026-02-08 10:30:00] Usuario: Usuario creado
+print(f"¿Valido? {usuario.validar()}")  # ¿Valido? True</code></pre>
                 </section>
 
                 <section id="ejemplos">
-                    <h2>Ejemplos Praticos</h2>
+                    <h2>Ejemplos Practicos</h2>
 
-                    <h3>Ejemplo 1: Figura Abstracta con Subclases Concretas</h3>
-                    <pre><code class="language-python">#_figura_abstracta.py
+                    <h3>Ejemplo 1: ABC Basico - Figura Geometrica</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de Abstract Base Class con figuras geometricas.
 """
-Sistema de figuras geometricas usando clases abstractas.
-Ejemplo clasico de ABC en Python.
-"""
-
 from abc import ABC, abstractmethod
 from math import pi
 
 class Figura(ABC):
-    """Clase abstracta base para todas las figuras geometricas."""
+    """Clase abstracta base para figuras geometricas."""
 
-    def __init__(self, nombre: str):
-        self.nombre = nombre
+    def __init__(self, color: str):
+        self.color = color
 
     @abstractmethod
     def area(self) -> float:
-        """Calcular area - obligatorio implementar."""
+        """Calcula el area (obligatorio)."""
         pass
 
     @abstractmethod
     def perimetro(self) -> float:
-        """Calcular perimetro - obligatorio implementar."""
+        """Calcula el perimetro (obligatorio)."""
         pass
 
-    def describir(self) -> str:
-        """Metodo concreto: todas las figuras se pueden describir."""
-        return f"{self.nombre}: area={self.area():.2f}, perimetro={self.perimetro():.2f}"
+    def descripcion(self) -> str:
+        """Metodo concreto con implementacion por defecto."""
+        return f"Figura de color {self.color}"
 
+    @property
+    def info(self) -> str:
+        """Propiedad que usa los metodos abstractos."""
+        return f"{self.__class__.__name__}: area={self.area():.2f}, perimetro={self.perimetro():.2f}"
 
 class Circulo(Figura):
     """Circulo concreto."""
 
-    def __init__(self, radio: float):
-        super().__init__("Circulo")
+    def __init__(self, radio: float, color: str):
+        super().__init__(color)
         self.radio = radio
 
     def area(self) -> float:
@@ -638,12 +665,11 @@ class Circulo(Figura):
     def perimetro(self) -> float:
         return 2 * pi * self.radio
 
-
 class Rectangulo(Figura):
     """Rectangulo concreto."""
 
-    def __init__(self, ancho: float, alto: float):
-        super().__init__("Rectangulo")
+    def __init__(self, ancho: float, alto: float, color: str):
+        super().__init__(color)
         self.ancho = ancho
         self.alto = alto
 
@@ -653,783 +679,967 @@ class Rectangulo(Figura):
     def perimetro(self) -> float:
         return 2 * (self.ancho + self.alto)
 
-
-class Triangulo(Figura):
-    """Triangulo equilatero concreto."""
-
-    def __init__(self, lado: float):
-        super().__init__("Triangulo Equilatero")
-        self.lado = lado
-
-    def area(self) -> float:
-        return (self.lado ** 2) * (3 ** 0.5) / 4
-
-    def perimetro(self) -> float:
-        return 3 * self.lado
-
-
 # Uso
-figuras: list[Figura] = [
-    Circulo(radio=5),
-    Rectangulo(ancho=4, alto=6),
-    Triangulo(lado=3)
-]
+circulo = Circulo(5.0, "rojo")
+rectangulo = Rectangulo(10, 5, "azul")
 
-for figura in figuras:
-    print(figura.describir())
+print(circulo.descripcion())  # Figura de color rojo
+print(circulo.info)            # Circulo: area=78.54, perimetro=31.42
+print(rectangulo.info)         # Rectangulo: area=50.00, perimetro=30.00
 
-print("\n--- Polimorfismo en accion ---")
-for figura in figuras:
-    print(f"{figura.nombre}: area={figura.area():.4f}")</code></pre>
+# Verificar que no se puede instanciar la clase abstracta
+try:
+    figura = Figura("verde")
+except TypeError as e:
+    print(f"No se puede instanciar: {e}")</code></pre>
 
-                    <h3>Ejemplo 2: Plugin System con ABC</h3>
-                    <pre><code class="language-python">#_plugin_system.py
+                    <h3>Ejemplo 2: Propiedades Abstractas</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de propiedades abstractas con ABC.
 """
-Sistema de plugins extensible usando clases abstractas.
-Permite que terceros desarrollen extensiones para tu aplicacion.
-"""
-
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Optional
 
-class Plugin(ABC):
-    """Clase abstracta base para todos los plugins."""
+class RecursoDigital(ABC):
+    """Clase abstracta para recursos digitales."""
+
+    def __init__(self, titulo: str):
+        self.titulo = titulo
 
     @property
     @abstractmethod
-    def nombre(self) -> str:
-        """Nombre unico del plugin."""
+    def tipo(self) -> str:
+        """Tipo de recurso (obligatorio)."""
         pass
 
     @property
     @abstractmethod
-    def version(self) -> str:
-        """Version del plugin."""
+    def tamano(self) -> int:
+        """Tamano en bytes (obligatorio)."""
         pass
 
     @property
-    @abstractmethod
-    def descripcion(self) -> str:
-        """Descripcion breve del plugin."""
-        pass
+    def tamano_formateado(self) -> str:
+        """Metodo concreto que usa las propiedades abstractas."""
+        kb = self.tamano / 1024
+        if kb < 1024:
+            return f"{kb:.1f} KB"
+        mb = kb / 1024
+        return f"{mb:.1f} MB"
 
-    @abstractmethod
-    def inicializar(self, config: Dict[str, Any]) -> None:
-        """Inicializar el plugin con configuracion."""
-        pass
+class Video(RecursoDigital):
+    """Video como recurso digital."""
 
-    @abstractmethod
-    def ejecutar(self) -> Any:
-        """Ejecutar la funcion principal del plugin."""
-        pass
-
-    def __str__(self) -> str:
-        return f"{self.nombre} v{self.version}: {self.descripcion}"
-
-
-class PluginManager:
-    """Gestor de plugins para la aplicacion."""
-
-    def __init__(self):
-        self._plugins: Dict[str, Plugin] = {}
-        self._configuracion: Dict[str, Any] = {}
-
-    def registrar_plugin(self, plugin: Plugin) -> None:
-        """Registra un nuevo plugin."""
-        if plugin.nombre in self._plugins:
-            raise ValueError(f"Plugin '{plugin.nombre}' ya registrado")
-        self._plugins[plugin.nombre] = plugin
-        print(f"Plugin registrado: {plugin}")
-
-    def configurar_plugins(self, config: Dict[str, Any]) -> None:
-        """Configura todos los plugins."""
-        self._configuracion = config
-        for plugin in self._plugins.values():
-            if plugin.nombre in config:
-                plugin.inicializar(config[plugin.nombre])
-
-    def ejecutar_plugins(self) -> Dict[str, Any]:
-        """Ejecuta todos los plugins."""
-        resultados = {}
-        for nombre, plugin in self._plugins.items():
-            print(f"Ejecutando: {plugin.nombre}")
-            resultados[nombre] = plugin.ejecutar()
-        return resultados
-
-    def listar_plugins(self) -> List[str]:
-        """Lista nombres de plugins registrados."""
-        return list(self._plugins.keys())
-
-
-# Ejemplo de plugins concretos
-
-class LoggerPlugin(Plugin):
-    """Plugin para logging de eventos."""
+    def __init__(self, titulo: str, duracion_segundos: int, resolucion: str):
+        super().__init__(titulo)
+        self.duracion = duracion_segundos
+        self.resolucion = resolucion
 
     @property
-    def nombre(self) -> str:
-        return "logger_plugin"
+    def tipo(self) -> str:
+        return "video"
 
     @property
-    def version(self) -> str:
-        return "1.0.0"
+    def tamano(self) -> int:
+        # Simulacion: ~1 MB por minuto a 1080p
+        return self.duracion * 17000  # bytes
+
+class Documento(RecursoDigital):
+    """Documento como recurso digital."""
+
+    def __init__(self, titulo: str, num_paginas: int):
+        super().__init__(titulo)
+        self.num_paginas = num_paginas
 
     @property
-    def descripcion(self) -> str:
-        return "Plugin de logging para la aplicacion"
-
-    def inicializar(self, config: Dict[str, Any]) -> None:
-        self._formato = config.get("formato", "[%(asctime)s] %(message)s")
-        self._archivo = config.get("archivo", "app.log")
-
-    def ejecutar(self) -> str:
-        return f"Logging configurado: formato='{self._formato}', archivo='{self._archivo}'"
-
-
-class AnalyticsPlugin(Plugin):
-    """Plugin para analytics y metricas."""
+    def tipo(self) -> str:
+        return "documento"
 
     @property
-    def nombre(self) -> str:
-        return "analytics_plugin"
-
-    @property
-    def version(self) -> str:
-        return "2.1.0"
-
-    @property
-    def descripcion(self) -> str:
-        return "Plugin de metricas y analisis de uso"
-
-    def inicializar(self, config: Dict[str, Any]) -> None:
-        self._api_key = config.get("api_key", "")
-        self._tracking_id = config.get("tracking_id", "")
-
-    def ejecutar(self) -> str:
-        return f"Analytics inicializado: tracking_id='{self._tracking_id}'"
-
+    def tamano(self) -> int:
+        # Simulacion: ~50 KB por pagina
+        return self.num_paginas * 51200  # bytes
 
 # Uso
-if __name__ == "__main__":
-    print("=== Sistema de Plugins ===\n")
+video = Video("Tutorial Python", 600, "1080p")
+doc = Documento("Informe", 25)
 
-    manager = PluginManager()
+print(f"{video.titulo} ({video.tipo}): {video.tamano_formateado}")
+# Tutorial Python (video): 10.0 MB
 
-    # Registrar plugins
-    logger = LoggerPlugin()
-    analytics = AnalyticsPlugin()
+print(f"{doc.titulo} ({doc.tipo}): {doc.tamano_formateado}")
+# Informe (documento): 1.3 MB</code></pre>
 
-    manager.registrar_plugin(logger)
-    manager.registrar_plugin(analytics)
-
-    # Configurar plugins
-    config = {
-        "logger_plugin": {
-            "formato": "[%(levelname)s] %(name)s: %(message)s",
-            "archivo": "logs/app.log"
-        },
-        "analytics_plugin": {
-            "api_key": "ak_12345",
-            "tracking_id": "UA-123456-1"
-        }
-    }
-    manager.configurar_plugins(config)
-
-    # Ejecutar plugins
-    print("\n--- Ejecucion de Plugins ---")
-    resultados = manager.ejecutar_plugins()</code></pre>
-
-                    <h3>Ejemplo 3: TaskFlow - Entity Base Abstracta</h3>
-                    <pre><code class="language-python">#_base_entity.py
+                    <h3>Ejemplo 3: Protocol para Tipado Estructural</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de Protocol para validacion de tipos en tiempo de compilacion.
 """
-BaseEntity abstracta para TaskFlow.
-Fundamento para Domain-Driven Design (DDD).
-"""
+from typing import Protocol, Iterable
 
+# Protocol para objetos iterables con metodo guardar
+class Guardable(Protocol):
+    """Protocolo para objetos que pueden ser guardados."""
+
+    def guardar(self) -> bool:
+        """Guarda el objeto y retorna exito."""
+        ...
+
+    def cargar(self, datos: dict) -> None:
+        """Carga el objeto desde un diccionario."""
+        ...
+
+# Implementaciones concretas (sin herencia de Protocol)
+class Usuario:
+    def __init__(self, username: str, email: str):
+        self.username = username
+        self.email = email
+
+    def guardar(self) -> bool:
+        print(f"Guardando usuario {self.username}")
+        return True
+
+    def cargar(self, datos: dict) -> None:
+        self.username = datos.get("username", self.username)
+        self.email = datos.get("email", self.email)
+
+class Tarea:
+    def __init__(self, titulo: str, completada: bool = False):
+        self.titulo = titulo
+        self.completada = completada
+
+    def guardar(self) -> bool:
+        print(f"Guardando tarea {self.titulo}")
+        return True
+
+    def cargar(self, datos: dict) -> None:
+        self.titulo = datos.get("titulo", self.titulo)
+        self.completada = datos.get("completada", self.completada)
+
+# Funcion que acepta cualquier objeto Guardable
+def guardar_todo(objetos: list[Guardable]) -> int:
+    """Guarda una lista de objetos y retorna cuantos se guardaron."""
+    guardados = 0
+    for obj in objetos:
+        if obj.guardar():
+            guardados += 1
+    return guardados
+
+def cargar_todo(objetos: list[Guardable], datos: list[dict]) -> None:
+    """Carga datos en una lista de objetos."""
+    for obj, data in zip(objetos, datos):
+        obj.cargar(data)
+
+# Uso
+usuarios = [Usuario("juan", "juan@email.com"), Usuario("maria", "maria@email.com")]
+tareas = [Tarea("Comprar leche"), Tarea("Hacer ejercicio")]
+
+# Todos los objetos son Guardable aunque no hereden de un ABC comun
+resultado = guardar_todo(usuarios + tareas)
+print(f"Objetos guardados: {resultado}")</code></pre>
+
+                    <h3>Ejemplo 4: Entidad Base Abstracta en TaskFlow</h3>
+                    <pre><code class="language-python">"""
+Entidad base abstracta para el proyecto TaskFlow.
+"""
 from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Optional, Dict, Any
-import uuid
 
+class EntidadBase(ABC):
+    """Clase base abstracta para todas las entidades del sistema."""
 
-class Entity(ABC):
-    """
-    Clase base abstracta para todas las entidades del dominio.
-    Implementa el patron de Entity del DDD.
-    """
-
-    def __init__(self):
-        self._id: Optional[uuid.UUID] = None
+    def __init__(self, id: Optional[int] = None):
+        self._id = id
         self._creado_en: Optional[datetime] = None
         self._actualizado_en: Optional[datetime] = None
 
     @property
-    @abstractmethod
-    def entity_type(self) -> str:
-        """Tipo de entidad para identificacion."""
-        pass
-
-    @property
-    def id(self) -> Optional[uuid.UUID]:
-        """Obtiene el identificador unico de la entidad."""
+    def id(self) -> Optional[int]:
+        """ID unico de la entidad."""
         return self._id
 
     @id.setter
-    def id(self, valor: uuid.UUID) -> None:
-        """Establece el ID (solo se puede asignar una vez)."""
-        if self._id is not None:
-            raise ValueError("El ID ya ha sido asignado")
+    def id(self, valor: int) -> None:
+        """Setter para el ID."""
         self._id = valor
 
     @property
-    def creado_en(self) -> Optional[datetime]:
-        """Fecha de creacion de la entidad."""
-        return self._creado_en
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre de la entidad (obligatorio)."""
+        pass
 
-    def _marcar_como_creado(self) -> None:
-        """Marca la entidad como creada (uso interno)."""
-        if self._creado_en is None:
-            self._creado_en = datetime.now()
-            self._actualizado_en = datetime.now()
+    @property
+    def creado_en(self) -> Optional[datetime]:
+        """Fecha de creacion."""
+        return self._creado_en
 
     @property
     def actualizado_en(self) -> Optional[datetime]:
-        """Ultima fecha de actualizacion."""
+        """Fecha de ultima actualizacion."""
         return self._actualizado_en
 
-    def _marcar_como_actualizado(self) -> None:
-        """Actualiza la marca de tiempo."""
+    def _marcar_actualizado(self) -> None:
+        """Marca la entidad como actualizada."""
         self._actualizado_en = datetime.now()
 
+    def __post_init__(self) -> None:
+        """Se ejecuta despues de __init__."""
+        if self._creado_en is None:
+            self._creado_en = datetime.now()
+
     @abstractmethod
-    def to_dict(self) -> Dict[str, Any]:
+    def a_diccionario(self) -> Dict[str, Any]:
         """Convierte la entidad a diccionario."""
         pass
 
     @abstractmethod
-    def validar(self) -> bool:
-        """Valida el estado de la entidad."""
+    def desde_diccionario(cls, datos: Dict[str, Any]) -> "EntidadBase":
+        """Crea una entidad desde un diccionario."""
         pass
 
-    def __eq__(self, otro: object) -> bool:
-        """Dos entidades son iguales si tienen el mismo ID."""
-        if not isinstance(otro, Entity):
-            return False
-        return self._id == otro._id
-
-    def __hash__(self) -> int:
-        """Las entidades son hasheables por su ID."""
-        return hash(self._id) if self._id else id(self)
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}(id={self.id}, nombre='{self.nombre}')"
 
     def __repr__(self) -> str:
-        return f"<{self.entity_type} id={self._id}>"
+        return (f"{self.__class__.__name__}("
+                f"id={self.id}, "
+                f"nombre='{self.nombre}', "
+                f"creado={self._creado_en})")
 
 
-class AggregateRoot(Entity):
-    """
-    Raiz de agregado del DDD.
-    Controla el acceso a todas las entidades dentro del agregado.
-    """
-
-    def __init__(self):
-        super().__init__()
-        self._version: int = 0
+class UsuarioBase(EntidadBase):
+    """Base abstracta para usuarios."""
 
     @property
-    def version(self) -> int:
-        """Version del agregado para control de concurrencia."""
-        return self._version
-
-    def _incrementar_version(self) -> None:
-        """Incrementa la version del agregado."""
-        self._version += 1
-        self._marcar_como_actualizado()
-
     @abstractmethod
-    def obtener_eventos(self) -> list:
-        """
-        Obtiene eventos de dominio ocurridos.
-        Para implementacion de Event Sourcing.
-        """
+    def email(self) -> str:
+        """Email del usuario (obligatorio)."""
         pass
 
+    @property
     @abstractmethod
-    def limpiar_eventos(self) -> None:
-        """Limpia eventos despues de procesarlos."""
+    def activo(self) -> bool:
+        """Si el usuario esta activo."""
         pass
 
 
-# Ejemplo de entidad concreta
+class TareaBase(EntidadBase):
+    """Base abstracta para tareas."""
 
-class Usuario(Entity):
-    """Usuario del sistema TaskFlow."""
+    @property
+    @abstractmethod
+    def completada(self) -> bool:
+        """Si la tarea esta completada."""
+        pass
 
-    def __init__(self, username: str, email: str):
-        super().__init__()
+    @abstractmethod
+    def completar(self) -> None:
+        """Marca la tarea como completada."""
+        pass
+
+    @abstractmethod
+    def reopenir(self) -> None:
+        """Reabre la tarea."""
+        pass
+
+# Uso
+class UsuarioConcreto(UsuarioBase):
+    """Implementacion concreta de Usuario."""
+
+    def __init__(self, id: Optional[int], username: str, email: str, activo: bool = True):
+        super().__init__(id)
         self._username = username
         self._email = email
+        self._activo = activo
 
     @property
-    def entity_type(self) -> str:
-        return "Usuario"
-
-    @property
-    def username(self) -> str:
+    def nombre(self) -> str:
         return self._username
 
     @property
     def email(self) -> str:
         return self._email
 
-    def to_dict(self) -> Dict[str, Any]:
+    @property
+    def activo(self) -> bool:
+        return self._activo
+
+    def a_diccionario(self) -> Dict[str, Any]:
         return {
-            "id": str(self._id) if self._id else None,
+            "id": self.id,
             "username": self._username,
             "email": self._email,
-            "creado_en": self._creado_en.isoformat() if self._creado_en else None,
-            "actualizado_en": self._actualizado_en.isoformat() if self._actualizado_en else None
+            "activo": self._activo
         }
 
-    def validar(self) -> bool:
-        """Valida que el usuario tenga datos correctos."""
-        return (
-            self._username is not None and len(self._username) >= 3
-            and self._email is not None and "@" in self._email
+    @classmethod
+    def desde_diccionario(cls, datos: Dict[str, Any]) -> "UsuarioConcreto":
+        return cls(
+            id=datos.get("id"),
+            username=datos["username"],
+            email=datos["email"],
+            activo=datos.get("activo", True)
         )
 
-    def __str__(self) -> str:
-        return f"@{self._username}"
-
-
-# Uso
-if __name__ == "__main__":
-    print("=== BaseEntity para TaskFlow ===\n")
-
-    usuario = Usuario("juan123", "juan@example.com")
-    usuario.id = uuid.uuid4()
-    usuario._marcar_como_creado()
-
-    print(f"Usuario: {usuario}")
-    print(f"ID: {usuario.id}")
-    print(f"Valido: {usuario.validar()}")
-    print(f"Diccionario: {usuario.to_dict()}")</code></pre>
+# Crear usuario
+usuario = UsuarioConcreto(id=1, username="juan123", email="juan@example.com")
+print(usuario)  # UsuarioConcreto(id=1, nombre='juan123')
+print(f"Email: {usuario.email}")  # Email: juan@example.com
+print(f"Creado: {usuario.creado_en}")</code></pre>
                 </section>
 
                 <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
+                    <h2>Buenas Practicas</h2>
 
-                    <h3>ABC para Contratos</h3>
-                    <pre><code class="language-python"># ✅ BIEN: ABC para definir contratos claros
+                    <h3>ABC Cuando Necesitas Shared Implementation</h3>
+                    <pre><code class="language-python"># Bien: ABC cuando hay codigo compartido
 from abc import ABC, abstractmethod
 
 class Persistable(ABC):
-    """Contrato para objetos que pueden persistir en almacenamiento."""
+    """Base para objetos persistibles."""
+
+    def __init__(self):
+        self._cache_activo = False
+
+    def iniciar_cache(self) -> None:
+        """Codigo compartido para cache."""
+        self._cache_activo = True
+        self._cache = {}
 
     @abstractmethod
-    def save(self, connection) -> bool:
-        """Guardar el objeto."""
+    def guardar(self) -> bool:
+        """Cada subclase implementa su guardado."""
         pass
 
+class UsuarioPersistable(Persistable):
+    def guardar(self) -> bool:
+        if not self._cache_activo:
+            self.iniciar_cache()
+        print("Guardando usuario en BD")
+        return True</code></pre>
+
+                    <h3>Protocol Cuando Solo Necesitas Typing</h3>
+                    <pre><code class="language-python"># Bien: Protocol para validacion de tipos sin herencia
+from typing import Protocol
+
+class ConNombre(Protocol):
+    """Protocolo simple para objetos con nombre."""
+    @property
+    def nombre(self) -> str:
+        ...
+
+# Cualquier objeto con propiedad nombre es compatible
+class Producto:
+    def __init__(self, nombre: str, precio: float):
+        self.nombre = nombre
+        self.precio = precio
+
+class Persona:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+def saludar(entidad: ConNombre) -> None:
+    print(f"Hola, {entidad.nombre}")
+
+saludar(Producto("Laptop", 999.99))  # Hola, Laptop
+saludar(Persona("Juan"))              # Hola, Juan</code></pre>
+
+                    <h3>No Hacer Clases Demasiado Abstractas</h3>
+                    <pre><code class="language-python"># Evitar: Demasiada abstraccion
+class SuperAbstractBase(ABC):
     @abstractmethod
-    def load(self, connection, id) -> None:
-        """Cargar el objeto por ID."""
-        pass
-
+    def metodo1(self): pass
     @abstractmethod
-    def delete(self, connection) -> bool:
-        """Eliminar el objeto."""
-        pass
-
-
-# ❌ EVITAR: Clases "abstractas" sin usar ABC
-class PersistableMal:
-    """Mal ejemplo: deberia usar ABC si es un contrato."""
-    def save(self, connection):
-        raise NotImplementedError</code></pre>
-
-                    <h3>No Instanciar Clases Abstractas</h3>
-                    <pre><code class="language-python">from abc import ABC, abstractmethod
-
-class Figura(ABC):
+    def metodo2(self): pass
     @abstractmethod
-    def area(self):
-        pass
+    def metodo3(self): pass
+    @abstractmethod
+    def metodo4(self): pass
+    @abstractmethod
+    def metodo5(self): pass
 
-# ❌ MAL: Intentar instanciar
-# figura = Figura()  # TypeError
+# Las subclases deben implementar TODO - poco practico
 
-# ✅ BIEN: Solo crear subclases concretas
-class Circulo(Figura):
-    def area(self):
-        return 3.14
+# Mejor: Abstraccion equilibrada
+class EntidadNegocio(ABC):
+    """Base con lo esencial compartido."""
 
-circulo = Circulo()
-
-# ✅ Usar type() para verificar
-if isinstance(circulo, Figura):
-    print("Circulo es una Figura")
-
-if type(circulo) is Circulo:
-    print("Circulo es exactamente la clase Circulo")</code></pre>
-
-                    <h3>Metodos vs Propiedades Abstractas</h3>
-                    <pre><code class="language-python">from abc import ABC, abstractmethod
-
-class Calculadora(ABC):
-    """Decidir correctamente entre metodo y propiedad abstracta."""
-
-    # Usar @property + @abstractmethod cuando:
-    # - El valor es computado/derivado
-    # - Se accede como atributo semanticamente
     @property
     @abstractmethod
-    def total(self) -> float:
-        """El total es un valor derivado, se accede como atributo."""
-        pass
+    def id(self): pass
 
-    # Usar @abstractmethod (metodo) cuando:
-    # - Hay parametros necesarios
-    # - La operacion tiene efectos secundarios
-    # - Se llama con frecuencia y quiere controlarse la llamadas
+    @property
     @abstractmethod
-    def calcular_con_descuento(self, porcentaje: float) -> float:
-        """Necesita parametros, por eso es metodo."""
-        pass
+    def estado(self): pass
 
-    # Usar @abstractmethod con parametros opcionales
-    @abstractmethod
-    def reiniciar(self, valor_inicial: float = 0) -> None:
-        """Operacion con parametros."""
-        pass</code></pre>
+    def validar(self) -> list[str]:
+        """Validacion comun."""
+        errores = []
+        if self.id is None:
+            errores.append("ID es requerido")
+        return errores
 
-                    <h3>Jerarquias de Clases Abstractas</h3>
-                    <pre><code class="language-python">from abc import ABC, abstractmethod
+class Usuario(EntidadNegocio):
+    """Solo implementa lo especifico de Usuario."""
+    @property
+    def id(self): return self._id
+    @property
+    def estado(self): return self._estado</code></pre>
 
-# ✅ BIEN: Herencia multiple de ABCs
-class Versionable(ABC):
-    @abstractmethod
-    def get_version(self) -> str:
-        pass
-
-class Serializable(ABC):
-    @abstractmethod
-    def serialize(self) -> dict:
-        pass
-
-class Entidad(Versionable, Serializable):
-    """Combina contratos de Versionable y Serializable."""
-    @abstractmethod
-    def get_id(self) -> str:
-        pass
-
-    def get_version(self) -> str:
-        return "1.0"
-
-    def serialize(self) -> dict:
-        return {"id": self.get_id(), "version": self.get_version()}
-
-
-# ❌ EVITAR: Herencia profunda de abstracciones
-class Base1(ABC): pass
-class Base2(Base1, ABC): pass
-class Base3(Base2, ABC): pass  # Demasiada complejidad</code></pre>
+                    <h3>Resumen de Decisiones</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Necesidad</th>
+                                <th>Herramienta</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Forzar implementacion</td>
+                                <td><code>@abstractmethod</code></td>
+                                <td>Metodos que deben existir</td>
+                            </tr>
+                            <tr>
+                                <td>Compartir codigo entre subclases</td>
+                                <td>ABC con metodos concretos</td>
+                                <td>Persistencia, logging comun</td>
+                            </tr>
+                            <tr>
+                                <td>Validar tipos estructuralmente</td>
+                                <td>Protocol</td>
+                                <td>Duck typing con type hints</td>
+                            </tr>
+                            <tr>
+                                <td>Jerarquia con comportamiento parcial</td>
+                                <td>ABC + mixins</td>
+                                <td>Entidades con funcionalidades opcionales</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
 
                 <section id="ejercicio">
                     <h2>Ejercicio Guiado</h2>
 
-                    <h3>Sistema de Notificaciones con ABC</h3>
-                    <p>Vamos a construir un sistema de notificaciones extensible usando clases abstractas. Este patron permite agregar nuevos tipos de notificaciones sin modificar el codigo existente (principio Open/Closed).</p>
+                    <h3>Ejercicio: Sistema de Tareas Abstracto para TaskFlow</h3>
+                    <p>Vamos a crear un sistema de tareas con clases abstractas y un Protocol para validacion de tipos.</p>
 
-                    <pre><code class="language-python">#_sistema_notificaciones.py
-"""
-Sistema de notificaciones extensible con ABC.
+                    <pre><code class="language-python">"""
+Ejercicio: Sistema de Tareas Abstracto para TaskFlow
 """
 
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Dict, Any, List
-import json
+from typing import Protocol, Optional
+from enum import Enum
 
+# ==================== Enums ====================
+class Prioridad(Enum):
+    """Prioridades de tareas."""
+    BAJA = 1
+    MEDIA = 2
+    ALTA = 3
+    URGENTE = 4
 
-# === INTERFAZ ABSTRACTA ===
+class EstadoTarea(Enum):
+    """Estados posibles de una tarea."""
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+    CANCELADA = "cancelada"
 
-class Notificador(ABC):
-    """Clase abstracta base para todos los notificadores."""
+# ==================== Protocol ====================
+class TareaValida(Protocol):
+    """Protocol para validar objetos tipo tarea."""
+    @property
+    def titulo(self) -> str:
+        """Titulo de la tarea."""
+        ...
 
     @property
+    def prioridad(self) -> Prioridad:
+        """Prioridad de la tarea."""
+        ...
+
+    def esta_completa(self) -> bool:
+        """Si la tarea esta completada."""
+        ...
+
+# ==================== Clase Abstracta ====================
+class BaseTarea(ABC):
+    """Clase base abstracta para todas las tareas."""
+
+    def __init__(self, titulo: str, descripcion: str = "", prioridad: Prioridad = Prioridad.MEDIA):
+        self._titulo = titulo
+        self._descripcion = descripcion
+        self._prioridad = prioridad
+        self._estado = EstadoTarea.PENDIENTE
+        self._fecha_creacion = datetime.now()
+        self._fecha_completado: Optional[datetime] = None
+
+    # Propiedades abstractas (obligatorias)
+    @property
     @abstractmethod
-    def nombre(self) -> str:
-        """Nombre del canal de notificacion."""
+    def categoria(self) -> str:
+        """Categoria de la tarea (obligatorio)."""
+        pass
+
+    # Propiedades concretas
+    @property
+    def titulo(self) -> str:
+        return self._titulo
+
+    @property
+    def descripcion(self) -> str:
+        return self._descripcion
+
+    @property
+    def prioridad(self) -> Prioridad:
+        return self._prioridad
+
+    @property
+    def estado(self) -> EstadoTarea:
+        return self._estado
+
+    @property
+    def fecha_creacion(self) -> datetime:
+        return self._fecha_creacion
+
+    @property
+    def fecha_completado(self) -> Optional[datetime]:
+        return self._fecha_completado
+
+    def esta_completa(self) -> bool:
+        return self._estado == EstadoTarea.COMPLETADA
+
+    # Metodos abstractos
+    @abstractmethod
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        """Calcula dias hasta el vencimiento."""
         pass
 
     @abstractmethod
-    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
-        """
-        Envia una notificacion.
-        Returns: True si fue exitoso, False en caso contrario.
-        """
+    def get_info_detallada(self) -> str:
+        """Informacion detallada de la tarea."""
         pass
 
-    @abstractmethod
-    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
-        """Formatea el mensaje para este canal."""
-        pass
+    # Metodos concretos
+    def completar(self) -> None:
+        """Marca la tarea como completada."""
+        self._estado = EstadoTarea.COMPLETADA
+        self._fecha_completado = datetime.now()
 
+    def cancelar(self) -> None:
+        """Cancela la tarea."""
+        self._estado = EstadoTarea.CANCELADA
 
-# === IMPLEMENTACIONES CONCRETAS ===
+    def __str__(self) -> str:
+        return f"[{self._estado.value}] {self._titulo} ({self._prioridad.name})"
 
-class NotificadorEmail(Notificador):
-    """Notificador por correo electronico."""
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}("
+                f"titulo='{self._titulo}', "
+                f"prioridad={self._prioridad.name}, "
+                f"estado={self._estado.value})")
 
-    @property
-    def nombre(self) -> str:
-        return "Email"
+# ==================== Implementaciones Concretas ====================
+class TareaSimple(BaseTarea):
+    """Tarea simple sin recurrencia."""
 
-    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
-        asunto = kwargs.get("asunto", "Notificacion")
-        return f"Subject: {asunto}\n\n{mensaje}"
-
-    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
-        """Simula envio de email."""
-        print(f"[EMAIL] Enviando a {destinatario}: {mensaje[:50]}...")
-        # Simular exito
-        return "@" in destinatario
-
-
-class NotificadorSMS(Notificador):
-    """Notificador por SMS."""
+    def __init__(self, titulo: str, descripcion: str = "", prioridad: Prioridad = Prioridad.MEDIA):
+        super().__init__(titulo, descripcion, prioridad)
 
     @property
-    def nombre(self) -> str:
-        return "SMS"
+    def categoria(self) -> str:
+        return "simple"
 
-    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
-        # SMS tiene limite de caracteres
-        return mensaje[:160]
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        delta = fecha_limite - self._fecha_creacion
+        return delta.days
 
-    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
-        """Simula envio de SMS."""
-        print(f"[SMS] Enviando a {destinatario}: {mensaje[:30]}...")
-        # SMS solo acepta numeros
-        return destinatario.isdigit() and len(destinatario) >= 10
-
-
-class NotificadorPush(Notificador):
-    """Notificador por push notification."""
-
-    @property
-    def nombre(self) -> str:
-        return "Push Notification"
-
-    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
-        titulo = kwargs.get("titulo", "TaskFlow")
-        return json.dumps({
-            "title": titulo,
-            "body": mensaje,
-            "icon": kwargs.get("icono", "default.png")
-        })
-
-    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
-        """Simula envio de push notification."""
-        print(f"[PUSH] Enviando a {destinatario}: {mensaje[:30]}...")
-        # Push necesita token
-        return destinatario.startswith("token_")
+    def get_info_detallada(self) -> str:
+        return (f"Tarea Simple: {self._titulo}\n"
+                f"  Descripcion: {self._descripcion}\n"
+                f"  Prioridad: {self._prioridad.name}\n"
+                f"  Estado: {self._estado.value}")
 
 
-class NotificadorSlack(Notificador):
-    """Notificador por Slack."""
+class TareaRecurrente(BaseTarea):
+    """Tarea que se repite periodicamente."""
+
+    def __init__(
+        self,
+        titulo: str,
+        descripcion: str = "",
+        prioridad: Prioridad = Prioridad.MEDIA,
+        frecuencia_dias: int = 7
+    ):
+        super().__init__(titulo, descripcion, prioridad)
+        self._frecuencia_dias = frecuencia_dias
+        self._contador_repeticiones = 0
 
     @property
-    def nombre(self) -> str:
-        return "Slack"
+    def categoria(self) -> str:
+        return "recurrente"
 
-    def formato_mensaje(self, mensaje: str, **kwargs) -> str:
-        canal = kwargs.get("canal", "#general")
-        emoji = kwargs.get("emoji", ":bell:")
-        return f"{emoji} {mensaje}"
+    @property
+    def frecuencia_dias(self) -> int:
+        return self._frecuencia_dias
 
-    def enviar(self, destinatario: str, mensaje: str, **kwargs) -> bool:
-        """Simula envio a Slack."""
-        canal = kwargs.get("canal", "#general")
-        print(f"[SLACK] Enviando a {canal}: {mensaje[:30]}...")
-        # Slack siempre funciona si el canal es valido
-        return canal.startswith("#")
+    @property
+    def contador_repeticiones(self) -> int:
+        return self._contador_repeticiones
+
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        delta = fecha_limite - self._fecha_creacion
+        return delta.days
+
+    def get_info_detallada(self) -> str:
+        return (f"Tarea Recurrente: {self._titulo}\n"
+                f"  Frecuencia: cada {self._frecuencia_dias} dias\n"
+                f"  Repeticiones: {self._contador_repeticiones}\n"
+                f"  Prioridad: {self._prioridad.name}")
+
+    def completar(self) -> None:
+        """Sobrescribe completar para tareas recurrentes."""
+        super().completar()
+        self._contador_repeticiones += 1
+        # Reiniciar para la siguiente repeticion
+        self._estado = EstadoTarea.PENDIENTE
+        self._fecha_completado = None
+        self._fecha_creacion = datetime.now()
 
 
-# === SISTEMA DE NOTIFICACIONES ===
+# ==================== Funciones con Protocol ====================
+def procesar_tarea(tarea: TareaValida) -> None:
+    """Procesa cualquier objeto que implemente TareaValida."""
+    estado = "completada" if tarea.esta_completa() else "pendiente"
+    print(f"Procesando: {tarea.titulo}")
+    print(f"  Prioridad: {tarea.prioridad.name}")
+    print(f"  Estado: {estado}")
+    print("-" * 40)
 
-class SistemaNotificaciones:
-    """Gestor central de notificaciones."""
+
+def filtrar_tareas_urgentes(tareas: list[TareaValida]) -> list[TareaValida]:
+    """Filtra tareas con prioridad alta o urgente."""
+    return [t for t in tareas if t.prioridad in (Prioridad.ALTA, Prioridad.URGENTE)]
+
+
+# ==================== Ejemplo de Uso ====================
+if __name__ == "__main__":
+    print("=" * 50)
+    print("EJERCICIO: Sistema de Tareas Abstracto")
+    print("=" * 50)
+
+    # Crear tareas
+    tarea1 = TareaSimple(
+        titulo="Completar informe",
+        descripcion="Escribir seccion final del proyecto",
+        prioridad=Prioridad.ALTA
+    )
+
+    tarea2 = TareaRecurrente(
+        titulo="Hacer respaldo",
+        descripcion="Backup semanal",
+        prioridad=Prioridad.MEDIA,
+        frecuencia_dias=7
+    )
+
+    tarea3 = TareaSimple(
+        titulo="Comprar groceries",
+        prioridad=Prioridad.BAJA
+    )
+
+    # Verificar que ambos tipos son compatibles con TareaValida
+    print("\nVerificacion de Protocol TareaValida:")
+    print(f"TareaSimple es TareaValida: {isinstance(tarea1, TareaValida)}")
+    print(f"TareaRecurrente es TareaValida: {isinstance(tarea2, TareaValida)}")
+
+    # Usar con el Protocol
+    tareas = [tarea1, tarea2, tarea3]
+
+    print("\nProcesando todas las tareas:")
+    for tarea in tareas:
+        procesar_tarea(tarea)
+
+    # Filtrar urgentes
+    print("\nTareas urgentes:")
+    urgentes = filtrar_tareas_urgentes(tareas)
+    for tarea in urgentes:
+        print(f"  - {tarea.titulo} ({tarea.prioridad.name})")
+
+    # Completar tarea recurrente
+    print("\nCompletando tarea recurrente:")
+    print(f"Antes: {tarea2}")
+    print(f"Repeticiones: {tarea2.contador_repeticiones}")
+    tarea2.completar()
+    print(f"Despues: {tarea2}")
+    print(f"Repeticiones: {tarea2.contador_repeticiones}")
+
+    # Mostrar informacion detallada
+    print("\nInformacion detallada:")
+    print(tarea1.get_info_detallada())
+    print()
+    print(tarea2.get_info_detallada())</code></pre>
+
+                    <h4>Resultados Esperados</h4>
+                    <pre><code class="language-bash"># Al ejecutar el ejercicio:
+EJERCICIO: Sistema de Tareas Abstracto
+
+Verificacion de Protocol TareaValida:
+TareaSimple es TareaValida: False (isinstance no funciona con Protocol)
+# Nota: isinstance no funciona con Protocol, pero los type hints si
+
+Procesando todas las tareas:
+Procesando: Completar informe
+  Prioridad: ALTA
+  Estado: pendiente
+----------------------------------------
+Procesando: Hacer respaldo
+  Prioridad: MEDIA
+  Estado: pendiente
+----------------------------------------
+Procesando: Comprar groceries
+  Prioridad: BAJA
+  Estado: pendiente
+----------------------------------------
+
+Tareas urgentes:
+  - Completar informe (ALTA)
+
+Completando tarea recurrente:
+Antes: [pendiente] Hacer respaldo (MEDIA)
+Repeticiones: 0
+Despues: [pendiente] Hacer respaldo (MEDIA)
+Repeticiones: 1
+
+Informacion detallada:
+Tarea Simple: Completar informe
+  Descripcion: Escribir seccion final del proyecto
+  Prioridad: ALTA
+  Estado: pendiente
+
+Tarea Recurrente: Hacer respaldo
+  Frecuencia: cada 7 dias
+  Repeticiones: 1
+  Prioridad: MEDIA</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Nota sobre isinstance y Protocol:</strong> Para verificar que un objeto implementa un Protocol en tiempo de ejecucion, usa el decorador <code>@runtime_checkable</code> en la definicion del Protocol.
+                    </div>
+                </section>
+
+                <section id="taskflow">
+                    <h2>Conexion con TaskFlow</h2>
+
+                    <h3>BaseModel Abstracto para TaskFlow</h3>
+                    <p>En TaskFlow, utilizaremos clases abstractas para definir la estructura base de nuestros modelos de dominio:</p>
+                    <pre><code class="language-python">"""
+BaseModel abstracto para TaskFlow.
+"""
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Optional, Dict, Any
+import uuid
+
+class BaseModel(ABC):
+    """Clase base abstracta para todos los modelos de TaskFlow."""
 
     def __init__(self):
-        self._notificadores: Dict[str, Notificador] = {}
+        self._id: Optional[str] = None
+        self._creado_en: datetime = datetime.now()
+        self._actualizado_en: datetime = datetime.now()
+        self._version: int = 1
 
-    def registrar_notificador(self, nombre: str, notificador: Notificador) -> None:
-        """Registra un nuevo tipo de notificador."""
-        self._notificadores[nombre] = notificador
-        print(f"Sistema: Registrado notificador '{nombre}'")
+    @property
+    def id(self) -> Optional[str]:
+        """ID unico del modelo."""
+        return self._id
 
-    def obtener_notificador(self, nombre: str) -> Notificador:
-        """Obtiene un notificador por nombre."""
-        if nombre not in self._notificadores:
-            raise ValueError(f"Notificador '{nombre}' no encontrado")
-        return self._notificadores[nombre]
+    @id.setter
+    def id(self, valor: str) -> None:
+        self._id = valor
 
-    def listar_notificadores(self) -> List[str]:
-        """Lista todos los notificadores disponibles."""
-        return list(self._notificadores.keys())
+    @property
+    def creado_en(self) -> datetime:
+        return self._creado_en
 
-    def notificar(
-        self,
-        canal: str,
-        destinatario: str,
-        mensaje: str,
-        **kwargs
-    ) -> bool:
-        """Envia una notificacion por el canal especificado."""
-        try:
-            notificador = self.obtener_notificador(canal)
-            mensaje_formateado = notificador.formato_mensaje(mensaje, **kwargs)
-            return notificador.enviar(destinatario, mensaje_formateado, **kwargs)
-        except ValueError as e:
-            print(f"Error: {e}")
-            return False
+    @property
+    def actualizado_en(self) -> datetime:
+        return self._actualizado_en
 
-    def notificar_multi_canal(
-        self,
-        canales: List[str],
-        destinatario: str,
-        mensaje: str,
-        **kwargs
-    ) -> Dict[str, bool]:
-        """Envia la misma notificacion por multiples canales."""
-        resultados = {}
-        for canal in canales:
-            resultados[canal] = self.notificar(canal, destinatario, mensaje, **kwargs)
-        return resultados
+    @property
+    def version(self) -> int:
+        return self._version
+
+    def _actualizar_version(self) -> None:
+        """Incrementa la version del modelo."""
+        self._version += 1
+        self._actualizado_en = datetime.now()
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}(id={self.id})"
+
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}("
+                f"id={self.id}, "
+                f"version={self._version})")
+
+    # ==================== Metodos Abstractos ====================
+    @abstractmethod
+    def a_json(self) -> Dict[str, Any]:
+        """Serializa el modelo a JSON."""
+        pass
+
+    @classmethod
+    @abstractmethod
+    def desde_json(cls, datos: Dict[str, Any]) -> "BaseModel":
+        """Deserializa el modelo desde JSON."""
+        pass
+
+    @abstractmethod
+    def validar(self) -> list[str]:
+        """Valida el modelo y retorna lista de errores."""
+        pass
+
+    @abstractmethod
+    def es_valido(self) -> bool:
+        """Retorna True si el modelo es valido."""
+        pass
 
 
-# === PRUEBA DEL SISTEMA ===
+class Entidad(BaseModel):
+    """Entidad del dominio (tiene identidad)."""
 
-if __name__ == "__main__":
-    print("=== Sistema de Notificaciones ===\n")
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre de la entidad."""
+        pass
 
-    # Crear sistema
-    sistema = SistemaNotificaciones()
+    @abstractmethod
+    def obtener_identity(self) -> str:
+        """Obtiene la identidad unica de la entidad."""
+        pass
 
-    # Registrar notificadores
-    sistema.registrar_notificador("email", NotificadorEmail())
-    sistema.registrar_notificador("sms", NotificadorSMS())
-    sistema.registrar_notificador("push", NotificadorPush())
-    sistema.registrar_notificador("slack", NotificadorSlack())
 
-    # Listar disponibles
-    print(f"\nNotificadores disponibles: {sistema.listar_notificadores()}")
+class Agregado(BaseModel):
+    """Raiz de un agregado."""
 
-    # Enviar notificaciones individuales
-    print("\n--- Envios Individuales ---")
-    sistema.notificar("email", "juan@example.com", "Tu tarea ha sido actualizada")
-    sistema.notificar("sms", "1234567890", "Recordatorio: reunion en 15 min")
-    sistema.notificar("push", "token_abc123", "Nuevo comentario en tu tarea", titulo="TaskFlow")
-    sistema.notificar("slack", "#desarrollo", "Build completado exitosamente", emoji=":white_check_mark:")
+    @property
+    @abstractmethod
+    def entidad_raiz(self) -> Entidad:
+        """Retorna la entidad raiz del agregado."""
+        pass
 
-    # Enviar por multiples canales
-    print("\n--- Envio Multi-Canal ---")
-    resultados = sistema.notificar_multi_canal(
-        canales=["email", "push"],
-        destinatario="maria@example.com",
-        mensaje="Tu tarea 'Diseno UI' ha sido completada",
-        asunto="Tarea Completada",
-        titulo="TaskFlow"
-    )
-    print(f"Resultados: {resultados}")
 
-    # Probar errores
-    print("\n--- Casos de Error ---")
-    sistema.notificar("whatsapp", "1234567890", "Este canal no existe")
+# ==================== Protocol de Validador ====================
+class Validador(Protocol):
+    """Protocolo para validadores."""
 
-    print("\n=== Sistema funcionando correctamente ===")</code></pre>
+    def validar(self, obj: Any) -> bool:
+        """Valida un objeto."""
+        ...
 
-                    <h4>Ejecucion del Codigo</h4>
-                    <pre><code class="language-bash">python _sistema_notificaciones.py</code></pre>
+    def obtener_errores(self, obj: Any) -> list[str]:
+        """Retorna errores de validacion."""
+        ...</code></pre>
+
+                    <h3>Protocol para Validacion de Tipos</h3>
+                    <p>Los Protocols nos permiten validar tipos sin herencia:</p>
+                    <pre><code class="language-python">"""
+Protocols para validacion de tipos en TaskFlow.
+"""
+from typing import Protocol, Optional
+from datetime import datetime
+
+# Protocol para entidades persistibles
+class Persistable(Protocol):
+    """Objeto que puede ser persistido."""
+
+    @property
+    def id(self) -> Optional[str]:
+        ...
+
+    def guardar(self) -> bool:
+        ...
+
+    def eliminar(self) -> bool:
+        ...
+
+# Protocol para eventos
+class Evento(Protocol):
+    """Evento del dominio."""
+
+    @property
+    def tipo(self) -> str:
+        ...
+
+    @property
+    def fecha(self) -> datetime:
+        ...
+
+    @property
+    def datos(self) -> dict:
+        ...
+
+# Protocol para repositorios
+class Repositorio(Protocol):
+    """Repositorio generico."""
+
+    def obtener(self, id: str) -> Optional[Persistable]:
+        ...
+
+    def listar(self) -> list[Persistable]:
+        ...
+
+    def guardar(self, obj: Persistable) -> bool:
+        ...
+
+    def eliminar(self, obj: Persistable) -> bool:
+        ...</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Reto adicional:</strong> Agrega un nuevo notificador <code>NotificadorDiscord</code> que use webhooks de Discord. No necesitas modificar el resto del codigo, solo registrar el nuevo notificador.
+                        <strong>Aplicacion en TaskFlow:</strong> BaseModel y los Protocols nos permiten:
+                        <ul>
+                            <li>Definir contratos claros para todos los modelos</li>
+                            <li>Validar tipos en tiempo de compilacion con mypy</li>
+                            <li>Mantener consistencia en la serializacion (a_json/desde_json)</li>
+                            <li>Implementar validacion centralizada</li>
+                        </ul>
                     </div>
                 </section>
 
                 <section id="referencias">
                     <h2>Para Profundizar</h2>
                     <ul>
-                        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">Documentacion Oficial del Modulo abc</a></li>
-                        <li><a href="https://docs.python.org/es/3/library/collections.abc.html" target="_blank">Colecciones Abstractas (collections.abc)</a></li>
-                        <li><a href="https://refactoring.guru/es/design-patterns/template-method" target="_blank">Patron Template Method - Refactoring Guru</a></li>
-                        <li><a href="https://realpython.com/python-interface/" target="_blank">Real Python - Abstract Base Classes</a></li>
-                        <li><a href="https://docs.python.org/es/3/library/typing.html#typing.Protocol" target="_blank">Protocolos (typing.Protocol) - Interfaces en Python</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">abc - Abstract Base Classes - Documentacion Oficial de Python</a></li>
+                        <li><a href="https://peps.python.org/pep-0544/" target="_blank">PEP 544: Protocols (Structural Subtyping)</a></li>
+                        <li><a href="https://realpython.com/python-interface/#using-abstract-base-classes" target="_blank">Real Python - Abstract Base Classes</a></li>
+                        <li><a href="https://mypy.readthedocs.io/en/stable/protocols.html" target="_blank">Mypy - Protocols</a></li>
+                        <li><a href="https://refactoring.guru/design-patterns/template-method" target="_blank">Refactoring Guru - Template Method Pattern</a></li>
                     </ul>
-                </section>
-
-                <section id="taskflow">
-                    <h2>Conexion con TaskFlow</h2>
-
-                    <h3>BaseEntity Abstracta</h3>
-                    <p>En el proyecto TaskFlow, las entidades del dominio heredan de una clase base abstracta que proporciona:</p>
-                    <ul>
-                        <li><strong>Gestion de ID:</strong> Control sobre la asignacion del identificador unico</li>
-                        <li><strong>Auditoria:</strong> Seguimiento de creado_en y actualizado_en</li>
-                        <li><strong>Validacion:</strong> Metodo abstracto para validar el estado</li>
-                        <li><strong>Serializacion:</strong> Metodo to_dict para convertir a diccionario</li>
-                    </ul>
-
-                    <h3>Repository Interfaces</h3>
-                    <p>Los repositorios definen contratos ABC para las operaciones de persistencia:</p>
-                    <pre><code class="language-python">from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional, List
-from ..entities import Entity
-
-E = TypeVar('E', bound=Entity)
-
-class Repository(ABC, Generic[E]):
-    """Interfaz abstracta para repositorios de entidades."""
-
-    @abstractmethod
-    def save(self, entity: E) -> E:
-        """Guarda o actualiza una entidad."""
-        pass
-
-    @abstractmethod
-    def find_by_id(self, id) -> Optional[E]:
-        """Busca una entidad por ID."""
-        pass
-
-    @abstractmethod
-    def find_all(self) -> List[E]:
-        """Obtiene todas las entidades."""
-        pass
-
-    @abstractmethod
-    def delete(self, entity: E) -> bool:
-        """Elimina una entidad."""
-        pass
-
-    @abstractmethod
-    def count(self) -> int:
-        """Cuenta el total de entidades."""
-        pass</code></pre>
-
-                    <div class="alert-note">
-                        <strong>Proxima clase:</strong> En la proxima clase sobre el Patron Repository, profundizaremos en la implementacion de repositorios concretos para TaskFlow usando SQLAlchemy.
-                    </div>
                 </section>
             </main>
         </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U1C04-ABS"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
     </div>
 
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
             <p>Ultima actualizacion: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
         </div>
     </footer>
 

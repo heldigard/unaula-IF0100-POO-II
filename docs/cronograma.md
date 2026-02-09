@@ -12,7 +12,7 @@
 | **Período Académico** | 2026-1 |
 | **Asignatura** | IF0100 - Programación Orientada a Objetos II |
 | **Programa** | Ingeniería en Sistemas |
-| **Día de Clase** | **Martes** |
+| **Días de Clase** | **Martes y Jueves** |
 | **Horario** | 06:00-08:00 PM (2 horas académicas) |
 | **Aula** | TU301 |
 | **Modalidad** | Presencial |
@@ -28,84 +28,78 @@
 
 | Métrica | Valor |
 |---------|-------|
-| **Total de Semanas del Semestre** | 17 semanas |
-| **Total de Clases Programadas** | 17 clases |
-| **Clases en Días Festivos** | 1 clase cancelada |
-| **Clases Efectivas** | 16 clases |
+| **Total de Semanas del Semestre** | 15 semanas efectivas |
+| **Total de Clases Programadas** | 30 clases (2 por semana) |
+| **Clases en Días Festivos** | 4 clases canceladas |
+| **Clases Efectivas** | 26 clases |
 
 ### Días Festivos que Afectan el Calendario
 
-| Fecha | Día | Festividad | Estado |
-|-------|-----|------------|--------|
-| 31 de Marzo | Martes | Martes Santo | **CLASE CANCELADA** |
+| Fecha | Día | Festividad | Clases Afectadas | Estado |
+|-------|-----|------------|------------------|--------|
+| 31 de Marzo | Martes | Martes Santo | 2 clases | **CLASE CANCELADA** |
+| 01 de Abril | Miércoles | Jueves Santo | 2 clases | **CLASE CANCELADA** |
+| 02 de Abril | Jueves | Viernes Santo | 2 clases | **CLASE CANCELADA** |
 
-> **Nota:** Según `docs/SemanaSanta2026.txt`, la Semana Santa 2026 se celebra del **29 de marzo al 5 de abril**, con Martes Santo el **31 de marzo**.
+> **Nota:** Según `docs/SemanaSanta2026.txt`, la Semana Santa 2026 se celebra del **29 de marzo al 5 de abril**.
 
 ---
 
-## 3. Calendario por Unidad
+## 3. Calendario por Unidad (Martes + Jueves)
 
 ### Unidad 00: Fundamentos Python (Semanas 1-4)
 
-| Semana | Fecha | Clase | Tema |
-|--------|-------|-------|------|
-| 1 | 27/01/2026 | Clase 01 | Ecosistema Python y Configuración del Entorno |
-| 2 | 03/02/2026 | Clase 02 | Variables, Tipos de Datos y Operadores |
-| 3 | 10/02/2026 | Clase 03 | Estructuras de Control (if, for, while) |
-| 4 | 17/02/2026 | Clase 04 | Estructuras de Datos (listas, diccionarios, tuples, sets) |
+| Semana | Martes (Fecha) | Jueves (Fecha) | Clase | Tema |
+|--------|----------------|----------------|-------|------|
+| 1 | 03/02/2026 | 06/02/2026 | Clases 01-02 | Variables, Tipos y Ecosistema Python |
+| 2 | 10/02/2026 | 13/02/2026 | Clases 03-04 | Estructuras de Control |
+| 3 | 17/02/2026 | 20/02/2026 | Clases 05-06 | Estructuras de Datos |
+| 4 | 24/02/2026 | 27/02/2026 | Clases 07-08 | **Quiz 1** + Repaso |
 
 ### Unidad 01: Programación Orientada a Objetos (Semanas 5-8)
 
-| Semana | Fecha | Clase | Tema |
-|--------|-------|-------|------|
-| 5 | 24/02/2026 | Clase 05 | Clases, Objetos y Atributos |
-| 6 | 03/03/2026 | Clase 06 | Métodos y el Método __init__ |
-| 7 | 10/03/2026 | Clase 07 | Encapsulamiento y Modificadores de Acceso |
-| 8 | 17/03/2026 | Clase 08 | Herencia y Polimorfismo |
+| Semana | Martes (Fecha) | Jueves (Fecha) | Clase | Tema |
+|--------|----------------|----------------|-------|------|
+| 5 | 03/03/2026 | 05/03/2026 | Clases 09-10 | Clases, Objetos y Atributos |
+| 6 | 10/03/2026 | 12/03/2026 | Clases 11-12 | Métodos y el Método __init__ |
+| 7 | 17/03/2026 | 19/03/2026 | Clases 13-14 | **Taller 1** + Encapsulamiento |
+| 8 | 24/03/2026 | 26/03/2026 | Clases 15-16 | Herencia, Polimorfismo y **Parcial 1** |
 
 ### Unidad 02: Técnicas de Desarrollo (Semanas 9-12)
 
-| Semana | Fecha | Clase | Tema |
-|--------|-------|-------|------|
-| 9 | 24/03/2026 | Clase 09 | Introducción a TDD y pytest |
-| - | **31/03/2026** | --- | **MARTES SANTO - RECESO (Semana Santa)** |
-| 10 | 07/04/2026 | Clase 10 | pytest Avanzado (fixtures, parametrización) |
-| 11 | 14/04/2026 | Clase 11 | Behavior-Driven Development (BDD) con Behave |
-| 12 | 21/04/2026 | Clase 12 | Introducción a Domain-Driven Design |
+| Semana | Martes (Fecha) | Jueves (Fecha) | Clase | Tema |
+|--------|----------------|----------------|-------|------|
+| 9 | 31/03/2026 | 02/04/2026 | --- | **SEMANA SANTA** |
+| 10 | 07/04/2026 | 09/04/2026 | Clases 17-18 | Introducción a TDD y pytest |
+| 11 | 14/04/2026 | 16/04/2026 | Clases 19-20 | pytest Avanzado y **Taller 2** |
+| 12 | 21/04/2026 | 23/04/2026 | Clases 21-22 | BDD con Behave y DDD Intro |
 
-### Unidad 03: Backend con FastAPI y Persistencia (Semanas 13-17)
+### Unidad 03: Backend con FastAPI y Persistencia (Semanas 13-16)
 
-| Semana | Fecha | Clase | Tema |
-|--------|-------|-------|------|
-| 13 | 28/04/2026 | Clase 13 | Introducción a FastAPI y APIs REST |
-| 14 | 05/05/2026 | Clase 14 | Pydantic y Validación de Datos |
-| 15 | 12/05/2026 | Clase 15 | Dependencias e Inyección de Dependencias |
-| 16 | 19/05/2026 | Clase 16 | Testing en APIs con pytest y httpx |
-| 17 | 26/05/2026 | Clase 17 | Persistencia de Datos con SQLAlchemy |
-
-### Proyecto TaskFlow - Integración (Opcional)
-
-| Semana | Fecha | Clase | Tema |
-|--------|-------|-------|------|
-| 18 | 02/06/2026 | Extra | Proyecto TaskFlow - Integración y Cierre |
+| Semana | Martes (Fecha) | Jueves (Fecha) | Clase | Tema |
+|--------|----------------|----------------|-------|------|
+| 13 | 28/04/2026 | 30/04/2026 | Clases 23-24 | FastAPI Intro y Pydantic |
+| 14 | 05/05/2026 | 07/05/2026 | Clases 25-26 | Dependencias y Testing APIs |
+| 15 | 12/05/2026 | 14/05/2026 | Clases 27-28 | **Proyecto Parcial** + Persistencia |
+| 16 | 19/05/2026 | 21/05/2026 | Clases 29-30 | Revisión y **Proyecto Final** |
 
 ---
 
-## 4. Tabla de Fechas con Entregas
+## 4. Tabla de Fechas con Entregas (PORCENTAJES CORRECTOS)
 
-| Semana | Fecha | Evento | Porcentaje | Seguimiento |
-|--------|-------|--------|------------|-------------|
-| 4 | 17/02/2026 | Quiz 1: Fundamentos Python | 15% | Primer Seguimiento |
-| 7 | 10/03/2026 | Taller 1: Modelado OO | 15% | Primer Seguimiento |
-| 8 | 17/03/2026 | Parcial 1: Python + POO | 20% | Primer Seguimiento |
-| 11 | 14/04/2026 | Taller 2: TDD + Testing | 15% | Segundo Seguimiento |
-| 15 | 12/05/2026 | Proyecto Parcial: TaskFlow (API) | 15% | Segundo Seguimiento |
-| 17 | 26/05/2026 | **Proyecto Final (TaskFlow Completo)** | 20% | Tercer Seguimiento |
+| Semana | Martes | Jueves | Evento | Porcentaje | Seguimiento |
+|--------|--------|--------|--------|------------|-------------|
+| 4 | 24/02 | 27/02 | Quiz 1: Fundamentos Python | **15%** | Primer Seguimiento |
+| 7 | 17/03 | 19/03 | Taller 1: Modelado OO | **15%** | Primer Seguimiento |
+| 8 | 24/03 | 26/03 | Parcial 1: Python + POO | **20%** | Primer Seguimiento |
+| 11 | 14/04 | 16/04 | Taller 2: TDD + Testing | **15%** | Segundo Seguimiento |
+| 15 | 12/05 | 14/05 | Proyecto Parcial: TaskFlow | **15%** | Segundo Seguimiento |
+| 16 | 19/05 | 21/05 | **Proyecto Final (TaskFlow Completo)** | **20%** | Tercer Seguimiento |
 
-**NOTA:** Esta distribución cumple con los porcentajes oficiales de evaluación:
-- **Primer Seguimiento (50%)**: 15% + 15% + 20% antes de Semana Santa (límite 27/03/2026) ✅
-- **Segundo Seguimiento (80%)**: +15% + 15% antes del 15/05/2026 ✅
-- **Tercer Seguimiento (100%)**: +20% antes del 28/05/2026 ✅
+**Esta distribución cumple con los porcentajes oficiales de Evaluación (50% + 30% + 20% = 100%):**
+- **Primer Seguimiento (50%)**: 15% + 15% + 20% = 50% (antes de Semana Santa) ✅
+- **Segundo Seguimiento (80%)**: +15% + 15% = 30% (antes del 15/05/2026) ✅
+- **Tercer Seguimiento (100%)**: +20% = 20% (antes del 28/05/2026) ✅
 
 ---
 
@@ -115,17 +109,17 @@
 
 | Seguimiento | Evaluación | Semana | Fecha | Porcentaje | Descripción |
 |-------------|------------|--------|-------|------------|-------------|
-| **Primer (50%)** | Quiz 1 | 4 | 17/02/2026 | 15% | Fundamentos Python |
-| **Primer (50%)** | Taller 1 | 7 | 10/03/2026 | 15% | Modelado OO |
-| **Primer (50%)** | Parcial 1 | 8 | 17/03/2026 | 20% | Python + POO |
+| **Primero (50%)** | Quiz 1 | 4 | 24/02/2026 | 15% | Fundamentos Python |
+| **Primero (50%)** | Taller 1 | 7 | 17/03/2026 | 15% | Modelado OO |
+| **Primero (50%)** | Parcial 1 | 8 | 24/03/2026 | 20% | Python + POO |
 | **Segundo (80%)** | Taller 2 | 11 | 14/04/2026 | 15% | TDD + Testing |
 | **Segundo (80%)** | Proyecto Parcial | 15 | 12/05/2026 | 15% | TaskFlow (API CRUD) |
-| **Tercer (100%)** | Proyecto Final | 17 | 26/05/2026 | 20% | TaskFlow Completo |
+| **Tercero (100%)** | Proyecto Final | 16 | 19/05/2026 | 20% | TaskFlow Completo |
 
 ### Fechas Límite Oficiales
 
-| Seguimiento | Porcentaje Acumulado | Fecha Límite | Estado |
-|-------------|----------------------|--------------|--------|
+| Seguimiento | Porcentaje | Fecha Límite | Estado |
+|-------------|------------|--------------|--------|
 | **Primer Seguimiento** | 50% | 27/03/2026 | Antes de Semana Santa ✅ |
 | **Segundo Seguimiento** | 80% | 15/05/2026 | ✅ |
 | **Tercer Seguimiento** | 100% | 28/05/2026 | ✅ |
@@ -134,27 +128,24 @@
 
 ## 6. Mapa de Progreso del Semestre
 
-| Semana | Fecha | Clase | Entregas | % Acumulado |
-|--------|-------|-------|----------|-------------|
-| 1 | 27 Ene | 01 | - | 0% |
-| 2 | 03 Feb | 02 | - | 0% |
-| 3 | 10 Feb | 03 | - | 0% |
-| 4 | 17 Feb | 04 | Quiz 1 (15%) | 15% |
-| 5 | 24 Feb | 05 | - | 15% |
-| 6 | 03 Mar | 06 | - | 15% |
-| 7 | 10 Mar | 07 | Taller 1 (15%) | 30% |
-| 8 | 17 Mar | 08 | Parcial 1 (20%) | **50%** ✅ |
-| 9 | 24 Mar | 09 | - | 50% |
-| - | **31 Mar** | - | **RECESO** | 50% |
-| 10 | 07 Abr | 10 | - | 50% |
-| 11 | 14 Abr | 11 | Taller 2 (15%) | 65% |
-| 12 | 21 Abr | 12 | - | 65% |
-| 13 | 28 Abr | 13 | - | 65% |
-| 14 | 05 May | 14 | - | 65% |
-| 15 | 12 May | 15 | Proyecto Parcial (15%) | **80%** ✅ |
-| 16 | 19 May | 16 | - | 80% |
-| 17 | 26 May | 17 | Proyecto Final (20%) | **100%** ✅ |
-| 18 | 02 Jun | Extra | Cierre | 100% |
+| Semana | Martes | Jueves | Entregas | % Acumulado |
+|--------|--------|--------|----------|-------------|
+| 1 | 03 Feb | 06 Feb | - | 0% |
+| 2 | 10 Feb | 13 Feb | - | 0% |
+| 3 | 17 Feb | 20 Feb | - | 0% |
+| 4 | 24 Feb | 27 Feb | Quiz 1 (15%) | **15%** |
+| 5 | 03 Mar | 05 Mar | - | 15% |
+| 6 | 10 Mar | 12 Mar | - | 15% |
+| 7 | 17 Mar | 19 Mar | Taller 1 (15%) | **30%** |
+| 8 | 24 Mar | 26 Mar | Parcial 1 (20%) | **50%** ✅ |
+| 9 | 31 Mar | 02 Abr | **SEMANA SANTA** | 50% |
+| 10 | 07 Abr | 09 Abr | - | 50% |
+| 11 | 14 Abr | 16 Abr | Taller 2 (15%) | **65%** |
+| 12 | 21 Abr | 23 Abr | - | 65% |
+| 13 | 28 Abr | 30 Abr | - | 65% |
+| 14 | 05 May | 07 May | - | 65% |
+| 15 | 12 May | 14 May | Proyecto Parcial (15%) | **80%** ✅ |
+| 16 | 19 May | 21 May | Proyecto Final (20%) | **100%** ✅ |
 
 ---
 
@@ -166,12 +157,12 @@ El proyecto **TaskFlow** es el componente central del curso. A continuación se 
 
 | Milestone | Semana | Fecha | Porcentaje | Entregable |
 |-----------|--------|-------|------------|------------|
-| **M1: Configuración** | 10 | 07 abr | - | Repo Git configurado, estructura base |
-| **M2: Modelos** | 11-12 | 21-28 abr | - | Entidades de dominio con Pydantic |
-| **M3: API Core** | 13-14 | 05-12 may | - | Endpoints CRUD funcionando |
-| **M4: Testing** | 15 | 12 may | 15% | Tests con >80% cobertura (Proyecto Parcial) |
-| **M5: Persistencia** | 16 | 19 may | - | SQLAlchemy integrado |
-| **M6: Entrega Final** | 17 | 26 may | 20% | Proyecto completo documentado (Proyecto Final) |
+| **M1: Configuración** | 10 | 07-09 abr | - | Repo Git configurado, estructura base |
+| **M2: Modelos** | 12 | 21-23 abr | - | Entidades de dominio con Pydantic |
+| **M3: API Core** | 13-14 | 28 abr - 07 may | - | Endpoints CRUD funcionando |
+| **M4: Testing** | 15 | 12-14 may | 15% | Tests con >80% cobertura (Proyecto Parcial) |
+| **M5: Persistencia** | 15-16 | 14-21 may | - | SQLAlchemy integrado |
+| **M6: Entrega Final** | 16 | 19-21 may | 20% | Proyecto completo documentado (Proyecto Final) |
 
 ### Arquitectura del Proyecto
 
@@ -243,5 +234,5 @@ TaskFlow/
 
 ---
 
-**Última Actualización:** 08/02/2026
-**Versión:** 1.1 (Actualizado para clases de MARTES)
+**Última Actualización:** 2026-02-08
+**Versión:** 2.2 (Porcentajes corregidos: 15%/15%/20%/15%/15%/20%)

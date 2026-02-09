@@ -341,16 +341,16 @@
                     <p>Python tiene varios tipos de datos incorporados. Los más fundamentales son:</p>
 
                     <h4>1. Enteros (int)</h4>
-                    <p>Números sin parte decimal. Pueden ser positivos, negativos o cero.</p>
-                    <pre><code class="language-python">edad = 25
-cantidad = -100
-numero_grande = 1_000_000  # Python 3.6+ permite guiones para legibilidad</code></pre>
+                    <p>Numeros sin parte decimal. Pueden ser positivos, negativos o cero.</p>
+                    <pre><code class="language-python">edad: int = 25
+cantidad: int = -100
+numero_grande: int = 1_000_000  # Python 3.6+ permite guiones para legibilidad</code></pre>
 
                     <h4>2. Flotantes (float)</h4>
-                    <p>Números con parte decimal. Nota: los flotantes tienen precisión limitada.</p>
-                    <pre><code class="language-python">precio = 19.99
-pi = 3.14159
-notacion_cientifica = 1.5e-4  # 0.00015</code></pre>
+                    <p>Numeros con parte decimal. Nota: los flotantes tienen precision limitada.</p>
+                    <pre><code class="language-python">precio: float = 19.99
+pi: float = 3.14159
+notacion_cientifica: float = 1.5e-4  # 0.00015</code></pre>
 
                     <div class="alert-warning-custom">
                         <strong>⚠️ Precisión de flotantes:</strong> <code>0.1 + 0.2 == 0.3</code> retorna <code>False</code> en Python debido a cómo se almacenan los flotantes. Para cálculos monetarios, considera usar <code>decimal.Decimal</code>.
@@ -358,21 +358,21 @@ notacion_cientifica = 1.5e-4  # 0.00015</code></pre>
 
                     <h4>3. Strings (str)</h4>
                     <p>Secuencias inmutables de caracteres. Pueden usar comillas simples, dobles o triples.</p>
-                    <pre><code class="language-python">nombre = "Ana"          # Comillas dobles
-saludo = 'Hola'        # Comillas simples
-parrafo = """Línea 1
-Línea 2"""            # Comillas triples para múltiples líneas</code></pre>
+                    <pre><code class="language-python">nombre: str = "Ana"          # Comillas dobles
+saludo: str = 'Hola'        # Comillas simples
+parrafo: str = """Linea 1
+Linea 2"""            # Comillas triples para multiples lineas</code></pre>
 
                     <h4>4. Booleanos (bool)</h4>
                     <p>Representan valores de verdad. Solo dos valores: <code>True</code> o <code>False</code>.</p>
-                    <pre><code class="language-python">es_activo = True
-esta_completado = False
-es_mayor = (5 > 3)  # True</code></pre>
+                    <pre><code class="language-python">es_activo: bool = True
+esta_completado: bool = False
+es_mayor: bool = (5 > 3)  # True</code></pre>
 
                     <h4>5. NoneType (None)</h4>
                     <p>Representa la ausencia de valor o un valor nulo.</p>
-                    <pre><code class="language-python">resultado = None
-valor_inicial = None</code></pre>
+                    <pre><code class="language-python">resultado: None = None
+valor_inicial: None = None</code></pre>
 
                     <h3>Operadores de Comparación</h3>
                     <p>Los operadores de comparación retornan siempre un valor booleano (<code>True</code> o <code>False</code>):</p>
@@ -914,10 +914,19 @@ else:
         </div>
     </div>
 
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U0C01-VARTIP"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-07</p>
+            <p>Última actualización: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
         </div>
     </footer>
 
