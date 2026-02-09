@@ -545,200 +545,293 @@
         <section id="clases">
             <h2>Contenido del Curso</h2>
 
-            <!-- Unidad 0 -->
-            <div class="card mb-4">
-                <div class="card-header unit-0 d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-gem me-2"></i>Unidad 0: Fundamentos de Python</span>
-                    <span class="badge bg-light text-dark">4 clases</span>
+            <!-- Notebooks por Unidad -->
+            <div class="card mb-4 border-primary">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-journal-bookmark me-2"></i>Notebooks por Unidad</span>
+                    <a href="https://colab.research.google.com" target="_blank" class="btn btn-light btn-sm">
+                        <i class="bi bi-laptop me-1"></i>Abrir en Colab
+                    </a>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-00/clase-00-introduccion.html">
-                                        <i class="bi bi-play-circle text-primary"></i>
-                                        Clase 00: Introducción a Python
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-00/clase-01-variables-tipos.html">
-                                        <i class="bi bi-code-slash text-secondary"></i>
-                                        Clase 01: Variables y Tipos de Datos
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                            </ul>
+                    <div class="row g-3">
+                        <!-- Unidad 0 -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white py-2">
+                                    <small><i class="bi bi-gem me-1"></i>Unidad 0: Python</small>
+                                </div>
+                                <div class="card-body py-2">
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li><a href="../notebooks/unidad-00/00-01-introduccion-python.ipynb" target="_blank"><i class="bi bi-play-circle text-success me-1"></i>00-01 Intro Python</a></li>
+                                        <li><a href="../notebooks/unidad-00/00-02-estructuras-control.ipynb" target="_blank"><i class="bi bi-diagram-2 text-success me-1"></i>00-02 Control</a></li>
+                                        <li><a href="../notebooks/unidad-00/00-03-estructuras-datos.ipynb" target="_blank"><i class="bi bi-collection text-success me-1"></i>00-03 Datos</a></li>
+                                        <li><a href="../notebooks/unidad-00/00-04-modulos-errores.ipynb" target="_blank"><i class="bi bi-box text-success me-1"></i>00-04 Módulos</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-00/clase-02-estructuras-control.html">
-                                        <i class="bi bi-diagram-2 text-success"></i>
-                                        Clase 02: Estructuras de Control
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-00/clase-03-estructuras-datos.html">
-                                        <i class="bi bi-collection text-warning"></i>
-                                        Clase 03: Estructuras de Datos
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <!-- Unidad 1 -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white py-2">
+                                    <small><i class="bi bi-box-seam me-1"></i>Unidad 1: POO</small>
+                                </div>
+                                <div class="card-body py-2">
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li><a href="../notebooks/unidad-01/01-01-clases-objetos.ipynb" target="_blank"><i class="bi bi-gear text-success me-1"></i>01-01 Clases</a></li>
+                                        <li><a href="../notebooks/unidad-01/01-02-encapsulamiento.ipynb" target="_blank"><i class="bi bi-shield-lock text-success me-1"></i>01-02 Encaps</a></li>
+                                        <li><a href="../notebooks/unidad-01/01-03-herencia-composicion.ipynb" target="_blank"><i class="bi bi-diagram-3 text-success me-1"></i>01-03 Herencia</a></li>
+                                        <li><a href="../notebooks/unidad-01/01-04-polimorfismo.ipynb" target="_blank"><i class="bi bi-layers text-success me-1"></i>01-04 Polimorf</a></li>
+                                        <li><a href="../notebooks/unidad-01/01-05-interfaces.ipynb" target="_blank"><i class="bi bi-interface text-success me-1"></i>01-05 Interfaces</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Unidad 2 -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 border-purple">
+                                <div class="card-header bg-purple text-white py-2">
+                                    <small><i class="bi bi-bug me-1"></i>Unidad 2: Testing</small>
+                                </div>
+                                <div class="card-body py-2">
+                                    <ul class="list-unstyled mb-0 small">
+                                        <li><a href="../notebooks/unidad-02/02-01-tdd-intro.ipynb" target="_blank"><i class="bi bi-check-circle text-purple me-1"></i>02-01 TDD Intro</a></li>
+                                        <li><a href="../notebooks/unidad-02/02-02-tdd-ciclo.ipynb" target="_blank"><i class="bi bi-arrow-repeat text-purple me-1"></i>02-02 Ciclo TDD</a></li>
+                                        <li><a href="../notebooks/unidad-02/02-03-testing-avanzado.ipynb" target="_blank"><i class="bi bi-lightning text-purple me-1"></i>02-03 Testing+</a></li>
+                                        <li><a href="../notebooks/unidad-02/02-04-bdd-intro.ipynb" target="_blank"><i class="bi bi-chat-quote text-purple me-1"></i>02-04 BDD</a></li>
+                                        <li><a href="../notebooks/unidad-02/02-05-ddd-intro.ipynb" target="_blank"><i class="bi bi-building text-purple me-1"></i>02-05 DDD</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Unidad 3 -->
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card h-100 border-warning">
+                                <div class="card-header bg-warning text-dark py-2">
+                                    <small><i class="bi bi-hdd-network me-1"></i>Unidad 3: FastAPI</small>
+                                </div>
+                                <div class="card-body py-2">
+                                    <ul class="list-unstyled mb-0 small text-muted">
+                                        <li class="text-muted"><i class="bi bi-clock-history me-1"></i>Próximamente</li>
+                                        <li class="text-muted small mt-2">5 notebooks pendientes de creación</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Unidad 1 -->
-            <div class="card mb-4">
-                <div class="card-header unit-1 d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-box-seam me-2"></i>Unidad 1: Programación Orientada a Objetos</span>
-                    <span class="badge bg-light text-dark">4 clases</span>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-01/clase-01-clases-objetos.html">
-                                        <i class="bi bi-gear text-success"></i>
-                                        Clase 01: Clases y Objetos
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-01/clase-02-encapsulamiento.html">
-                                        <i class="bi bi-shield-lock text-success"></i>
-                                        Clase 02: Encapsulamiento
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-01/clase-03-herencia-polimorfismo.html">
-                                        <i class="bi bi-diagram-3 text-success"></i>
-                                        Clase 03: Herencia y Polimorfismo
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-01/clase-04-clases-abstractas.html">
-                                        <i class="bi bi-gem text-success"></i>
-                                        Clase 04: Clases Abstractas e Interfaces
-                                        <span class="badge bg-secondary">VSCode</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Unidad 2 -->
-            <div class="card mb-4">
-                <div class="card-header unit-2 d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-bug me-2"></i>Unidad 2: Técnicas de Desarrollo</span>
-                    <span class="badge bg-light text-dark">4 clases</span>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-02/clase-01-tdd-intro.html">
-                                        <i class="bi bi-check-circle text-purple"></i>
-                                        Clase 01: Introducción al TDD
-                                        <span class="badge bg-purple">pytest</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-02/clase-02-pytest-avanzado.html">
-                                        <i class="bi bi-lightning text-purple"></i>
-                                        Clase 02: pytest Avanzado
-                                        <span class="badge bg-purple">pytest</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-02/clase-03-bdd-intro.html">
-                                        <i class="bi bi-chat-quote text-purple"></i>
-                                        Clase 03: Behavior-Driven Development
-                                        <span class="badge bg-purple">BDD</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-02/clase-04-ddd-intro.html">
-                                        <i class="bi bi-building text-purple"></i>
-                                        Clase 04: Domain-Driven Design
-                                        <span class="badge bg-purple">DDD</span>
-                                    </a>
-                                </li>
-                            </ul>
+            <!-- Clases HTML existentes -->
+            <div class="accordion" id="accordionClases">
+                <!-- Unidad 0 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad0">
+                            <i class="bi bi-gem text-primary me-2"></i>Unidad 0: Fundamentos de Python (4 clases)
+                        </button>
+                    </h2>
+                    <div id="collapseUnidad0" class="accordion-collapse collapse show" data-bs-parent="#accordionClases">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-00/clase-00-introduccion.html">
+                                                <i class="bi bi-play-circle text-primary"></i>
+                                                Clase 00: Introducción a Python
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-00/clase-01-variables-tipos.html">
+                                                <i class="bi bi-code-slash text-secondary"></i>
+                                                Clase 01: Variables y Tipos de Datos
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-00/clase-02-estructuras-control.html">
+                                                <i class="bi bi-diagram-2 text-success"></i>
+                                                Clase 02: Estructuras de Control
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-00/clase-03-estructuras-datos.html">
+                                                <i class="bi bi-collection text-warning"></i>
+                                                Clase 03: Estructuras de Datos
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Unidad 3 -->
-            <div class="card mb-4">
-                <div class="card-header unit-3 d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-hdd-network me-2"></i>Unidad 3: Desarrollo Backend con FastAPI</span>
-                    <span class="badge bg-light text-dark">5 clases</span>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-03/clase-01-fastapi-intro.html">
-                                        <i class="bi bi-lightning-charge text-orange"></i>
-                                        Clase 01: Introducción a FastAPI
-                                        <span class="badge bg-orange">FastAPI</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-03/clase-02-pydantic-validacion.html">
-                                        <i class="bi bi-patch-check text-orange"></i>
-                                        Clase 02: Pydantic y Validación
-                                        <span class="badge bg-orange">Pydantic</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-03/clase-03-dependencias.html">
-                                        <i class="bi bi-diagram-2 text-orange"></i>
-                                        Clase 03: Sistema de Dependencias
-                                        <span class="badge bg-orange">DI</span>
-                                    </a>
-                                </li>
-                            </ul>
+                <!-- Unidad 1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad1">
+                            <i class="bi bi-box-seam text-success me-2"></i>Unidad 1: Programación Orientada a Objetos (4 clases)
+                        </button>
+                    </h2>
+                    <div id="collapseUnidad1" class="accordion-collapse collapse" data-bs-parent="#accordionClases">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-01/clase-01-clases-objetos.html">
+                                                <i class="bi bi-gear text-success"></i>
+                                                Clase 01: Clases y Objetos
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-01/clase-02-encapsulamiento.html">
+                                                <i class="bi bi-shield-lock text-success"></i>
+                                                Clase 02: Encapsulamiento
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-01/clase-03-herencia-polimorfismo.html">
+                                                <i class="bi bi-diagram-3 text-success"></i>
+                                                Clase 03: Herencia y Polimorfismo
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-01/clase-04-clases-abstractas.html">
+                                                <i class="bi bi-gem text-success"></i>
+                                                Clase 04: Clases Abstractas e Interfaces
+                                                <span class="badge bg-primary">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <ul class="class-list">
-                                <li>
-                                    <a href="unidad-03/clase-04-testing-fastapi.html">
-                                        <i class="bi bi-check2-circle text-orange"></i>
-                                        Clase 04: Testing en FastAPI
-                                        <span class="badge bg-orange">pytest</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="unidad-03/clase-05-persistencia-datos.html">
-                                        <i class="bi bi-database text-orange"></i>
-                                        Clase 05: Persistencia de Datos
-                                        <span class="badge bg-orange">SQLAlchemy</span>
-                                    </a>
-                                </li>
-                            </ul>
+                    </div>
+                </div>
+
+                <!-- Unidad 2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad2">
+                            <i class="bi bi-bug text-purple me-2"></i>Unidad 2: Técnicas de Desarrollo (4 clases)
+                        </button>
+                    </h2>
+                    <div id="collapseUnidad2" class="accordion-collapse collapse" data-bs-parent="#accordionClases">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-02/clase-01-tdd-intro.html">
+                                                <i class="bi bi-check-circle text-purple"></i>
+                                                Clase 01: Introducción al TDD
+                                                <span class="badge bg-purple">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-02/clase-02-pytest-avanzado.html">
+                                                <i class="bi bi-lightning text-purple"></i>
+                                                Clase 02: pytest Avanzado
+                                                <span class="badge bg-purple">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-02/clase-03-bdd-intro.html">
+                                                <i class="bi bi-chat-quote text-purple"></i>
+                                                Clase 03: Behavior-Driven Development
+                                                <span class="badge bg-purple">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-02/clase-04-ddd-intro.html">
+                                                <i class="bi bi-building text-purple"></i>
+                                                Clase 04: Domain-Driven Design
+                                                <span class="badge bg-purple">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unidad 3 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad3">
+                            <i class="bi bi-hdd-network text-warning me-2"></i>Unidad 3: Desarrollo Backend con FastAPI (5 clases)
+                        </button>
+                    </h2>
+                    <div id="collapseUnidad3" class="accordion-collapse collapse" data-bs-parent="#accordionClases">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-03/clase-01-fastapi-intro.html">
+                                                <i class="bi bi-lightning-charge text-orange"></i>
+                                                Clase 01: Introducción a FastAPI
+                                                <span class="badge bg-warning text-dark">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-03/clase-02-pydantic-validacion.html">
+                                                <i class="bi bi-patch-check text-orange"></i>
+                                                Clase 02: Pydantic y Validación
+                                                <span class="badge bg-warning text-dark">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-03/clase-03-dependencias.html">
+                                                <i class="bi bi-diagram-2 text-orange"></i>
+                                                Clase 03: Sistema de Dependencias
+                                                <span class="badge bg-warning text-dark">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="class-list">
+                                        <li>
+                                            <a href="unidad-03/clase-04-testing-fastapi.html">
+                                                <i class="bi bi-check2-circle text-orange"></i>
+                                                Clase 04: Testing en FastAPI
+                                                <span class="badge bg-warning text-dark">Colab</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-03/clase-05-persistencia-datos.html">
+                                                <i class="bi bi-database text-orange"></i>
+                                                Clase 05: Persistencia de Datos
+                                                <span class="badge bg-warning text-dark">Colab</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

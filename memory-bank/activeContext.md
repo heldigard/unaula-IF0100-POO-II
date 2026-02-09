@@ -42,12 +42,12 @@ evaluaciones/         (6 evaluaciones)
 ### Evaluaciones y Porcentajes
 | Seguimiento | Evaluación | Porcentaje | Fecha |
 |-------------|------------|------------|-------|
-| **Primero (50%)** | Quiz 1 - Fundamentos Python | 15% | 17 feb |
-| **Primero (50%)** | Taller 1 - Modelado OO | 15% | 10 mar |
-| **Primero (50%)** | Parcial 1 - Python + POO | 20% | 17 mar |
-| **Segundo (80%)** | Taller 2 - TDD + Testing | 15% | 14 abr |
-| **Segundo (80%)** | Proyecto Parcial - TaskFlow API | 15% | 12 may |
-| **Tercero (100%)** | Proyecto Final - TaskFlow Completo | 20% | 26 may |
+| **Primero (50%)** | Quiz 1 - Fundamentos Python | 15% | 19 feb |
+| **Primero (50%)** | Taller 1 - Modelado OO | 15% | 03 mar |
+| **Primero (50%)** | Parcial 1 - Python + POO | 20% | 12 mar |
+| **Segundo (80%)** | Taller 2 - TDD + Testing | 15% | 19 mar |
+| **Segundo (80%)** | Proyecto Parcial - TaskFlow API | 15% | 16 abr |
+| **Tercero (100%)** | Proyecto Final - TaskFlow Completo | 20% | 07 may |
 
 ### Fechas Límite Oficiales
 | Seguimiento | Porcentaje | Fecha Límite |
@@ -55,6 +55,11 @@ evaluaciones/         (6 evaluaciones)
 | Primer Seguimiento | 50% | 27 mar 2026 |
 | Segundo Seguimiento | 80% | 15 may 2026 |
 | Tercer Seguimiento | 100% | 28 may 2026 |
+
+### Correcciones Recientes (08 feb 2026)
+- ✅ Reestructuración de rúbricas: 6 evaluaciones que suman 100%
+- ✅ Documento: `docs/rubricas.md` v2.0
+- ✅ Registro: `docs/CORRECCIONES-APLICADAS.md`
 
 ### Festivos y Recesos
 - **31 mar 2026:** Martes Santo (Sin clase)
