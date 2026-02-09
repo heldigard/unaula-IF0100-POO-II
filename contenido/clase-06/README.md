@@ -1,20 +1,41 @@
-# Clase 06 - BDD - Behavior Driven Development
+# Clase 06 - Metodos y Encapsulamiento
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 2 - Técnicas de Desarrollo*
-
-## Objetivos
-- Comprender filosofía BDD
-- Escribir especificaciones Gherkin
-- Usar SpecFlow en .NET
-
-## Archivos
-- [📄 Slides](../../clases/unidad-02-tecnicas-desarrollo/clase-06-bdd-behavior-driven-development.md)
-- [📖 Teoría](./teoria.md) - Gherkin, Given-When-Then
-- [💻 Código](./codigo.md) - Ejemplos SpecFlow
-- [✏️ Ejercicios](./ejercicios.md)
-- [📚 Referencias](./referencias.md)
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 1 - Programacion Orientada a Objetos*
 
 ---
 
-**Última actualización:** 2026-02-01
+## Indice de Contenido
+
+| Archivo | Descripcion |
+|---------|-------------|
+| [📖 Teoria](./teoria.md) | Metodos, encapsulamiento, propiedades |
+| [💻 Codigo](./codigo.md) | Ejemplos completos en Python |
+| [✏️ Ejercicios](./ejercicios.md) | Practica de encapsulamiento |
+| [📚 Referencias](./referencias.md) | Recursos adicionales |
+
+---
+
+## Objetivos de Aprendizaje
+
+1. Definir metodos de instancia, clase y estaticos
+2. Aplicar encapsulamiento con convenciones Python
+3. Usar @property para getters/setters
+4. Implementar metodos magicos
+
+---
+
+## Temas Cubiertos
+
+| Tema | Teoria | Codigo | Ejercicios |
+|------|--------|--------|------------|
+| Metodos de instancia | ✅ | ✅ | ✅ |
+| Metodos de clase | ✅ | ✅ | ✅ |
+| Metodos estaticos | ✅ | ✅ | ✅ |
+| Encapsulamiento | ✅ | ✅ | ✅ |
+| @property | ✅ | ✅ | ✅ |
+| Metodos magicos | ✅ | ✅ | ✅ |
+
+---
+
+**Ultima actualizacion:** 2026-02-08

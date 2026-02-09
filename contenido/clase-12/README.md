@@ -1,10 +1,10 @@
-# Clase 12 - Introducción a ADO.NET
+# Clase 12 - Domain-Driven Design (DDD)
 
 **IF0100 - Lenguaje de Programación OO II**
-*Unidad 4 - Persistencia*
+*Unidad 2 - Técnicas de Desarrollo*
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-04-persistencia/clase-12-introduccion-ado-net.md)
+- [📄 Slides](../../clases-html/unidad-02/clase-04-ddd-intro.html)
 - [📖 Teoría](./teoria.md)
 - [💻 Código](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
@@ -12,4 +12,4 @@
 
 ---
 
-**Última actualización:** 2026-02-01
+**Última actualización:** 2026-02-08

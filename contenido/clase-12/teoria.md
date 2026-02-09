@@ -1,269 +1,253 @@
-# Teoría - Acceso a Bases de Datos en Python
+# Teoría - Domain-Driven Design (DDD)
 
 **IF0100 - Lenguaje de Programación OO II**
 
 ---
 
-## 1. DB-API 2.0 (sqlite3)
+## 1. ¿Qué es DDD?
 
-Librería estándar de Python para acceso a bases de datos SQLite.
+**Domain-Driven Design** es un enfoque de desarrollo de software que se centra en el dominio del problema y en la lógica de negocio, más que en detalles técnicos de implementación.
 
-### Arquitectura
+### Principios Fundamentales
+
+| Principio | Descripción |
+|-----------|-------------|
+| **Ubiquitous Language** | Lenguaje compartido entre expertos del dominio y desarrolladores |
+| **Bounded Contexts** | Delimitar fronteras claras entre diferentes contextos del dominio |
+| **Modelo Rico** | El modelo no es solo datos, incluye comportamiento y reglas de negocio |
+| **Separación de Capas** | Dominio, Aplicación, Infraestructura e Interfaz |
+
+### Arquitectura en Capas DDD
 
 ```
 ┌─────────────────────────────────────┐
-│      APLICACIÓN PYTHON              │
+│     UI / Presentación               │
+│   (Controllers, Templates)         │
 ├─────────────────────────────────────┤
-│  DB-API 2.0 (PEP 249)               │
-│  ┌───────────────────────────────┐ │
-│  │ Connection                    │ │
-│  │ Cursor                        │ │
-│  │ execute() / executemany()     │ │
-│  │ fetchone() / fetchall()       │ │
-│  └───────────────────────────────┘ │
+│     Aplicación                      │
+│   (Servicios, Casos de uso)        │
 ├─────────────────────────────────────┤
-│  sqlite3 / psycopg2 / pymysql      │
+│     Dominio                         │
+│   (Entidades, VOs, Servicios)      │
 ├─────────────────────────────────────┤
-│  SQLite / PostgreSQL / MySQL        │
+│     Infraestructura                  │
+│   (Repositorios, BD, APIs)         │
 └─────────────────────────────────────┘
 ```
 
-### Objetos Principales
-
-| Objeto | Propósito |
-|--------|-----------|
-| **Connection** | Conexión a la base de datos |
-| **Cursor** | Ejecutar consultas SQL |
-| **execute()** | Ejecutar una sentencia SQL |
-| **fetchone()** | Obtener una fila |
-| **fetchall()** | Obtener todas las filas |
-
 ---
 
-## 2. SQLite3 - Ejemplos
+## 2. Entidades
+
+Una **Entidad** es un objeto definido por su **identidad**, no por sus atributos. Dos entidades son iguales si tienen el mismo ID.
+
+### Características
+
+- Identidad única (ID)
+- Ciclo de vida (puede cambiar)
+- Continuidad (mantiene identidad aunque atributos cambien)
+- Comportamiento encapsulado
+
+### Ejemplo: Entidad Usuario
 
 ```python
-import sqlite3
+from dataclasses import dataclass
+from typing import Optional
 from datetime import datetime
 
 
-# Conectar a la base de datos (crea si no existe)
-conn = sqlite3.connect('mi_base.db')
-cursor = conn.cursor()
+@dataclass
+class Usuario:
+    """
+    Entidad Usuario en el dominio TaskFlow.
 
-# Crear tabla
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS usuarios (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nombre TEXT NOT NULL,
-        email TEXT UNIQUE NOT NULL,
-        fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-''')
+    La identidad de un usuario está dada por su ID,
+    no por su username o email que pueden cambiar.
+    """
+    id: Optional[int]
+    username: str
+    email: str
+    password_hash: str
+    nombre_completo: Optional[str] = None
+    activo: bool = True
 
-# Insertar datos
-cursor.execute('''
-    INSERT INTO usuarios (nombre, email) 
-    VALUES (?, ?)
-''', ('Juan Pérez', 'juan@email.com'))
+    def cambiar_email(self, nuevo_email: str):
+        """Cambia el email del usuario."""
+        if "@" not in nuevo_email:
+            raise ValueError("Email inválido")
+        self.email = nuevo_email
 
-# Insertar múltiples registros
-usuarios = [
-    ('María García', 'maria@email.com'),
-    ('Pedro López', 'pedro@email.com'),
-]
-cursor.executemany('''
-    INSERT INTO usuarios (nombre, email) 
-    VALUES (?, ?)
-''', usuarios)
+    def desactivar(self):
+        """Desactiva el usuario."""
+        self.activo = False
 
-# Confirmar cambios
-conn.commit()
-
-# Consultar datos
-cursor.execute('SELECT * FROM usuarios WHERE nombre LIKE ?', ('%Juan%',))
-resultados = cursor.fetchall()
-
-for fila in resultados:
-    print(f"ID: {fila[0]}, Nombre: {fila[1]}, Email: {fila[2]}")
-
-# Consultar un solo registro
-cursor.execute('SELECT * FROM usuarios WHERE id = ?', (1,))
-usuario = cursor.fetchone()
-
-if usuario:
-    print(f"Usuario encontrado: {usuario}")
-
-# Actualizar
-cursor.execute('''
-    UPDATE usuarios 
-    SET email = ? 
-    WHERE id = ?
-''', ('juan.nuevo@email.com', 1))
-
-# Eliminar
-cursor.execute('DELETE FROM usuarios WHERE id = ?', (2,))
-
-conn.commit()
-
-# Cerrar conexión
-cursor.close()
-conn.close()
-```
-
-### Uso con Context Manager (recomendado)
-
-```python
-import sqlite3
-
-
-def obtener_usuario_por_id(user_id):
-    with sqlite3.connect('mi_base.db') as conn:
-        conn.row_factory = sqlite3.Row  # Acceso por nombre de columna
-        cursor = conn.cursor()
-        
-        cursor.execute('SELECT * FROM usuarios WHERE id = ?', (user_id,))
-        fila = cursor.fetchone()
-        
-        if fila:
-            return {
-                'id': fila['id'],
-                'nombre': fila['nombre'],
-                'email': fila['email'],
-                'fecha_registro': fila['fecha_registro']
-            }
-        return None
-
-
-def listar_todos_los_usuarios():
-    with sqlite3.connect('mi_base.db') as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        
-        cursor.execute('SELECT * FROM usuarios ORDER BY nombre')
-        return [dict(fila) for fila in cursor.fetchall()]
+    def puede_crear_proyectos(self) -> bool:
+        """Verifica si el usuario puede crear proyectos."""
+        return self.activo
 ```
 
 ---
 
-## 3. SQLAlchemy (ORM)
+## 3. Value Objects
 
-ORM más popular para Python.
+Un **Value Object** es un objeto definido por sus atributos, no por su identidad. Son **inmutables**.
 
-### Instalación
+### Características
 
-```bash
-pip install sqlalchemy
-```
+- Sin identidad
+- Inmutables
+- Compartibles
+- Validados al crearse
 
-### Configuración Básica
-
-```python
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from datetime import datetime
-
-Base = declarative_base()
-
-
-class Usuario(Base):
-    __tablename__ = 'usuarios'
-    
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(100), nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
-    fecha_registro = Column(DateTime, default=datetime.now)
-    
-    def __repr__(self):
-        return f"<Usuario(id={self.id}, nombre='{self.nombre}', email='{self.email}')>"
-
-
-# Configurar conexión
-engine = create_engine('sqlite:///app.db', echo=True)
-Base.metadata.create_all(engine)
-
-# Crear sesión
-Session = sessionmaker(bind=engine)
-session = Session()
-```
-
-### CRUD con SQLAlchemy
+### Ejemplo: Value Object Email
 
 ```python
-# CREATE - Crear
-nuevo_usuario = Usuario(nombre='Ana Torres', email='ana@email.com')
-session.add(nuevo_usuario)
-session.commit()
+from dataclasses import dataclass
 
-# READ - Leer
-todos = session.query(Usuario).all()
-uno = session.query(Usuario).filter_by(id=1).first()
-filtrados = session.query(Usuario).filter(Usuario.nombre.like('%Torres%')).all()
 
-# UPDATE - Actualizar
-usuario = session.query(Usuario).filter_by(id=1).first()
-usuario.email = 'nuevo@email.com'
-session.commit()
+@dataclass(frozen=True)
+class Email:
+    """Value Object que representa un email."""
+    valor: str
 
-# DELETE - Eliminar
-usuario = session.query(Usuario).filter_by(id=1).first()
-session.delete(usuario)
-session.commit()
+    def __post_init__(self):
+        """Valida el email después de la creación."""
+        if "@" not in self.valor:
+            raise ValueError(f"Email inválido: {self.valor}")
+
+    def dominio(self) -> str:
+        """Retorna el dominio del email."""
+        return self.valor.split("@")[1]
 ```
 
-### Relaciones
+### Comparación Entidad vs Value Object
+
+| Aspecto | Entidad | Value Object |
+|---------|---------|--------------|
+| Identidad | Definida por ID | Definida por atributos |
+| Mutable | Sí | No (inmutable) |
+| Comparación | Por ID | Por todos los atributos |
+| Ciclo de vida | Largo, con cambios | Corto, se reemplaza |
+| Ejemplos | Usuario, Tarea, Proyecto | Email, Fecha, Dinero |
+
+---
+
+## 4. Patrón Repository
+
+Un **Repository** es una abstracción que simula una colección de objetos del dominio, ocultando los detalles de persistencia.
+
+### Propósito
+
+- Abstraer persistencia
+- Centrar lógica de acceso
+- Facilitar testing
+- Separar responsabilidades
+
+### Interfaz de Repository
 
 ```python
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
+from abc import ABC, abstractmethod
+from typing import TypeVar, Generic, List, Optional
+
+T = TypeVar('T')
 
 
-class Pedido(Base):
-    __tablename__ = 'pedidos'
-    
-    id = Column(Integer, primary_key=True)
-    usuario_id = Column(Integer, ForeignKey('usuarios.id'))
-    total = Column(Integer)
-    
-    # Relación
-    usuario = relationship("Usuario", back_populates="pedidos")
+class Repository(ABC, Generic[T]):
+    """Interfaz base para repositorios."""
+
+    @abstractmethod
+    def guardar(self, entidad: T) -> T:
+        pass
+
+    @abstractmethod
+    def obtener_por_id(self, id: int) -> Optional[T]:
+        pass
+
+    @abstractmethod
+    def obtener_todos(self) -> List[T]:
+        pass
+
+    @abstractmethod
+    def eliminar(self, entidad: T) -> None:
+        pass
 
 
-# Agregar relación inversa a Usuario
-Usuario.pedidos = relationship("Pedido", back_populates="usuario")
+# Implementación para Usuario
+class UsuarioRepository(Repository[Usuario]):
+    """Repositorio para la entidad Usuario."""
 
-# Uso
-usuario = session.query(Usuario).filter_by(id=1).first()
-for pedido in usuario.pedidos:
-    print(pedido.total)
+    def guardar(self, usuario: Usuario) -> Usuario:
+        if usuario.id is None:
+            return self._crear(usuario)
+        else:
+            return self._actualizar(usuario)
+
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        pass
+
+    def obtener_todos(self) -> List[Usuario]:
+        pass
+
+    def eliminar(self, usuario: Usuario) -> None:
+        pass
 ```
 
 ---
 
-## 4. Connection String
+## 5. Servicios de Dominio
+
+Lógica de negocio que no pertenece naturalmente a una Entidad o Value Object específico.
+
+### Características
+
+- Stateless (no mantienen estado)
+- Operaciones del dominio
+- No CRUD simple
+
+### Ejemplo: Servicio de Autenticación
 
 ```python
-# SQLite
-sqlite:///app.db                    # Archivo
-sqlite:///:memory:                  # En memoria
+class AuthService:
+    """Servicio de dominio para autenticación."""
 
-# PostgreSQL
-postgresql://usuario:password@localhost:5432/midb
+    def __init__(self, repo: UsuarioRepository):
+        self.repo = repo
 
-# MySQL
-mysql+pymysql://usuario:password@localhost:3306/midb
-```
+    def login(self, username: str, password: str) -> dict:
+        """Autentica un usuario."""
+        usuario = self.repo.obtener_por_username(username)
 
-### Configuración con variables de entorno
+        if not usuario:
+            return {"exitoso": False, "mensaje": "Usuario no encontrado"}
 
-```python
-import os
+        if usuario.password_hash != self._hashear(password):
+            return {"exitoso": False, "mensaje": "Password incorrecto"}
 
-DATABASE_URL = os.environ.get('DATABASE_URL') or 'sqlite:///app.db'
-engine = create_engine(DATABASE_URL)
+        if not usuario.activo:
+            return {"exitoso": False, "mensaje": "Usuario desactivado"}
+
+        return {"exitoso": True, "usuario": usuario}
 ```
 
 ---
 
-**Última actualización:** 2026-02-01
+## 6. Buenas Prácticas
+
+### DO's
+
+- Pon lógica en entidades (no modelos anémicos)
+- Usa Value Objects para conceptos sin identidad
+- Abstrae con repositorios (dominio no sabe sobre BD)
+- Servicios stateless
+- Usa el lenguaje del dominio
+
+### DON'T's
+
+- No modelos anémicos (solo getters/setters)
+- No lógica de infraestructura en dominio
+- No servicios con todo
+- No bases de datos en entidades
+
+---
+
+**Última actualización:** 2026-02-08

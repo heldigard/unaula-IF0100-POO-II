@@ -3,159 +3,112 @@
 
 ---
 
-## ✅ ESTADO DEL PROYECTO: CURSO COMPLETO Y LISTO
+## ESTADO DEL PROYECTO: CURSO COMPLETO Y OPERATIVO
 
-### Tecnología
+### Tecnología Principal
 - **Lenguaje:** Python 3.12+
 - **Framework:** FastAPI
 - **Testing:** pytest, Behave (BDD)
-- **IDE Recomendado:** VSCode
-- **Notebooks:** Jupyter (40 notebooks disponibles)
+- **IDE:** VSCode
 
 ### Estructura del Curso
 ```
-clases-html/
-├── unidad-00/ (4 clases) - Fundamentos Python
-├── unidad-01/ (4 clases) - Programación Orientada a Objetos
-├── unidad-02/ (4 clases) - Técnicas de Desarrollo (TDD/BDD/DDD)
-├── unidad-03/ (5 clases) - FastAPI y Persistencia
-└── index.html - Página principal
+clases-html/          (17 clases en formato HTML)
+├── unidad-00/        (4 clases) - Fundamentos Python
+├── unidad-01/        (4 clases) - POO
+├── unidad-02/        (4 clases) - Técnicas de Desarrollo
+└── unidad-03/        (5 clases) - FastAPI y Persistencia
 
-notebooks/
-├── unidad-00/ (10 notebooks)
-├── unidad-01/ (12 notebooks)
-├── unidad-02/ (9 notebooks)
-└── unidad-03/ (9 notebooks)
+contenido/            (17 carpetas con material complementario)
+└── clase-01/ a clase-17/  (README, teoria, codigo, ejercicios, referencias)
 
-contenido/
-└── clase-01/ a clase-16/ (teoría, código, ejercicios)
+evaluaciones/         (6 evaluaciones)
+└── evaluacion-01 a 06
 ```
 
 ---
 
-## 📅 CRONOGRAMA OFICIAL (v2.2)
+## CRONOGRAMA OFICIAL - Clases de MARTES
 
-### Horario
-- **Días:** Martes y Jueves
-- **Horario:** 06:00-08:00 PM
-- **Aula:** TU301
-- **Inicio:** 03/02/2026
+### Información General
+| Campo | Valor |
+|-------|-------|
+| **Día** | Martes |
+| **Horario** | 06:00-08:00 PM |
+| **Aula** | TU301 |
+| **Inicio** | 27 ene 2026 |
+| **Fin** | 26 may 2026 |
 
-### Evaluaciones (Porcentajes OFICIALES)
-| Evaluación | Fecha | Porcentaje | Seguimiento |
-|------------|-------|------------|-------------|
-| Quiz 1 | 24/02/2026 | 15% | Primero (50%) |
-| Taller 1 | 17/03/2026 | 15% | Primero (50%) |
-| Parcial 1 | 24/03/2026 | 20% | Primero (50%) |
-| Taller 2 | 14/04/2026 | 15% | Segundo (80%) |
-| Proyecto Parcial | 12/05/2026 | 15% | Segundo (80%) |
-| Proyecto Final | 19/05/2026 | 20% | Tercero (100%) |
+### Evaluaciones y Porcentajes
+| Seguimiento | Evaluación | Porcentaje | Fecha |
+|-------------|------------|------------|-------|
+| **Primero (50%)** | Quiz 1 - Fundamentos Python | 15% | 17 feb |
+| **Primero (50%)** | Taller 1 - Modelado OO | 15% | 10 mar |
+| **Primero (50%)** | Parcial 1 - Python + POO | 20% | 17 mar |
+| **Segundo (80%)** | Taller 2 - TDD + Testing | 15% | 14 abr |
+| **Segundo (80%)** | Proyecto Parcial - TaskFlow API | 15% | 12 may |
+| **Tercero (100%)** | Proyecto Final - TaskFlow Completo | 20% | 26 may |
 
-### Fechas Límite de Seguimientos
-- **Primer Seguimiento (50%):** 27/03/2026 (antes de Semana Santa)
-- **Segundo Seguimiento (80%):** 15/05/2026
-- **Tercer Seguimiento (100%):** 28/05/2026
+### Fechas Límite Oficiales
+| Seguimiento | Porcentaje | Fecha Límite |
+|-------------|------------|--------------|
+| Primer Seguimiento | 50% | 27 mar 2026 |
+| Segundo Seguimiento | 80% | 15 may 2026 |
+| Tercer Seguimiento | 100% | 28 may 2026 |
 
-### Semana Santa 2026
-- **Sin clases:** 31/03/2026 (Martes Santo) y 02/04/2026 (Jueves Santo)
-- **Clases perdidas:** 4 clases
+### Festivos y Recesos
+- **31 mar 2026:** Martes Santo (Sin clase)
 
 ---
 
-## 🚀 PROYECTO TASKFLOW
+## PROYECTO TASKFLOW
 
 ### Descripción
-Sistema de Gestión de Tasks implementado con:
+Sistema de Gestión de Tasks con arquitectura limpa:
 - **Backend:** FastAPI
 - **Validación:** Pydantic
-- **Testing:** pytest
+- **Testing:** pytest (cobertura >80%)
 - **Persistencia:** SQLAlchemy
 
-### Entregables
-- **Proyecto Parcial (15%):** API CRUD con tests >80% cobertura
-- **Proyecto Final (20%):** Integración completa con documentación
-
-### Arquitectura
-```
-TaskFlow/
-├── app/
-│   ├── api/ (endpoints)
-│   ├── core/ (config, security)
-│   ├── models/ (dominio)
-│   ├── schemas/ (pydantic)
-│   └── services/ (lógica de negocio)
-├── tests/ (unit, integration, e2e)
-└── requirements.txt
-```
+### Hitos del Proyecto
+| Milestone | Semana | Fecha | Porcentaje |
+|-----------|--------|-------|------------|
+| M1: Configuración | 9-10 | 07-14 abr | - |
+| M2: Modelos | 11-12 | 21-28 abr | - |
+| M3: API Core | 13-14 | 05-12 may | - |
+| M4: Testing | 15 | 12 may | 15% (Proyecto Parcial) |
+| M5: Persistencia | 16 | 19 may | - |
+| M6: Entrega Final | 17 | 26 may | 20% (Proyecto Final) |
 
 ---
 
-## ✅ ÚLTIMA REVISIÓN COMPLETADA (2026-02-08)
+## RECURSOS DEL CURSO
 
-### Estado: TODAS LAS CORRECCIONES APLICADAS
+### Documentación Principal
+| Recurso | Archivo |
+|---------|---------|
+| Cronograma | `docs/cronograma-corregido-2026-1-tuesday.md` |
+| Rubricas | `docs/rubricas.md` |
+| Evaluaciones | `evaluaciones/evaluacion-*.md` |
 
-#### Correcciones Realizadas
-1. ✅ **index.html** - Fechas y porcentajes corregidos
-2. ✅ **clase-02-pydantic-validacion.html** - Password actualizado a 2026
-3. ✅ **index.html** - Ortografía corregida ("Última")
-
-#### Verificaciones
-- ✅ 17/17 clases HTML revisadas
-- ✅ Contenido 100% Python (sin C#/.NET)
-- ✅ 40 notebooks Jupyter disponibles
-- ✅ Conexión TaskFlow en Unidad 03
-- ✅ Navegación funcional
-
----
-
-## 📚 RECURSOS DEL CURSO
-
-### Documentación
-- **Cronograma:** `docs/cronograma.md` (v2.2)
-- **Rubricas:** `docs/rubricas.md`
-- **Evaluaciones:** `evaluaciones/`
-
-### Clases HTML (17 archivos)
-- Fundamentos Python: Variables, Tipos, Control, Datos
-- POO: Clases, Objetos, Encapsulamiento, Herencia, Polimorfismo, Abstractas
-- Testing: TDD, pytest, BDD, DDD
-- FastAPI: Intro, Pydantic, Dependencias, Testing, Persistencia
-
-### Notebooks (40 archivos)
-- Todos los notebooks tienen código Python ejecutable
-- Formato .ipynb para Jupyter/Google Colab
+### Clases (Material por Unidad)
+| Unidad | Clases | Temas |
+|--------|--------|-------|
+| U00 | 01-04 | Fundamentos Python |
+| U01 | 05-08 | POO (clases, herencia, polimorfismo) |
+| U02 | 09-12 | TDD, pytest, BDD, DDD |
+| U03 | 13-17 | FastAPI, Pydantic, Dependencias, SQLAlchemy |
 
 ---
 
-## 🎯 PRÓXIMOS PASOS
+## ÚLTIMAS CORRECCIONES APLICADAS
 
-### Inmediato (Antes del 03/02/2026)
-- N/A - Curso listo para iniciar
-
-### Primera Semana de Clases
-- Presentación del curso
-- Configuración de entornos Python
-- Introducción a variables y tipos
-
-### Durante el Semestre
-- Monitorear progreso de estudiantes
-- Ajustar ritmo según necesidades
-- Preparar evaluaciones según cronograma
-
----
-
-## 📊 MÉTRICAS DEL CURSO
-
-| Métrica | Valor |
-|---------|-------|
-| Total clases | 17 |
-| Total notebooks | 40 |
-| Unidades | 4 |
-| Evaluaciones | 6 |
-| Porcentaje completado | 100% |
+### Revisión de Clases 01-04 (2026-02-08)
+- Links a slides actualizados (HTML)
+- Estructura markdown consistente
+- Contenido verificado y coherente
 
 ---
 
 **Última actualización:** 2026-02-08
-**Estado:** ✅ CURSO LISTO PARA INICIO DE CLASES
-**Próxima clase:** 03/02/2026 (Introducción a Python)
+**Estado:** ✅ CURSO OPERATIVO

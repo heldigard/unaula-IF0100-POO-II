@@ -1,42 +1,40 @@
-# Clase 05 - TDD - Test-Driven Development
+# Clase 05 - Clases, Objetos y Atributos
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 2 - Técnicas de Desarrollo de software*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 1 - Programacion Orientada a Objetos*
 
 ---
 
-## Índice de Contenido
+## Indice de Contenido
 
-| Archivo | Descripción |
+| Archivo | Descripcion |
 |---------|-------------|
-| [📄 Slides](../../clases/unidad-02-tecnicas-desarrollo/clase-05-tdd-pruebas-unitarias.md) | Presentación Marp |
-| [📖 Teoría](./teoria.md) | Explicación TDD, xUnit |
-| [💻 Código](./codigo.md) | Ejemplos completos |
-| [✏️ Ejercicios](./ejercicios.md) | Guía de prácticas |
+| [📖 Teoria](./teoria.md) | Clases, objetos, atributos de instancia/clase |
+| [💻 Codigo](./codigo.md) | Ejemplos completos en Python |
+| [✏️ Ejercicios](./ejercicios.md) | Practica de modelado |
 | [📚 Referencias](./referencias.md) | Recursos adicionales |
 
 ---
 
 ## Objetivos de Aprendizaje
 
-1. Comprender filosofía y ciclo TDD
-2. Escribir pruebas con xUnit
-3. Aplicar Red-Green-Refactor
-4. Medir cobertura de código
+1. Comprender el concepto de clase y objeto
+2. Definir atributos de instancia y de clase
+3. Crear metodos de instancia
+4. Aplicar convenciones de naming en Python
 
 ---
 
 ## Temas Cubiertos
 
-| Tema | Slides | Teoría | Código | Ejercicios |
-|------|--------|--------|--------|------------|
-| TDD y ciclo R-G-R | ✅ | ✅ | ✅ | ✅ |
-| xUnit Framework | ✅ | ✅ | ✅ | ✅ |
-| Patrón AAA | ✅ | ✅ | ✅ | ✅ |
-| Test Doubles | ✅ | ✅ | ✅ | ✅ |
-| Pruebas async | ✅ | ✅ | ✅ | ✅ |
-| Cobertura | ✅ | ✅ | | ✅ |
+| Tema | Teoria | Codigo | Ejercicios |
+|------|--------|--------|------------|
+| Clases y objetos | ✅ | ✅ | ✅ |
+| Atributos de instancia | ✅ | ✅ | ✅ |
+| Atributos de clase | ✅ | ✅ | ✅ |
+| Metodos __init__ | ✅ | ✅ | ✅ |
+| Metodo __str__ | ✅ | ✅ | ✅ |
 
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

@@ -1,6 +1,6 @@
 # Referencias - Clase 17
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
@@ -8,19 +8,20 @@
 
 | Recurso | Enlace |
 |---------|--------|
-| ASP.NET Core Docs | [docs.microsoft.com/aspnet/core](https://learn.microsoft.com/en-us/aspnet/core) |
-| xUnit | [xunit.net](https://xunit.net) |
-| SQL Server Docs | [docs.microsoft.com/sql](https://learn.microsoft.com/en-us/sql) |
+| SQLAlchemy Documentation | [docs.sqlalchemy.org](https://docs.sqlalchemy.org/) |
+| SQLAlchemy ORM Tutorial | [docs.sqlalchemy.org/orm/quickstart.html](https://docs.sqlalchemy.org/orm/quickstart.html) |
+| Pydantic Models | [docs.pydantic.dev/latest/concepts/models/](https://docs.pydantic.dev/latest/concepts/models/) |
+| Alembic Documentation | [alembic.sqlalchemy.org](https://alembic.sqlalchemy.org/) |
+| PostgreSQL Documentation | [www.postgresql.org/docs/](https://www.postgresql.org/docs/) |
 
 ---
 
-## Libros del Curso
+## Recursos Adicionales
 
-1. **"Programación Orientada a Objetos en C#"** - Pérez Chaves, Roger
-2. **"C# and the .NET Platform"** - TROELSEN, Andrew
-3. **"Así es Microsoft Visual Studio .NET"** - Microsoft Corporation
-4. **"Microsoft .NET Framework"** - Microsoft Corporation
+- [Real Python: Python ORM with SQLAlchemy](https://realpython.com/python-sqlalchemy-sqlite/)
+- [TestDriven.io: SQLAlchemy with FastAPI](https://testdriven.io/blog/fastapi-sqlalchemy-pydantic/)
+- [Alembic Tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
 
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

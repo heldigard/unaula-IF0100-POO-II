@@ -1,20 +1,24 @@
-# Clase 08 - Introducción a ASP.NET Core
+# Clase 08 - Clases Abstractas e Interfaces
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 3 - Desarrollo Web*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 2 - Tecnicas de Desarrollo*
 
 ## Objetivos
-- Entender arquitectura ASP.NET Core
-- Crear primer proyecto web
-- Middleware y pipeline
+- Comprender clases abstractas e interfaces en Python
+- Implementar herencia de clases abstractas
+- Usar Protocol para definir interfaces
+- Aplicar polimorfismo con ABC
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-03-desarrollo-web/clase-08-introduccion-aspnet-core.md)
-- [📖 Teoría](./teoria.md)
-- [💻 Código](./codigo.md)
+- [📖 Teoria](./teoria.md)
+- [💻 Codigo](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
 - [📚 Referencias](./referencias.md)
 
+## Evaluacion
+- [Evaluacion Parcial 1](/evaluaciones/evaluacion-01-conceptos-poo.md) - Clases 01-04
+- [Evaluacion Parcial 2](/evaluaciones/evaluacion-02-tecnicas-desarrollo.md) - Clases 05-08
+
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

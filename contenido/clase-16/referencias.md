@@ -1,6 +1,6 @@
 # Referencias - Clase 16
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
@@ -8,9 +8,19 @@
 
 | Recurso | Enlace |
 |---------|--------|
-| DataBinding | [docs.microsoft.com/dotnet/desktop/winforms/data-binding](https://learn.microsoft.com/en-us/dotnet/desktop/winforms/data-binding-overview-windows-forms) |
-| LINQ to XML | [docs.microsoft.com/dotnet/standard/linq/linq-xml-overview](https://learn.microsoft.com/en-us/dotnet/standard/linq/linq-xml-overview) |
+| pytest Documentation | [docs.pytest.org](https://docs.pytest.org/) |
+| httpx Documentation | [www.python-httpx.org](https://www.python-httpx.org/) |
+| FastAPI Testing | [fastapi.tiangolo.com/tutorial/testing/](https://fastapi.tiangolo.com/tutorial/testing/) |
+| pytest-asyncio | [pytest-asyncio.readthedocs.io](https://pytest-asyncio.readthedocs.io/) |
+| pytest-cov | [pytest-cov.readthedocs.io](https://pytest-cov.readthedocs.io/) |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Recursos Adicionales
+
+- [Real Python: Getting Started with pytest](https://realpython.com/pytest-python-testing/)
+- [TestDriven.io: FastAPI Testing](https://testdriven.io/blog/fastapi-testing/)
+
+---
+
+**Ultima actualizacion:** 2026-02-08

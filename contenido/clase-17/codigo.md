@@ -1,328 +1,318 @@
-# Código - Proyecto Final
+# Codigo - SQLAlchemy y Persistencia de Datos
 
-**IF0100 - Lenguaje de Programación OO II**
-
----
-
-## Estructura del Proyecto
-
-```
-SistemaUniversidad/
-├── src/
-│   ├── SistemaUniversidad.Web/     # ASP.NET Core
-│   ├── SistemaUniversidad.Core/    # Dominio (POO)
-│   ├── SistemaUniversidad.Data/    # Repositories (ADO.NET)
-│   └── SistemaUniversidad.Tests/   # xUnit Tests
-├── docs/
-│   ├── diagramas/
-│   └── manual-usuario.md
-└── scripts/
-    └── base-datos.sql
-```
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
-## 1. Modelo de Dominio (POO)
+## 1. Configuracion de Base de Datos
 
-```csharp
-// Entidad base
-public abstract class EntidadBase
-{
-    public int Id { get; protected set; }
-}
+```python
+# src/db/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
-// Estudiante (Entidad)
-public class Estudiante : EntidadBase
-{
-    public string Codigo { get; set; }
-    public string Nombre { get; set; }
-    public string Email { get; set; }
-    public int Edad { get; set; }
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres:postgres@localhost:5432/taskflow"
+)
 
-    // Relación 1:N
-    public int CarreraId { get; set; }
-    public Carrera Carrera { get; set; }
+engine = create_engine(DATABASE_URL, echo=True)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-    // Relación N:M (a través de Inscripcion)
-    public IReadOnlyCollection<Inscripcion> Inscripciones { get; protected set; }
+Base = declarative_base()
 
-    public void Inscribir(Materia materia)
-    {
-        if (_inscripciones.Any(i => i.MateriaId == materia.Id))
-            throw new InvalidOperationException("Ya inscrito");
-
-        _inscripciones.Add(new Inscripcion(this, materia));
-    }
-}
-
-// Carrera (Entidad)
-public class Carrera : EntidadBase
-{
-    public string Nombre { get; set; }
-    public int DuracionSemestres { get; set; }
-
-    public IReadOnlyCollection<Estudiante> Estudiantes { get; protected set; }
-}
-
-// Materia (Entidad)
-public class Materia : EntidadBase
-{
-    public string Nombre { get; set; }
-    public int Creditos { get; set; }
-}
-
-// Inscripcion (Entidad - tabla intermedia)
-public class Inscripcion : EntidadBase
-{
-    public int EstudianteId { get; set; }
-    public int MateriaId { get; set; }
-    public DateTime FechaInscripcion { get; set; }
-    public decimal NotaFinal { get; set; }
-
-    public Estudiante Estudiante { get; set; }
-    public Materia Materia { get; set; }
-
-    public Inscripcion(Estudiante estudiante, Materia materia)
-    {
-        Estudiante = estudiante ?? throw new ArgumentNullException(nameof(estudiante));
-        Materia = materia ?? throw new ArgumentNullException(nameof(materia));
-        FechaInscripcion = DateTime.Now;
-    }
-}
+def get_db():
+    """Dependencia para obtener sesion de base de datos"""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 ```
 
 ---
 
-## 2. Repository (ADO.NET)
+## 2. Modelos de Datos
 
-```csharp
-public interface IEstudianteRepository
-{
-    IEnumerable<Estudiante> ObtenerTodos();
-    Estudiante? ObtenerPorId(int id);
-    Estudiante? ObtenerPorCodigo(string codigo);
-    void Agregar(Estudiante estudiante);
-    void Actualizar(Estudiante estudiante);
-    void Eliminar(int id);
-}
+```python
+# src/models/user.py
+from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from src.db.database import Base
+from datetime import datetime
 
-public class EstudianteRepository : IEstudianteRepository
-{
-    private readonly string _connectionString;
+class User(Base):
+    """Modelo de usuario para base de datos"""
+    __tablename__ = "usuarios"
 
-    public EstudianteRepository(IConfiguration configuration)
-    {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
-    }
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    nombre_completo = Column(String(255))
+    hashed_password = Column(String(255), nullable=False)
+    activo = Column(Boolean, default=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    public IEnumerable<Estudiante> ObtenerTodos()
-    {
-        var estudiantes = new List<Estudiante>();
+    # Relaciones
+    proyectos = relationship("Project", back_populates="creador")
+```
 
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-            string sql = @"SELECT e.*, c.Nombre as CarreraNombre
-                          FROM Estudiantes e
-                          LEFT JOIN Carreras c ON e.CarreraId = c.Id";
+```python
+# src/models/project.py
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from src.db.database import Base
+from datetime import datetime
+from sqlalchemy.orm import relationship
 
-            using (var command = new SqlCommand(sql, connection))
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    estudiantes.Add(MapFromReader(reader));
-                }
-            }
-        }
+class Project(Base):
+    """Modelo de proyecto"""
+    __tablename__ = "proyectos"
 
-        return estudiantes;
-    }
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String(255), nullable=False)
+    descripcion = Column(Text)
+    estado = Column(String(50), default="activo")
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"))
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    public Estudiante? ObtenerPorCodigo(string codigo)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-            string sql = @"SELECT e.*, c.Nombre as CarreraNombre
-                          FROM Estudiantes e
-                          LEFT JOIN Carreras c ON e.CarreraId = c.Id
-                          WHERE e.Codigo = @Codigo";
+    # Relaciones
+    creador = relationship("User", back_populates="proyectos")
+    tareas = relationship("Task", back_populates="proyecto")
+```
 
-            using (var command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@Codigo", codigo);
+```python
+# src/models/task.py
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Numeric
+from src.db.database import Base
+from datetime import datetime
+from sqlalchemy.orm import relationship
 
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                        return MapFromReader(reader);
-                }
-            }
-        }
+class Task(Base):
+    """Modelo de tarea"""
+    __tablename__ = "tareas"
 
-        return null;
-    }
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String(255), nullable=False)
+    descripcion = Column(Text)
+    estado = Column(String(50), default="pendiente")
+    prioridad = Column(String(20), default="media")
+    proyecto_id = Column(Integer, ForeignKey("proyectos.id"))
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"))
+    fecha_limite = Column(DateTime)
+    nota_final = Column(Numeric(4, 2))
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    public void Agregar(Estudiante estudiante)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-            string sql = @"INSERT INTO Estudiantes (Codigo, Nombre, Email, Edad, CarreraId)
-                          VALUES (@Codigo, @Nombre, @Email, @Edad, @CarreraId);
-                          SELECT CAST(scope_identity() AS int);";
+    # Relaciones
+    proyecto = relationship("Project", back_populates="tareas")
+    usuario = relationship("User")
+    comentarios = relationship("Comment", back_populates="tarea")
+```
 
-            using (var command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@Codigo", estudiante.Codigo);
-                command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-                command.Parameters.AddWithValue("@Email", estudiante.Email);
-                command.Parameters.AddWithValue("@Edad", estudiante.Edad);
-                command.Parameters.AddWithValue("@CarreraId", estudiante.CarreraId);
+```python
+# src/models/comment.py
+from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey
+from src.db.database import Base
+from datetime import datetime
+from sqlalchemy.orm import relationship
 
-                estudiante.Id = (int)command.ExecuteScalar();
-            }
-        }
-    }
+class Comment(Base):
+    """Modelo de comentario"""
+    __tablename__ = "comentarios"
 
-    public void Actualizar(Estudiante estudiante)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-            string sql = @"UPDATE Estudiantes
-                          SET Nombre = @Nombre, Email = @Email, Edad = @Edad, CarreraId = @CarreraId
-                          WHERE Id = @Id";
+    id = Column(Integer, primary_key=True, index=True)
+    contenido = Column(Text, nullable=False)
+    tarea_id = Column(Integer, ForeignKey("tareas.id"))
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"))
+    creado_en = Column(DateTime, default=datetime.utcnow)
 
-            using (var command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@Id", estudiante.Id);
-                command.Parameters.AddWithValue("@Nombre", estudiante.Nombre);
-                command.Parameters.AddWithValue("@Email", estudiante.Email);
-                command.Parameters.AddWithValue("@Edad", estudiante.Edad);
-                command.Parameters.AddWithValue("@CarreraId", estudiante.CarreraId);
-
-                command.ExecuteNonQuery();
-            }
-        }
-    }
-
-    public void Eliminar(int id)
-    {
-        using (var connection = new SqlConnection(_connectionString))
-        {
-            connection.Open();
-            string sql = "DELETE FROM Estudiantes WHERE Id = @Id";
-
-            using (var command = new SqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@Id", id);
-                command.ExecuteNonQuery();
-            }
-        }
-    }
-
-    private Estudiante MapFromReader(SqlDataReader reader)
-    {
-        return new Estudiante
-        {
-            Id = Convert.ToInt32(reader["Id"]),
-            Codigo = reader["Codigo"].ToString(),
-            Nombre = reader["Nombre"].ToString(),
-            Email = reader["Email"].ToString(),
-            Edad = Convert.ToInt32(reader["Edad"]),
-            CarreraId = reader["CarreraId"] != DBNull.Value ? Convert.ToInt32(reader["CarreraId"]) : 0,
-            Carrera = new Carrera
-            {
-                Id = reader["CarreraId"] != DBNull.Value ? Convert.ToInt32(reader["CarreraId"]) : 0,
-                Nombre = reader["CarreraNombre"]?.ToString()
-            }
-        };
-    }
-}
+    # Relaciones
+    tarea = relationship("Task", back_populates="comentarios")
+    usuario = relationship("User")
 ```
 
 ---
 
-## 3. Razor Page con TDD
+## 3. Schemas Pydantic
 
-```csharp
-public class IndexModel : PageModel
-{
-    private readonly IEstudianteRepository _estudianteRepository;
+```python
+# src/schemas/user.py
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from typing import Optional
 
-    public IndexModel(IEstudianteRepository estudianteRepository)
-    {
-        _estudianteRepository = estudianteRepository;
-    }
+class UserBase(BaseModel):
+    """Schema base para usuario"""
+    email: EmailStr
+    nombre_completo: str
 
-    public IList<Estudiante> Estudiantes { get; set; }
+class UserCreate(UserBase):
+    """Schema para crear usuario"""
+    password: str
 
-    public void OnGet()
-    {
-        Estudiantes = _estudianteRepository.ObtenerTodos().ToList();
-    }
-}
+class UserUpdate(BaseModel):
+    """Schema para actualizar usuario"""
+    nombre_completo: Optional[str] = None
+    email: Optional[EmailStr] = None
+    activo: Optional[bool] = None
+
+class UserResponse(UserBase):
+    """Schema para respuesta de usuario"""
+    id: int
+    activo: bool
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
+```
+
+```python
+# src/schemas/task.py
+from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+
+class TaskBase(BaseModel):
+    """Schema base para tarea"""
+    titulo: str
+    descripcion: Optional[str] = None
+    prioridad: Optional[str] = "media"
+
+class TaskCreate(TaskBase):
+    """Schema para crear tarea"""
+    proyecto_id: int
+
+class TaskUpdate(BaseModel):
+    """Schema para actualizar tarea"""
+    titulo: Optional[str] = None
+    descripcion: Optional[str] = None
+    estado: Optional[str] = None
+    prioridad: Optional[str] = None
+    nota_final: Optional[float] = None
+
+class TaskResponse(TaskBase):
+    """Schema para respuesta de tarea"""
+    id: int
+    proyecto_id: int
+    estado: str
+    fecha_limite: Optional[datetime]
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
 ```
 
 ---
 
-## 4. Tests (xUnit)
+## 4. Repositories
 
-```csharp
-public class EstudianteTests
-{
-    [Fact]
-    public void Constructor_ConDatosValidos_CreaEstudiante()
-    {
-        // Arrange
-        var codigo = "2024001";
-        var nombre = "María López";
+```python
+# src/repositories/user_repository.py
+from typing import Optional, List
+from sqlalchemy.orm import Session
+from src.models.user import User
+from src.schemas.user import UserCreate, UserUpdate
 
-        // Act
-        var estudiante = new Estudiante
-        {
-            Codigo = codigo,
-            Nombre = nombre,
-            Email = "maria@email.com",
-            Edad = 20
-        };
+class UserRepository:
+    """Repository para operaciones de usuario"""
 
-        // Assert
-        Assert.Equal(codigo, estudiante.Codigo);
-        Assert.Equal(nombre, estudiante.Nombre);
-    }
+    def __init__(self, db: Session):
+        self.db = db
 
-    [Fact]
-    public void Inscribir_MateriaNoInscrita_AgregaInscripcion()
-    {
-        // Arrange
-        var estudiante = new Estudiante();
-        var materia = new Materia { Id = 1, Nombre = "POO" };
+    def get_all(self, skip: int = 0, limit: int = 100) -> List[User]:
+        """Obtener todos los usuarios con paginacion"""
+        return (
+            self.db.query(User)
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
-        // Act
-        estudiante.Inscribir(materia);
+    def get_by_id(self, user_id: int) -> Optional[User]:
+        """Obtener usuario por ID"""
+        return self.db.query(User).filter(User.id == user_id).first()
 
-        // Assert
-        Assert.Single(estudiante.Inscripciones);
-    }
+    def get_by_email(self, email: str) -> Optional[User]:
+        """Obtener usuario por email"""
+        return self.db.query(User).filter(User.email == email).first()
 
-    [Fact]
-    public void Inscribir_MateriaYaInscrita_LanzaExcepcion()
-    {
-        // Arrange
-        var estudiante = new Estudiante();
-        var materia = new Materia { Id = 1, Nombre = "POO" };
-        estudiante.Inscribir(materia);
+    def create(self, user_data: UserCreate) -> User:
+        """Crear nuevo usuario"""
+        db_user = User(
+            email=user_data.email,
+            nombre_completo=user_data.nombre_completo,
+            hashed_password=user_data.password  # Hashear en produccion!
+        )
+        self.db.add(db_user)
+        self.db.commit()
+        self.db.refresh(db_user)
+        return db_user
 
-        // Act & Assert
-        Assert.Throws<InvalidOperationException>(() =>
-            estudiante.Inscribir(materia));
-    }
-}
+    def update(self, user_id: int, user_data: UserUpdate) -> Optional[User]:
+        """Actualizar usuario"""
+        db_user = self.get_by_id(user_id)
+        if not db_user:
+            return None
+
+        update_data = user_data.model_dump(exclude_unset=True)
+        for field, value in update_data.items():
+            setattr(db_user, field, value)
+
+        self.db.commit()
+        self.db.refresh(db_user)
+        return db_user
+
+    def delete(self, user_id: int) -> bool:
+        """Soft delete de usuario"""
+        db_user = self.get_by_id(user_id)
+        if not db_user:
+            return False
+
+        db_user.activo = False
+        self.db.commit()
+        return True
 ```
 
 ---
 
-**Última actualización:** 2026-02-01
+## 5. Migraciones con Alembic
+
+```python
+# alembic/versions/001_initial.py
+"""Initial migration
+
+Revision ID: 001
+Revises:
+Create Date: 2026-02-08
+
+"""
+from alembic import op
+import sqlalchemy as sa
+
+def upgrade():
+    # Crear tablas
+    op.create_table(
+        "usuarios",
+        sa.Column("id", sa.Integer(), nullable=False),
+        sa.Column("email", sa.String(255), nullable=False),
+        sa.Column("nombre_completo", sa.String(255)),
+        sa.Column("hashed_password", sa.String(255), nullable=False),
+        sa.Column("activo", sa.Boolean(), default=True),
+        sa.Column("creado_en", sa.DateTime(), default=sa.func.now()),
+        sa.Column("actualizado_en", sa.DateTime(), default=sa.func.now()),
+        sa.PrimaryKeyConstraint("id")
+    )
+    op.create_index(op.f("ix_usuarios_id"), "usuarios", ["id"], unique=False)
+    op.create_index(op.f("ix_usuarios_email"), "usuarios", ["email"], unique=True)
+
+def downgrade():
+    op.drop_index(op.f("ix_usuarios_email"), table_name="usuarios")
+    op.drop_index(op.f("ix_usuarios_id"), table_name="usuarios")
+    op.drop_table("usuarios")
+```
+
+---
+
+**Ultima actualizacion:** 2026-02-08

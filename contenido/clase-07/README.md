@@ -1,20 +1,24 @@
-# Clase 07 - Domain Driven Design (DDD)
+# Clase 07 - Herencia y Polimorfismo
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 2 - Técnicas de Desarrollo*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 2 - Tecnicas de Desarrollo*
 
 ## Objetivos
-- Entender arquitectura DDD
-- Identar Bounded Contexts
-- Implementar Entidades y Value Objects
+- Comprender el concepto de herencia en POO
+- Implementar herencia simple, multiple y multinivel
+- Aplicar polimorfismo con metodos abstractos
+- Comparar composicion vs herencia
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-02-tecnicas-desarrollo/clase-07-domain-driven-design.md)
-- [📖 Teoría](./teoria.md)
-- [💻 Código](./codigo.md)
+- [📖 Teoria](./teoria.md)
+- [💻 Codigo](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
 - [📚 Referencias](./referencias.md)
 
+## Evaluacion
+- [Evaluacion Parcial 1](/evaluaciones/evaluacion-01-conceptos-poo.md) - Clases 01-04
+- [Evaluacion Parcial 2](/evaluaciones/evaluacion-02-tecnicas-desarrollo.md) - Clases 05-08
+
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

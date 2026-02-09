@@ -1,146 +1,257 @@
-# Teoría - TDD y Pruebas Unitarias
+# Teoria - Clases, Objetos y Atributos
 
-**IF0100 - Lenguaje de Programación OO II**
-
----
-
-## 1. ¿Qué es TDD?
-
-**Test-Driven Development (TDD)** es una práctica de desarrollo donde se escriben las pruebas ANTES del código de producción.
-
-### Ciclo Red-Green-Refactor
-
-```
-🔴 RED   → Escribir prueba que falla
-🟢 GREEN → Código mínimo para pasar
-🔵 REFACTOR → Eliminar duplicación
-🔁 REPEAT → Siguiente prueba
-```
-
-### Las Tres Leyes de TDD (Uncle Bob)
-
-1. No escribirás código de producción hasta haber escrito una prueba que falle
-2. No escribirás más de una prueba suficiente para fallar
-3. No escribirás más código del necesario para pasar la prueba
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
-## 2. pytest Framework
+## 1. Conceptos Fundamentales de POO
 
-### Fixtures y Funciones de Prueba
+### 1.1 Que es una Clase?
 
-| Decorador/Función | Uso |
-|-------------------|-----|
-| `def test_*()` | Prueba básica |
-| `@pytest.fixture` | Configuración reutilizable |
-| `@pytest.mark.parametrize` | Prueba parametrizada |
+Una **clase** es una plantilla o molde que define las caracteristicas y comportamientos que tendran los objetos creados a partir de ella. En Python, las clases son blueprint que combinan datos (atributos) y funciones (metodos).
 
-### Patrón AAA
+### 1.2 Que es un Objeto?
+
+Un **objeto** es una instancia especifica de una clase. Cada objeto tiene su propio conjunto de valores para los atributos definidos en la clase, pero comparten la misma estructura y comportamiento.
+
+### Relacion Clase-Objeto
+
+```
+CLASE (Molde/Plantilla)          OBJETO (Instancia concreta)
++------------------+              +------------------+
+|     Persona      |              | persona1         |
++------------------+              +------------------|
+| atributos:       |              | nombre: "Ana"   |
+| - nombre         | --------->   | edad: 25        |
+| - edad           |              | email: "a@b.com"|
+|------------------|              +------------------|
+| metodos:         |
+| - hablar()       |
+| - caminar()      |
++------------------+
+```
+
+---
+
+## 2. Definicion de Clases en Python
+
+### Sintaxis Basica
 
 ```python
-# test_calculadora.py
-import pytest
-from calculadora import Calculadora
-
-
-def test_sumar_dos_numeros_retorna_suma():
-    # Arrange - Configurar
-    calc = Calculadora()
-
-    # Act - Ejecutar
-    resultado = calc.sumar(5, 3)
-
-    # Assert - Verificar
-    assert resultado == 8
-
-
-# Versión con fixture
-@pytest.fixture
-def calculadora():
-    return Calculadora()
-
-
-def test_sumar_con_fixture(calculadora):
-    # Act
-    resultado = calculadora.sumar(5, 3)
-    
-    # Assert
-    assert resultado == 8
-
-
-# Versión parametrizada
-@pytest.mark.parametrize("a, b, esperado", [
-    (5, 3, 8),
-    (10, 20, 30),
-    (-1, 1, 0),
-])
-def test_sumar_parametrizado(calculadora, a, b, esperado):
-    assert calculadora.sumar(a, b) == esperado
+class Persona:
+    """Clase que representa una persona"""
+    pass
 ```
 
-### Clase de Ejemplo
+### Creacion de Objetos
 
 ```python
-# calculadora.py
-class Calculadora:
-    def sumar(self, a: int, b: int) -> int:
-        return a + b
+# Crear instancias de la clase Persona
+persona1 = Persona()
+persona2 = Persona()
 
-    def restar(self, a: int, b: int) -> int:
-        return a - b
-
-    def dividir(self, a: int, b: int) -> float:
-        if b == 0:
-            raise ValueError("No se puede dividir por cero")
-        return a / b
+print(type(persona1))  # <class '__main__.Persona'>
+print(persona1 is persona2)  # False - son objetos diferentes
 ```
 
 ---
 
-## 3. Test Doubles
+## 3. Atributos
 
-| Tipo | Propósito |
-|------|-----------|
-| **Dummy** | Llena parámetros, sin uso |
-| **Stub** | Respuestas predefinidas |
-| **Fake** | Implementación simplificada |
-| **Mock** | Verifica comportamiento |
+### 3.1 Atributos de Instancia
 
-### Ejemplo con Mock (unittest.mock)
+Los atributos de instancia pertenecen a cada objeto individualmente. Se definen dentro del metodo `__init__`.
 
 ```python
-# test_con_mock.py
-from unittest.mock import Mock, patch
-import pytest
+class Persona:
+    def __init__(self, nombre, edad):
+        # Atributos de instancia
+        self.nombre = nombre
+        self.edad = edad
 
+# Crear objetos
+persona1 = Persona("Ana", 25)
+persona2 = Persona("Carlos", 30)
 
-def test_enviar_notificacion():
-    # Arrange
-    servicio_mock = Mock()
-    servicio_mock.enviar.return_value = True
-    
-    notificador = Notificador(servicio_mock)
-    
-    # Act
-    resultado = notificador.notificar("Hola")
-    
-    # Assert
-    assert resultado is True
-    servicio_mock.enviar.assert_called_once_with("Hola")
+print(persona1.nombre)  # Ana
+print(persona2.nombre)  # Carlos
+print(persona1.edad)    # 25
 
+# Cada objeto tiene sus propios atributos
+persona1.edad = 26  # Solo afecta a persona1
+print(persona1.edad)  # 26
+print(persona2.edad)  # 30
+```
 
-# Usando patch
-@patch("modulo.ServicioEmail")
-def test_procesar_pedido(mock_email_class):
-    mock_email = Mock()
-    mock_email_class.return_value = mock_email
-    
-    procesador = ProcesadorPedidos()
-    procesador.procesar("cliente@email.com")
-    
-    mock_email.enviar_confirmacion.assert_called_once()
+### 3.2 Atributos de Clase
+
+Los atributos de clase son compartidos por todas las instancias de esa clase. Se definen directamente en el cuerpo de la clase.
+
+```python
+class Persona:
+    # Atributo de clase (compartido por todas las instancias)
+    especie = "Homo sapiens"
+
+    def __init__(self, nombre, edad):
+        # Atributos de instancia
+        self.nombre = nombre
+        self.edad = edad
+
+# Acceso al atributo de clase
+print(Persona.especie)  # Homo sapiens
+
+# Todas las instancias comparten el mismo atributo de clase
+p1 = Persona("Ana", 25)
+p2 = Persona("Carlos", 30)
+
+print(p1.especie)  # Homo sapiens
+print(p2.especie)  # Homo sapiens
+
+# Si modificamos el atributo de clase, afecta a todas las instancias
+Persona.especie = "Humano"
+print(p1.especie)  # Humano
+print(p2.especie)  # Humano
+```
+
+### 3.3 Atributos de Clase para Contadores
+
+```python
+class Contador:
+    total_instancias = 0  # Atributo de clase compartido
+
+    def __init__(self, nombre):
+        self.nombre = nombre
+        Contador.total_instancias += 1  # Incrementar contador
+
+# Crear instancias
+c1 = Contador("Primero")
+c2 = Contador("Segundo")
+c3 = Contador("Tercero")
+
+print(f"Total instancias: {Contador.total_instancias}")  # 3
+print(f"Instancia c1: {c1.nombre}, id: {c1.total_instancias}")  # 1
 ```
 
 ---
 
-**Última actualización:** 2026-02-01
+## 4. El Metodo __init__
+
+El metodo `__init__` es el **constructor** de la clase. Se ejecuta automaticamente cuando se crea un nuevo objeto.
+
+### Caracteristicas del __init__
+
+```python
+class Persona:
+    def __init__(self, nombre, edad, email=None):
+        # Atributos obligatorios
+        self.nombre = nombre
+        self.edad = edad
+        # Atributo opcional con valor por defecto
+        self.email = email if email else f"{nombre.lower()}@ejemplo.com"
+
+    def presentarse(self):
+        return f"Hola, soy {self.nombre} y tengo {self.edad} anos"
+
+# Crear objetos
+p1 = Persona("Ana", 25)
+p2 = Persona("Carlos", 30, "carlos@empresa.com")
+
+print(p1.presentarse())  # Hola, soy Ana y tengo 25 anos
+print(p2.presentarse())  # Hola, soy Carlos y tengo 30 anos
+print(p1.email)  # ana@ejemplo.com (generado automaticamente)
+print(p2.email)  # carlos@empresa.com (proporcionado)
+```
+
+### Atributos de Clase con Valor Mutable
+
+**PELIGRO:** No usar listas o diccionarios como valores por defecto en `__init__`.
+
+```python
+# INCORRECTO - Todas las instancias comparten la misma lista
+class Incorrecto:
+    def __init__(self, valores=[]):  # PROBLEMA!
+        self.valores = valores
+
+# CORRECTO - Usar None y crear nueva lista
+class Correcto:
+    def __init__(self, valores=None):
+        self.valores = valores if valores is not None else []
+```
+
+---
+
+## 5. El Metodo __str__
+
+El metodo `__str__` define la representacion legible del objeto para usuarios.
+
+```python
+class Persona:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+
+    def __str__(self):
+        return f"Persona(nombre='{self.nombre}', edad={self.edad})"
+
+p1 = Persona("Ana", 25)
+print(p1)  # Persona(nombre='Ana', edad=25)
+print(str(p1))  # Lo mismo
+```
+
+---
+
+## 6. Convenciones de Nombres en Python
+
+| Tipo | Convencion | Ejemplo |
+|------|------------|---------|
+| Clases | PascalCase | ` Persona`, `CalculadoraSimple` |
+| Funciones/Metodos | snake_case | `calcular_total()`, `obtener_datos()` |
+| Atributos | snake_case | `nombre_usuario`, `edad_maxima` |
+| Constantes | UPPER_SNAKE_CASE | `MAXIMO_INTENTOS`, `TASA_POR_DEFECTO` |
+| Atributos privados | underscore prefix | `_atributo_protegido` |
+| Atributos muy privados | double underscore | `__atributo_privado` |
+
+---
+
+## 7. Ejemplo Integrador
+
+```python
+class Banco:
+    # Atributo de clase
+    tasa_interes = 0.05
+
+    def __init__(self, nombre, saldo_inicial=0):
+        self.nombre = nombre
+        self.saldo = saldo_inicial
+
+    def depositar(self, monto):
+        if monto > 0:
+            self.saldo += monto
+            return True
+        return False
+
+    def retirar(self, monto):
+        if 0 < monto <= self.saldo:
+            self.saldo -= monto
+            return True
+        return False
+
+    def calcular_interes(self):
+        return self.saldo * self.tasa_interes
+
+    def __str__(self):
+        return f"Banco({self.nombre}, saldo=${self.saldo:.2f})"
+
+# Uso
+cuenta1 = Banco("Ana", 1000)
+cuenta2 = Banco("Carlos", 500)
+
+print(cuenta1)  # Banco(Ana, saldo=$1000.00)
+cuenta1.depositar(200)
+print(cuenta1)  # Banco(Ana, saldo=$1200.00)
+print(f"Interes de Carlos: ${cuenta2.calcular_interes():.2f}")
+```
+
+---
+
+**Ultima actualizacion:** 2026-02-08

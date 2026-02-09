@@ -1,16 +1,53 @@
 # Referencias - Clase 09
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
-## Recursos
+## Documentacion Oficial
 
 | Recurso | Enlace |
 |---------|--------|
-| HTML5 MDN | [developer.mozilla.org/html](https://developer.mozilla.org/en-US/docs/Web/HTML) |
-| Bootstrap 5 | [getbootstrap.com](https://getbootstrap.com/docs/5.3) |
+| Documentacion pytest | https://docs.pytest.org/en/stable/ |
+| Tutorial pytest | https://docs.pytest.org/en/stable/getting-started.html |
+| Assert en pytest | https://docs.pytest.org/en/stable/assert.html |
+| pytest Fixtures | https://docs.pytest.org/en/stable/fixture.html |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Recursos TDD
+
+| Recurso | Enlace |
+|---------|--------|
+| Introduccion a TDD | https://testdriven.io/test-driven-development/ |
+| TDD Python | https://realpython.com/python-testing/ |
+| Ciclo TDD | https://www.agilealliance.org/glossary/tdd/ |
+
+---
+
+## Libros Recomendados
+
+| Libro | Autor | Descripcion |
+|-------|-------|-------------|
+| Test-Driven Development | Kent Beck | El libro clasico de TDD |
+| pytest Quick Start Guide | Bruno Oliveira | Guia practica de pytest |
+
+---
+
+## Cheat Sheets
+
+```bash
+# Comandos utiles pytest
+pytest              # Ejecutar todos los tests
+pytest -v           # Verboso
+pytest -k "nombre"  # Filtrar por nombre
+pytest -x           # Detener en primer fallo
+pytest --tb=short   # Traceback corto
+pytest --cov=src    # Coverage
+pytest --cov-report=html  # Reporte HTML
+pytest --cov-report=term-missing  # Lineas sin coverage
+```
+
+---
+
+**Ultima actualizacion:** 2026-02-08

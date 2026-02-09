@@ -1,15 +1,23 @@
-# Clase 09 - HTML5 y Bootstrap
+# Clase 09 - TDD y pytest Basico
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 3 - Desarrollo Web*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 2 - Tecnicas de Desarrollo*
+
+## Objetivos
+- Comprender el ciclo TDD (Test-Driven Development)
+- Escribir pruebas unitarias con pytest
+- Aplicar el ciclo Rojo-Verde-Refactorizar
+- Ejecutar y analizar resultados de pruebas
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-03-desarrollo-web/clase-09-html5-bootstrap.md)
-- [📖 Teoría](./teoria.md)
-- [💻 Código](./codigo.md)
+- [📖 Teoria](./teoria.md)
+- [💻 Codigo](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
 - [📚 Referencias](./referencias.md)
 
+## Evaluacion
+- [Taller 2 - TDD y pytest](/evaluaciones/evaluacion-02-tecnicas-desarrollo.md) - Clases 09-12
+
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

@@ -1,15 +1,15 @@
-# Clase 13 - CRUD con ADO.NET y SQL Server
+# Clase 13 - FastAPI y APIs REST
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 4 - Persistencia*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 3 - Desarrollo Backend con FastAPI*
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-04-persistencia/clase-13-crud-ado-net-sqlserver.md)
-- [📖 Teoría](./teoria.md)
-- [💻 Código](./codigo.md)
+- [Slides](../../clases-html/unidad-03/clase-01-fastapi-intro.html)
+- [📖 Teoria](./teoria.md)
+- [💻 Codigo](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
 - [📚 Referencias](./referencias.md)
 
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

@@ -1,16 +1,33 @@
 # Referencias - Clase 14
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
-## Recursos
+## Documentacion Oficial
 
 | Recurso | Enlace |
 |---------|--------|
-| System.IO | [docs.microsoft.com/dotnet/api/system.io](https://learn.microsoft.com/en-us/dotnet/api/system.io) |
-| JSON JsonSerializer | [docs.microsoft.com/dotnet/api/system.text.json](https://learn.microsoft.com/en-us/dotnet/api/system.text.json) |
+| Pydantic Docs | https://docs.pydantic.dev/latest/ |
+| FastAPI Request Body | https://fastapi.tiangolo.com/tutorial/body/ |
+| FastAPI Dependencies | https://fastapi.tiangolo.com/tutorial/dependencies/ |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Recursos de Aprendizaje
+
+| Recurso | Enlace |
+|---------|--------|
+| Pydantic v2 Tutorial | https://www.youtube.com/watch?v=tM6ar0dGVJE |
+| FastAPI Dependencies | https://www.youtube.com/watch?v=eCP1qPHBNg4 |
+
+---
+
+## Slides de las Clases
+
+- [Pydantic y Validacion](../../clases-html/unidad-03/clase-02-pydantic-validacion.html)
+- [Inyeccion de Dependencias](../../clases-html/unidad-03/clase-03-dependencias.html)
+
+---
+
+**Ultima actualizacion:** 2026-02-08

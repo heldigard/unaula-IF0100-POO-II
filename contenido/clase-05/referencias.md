@@ -1,6 +1,6 @@
 # Referencias - Clase 05
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
@@ -8,10 +8,18 @@
 
 | Recurso | Enlace |
 |---------|--------|
-| xUnit Docs | [xunit.net](https://xunit.net) |
-| TDD Book | Kent Beck - "TDD: By Example" |
-| dotnet test | [docs.microsoft.com](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test) |
+| Python Classes | [docs.python.org/3/tutorial/classes.html](https://docs.python.org/3/tutorial/classes.html) |
+| Real Python - OOP | [realpython.com/python3-object-oriented-programming](https://realpython.com/python3-object-oriented-programming) |
+| PEP 8 - Style Guide | [peps.python.org/pep-0008/](https://peps.python.org/pep-0008/) |
+| Python Data Model | [docs.python.org/3/reference/datamodel.html](https://docs.python.org/3/reference/datamodel.html) |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Videos Recomendados
+
+- "Python Classes in 10 Minutes" - YouTube
+- "Understanding self in Python" - Corey Schafer
+
+---
+
+**Ultima actualizacion:** 2026-02-08

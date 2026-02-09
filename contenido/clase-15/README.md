@@ -1,15 +1,15 @@
-# Clase 15 - DataSet y DataAdapter
+# Clase 15 - Dependencias e Inyeccion de Dependencias
 
-**IF0100 - Lenguaje de Programación OO II**
-*Unidad 5 - Datos Desconectados*
+**IF0100 - Lenguaje de Programacion OO II**
+*Unidad 3 - Desarrollo Backend con FastAPI*
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-05-datos-desconectados/clase-15-dataset-dataadapter.md)
-- [📖 Teoría](./teoria.md)
-- [💻 Código](./codigo.md)
+- [📄 Slides](../../clases-html/unidad-03/clase-03-dependencias.html)
+- [📖 Teoria](./teoria.md)
+- [💻 Codigo](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
 - [📚 Referencias](./referencias.md)
 
 ---
 
-**Última actualización:** 2026-02-01
+**Ultima actualizacion:** 2026-02-08

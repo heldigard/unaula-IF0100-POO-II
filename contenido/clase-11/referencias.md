@@ -1,16 +1,26 @@
-# Referencias - Clase 11
+# Referencias - Clase 11 (BDD)
 
 **IF0100 - Lenguaje de Programación OO II**
 
 ---
 
-## Recursos
+## Recursos Oficiales
 
 | Recurso | Enlace |
 |---------|--------|
-| Model Validation | [docs.microsoft.com/aspnet/core/mvc/models/validation](https://learn.microsoft.com/en-us/aspnet/core/mvc/models/validation) |
-| Session State | [docs.microsoft.com/aspnet/core/fundamentals/app-state](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state) |
+| Documentación Behave | https://behave.readthedocs.io/ |
+| Gherkin Reference (Cucumber) | https://cucumber.io/docs/gherkin/ |
+| pytest-bdd Documentation | https://pytest-bdd.readthedocs.io/ |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Documentación Adicional
+
+| Recurso | Descripción |
+|---------|-------------|
+| behave en GitHub | https://github.com/behave/behave |
+| Ejemplos BDD | https://github.com/behave/behave/tree/main/example |
+
+---
+
+**Última actualización:** 2026-02-08

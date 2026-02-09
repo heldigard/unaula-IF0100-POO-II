@@ -1,10 +1,10 @@
-# Clase 11 - Formularios, Validación y Sesiones
+# Clase 11 - Behavior-Driven Development (BDD)
 
 **IF0100 - Lenguaje de Programación OO II**
-*Unidad 3 - Desarrollo Web*
+*Unidad 2 - Técnicas de Desarrollo*
 
 ## Archivos
-- [📄 Slides](../../clases/unidad-03-desarrollo-web/clase-11-formularios-validacion-sesiones.md)
+- [📄 Slides](../../clases-html/unidad-02/clase-03-bdd-intro.html)
 - [📖 Teoría](./teoria.md)
 - [💻 Código](./codigo.md)
 - [✏️ Ejercicios](./ejercicios.md)
@@ -12,4 +12,4 @@
 
 ---
 
-**Última actualización:** 2026-02-01
+**Última actualización:** 2026-02-08

@@ -1,6 +1,6 @@
 # Referencias - Clase 15
 
-**IF0100 - Lenguaje de Programación OO II**
+**IF0100 - Lenguaje de Programacion OO II**
 
 ---
 
@@ -8,9 +8,16 @@
 
 | Recurso | Enlace |
 |---------|--------|
-| DataSet Class | [docs.microsoft.com/dotnet/api/system.data.dataset](https://learn.microsoft.com/en-us/dotnet/api/system.data.dataset) |
-| DataAdapter | [docs.microsoft.com/dotnet/api/system.data.common.dataadapter](https://learn.microsoft.com/en-us/dotnet/api/system.data.common.dataadapter) |
+| FastAPI Dependencies | [fastapi.tiangolo.com/tutorial/dependencies/](https://fastapi.tiangolo.com/tutorial/dependencies/) |
+| Dependency Injection | [fastapi.tiangolo.com/tutorial/dependencies/dependency-instances/](https://fastapi.tiangolo.com/tutorial/dependencies/dependency-instances/) |
+| Depends | [fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/) |
 
 ---
 
-**Última actualización:** 2026-02-01
+## Videos Recomendados
+
+- FastAPI Official: Dependency Injection System
+
+---
+
+**Ultima actualizacion:** 2026-02-08
