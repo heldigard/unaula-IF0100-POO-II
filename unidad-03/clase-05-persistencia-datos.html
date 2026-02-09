@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Persistencia de datos con SQLite y SQLAlchemy en FastAPI. Curso IF0100 - POO II">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Persistencia de Datos | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Blocks */
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Database Diagram */
+        .db-diagram {
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .db-table {
+            background: white;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Backend con FastAPI</h2>
+            <h3>Clase 5: Persistencia de Datos</h3>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#sqlite">SQLite con Python</a></li>
+                        <li><a href="#sqlalchemy">SQLAlchemy ORM</a></li>
+                        <li><a href="#modelos">Definición de Modelos</a></li>
+                        <li><a href="#crud">Operaciones CRUD</a></li>
+                        <li><a href="#fastapi">FastAPI + SQLAlchemy</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guiado</a></li>
+                        <li><a href="#taskflow">Conexión con TaskFlow</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-lg-9">
+                <!-- Sección 1: Objetivos -->
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender los conceptos fundamentales de persistencia de datos</li>
+                        <li>Implementar conexiones a SQLite usando Python</li>
+                        <li>Utilizar SQLAlchemy como ORM para abstraer operaciones de base de datos</li>
+                        <li>Definir modelos de datos que representen tablas de la base de datos</li>
+                        <li>Realizar operaciones CRUD (Create, Read, Update, Delete) con SQLAlchemy</li>
+                        <li>Implementar relaciones entre tablas (uno a muchos, muchos a muchos)</li>
+                        <li>Integrar SQLAlchemy con FastAPI usando dependencias</li>
+                        <li>Aplicar patrones de diseño para acceso a datos en TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 2: Conceptos Teóricos -->
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es Persistencia de Datos?</h3>
+                    <p>
+                        La <strong>persistencia de datos</strong> se refiere a la capacidad de almacenar
+                        información de manera que pueda ser recuperada y utilizada posteriormente, incluso
+                        después de que el programa que la creó haya finalizado. A diferencia de los datos
+                        en memoria RAM que se pierden al apagar el sistema, los datos persistentes
+                        permanecen almacenados en dispositivos de almacenamiento no volátil.
+                    </p>
+
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> Imagina que la memoria RAM es como una pizarra
+                        temporal donde anotas notas mientras trabajas, mientras que la persistencia
+                        es como guardar esas notas en un cuaderno que puedes consultar mañana.
+                    </div>
+
+                    <h3>¿Por qué Persistir Datos?</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Datos Duraderos</h5>
+                                    <p class="card-text">
+                                        La información sobrevive a la ejecución del programa
+                                        y puede ser compartida entre múltiples sesiones.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Escalabilidad</h5>
+                                    <p class="card-text">
+                                        Permite manejar grandes volúmenes de datos que no
+                                        caben en memoria RAM.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Compartición</h5>
+                                    <p class="card-text">
+                                        Múltiples aplicaciones o usuarios pueden acceder
+                                        a los mismos datos simultáneamente.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Integridad</h5>
+                                    <p class="card-text">
+                                        Las bases de datos proporcionan mecanismos para
+                                        mantener la consistencia e integridad de los datos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <figure class="text-center my-4">
+                        <img src="../assets/infografias/clase-12-pyodbc-arquitectura.svg" alt="Arquitectura PyODBC" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+                        <figcaption class="figure-caption mt-2">Figura 1: Arquitectura de Conexión a Base de Datos con Python</figcaption>
+                    </figure>
+
+                    <h3>SQLite: Base de Datos Embebida</h3>
+                    <p>
+                        <strong>SQLite</strong> es un sistema de gestión de bases de datos relacional
+                        contenido en una biblioteca de C. A diferencia de otros sistemas como MySQL
+                        o PostgreSQL, SQLite no requiere un servidor separado: toda la base de datos
+                        reside en un único archivo.
+                    </p>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Característica</th>
+                                <th>SQLite</th>
+                                <th>MySQL/PostgreSQL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Arquitectura</strong></td>
+                                <td>Embebida (sin servidor)</td>
+                                <td>Cliente-Servidor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Archivo</strong></td>
+                                <td>Un solo archivo .db</td>
+                                <td>Múltiples archivos/directorios</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Instalación</strong></td>
+                                <td>No requiere</td>
+                                <td>Requiere servidor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Concurrencia</strong></td>
+                                <td>Limitada</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Uso Ideal</strong></td>
+                                <td>Desarrollo, apps móviles, pequeños proyectos</td>
+                                <td>Producción, aplicaciones web escalables</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>SQLAlchemy: El ORM de Python</h3>
+                    <p>
+                        <strong>SQLAlchemy</strong> es una biblioteca de Python que proporciona
+                        herramientas para trabajar con bases de datos relacionales. Ofrece dos
+                        enfoques principales:
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">SQLAlchemy ORM</h5>
+                                    <p class="card-text">
+                                        <strong>Object-Relational Mapping</strong>: Mapea clases
+                                        Python a tablas de base de datos. Trabajas con objetos
+                                        en lugar de SQL directo.
+                                    </p>
+                                    <pre><code class="language-python"># Enfoque ORM
+usuario = User(username="juan", email="juan@example.com")
+session.add(usuario)
+session.commit()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">SQLAlchemy Core</h5>
+                                    <p class="card-text">
+                                        <strong>SQL Expression Language</strong>: Genera SQL
+                                        programáticamente. Más control pero más verboso.
+                                    </p>
+                                    <pre><code class="language-python"># Enfoque Core
+stmt = users.insert().values(username="juan", email="juan@example.com")
+session.execute(stmt)
+session.commit()</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-tip">
+                        <strong>Recomendación:</strong> Para este curso usaremos SQLAlchemy ORM
+                        porque es más intuitivo para desarrolladores Python y se integra mejor
+                        con el paradigma de programación orientada a objetos.
+                    </div>
+
+                    <h3>Modelos vs Tablas</h3>
+                    <p>
+                        Es importante entender la diferencia entre <strong>modelos</strong> y <strong>tablas</strong>
+                        en el contexto de un ORM:
+                    </p>
+
+                    <ul>
+                        <li>
+                            <strong>Modelo:</strong> Es una clase Python que define la estructura
+                            de datos. Contiene atributos que mapean a columnas de la tabla.
+                            <pre><code class="language-python">class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False)
+    email = Column(String(100), unique=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)</code></pre>
+                        </li>
+                        <li>
+                            <strong>Tabla:</strong> Es la representación real en la base de datos.
+                            El ORM crea la tabla cuando se ejecuta el código.
+                        </li>
+                    </ul>
+
+                    <h3>Sesiones y Transacciones</h3>
+
+                    <div class="db-diagram">
+                        <h4>Ciclo de Vida de una Sesion</h4>
+                        <div class="dependency-step">
+                            <div class="db-table">
+                                <strong>1. Crear Sesion:</strong> session = SessionLocal()
+                            </div>
+                        </div>
+                        <div class="dependency-step">
+                            <div class="db-table">
+                                <strong>2. Ejecutar Operaciones:</strong> query(), add(), commit()
+                            </div>
+                        </div>
+                        <div class="dependency-step">
+                            <div class="db-table">
+                                <strong>3. Transaccion:</strong> Inicio -> Operaciones -> Commit/Rollback
+                            </div>
+                        </div>
+                        <div class="dependency-step">
+                            <div class="db-table">
+                                <strong>4. Cerrar Sesion:</strong> session.close()
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li>
+                            <strong>Sesion:</strong> Objeto que representa una conversación
+                            con la base de datos. Mantiene un conjunto de objetos en memoria.
+                        </li>
+                        <li>
+                            <strong>Transaccion:</strong> Secuencia de operaciones que se
+                            ejecutan como una unidad. Si una falla, todas se revierten.
+                        </li>
+                        <li>
+                            <strong>Commit:</strong> Guarda permanentemente los cambios
+                            realizados en la transacción actual.
+                        </li>
+                        <li>
+                            <strong>Rollback:</strong> Revierte todos los cambios de la
+                            transacción actual.
+                        </li>
+                    </ul>
+
+                    <h3>Conexion a Bases de Datos</h3>
+                    <p>
+                        La conexion a una base de datos se realiza mediante una <strong>URL de
+                        conexion</strong> que especifica el motor, host, puerto, usuario y base de datos:
+                    </p>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Base de Datos</th>
+                                <th>URL de Conexion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SQLite</strong></td>
+                                <td><code>sqlite:///./basedatos.db</code> (archivo local)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PostgreSQL</strong></td>
+                                <td><code>postgresql://user:password@localhost/dbname</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>MySQL</strong></td>
+                                <td><code>mysql://user:password@localhost/dbname</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Sección 3: SQLite con Python -->
+                <section id="sqlite">
+                    <h2>SQLite con Python</h2>
+
+                    <h3>sqlite3: Modulo Integrado</h3>
+                    <p>
+                        Python incluye el modulo <code>sqlite3</code> para trabajar con SQLite
+                        sin necesidad de instalar nada adicional.
+                    </p>
+
+                    <pre><code class="language-python">import sqlite3
+from sqlite3 import Error
+
+def crear_conexion(db_file):
+    """
+    Crea una conexion a la base de datos SQLite.
+
+    Args:
+        db_file: Ruta al archivo de la base de datos
+
+    Returns:
+        Connection: Objeto de conexion o None si hay error
+    """
+    conexion = None
+    try:
+        conexion = sqlite3.connect(db_file)
+        print(f"Connexion exitosa a SQLite: {db_file}")
+        return conexion
+    except Error as e:
+        print(f"Error al conectar a SQLite: {e}")
+        return None
+
+def crear_tabla(conexion, sql_create):
+    """
+    Crea una tabla usando la instruccion SQL proporcionada.
+
+    Args:
+        conexion: Objeto de conexion a SQLite
+        sql_create: Instruccion SQL CREATE TABLE
+    """
+    try:
+        cursor = conexion.cursor()
+        cursor.execute(sql_create)
+        print("Tabla creada exitosamente")
+    except Error as e:
+        print(f"Error al crear tabla: {e}")
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    conexion = crear_conexion("taskflow.db")
+
+    if conexion:
+        # SQL para crear tabla de usuarios
+        sql_usuarios = """
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+
+        sql_tareas = """
+        CREATE TABLE IF NOT EXISTS tareas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT NOT NULL,
+            descripcion TEXT,
+            estado TEXT DEFAULT 'pendiente',
+            usuario_id INTEGER NOT NULL,
+            FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+            creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+
+        crear_tabla(conexion, sql_usuarios)
+        crear_tabla(conexion, sql_tareas)
+        conexion.close()</code></pre>
+
+                    <h3>Operaciones CRUD con sqlite3</h3>
+
+                    <pre><code class="language-python">def insertar_usuario(conexion, usuario):
+    """
+    Inserta un nuevo usuario en la base de datos.
+
+    Args:
+        conexion: Objeto de conexion
+        usuario: Tupla con (username, email, password_hash)
+
+    Returns:
+        int: ID del usuario insertado o None si hay error
+    """
+    sql = """INSERT INTO usuarios(username, email, password_hash)
+             VALUES(?, ?, ?)"""
+    cursor = conexion.cursor()
+    try:
+        cursor.execute(sql, usuario)
+        conexion.commit()
+        print(f"Usuario insertado con ID: {cursor.lastrowid}")
+        return cursor.lastrowid
+    except Error as e:
+        print(f"Error al insertar usuario: {e}")
+        return None
+
+def obtener_usuario_por_id(conexion, usuario_id):
+    """
+    Obtiene un usuario por su ID.
+
+    Args:
+        conexion: Objeto de conexion
+        usuario_id: ID del usuario a buscar
+
+    Returns:
+        tuple: Fila del usuario o None
+    """
+    sql = "SELECT * FROM usuarios WHERE id = ?"
+    cursor = conexion.cursor()
+    cursor.execute(sql, (usuario_id,))
+    return cursor.fetchone()
+
+def listar_usuarios(conexion):
+    """
+    Lista todos los usuarios.
+
+    Args:
+        conexion: Objeto de conexion
+
+    Returns:
+        list: Lista de tuplas con los usuarios
+    """
+    sql = "SELECT * FROM usuarios"
+    cursor = conexion.cursor()
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+def actualizar_usuario(conexion, usuario):
+    """
+    Actualiza un usuario existente.
+
+    Args:
+        conexion: Objeto de conexion
+        usuario: Tupla con (username, email, password_hash, id)
+
+    Returns:
+        bool: True si se actualizo, False si hay error
+    """
+    sql = """UPDATE usuarios
+             SET username = ?, email = ?, password_hash = ?
+             WHERE id = ?"""
+    cursor = conexion.cursor()
+    try:
+        cursor.execute(sql, usuario)
+        conexion.commit()
+        print(f"Filas actualizadas: {cursor.rowcount}")
+        return cursor.rowcount > 0
+    except Error as e:
+        print(f"Error al actualizar usuario: {e}")
+        return False
+
+def eliminar_usuario(conexion, usuario_id):
+    """
+    Elimina un usuario por su ID.
+
+    Args:
+        conexion: Objeto de conexion
+        usuario_id: ID del usuario a eliminar
+
+    Returns:
+        bool: True si se elimino, False si hay error
+    """
+    sql = "DELETE FROM usuarios WHERE id = ?"
+    cursor = conexion.cursor()
+    try:
+        cursor.execute(sql, (usuario_id,))
+        conexion.commit()
+        print(f"Filas eliminadas: {cursor.rowcount}")
+        return cursor.rowcount > 0
+    except Error as e:
+        print(f"Error al eliminar usuario: {e}")
+        return False
+
+# Ejemplo de uso del CRUD
+if __name__ == "__main__":
+    conexion = crear_conexion("taskflow.db")
+
+    if conexion:
+        # Create
+        nuevo_usuario = ("juan", "juan@example.com", "hash_password")
+        usuario_id = insertar_usuario(conexion, nuevo_usuario)
+
+        # Read
+        usuario = obtener_usuario_por_id(conexion, usuario_id)
+        print(f"Usuario obtenido: {usuario}")
+
+        usuarios = listar_usuarios(conexion)
+        print(f"Todos los usuarios: {usuarios}")
+
+        # Update
+        if usuario_id:
+            actualizar_usuario(conexion, ("juan_updated", "juan@email.com", "new_hash", usuario_id))
+
+        # Delete
+        if usuario_id:
+            eliminar_usuario(conexion, usuario_id)
+
+        conexion.close()</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Nota:</strong> Aunque sqlite3 funciona, en aplicaciones reales
+                        preferimos usar SQLAlchemy porque:
+                        <ul>
+                            <li>Abstrae las diferencias entre bases de datos</li>
+                            <li>Previene inyeccion SQL automaticamente</li>
+                            <li>Permite trabajar con objetos Python</li>
+                            <li>Mejora la mantenibilidad del codigo</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Sección 4: SQLAlchemy ORM -->
+                <section id="sqlalchemy">
+                    <h2>SQLAlchemy ORM</h2>
+
+                    <h3>Instalacion</h3>
+                    <pre><code class="language-bash"># Instalar SQLAlchemy y extensiones
+pip install sqlalchemy
+
+# Para FastAPI con SQLite, necesitamos pysqlite (incluido en Python)
+# Para PostgreSQL, instalar psycopg2
+pip install psycopg2-binary  # o pip install psycopg2 para compilar</code></pre>
+
+                    <h3>Configuracion de Engine y Session</h3>
+
+                    <pre><code class="language-python"># database.py
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.pool import QueuePool
+
+# URL de conexion a SQLite
+DATABASE_URL = "sqlite:///./taskflow.db"
+# Para SQLite en Windows con hilos
+# DATABASE_URL = "sqlite:///./taskflow.db?check_same_thread=False"
+
+# Crear engine
+# connect_args={"check_same_thread": False} es necesario solo para SQLite
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    poolclass=QueuePool,
+    pool_size=5,
+    max_overflow=10,
+    pool_pre_ping=True  # Verificar conexion antes de usar
+)
+
+# Crear SessionLocal para las sesiones de base de datos
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
+# Base declarativa para definir modelos
+Base = declarative_base()
+
+# Funcion para crear tablas
+def create_db():
+    """Crea todas las tablas definidas en los modelos."""
+    Base.metadata.create_all(bind=engine)
+
+# Funcion para dropear tablas (cuidado!)
+def drop_db():
+    """Elimina todas las tablas."""
+    Base.metadata.drop_all(bind=engine)</code></pre>
+
+                    <h3>Definicion de Modelos</h3>
+
+                    <pre><code class="language-python"># models/usuario.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+class Usuario(Base):
+    """
+    Modelo que representa la tabla de usuarios.
+
+    Attrs:
+        id: Identificador unico del usuario
+        username: Nombre de usuario unico
+        email: Correo electronico unico
+        password_hash: Hash de la contrasena
+        activo: Indica si el usuario esta activo
+        creado_en: Fecha de creacion del registro
+        actualizado_en: Fecha de ultima actualizacion
+    """
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    email = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    activo = Column(Boolean, default=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relacion con tareas (uno a muchos)
+    tareas = relationship("Tarea", back_populates="usuario", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"&lt;Usuario(id={self.id}, username='{self.username}')&gt;"</code></pre>
+
+                    <pre><code class="language-python"># models/tarea.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Enum
+from sqlalchemy.orm import relationship
+from datetime import datetime
+import enum
+from database import Base
+
+class EstadoTarea(str, enum.Enum):
+    """Enumeracion para estados de una tarea."""
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+    CANCELADA = "cancelada"
+
+class Tarea(Base):
+    """
+    Modelo que representa la tabla de tareas.
+
+    Attrs:
+        id: Identificador unico de la tarea
+        titulo: Titulo de la tarea (obligatorio)
+        descripcion: Descripcion detallada de la tarea
+        estado: Estado actual de la tarea
+        usuario_id: ID del usuario propietario
+        creado_en: Fecha de creacion
+        actualizado_en: Fecha de ultima actualizacion
+    """
+    __tablename__ = "tareas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String(200), nullable=False)
+    descripcion = Column(Text)
+    estado = Column(String(20), default=EstadoTarea.PENDIENTE.value)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relacion con usuario (muchos a uno)
+    usuario = relationship("Usuario", back_populates="tareas")
+
+    # Relacion con proyecto (muchos a uno)
+    proyecto = relationship("Proyecto", back_populates="tareas")
+
+    def __repr__(self):
+        return f"&lt;Tarea(id={self.id}, titulo='{self.titulo}')&gt;"</code></pre>
+
+                    <pre><code class="language-python"># models/proyecto.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+class Proyecto(Base):
+    """
+    Modelo que representa la tabla de proyectos.
+
+    Attrs:
+        id: Identificador unico del proyecto
+        nombre: Nombre del proyecto
+        descripcion: Descripcion del proyecto
+        usuario_id: ID del usuario propietario
+        creado_en: Fecha de creacion
+        actualizado_en: Fecha de ultima actualizacion
+    """
+    __tablename__ = "proyectos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String(100), nullable=False)
+    descripcion = Column(Text)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relacion con tareas (uno a muchos)
+    tareas = relationship("Tarea", back_populates="proyecto", cascade="all, delete-orphan")
+
+    # Relacion con usuario (muchos a uno)
+    usuario = relationship("Usuario", back_populates="proyectos")
+
+    def __repr__(self):
+        return f"&lt;Proyecto(id={self.id}, nombre='{self.nombre}')&gt;"</code></pre>
+
+                    <h3>Relaciones entre Tablas</h3>
+
+                    <div class="db-diagram">
+                        <h4>Diagrama de Entidad-Relacion de TaskFlow</h4>
+
+                        <div class="db-table" style="text-align: center;">
+                            <strong>usuarios</strong><br>
+                            ---<br>
+                            id (PK)<br>
+                            username<br>
+                            email<br>
+                            password_hash
+                        </div>
+
+                        <div style="text-align: center; font-size: 24px;">1</div>
+                        <div style="text-align: center;">|</div>
+                        <div style="text-align: center; font-size: 24px;">N</div>
+
+                        <div class="db-table" style="text-align: center;">
+                            <strong>tareas</strong><br>
+                            ---<br>
+                            id (PK)<br>
+                            titulo<br>
+                            descripcion<br>
+                            estado<br>
+                            usuario_id (FK)<br>
+                            proyecto_id (FK)
+                        </div>
+
+                        <div style="text-align: center; font-size: 24px;">1</div>
+                        <div style="text-align: center;">|</div>
+                        <div style="text-align: center; font-size: 24px;">N</div>
+
+                        <div class="db-table" style="text-align: center;">
+                            <strong>proyectos</strong><br>
+                            ---<br>
+                            id (PK)<br>
+                            nombre<br>
+                            descripcion<br>
+                            usuario_id (FK)
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li><strong>Usuario - Tarea:</strong> Uno a muchos (un usuario tiene muchas tareas)</li>
+                        <li><strong>Usuario - Proyecto:</strong> Uno a muchos (un usuario tiene muchos proyectos)</li>
+                        <li><strong>Proyecto - Tarea:</strong> Uno a muchos (un proyecto tiene muchas tareas)</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 5: Operaciones CRUD -->
+                <section id="crud">
+                    <h2>Operaciones CRUD con SQLAlchemy</h2>
+
+                    <h3>Create (Crear)</h3>
+
+                    <pre><code class="language-python">from database import SessionLocal
+from models.usuario import Usuario
+from models.tarea import Tarea
+from datetime import datetime
+
+def crear_usuario(username: str, email: str, password_hash: str) -> Usuario:
+    """
+    Crea un nuevo usuario en la base de datos.
+
+    Args:
+        username: Nombre de usuario unico
+        email: Correo electronico unico
+        password_hash: Hash de la contrasena
+
+    Returns:
+        Usuario: Objeto Usuario creado
+    """
+    session = SessionLocal()
+
+    try:
+        # Crear instancia del modelo
+        nuevo_usuario = Usuario(
+            username=username,
+            email=email,
+            password_hash=password_hash
+        )
+
+        # Agregar a la sesion (no se guarda hasta hacer commit)
+        session.add(nuevo_usuario)
+
+        # Guardar cambios
+        session.commit()
+
+        # Refrescar para obtener el ID generado
+        session.refresh(nuevo_usuario)
+
+        print(f"Usuario creado: {nuevo_usuario}")
+        return nuevo_usuario
+
+    except Exception as e:
+        # Si hay error, revertir cambios
+        session.rollback()
+        print(f"Error al crear usuario: {e}")
+        raise
+
+    finally:
+        # Cerrar sesion siempre
+        session.close()
+
+def crear_tarea(titulo: str, descripcion: str, usuario_id: int,
+                proyecto_id: int = None) -> Tarea:
+    """
+    Crea una nueva tarea para un usuario.
+
+    Args:
+        titulo: Titulo de la tarea
+        descripcion: Descripcion detallada
+        usuario_id: ID del usuario propietario
+        proyecto_id: ID del proyecto (opcional)
+
+    Returns:
+        Tarea: Objeto Tarea creado
+    """
+    session = SessionLocal()
+
+    try:
+        nueva_tarea = Tarea(
+            titulo=titulo,
+            descripcion=descripcion,
+            usuario_id=usuario_id,
+            proyecto_id=proyecto_id
+        )
+
+        session.add(nueva_tarea)
+        session.commit()
+        session.refresh(nueva_tarea)
+
+        print(f"Tarea creada: {nueva_tarea}")
+        return nueva_tarea
+
+    except Exception as e:
+        session.rollback()
+        raise
+
+    finally:
+        session.close()</code></pre>
+
+                    <h3>Read (Leer)</h3>
+
+                    <pre><code class="language-python">def obtener_usuario_por_id(usuario_id: int) -> Usuario | None:
+    """
+    Obtiene un usuario por su ID.
+
+    Args:
+        usuario_id: ID del usuario
+
+    Returns:
+        Usuario: Objeto Usuario o None si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        # query() especifica el modelo
+        # .filter() aplica condiciones (similar a WHERE)
+        # .first() obtiene el primer resultado o None
+        usuario = session.query(Usuario).filter(
+            Usuario.id == usuario_id
+        ).first()
+        return usuario
+
+    finally:
+        session.close()
+
+def obtener_usuario_por_username(username: str) -> Usuario | None:
+    """
+    Obtiene un usuario por su nombre de usuario.
+
+    Args:
+        username: Nombre de usuario a buscar
+
+    Returns:
+        Usuario: Objeto Usuario o None si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        usuario = session.query(Usuario).filter(
+            Usuario.username == username
+        ).first()
+        return usuario
+
+    finally:
+        session.close()
+
+def listar_usuarios(activo: bool | None = None) -> list[Usuario]:
+    """
+    Lista todos los usuarios, opcionalmente filtrados por estado.
+
+    Args:
+        activo: Si es True, solo usuarios activos;
+                si False, solo inactivos; si None, todos
+
+    Returns:
+        list: Lista de objetos Usuario
+    """
+    session = SessionLocal()
+
+    try:
+        query = session.query(Usuario)
+
+        if activo is not None:
+            query = query.filter(Usuario.activo == activo)
+
+        # .all() obtiene todos los resultados como lista
+        usuarios = query.order_by(Usuario.creado_en.desc()).all()
+        return usuarios
+
+    finally:
+        session.close()
+
+def listar_tareas_por_usuario(usuario_id: int,
+                               estado: str | None = None) -> list[Tarea]:
+    """
+    Lista tareas de un usuario, opcionalmente filtradas por estado.
+
+    Args:
+        usuario_id: ID del usuario
+        estado: Filtrar por estado (opcional)
+
+    Returns:
+        list: Lista de objetos Tarea
+    """
+    session = SessionLocal()
+
+    try:
+        query = session.query(Tarea).filter(
+            Tarea.usuario_id == usuario_id
+        )
+
+        if estado:
+            query = query.filter(Tarea.estado == estado)
+
+        # Ordenar por fecha de creacion (mas recientes primero)
+        tareas = query.order_by(Tarea.creado_en.desc()).all()
+        return tareas
+
+    finally:
+        session.close()
+
+# Consultas avanzadas
+def buscar_tareas(busqueda: str, limite: int = 10) -> list[Tarea]:
+    """
+    Busca tareas por titulo o descripcion.
+
+    Args:
+        busqueda: Termino de busqueda
+        limite: Numero maximo de resultados
+
+    Returns:
+        list: Lista de tareas que coinciden
+    """
+    session = SessionLocal()
+
+    try:
+        # LIKE para busqueda parcial (case insensitive en SQLite)
+        tareas = session.query(Tarea).filter(
+            (Tarea.titulo.ilike(f"%{busqueda}%")) |
+            (Tarea.descripcion.ilike(f"%{busqueda}%"))
+        ).limit(limite).all()
+        return tareas
+
+    finally:
+        session.close()
+
+def estadisticas_tareas(usuario_id: int) -> dict:
+    """
+    Obtiene estadisticas de tareas de un usuario.
+
+    Args:
+        usuario_id: ID del usuario
+
+    Returns:
+        dict: Diccionario con conteos por estado
+    """
+    session = SessionLocal()
+
+    try:
+        from sqlalchemy import func
+
+        resultados = session.query(
+            Tarea.estado,
+            func.count(Tarea.id)
+        ).filter(
+            Tarea.usuario_id == usuario_id
+        ).group_by(Tarea.estado).all()
+
+        estadisticas = {estado.value: count for estado, count in resultados}
+        return estadisticas
+
+    finally:
+        session.close()</code></pre>
+
+                    <h3>Update (Actualizar)</h3>
+
+                    <pre><code class="language-python">def actualizar_usuario(usuario_id: int, **kwargs) -> Usuario | None:
+    """
+    Actualiza campos de un usuario.
+
+    Args:
+        usuario_id: ID del usuario a actualizar
+        **kwargs: Campos a actualizar (username, email, activo, etc.)
+
+    Returns:
+        Usuario: Usuario actualizado o None si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        # Obtener el usuario
+        usuario = session.query(Usuario).filter(
+            Usuario.id == usuario_id
+        ).first()
+
+        if not usuario:
+            print(f"Usuario con ID {usuario_id} no encontrado")
+            return None
+
+        # Actualizar campos
+        for key, value in kwargs.items():
+            if hasattr(usuario, key):
+                setattr(usuario, key, value)
+
+        # Commit automatico
+        session.commit()
+        session.refresh(usuario)
+
+        print(f"Usuario actualizado: {usuario}")
+        return usuario
+
+    except Exception as e:
+        session.rollback()
+        print(f"Error al actualizar usuario: {e}")
+        raise
+
+    finally:
+        session.close()
+
+def actualizar_estado_tarea(tarea_id: int, nuevo_estado: str) -> Tarea | None:
+    """
+    Actualiza el estado de una tarea.
+
+    Args:
+        tarea_id: ID de la tarea
+        nuevo_estado: Nuevo estado ("pendiente", "en_progreso", "completada", "cancelada")
+
+    Returns:
+        Tarea: Tarea actualizada o None si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        tarea = session.query(Tarea).filter(
+            Tarea.id == tarea_id
+        ).first()
+
+        if not tarea:
+            return None
+
+        tarea.estado = nuevo_estado
+        tarea.actualizado_en = datetime.utcnow()
+
+        session.commit()
+        session.refresh(tarea)
+
+        return tarea
+
+    except Exception as e:
+        session.rollback()
+        raise
+
+    finally:
+        session.close()</code></pre>
+
+                    <h3>Delete (Eliminar)</h3>
+
+                    <pre><code class="language-python">def eliminar_usuario(usuario_id: int) -> bool:
+    """
+    Elimina un usuario y todas sus tareas (cascade delete).
+
+    Args:
+        usuario_id: ID del usuario a eliminar
+
+    Returns:
+        bool: True si se elimino, False si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        usuario = session.query(Usuario).filter(
+            Usuario.id == usuario_id
+        ).first()
+
+        if not usuario:
+            print(f"Usuario con ID {usuario_id} no encontrado")
+            return False
+
+        # Eliminar el usuario (cascade eliminara tareas automaticamente)
+        session.delete(usuario)
+        session.commit()
+
+        print(f"Usuario {usuario_id} eliminado correctamente")
+        return True
+
+    except Exception as e:
+        session.rollback()
+        print(f"Error al eliminar usuario: {e}")
+        raise
+
+    finally:
+        session.close()
+
+def eliminar_tarea(tarea_id: int) -> bool:
+    """
+    Elimina una tarea por su ID.
+
+    Args:
+        tarea_id: ID de la tarea a eliminar
+
+    Returns:
+        bool: True si se elimino, False si no existe
+    """
+    session = SessionLocal()
+
+    try:
+        tarea = session.query(Tarea).filter(
+            Tarea.id == tarea_id
+        ).first()
+
+        if not tarea:
+            return False
+
+        session.delete(tarea)
+        session.commit()
+
+        print(f"Tarea {tarea_id} eliminada correctamente")
+        return True
+
+    except Exception as e:
+        session.rollback()
+        raise
+
+    finally:
+        session.close()
+
+def eliminar_tareas_completadas(usuario_id: int) -> int:
+    """
+    Elimina todas las tareas completadas de un usuario.
+
+    Args:
+        usuario_id: ID del usuario
+
+    Returns:
+        int: Numero de tareas eliminadas
+    """
+    session = SessionLocal()
+
+    try:
+        from models.tarea import EstadoTarea
+
+        # Eliminar todas las tareas completadas
+        tareas_eliminadas = session.query(Tarea).filter(
+            Tarea.usuario_id == usuario_id,
+            Tarea.estado == EstadoTarea.COMPLETADA.value
+        ).delete()
+
+        session.commit()
+
+        print(f"Tareas completadas eliminadas: {tareas_eliminadas}")
+        return tareas_eliminadas
+
+    except Exception as e:
+        session.rollback()
+        raise
+
+    finally:
+        session.close()</code></pre>
+                </section>
+
+                <!-- Sección 6: FastAPI + SQLAlchemy -->
+                <section id="fastapi">
+                    <h2>FastAPI + SQLAlchemy</h2>
+
+                    <h3>Integracion con FastAPI</h3>
+
+                    <pre><code class="language-python"># main.py
+
+from fastapi import FastAPI, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from pydantic import BaseModel
+from datetime import datetime
+
+# Importar configuracion y modelos
+from database import engine, SessionLocal, Base, create_db
+from models.usuario import Usuario as UsuarioModel
+from models.tarea import Tarea as TareaModel, EstadoTarea
+
+# --- Esquemas Pydantic ---
+
+class UsuarioCreate(BaseModel):
+    """Esquema para crear un usuario."""
+    username: str
+    email: str
+    password_hash: str
+
+class UsuarioResponse(BaseModel):
+    """Esquema para respuesta de usuario."""
+    id: int
+    username: str
+    email: str
+    activo: bool
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
+
+class TareaCreate(BaseModel):
+    """Esquema para crear una tarea."""
+    titulo: str
+    descripcion: Optional[str] = None
+    proyecto_id: Optional[int] = None
+
+class TareaUpdate(BaseModel):
+    """Esquema para actualizar una tarea."""
+    titulo: Optional[str] = None
+    descripcion: Optional[str] = None
+    estado: Optional[str] = None
+
+class TareaResponse(BaseModel):
+    """Esquema para respuesta de tarea."""
+    id: int
+    titulo: str
+    descripcion: Optional[str]
+    estado: str
+    usuario_id: int
+    proyecto_id: Optional[int]
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
+
+# --- Dependencias ---
+
+def get_db() -> Generator[Session, None, None]:
+    """
+    Dependencia que provee una sesion de base de datos.
+
+    Yields:
+        Session: Sesion de SQLAlchemy
+
+    La sesion se cierra automaticamente despues de cada request.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# --- Aplicacion FastAPI ---
+
+app = FastAPI(
+    title="TaskFlow API",
+    description="API para gestion de tareas y proyectos",
+    version="1.0.0"
+)
+
+# Crear tablas al iniciar
+@app.on_event("startup")
+def startup_event():
+    create_db()
+    print("Base de datos inicializada")
+
+# --- Endpoints de Usuario ---
+
+@app.post("/usuarios", response_model=UsuarioResponse, status_code=status.HTTP_201_CREATED)
+def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
+    """
+    Crea un nuevo usuario en el sistema.
+    """
+    # Verificar si el username ya existe
+    existente = db.query(UsuarioModel).filter(
+        UsuarioModel.username == usuario.username
+    ).first()
+
+    if existente:
+        raise HTTPException(
+            status_code=400,
+            detail="El nombre de usuario ya esta registrado"
+        )
+
+    # Verificar si el email ya existe
+    existente_email = db.query(UsuarioModel).filter(
+        UsuarioModel.email == usuario.email
+    ).first()
+
+    if existente_email:
+        raise HTTPException(
+            status_code=400,
+            detail="El correo electronico ya esta registrado"
+        )
+
+    # Crear usuario
+    db_usuario = UsuarioModel(**usuario.model_dump())
+    db.add(db_usuario)
+    db.commit()
+    db.refresh(db_usuario)
+
+    return db_usuario
+
+@app.get("/usuarios", response_model=List[UsuarioResponse])
+def listar_usuarios(
+        skip: int = 0,
+        limit: int = 100,
+        activo: Optional[bool] = None,
+        db: Session = Depends(get_db)
+):
+    """
+    Lista todos los usuarios con paginacion y filtro opcional por estado.
+    """
+    query = db.query(UsuarioModel)
+
+    if activo is not None:
+        query = query.filter(UsuarioModel.activo == activo)
+
+    usuarios = query.offset(skip).limit(limit).all()
+    return usuarios
+
+@app.get("/usuarios/{usuario_id}", response_model=UsuarioResponse)
+def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    """
+    Obtiene un usuario por su ID.
+    """
+    usuario = db.query(UsuarioModel).filter(
+        UsuarioModel.id == usuario_id
+    ).first()
+
+    if not usuario:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
+    return usuario
+
+@app.delete("/usuarios/{usuario_id}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    """
+    Elimina un usuario y todas sus tareas.
+    """
+    usuario = db.query(UsuarioModel).filter(
+        UsuarioModel.id == usuario_id
+    ).first()
+
+    if not usuario:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
+    db.delete(usuario)
+    db.commit()
+
+    return None
+
+# --- Endpoints de Tareas ---
+
+@app.post("/usuarios/{usuario_id}/tareas", response_model=TareaResponse,
+          status_code=status.HTTP_201_CREATED)
+def crear_tarea(
+        usuario_id: int,
+        tarea: TareaCreate,
+        db: Session = Depends(get_db)
+):
+    """
+    Crea una nueva tarea para un usuario especifico.
+    """
+    # Verificar que el usuario existe
+    usuario = db.query(UsuarioModel).filter(
+        UsuarioModel.id == usuario_id
+    ).first()
+
+    if not usuario:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
+    # Crear tarea
+    db_tarea = TareaModel(
+        **tarea.model_dump(),
+        usuario_id=usuario_id
+    )
+    db.add(db_tarea)
+    db.commit()
+    db.refresh(db_tarea)
+
+    return db_tarea
+
+@app.get("/usuarios/{usuario_id}/tareas", response_model=List[TareaResponse])
+def listar_tareas_usuario(
+        usuario_id: int,
+        estado: Optional[str] = None,
+        skip: int = 0,
+        limit: int = 100,
+        db: Session = Depends(get_db)
+):
+    """
+    Lista las tareas de un usuario, opcionalmente filtradas por estado.
+    """
+    # Verificar usuario existe
+    usuario = db.query(UsuarioModel).filter(
+        UsuarioModel.id == usuario_id
+    ).first()
+
+    if not usuario:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado"
+        )
+
+    query = db.query(TareaModel).filter(
+        TareaModel.usuario_id == usuario_id
+    )
+
+    if estado:
+        query = query.filter(TareaModel.estado == estado)
+
+    tareas = query.offset(skip).limit(limit).order_by(
+        TareaModel.creado_en.desc()
+    ).all()
+
+    return tareas
+
+@app.get("/tareas/{tarea_id}", response_model=TareaResponse)
+def obtener_tarea(tarea_id: int, db: Session = Depends(get_db)):
+    """
+    Obtiene una tarea por su ID.
+    """
+    tarea = db.query(TareaModel).filter(
+        TareaModel.id == tarea_id
+    ).first()
+
+    if not tarea:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarea no encontrada"
+        )
+
+    return tarea
+
+@app.patch("/tareas/{tarea_id}", response_model=TareaResponse)
+def actualizar_tarea(
+        tarea_id: int,
+        tarea_update: TareaUpdate,
+        db: Session = Depends(get_db)
+):
+    """
+    Actualiza una tarea (parcialmente).
+    """
+    tarea = db.query(TareaModel).filter(
+        TareaModel.id == tarea_id
+    ).first()
+
+    if not tarea:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarea no encontrada"
+        )
+
+    # Actualizar solo los campos proporcionados
+    update_data = tarea_update.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(tarea, key, value)
+
+    db.commit()
+    db.refresh(tarea)
+
+    return tarea
+
+@app.delete("/tareas/{tarea_id}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar_tarea(tarea_id: int, db: Session = Depends(get_db)):
+    """
+    Elimina una tarea.
+    """
+    tarea = db.query(TareaModel).filter(
+        TareaModel.id == tarea_id
+    ).first()
+
+    if not tarea:
+        raise HTTPException(
+            status_code=404,
+            detail="Tarea no encontrada"
+        )
+
+    db.delete(tarea)
+    db.commit()
+
+    return None</code></pre>
+
+                    <h3>Manejo de Errores</h3>
+
+                    <pre><code class="language-python">from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+
+# Manejo de errores comunes
+@app.exception_handler(IntegrityError)
+async def integrity_exception_handler(request, exc):
+    """
+    Maneja errores de integridad (violacion de constraints).
+    """
+    return HTTPException(
+        status_code=400,
+        detail=f"Error de integridad: {str(exc)}"
+    )
+
+@app.exception_handler(SQLAlchemyError)
+async def sqlalchemy_exception_handler(request, exc):
+    """
+    Maneja errores generales de SQLAlchemy.
+    """
+    return HTTPException(
+        status_code=500,
+        detail=f"Error de base de datos: {str(exc)}"
+    )
+
+# Funcion con manejo de transacciones
+def transferir_tarea(tarea_id: int, nuevo_usuario_id: int,
+                     db: Session = Depends(get_db)) -> TareaModel:
+    """
+    Transfiere una tarea a otro usuario (transaccion atomica).
+    """
+    try:
+        # Obtener tarea
+        tarea = db.query(TareaModel).filter(
+            TareaModel.id == tarea_id
+        ).first()
+
+        if not tarea:
+            raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+        # Verificar nuevo usuario existe
+        nuevo_usuario = db.query(UsuarioModel).filter(
+            UsuarioModel.id == nuevo_usuario_id
+        ).first()
+
+        if not nuevo_usuario:
+            raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+        # Actualizar
+        tarea.usuario_id = nuevo_usuario_id
+        db.commit()
+        db.refresh(tarea)
+
+        return tarea
+
+    except HTTPException:
+        db.rollback()
+        raise
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error al transferir tarea: {str(e)}"
+        )</code></pre>
+                </section>
+
+                <!-- Sección 7: Buenas Practicas -->
+                <section id="buenas-practicas">
+                    <h2>Buenas Practicas</h2>
+
+                    <h3>Patron Repository</h3>
+                    <p>
+                        El patron <strong>Repository</strong> abstrae el acceso a datos,
+                        separando la logica de persistencia de la logica de negocio.
+                    </p>
+
+                    <pre><code class="language-python"># repositories/usuario_repository.py
+
+from typing import Optional, List
+from sqlalchemy.orm import Session
+from models.usuario import Usuario as UsuarioModel
+
+class UsuarioRepository:
+    """
+    Repository para operaciones de Usuario.
+
+    Centraliza el acceso a datos de usuarios,
+    facilitando testing y mantenimiento.
+    """
+
+    def __init__(self, db: Session):
+        self.db = db
+
+    def create(self, usuario: UsuarioModel) -> UsuarioModel:
+        """Crea un nuevo usuario."""
+        self.db.add(usuario)
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+
+    def get_by_id(self, usuario_id: int) -> Optional[UsuarioModel]:
+        """Obtiene un usuario por ID."""
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.id == usuario_id
+        ).first()
+
+    def get_by_username(self, username: str) -> Optional[UsuarioModel]:
+        """Obtiene un usuario por username."""
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.username == username
+        ).first()
+
+    def get_by_email(self, email: str) -> Optional[UsuarioModel]:
+        """Obtiene un usuario por email."""
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.email == email
+        ).first()
+
+    def list_all(self, skip: int = 0, limit: int = 100,
+                 activo: Optional[bool] = None) -> List[UsuarioModel]:
+        """Lista usuarios con paginacion."""
+        query = self.db.query(UsuarioModel)
+
+        if activo is not None:
+            query = query.filter(UsuarioModel.activo == activo)
+
+        return query.offset(skip).limit(limit).all()
+
+    def update(self, usuario: UsuarioModel) -> UsuarioModel:
+        """Actualiza un usuario."""
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+
+    def delete(self, usuario_id: int) -> bool:
+        """Elimina un usuario."""
+        usuario = self.get_by_id(usuario_id)
+        if usuario:
+            self.db.delete(usuario)
+            self.db.commit()
+            return True
+        return False
+
+    def username_exists(self, username: str) -> bool:
+        """Verifica si un username existe."""
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.username == username
+        ).first() is not None
+
+    def email_exists(self, email: str) -> bool:
+        """Verifica si un email existe."""
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.email == email
+        ).first() is not None</code></pre>
+
+                    <h3>Patron Unit of Work</h3>
+                    <p>
+                        El patron <strong>Unit of Work</strong> mantiene una lista de objetos
+                        afectados y coordina la escritura de cambios.
+                    </p>
+
+                    <pre><code class="language-python"># repositories/unit_of_work.py
+
+from typing import Generic, TypeVar, Type
+from sqlalchemy.orm import Session
+from database import Base
+
+T = TypeVar('T', bound=Base)
+
+class UnitOfWork:
+    """
+    Patron Unit of Work para manejar transacciones.
+
+    Permite agrupar multiples operaciones que deben
+    ejecutarse atomicamente.
+    """
+
+    def __init__(self, db: Session):
+        self.db = db
+        self._repositories = {}
+
+    def repository(self, model_class: Type[T]):
+        """
+        Obtiene o crea un repositorio para un modelo.
+
+        Args:
+            model_class: Clase del modelo
+
+        Returns:
+            Repository: Instancia del repositorio
+        """
+        if model_class not in self._repositories:
+            if model_class.__name__ == 'Usuario':
+                from repositories.usuario_repository import UsuarioRepository
+                self._repositories[model_class] = UsuarioRepository(self.db)
+            elif model_class.__name__ == 'Tarea':
+                from repositories.tarea_repository import TareaRepository
+                self._repositories[model_class] = TareaRepository(self.db)
+            # Agregar mas repositorios segun necesidad
+
+        return self._repositories[model_class]
+
+    def commit(self):
+        """Guarda todos los cambios."""
+        self.db.commit()
+
+    def rollback(self):
+        """Revierte todos los cambios."""
+        self.db.rollback()
+
+    def flush(self):
+        """Hace flush de los cambios."""
+        self.db.flush()
+
+    def close(self):
+        """Cierra la sesion."""
+        self.db.close()
+
+# Uso del Unit of Work
+def transferir_tareas_entre_proyectos(
+        usuario_id: int,
+        proyecto_origen_id: int,
+        proyecto_destino_id: int,
+        db: Session
+):
+    """
+    Transfiere todas las tareas de un proyecto a otro.
+    """
+    uow = UnitOfWork(db)
+
+    try:
+        # Obtener repositorios
+        tarea_repo = uow.repository(Tarea)
+
+        # Obtener tareas del proyecto origen
+        tareas = db.query(TareaModel).filter(
+            TareaModel.proyecto_id == proyecto_origen_id,
+            TareaModel.usuario_id == usuario_id
+        ).all()
+
+        # Actualizar cada tarea
+        for tarea in tareas:
+            tarea.proyecto_id = proyecto_destino_id
+
+        # Commit de todas las operaciones
+        uow.commit()
+
+        return len(tareas)
+
+    except Exception as e:
+        uow.rollback()
+        raise Exception(f"Error al transferir tareas: {e}")</code></pre>
+
+                    <h3>Organizacion del Proyecto</h3>
+
+                    <pre><code class="language-text">app/
+├── main.py                    # Aplicacion FastAPI
+├── database.py                 # Configuracion de BD
+├── models/
+│   ├── __init__.py
+│   ├── usuario.py             # Modelo Usuario
+│   ├── tarea.py               # Modelo Tarea
+│   └── proyecto.py            # Modelo Proyecto
+├── repositories/
+│   ├── __init__.py
+│   ├── usuario_repository.py  # Repository Usuario
+│   ├── tarea_repository.py    # Repository Tarea
+│   └── unit_of_work.py        # Unit of Work
+├── schemas/
+│   ├── __init__.py
+│   ├── usuario.py             # Pydantic Usuario
+│   └── tarea.py               # Pydantic Tarea
+├── services/
+│   ├── __init__.py
+│   └── usuario_service.py     # Logica de negocio
+└── dependencies/
+    ├── __init__.py
+    └── database.py            # get_db, etc.</code></pre>
+
+                    <h3>DO's y DON'Ts</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <strong>DO's</strong>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Usar <code>Depends(get_db)</code> para sesion por request</li>
+                                        <li>Usar <code>with try/finally</code> en funciones CRUD</li>
+                                        <li>Hacer <code>commit()</code> solo cuando sea necesario</li>
+                                        <li>Usar <code>rollback()</code> en caso de error</li>
+                                        <li>Validar datos antes de insertar</li>
+                                        <li>Usar type hints en funciones</li>
+                                        <li>Cerrar sesiones siempre (<code>finally</code>)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-danger">
+                                <div class="card-header bg-danger text-white">
+                                    <strong>DON'Ts</strong>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>No compartir sesiones globales</li>
+                                        <li>No hacer commit despues de cada operacion</li>
+                                        <li>No crear engine en cada request</li>
+                                        <li>No olvidar <code>close()</code></li>
+                                        <li>No信任 datos del usuario sin validar</li>
+                                        <li>No usar strings para construir SQL</li>
+                                        <li>No mantener sesiones abiertas innecesariamente</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sección 8: Ejercicio Guiado -->
+                <section id="ejercicio">
+                    <h2>Ejercicio Guiado: Implementar Persistencia para TaskFlow</h2>
+
+                    <h3>Objetivo</h3>
+                    <p>
+                        Implementar la capa de persistencia completa para el proyecto TaskFlow,
+                        incluyendo modelos, repositories y endpoints FastAPI.
+                    </p>
+
+                    <h3>Instrucciones Paso a Paso</h3>
+
+                    <h4>Paso 1: Configurar Database (5 min)</h4>
+
+                    <pre><code class="language-bash"># Crear estructura de directorios
+mkdir -p app/models app/repositories app/schemas app/services
+
+# Instalar dependencias
+pip install sqlalchemy psycopg2-binary</code></pre>
+
+                    <pre><code class="language-python"># app/database.py
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+
+# URL de SQLite para desarrollo
+DATABASE_URL = "sqlite:///./taskflow.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    pool_pre_ping=True
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+def get_db():
+    """
+    Dependencia para obtener sesion de BD.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+def init_db():
+    """Inicializa la base de datos."""
+    Base.metadata.create_all(bind=engine)</code></pre>
+
+                    <h4>Paso 2: Crear Modelos (10 min)</h4>
+
+                    <pre><code class="language-python"># app/models/usuario.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Boolean
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    email = Column(String(100), unique=True, nullable=False)
+    password_hash = Column(String(255), nullable=False)
+    activo = Column(Boolean, default=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow,
+                            onupdate=datetime.utcnow)
+
+    tareas = relationship("Tarea", back_populates="usuario",
+                         cascade="all, delete-orphan")
+    proyectos = relationship("Proyecto", back_populates="usuario",
+                           cascade="all, delete-orphan")</code></pre>
+
+                    <pre><code class="language-python"># app/models/tarea.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Enum
+from sqlalchemy.orm import relationship
+from datetime import datetime
+import enum
+from database import Base
+
+class EstadoTarea(str, enum.Enum):
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+    CANCELADA = "cancelada"
+
+class Tarea(Base):
+    __tablename__ = "tareas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String(200), nullable=False)
+    descripcion = Column(Text)
+    estado = Column(String(20), default=EstadoTarea.PENDIENTE.value)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    proyecto_id = Column(Integer, ForeignKey("proyectos.id"), nullable=True)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow,
+                           onupdate=datetime.utcnow)
+
+    usuario = relationship("Usuario", back_populates="tareas")
+    proyecto = relationship("Proyecto", back_populates="tareas")</code></pre>
+
+                    <pre><code class="language-python"># app/models/proyecto.py
+
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from database import Base
+
+class Proyecto(Base):
+    __tablename__ = "proyectos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String(100), nullable=False)
+    descripcion = Column(Text)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    creado_en = Column(DateTime, default=datetime.utcnow)
+    actualizado_en = Column(DateTime, default=datetime.utcnow,
+                           onupdate=datetime.utcnow)
+
+    tareas = relationship("Tarea", back_populates="proyecto",
+                         cascade="all, delete-orphan")
+    usuario = relationship("Usuario", back_populates="proyectos")</code></pre>
+
+                    <h4>Paso 3: Crear Repository (10 min)</h4>
+
+                    <pre><code class="language-python"># app/repositories/usuario_repository.py
+
+from typing import Optional, List
+from sqlalchemy.orm import Session
+from models.usuario import Usuario as UsuarioModel
+
+class UsuarioRepository:
+    def __init__(self, db: Session):
+        self.db = db
+
+    def create(self, usuario: UsuarioModel) -> UsuarioModel:
+        self.db.add(usuario)
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+
+    def get_by_id(self, usuario_id: int) -> Optional[UsuarioModel]:
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.id == usuario_id
+        ).first()
+
+    def get_by_username(self, username: str) -> Optional[UsuarioModel]:
+        return self.db.query(UsuarioModel).filter(
+            UsuarioModel.username == username
+        ).first()
+
+    def list_all(self, skip: int = 0, limit: int = 100) -> List[UsuarioModel]:
+        return self.db.query(UsuarioModel).offset(skip).limit(limit).all()
+
+    def update(self, usuario: UsuarioModel) -> UsuarioModel:
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+
+    def delete(self, usuario_id: int) -> bool:
+        usuario = self.get_by_id(usuario_id)
+        if usuario:
+            self.db.delete(usuario)
+            self.db.commit()
+            return True
+        return False
+
+    def username_exists(self, username: str) -> bool:
+        return self.get_by_username(username) is not None</code></pre>
+
+                    <h4>Paso 4: Crear Endpoints CRUD (10 min)</h4>
+
+                    <pre><code class="language-python"># app/main.py
+
+from fastapi import FastAPI, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from typing import List
+from pydantic import BaseModel
+from datetime import datetime
+
+from database import get_db, init_db
+from models.usuario import Usuario
+from models.tarea import Tarea, EstadoTarea
+from repositories.usuario_repository import UsuarioRepository
+
+app = FastAPI(title="TaskFlow API")
+
+# Inicializar BD al inicio
+@app.on_event("startup")
+def startup():
+    init_db()
+
+# --- Pydantic Schemas ---
+
+class UsuarioCreate(BaseModel):
+    username: str
+    email: str
+    password_hash: str
+
+class UsuarioResponse(BaseModel):
+    id: int
+    username: str
+    email: str
+    activo: bool
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
+
+class TareaCreate(BaseModel):
+    titulo: str
+    descripcion: str | None = None
+    proyecto_id: int | None = None
+
+class TareaResponse(BaseModel):
+    id: int
+    titulo: str
+    descripcion: str | None
+    estado: str
+    usuario_id: int
+    proyecto_id: int | None
+    creado_en: datetime
+
+    class Config:
+        from_attributes = True
+
+# --- Endpoints ---
+
+@app.post("/usuarios", response_model=UsuarioResponse,
+         status_code=status.HTTP_201_CREATED)
+def crear_usuario(usuario: UsuarioCreate,
+                  db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+
+    if repo.username_exists(usuario.username):
+        raise HTTPException(status_code=400, detail="Username ya existe")
+
+    db_usuario = Usuario(**usuario.model_dump())
+    return repo.create(db_usuario)
+
+@app.get("/usuarios", response_model=List[UsuarioResponse])
+def listar_usuarios(skip: int = 0, limit: int = 100,
+                     db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+    return repo.list_all(skip=skip, limit=limit)
+
+@app.get("/usuarios/{usuario_id}", response_model=UsuarioResponse)
+def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+    usuario = repo.get_by_id(usuario_id)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return usuario
+
+@app.post("/usuarios/{usuario_id}/tareas", response_model=TareaResponse,
+          status_code=status.HTTP_201_CREATED)
+def crear_tarea(usuario_id: int, tarea: TareaCreate,
+                db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+    if not repo.get_by_id(usuario_id):
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    db_tarea = Tarea(**tarea.model_dump(), usuario_id=usuario_id)
+    db.add(db_tarea)
+    db.commit()
+    db.refresh(db_tarea)
+    return db_tarea
+
+@app.get("/usuarios/{usuario_id}/tareas", response_model=List[TareaResponse])
+def listar_tareas_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+    if not repo.get_by_id(usuario_id):
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    return db.query(Tarea).filter(
+        Tarea.usuario_id == usuario_id
+    ).order_by(Tarea.creado_en.desc()).all()</code></pre>
+
+                    <h4>Paso 5: Probar la API (5 min)</h4>
+
+                    <pre><code class="language-bash"># Iniciar servidor
+uvicorn app.main:app --reload
+
+# Probar endpoints con curl
+
+# 1. Crear usuario
+curl -X POST "http://localhost:8000/usuarios" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "juan", "email": "juan@email.com", "password_hash": "hash123"}'
+
+# 2. Listar usuarios
+curl "http://localhost:8000/usuarios"
+
+# 3. Obtener usuario por ID
+curl "http://localhost:8000/usuarios/1"
+
+# 4. Crear tarea para usuario
+curl -X POST "http://localhost:8000/usuarios/1/tareas" \
+  -H "Content-Type: application/json" \
+  -d '{"titulo": "Terminar proyecto", "descripcion": "Finalizar TaskFlow"}'
+
+# 5. Listar tareas del usuario
+curl "http://localhost:8000/usuarios/1/tareas"</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Verificar en Swagger UI:</strong>
+                        Abre http://localhost:8000/docs para ver y probar
+                        todos los endpoints de forma interactiva.
+                    </div>
+                </section>
+
+                <!-- Sección 9: Conexion con TaskFlow -->
+                <section id="taskflow">
+                    <h2>Conexion con TaskFlow</h2>
+
+                    <h3>Modelos para TaskFlow</h3>
+
+                    <p>
+                        Los modelos que implementaremos para TaskFlow incluyen las entidades
+                        necesarias para gestionar usuarios, proyectos y tareas con sus relaciones.
+                    </p>
+
+                    <div class="db-diagram">
+                        <h4>Arquitectura de Datos de TaskFlow</h4>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="db-table">
+                                    <strong>Usuario</strong><br>
+                                    <small>Propietario de recursos</small>
+                                    <hr>
+                                    <code>id, username, email</code><br>
+                                    <code>password_hash, activo</code><br>
+                                    <code>creado_en</code>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="db-table">
+                                    <strong>Proyecto</strong><br>
+                                    <small>Contenedor de tareas</small>
+                                    <hr>
+                                    <code>id, nombre, descripcion</code><br>
+                                    <code>usuario_id (FK)</code>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="db-table">
+                                    <strong>Tarea</strong><br>
+                                    <small>Unidad de trabajo</small>
+                                    <hr>
+                                    <code>id, titulo</code><br>
+                                    <code>descripcion, estado</code><br>
+                                    <code>usuario_id, proyecto_id</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Repositories para TaskFlow</h3>
+
+                    <pre><code class="language-text">app/repositories/
+├── __init__.py
+├── usuario_repository.py      # CRUD Usuario
+├── tarea_repository.py        # CRUD Tarea con filtros
+├── proyecto_repository.py     # CRUD Proyecto
+└── unit_of_work.py           # Transacciones atomicas</code></pre>
+
+                    <h3>Integracion con API</h3>
+
+                    <pre><code class="language-python"># app/api/usuario_routes.py
+
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from typing import List
+
+from database import get_db
+from repositories.usuario_repository import UsuarioRepository
+from schemas.usuario import UsuarioCreate, UsuarioResponse
+
+router = APIRouter(prefix="/usuarios", tags=["Usuarios"])
+
+@router.post("", response_model=UsuarioResponse, status_code=201)
+def crear_usuario(
+        usuario: UsuarioCreate,
+        db: Session = Depends(get_db)
+):
+    repo = UsuarioRepository(db)
+
+    if repo.username_exists(usuario.username):
+        raise HTTPException(status_code=400, detail="Username ocupado")
+
+    if repo.email_exists(usuario.email):
+        raise HTTPException(status_code=400, detail="Email ocupado")
+
+    from models.usuario import Usuario
+    db_usuario = Usuario(**usuario.model_dump())
+    return repo.create(db_usuario)
+
+@router.get("", response_model=List[UsuarioResponse])
+def listar_usuarios(
+        skip: int = 0,
+        limit: int = 100,
+        db: Session = Depends(get_db)
+):
+    repo = UsuarioRepository(db)
+    return repo.list_all(skip=skip, limit=limit)
+
+@router.get("/{usuario_id}", response_model=UsuarioResponse)
+def obtener_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    repo = UsuarioRepository(db)
+    usuario = repo.get_by_id(usuario_id)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return usuario</code></pre>
+
+                    <h3>Siguientes Pasos</h3>
+
+                    <ul>
+                        <li>
+                            <strong>Clase 6 (Autenticacion):</strong>
+                            Agregar JWT para autenticacion segura de usuarios.
+                        </li>
+                        <li>
+                            <strong>Clase 7 (Testing):</strong>
+                            Implementar tests con bases de datos de prueba.
+                        </li>
+                        <li>
+                            <strong>Proyecto Final:</strong>
+                            Integrar toda la persistencia en TaskFlow.
+                        </li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Resultado Esperado:</strong> Al finalizar esta clase,
+                        tendras una capa de persistencia funcional para TaskFlow con
+                        modelos, repositories y endpoints CRUD completos.
+                    </div>
+                </section>
+
+                <!-- Sección 10: Referencias -->
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li>
+                            <a href="https://docs.sqlalchemy.org/" target="_blank">
+                                Documentacion Oficial de SQLAlchemy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://fastapi.tiangolo.com/tutorial/sql-databases/" target="_blank">
+                                FastAPI Tutorial - SQL Databases
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://sqlite.org/docs.html" target="_blank">
+                                Documentacion de SQLite
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/tiangolo/full-stack-fastapi-postgresql"
+                               target="_blank">
+                                Plantilla FastAPI + PostgreSQL (Referencia)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://realpython.com/python-sqlite-sqlalchemy/"
+                               target="_blank">
+                                Tutorial: Python, SQLAlchemy y SQLite
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U3C05-PERSIST" target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Nota: El link de Google Colab se activara cuando el notebook sea creado.</p>
+            <p>Ultima actualizacion: 2026-02-08</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

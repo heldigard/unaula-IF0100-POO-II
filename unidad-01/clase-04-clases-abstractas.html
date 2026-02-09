@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aprende sobre clases abstractas e interfaces en Python. Domina ABC, @abstractmethod, @property abstract y Protocols. Implementa BaseModel abstracto para TaskFlow.">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Clases Abstractas e Interfaces | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programacion OO II</h1>
+            <h2>Unidad 1: POO Avanzada</h2>
+            <h3>Clase 4: Clases Abstractas e Interfaces</h3>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clase-03-herencia-polimorfismo.html">Anterior: Herencia y Polimorfismo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../unidad-02/clase-01-tdd-intro.html">Siguiente: TDD</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teoricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Practicos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Practicas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guiado</a></li>
+                        <li><a href="#taskflow">Conexion con TaskFlow</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted sera capaz de:</p>
+                    <ul>
+                        <li>Comprender que son las clases abstractas y su proposito en el diseno de software</li>
+                        <li>Implementar clases abstractas utilizando el modulo ABC (Abstract Base Classes)</li>
+                        <li>Definir metodos abstractos con el decorador <code>@abstractmethod</code></li>
+                        <li>Crear propiedades abstractas con <code>@property</code> y <code>@abstractmethod</code></li>
+                        <li>Entender y aplicar Protocols para tipado estructural en Python 3.8+</li>
+                        <li>Diferenciar entre Abstract Base Classes e Interfaces</li>
+                        <li>Aplicar clases abstractas en el proyecto TaskFlow (entidades base abstractas)</li>
+                        <li>Disenar jerarquias de clases con contratos bien definidos</li>
+                    </ul>
+                </section>
+
+                <section id="teoria">
+                    <h2>Conceptos Teoricos</h2>
+
+                    <h3>¿Que es una Clase Abstracta?</h3>
+                    <p>Una <strong>clase abstracta</strong> es una clase que no puede ser instanciada directamente y esta disenada para ser heredada por otras clases. Sirve como <strong>plantilla</strong> o <strong>contrato</strong> que define que metodos y propiedades deben implementar las subclases, pero no proporciona la implementacion completa.</p>
+
+                    <div class="alert-note">
+                        <strong>Analogia:</strong> Piensa en una clase abstracta como el plano de una casa. El plano define que la casa debe tener puertas, ventanas y un techo, pero no construye una casa habitable por si mismo. Los constructores (subclases) usan el plano para construir casas reales.
+                    </div>
+
+                    <h3>ABC (Abstract Base Classes)</h3>
+                    <p>Python proporciona el modulo <code>abc</code> para crear clases abstractas. Una clase se convierte en abstracta cuando hereda de <code>ABC</code>.</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+# Clase abstracta base
+class Figura(ABC):
+    """Clase abstracta para figuras geometricas."""
+
+    def __init__(self, color: str):
+        self.color = color
+
+    # Metodo abstracto (debe ser implementado por las subclases)
+    @abstractmethod
+    def area(self) -> float:
+        """Calcula el area de la figura."""
+        pass
+
+    # Metodo concreto (opcional, tiene implementacion)
+    def descripcion(self) -> str:
+        """Descripcion de la figura."""
+        return f"Figura de color {self.color}"
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre de la figura (propiedad abstracta)."""
+        pass</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Importante:</strong> Si una clase tiene al menos un metodo abstracto, no se puede instanciar directamente. Las subclases DEBEN implementar todos los metodos abstractos.
+                    </div>
+
+                    <h3>El Decorador @abstractmethod</h3>
+                    <p>El decorador <code>@abstractmethod</code> marca un metodo como abstracto, lo que significa que debe ser implementado por cualquier subclase concreta.</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Vehiculo(ABC):
+    @abstractmethod
+    def arrancar(self) -> None:
+        """Metodo abstracto: todos los vehiculos deben poder arrancar."""
+        pass
+
+    @abstractmethod
+    def detenerse(self) -> None:
+        """Metodo abstracto: todos los vehiculos deben poder detenerse."""
+        pass
+
+    # Metodo concreto opcional
+    def describir(self) -> str:
+        return "Vehiculo de transporte"
+
+# Intentar instanciar una clase abstracta falla
+try:
+    vehiculo = Vehiculo()  # TypeError!
+except TypeError as e:
+    print(f"Error: {e}")  # No se puede instanciar una clase abstracta
+
+# Las subclases deben implementar los metodos abstractos
+class Coche(Vehiculo):
+    def __init__(self, marca: str):
+        self.marca = marca
+
+    def arrancar(self) -> None:
+        print(f"Coche {self.marca} arrancando...")
+
+    def detenerse(self) -> None:
+        print(f"Coche {self.marca} deteniendo...")
+
+# Ahora si se puede instanciar
+coche = Coche("Toyota")
+coche.arrancar()  # Coche Toyota arrancando...</code></pre>
+
+                    <h3>Propiedades Abstractas</h3>
+                    <p>Las propiedades también pueden ser abstractas, combinando <code>@property</code> con <code>@abstractmethod</code>.</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class SerVivo(ABC):
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre del ser vivo (obligatorio)."""
+        pass
+
+    @property
+    @abstractmethod
+    def edad(self) -> int:
+        """Edad del ser vivo (obligatorio)."""
+        pass
+
+    def vivir_un_anio(self) -> None:
+        """Metodo concreto que usa las propiedades abstractas."""
+        print(f"{self.nombre} envejecimiento un ano. Ahora tiene {self.edad + 1} anos.")
+
+class Persona(SerVivo):
+    def __init__(self, nombre: str, edad: int):
+        self._nombre = nombre
+        self._edad = edad
+
+    @property
+    def nombre(self) -> str:
+        return self._nombre
+
+    @property
+    def edad(self) -> int:
+        return self._edad
+
+persona = Persona("Juan", 25)
+print(f"{persona.nombre} tiene {persona.edad} anos")  # Juan tiene 25 anos</code></pre>
+
+                    <h3>Protocols en Python 3.8+</h3>
+                    <p>Los <strong>Protocols</strong> son una forma de lograr tipado estructural en Python. Definen una interfaz sin usar herencia. Un tipo es compatible con un Protocol si tiene todos los metodos requeridos, sin importar su jerarquia de clases.</p>
+                    <pre><code class="language-python">from typing import Protocol, runtime_checkable
+
+# Definicion de un Protocol
+class Dibujable(Protocol):
+    """Protocolo para objetos que pueden ser dibujados."""
+
+    def dibujar(self) -> None:
+        ...
+
+    @property
+    def color(self) -> str:
+        ...
+
+# Clases que implementan el Protocol (sin heredar de el)
+class Circulo:
+    def __init__(self, radio: float, color: str):
+        self.radio = radio
+        self._color = color
+
+    def dibujar(self) -> None:
+        print(f"Draw circle with radius {self.radio} and color {self._color}")
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+class Rectangulo:
+    def __init__(self, ancho: float, alto: float, color: str):
+        self.ancho = ancho
+        self.alto = alto
+        self._color = color
+
+    def dibujar(self) -> None:
+        print(f"Draw rectangle {self.ancho}x{self.alto} in color {self._color}")
+
+    @property
+    def color(self) -> str:
+        return self._color
+
+# Uso con type hints
+def dibujar_figura(figura: Dibujable) -> None:
+    """Funcion que acepta cualquier objeto que implemente Dibujable."""
+    figura.dibujar()
+
+# Tanto Circulo como Rectangulo son compatibles con Dibujable
+circulo = Circulo(5.0, "rojo")
+rectangulo = Rectangulo(10, 5, "azul")
+
+dibujar_figura(circulo)    # Draw circle with radius 5.0 and color rojo
+dibujar_figura(rectangulo)  # Draw rectangle 10x5 in color azul
+
+# Verificar compatibilidad en tiempo de ejecucion
+@runtime_checkable
+class Verificable(Protocol):
+    def guardar(self) -> bool:
+        ...
+
+class Persona:
+    def guardar(self) -> bool:
+        return True
+
+class Coche:
+    pass
+
+print(isinstance(Persona(), Verificable))  # True (tiene guardar)
+print(isinstance(Coche(), Verificable))    # False (no tiene guardar)</code></pre>
+
+                    <h3>Cuándo Usar ABC vs Protocol</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Criterio</th>
+                                <th>ABC (Abstract Base Class)</th>
+                                <th>Protocol</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Herencia de codigo</strong></td>
+                                <td>Si, puedes compartir implementacion</td>
+                                <td>No, solo define estructura</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tipado</strong></td>
+                                <td>Nominal (herencia)</td>
+                                <td>Estructural (duck typing)</td>
+                            </tr>
+                            <td><strong>Instanciacion</strong></td>
+                                <td>No se puede instanciar directamente</td>
+                                <td>No es una clase, es un Protocol</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Uso principal</strong></td>
+                                <td>Diseno de jerarquias con codigo compartido</td>
+                                <td>Validacion de tipos y contratos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flexibilidad</strong></td>
+                                <td>Menos flexible (necesita herencia)</td>
+                                <td>Mas flexible (duck typing)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-tip">
+                        <strong>Regla practica:</strong> Usa <strong>ABC</strong> cuando necesitas compartir implementacion entre clases relacionadas. Usa <strong>Protocol</strong> cuando solo necesitas definir un contrato de tipos sin importar la jerarquia de clases.
+                    </div>
+
+                    <h3>Mixins y Herencia Multiple</h3>
+                    <p>Los <strong>mixins</strong> son clases diseadas para ser heredadas junto con otras, proporcionando funcionalidad adicional especifica.</p>
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+from datetime import datetime
+
+# Mixin para logging
+class LoggeableMixin:
+    """Mixin que anade capacidades de logging."""
+
+    def log(self, mensaje: str) -> None:
+        """Registra un mensaje con timestamp."""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{timestamp}] {self.__class__.__name__}: {mensaje}")
+
+# Mixin para validacion
+class ValidableMixin:
+    """Mixin que anade validacion generica."""
+
+    def validar(self) -> bool:
+        """Valida el objeto. Debe ser implementado."""
+        return True
+
+# Clase abstracta base
+class Entidad(ABC, LoggeableMixin, ValidableMixin):
+    """Entidad base abstracta."""
+
+    @property
+    @abstractmethod
+    def id(self):
+        """ID unico de la entidad."""
+        pass
+
+# Implementacion concreta
+class Usuario(Entidad):
+    def __init__(self, id: int, username: str):
+        self._id = id
+        self._username = username
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def username(self) -> str:
+        return self._username
+
+# Uso
+usuario = Usuario(1, "juan123")
+usuario.log("Usuario creado")  # [2026-02-08 10:30:00] Usuario: Usuario creado
+print(f"¿Valido? {usuario.validar()}")  # ¿Valido? True</code></pre>
+                </section>
+
+                <section id="ejemplos">
+                    <h2>Ejemplos Practicos</h2>
+
+                    <h3>Ejemplo 1: ABC Basico - Figura Geometrica</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de Abstract Base Class con figuras geometricas.
+"""
+from abc import ABC, abstractmethod
+from math import pi
+
+class Figura(ABC):
+    """Clase abstracta base para figuras geometricas."""
+
+    def __init__(self, color: str):
+        self.color = color
+
+    @abstractmethod
+    def area(self) -> float:
+        """Calcula el area (obligatorio)."""
+        pass
+
+    @abstractmethod
+    def perimetro(self) -> float:
+        """Calcula el perimetro (obligatorio)."""
+        pass
+
+    def descripcion(self) -> str:
+        """Metodo concreto con implementacion por defecto."""
+        return f"Figura de color {self.color}"
+
+    @property
+    def info(self) -> str:
+        """Propiedad que usa los metodos abstractos."""
+        return f"{self.__class__.__name__}: area={self.area():.2f}, perimetro={self.perimetro():.2f}"
+
+class Circulo(Figura):
+    """Circulo concreto."""
+
+    def __init__(self, radio: float, color: str):
+        super().__init__(color)
+        self.radio = radio
+
+    def area(self) -> float:
+        return pi * self.radio ** 2
+
+    def perimetro(self) -> float:
+        return 2 * pi * self.radio
+
+class Rectangulo(Figura):
+    """Rectangulo concreto."""
+
+    def __init__(self, ancho: float, alto: float, color: str):
+        super().__init__(color)
+        self.ancho = ancho
+        self.alto = alto
+
+    def area(self) -> float:
+        return self.ancho * self.alto
+
+    def perimetro(self) -> float:
+        return 2 * (self.ancho + self.alto)
+
+# Uso
+circulo = Circulo(5.0, "rojo")
+rectangulo = Rectangulo(10, 5, "azul")
+
+print(circulo.descripcion())  # Figura de color rojo
+print(circulo.info)            # Circulo: area=78.54, perimetro=31.42
+print(rectangulo.info)         # Rectangulo: area=50.00, perimetro=30.00
+
+# Verificar que no se puede instanciar la clase abstracta
+try:
+    figura = Figura("verde")
+except TypeError as e:
+    print(f"No se puede instanciar: {e}")</code></pre>
+
+                    <h3>Ejemplo 2: Propiedades Abstractas</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de propiedades abstractas con ABC.
+"""
+from abc import ABC, abstractmethod
+from typing import Optional
+
+class RecursoDigital(ABC):
+    """Clase abstracta para recursos digitales."""
+
+    def __init__(self, titulo: str):
+        self.titulo = titulo
+
+    @property
+    @abstractmethod
+    def tipo(self) -> str:
+        """Tipo de recurso (obligatorio)."""
+        pass
+
+    @property
+    @abstractmethod
+    def tamano(self) -> int:
+        """Tamano en bytes (obligatorio)."""
+        pass
+
+    @property
+    def tamano_formateado(self) -> str:
+        """Metodo concreto que usa las propiedades abstractas."""
+        kb = self.tamano / 1024
+        if kb < 1024:
+            return f"{kb:.1f} KB"
+        mb = kb / 1024
+        return f"{mb:.1f} MB"
+
+class Video(RecursoDigital):
+    """Video como recurso digital."""
+
+    def __init__(self, titulo: str, duracion_segundos: int, resolucion: str):
+        super().__init__(titulo)
+        self.duracion = duracion_segundos
+        self.resolucion = resolucion
+
+    @property
+    def tipo(self) -> str:
+        return "video"
+
+    @property
+    def tamano(self) -> int:
+        # Simulacion: ~1 MB por minuto a 1080p
+        return self.duracion * 17000  # bytes
+
+class Documento(RecursoDigital):
+    """Documento como recurso digital."""
+
+    def __init__(self, titulo: str, num_paginas: int):
+        super().__init__(titulo)
+        self.num_paginas = num_paginas
+
+    @property
+    def tipo(self) -> str:
+        return "documento"
+
+    @property
+    def tamano(self) -> int:
+        # Simulacion: ~50 KB por pagina
+        return self.num_paginas * 51200  # bytes
+
+# Uso
+video = Video("Tutorial Python", 600, "1080p")
+doc = Documento("Informe", 25)
+
+print(f"{video.titulo} ({video.tipo}): {video.tamano_formateado}")
+# Tutorial Python (video): 10.0 MB
+
+print(f"{doc.titulo} ({doc.tipo}): {doc.tamano_formateado}")
+# Informe (documento): 1.3 MB</code></pre>
+
+                    <h3>Ejemplo 3: Protocol para Tipado Estructural</h3>
+                    <pre><code class="language-python">"""
+Ejemplo de Protocol para validacion de tipos en tiempo de compilacion.
+"""
+from typing import Protocol, Iterable
+
+# Protocol para objetos iterables con metodo guardar
+class Guardable(Protocol):
+    """Protocolo para objetos que pueden ser guardados."""
+
+    def guardar(self) -> bool:
+        """Guarda el objeto y retorna exito."""
+        ...
+
+    def cargar(self, datos: dict) -> None:
+        """Carga el objeto desde un diccionario."""
+        ...
+
+# Implementaciones concretas (sin herencia de Protocol)
+class Usuario:
+    def __init__(self, username: str, email: str):
+        self.username = username
+        self.email = email
+
+    def guardar(self) -> bool:
+        print(f"Guardando usuario {self.username}")
+        return True
+
+    def cargar(self, datos: dict) -> None:
+        self.username = datos.get("username", self.username)
+        self.email = datos.get("email", self.email)
+
+class Tarea:
+    def __init__(self, titulo: str, completada: bool = False):
+        self.titulo = titulo
+        self.completada = completada
+
+    def guardar(self) -> bool:
+        print(f"Guardando tarea {self.titulo}")
+        return True
+
+    def cargar(self, datos: dict) -> None:
+        self.titulo = datos.get("titulo", self.titulo)
+        self.completada = datos.get("completada", self.completada)
+
+# Funcion que acepta cualquier objeto Guardable
+def guardar_todo(objetos: list[Guardable]) -> int:
+    """Guarda una lista de objetos y retorna cuantos se guardaron."""
+    guardados = 0
+    for obj in objetos:
+        if obj.guardar():
+            guardados += 1
+    return guardados
+
+def cargar_todo(objetos: list[Guardable], datos: list[dict]) -> None:
+    """Carga datos en una lista de objetos."""
+    for obj, data in zip(objetos, datos):
+        obj.cargar(data)
+
+# Uso
+usuarios = [Usuario("juan", "juan@email.com"), Usuario("maria", "maria@email.com")]
+tareas = [Tarea("Comprar leche"), Tarea("Hacer ejercicio")]
+
+# Todos los objetos son Guardable aunque no hereden de un ABC comun
+resultado = guardar_todo(usuarios + tareas)
+print(f"Objetos guardados: {resultado}")</code></pre>
+
+                    <h3>Ejemplo 4: Entidad Base Abstracta en TaskFlow</h3>
+                    <pre><code class="language-python">"""
+Entidad base abstracta para el proyecto TaskFlow.
+"""
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Optional, Dict, Any
+
+class EntidadBase(ABC):
+    """Clase base abstracta para todas las entidades del sistema."""
+
+    def __init__(self, id: Optional[int] = None):
+        self._id = id
+        self._creado_en: Optional[datetime] = None
+        self._actualizado_en: Optional[datetime] = None
+
+    @property
+    def id(self) -> Optional[int]:
+        """ID unico de la entidad."""
+        return self._id
+
+    @id.setter
+    def id(self, valor: int) -> None:
+        """Setter para el ID."""
+        self._id = valor
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre de la entidad (obligatorio)."""
+        pass
+
+    @property
+    def creado_en(self) -> Optional[datetime]:
+        """Fecha de creacion."""
+        return self._creado_en
+
+    @property
+    def actualizado_en(self) -> Optional[datetime]:
+        """Fecha de ultima actualizacion."""
+        return self._actualizado_en
+
+    def _marcar_actualizado(self) -> None:
+        """Marca la entidad como actualizada."""
+        self._actualizado_en = datetime.now()
+
+    def __post_init__(self) -> None:
+        """Se ejecuta despues de __init__."""
+        if self._creado_en is None:
+            self._creado_en = datetime.now()
+
+    @abstractmethod
+    def a_diccionario(self) -> Dict[str, Any]:
+        """Convierte la entidad a diccionario."""
+        pass
+
+    @abstractmethod
+    def desde_diccionario(cls, datos: Dict[str, Any]) -> "EntidadBase":
+        """Crea una entidad desde un diccionario."""
+        pass
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}(id={self.id}, nombre='{self.nombre}')"
+
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}("
+                f"id={self.id}, "
+                f"nombre='{self.nombre}', "
+                f"creado={self._creado_en})")
+
+
+class UsuarioBase(EntidadBase):
+    """Base abstracta para usuarios."""
+
+    @property
+    @abstractmethod
+    def email(self) -> str:
+        """Email del usuario (obligatorio)."""
+        pass
+
+    @property
+    @abstractmethod
+    def activo(self) -> bool:
+        """Si el usuario esta activo."""
+        pass
+
+
+class TareaBase(EntidadBase):
+    """Base abstracta para tareas."""
+
+    @property
+    @abstractmethod
+    def completada(self) -> bool:
+        """Si la tarea esta completada."""
+        pass
+
+    @abstractmethod
+    def completar(self) -> None:
+        """Marca la tarea como completada."""
+        pass
+
+    @abstractmethod
+    def reopenir(self) -> None:
+        """Reabre la tarea."""
+        pass
+
+# Uso
+class UsuarioConcreto(UsuarioBase):
+    """Implementacion concreta de Usuario."""
+
+    def __init__(self, id: Optional[int], username: str, email: str, activo: bool = True):
+        super().__init__(id)
+        self._username = username
+        self._email = email
+        self._activo = activo
+
+    @property
+    def nombre(self) -> str:
+        return self._username
+
+    @property
+    def email(self) -> str:
+        return self._email
+
+    @property
+    def activo(self) -> bool:
+        return self._activo
+
+    def a_diccionario(self) -> Dict[str, Any]:
+        return {
+            "id": self.id,
+            "username": self._username,
+            "email": self._email,
+            "activo": self._activo
+        }
+
+    @classmethod
+    def desde_diccionario(cls, datos: Dict[str, Any]) -> "UsuarioConcreto":
+        return cls(
+            id=datos.get("id"),
+            username=datos["username"],
+            email=datos["email"],
+            activo=datos.get("activo", True)
+        )
+
+# Crear usuario
+usuario = UsuarioConcreto(id=1, username="juan123", email="juan@example.com")
+print(usuario)  # UsuarioConcreto(id=1, nombre='juan123')
+print(f"Email: {usuario.email}")  # Email: juan@example.com
+print(f"Creado: {usuario.creado_en}")</code></pre>
+                </section>
+
+                <section id="buenas-practicas">
+                    <h2>Buenas Practicas</h2>
+
+                    <h3>ABC Cuando Necesitas Shared Implementation</h3>
+                    <pre><code class="language-python"># Bien: ABC cuando hay codigo compartido
+from abc import ABC, abstractmethod
+
+class Persistable(ABC):
+    """Base para objetos persistibles."""
+
+    def __init__(self):
+        self._cache_activo = False
+
+    def iniciar_cache(self) -> None:
+        """Codigo compartido para cache."""
+        self._cache_activo = True
+        self._cache = {}
+
+    @abstractmethod
+    def guardar(self) -> bool:
+        """Cada subclase implementa su guardado."""
+        pass
+
+class UsuarioPersistable(Persistable):
+    def guardar(self) -> bool:
+        if not self._cache_activo:
+            self.iniciar_cache()
+        print("Guardando usuario en BD")
+        return True</code></pre>
+
+                    <h3>Protocol Cuando Solo Necesitas Typing</h3>
+                    <pre><code class="language-python"># Bien: Protocol para validacion de tipos sin herencia
+from typing import Protocol
+
+class ConNombre(Protocol):
+    """Protocolo simple para objetos con nombre."""
+    @property
+    def nombre(self) -> str:
+        ...
+
+# Cualquier objeto con propiedad nombre es compatible
+class Producto:
+    def __init__(self, nombre: str, precio: float):
+        self.nombre = nombre
+        self.precio = precio
+
+class Persona:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+
+def saludar(entidad: ConNombre) -> None:
+    print(f"Hola, {entidad.nombre}")
+
+saludar(Producto("Laptop", 999.99))  # Hola, Laptop
+saludar(Persona("Juan"))              # Hola, Juan</code></pre>
+
+                    <h3>No Hacer Clases Demasiado Abstractas</h3>
+                    <pre><code class="language-python"># Evitar: Demasiada abstraccion
+class SuperAbstractBase(ABC):
+    @abstractmethod
+    def metodo1(self): pass
+    @abstractmethod
+    def metodo2(self): pass
+    @abstractmethod
+    def metodo3(self): pass
+    @abstractmethod
+    def metodo4(self): pass
+    @abstractmethod
+    def metodo5(self): pass
+
+# Las subclases deben implementar TODO - poco practico
+
+# Mejor: Abstraccion equilibrada
+class EntidadNegocio(ABC):
+    """Base con lo esencial compartido."""
+
+    @property
+    @abstractmethod
+    def id(self): pass
+
+    @property
+    @abstractmethod
+    def estado(self): pass
+
+    def validar(self) -> list[str]:
+        """Validacion comun."""
+        errores = []
+        if self.id is None:
+            errores.append("ID es requerido")
+        return errores
+
+class Usuario(EntidadNegocio):
+    """Solo implementa lo especifico de Usuario."""
+    @property
+    def id(self): return self._id
+    @property
+    def estado(self): return self._estado</code></pre>
+
+                    <h3>Resumen de Decisiones</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Necesidad</th>
+                                <th>Herramienta</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Forzar implementacion</td>
+                                <td><code>@abstractmethod</code></td>
+                                <td>Metodos que deben existir</td>
+                            </tr>
+                            <tr>
+                                <td>Compartir codigo entre subclases</td>
+                                <td>ABC con metodos concretos</td>
+                                <td>Persistencia, logging comun</td>
+                            </tr>
+                            <tr>
+                                <td>Validar tipos estructuralmente</td>
+                                <td>Protocol</td>
+                                <td>Duck typing con type hints</td>
+                            </tr>
+                            <tr>
+                                <td>Jerarquia con comportamiento parcial</td>
+                                <td>ABC + mixins</td>
+                                <td>Entidades con funcionalidades opcionales</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="ejercicio">
+                    <h2>Ejercicio Guiado</h2>
+
+                    <h3>Ejercicio: Sistema de Tareas Abstracto para TaskFlow</h3>
+                    <p>Vamos a crear un sistema de tareas con clases abstractas y un Protocol para validacion de tipos.</p>
+
+                    <pre><code class="language-python">"""
+Ejercicio: Sistema de Tareas Abstracto para TaskFlow
+"""
+
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Protocol, Optional
+from enum import Enum
+
+# ==================== Enums ====================
+class Prioridad(Enum):
+    """Prioridades de tareas."""
+    BAJA = 1
+    MEDIA = 2
+    ALTA = 3
+    URGENTE = 4
+
+class EstadoTarea(Enum):
+    """Estados posibles de una tarea."""
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+    CANCELADA = "cancelada"
+
+# ==================== Protocol ====================
+class TareaValida(Protocol):
+    """Protocol para validar objetos tipo tarea."""
+    @property
+    def titulo(self) -> str:
+        """Titulo de la tarea."""
+        ...
+
+    @property
+    def prioridad(self) -> Prioridad:
+        """Prioridad de la tarea."""
+        ...
+
+    def esta_completa(self) -> bool:
+        """Si la tarea esta completada."""
+        ...
+
+# ==================== Clase Abstracta ====================
+class BaseTarea(ABC):
+    """Clase base abstracta para todas las tareas."""
+
+    def __init__(self, titulo: str, descripcion: str = "", prioridad: Prioridad = Prioridad.MEDIA):
+        self._titulo = titulo
+        self._descripcion = descripcion
+        self._prioridad = prioridad
+        self._estado = EstadoTarea.PENDIENTE
+        self._fecha_creacion = datetime.now()
+        self._fecha_completado: Optional[datetime] = None
+
+    # Propiedades abstractas (obligatorias)
+    @property
+    @abstractmethod
+    def categoria(self) -> str:
+        """Categoria de la tarea (obligatorio)."""
+        pass
+
+    # Propiedades concretas
+    @property
+    def titulo(self) -> str:
+        return self._titulo
+
+    @property
+    def descripcion(self) -> str:
+        return self._descripcion
+
+    @property
+    def prioridad(self) -> Prioridad:
+        return self._prioridad
+
+    @property
+    def estado(self) -> EstadoTarea:
+        return self._estado
+
+    @property
+    def fecha_creacion(self) -> datetime:
+        return self._fecha_creacion
+
+    @property
+    def fecha_completado(self) -> Optional[datetime]:
+        return self._fecha_completado
+
+    def esta_completa(self) -> bool:
+        return self._estado == EstadoTarea.COMPLETADA
+
+    # Metodos abstractos
+    @abstractmethod
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        """Calcula dias hasta el vencimiento."""
+        pass
+
+    @abstractmethod
+    def get_info_detallada(self) -> str:
+        """Informacion detallada de la tarea."""
+        pass
+
+    # Metodos concretos
+    def completar(self) -> None:
+        """Marca la tarea como completada."""
+        self._estado = EstadoTarea.COMPLETADA
+        self._fecha_completado = datetime.now()
+
+    def cancelar(self) -> None:
+        """Cancela la tarea."""
+        self._estado = EstadoTarea.CANCELADA
+
+    def __str__(self) -> str:
+        return f"[{self._estado.value}] {self._titulo} ({self._prioridad.name})"
+
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}("
+                f"titulo='{self._titulo}', "
+                f"prioridad={self._prioridad.name}, "
+                f"estado={self._estado.value})")
+
+# ==================== Implementaciones Concretas ====================
+class TareaSimple(BaseTarea):
+    """Tarea simple sin recurrencia."""
+
+    def __init__(self, titulo: str, descripcion: str = "", prioridad: Prioridad = Prioridad.MEDIA):
+        super().__init__(titulo, descripcion, prioridad)
+
+    @property
+    def categoria(self) -> str:
+        return "simple"
+
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        delta = fecha_limite - self._fecha_creacion
+        return delta.days
+
+    def get_info_detallada(self) -> str:
+        return (f"Tarea Simple: {self._titulo}\n"
+                f"  Descripcion: {self._descripcion}\n"
+                f"  Prioridad: {self._prioridad.name}\n"
+                f"  Estado: {self._estado.value}")
+
+
+class TareaRecurrente(BaseTarea):
+    """Tarea que se repite periodicamente."""
+
+    def __init__(
+        self,
+        titulo: str,
+        descripcion: str = "",
+        prioridad: Prioridad = Prioridad.MEDIA,
+        frecuencia_dias: int = 7
+    ):
+        super().__init__(titulo, descripcion, prioridad)
+        self._frecuencia_dias = frecuencia_dias
+        self._contador_repeticiones = 0
+
+    @property
+    def categoria(self) -> str:
+        return "recurrente"
+
+    @property
+    def frecuencia_dias(self) -> int:
+        return self._frecuencia_dias
+
+    @property
+    def contador_repeticiones(self) -> int:
+        return self._contador_repeticiones
+
+    def dias_para_vencimiento(self, fecha_limite: datetime) -> int:
+        delta = fecha_limite - self._fecha_creacion
+        return delta.days
+
+    def get_info_detallada(self) -> str:
+        return (f"Tarea Recurrente: {self._titulo}\n"
+                f"  Frecuencia: cada {self._frecuencia_dias} dias\n"
+                f"  Repeticiones: {self._contador_repeticiones}\n"
+                f"  Prioridad: {self._prioridad.name}")
+
+    def completar(self) -> None:
+        """Sobrescribe completar para tareas recurrentes."""
+        super().completar()
+        self._contador_repeticiones += 1
+        # Reiniciar para la siguiente repeticion
+        self._estado = EstadoTarea.PENDIENTE
+        self._fecha_completado = None
+        self._fecha_creacion = datetime.now()
+
+
+# ==================== Funciones con Protocol ====================
+def procesar_tarea(tarea: TareaValida) -> None:
+    """Procesa cualquier objeto que implemente TareaValida."""
+    estado = "completada" if tarea.esta_completa() else "pendiente"
+    print(f"Procesando: {tarea.titulo}")
+    print(f"  Prioridad: {tarea.prioridad.name}")
+    print(f"  Estado: {estado}")
+    print("-" * 40)
+
+
+def filtrar_tareas_urgentes(tareas: list[TareaValida]) -> list[TareaValida]:
+    """Filtra tareas con prioridad alta o urgente."""
+    return [t for t in tareas if t.prioridad in (Prioridad.ALTA, Prioridad.URGENTE)]
+
+
+# ==================== Ejemplo de Uso ====================
+if __name__ == "__main__":
+    print("=" * 50)
+    print("EJERCICIO: Sistema de Tareas Abstracto")
+    print("=" * 50)
+
+    # Crear tareas
+    tarea1 = TareaSimple(
+        titulo="Completar informe",
+        descripcion="Escribir seccion final del proyecto",
+        prioridad=Prioridad.ALTA
+    )
+
+    tarea2 = TareaRecurrente(
+        titulo="Hacer respaldo",
+        descripcion="Backup semanal",
+        prioridad=Prioridad.MEDIA,
+        frecuencia_dias=7
+    )
+
+    tarea3 = TareaSimple(
+        titulo="Comprar groceries",
+        prioridad=Prioridad.BAJA
+    )
+
+    # Verificar que ambos tipos son compatibles con TareaValida
+    print("\nVerificacion de Protocol TareaValida:")
+    print(f"TareaSimple es TareaValida: {isinstance(tarea1, TareaValida)}")
+    print(f"TareaRecurrente es TareaValida: {isinstance(tarea2, TareaValida)}")
+
+    # Usar con el Protocol
+    tareas = [tarea1, tarea2, tarea3]
+
+    print("\nProcesando todas las tareas:")
+    for tarea in tareas:
+        procesar_tarea(tarea)
+
+    # Filtrar urgentes
+    print("\nTareas urgentes:")
+    urgentes = filtrar_tareas_urgentes(tareas)
+    for tarea in urgentes:
+        print(f"  - {tarea.titulo} ({tarea.prioridad.name})")
+
+    # Completar tarea recurrente
+    print("\nCompletando tarea recurrente:")
+    print(f"Antes: {tarea2}")
+    print(f"Repeticiones: {tarea2.contador_repeticiones}")
+    tarea2.completar()
+    print(f"Despues: {tarea2}")
+    print(f"Repeticiones: {tarea2.contador_repeticiones}")
+
+    # Mostrar informacion detallada
+    print("\nInformacion detallada:")
+    print(tarea1.get_info_detallada())
+    print()
+    print(tarea2.get_info_detallada())</code></pre>
+
+                    <h4>Resultados Esperados</h4>
+                    <pre><code class="language-bash"># Al ejecutar el ejercicio:
+EJERCICIO: Sistema de Tareas Abstracto
+
+Verificacion de Protocol TareaValida:
+TareaSimple es TareaValida: False (isinstance no funciona con Protocol)
+# Nota: isinstance no funciona con Protocol, pero los type hints si
+
+Procesando todas las tareas:
+Procesando: Completar informe
+  Prioridad: ALTA
+  Estado: pendiente
+----------------------------------------
+Procesando: Hacer respaldo
+  Prioridad: MEDIA
+  Estado: pendiente
+----------------------------------------
+Procesando: Comprar groceries
+  Prioridad: BAJA
+  Estado: pendiente
+----------------------------------------
+
+Tareas urgentes:
+  - Completar informe (ALTA)
+
+Completando tarea recurrente:
+Antes: [pendiente] Hacer respaldo (MEDIA)
+Repeticiones: 0
+Despues: [pendiente] Hacer respaldo (MEDIA)
+Repeticiones: 1
+
+Informacion detallada:
+Tarea Simple: Completar informe
+  Descripcion: Escribir seccion final del proyecto
+  Prioridad: ALTA
+  Estado: pendiente
+
+Tarea Recurrente: Hacer respaldo
+  Frecuencia: cada 7 dias
+  Repeticiones: 1
+  Prioridad: MEDIA</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Nota sobre isinstance y Protocol:</strong> Para verificar que un objeto implementa un Protocol en tiempo de ejecucion, usa el decorador <code>@runtime_checkable</code> en la definicion del Protocol.
+                    </div>
+                </section>
+
+                <section id="taskflow">
+                    <h2>Conexion con TaskFlow</h2>
+
+                    <h3>BaseModel Abstracto para TaskFlow</h3>
+                    <p>En TaskFlow, utilizaremos clases abstractas para definir la estructura base de nuestros modelos de dominio:</p>
+                    <pre><code class="language-python">"""
+BaseModel abstracto para TaskFlow.
+"""
+from abc import ABC, abstractmethod
+from datetime import datetime
+from typing import Optional, Dict, Any
+import uuid
+
+class BaseModel(ABC):
+    """Clase base abstracta para todos los modelos de TaskFlow."""
+
+    def __init__(self):
+        self._id: Optional[str] = None
+        self._creado_en: datetime = datetime.now()
+        self._actualizado_en: datetime = datetime.now()
+        self._version: int = 1
+
+    @property
+    def id(self) -> Optional[str]:
+        """ID unico del modelo."""
+        return self._id
+
+    @id.setter
+    def id(self, valor: str) -> None:
+        self._id = valor
+
+    @property
+    def creado_en(self) -> datetime:
+        return self._creado_en
+
+    @property
+    def actualizado_en(self) -> datetime:
+        return self._actualizado_en
+
+    @property
+    def version(self) -> int:
+        return self._version
+
+    def _actualizar_version(self) -> None:
+        """Incrementa la version del modelo."""
+        self._version += 1
+        self._actualizado_en = datetime.now()
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}(id={self.id})"
+
+    def __repr__(self) -> str:
+        return (f"{self.__class__.__name__}("
+                f"id={self.id}, "
+                f"version={self._version})")
+
+    # ==================== Metodos Abstractos ====================
+    @abstractmethod
+    def a_json(self) -> Dict[str, Any]:
+        """Serializa el modelo a JSON."""
+        pass
+
+    @classmethod
+    @abstractmethod
+    def desde_json(cls, datos: Dict[str, Any]) -> "BaseModel":
+        """Deserializa el modelo desde JSON."""
+        pass
+
+    @abstractmethod
+    def validar(self) -> list[str]:
+        """Valida el modelo y retorna lista de errores."""
+        pass
+
+    @abstractmethod
+    def es_valido(self) -> bool:
+        """Retorna True si el modelo es valido."""
+        pass
+
+
+class Entidad(BaseModel):
+    """Entidad del dominio (tiene identidad)."""
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        """Nombre de la entidad."""
+        pass
+
+    @abstractmethod
+    def obtener_identity(self) -> str:
+        """Obtiene la identidad unica de la entidad."""
+        pass
+
+
+class Agregado(BaseModel):
+    """Raiz de un agregado."""
+
+    @property
+    @abstractmethod
+    def entidad_raiz(self) -> Entidad:
+        """Retorna la entidad raiz del agregado."""
+        pass
+
+
+# ==================== Protocol de Validador ====================
+class Validador(Protocol):
+    """Protocolo para validadores."""
+
+    def validar(self, obj: Any) -> bool:
+        """Valida un objeto."""
+        ...
+
+    def obtener_errores(self, obj: Any) -> list[str]:
+        """Retorna errores de validacion."""
+        ...</code></pre>
+
+                    <h3>Protocol para Validacion de Tipos</h3>
+                    <p>Los Protocols nos permiten validar tipos sin herencia:</p>
+                    <pre><code class="language-python">"""
+Protocols para validacion de tipos en TaskFlow.
+"""
+from typing import Protocol, Optional
+from datetime import datetime
+
+# Protocol para entidades persistibles
+class Persistable(Protocol):
+    """Objeto que puede ser persistido."""
+
+    @property
+    def id(self) -> Optional[str]:
+        ...
+
+    def guardar(self) -> bool:
+        ...
+
+    def eliminar(self) -> bool:
+        ...
+
+# Protocol para eventos
+class Evento(Protocol):
+    """Evento del dominio."""
+
+    @property
+    def tipo(self) -> str:
+        ...
+
+    @property
+    def fecha(self) -> datetime:
+        ...
+
+    @property
+    def datos(self) -> dict:
+        ...
+
+# Protocol para repositorios
+class Repositorio(Protocol):
+    """Repositorio generico."""
+
+    def obtener(self, id: str) -> Optional[Persistable]:
+        ...
+
+    def listar(self) -> list[Persistable]:
+        ...
+
+    def guardar(self, obj: Persistable) -> bool:
+        ...
+
+    def eliminar(self, obj: Persistable) -> bool:
+        ...</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Aplicacion en TaskFlow:</strong> BaseModel y los Protocols nos permiten:
+                        <ul>
+                            <li>Definir contratos claros para todos los modelos</li>
+                            <li>Validar tipos en tiempo de compilacion con mypy</li>
+                            <li>Mantener consistencia en la serializacion (a_json/desde_json)</li>
+                            <li>Implementar validacion centralizada</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li><a href="https://docs.python.org/es/3/library/abc.html" target="_blank">abc - Abstract Base Classes - Documentacion Oficial de Python</a></li>
+                        <li><a href="https://peps.python.org/pep-0544/" target="_blank">PEP 544: Protocols (Structural Subtyping)</a></li>
+                        <li><a href="https://realpython.com/python-interface/#using-abstract-base-classes" target="_blank">Real Python - Abstract Base Classes</a></li>
+                        <li><a href="https://mypy.readthedocs.io/en/stable/protocols.html" target="_blank">Mypy - Protocols</a></li>
+                        <li><a href="https://refactoring.guru/design-patterns/template-method" target="_blank">Refactoring Guru - Template Method Pattern</a></li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U1C04-ABS"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Ultima actualizacion: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

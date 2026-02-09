@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introducción a Domain Driven Design (DDD) con Entidades, Value Objects y Repositorios. Curso IF0100 - POO II">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Introducción a DDD | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Blocks */
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* DDD Layer Diagram */
+        .ddd-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .ddd-layer {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .layer-ui {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+        }
+
+        .layer-app {
+            background-color: #fff3e0;
+            border: 2px solid #f57c00;
+        }
+
+        .layer-domain {
+            background-color: #e8f5e9;
+            border: 2px solid #388e3c;
+        }
+
+        .layer-infra {
+            background-color: #fce4ec;
+            border: 2px solid #c2185b;
+        }
+
+        /* Entity vs VO Comparison */
+        .comparison-box {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-item {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .entity-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .vo-box {
+            background-color: #e3f2fd;
+            border-left: 4px solid var(--info-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 2: Técnicas de Desarrollo</h2>
+            <h3>Clase 04: Introducción a DDD</h3>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#entidades">Entidades</a></li>
+                        <li><a href="#value-objects">Value Objects</a></li>
+                        <li><a href="#repositorios">Patrón Repository</a></li>
+                        <li><a href="#servicios">Servicios de Dominio</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-lg-9">
+                <!-- Sección 1: Objetivos -->
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender los principios de Domain Driven Design (DDD)</li>
+                        <li>Distinguir entre Entidades y Value Objects</li>
+                        <li>Implementar Entidades con identidad única</li>
+                        <li>Crear Value Objects inmutables</li>
+                        <li>Aplicar el patrón Repository para abstraer persistencia</li>
+                        <li>Separar lógica de dominio de infraestructura</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 2: Conceptos Teóricos -->
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es Domain Driven Design (DDD)?</h3>
+                    <p>
+                        <strong>Domain Driven Design</strong> es un enfoque de desarrollo de software
+                        que se centra en el dominio del problema y en la lógica de negocio, más que
+                        en detalles técnicos de implementación.
+                    </p>
+
+                    <div class="alert-tip">
+                        <strong>Idea clave:</strong> El código debe reflejar el lenguaje del dominio.
+                        Terminología de negocio = Terminología de código.
+                    </div>
+
+                    <h3>Principios Fundamentales de DDD</h3>
+                    <ul>
+                        <li><strong>Ubiquitous Language:</strong> Lenguaje compartido entre expertos del dominio y desarrolladores</li>
+                        <li><strong>Bounded Contexts:</strong> Delimitar fronteras claras entre diferentes contextos del dominio</li>
+                        <li><strong>Modelo Rico:</strong> El modelo no es solo datos, incluye comportamiento y reglas de negocio</li>
+                        <li><strong>Separación de Capas:</strong> Dominio, Aplicación, Infraestructura e Interfaz</li>
+                    </ul>
+
+                    <h3>Arquitectura en Capas DDD</h3>
+
+                    <div class="ddd-layers">
+                        <div class="ddd-layer layer-ui">
+                            <strong>UI / Presentación</strong>
+                            <small>Interfaces, Controllers, Templates</small>
+                        </div>
+                        <div class="ddd-layer layer-app">
+                            <strong>Aplicación</strong>
+                            <small>Servicios de aplicación, Casos de uso</small>
+                        </div>
+                        <div class="ddd-layer layer-domain">
+                            <strong>Dominio</strong>
+                            <small>Entidades, Value Objects, Servicios de dominio</small>
+                        </div>
+                        <div class="ddd-layer layer-infra">
+                            <strong>Infraestructura</strong>
+                            <small>Repositorios, Base de datos, APIs externas</small>
+                        </div>
+                    </div>
+
+                    <figure class="text-center my-4">
+                        <img src="../assets/infografias/clase-07-ddd-arquitectura.png" alt="Arquitectura DDD" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+                        <figcaption class="figure-caption mt-2">Figura 1: Arquitectura Domain Driven Design</figcaption>
+                    </figure>
+
+                    <h3>Bloques Constructivos de DDD</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Propósito</th>
+                                <th>Ejemplo en TaskFlow</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Entity</strong></td>
+                                <td>Objeto con identidad única</td>
+                                <td>Usuario, Proyecto, Tarea</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Value Object</strong></td>
+                                <td>Objeto definido por sus atributos</td>
+                                <td>Email, Prioridad, Estado</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Aggregate</strong></td>
+                                <td>Grupo de objetos tratados como unidad</td>
+                                <td>Proyecto con sus Tareas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Repository</strong></td>
+                                <td>Abstracción de persistencia</td>
+                                <td>UsuarioRepository, TareaRepository</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Domain Service</strong></td>
+                                <td>Lógica que no pertenece a Entity/VO</td>
+                                <td>Servicio de autenticación</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Sección 3: Entidades -->
+                <section id="entidades">
+                    <h2>Entidades</h2>
+
+                    <h3>¿Qué es una Entidad?</h3>
+                    <p>
+                        Una <strong>Entidad</strong> es un objeto del dominio definido por su
+                        <strong>identidad</strong>, no por sus atributos. Dos entidades son iguales
+                        si tienen el mismo ID, aunque tengan diferentes atributos.
+                    </p>
+
+                    <h3>Características de las Entidades</h3>
+                    <ul>
+                        <li><strong>Identidad única:</strong> Cada entidad tiene un ID que la identifica</li>
+                        <li><strong>Ciclo de vida:</strong> Tiene un comienzo y puede cambiar a lo largo del tiempo</li>
+                        <li><strong>Continuidad:</strong> Mantiene su identidad aunque sus atributos cambien</li>
+                        <li><strong>Comportamiento:</strong> Encapsula lógica de negocio</li>
+                    </ul>
+
+                    <h3>Ejemplo: Entidad Usuario</h3>
+
+                    <pre><code class="language-python">from dataclasses import dataclass
+from typing import Optional
+from datetime import datetime
+
+@dataclass
+class Usuario:
+    """
+    Entidad Usuario en el dominio TaskFlow.
+
+    La identidad de un usuario está dada por su ID,
+    no por su username o email que pueden cambiar.
+    """
+    id: Optional[int]  # None para nuevos usuarios
+    username: str
+    email: str
+    password_hash: str
+    nombre_completo: Optional[str] = None
+    activo: bool = True
+    creado_en: Optional[datetime] = None
+
+    def __eq__(self, other):
+        """Dos usuarios son iguales si tienen el mismo ID."""
+        if not isinstance(other, Usuario):
+            return False
+        return self.id is not None and self.id == other.id
+
+    def __hash__(self):
+        """Hash basado en ID para poder usar en sets y dicts."""
+        return hash(self.id) if self.id is not None else hash(id(self))
+
+    def cambiar_email(self, nuevo_email: str):
+        """
+        Cambia el email del usuario.
+
+        Raises:
+            ValueError: Si el email es inválido
+        """
+        if not self._validar_email(nuevo_email):
+            raise ValueError("Email inválido")
+        self.email = nuevo_email
+
+    def desactivar(self):
+        """Desactiva el usuario."""
+        self.activo = False
+
+    def puede_crear_proyectos(self) -> bool:
+        """Verifica si el usuario puede crear proyectos."""
+        return self.activo
+
+    @staticmethod
+    def _validar_email(email: str) -> bool:
+        """Valida formato de email."""
+        return "@" in email and "." in email.split("@")[1]</code></pre>
+
+                    <h3>Identidad en Entidades</h3>
+
+                    <div class="comparison-box">
+                        <div class="comparison-item entity-box">
+                            <h5>✅ Con Identidad</h5>
+                            <pre><code class="language-python">usuario1 = Usuario(id=1, username="juan")
+usuario1.username = "juanperez"
+# Sigue siendo el mismo usuario
+# porque el ID no cambió</code></pre>
+                        </div>
+                        <div class="comparison-item vo-box">
+                            <h5>❌ Sin Identidad (VO)</h5>
+                            <pre><code class="language-python">email1 = Email("juan@example.com")
+email1.valor = "otro@example.com"
+# Es un email diferente</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>Reglas de Negocio en Entidades</h3>
+
+                    <pre><code class="language-python">@dataclass
+class Tarea:
+    """
+    Entidad Tarea con lógica de dominio.
+
+    Las reglas de negocio están encapsuladas
+    en la entidad, no en servicios externos.
+    """
+    id: Optional[int]
+    titulo: str
+    estado: str  # pendiente, en_progreso, completada
+    proyecto_id: int
+    asignado_a: Optional[int] = None
+
+    def asignar_a(self, usuario_id: int):
+        """
+        Asigna la tarea a un usuario.
+
+        Raises:
+            ValueError: Si la tarea está completada
+        """
+        if self.estado == "completada":
+            raise ValueError("No se puede reasignar una tarea completada")
+
+        self.asignado_a = usuario_id
+
+    def marcar_completada(self):
+        """
+        Marca la tarea como completada.
+
+        Raises:
+            ValueError: Si no hay nadie asignado
+        """
+        if self.asignado_a is None:
+            raise ValueError("No se puede completar una tarea sin asignar")
+
+        self.estado = "completada"
+
+    def esta_atrasada(self, fecha_limite: datetime) -> bool:
+        """
+        Verifica si la tarea está atrasada.
+        """
+        return self.estado != "completada" and datetime.now() > fecha_limite</code></pre>
+                </section>
+
+                <!-- Sección 4: Value Objects -->
+                <section id="value-objects">
+                    <h2>Value Objects</h2>
+
+                    <h3>¿Qué es un Value Object?</h3>
+                    <p>
+                        Un <strong>Value Object</strong> es un objeto definido por sus atributos,
+                        no por su identidad. Dos VOs son iguales si todos sus atributos son iguales.
+                        Son <strong>inmutables</strong> por naturaleza.
+                    </p>
+
+                    <h3>Características de los Value Objects</h3>
+                    <ul>
+                        <li><strong>Sin identidad:</strong> No tienen ID, se definen por sus valores</li>
+                        <li><strong>Inmutables:</strong> No cambian después de creados</li>
+                        <li><strong>Compartibles:</strong> Pueden ser compartidos sin riesgo</li>
+                        <li><strong>Validados:</strong> Se validan al crearse</li>
+                    </ul>
+
+                    <h3>Ejemplo: Value Object Email</h3>
+
+                    <pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)  # frozen hace el VO inmutable
+class Email:
+    """
+    Value Object que representa un email.
+
+    Es inmutable y se valida al crearse.
+    """
+    valor: str
+
+    def __post_init__(self):
+        """Valida el email después de la creación."""
+        if not self._es_valido():
+            raise ValueError(f"Email inválido: {self.valor}")
+
+    def _es_valido(self) -> bool:
+        """Valida formato de email."""
+        partes = self.valor.split("@")
+        return len(partes) == 2 and "." in partes[1]
+
+    def dominio(self) -> str:
+        """Retorna el dominio del email."""
+        return self.valor.split("@")[1]
+
+    def __str__(self) -> str:
+        """Representación string del email."""
+        return self.valor</code></pre>
+
+                    <h3>Comparación: Entidad vs Value Object</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Entidad</th>
+                                <th>Value Object</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Identidad</strong></td>
+                                <td>Definida por ID</td>
+                                <td>Definida por atributos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mutable</strong></td>
+                                <td>Sí, puede cambiar</td>
+                                <td>No, inmutable</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Comparación</strong></td>
+                                <td>Por ID</td>
+                                <td>Por todos los atributos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ciclo de vida</strong></td>
+                                <td>Largo, con cambios</td>
+                                <td>Corto, se reemplaza</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ejemplos</strong></td>
+                                <td>Usuario, Tarea, Proyecto</td>
+                                <td>Email, Fecha, Dinero, Prioridad</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Más Ejemplos de Value Objects</h3>
+
+                    <pre><code class="language-python">@dataclass(frozen=True)
+class Prioridad:
+    """Value Object para prioridad de tareas."""
+    valor: str
+
+    def __post_init__(self):
+        prioridades_validas = ["baja", "media", "alta", "urgente"]
+        if self.valor not in prioridades_validas:
+            raise ValueError(f"Prioridad inválida: {self.valor}")
+
+@dataclass(frozen=True)
+class Monto:
+    """Value Object para montos monetarios."""
+    valor: float
+    moneda: str = "USD"
+
+    def __post_init__(self):
+        if self.valor < 0:
+            raise ValueError("El monto no puede ser negativo")
+
+    def __add__(self, otro: 'Monto') -> 'Monto':
+        """Suma dos montos."""
+        if self.moneda != otro.moneda:
+            raise ValueError("No se pueden sumar montos de diferentes monedas")
+        return Monto(self.valor + otro.valor, self.moneda)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>¿Cuándo usar Value Objects?</strong>
+                        <ul>
+                            <li>Cuando el objeto no tiene identidad propia</li>
+                            <li>Cuando la inmutabilidad es deseable</li>
+                            <li>Cuando el objeto se usa como atributo de entidades</li>
+                            <li>Cuando quieres validar reglas de negocio en la creación</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Sección 5: Patrón Repository -->
+                <section id="repositorios">
+                    <h2>Patrón Repository</h2>
+
+                    <h3>¿Qué es un Repository?</h3>
+                    <p>
+                        Un <strong>Repository</strong> es una abstracción que simula una colección
+                        de objetos del dominio en memoria, ocultando los detalles de persistencia
+                        (base de datos, archivos, APIs).
+                    </p>
+
+                    <h3>Propósito del Patrón Repository</h3>
+                    <ul>
+                        <li><strong>Abstraer persistencia:</strong> El dominio no sabe cómo se guardan los datos</li>
+                        <li><strong>Centrar lógica de acceso:</strong> Un solo lugar para consultas</li>
+                        <li><strong>Facilitar testing:</strong> Podemos mockear repositories fácilmente</li>
+                        <li><strong>Separar responsabilidades:</strong> Dominio vs Infraestructura</li>
+                    </ul>
+
+                    <h3>Interfaz de Repository</h3>
+
+                    <pre><code class="language-python"># src/taskflow/repositories/base.py
+
+from abc import ABC, abstractmethod
+from typing import TypeVar, Generic, List, Optional
+
+T = TypeVar('T')
+
+class Repository(ABC, Generic[T]):
+    """
+    Interfaz base para repositorios.
+
+    Define las operaciones CRUD que todos los repositorios deben implementar.
+    """
+
+    @abstractmethod
+    def guardar(self, entidad: T) -> T:
+        """Guarda una entidad (crear o actualizar)."""
+        pass
+
+    @abstractmethod
+    def obtener_por_id(self, id: int) -> Optional[T]:
+        """Obtiene una entidad por su ID."""
+        pass
+
+    @abstractmethod
+    def obtener_todos(self) -> List[T]:
+        """Obtiene todas las entidades."""
+        pass
+
+    @abstractmethod
+    def eliminar(self, entidad: T) -> None:
+        """Elimina una entidad."""
+        pass
+
+# src/taskflow/repositories/usuario_repo.py
+
+from src.taskflow.repositories.base import Repository
+from src.taskflow.models.usuario import Usuario
+
+class UsuarioRepository(Repository[Usuario]):
+    """Repositorio para la entidad Usuario."""
+
+    def guardar(self, usuario: Usuario) -> Usuario:
+        """Guarda un usuario en BD."""
+        # Implementación concreta con SQLAlchemy, archivos, etc.
+        if usuario.id is None:
+            # Crear nuevo
+            return self._crear(usuario)
+        else:
+            # Actualizar existente
+            return self._actualizar(usuario)
+
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        """Busca usuario por ID."""
+        # Query a BD: SELECT * FROM usuarios WHERE id = ?
+        pass
+
+    def obtener_por_username(self, username: str) -> Optional[Usuario]:
+        """Busca usuario por username."""
+        # Query a BD: SELECT * FROM usuarios WHERE username = ?
+        pass
+
+    def obtener_por_email(self, email: str) -> Optional[Usuario]:
+        """Busca usuario por email."""
+        pass
+
+    def obtener_todos(self) -> List[Usuario]:
+        """Obtiene todos los usuarios."""
+        pass
+
+    def eliminar(self, usuario: Usuario) -> None:
+        """Elimina un usuario."""
+        pass</code></pre>
+
+                    <h3>Implementación con Archivos</h3>
+
+                    <pre><code class="language-python"># src/taskflow/repositories/usuario_file_repo.py
+
+import json
+from typing import List, Optional
+from src.taskflow.repositories.usuario_repo import UsuarioRepository
+from src.taskflow.models.usuario import Usuario
+
+class UsuarioFileRepository(UsuarioRepository):
+    """Implementación de repositorio usando archivos JSON."""
+
+    def __init__(self, archivo: str = "data/usuarios.json"):
+        self.archivo = archivo
+        self._datos = self._cargar_datos()
+
+    def _cargar_datos(self) -> dict:
+        """Carga datos desde archivo."""
+        try:
+            with open(self.archivo, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {"usuarios": []}
+
+    def _guardar_datos(self):
+        """Guarda datos a archivo."""
+        with open(self.archivo, 'w') as f:
+            json.dump(self._datos, f, indent=2, default=str)
+
+    def guardar(self, usuario: Usuario) -> Usuario:
+        """Guarda usuario en archivo."""
+        if usuario.id is None:
+            # Crear nuevo
+            usuario.id = self._siguiente_id()
+            self._datos["usuarios"].append(self._usuario_a_dict(usuario))
+        else:
+            # Actualizar existente
+            for i, u in enumerate(self._datos["usuarios"]):
+                if u["id"] == usuario.id:
+                    self._datos["usuarios"][i] = self._usuario_a_dict(usuario)
+                    break
+
+        self._guardar_datos()
+        return usuario
+
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        """Busca usuario por ID."""
+        for u in self._datos["usuarios"]:
+            if u["id"] == id:
+                return self._dict_a_usuario(u)
+        return None
+
+    @staticmethod
+    def _usuario_a_dict(usuario: Usuario) -> dict:
+        """Convierte Usuario a dict."""
+        return {
+            "id": usuario.id,
+            "username": usuario.username,
+            "email": usuario.email,
+            # ... otros campos
+        }</code></pre>
+
+                    <h3>Inyección de Dependencias con Repositories</h3>
+
+                    <pre><code class="language-python"># src/taskflow/services/usuario_service.py
+
+from typing import Optional
+from src.taskflow.models.usuario import Usuario
+from src.taskflow.repositories.usuario_repo import UsuarioRepository
+
+class UsuarioService:
+    """Servicio de lógica de negocio para usuarios."""
+
+    def __init__(self, repo: UsuarioRepository):
+        """
+        Inyecta el repositorio.
+
+        Esto permite inyectar diferentes implementaciones
+        (BD, archivos, mocks) sin cambiar el servicio.
+        """
+        self.repo = repo
+
+    def crear_usuario(self, username: str, email: str, password: str) -> Usuario:
+        """
+        Crea un nuevo usuario.
+
+        El servicio no sabe CÓMO se guarda el usuario,
+        solo sabe que usa un repositorio.
+        """
+        # Validaciones de dominio
+        if len(username) < 3:
+            raise ValueError("Username muy corto")
+
+        # Verificar duplicados
+        if self.repo.obtener_por_username(username):
+            raise ValueError("Username ya existe")
+
+        # Crear usuario
+        usuario = Usuario(
+            id=None,  # Nuevo usuario
+            username=username,
+            email=email,
+            password_hash=self._hashear_password(password)
+        )
+
+        # Guardar usando repositorio
+        return self.repo.guardar(usuario)
+
+    def obtener_usuario(self, id: int) -> Optional[Usuario]:
+        """Obtiene usuario por ID."""
+        return self.repo.obtener_por_id(id)
+
+    @staticmethod
+    def _hashear_password(password: str) -> str:
+        """Hashea el password (simplificado)."""
+        # En producción usar bcrypt o similar
+        return hash(password)</code></pre>
+                </section>
+
+                <!-- Sección 6: Servicios de Dominio -->
+                <section id="servicios">
+                    <h2>Servicios de Dominio</h2>
+
+                    <h3>¿Cuándo Usar un Servicio de Dominio?</h3>
+
+                    <p>
+                        Cuando hay lógica de negocio que no pertenece naturalmente a una
+                        Entidad o Value Object específico.
+                    </p>
+
+                    <h3>Características de los Servicios de Dominio</h3>
+                    <ul>
+                        <li><strong>Stateless:</strong> No mantienen estado entre llamadas</li>
+                        <li><strong>Operaciones del dominio:</strong> Lógica de negocio pura</li>
+                        <li><strong>No CRUD:</strong> No son simplemente operaciones de guardar/obtener</li>
+                    </ul>
+
+                    <h3>Ejemplo: Servicio de Autenticación</h3>
+
+                    <pre><code class="language-python"># src/taskflow/domain/auth_service.py
+
+from typing import Optional
+from src.taskflow.models.usuario import Usuario
+from src.taskflow.repositories.usuario_repo import UsuarioRepository
+
+class AuthService:
+    """
+    Servicio de dominio para autenticación.
+
+    Contiene lógica de negocio que no pertenece
+    a la entidad Usuario pero es parte del dominio.
+    """
+
+    def __init__(self, repo: UsuarioRepository):
+        self.repo = repo
+
+    def login(self, username: str, password: str) -> dict:
+        """
+        Autentica un usuario.
+
+        Returns:
+            Dict con resultado del login:
+            - exitoso: bool
+            - usuario: Usuario o None
+            - mensaje: str
+
+        Esta lógica no pertenece a Usuario porque involucra
+        comparación de passwords y manejo de errores.
+        """
+        # Buscar usuario
+        usuario = self.repo.obtener_por_username(username)
+
+        if not usuario:
+            return {
+                "exitoso": False,
+                "usuario": None,
+                "mensaje": "Usuario no encontrado"
+            }
+
+        # Verificar password
+        if not self._verificar_password(password, usuario.password_hash):
+            return {
+                "exitoso": False,
+                "usuario": None,
+                "mensaje": "Password incorrecto"
+            }
+
+        # Verificar que esté activo
+        if not usuario.activo:
+            return {
+                "exitoso": False,
+                "usuario": None,
+                "mensaje": "Usuario desactivado"
+            }
+
+        # Login exitoso
+        return {
+            "exitoso": True,
+            "usuario": usuario,
+            "mensaje": "Login exitoso"
+        }
+
+    @staticmethod
+    def _verificar_password(password: str, hash: str) -> bool:
+        """Verifica password (simplificado)."""
+        # En producción usar bcrypt o similar
+        return hash(password) == hash</code></pre>
+                </section>
+
+                <!-- Sección 7: Ejemplos Prácticos -->
+                <section id="ejemplos">
+                    <h2>Ejemplos Prácticos</h2>
+
+                    <h3>Ejemplo 1: Modelo de Dominio Completo</h3>
+
+                    <pre><code class="language-python"># Entidad Proyecto
+
+from dataclasses import dataclass, field
+from typing import List, Optional
+from datetime import datetime
+
+@dataclass
+class Proyecto:
+    """Entidad Proyecto del dominio TaskFlow."""
+    id: Optional[int]
+    nombre: str
+    usuario_id: int
+    estado: str = "activo"  # Value Object en practice
+    creado_en: Optional[datetime] = None
+    tareas: List['Tarea'] = field(default_factory=list)
+
+    def agregar_tarea(self, tarea: 'Tarea'):
+        """
+        Agrega una tarea al proyecto.
+
+        Raises:
+            ValueError: Si el proyecto está completado
+        """
+        if self.estado == "completado":
+            raise ValueError("No se pueden agregar tareas a un proyecto completado")
+
+        tarea.proyecto_id = self.id
+        self.tareas.append(tarea)
+
+    def porcentaje_completado(self) -> float:
+        """
+        Calcula el porcentaje de tareas completadas.
+
+        Lógica de negocio que pertenece a la entidad.
+        """
+        if not self.tareas:
+            return 0.0
+
+        completadas = sum(1 for t in self.tareas if t.estado == "completada")
+        return (completadas / len(self.tareas)) * 100
+
+# Entidad Tarea
+
+@dataclass
+class Tarea:
+    """Entidad Tarea del dominio TaskFlow."""
+    id: Optional[int]
+    titulo: str
+    estado: str
+    proyecto_id: int
+    asignado_a: Optional[int] = None
+    prioridad: str = "media"  # baja, media, alta, urgente
+
+    def asignar_a(self, usuario_id: int):
+        """Asigna la tarea a un usuario."""
+        if self.estado == "completada":
+            raise ValueError("Tarea completada no puede ser reasignada")
+        self.asignado_a = usuario_id
+
+    def marcar_en_progreso(self):
+        """Marca la tarea como en progreso."""
+        if self.estado != "pendiente":
+            raise ValueError("Solo tareas pendientes pueden ir a en progreso")
+        self.estado = "en_progreso"
+
+    def completar(self):
+        """Marca la tarea como completada."""
+        if not self.asignado_a:
+            raise ValueError("Tarea sin asignar no puede completarse")
+        self.estado = "completada"</code></pre>
+
+                    <h3>Ejemplo 2: Repositorio con SQLAlchemy</h3>
+
+                    <pre><code class="language-python"># src/taskflow/repositories/usuario_sqlalchemy_repo.py
+
+from typing import List, Optional
+from sqlalchemy.orm import Session
+from src.taskflow.models.usuario import Usuario
+from src.taskflow.repositories.usuario_repo import UsuarioRepository
+
+class UsuarioSQLAlchemyRepository(UsuarioRepository):
+    """Implementación de repositorio con SQLAlchemy."""
+
+    def __init__(self, session: Session):
+        self.session = session
+
+    def guardar(self, usuario: Usuario) -> Usuario:
+        """Guarda usuario usando SQLAlchemy."""
+        if usuario.id is None:
+            # Crear nuevo
+            self.session.add(usuario)
+            self.session.flush()  # Obtiene el ID
+        else:
+            # Actualizar existente (merge)
+            self.session.merge(usuario)
+
+        self.session.commit()
+        return usuario
+
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        """Busca por ID usando SQLAlchemy."""
+        return self.session.query(Usuario).filter_by(id=id).first()
+
+    def obtener_por_username(self, username: str) -> Optional[Usuario]:
+        """Busca por username."""
+        return self.session.query(Usuario).filter_by(username=username).first()
+
+    def obtener_todos(self) -> List[Usuario]:
+        """Obtiene todos los usuarios."""
+        return self.session.query(Usuario).all()
+
+    def eliminar(self, usuario: Usuario) -> None:
+        """Elimina usuario."""
+        self.session.delete(usuario)
+        self.session.commit()</code></pre>
+
+                    <h3>Ejemplo 3: Servicio que Usa Repositorio</h3>
+
+                    <pre><code class="language-python"># src/taskflow/services/proyecto_service.py
+
+from typing import List, Optional
+from src.taskflow.models.proyecto import Proyecto
+from src.taskflow.repositories.proyecto_repo import ProyectoRepository
+
+class ProyectoService:
+    """Servicio de lógica de negocio para proyectos."""
+
+    def __init__(self, repo: ProyectoRepository):
+        self.repo = repo
+
+    def crear_proyecto(self, nombre: str, usuario_id: int) -> Proyecto:
+        """
+        Crea un nuevo proyecto.
+
+        El servicio contiene lógica de negocio que
+        la entidad no debería tener (acceso a otros objetos).
+        """
+        # Validaciones
+        if len(nombre) < 3:
+            raise ValueError("Nombre muy corto")
+
+        if self._usuario_tiene_demasiados_proyectos(usuario_id):
+            raise ValueError("Límite de proyectos alcanzado")
+
+        # Crear proyecto
+        proyecto = Proyecto(
+            id=None,
+            nombre=nombre,
+            usuario_id=usuario_id
+        )
+
+        # Guardar usando repositorio
+        return self.repo.guardar(proyecto)
+
+    def obtener_proyectos_usuario(self, usuario_id: int) -> List[Proyecto]:
+        """Obtiene todos los proyectos de un usuario."""
+        return self.repo.obtener_por_usuario(usuario_id)
+
+    def obtener_proyectos_activos(self, usuario_id: int) -> List[Proyecto]:
+        """Obtiene solo proyectos activos de un usuario."""
+        proyectos = self.repo.obtener_por_usuario(usuario_id)
+        return [p for p in proyectos if p.estado == "activo"]
+
+    def _usuario_tiene_demasiados_proyectos(self, usuario_id: int) -> bool:
+        """Verifica límite de proyectos (regla de negocio)."""
+        proyectos = self.repo.obtener_por_usuario(usuario_id)
+        return len(proyectos) >= 10  # Máximo 10 proyectos</code></pre>
+                </section>
+
+                <!-- Sección 8: Buenas Prácticas -->
+                <section id="buenas-practicas">
+                    <h2>Buenas Prácticas</h2>
+
+                    <h3>Separación de Responsabilidades</h3>
+
+                    <div class="alert-tip">
+                        <strong>Regla de oro:</strong> El dominio NO debe saber sobre la infraestructura.
+                        <ul>
+                            <li>Las Entidades no importan SQLAlchemy, archivos JSON, etc.</li>
+                            <li>Los Repositories son el puente entre dominio e infraestructura</li>
+                            <li>Los Servicios de dominio no hacen I/O directo</li>
+                        </ul>
+                    </div>
+
+                    <h3>DO's con DDD</h3>
+                    <ul>
+                        <li><strong>Pon lógica en entidades:</strong> Las entidades no son solo datos</li>
+                        <li><strong>Usa Value Objects:</strong> Para conceptos sin identidad</li>
+                        <li><strong>Abstrae con repositorios:</strong> El dominio no sabe cómo se guardan los datos</li>
+                        <li><strong>Servicios stateless:</strong> No guarden estado entre llamadas</li>
+                        <li><strong>Usa el lenguaje del dominio:</strong> Terminología de negocio = código</li>
+                    </ul>
+
+                    <h3>DON'T's con DDD</h3>
+                    <ul>
+                        <li><strong>No "anemic models":</strong> Entidades con solo getters/setters</li>
+                        <li><strong>No lógica de infraestructura en dominio:</strong> BD, APIs en infraestructura</li>
+                        <li><strong>No servicios con todo:</strong> El modelo debe tener lógica también</li>
+                        <li><strong>No bases de datos en entidades:</strong> Abstraer con repositorios</li>
+                    </ul>
+
+                    <h3>Anti-Pattern: Anemic Domain Model</h3>
+
+                    <div class="alert-error">
+                        <strong>❌ Mal - Modelo Anémico:</strong>
+                        <pre><code class="language-python">@dataclass
+class Usuario:
+    id: int
+    username: str
+    email: str
+
+# Lógica en servicio en vez de entidad
+def cambiar_email(usuario, nuevo_email):
+    if not validar_email(nuevo_email):
+        raise ValueError("Email inválido")
+    usuario.email = nuevo_email</code></pre>
+                    </div>
+
+                    <div class="alert-tip">
+                        <strong>✅ Bien - Modelo Rico:</strong>
+                        <pre><code class="language-python">@dataclass
+class Usuario:
+    id: int
+    username: str
+    email: str
+
+    def cambiar_email(self, nuevo_email):
+        if not self._validar_email(nuevo_email):
+            raise ValueError("Email inválido")
+        self.email = nuevo_email</code></pre>
+                    </div>
+                </section>
+
+                <!-- Sección 9: Ejercicio Guido -->
+                <section id="ejercicio">
+                    <h2>Ejercicio Guido: Refactorizar con Repository</h2>
+
+                    <h3>Objetivo</h3>
+                    <p>
+                        Refactorizar código existente para usar el patrón Repository,
+                        separando el dominio de la infraestructura.
+                    </p>
+
+                    <h3>Instrucciones Paso a Paso</h3>
+
+                    <h4>Paso 1: Código "Antes" (sin DDD)</h4>
+
+                    <pre><code class="language-python"># Código sin DDD - TODO MEZCLADO
+
+class UsuarioService:
+    """Servicio que hace TODO junto."""
+
+    def crear_usuario(self, username, email, password):
+        # Lógica de negocio
+        if len(username) < 3:
+            raise ValueError("Username muy corto")
+
+        # Acceso a BD directamente
+        import sqlite3
+        conn = sqlite3.connect('taskflow.db')
+        cursor = conn.cursor()
+
+        # Insertar directamente
+        cursor.execute(
+            "INSERT INTO usuarios (username, email) VALUES (?, ?)",
+            (username, email)
+        )
+        conn.commit()
+        conn.close()
+
+        return usuario</code></pre>
+
+                    <h4>Paso 2: Crear Interfaz Repository</h4>
+
+                    <pre><code class="language-python"># src/taskflow/repositories/usuario_repo.py
+
+from abc import ABC, abstractmethod
+from typing import Optional
+from src.taskflow.models.usuario import Usuario
+
+class UsuarioRepository(ABC):
+    """Interfaz de repositorio de usuarios."""
+
+    @abstractmethod
+    def guardar(self, usuario: Usuario) -> Usuario:
+        pass
+
+    @abstractmethod
+    def obtener_por_username(self, username: str) -> Optional[Usuario]:
+        pass
+
+    @abstractmethod
+    def existe_username(self, username: str) -> bool:
+        pass</code></pre>
+
+                    <h4>Paso 3: Implementar Repository SQLite</h4>
+
+                    <pre><code class="language-python"># src/taskflow/repositories/usuario_sqlite_repo.py
+
+import sqlite3
+from src.taskflow.repositories.usuario_repo import UsuarioRepository
+from src.taskflow.models.usuario import Usuario
+
+class UsuarioSQLiteRepository(UsuarioRepository):
+    """Implementación con SQLite."""
+
+    def __init__(self, db_path: str = "taskflow.db"):
+        self.db_path = db_path
+
+    def guardar(self, usuario: Usuario) -> Usuario:
+        """Guarda usuario en SQLite."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+
+        if usuario.id is None:
+            cursor.execute(
+                "INSERT INTO usuarios (username, email) VALUES (?, ?)",
+                (usuario.username, usuario.email)
+            )
+            usuario.id = cursor.lastrowid
+        else:
+            cursor.execute(
+                "UPDATE usuarios SET username=?, email=? WHERE id=?",
+                (usuario.username, usuario.email, usuario.id)
+            )
+
+        conn.commit()
+        conn.close()
+        return usuario
+
+    def existe_username(self, username: str) -> bool:
+        """Verifica si username existe."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT COUNT(*) FROM usuarios WHERE username=?",
+            (username,)
+        )
+        count = cursor.fetchone()[0]
+        conn.close()
+        return count > 0</code></pre>
+
+                    <h4>Paso 4: Refactorizar Servicio</h4>
+
+                    <pre><code class="language-python"># src/taskflow/services/usuario_service.py
+
+from typing import Optional
+from src.taskflow.models.usuario import Usuario
+from src/taskflow.repositories.usuario_repo import UsuarioRepository
+
+class UsuarioService:
+    """Servicio REFACTORIZADO con DDD."""
+
+    def __init__(self, repo: UsuarioRepository):
+        # Inyectar dependencia
+        self.repo = repo
+
+    def crear_usuario(self, username: str, email: str) -> Usuario:
+        """
+        Crea usuario.
+
+        El servicio SOLO contiene lógica de negocio.
+        La persistencia está abstraída en el repositorio.
+        """
+        # Validaciones de dominio
+        if len(username) < 3:
+            raise ValueError("Username muy corto")
+
+        # Verificar duplicados (lógica de negocio)
+        if self.repo.existe_username(username):
+            raise ValueError("Username ya existe")
+
+        # Crear entidad
+        usuario = Usuario(
+            id=None,
+            username=username,
+            email=email
+        )
+
+        # Guardar usando repositorio (inyectado)
+        return self.repo.guardar(usuario)
+
+    def obtener_usuario(self, username: str) -> Optional[Usuario]:
+        """Obtiene usuario por username."""
+        return self.repo.obtener_por_username(username)</code></pre>
+
+                    <h4>Paso 5: Usar el Servicio Refactorizado</h4>
+
+                    <pre><code class="language-python"># Uso del servicio
+
+# Inyectar repositorio concreto
+repo = UsuarioSQLiteRepository("taskflow.db")
+service = UsuarioService(repo)
+
+# Crear usuario
+try:
+    usuario = service.crear_usuario("juan", "juan@example.com")
+    print(f"Usuario creado con ID: {usuario.id}")
+except ValueError as e:
+    print(f"Error: {e}")
+
+# El servicio es testeable! Podemos inyectar un mock:
+# mock_repo = Mock()
+# mock_repo.existe_username.return_value = False
+# service = UsuarioService(mock_repo)
+# # ... tests</code></pre>
+
+                    <h3>Conexión con TaskFlow</h3>
+                    <p>
+                        Refactorizar el código de TaskFlow usando este patrón permite:
+                    </p>
+                    <ul>
+                        <li>Tests más fáciles (podemos mockear repos)</li>
+                        <li>Código más mantenible (dominio separado de infraestructura)</li>
+                        <li>Cambio de BD sin afectar el dominio (solo cambiar repo)</li>
+                        <li>Código más limpio y enfocado</li>
+                    </ul>
+
+                    <h3>Resultado Esperado</h3>
+                    <p>Al finalizar este ejercicio, tendrás:</p>
+                    <ul>
+                        <li>✅ Interfaz Repository creada</li>
+                        <li>✅ Implementación concreta (SQLite, archivos, etc.)</li>
+                        <li>✅ Servicio refactorizado usando el repositorio</li>
+                        <li>✅ Separación clara entre dominio e infraestructura</li>
+                        <li>✅ Código más testeable</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 10: Referencias -->
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li>
+                            <a href="https://www.domainlanguage.com/ddd/" target="_blank">
+                                Domain-Driven Design - Official Site
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank">
+                                Libro: Domain-Driven Design de Eric Evans
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/watch?v=CzhU7O8SPiE" target="_blank">
+                                Video: DDD explicado simple
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/ddd-crew/crud-example" target="_blank">
+                                GitHub: DDD Example - CRUD
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://cosmicpython.com/" target="_blank">
+                                Cosmic Python - DDD con Python
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U2C04-DDD" target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Nota: El link de Google Colab se activara cuando el notebook sea creado.</p>
+            <p>Ultima actualizacion: 2026-02-08</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

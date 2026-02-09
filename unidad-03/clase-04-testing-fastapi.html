@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Testing de APIs FastAPI: TestClient, pytest, coverage, fixtures especializados. Curso IF0100 - POO II">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Testing de APIs FastAPI | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Blocks */
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Coverage Badge */
+        .coverage-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .coverage-high {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .coverage-medium {
+            background-color: var(--warning-color);
+            color: black;
+        }
+
+        .coverage-low {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        /* Test Status Icons */
+        .test-pass {
+            color: var(--success-color);
+        }
+
+        .test-fail {
+            color: var(--danger-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programacion OO II</h1>
+            <h2>Unidad 3: Desarrollo Backend con FastAPI</h2>
+            <h3>Clase 4: Testing de APIs FastAPI</h3>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teoricos</a></li>
+                        <li><a href="#testclient">TestClient en Profundidad</a></li>
+                        <li><a href="#httptie">HTTPie vs TestClient</a></li>
+                        <li><a href="#dependency-injection">Dependency Injection en Testing</a></li>
+                        <li><a href="#testing-async">Testing Asincrono</a></li>
+                        <li><a href="#fixtures">Fixtures Especializados</a></li>
+                        <li><a href="#ejemplos">Ejemplos Practicos</a></li>
+                        <li><a href="#cobertura">Cobertura de Tests</a></li>
+                        <li><a href="#buenas-practicas">Buenas Practicas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guiado</a></li>
+                        <li><a href="#taskflow">Conexion con TaskFlow</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-lg-9">
+                <!-- Seccion 1: Objetivos -->
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted sera capaz de:</p>
+                    <ul>
+                        <li>Dominar el uso de TestClient de FastAPI para testing de APIs</li>
+                        <li>Escribir tests para endpoints REST de manera efectiva</li>
+                        <li>Implementar testing de autenticacion y autorizacion JWT</li>
+                        <li>Validar modelos Pydantic en los tests</li>
+                        <li>Medir y reportar cobertura de codigo en APIs</li>
+                        <li>Integrar tests en el proyecto TaskFlow</li>
+                        <li>Crear fixtures especializados para testing de APIs</li>
+                        <li>Implementar tests asincronos con pytest-asyncio</li>
+                    </ul>
+                </section>
+
+                <!-- Seccion 2: Conceptos Teoricos -->
+                <section id="teoria">
+                    <h2>Conceptos Teoricos</h2>
+
+                    <h3>Por que Testear APIs FastAPI</h3>
+                    <p>
+                        El testing de APIs es fundamental para garantizar que los endpoints funcionen
+                        correctamente, cumplan con las especificaciones y manejen errores de manera
+                        apropiada. FastAPI proporciona herramientas integradas que hacen el testing
+                        rapido y eficiente.
+                    </p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">TestClient</h5>
+                                    <p class="card-text">
+                                        Herramienta integrada de FastAPI que simula HTTP requests
+                                        sin necesidad de levantar el servidor.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">pytest</h5>
+                                    <p class="card-text">
+                                        Framework de testing mas popular en Python con sintaxis
+                                        simple y powerful fixtures.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dependency Override</h5>
+                                    <p class="card-text">
+                                        Permite sobrescribir dependencias reales con mocks
+                                        para testing aislado.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Coverage</h5>
+                                    <p class="card-text">
+                                        Herramienta para medir que porcentaje del codigo
+                                        es ejecutado durante los tests.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-tip">
+                        <strong>Nota:</strong> El testing de APIs es una extension natural del TDD
+                        que vimos en la Unidad 2. Ahora aplicamos esos conceptos a una API REST.
+                    </div>
+                </section>
+
+                <!-- Seccion 3: TestClient en Profundidad -->
+                <section id="testclient">
+                    <h2>TestClient en Profundidad</h2>
+
+                    <h3>Que es TestClient</h3>
+                    <p>
+                        El <code>TestClient</code> es una herramienta de Starlette (framework base
+                        de FastAPI) que permite hacer HTTP requests a la aplicacion sin necesidad
+                        de levantar un servidor real. Internamente usa ASGI para procesar las
+                        solicitudes.
+                    </p>
+
+                    <h3>Configuracion Basica</h3>
+
+                    <pre><code class="language-python"># test_main.py
+from fastapi.testclient import TestClient
+from main import app
+
+# Crear TestClient
+client = TestClient(app)
+
+# Hacer un GET request
+response = client.get("/")
+
+# Verificar respuesta
+assert response.status_code == 200
+assert response.json() == {"mensaje": "Hola Mundo"}</code></pre>
+
+                    <h3>Metodos HTTP Soportados</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Metodo</th>
+                                <th>Funcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>GET</code></td>
+                                <td><code>client.get(url, params=)</code></td>
+                                <td>Obtener recursos</td>
+                            </tr>
+                            <tr>
+                                <td><code>POST</code></td>
+                                <td><code>client.post(url, json=)</code></td>
+                                <td>Crear recursos</td>
+                            </tr>
+                            <tr>
+                                <td><code>PUT</code></td>
+                                <td><code>client.put(url, json=)</code></td>
+                                <td>Reemplazar recursos</td>
+                            </tr>
+                            <tr>
+                                <td><code>PATCH</code></td>
+                                <td><code>client.patch(url, json=)</code></td>
+                                <td>Actualizar parcialmente</td>
+                            </tr>
+                            <tr>
+                                <td><code>DELETE</code></td>
+                                <td><code>client.delete(url)</code></td>
+                                <td>Eliminar recursos</td>
+                            </tr>
+                            <tr>
+                                <td><code>OPTIONS</code></td>
+                                <td><code>client.options(url)</code></td>
+                                <td>Opciones de CORS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Parametros del TestClient</h3>
+
+                    <pre><code class="language-python"># Ejemplo completo con todos los parametros
+response = client.post(
+    "/usuarios",                    # URL
+    json={                          # Body JSON (automaticamente establece Content-Type: application/json)
+        "username": "juan",
+        "email": "juan@example.com",
+        "password": "secreto123"
+    },
+    params={                        # Query parameters
+        "skip": 0,
+        "limit": 10
+    },
+    headers={                       # Headers personalizados
+        "X-Custom-Header": "valor",
+        "Authorization": "Bearer token"
+    },
+    follow_redirects=True           # Seguir redirects automaticamente
+)
+
+# Verificar respuesta
+print(f"Status Code: {response.status_code}")
+print(f"Headers: {response.headers}")
+print(f"JSON: {response.json()}")
+print(f"Text: {response.text}")</code></pre>
+
+                    <h3>Verificaciones Comunes</h3>
+
+                    <pre><code class="language-python">def test_endpoint_completo():
+    """Ejemplo de verificaciones completas."""
+    response = client.get("/usuarios/1")
+
+    # Verificar status code
+    assert response.status_code == 200
+    # O para errores
+    assert response.status_code == 404
+
+    # Verificar JSON response
+    data = response.json()
+    assert data["id"] == 1
+    assert data["username"] == "juan"
+    assert "email" in data
+
+    # Verificar headers
+    assert response.headers["content-type"] == "application/json"
+
+    # Para responses con texto plano
+    assert "Error" in response.text
+
+    # Verificar cookies
+    assert "session_id" in response.cookies</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Content-Type:</strong> Usa el parametro <code>json=</code> para enviar
+                        JSON y automaticamente establece el header correcto. No uses <code>data=</code>
+                        con diccionarios ya que lo enviara como form-data.
+                    </div>
+                </section>
+
+                <!-- Seccion 4: HTTPie vs TestClient -->
+                <section id="httptie">
+                    <h2>HTTPie vs TestClient</h2>
+
+                    <h3>Cuando Usar Cada Uno</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Caracteristica</th>
+                                <th>TestClient</th>
+                                <th>HTTPie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Proposito Principal</strong></td>
+                                <td>Testing automatizado</td>
+                                <td>Testing manual / Debug</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ejecucion</strong></td>
+                                <td>En tests automatizados</td>
+                                <td>En terminal, linea de comandos</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Integracion CI/CD</strong></td>
+                                <td>Si, automatico</td>
+                                <td>Requiere instalacion</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verificaciones</strong></td>
+                                <td>Asserts en Python</td>
+                                <td>Visual, inspeccion manual</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Velocidad</strong></td>
+                                <td>Mas rapido (mismo proceso)</td>
+                                <td>Requiere servidor levantando</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Ejemplo con HTTPie (Debug Manual)</h3>
+
+                    <pre><code class="language-bash"># Instalacion de HTTPie
+pip install httpie
+
+# GET request simple
+http GET http://localhost:8000/usuarios
+
+# POST con JSON
+http POST http://localhost:8000/usuarios \
+    username=juan \
+    email=juan@example.com \
+    password=secreto123
+
+# Con autenticacion
+http GET http://localhost:8000/usuarios/me \
+    Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+# Con query parameters
+http GET http://localhost:8000/usuarios skip==10 limit==20
+
+# Ver respuesta formateada (是高亮 de JSON)
+http --print=hH http://localhost:8000/api/endpoint</code></pre>
+
+                    <h3>Flujo de Desarrollo Tipico</h3>
+
+                    <div class="dependency-flow">
+                        <div class="dependency-step">
+                            1️⃣ <strong>Desarrollar endpoint</strong> en el codigo
+                        </div>
+                        <div class="dependency-step">
+                            2️⃣ <strong>Probar con TestClient</strong> escribir test automatico
+                        </div>
+                        <div class="dependency-step">
+                            3️⃣ <strong>Iterar</strong> ajustar codigo hasta que el test pase
+                        </div>
+                        <div class="dependency-step">
+                            4️⃣ <strong>Verificacion manual</strong> con HTTPie o /docs
+                        </div>
+                        <div class="dependency-step">
+                            5️⃣ <strong>Coverage</strong> medir cobertura de tests
+                        </div>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Recomendacion:</strong> Usa TestClient para todos los tests
+                        automatizados y deja HTTPie para verification manual rapida durante
+                        el desarrollo.
+                    </div>
+                </section>
+
+                <!-- Seccion 5: Dependency Injection en Testing -->
+                <section id="dependency-injection">
+                    <h2>Dependency Injection en Testing</h2>
+
+                    <h3>Override de Dependencias</h3>
+                    <p>
+                        FastAPI permite sobrescribir las dependencias definidas en la aplicacion
+                        para usar versiones de testing. Esto es crucial para:
+                    </p>
+                    <ul>
+                        <li>Usar base de datos en memoria (SQLite) en lugar de PostgreSQL</li>
+                        <li>Mockear servicios externos</li>
+                        <li>Simular usuarios autenticados</li>
+                        <li>Aislar tests de factores externos</li>
+                    </ul>
+
+                    <h3>Override de get_db</h3>
+
+                    <pre><code class="language-python"># test_api.py
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from main import app, get_db
+
+# Base de datos de prueba en memoria
+SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Dependency override para testing
+def override_get_db():
+    """Sobrescribe get_db para usar BD de testing."""
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Aplicar el override ANTES de crear el TestClient
+app.dependency_overrides[get_db] = override_get_db
+
+# Ahora crear el client
+client = TestClient(app)
+
+# Los tests usaran la BD de memoria
+def test_crear_usuario():
+    response = client.post(
+        "/usuarios",
+        json={"username": "test", "email": "test@example.com"}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["username"] == "test"</code></pre>
+
+                    <h3>Override de get_current_user</h3>
+
+                    <pre><code class="language-python"># test_auth.py
+from fastapi.testclient import TestClient
+from main import app, get_current_user, get_db
+from models.usuario import Usuario
+
+# Mock user para testing
+test_user = Usuario(
+    id=1,
+    username="testuser",
+    email="test@example.com",
+    hashed_password="hashed",
+    activo=True
+)
+
+def override_get_current_user():
+    """Mock de usuario autenticado para tests."""
+    return test_user
+
+# Aplicar overrides
+app.dependency_overrides[get_current_user] = override_get_current_user
+app.dependency_overrides[get_db] = override_get_db
+
+client = TestClient(app)
+
+def test_endpoint_protegido():
+    """Test de endpoint que requiere autenticacion."""
+    response = client.get("/usuarios/me")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["username"] == "testuser"</code></pre>
+
+                    <h3>Cleanup de Overrides</h3>
+
+                    <pre><code class="language-python">import pytest
+from fastapi.testclient import TestClient
+from main import app, get_db
+
+# Funcion fixture que maneja cleanup automaticamente
+@pytest.fixture
+def client():
+    """Fixture de test que maneja overrides y cleanup."""
+    # Guardar overrides originales
+    original_overrides = app.dependency_overrides.copy()
+
+    # Configurar overrides de testing
+    def override_get_db():
+        db = TestingSessionLocal()
+        try:
+            yield db
+        finally:
+            db.close()
+
+    app.dependency_overrides[get_db] = override_get_db
+
+    # Crear client
+    with TestClient(app) as client:
+        yield client
+
+    # Restaurar overrides originales
+    app.dependency_overrides = original_overrides</code></pre>
+
+                    <h3>Patron Factory para Overrides</h3>
+
+                    <pre><code class="language-python"># conftest.py - Configuracion global de tests
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from main import app, get_db, get_current_user
+from models.usuario import Usuario
+
+# BD de test
+TESTING_DATABASE_URL = "sqlite:///:memory:"
+engine = create_engine(TESTING_DATABASE_URL, connect_args={"check_same_thread": False})
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_test_db():
+    """Dependency para BD de testing."""
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+def get_test_user():
+    """Dependency para usuario de testing."""
+    return Usuario(
+        id=1,
+        username="testuser",
+        email="test@example.com",
+        activo=True
+    )
+
+# Aplicar overrides al importar
+app.dependency_overrides[get_db] = get_test_db
+app.dependency_overrides[get_current_user] = get_test_user</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Importante:</strong> Los overrides se aplican a nivel de aplicacion.
+                        Asegurate de limpiar los overrides entre tests si diferentes tests
+                        requieren diferentes mocks.
+                    </div>
+                </section>
+
+                <!-- Seccion 6: Testing Asincrono -->
+                <section id="testing-async">
+                    <h2>Testing Asincrono</h2>
+
+                    <h3>pytest-asyncio</h3>
+                    <p>
+                        FastAPI soporta endpoints asincronos con <code>async def</code>.
+                        Para testear estos endpoints, necesitamos <code>pytest-asyncio</code>.
+                    </p>
+
+                    <pre><code class="language-bash"># Instalacion
+pip install pytest-asyncio
+
+# Configuracion en pytest.ini o pyproject.toml
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"</code></pre>
+
+                    <h3>TestClient Asincrono (AsyncTestClient)</h3>
+
+                    <pre><code class="language-python"># test_async.py
+from fastapi.testclient import TestClient
+import pytest
+from main import app
+
+# El TestClient estandar funciona con endpoints async
+client = TestClient(app)
+
+@pytest.mark.asyncio
+async def test_async_endpoint():
+    """Test de endpoint asincrono."""
+    response = client.get("/items")
+    assert response.status_code == 200
+
+# O usando el patron asincrono directamente
+from httpx import AsyncClient
+
+@pytest.fixture
+async def async_client():
+    """Client asincrono para endpoints async."""
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
+
+@pytest.mark.asyncio
+async def test_create_item(async_client):
+    """Test asincrono con AsyncClient de httpx."""
+    response = await async_client.post(
+        "/items",
+        json={"title": "Test Item", "description": "Testing"}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["title"] == "Test Item"</code></pre>
+
+                    <h3>Fixtures Asincronos</h3>
+
+                    <pre><code class="language-python"># conftest.py
+import pytest
+import asyncio
+from httpx import AsyncClient, ASGITransport
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from main import app
+from models.base import Base
+
+# BD de test
+TESTING_DATABASE_URL = "sqlite:///:memory:"
+engine = create_engine(TESTING_DATABASE_URL, connect_args={"check_same_thread": False})
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+@pytest.fixture(scope="session")
+def event_loop():
+    """Loop de eventos para async tests."""
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+@pytest.fixture
+async def async_client():
+    """Client asincrono configurado."""
+    # Transport ASGI para testing
+    transport = ASGITransport(app=app)
+
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        yield client
+
+@pytest.fixture
+async def db_session():
+    """Sesion de BD asincrona para testing."""
+    # Crear tablas
+    Base.metadata.create_all(bind=engine)
+
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()</code></pre>
+
+                    <h3>Comparacion: Sync vs Async</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>TestClient (Sync)</th>
+                                <th>AsyncClient (httpx)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Endpoints sync</strong></td>
+                                <td>Compatible</td>
+                                <td>Compatible</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Endpoints async</strong></td>
+                                <td>Compatible</td>
+                                <td>Recomendado</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Velocidad</strong></td>
+                                <td>Buena</td>
+                                <td>Mejor para I/O bound</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Setup</strong></td>
+                                <td>Simple</td>
+                                <td>Requiere asyncio</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-tip">
+                        <strong>Recomendacion:</strong> Para APIs FastAPI que usan endpoints
+                        <code>async</code>, el TestClient estandar funciona bien. Usa
+                        <code>AsyncClient</code> solo si tienes operaciones asincronas
+                        en los propios tests.
+                    </div>
+                </section>
+
+                <!-- Seccion 7: Fixtures Especializados -->
+                <section id="fixtures">
+                    <h2>Fixtures Especializados para APIs</h2>
+
+                    <h3>Fixture de Base de Datos</h3>
+
+                    <pre><code class="language-python"># fixtures/database.py
+import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+from models.base import Base
+from dependencies.database import get_db
+
+# BD en memoria para tests
+TESTING_DATABASE_URL = "sqlite:///:memory:"
+
+engine = create_engine(
+    TESTING_DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool
+)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+@pytest.fixture(scope="function")
+def db_session():
+    """Sesion de BD con cleanup automatico."""
+    # Crear todas las tablas
+    Base.metadata.create_all(bind=engine)
+
+    session = TestingSessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
+        # Limpiar BD despues de cada test
+        Base.metadata.drop_all(bind=engine)
+
+@pytest.fixture(scope="function")
+def override_get_db(db_session):
+    """Override de get_db que usa la sesion de test."""
+    def _override():
+        yield db_session
+
+    return _override</code></pre>
+
+                    <h3>Fixture de Usuario Autenticado</h3>
+
+                    <pre><code class="language-python"># fixtures/auth.py
+import pytest
+from datetime import datetime, timedelta
+from jose import jwt
+from fastapi.testclient import TestClient
+from main import app, get_current_user, get_db
+
+# Token de test (debe coincidir con SECRET_KEY real)
+SECRET_KEY = "test-secret-key"
+ALGORITHM = "HS256"
+
+@pytest.fixture
+def test_user():
+    """Usuario de prueba."""
+    return {
+        "id": 1,
+        "username": "testuser",
+        "email": "test@example.com",
+        "hashed_password": "hashedpassword",
+        "activo": True
+    }
+
+@pytest.fixture
+def auth_token(test_user):
+    """Token JWT para el usuario de test."""
+    expire = datetime.utcnow() + timedelta(minutes=30)
+    to_encode = {
+        "sub": test_user["username"],
+        "exp": expire
+    }
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+@pytest.fixture
+def auth_headers(auth_token):
+    """Headers con autenticacion."""
+    return {"Authorization": f"Bearer {auth_token}"}
+
+@pytest.fixture
+def authenticated_client(app, db_session):
+    """Client con usuario autenticado."""
+    def override_get_current_user():
+        return test_user
+
+    def override_get_db():
+        yield db_session
+
+    app.dependency_overrides[get_current_user] = override_get_current_user
+    app.dependency_overrides[get_db] = override_get_db
+
+    client = TestClient(app)
+    yield client
+
+    # Limpiar overrides
+    app.dependency_overrides.clear()</code></pre>
+
+                    <h3>Fixture de Datos de Prueba</h3>
+
+                    <pre><code class="language-python"># fixtures/data.py
+import pytest
+from datetime import datetime
+
+@pytest.fixture
+def sample_task():
+    """Datos de tarea de prueba."""
+    return {
+        "titulo": "Tarea de prueba",
+        "descripcion": "Descripcion de la tarea",
+        "estado": "pendiente",
+        "prioridad": "media",
+        "proyecto_id": 1,
+        "fecha_vencimiento": "2026-12-31"
+    }
+
+@pytest.fixture
+def sample_project():
+    """Datos de proyecto de prueba."""
+    return {
+        "nombre": "Proyecto de prueba",
+        "descripcion": "Descripcion del proyecto",
+        "fecha_inicio": "2026-01-01",
+        "fecha_fin": "2026-06-30"
+    }
+
+@pytest.fixture
+def sample_user():
+    """Datos de usuario de prueba."""
+    return {
+        "username": "testuser",
+        "email": "test@example.com",
+        "password": "testpassword123"
+    }</code></pre>
+
+                    <h3>Organizacion de Fixtures</h3>
+
+                    <pre><code class="language-text">tests/
+├── conftest.py              # Fixtures compartidos
+├── fixtures/
+│   ├── __init__.py
+│   ├── database.py          # db_session, override_get_db
+│   ├── auth.py              # test_user, auth_token, auth_headers
+│   └── data.py              # sample_task, sample_project
+├── test_users.py
+├── test_tasks.py
+├── test_projects.py
+└── test_auth.py</code></pre>
+                </section>
+
+                <!-- Seccion 8: Ejemplos Practicos -->
+                <section id="ejemplos">
+                    <h2>Ejemplos Practicos</h2>
+
+                    <h3>Ejemplo 1: CRUD TaskFlow API</h3>
+
+                    <pre><code class="language-python"># test_crud_tasks.py
+import pytest
+from fastapi.testclient import TestClient
+from main import app
+from models.tarea import Tarea
+from models.proyecto import Proyecto
+
+# Configurar overrides
+app.dependency_overrides.clear()
+app.dependency_overrides[get_db] = get_test_db
+app.dependency_overrides[get_current_user] = get_test_user
+
+client = TestClient(app)
+
+class TestTareas:
+    """Suite de tests para CRUD de tareas."""
+
+    def test_crear_tarea(self, sample_task):
+        """Test de creacion de tarea."""
+        response = client.post("/tareas", json=sample_task)
+
+        assert response.status_code == 201
+        data = response.json()
+        assert data["titulo"] == sample_task["titulo"]
+        assert data["estado"] == "pendiente"
+        assert "id" in data
+        assert "created_at" in data
+
+    def test_listar_tareas(self):
+        """Test de listado de tareas."""
+        response = client.get("/tareas")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert isinstance(data, list)
+
+    def test_obtener_tarea_por_id(self, sample_task):
+        """Test de obtener tarea existente."""
+        # Crear tarea primero
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        # Obtener tarea
+        response = client.get(f"/tareas/{tarea_id}")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["id"] == tarea_id
+        assert data["titulo"] == sample_task["titulo"]
+
+    def test_obtener_tarea_no_existente(self):
+        """Test de obtener tarea que no existe."""
+        response = client.get("/tareas/99999")
+
+        assert response.status_code == 404
+        data = response.json()
+        assert "detail" in data
+
+    def test_actualizar_tarea(self, sample_task):
+        """Test de actualizacion parcial de tarea."""
+        # Crear tarea
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        # Actualizar
+        response = client.patch(
+            f"/tareas/{tarea_id}",
+            json={"estado": "completada", "prioridad": "alta"}
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["estado"] == "completada"
+        assert data["prioridad"] == "alta"
+
+    def test_eliminar_tarea(self, sample_task):
+        """Test de eliminacion de tarea."""
+        # Crear tarea
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        # Eliminar
+        response = client.delete(f"/tareas/{tarea_id}")
+
+        assert response.status_code == 200
+        assert response.json()["message"] == "Tarea eliminada"
+
+        # Verificar que fue eliminada
+        get_response = client.get(f"/tareas/{tarea_id}")
+        assert get_response.status_code == 404
+
+    def test_filtrar_tareas_por_estado(self, sample_task):
+        """Test de filtrado de tareas por estado."""
+        # Crear varias tareas con diferentes estados
+        client.post("/tareas", json={**sample_task, "estado": "pendiente"})
+        client.post("/tareas", json={**sample_task, "titulo": "Tarea 2", "estado": "completada"})
+
+        # Filtrar por estado
+        response = client.get("/tareas", params={"estado": "pendiente"})
+
+        assert response.status_code == 200
+        data = response.json()
+        for tarea in data:
+            assert tarea["estado"] == "pendiente"</code></pre>
+
+                    <h3>Ejemplo 2: Testing de Autenticacion JWT</h3>
+
+                    <pre><code class="language-python"># test_auth.py
+import pytest
+from fastapi.testclient import TestClient
+from jose import jwt
+from datetime import datetime, timedelta
+from main import app, get_db, get_current_user
+
+SECRET_KEY = "test-secret-key"
+ALGORITHM = "HS256"
+
+class TestAutenticacion:
+    """Tests para sistema de autenticacion JWT."""
+
+    def test_registro_usuario(self, sample_user):
+        """Test de registro de nuevo usuario."""
+        response = client.post("/auth/register", json=sample_user)
+
+        assert response.status_code == 201
+        data = response.json()
+        assert data["username"] == sample_user["username"]
+        assert data["email"] == sample_user["email"]
+        assert "id" in data
+        assert "password" not in data  # Password no deveuld
+
+    def test_login_exitoso(self, sample_user):
+        """Test de login con credenciales validas."""
+        # Registrar primero
+        client.post("/auth/register", json=sample_user)
+
+        # Login
+        response = client.post("/auth/login", json={
+            "username": sample_user["username"],
+            "password": sample_user["password"]
+        })
+
+        assert response.status_code == 200
+        data = response.json()
+        assert "access_token" in data
+        assert data["token_type"] == "bearer"
+
+    def test_login_credenciales_invalidas(self, sample_user):
+        """Test de login con contrasena incorrecta."""
+        client.post("/auth/register", json=sample_user)
+
+        response = client.post("/auth/login", json={
+            "username": sample_user["username"],
+            "password": "wrongpassword"
+        })
+
+        assert response.status_code == 401
+        assert "Credenciales incorrectas" in response.json()["detail"]
+
+    def test_login_usuario_no_existe(self):
+        """Test de login con usuario inexistente."""
+        response = client.post("/auth/login", json={
+            "username": "nobody",
+            "password": "anypassword"
+        })
+
+        assert response.status_code == 401
+
+    def test_token_jwt_valido(self, sample_user):
+        """Test de validacion de token JWT."""
+        # Registrar y login
+        client.post("/auth/register", json=sample_user)
+        login_response = client.post("/auth/login", json={
+            "username": sample_user["username"],
+            "password": sample_user["password"]
+        })
+        token = login_response.json()["access_token"]
+
+        # Usar token en endpoint protegido
+        response = client.get(
+            "/usuarios/me",
+            headers={"Authorization": f"Bearer {token}"}
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["username"] == sample_user["username"]
+
+    def test_token_jwt_invalido(self):
+        """Test de token JWT invalido."""
+        response = client.get(
+            "/usuarios/me",
+            headers={"Authorization": "Bearer invalidtoken"}
+        )
+
+        assert response.status_code == 401
+
+    def test_sin_token(self):
+        """Test de endpoint protegido sin token."""
+        response = client.get("/usuarios/me")
+
+        assert response.status_code == 401
+        assert "Not authenticated" in response.json()["detail"]
+
+    def test_token_expirado(self):
+        """Test de token expirado."""
+        # Crear token expirado
+        expire = datetime.utcnow() - timedelta(hours=1)
+        payload = {"sub": "testuser", "exp": expire}
+        expired_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+        response = client.get(
+            "/usuarios/me",
+            headers={"Authorization": f"Bearer {expired_token}"}
+        )
+
+        assert response.status_code == 401
+        assert "Token ha expirado" in response.json()["detail"]</code></pre>
+
+                    <h3>Ejemplo 3: Testing de Validacion</h3>
+
+                    <pre><code class="language-python"># test_validation.py
+import pytest
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+
+class TestValidacionPydantic:
+    """Tests para validacion de datos de entrada."""
+
+    def test_titulo_requerido(self, sample_project):
+        """Test que titulo es obligatorio."""
+        response = client.post("/tareas", json={
+            "descripcion": "Sin titulo"
+        })
+
+        assert response.status_code == 422  # Validation Error
+        errors = response.json()["detail"]
+        assert any("titulo" in str(e["loc"]) for e in errors)
+
+    def test_email_invalido(self, sample_user):
+        """Test de formato de email invalido."""
+        response = client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "no-es-un-email",
+            "password": "password123"
+        })
+
+        assert response.status_code == 422
+        errors = response.json()["detail"]
+        assert any("email" in str(e["loc"]) for e in errors)
+
+    def test_password_muy_corto(self, sample_user):
+        """Test que password sea minimo 8 caracteres."""
+        response = client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "123"  # Muy corto
+        })
+
+        assert response.status_code == 422
+        errors = response.json()["detail"]
+        assert any("password" in str(e["loc"]) for e in errors)
+
+    def test_estado_invalido(self, sample_task):
+        """Test de estado con valor invalido."""
+        response = client.post("/tareas", json={
+            **sample_task,
+            "estado": "estado_inexistente"  # Valor no valido
+        })
+
+        assert response.status_code == 422
+        errors = response.json()["detail"]
+
+    def test_prioridad_enum(self, sample_task):
+        """Test de prioridad con valores validos."""
+        for prioridad in ["baja", "media", "alta", "critica"]:
+            response = client.post("/tareas", json={
+                **sample_task,
+                "prioridad": prioridad
+            })
+            assert response.status_code == 201
+
+    def test_texto_muy_largo(self, sample_task):
+        """Test que titulo no exceda limite."""
+        response = client.post("/tareas", json={
+            **sample_task,
+            "titulo": "x" * 200  # Excede limite tipico de 100
+        })
+
+        assert response.status_code == 422
+
+    def test_numero_negativo(self, sample_project):
+        """Test de numeros positivos."""
+        response = client.post("/proyectos", json={
+            **sample_project,
+            "presupuesto": -1000
+        })
+
+        assert response.status_code == 422</code></pre>
+
+                    <h3>Ejemplo 4: Testing de Errores y Excepciones</h3>
+
+                    <pre><code class="language-python"># test_errors.py
+import pytest
+from fastapi.testclient import TestClient
+from fastapi import HTTPException
+from main import app
+
+client = TestClient(app)
+
+class TestErrores:
+    """Tests para manejo de errores y excepciones."""
+
+    def test_404_recurso_no_existe(self):
+        """Test de endpoint que no existe."""
+        response = client.get("/endpoint/inexistente")
+
+        assert response.status_code == 404
+        assert "detail" in response.json()
+
+    def test_400_bad_request(self):
+        """Test de peticion mal formada."""
+        response = client.get(
+            "/tareas",
+            params={"page": -1}  # Pagina negativa
+        )
+
+        assert response.status_code == 400
+
+    def test_422_validation_error(self):
+        """Test de error de validacion."""
+        response = client.post("/tareas", json={})
+
+        assert response.status_code == 422
+        errors = response.json()["detail"]
+        assert isinstance(errors, list)
+
+    def test_custom_error_404(self):
+        """Test de error 404 personalizado."""
+        response = client.get("/tareas/999999")
+
+        assert response.status_code == 404
+        data = response.json()
+        assert data["detail"] == "Tarea no encontrada"
+
+    def test_error_integridad_bd(self):
+        """Test de error de integridad (FK inexistente)."""
+        response = client.post("/tareas", json={
+            "titulo": "Tarea con FK invalida",
+            "proyecto_id": 999999  # Proyecto no existe
+        })
+
+        # Debe retornar 400 o 422 dependiendo de validacion
+        assert response.status_code in [400, 404, 422]
+
+    def test_metodo_no_permitido(self):
+        """Test de metodo HTTP no permitido."""
+        response = client.request("DELETE", "/tareas")  # DELETE en lista
+
+        assert response.status_code == 405
+
+    def test_internal_server_error(self):
+        """Test de error interno del servidor."""
+        # Forzar error interno con datos especiales
+        response = client.get("/tareas/especial")
+
+        # Si el endpoint existe pero falla internamente
+        if response.status_code == 500:
+            data = response.json()
+            assert "detail" in data or "error" in data
+
+    def test_response_model_validation(self, sample_task):
+        """Test que la respuesta cumple con response_model."""
+        response = client.post("/tareas", json=sample_task)
+
+        assert response.status_code == 201
+        data = response.json()
+
+        # Verificar tipos en respuesta
+        assert isinstance(data["id"], int)
+        assert isinstance(data["titulo"], str)
+        assert isinstance(data["estado"], str)
+        assert "created_at" in data
+        assert "updated_at" in data</code></pre>
+                </section>
+
+                <!-- Seccion 9: Cobertura de Tests -->
+                <section id="cobertura">
+                    <h2>Cobertura de Tests</h2>
+
+                    <h3>Configurar Coverage</h3>
+
+                    <pre><code class="language-bash"># Instalacion
+pip install pytest-cov
+
+# Ejecucion con coverage
+pytest --cov=main --cov-report=html --cov-report=term-missing
+
+# Ver reporte HTML
+open htmlcov/index.html</code></pre>
+
+                    <h3>Configuracion en pyproject.toml</h3>
+
+                    <pre><code class="language-toml">[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+
+[tool.coverage.run]
+source = ["main"]  # Modulos a cubrir
+omit = [
+    "tests/*",
+    "*/__pycache__/*",
+    "*/migrations/*"
+]
+branch = true  # Coverage de branches (no solo lineas)
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:"
+]
+show_missing = true  # Mostrar lineas no cubiertas</code></pre>
+
+                    <h3>Interpretar Reportes de Coverage</h3>
+
+                    <pre><code class="language-text">----------- coverage: platform darwin, python 3.11.x ----------
+Name                 Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+main.py                 150     10    93%   45, 67, 123-125
+models/
+    __init__.py          5      0   100%
+    usuario.py           80      5    94%   34, 56, 78-80
+    tarea.py             95     12    87%   23-25, 67, 89-92
+routes/
+    __init__.py          3      0   100%
+    usuarios.py         120     25    79%   45, 67-70, 89, 110-115
+    tareas.py           140     30    79%   34-38, 56, 78-80
+dependencies/
+    database.py          25      2    92%   18, 23
+    auth.py              45      5    89%   12, 34, 67
+----------------------------------------------------------
+TOTAL                  663     89    87%</code></pre>
+
+                    <h3>Interpretacion de Metricas</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Porcentaje</th>
+                                <th>Significado</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="coverage-badge coverage-high">> 90%</span></td>
+                                <td>Excelente cobertura</td>
+                                <td>Mantener, agregar tests de integracion</td>
+                            </tr>
+                            <tr>
+                                <td><span class="coverage-badge coverage-medium">80-90%</span></td>
+                                <td>Buena cobertura</td>
+                                <td>Identificar y cubrir gaps prioritarios</td>
+                            </tr>
+                            <tr>
+                                <td><span class="coverage-badge coverage-medium">70-80%</span></td>
+                                <td>Cobertura aceptable</td>
+                                <td>Mejorar coverage antes de nuevo feature</td>
+                            </tr>
+                            <tr>
+                                <td><span class="coverage-badge coverage-low">< 70%</span></td>
+                                <td>Cobertura insuficiente</td>
+                                <td>Escribir tests antes de continuar</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Objetivos de Cobertura por Tipo de Archivo</h3>
+
+                    <pre><code class="language-text"># Objetivo de cobertura minima por tipo
+
+Endpoints (routes/):
+    Objetivo: > 85%
+    Razon: Toda la logica de API debe estar testeada
+
+Models:
+    Objetivo: > 90%
+    Razon: Solo definiciones, faciles de cubrir
+
+Dependencies:
+    Objetivo: > 95%
+    Razon: Logica critica de BD y auth
+
+Schemas (Pydantic):
+    Objetivo: > 90%
+    Razon: Validacion es fundamental</code></pre>
+
+                    <h3>Coverage con Flags Especiales</h3>
+
+                    <pre><code class="language-python"># Marcadores para coverage
+def algoritmo_complejo():
+    if cond1:
+        # pragma: no cover  # Excluir codigo inalcanzable
+        pass
+    elif cond2:
+        pass  # noqa: cover
+
+# Coverage de branches
+def validar_usuario(usuario):
+    if usuario.edad >= 18:
+        return "mayor_edad"
+    else:
+        return "menor_edad"  # Si no testeamos ambos, coverage bajara</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>Cobertura != Calidad:</strong> Una cobertura del 100% no garantiza
+                        que los tests sean buenos. Enfocate en tests que verifiquen comportamiento
+                        real, no solo que las lineas se ejecuten.
+                    </div>
+                </section>
+
+                <!-- Seccion 10: Buenas Practicas -->
+                <section id="buenas-practicas">
+                    <h2>Buenas Practicas</h2>
+
+                    <h3>Aislar Tests</h3>
+
+                    <pre><code class="language-python"># MAL: Test que depende de otros
+def test_crear_y_listar():
+    # Crear
+    client.post("/tareas", json={"titulo": "Tarea 1"})
+    client.post("/tareas", json={"titulo": "Tarea 2"})
+
+    # Listar (funciona porque las tareas creadas persisten)
+    response = client.get("/tareas")
+    assert len(response.json()) == 2  # Depende del test anterior!
+
+# BIEN: Test completamente aislado
+def test_crear_tarea(sample_task):
+    response = client.post("/tareas", json=sample_task)
+    assert response.status_code == 201
+
+def test_listar_tareas_vacio():
+    response = client.get("/tareas")
+    assert response.status_code == 200
+    assert len(response.json()) == 0  # Sin datos de otros tests</code></pre>
+
+                    <h3>Tests Idempotentes</h3>
+
+                    <pre><code class="language-python"># MAL: No es idempotente
+def test_crear_usuario():
+    response = client.post("/usuarios", json={"username": "test"})
+    # Si se ejecuta 2 veces, fallara por duplicado
+    assert response.status_code == 201
+
+# BIEN: Es idempotente
+def test_crear_usuario_nuevo():
+    import uuid
+    username = f"test_{uuid.uuid4().hex[:8]}"  # Username unico
+
+    response = client.post("/usuarios", json={"username": username})
+
+    # Puede ejecutarse N veces con el mismo resultado
+    assert response.status_code == 201</code></pre>
+
+                    <h3>Nombres Descriptivos</h3>
+
+                    <pre><code class="language-python"># MAL: Nombres vagos
+def test_1():
+    assert True
+
+def test_create():
+    pass
+
+def test_auth():
+    pass
+
+# BIEN: Nombres que describen el comportamiento
+def test_crear_tarea_retorna_201_con_datos_validos():
+    """Test que cuando se crea una tarea con datos validos, retorna 201."""
+    pass
+
+def test_login_con_credenciales_invalidas_retorna_401():
+    """Test que login con password incorrecto retorna 401."""
+    pass
+
+def test_listar_tareas_vacias_cuando_no_hay_datos():
+    """Test que el listado esta vacio inicialmente."""
+    pass</code></pre>
+
+                    <h3>Organizacion de Tests</h3>
+
+                    <pre><code class="language-text">tests/
+├── conftest.py              # Configuracion y fixtures globales
+├── __init__.py
+├── unit/
+│   ├── test_models.py       # Tests de modelos
+│   ├── test_schemas.py      # Tests de Pydantic
+│   └── test_dependencies.py  # Tests de dependencias
+├── integration/
+│   ├── test_crud.py         # Tests de operaciones CRUD
+│   └── test_auth.py         # Tests de autenticacion
+└── e2e/
+    └── test_user_flow.py    # Tests end-to-end</code></pre>
+
+                    <h3>DO's y DON'Ts</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Recomendacion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>DO:</strong> Usa fixtures</td>
+                                <td><code>@pytest.fixture def sample_task(): ...</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DO:</strong> Limpia estado entre tests</td>
+                                <td>BD en memoria, mocks por test</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DO:</strong> Verifica status codes</td>
+                                <td><code>assert response.status_code == 201</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>DO:</strong> Testea casos de error</td>
+                                <td>404, 401, 422</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DON'T:</strong> Tests que dependen de orden</td>
+                                <td>No asumas que test_1 corre antes de test_2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DON'T:</strong> Hardcodear URLs</td>
+                                <td>Usa constantes o fixtures</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DON'T:</strong> Ignorar assertions</td>
+                                <td>Siempre verifica algo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> Ejecuta los tests en orden aleatorio para descubrir
+                        dependencias ocultas:
+                        <code>pytest -x --randomly-seed</code>
+                    </div>
+                </section>
+
+                <!-- Seccion 11: Ejercicio Guiado -->
+                <section id="ejercicio">
+                    <h2>Ejercicio Guiado: Testing TaskFlow API</h2>
+
+                    <h3>Objetivo del Ejercicio</h3>
+                    <p>
+                        Crear una suite completa de tests para la API de TaskFlow, cubriendo
+                        autenticacion, CRUD de proyectos y tareas, y medicion de cobertura.
+                    </p>
+
+                    <h3>Instrucciones Paso a Paso</h3>
+
+                    <h4>Paso 1: Configurar Estructura de Tests (5 min)</h4>
+
+                    <pre><code class="language-bash"># Crear estructura de tests
+mkdir -p tests
+touch tests/__init__.py
+touch tests/conftest.py
+touch tests/test_auth.py
+touch tests/test_tasks.py
+touch tests/test_projects.py
+
+# Instalar herramientas de testing
+pip install pytest pytest-cov httpx</code></pre>
+
+                    <h4>Paso 2: Crear conftest.py con Fixtures (10 min)</h4>
+
+                    <pre><code class="language-python"># tests/conftest.py
+import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
+from main import app
+from dependencies.database import get_db
+from models.base import Base
+
+# BD de test en memoria
+TESTING_DATABASE_URL = "sqlite:///:memory:"
+
+engine = create_engine(
+    TESTING_DATABASE_URL,
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool
+)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+@pytest.fixture(scope="function")
+def db_session():
+    """Sesion de BD con cleanup."""
+    # Crear tablas
+    Base.metadata.create_all(bind=engine)
+
+    session = TestingSessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
+        Base.metadata.drop_all(bind=engine)
+
+@pytest.fixture(scope="function")
+def client(db_session):
+    """Client de test con BD limpia."""
+    def override_get_db():
+        yield db_session
+
+    app.dependency_overrides[get_db] = override_get_db
+
+    with TestClient(app) as test_client:
+        yield test_client
+
+    app.dependency_overrides.clear()
+
+@pytest.fixture
+def sample_task():
+    """Tarea de ejemplo."""
+    return {
+        "titulo": "Tarea de prueba",
+        "descripcion": "Descripcion de tarea",
+        "estado": "pendiente",
+        "prioridad": "media"
+    }
+
+@pytest.fixture
+def sample_project():
+    """Proyecto de ejemplo."""
+    return {
+        "nombre": "Proyecto de prueba",
+        "descripcion": "Descripcion del proyecto"
+    }</code></pre>
+
+                    <h4>Paso 3: Escribir Tests de Autenticacion (15 min)</h4>
+
+                    <pre><code class="language-python"># tests/test_auth.py
+import pytest
+from jose import jwt
+from datetime import datetime, timedelta
+
+SECRET_KEY = "test-secret-key"
+ALGORITHM = "HS256"
+
+class TestAutenticacion:
+    """Tests para sistema de autenticacion."""
+
+    def test_registro_exitoso(self, client):
+        """Test de registro de usuario."""
+        response = client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "password123"
+        })
+
+        assert response.status_code == 201
+        data = response.json()
+        assert data["username"] == "testuser"
+        assert data["email"] == "test@example.com"
+
+    def test_login_exitoso(self, client):
+        """Test de login con credenciales validas."""
+        # Registrar primero
+        client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "password123"
+        })
+
+        # Login
+        response = client.post("/auth/login", json={
+            "username": "testuser",
+            "password": "password123"
+        })
+
+        assert response.status_code == 200
+        assert "access_token" in response.json()
+
+    def test_login_incorrecto(self, client):
+        """Test de login con contrasena incorrecta."""
+        client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test@example.com",
+            "password": "password123"
+        })
+
+        response = client.post("/auth/login", json={
+            "username": "testuser",
+            "password": "wrongpassword"
+        })
+
+        assert response.status_code == 401
+
+    def test_usuario_duplicate(self, client):
+        """Test de registro con username duplicado."""
+        # Primer registro
+        client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test1@example.com",
+            "password": "password123"
+        })
+
+        # Segundo registro con mismo username
+        response = client.post("/auth/register", json={
+            "username": "testuser",
+            "email": "test2@example.com",
+            "password": "password123"
+        })
+
+        assert response.status_code == 400</code></pre>
+
+                    <h4>Paso 4: Escribir Tests de Tareas (15 min)</h4>
+
+                    <pre><code class="language-python"># tests/test_tasks.py
+import pytest
+from fastapi.testclient import TestClient
+
+class TestTareas:
+    """Tests para CRUD de tareas."""
+
+    def test_crear_tarea(self, client, sample_task):
+        """Test de creacion de tarea."""
+        response = client.post("/tareas", json=sample_task)
+
+        assert response.status_code == 201
+        data = response.json()
+        assert data["titulo"] == sample_task["titulo"]
+        assert data["estado"] == "pendiente"
+
+    def test_listar_tareas_vacio(self, client):
+        """Test de listado vacio."""
+        response = client.get("/tareas")
+
+        assert response.status_code == 200
+        assert response.json() == []
+
+    def test_listar_tareas_con_datos(self, client, sample_task):
+        """Test de listado con tareas."""
+        client.post("/tareas", json=sample_task)
+
+        response = client.get("/tareas")
+
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data) == 1
+
+    def test_obtener_tarea(self, client, sample_task):
+        """Test de obtener tarea por ID."""
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        response = client.get(f"/tareas/{tarea_id}")
+
+        assert response.status_code == 200
+        assert response.json()["id"] == tarea_id
+
+    def test_actualizar_tarea(self, client, sample_task):
+        """Test de actualizacion de tarea."""
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        response = client.patch(
+            f"/tareas/{tarea_id}",
+            json={"estado": "completada"}
+        )
+
+        assert response.status_code == 200
+        assert response.json()["estado"] == "completada"
+
+    def test_eliminar_tarea(self, client, sample_task):
+        """Test de eliminacion de tarea."""
+        create_response = client.post("/tareas", json=sample_task)
+        tarea_id = create_response.json()["id"]
+
+        response = client.delete(f"/tareas/{tarea_id}")
+
+        assert response.status_code == 200
+
+        # Verificar eliminacion
+        get_response = client.get(f"/tareas/{tarea_id}")
+        assert get_response.status_code == 404</code></pre>
+
+                    <h4>Paso 5: Medir Cobertura (5 min)</h4>
+
+                    <pre><code class="language-bash"># Ejecutar tests con coverage
+pytest --cov=main --cov-report=term-missing --cov-report=html
+
+# Ver resultado en terminal
+# Objetivo: > 80% de cobertura
+
+# Si esta por debajo, identificar gaps
+# pytest --cov=main --cov-report=term-missing</code></pre>
+
+                    <h4>Paso 6: Ejecutar Suite Completa (5 min)</h4>
+
+                    <pre><code class="language-bash"># Ejecutar todos los tests
+pytest tests/ -v
+
+# Con coverage
+pytest tests/ --cov=main -v
+
+# Con reporte HTML
+pytest tests/ --cov=main --cov-report=html
+open htmlcov/index.html</code></pre>
+
+                    <h3>Resultado Esperado</h3>
+                    <p>Al finalizar este ejercicio, tendras:</p>
+                    <ul>
+                        <li>✅ Estructura de tests organizada</li>
+                        <li>✅ Fixture reusable (conftest.py)</li>
+                        <li>✅ Tests de autenticacion (register, login, validation)</li>
+                        <li>✅ Tests CRUD completos de tareas</li>
+                        <li>✅ Coverage report</li>
+                        <li>✅ Base para tests de proyectos</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Proxima clase:</strong> Continuaremos con integracion de tests
+                        en CI/CD y testing de integracion con base de datos real.
+                    </div>
+                </section>
+
+                <!-- Seccion 12: Conexion con TaskFlow -->
+                <section id="taskflow">
+                    <h2>Conexion con TaskFlow</h2>
+
+                    <h3>Tests para Endpoints de TaskFlow</h3>
+                    <p>
+                        El proyecto TaskFlow necesita tests para cada endpoint de la API.
+                        A continuacion se presenta la matriz de coverage objetivo.
+                    </p>
+
+                    <h3>Matriz de Coverage Objetivo</h3>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Modulo</th>
+                                <th>Endpoints</th>
+                                <th>Tests Requeridos</th>
+                                <th>Cobertura Objetivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Auth</strong></td>
+                                <td>/auth/register, /auth/login, /auth/me</td>
+                                <td>8 tests minimos</td>
+                                <td>95%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Usuarios</strong></td>
+                                <td>/usuarios, /usuarios/{id}</td>
+                                <td>6 tests minimos</td>
+                                <td>90%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proyectos</strong></td>
+                                <td>/proyectos, /proyectos/{id}</td>
+                                <td>8 tests minimos</td>
+                                <td>90%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tareas</strong></td>
+                                <td>/tareas, /tareas/{id}</td>
+                                <td>10 tests minimos</td>
+                                <td>95%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dependencias</strong></td>
+                                <td>get_db, get_current_user</td>
+                                <td>4 tests minimos</td>
+                                <td>100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Estructura de Tests TaskFlow</h3>
+
+                    <pre><code class="language-text">taskflow/
+├── main.py                    # Aplicacion FastAPI
+├── models/
+│   ├── usuario.py
+│   ├── proyecto.py
+│   └── tarea.py
+├── routes/
+│   ├── auth.py
+│   ├── usuarios.py
+│   ├── proyectos.py
+│   └── tareas.py
+└── tests/
+    ├── conftest.py            # Fixtures compartidos
+    ├── test_auth.py           # Tests de autenticacion
+    ├── test_usuarios.py      # Tests de usuarios
+    ├── test_proyectos.py     # Tests de proyectos
+    └── test_tareas.py        # Tests de tareas</code></pre>
+
+                    <h3>Checklist de Coverage para TaskFlow</h3>
+
+                    <pre><code class="language-text"># Objetivo: Coverage Total > 85%
+
+[x] auth.py
+    [x] POST /auth/register - registro exitoso
+    [x] POST /auth/register - validacion email
+    [x] POST /auth/register - password largo
+    [x] POST /auth/login - credenciales validas
+    [x] POST /auth/login - credenciales invalidas
+    [x] GET /auth/me - con token valido
+    [x] GET /auth/me - sin token
+    [x] GET /auth/me - token expirado
+
+[x] usuarios.py
+    [x] GET /usuarios - lista usuarios
+    [x] GET /usuarios/{id} - usuario existe
+    [x] GET /usuarios/{id} - usuario no existe
+    [x] POST /usuarios - crear usuario
+    [x] PUT /usuarios/{id} - actualizar
+    [x] DELETE /usuarios/{id} - eliminar
+
+[x] proyectos.py
+    [x] GET /proyectos - lista proyectos
+    [x] GET /proyectos/{id} - proyecto existe
+    [x] POST /proyectos - crear proyecto
+    [x] POST /proyectos - con tareas
+    [x] PATCH /proyectos/{id} - actualizar
+    [x] DELETE /proyectos/{id} - eliminar
+
+[x] tareas.py
+    [x] GET /tareas - lista tareas
+    [x] GET /tareas/{id} - tarea existe
+    [x] POST /tareas - crear tarea
+    [x] POST /tareas - validacion estado
+    [x] PATCH /tareas/{id} - actualizar estado
+    [x] PATCH /tareas/{id} - cambiar prioridad
+    [x] DELETE /tareas/{id} - eliminar
+    [x] GET /tareas?estado= - filtrar
+    [x] GET /tareas?prioridad= - filtrar</code></pre>
+
+                    <h3>Integracion con CI/CD</h3>
+
+                    <pre><code class="language-yaml"># .github/workflows/test.yml
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests
+        run: pytest tests/ --cov=main --cov-report=xml
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          fail_ci_if_error: false
+
+      - name: Check coverage
+        run: |
+          TOTAL=$(python -c "import xml.etree.ElementTree as ET; r=ET.parse('coverage.xml').getroot(); print(sum(float(c.attrib['line-rate']) for c in r.findall('.//class'))/len(r.findall('.//class'))*100)")
+          echo "Coverage: $TOTAL%"
+          if (( $(echo "$TOTAL < 80" | bc -l) )); then
+            echo "Coverage below 80%!"
+            exit 1
+          fi</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>TaskFlow Checklist:</strong> Antes de considerar la API completa,
+                        asegurate de tener:
+                    </div>
+
+                    <ul>
+                        <li>✅ Todos los endpoints tienen al menos un test</li>
+                        <li>✅ Los casos de error (404, 401, 422)estan testeados</li>
+                        <li>✅ Coverage total > 80%</li>
+                        <li>✅ Tests son idempotentes</li>
+                        <li>✅ Fixtures reutilizables definidos</li>
+                        <li>✅ CI/CD verifica coverage automaticamente</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Siguiente paso:</strong> Con los conocimientos de testing
+                        adquiridos, el proyecto TaskFlow tendra una base solida de tests
+                        automatizados que garantizara la calidad del codigo y facilitara
+                        el desarrollo de nuevas funcionalidades.
+                    </div>
+                </section>
+
+                <!-- Seccion 13: Referencias -->
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li>
+                            <a href="https://fastapi.tiangolo.com/tutorial/testing/" target="_blank">
+                                FastAPI Tutorial - Testing
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://fastapi.tiangolo.com/advanced/testing-database/" target="_blank">
+                                Testing con Base de Datos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://docs.pytest.org/en/stable/" target="_blank">
+                                Documentacion de pytest
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://pytest-asyncio.readthedocs.io/" target="_blank">
+                                pytest-asyncio: Async support for pytest
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://coverage.readthedocs.io/" target="_blank">
+                                Coverage.py: Code Coverage Measurement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.starlette.io/testclient/" target="_blank">
+                                Starlette TestClient
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/tiangolo/fastapi/issues?q=testing" target="_blank">
+                                FastAPI Issues - Testing (GitHub)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://testdriven.io/blog/fastapi-crud/" target="_blank">
+                                TestDriven.io: FastAPI CRUD with Testing
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U3C04-TEST" target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            Ultima actualizacion: 2026-02-08</p>
+            <p>Nota: El link de Google Colab se activara cuando el notebook sea creado.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-toml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>

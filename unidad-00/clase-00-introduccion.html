@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introducción a Python y configuración del entorno de desarrollo. Aprende a instalar Python, configurar VSCode y escribir tus primeras líneas de código.">
+    <meta name="author" content="IF0100 - UNAULA">
+    <title>Introducción a Python | IF0100 - POO II</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+
+    <!-- Prism.js para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --success-color: #198754;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #0dcaf0;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        header h3 {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .sidebar h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--dark-text);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            display: block;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        section h2 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        section h3 {
+            color: var(--dark-text);
+            font-weight: 500;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section h4 {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Lists */
+        section ul, section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code Blocks */
+        pre[class*="language-"] {
+            border-radius: 6px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        code[class*="language-"] {
+            font-size: 0.9rem;
+        }
+
+        /* Alert Boxes */
+        .alert-note {
+            background-color: #e7f3ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-warning-custom {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-tip {
+            background-color: #d1e7dd;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* Cards */
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tables */
+        .table {
+            margin: 1rem 0;
+        }
+
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        /* Print Styles */
+        @media print {
+            header {
+                background: white !important;
+                color: black !important;
+                padding: 1rem 0;
+            }
+
+            .navbar, .sidebar, footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid var(--border-color);
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+
+            a[href]:after {
+                content: " (" attr(href) ")";
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header h2 {
+                font-size: 1rem;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h2>Unidad 0: Fundamentos de Python</h2>
+            <h3>Clase 0: Introducción a Python</h3>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clase-01-variables-tipos.html">Siguiente: Variables y Tipos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul>
+                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Guidado</a></li>
+                        <li><a href="#referencias">Para Profundizar</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-lg-9">
+                <!-- Sección 1: Objetivos -->
+                <section id="objetivos">
+                    <h2>Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <ul>
+                        <li>Comprender qué es Python y por qué es importante para el desarrollo de software</li>
+                        <li>Configurar el entorno de desarrollo Python (instalación + VSCode)</li>
+                        <li>Ejecutar código Python desde la terminal y desde VSCode</li>
+                        <li>Entender el concepto de variables y asignación</li>
+                        <li>Usar operadores aritméticos básicos</li>
+                        <li>Aplicar input/output con <code>print()</code> e <code>input()</code></li>
+                        <li>Escribir y ejecutar tu primer script Python</li>
+                    </ul>
+                </section>
+
+                <!-- Sección 2: Conceptos Teóricos -->
+                <section id="teoria">
+                    <h2>Conceptos Teóricos</h2>
+
+                    <h3>¿Qué es Python?</h3>
+                    <p>Python es un lenguaje de programación de alto nivel, interpretado y de propósito general. Fue creado por Guido van Rossum y lanzado por primera vez en 1991. Sus características principales incluyen:</p>
+                    <ul>
+                        <li><strong>Sintaxis limpia y legible:</strong> El código Python se lee como pseudocódigo en inglés</li>
+                        <li><strong>Tipado dinámico:</strong> No necesitas declarar el tipo de variable</li>
+                        <li><strong>Multiparadigma:</strong> Soporta POO, programación funcional y procedural</li>
+                        <li><strong>Baterías incluidas:</strong> Biblioteca estándar extensa</li>
+                        <li><strong>Código abierto:</strong> Gratis y con una comunidad activa</li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>💡 Dato Curioso:</strong> El nombre "Python" viene de los Monty Python, no de la serpiente. Guido van Rossum era fan del show de comedia británico.
+                    </div>
+
+                    <h3>El Ecosistema de Python</h3>
+                    <p>Python tiene uno de los ecosistemas más grandes de cualquier lenguaje de programación:</p>
+                    <ul>
+                        <li><strong>PyPI (Python Package Index):</strong> Más de 500,000 paquetes disponibles</li>
+                        <li><strong>pip:</strong> Gestor de paquetes estándar para instalar bibliotecas</li>
+                        <li><strong>Virtual environments:</strong> venv, conda, poetry para aislar proyectos</li>
+                        <li><strong>Herramientas de desarrollo:</strong> VSCode, PyCharm, Jupyter Notebooks</li>
+                    </ul>
+
+                    <figure class="text-center my-4">
+                        <img src="../assets/infografias/clase-01-ecosistema-python.svg" alt="Ecosistema de Python" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
+                        <figcaption class="figure-caption mt-2">Figura 1: Ecosistema de Python</figcaption>
+                    </figure>
+
+                    <h3>Instalación de Python</h3>
+
+                    <h4>Windows</h4>
+                    <ol>
+                        <li>Visita <a href="https://python.org/downloads" target="_blank">python.org/downloads</a></li>
+                        <li>Descarga la última versión (3.12+)</li>
+                        <li><strong>IMPORTANTE:</strong> Marca "Add Python to PATH" durante la instalación</li>
+                        <li>Verifica la instalación abriendo una terminal:</li>
+                    </ol>
+                    <pre><code class="language-bash">python --version
+# o
+python3 --version</code></pre>
+
+                    <h4>macOS</h4>
+                    <pre><code class="language-bash"># Usar Homebrew (recomendado)
+brew install python3</code></pre>
+
+                    <h4>Linux (Ubuntu/Debian)</h4>
+                    <pre><code class="language-bash">sudo apt update
+sudo apt install python3 python3-pip python3-venv</code></pre>
+
+                    <div class="alert-warning-custom">
+                        <strong>⚠️ Precaución:</strong> En Windows, si no marcaste "Add Python to PATH", necesitarás agregar Python manualmente a las variables de entorno.
+                    </div>
+
+                    <h3>Configuración de VSCode</h3>
+                    <p>Visual Studio Code es el editor recomendado para este curso. Configuración:</p>
+                    <ol>
+                        <li>Instala VSCode desde <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a></li>
+                        <li>Instala la extensión "Python" de Microsoft</li>
+                        <li>Instala la extensión "Code Runner" para ejecución rápida</li>
+                        <li>Configura el intérprete: <code>Ctrl+Shift+P</code> → "Python: Select Interpreter"</li>
+                    </ol>
+
+                    <h3>Variables y Asignación</h3>
+                    <p>Una variable es un nombre que referencia un valor en memoria. En Python, las variables se crean mediante asignación:</p>
+                    <pre><code class="language-python"># Asignación básica
+nombre: str = "Juan"
+edad: int = 25
+altura: float = 1.75
+es_estudiante: bool = True</code></pre>
+
+                    <p>Python usa <strong>tipado dinámico</strong>, lo que significa que el tipo de una variable se determina en tiempo de ejecución:</p>
+                    <pre><code class="language-python">x: int = 10        # x es int
+x = "Hola"          # ahora x es str (Python infiere el tipo)
+x = 3.14            # ahora x es float</code></pre>
+
+                    <div class="alert-note">
+                        <strong>📝 Nota:</strong> Aunque Python permite cambiar el tipo de una variable, esto se considera una mala práctica. Mantén tipos consistentes.
+                    </div>
+
+                    <h3>Operadores Aritméticos</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Operador</th>
+                                <th>Descripción</th>
+                                <th>Ejemplo</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>+</code></td>
+                                <td>Suma</td>
+                                <td><code>5 + 3</code></td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td><code>-</code></td>
+                                <td>Resta</td>
+                                <td><code>5 - 3</code></td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td><code>*</code></td>
+                                <td>Multiplicación</td>
+                                <td><code>5 * 3</code></td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td><code>/</code></td>
+                                <td>División (float)</td>
+                                <td><code>10 / 3</code></td>
+                                <td>3.333...</td>
+                            </tr>
+                            <tr>
+                                <td><code>//</code></td>
+                                <td>División entera</td>
+                                <td><code>10 // 3</code></td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td><code>%</code></td>
+                                <td>Módulo (resto)</td>
+                                <td><code>10 % 3</code></td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td><code>**</code></td>
+                                <td>Exponente</td>
+                                <td><code>2 ** 3</code></td>
+                                <td>8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Input/Output Básico</h3>
+                    <p>Para interactuar con el usuario, Python proporciona dos funciones fundamentales:</p>
+                    <pre><code class="language-python"># Output: imprimir en pantalla
+print("Hola, mundo!")
+print("El valor de x es:", x)
+
+# Input: leer desde el teclado (siempre retorna str)
+nombre = input("¿Cuál es tu nombre? ")
+print("Mucho gusto,", nombre)
+
+# Convertir input a número
+edad = int(input("¿Cuántos años tienes? "))
+altura = float(input("¿Cuánto mides? "))</code></pre>
+
+                    <h3>Comentarios</h3>
+                    <p>Los comentarios son texto ignorado por Python que sirve para documentar el código:</p>
+                    <pre><code class="language-python"># Esto es un comentario de una línea
+
+"""
+Esto es un comentario
+de múltiples líneas
+(también llamado docstring)
+"""
+
+''' También se pueden usar comillas simples '''</code></pre>
+                </section>
+
+                <!-- Sección 3: Ejemplos Prácticos -->
+                <section id="ejemplos">
+                    <h2>Ejemplos Prácticos</h2>
+
+                    <h3>Ejemplo 1: Hola Mundo</h3>
+                    <p>El programa más simple en Python:</p>
+                    <pre><code class="language-python"># hola_mundo.py
+print("¡Hola, mundo!")
+print("Bienvenido a Python")</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>💡 Para ejecutar:</strong> Guarda el código en un archivo <code>hola_mundo.py</code> y ejecuta: <code>python hola_mundo.py</code>
+                    </div>
+
+                    <h3>Ejemplo 2: Variables y Tipos</h3>
+                    <pre><code class="language-python"># variables.py
+# Enteros
+edad = 25
+cantidad = 100
+
+# Flotantes (decimales)
+precio = 19.99
+pi = 3.14159
+
+# Strings (cadenas de texto)
+nombre = "Ana García"
+mensaje = 'Hola, ¿cómo estás?'
+
+# Booleanos
+es_activo = True
+esta_completado = False
+
+# Mostrar información
+print(f"Nombre: {nombre}")
+print(f"Edad: {edad}")
+print(f"Precio: ${precio}")
+print(f"Es activo: {es_activo}")
+
+# Verificar el tipo de una variable
+print(f"Tipo de edad: {type(edad)}")
+print(f"Tipo de nombre: {type(nombre)}")</code></pre>
+
+                    <h3>Ejemplo 3: Operaciones Aritméticas</h3>
+                    <pre><code class="language-python"># operaciones.py
+a = 10
+b = 3
+
+# Operaciones básicas
+print(f"Suma: {a} + {b} = {a + b}")
+print(f"Resta: {a} - {b} = {a - b}")
+print(f"Multiplicación: {a} * {b} = {a * b}")
+print(f"División: {a} / {b} = {a / b}")
+print(f"División entera: {a} // {b} = {a // b}")
+print(f"Módulo: {a} % {b} = {a % b}")
+print(f"Exponente: {a} ** {b} = {a ** b}")
+
+# Ejemplo práctico: calcular propina
+total_cuenta = 150.50
+porcentaje_propina = 15
+propina = total_cuenta * (porcentaje_propina / 100)
+total_pagar = total_cuenta + propina
+
+print(f"\n--- Restaurante ---")
+print(f"Total cuenta: ${total_cuenta:.2f}")
+print(f"Propina ({porcentaje_propina}%): ${propina:.2f}")
+print(f"Total a pagar: ${total_pagar:.2f}")</code></pre>
+
+                    <h3>Ejemplo 4: Interacción con el Usuario</h3>
+                    <pre><code class="language-python"># saludo.py
+# Solicitar información al usuario
+nombre = input("¿Cuál es tu nombre? ")
+edad = int(input("¿Cuántos años tienes? "))
+
+# Calcular año de nacimiento (aproximado)
+from datetime import datetime
+anio_actual = datetime.now().year
+anio_nacimiento = anio_actual - edad
+
+# Mostrar mensaje personalizado
+print(f"\n¡Hola, {nombre}!")
+print(f"Tienes {edad} años")
+print(f"Aproximadamente naciste en {anio_nacimiento}")
+
+# Mensaje según la edad
+if edad < 18:
+    print("Eres menor de edad")
+else:
+    print("Eres mayor de edad")</code></pre>
+
+                    <h3>Ejemplo 5: Conversión de Temperatura</h3>
+                    <pre><code class="language-python"># temperatura.py
+# Convertir Celsius a Fahrenheit
+celsius = float(input("Ingresa temperatura en Celsius: "))
+
+fahrenheit = (celsius * 9/5) + 32
+
+print(f"\n{celsius}°C = {fahrenheit}°F")
+
+# Convertir Fahrenheit a Celsius
+fahrenheit = float(input("Ingresa temperatura en Fahrenheit: "))
+
+celsius = (fahrenheit - 32) * 5/9
+
+print(f"{fahrenheit}°F = {celsius:.2f}°C")</code></pre>
+
+                    <h3>Ejemplo 6: Cálculo de Promedio</h3>
+                    <pre><code class="language-python"># promedio.py
+print("Cálculo de promedio de 3 notas")
+
+nota1 = float(input("Ingresa nota 1: "))
+nota2 = float(input("Ingresa nota 2: "))
+nota3 = float(input("Ingresa nota 3: "))
+
+promedio = (nota1 + nota2 + nota3) / 3
+
+print(f"\n--- Resultado ---")
+print(f"Nota 1: {nota1}")
+print(f"Nota 2: {nota2}")
+print(f"Nota 3: {nota3}")
+print(f"Promedio: {promedio:.2f}")
+
+if promedio >= 3.0:
+    print("¡Aprobado!")
+else:
+    print("Reprobado")</code></pre>
+                </section>
+
+                <!-- Sección 4: Buenas Prácticas -->
+                <section id="buenas-practicas">
+                    <h2>Buenas Prácticas</h2>
+
+                    <h3>Convenciones de Nomenclatura (PEP 8)</h3>
+                    <ul>
+                        <li><strong>Variables y funciones:</strong> <code>snake_case</code> (minúsculas con guiones bajos)
+                            <pre><code class="language-python">mi_variable = 10
+nombre_usuario = "Juan"
+def calcular_promedio():</code></pre>
+                        </li>
+                        <li><strong>Constantes:</strong> <code>UPPER_CASE</code> (mayúsculas con guiones bajos)
+                            <pre><code class="language-python">MAX_INTENTOS = 3
+PI = 3.14159</code></pre>
+                        </li>
+                        <li><strong>Nombres descriptivos:</strong> Usa nombres que expliquen el propósito
+                            <pre><code class="language-python"># ❌ Mal
+x = 25
+d = "Juan"
+
+# ✅ Bien
+edad = 25
+nombre = "Juan"</code></pre>
+                        </li>
+                    </ul>
+
+                    <h3>F-Strings para Formato</h3>
+                    <p>Los f-strings (Python 3.6+) son la forma recomendada de formatear strings:</p>
+                    <pre><code class="language-python"># ✅ Bien (Python 3.6+)
+nombre = "Ana"
+edad = 25
+print(f"Hola, {nombre}. Tienes {edad} años")
+
+# ⚠️ Funciona pero es más verboso
+print("Hola, {}. Tienes {} años".format(nombre, edad))
+
+# ❌ Antiguo, evitar
+print("Hola, %s. Tienes %d años" % (nombre, edad))</code></pre>
+
+                    <h3>Tipado Explícito (Type Hints)</h3>
+                    <p>Aunque es opcional, es buena práctica indicar los tipos:</p>
+                    <pre><code class="language-python"># Con type hints (recomendado)
+nombre: str = "Juan"
+edad: int = 25
+altura: float = 1.75
+es_estudiante: bool = True</code></pre>
+
+                    <h3>Errores Comunes a Evitar</h3>
+                    <div class="alert-error">
+                        <h4>❌ No Hacer</h4>
+                        <ul>
+                            <li>Usar nombres de una sola letra (excepto en loops)</li>
+                            <li>Cambiar el tipo de una variable durante la ejecución</li>
+                            <li>Usar palabras reservadas como nombres de variable (<code>print</code>, <code>list</code>, <code>type</code>)</li>
+                            <li>Olvidar convertir el input (<code>input()</code> siempre retorna <code>str</code>)</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-tip">
+                        <h4>✅ Sí Hacer</h4>
+                        <ul>
+                            <li>Usar nombres descriptivos y en español (o inglés consistente)</li>
+                            <li>Convertir explícitamente el input: <code>int(input(...))</code></li>
+                            <li>Usar f-strings para formatear salida</li>
+                            <li>Agregar comentarios para explicar código complejo</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Sección 5: Ejercicio Guidado -->
+                <section id="ejercicio">
+                    <h2>Ejercicio Guidado</h2>
+
+                    <h3>🎯 Ejercicio: Tu Primer Script Python</h3>
+                    <p>Vamos a crear un script que calcule el índice de masa corporal (IMC) de una persona.</p>
+
+                    <h4>Paso 1: Crear el archivo</h4>
+                    <ol>
+                        <li>Abre VSCode</li>
+                        <li>Crea un nuevo archivo: <code>imc.py</code></li>
+                        <li>Guarda el archivo en tu carpeta de trabajo</li>
+                    </ol>
+
+                    <h4>Paso 2: Escribir el código</h4>
+                    <pre><code class="language-python"># imc.py
+"""
+Calculadora de Índice de Masa Corporal (IMC)
+
+Fórmula: IMC = peso / altura²
+Donde:
+- peso está en kilogramos
+- altura está en metros
+"""
+
+print("=== Calculadora de IMC ===")
+
+# Solicitar datos al usuario
+nombre = input("¿Cuál es tu nombre? ")
+peso = float(input("Ingresa tu peso en kg: "))
+altura = float(input("Ingresa tu altura en metros: "))
+
+# Calcular IMC
+imc = peso / (altura ** 2)
+
+# Mostrar resultado
+print(f"\n--- Resultado para {nombre} ---")
+print(f"Peso: {peso} kg")
+print(f"Altura: {altura} m")
+print(f"IMC: {imc:.2f}")
+
+# Clasificación según la OMS
+if imc < 18.5:
+    clasificacion = "Bajo peso"
+elif imc < 25:
+    clasificacion = "Peso normal"
+elif imc < 30:
+    clasificacion = "Sobrepeso"
+else:
+    clasificacion = "Obesidad"
+
+print(f"Clasificación: {clasificacion}")</code></pre>
+
+                    <h4>Paso 3: Ejecutar el script</h4>
+                    <pre><code class="language-bash"># Desde VSCode: Ctrl+F5 (Run Python File)
+
+# O desde terminal:
+python imc.py
+
+# O en macOS/Linux:
+python3 imc.py</code></pre>
+
+                    <h4>Paso 4: Probar con diferentes valores</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Peso (kg)</th>
+                                <th>Altura (m)</th>
+                                <th>IMC esperado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Juan</td>
+                                <td>70</td>
+                                <td>1.75</td>
+                                <td>22.86</td>
+                            </tr>
+                            <tr>
+                                <td>Maria</td>
+                                <td>55</td>
+                                <td>1.60</td>
+                                <td>21.48</td>
+                            </tr>
+                            <tr>
+                                <td>Carlos</td>
+                                <td>90</td>
+                                <td>1.70</td>
+                                <td>31.14</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-warning-custom">
+                        <strong>⚠️ Reto adicional:</strong> Modifica el script para que también calcule el peso ideal según la fórmula: <code>peso_ideal = IMC_deseado * altura²</code> (usando IMC = 22 como peso saludable).
+                    </div>
+
+                    <h3>🚀 Conexión con el Proyecto TaskFlow</h3>
+                    <p>Este ejercicio es la base para preparar tu entorno de desarrollo para el proyecto del curso. Las habilidades que estás desarrollando:</p>
+                    <ul>
+                        <li>Configurar Python y VSCode → Necesario para todo el curso</li>
+                        <li>Manejo de variables y tipos → Fundamental para programar en Python</li>
+                        <li>Input/output → Base para crear interfaces interactivas</li>
+                        <li>Operaciones aritméticas → Usarás en cálculos de tareas y proyectos</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>📝 Para la próxima clase:</strong> Practica creando más scripts simples: conversor de unidades, calculadora de propinas, contador de palabras, etc.
+                    </div>
+                </section>
+
+                <!-- Sección 6: Referencias -->
+                <section id="referencias">
+                    <h2>Para Profundizar</h2>
+                    <ul>
+                        <li><a href="https://docs.python.org/es/3/tutorial/" target="_blank">Tutorial Oficial de Python (español)</a></li>
+                        <li><a href="https://docs.python.org/es/3/library/index.html" target="_blank">Biblioteca Estándar de Python</a></li>
+                        <li><a href="https://peps.python.org/pep-0008/" target="_blank">PEP 8 - Guía de Estilo de Python</a></li>
+                        <li><a href="https://code.visualstudio.com/docs/python/python-tutorial" target="_blank">Tutorial de Python con VSCode</a></li>
+                        <li><a href="https://www.w3schools.com/python/" target="_blank">W3Schools Python Tutorial</a></li>
+                        <li><a href="https://realpython.com/" target="_blank">Real Python - Tutoriales en profundidad</a></li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Google Colab Button -->
+    <div class="alert-tip mt-4">
+        <a href="https://colab.research.google.com/drive/U0C00-INTRO"
+           target="_blank" class="btn btn-primary">
+            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
+            <p>Última actualización: 2026-02-08</p>
+            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Prism.js Core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+    <!-- Prism.js Language Support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+
+    <!-- Highlight code on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+        });
+    </script>
+</body>
+</html>
