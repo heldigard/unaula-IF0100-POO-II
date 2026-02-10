@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <defs>
+    <style>
+      .title { font: bold 24px sans-serif; fill: #2c3e50; }
+      .subtitle { font: 16px sans-serif; fill: #7f8c8d; }
+      .box { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .box-a { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; rx: 8; }
+      .box-b { fill: #2ecc71; stroke: #27ae60; stroke-width: 2; rx: 8; }
+      .box-c { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; rx: 8; }
+      .box-d { fill: #f39c12; stroke: #d68910; stroke-width: 2; rx: 8; }
+      .text { font: 14px sans-serif; fill: white; text-anchor: middle; }
+      .label { font: 12px sans-serif; fill: #2c3e50; text-anchor: middle; }
+      .arrow { stroke: #34495e; stroke-width: 2; marker-end: url(#arrowhead); }
+      .mro-box { fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 1; rx: 4; }
+      .mro-text { font: 13px monospace; fill: #2c3e50; }
+      .code { font: 11px monospace; fill: #2c3e50; }
+      .note { font: 12px sans-serif; fill: #e74c3c; font-style: italic; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="35" class="title">Herencia Múltiple y MRO en Python</text>
+  <text x="450" y="60" class="subtitle">Method Resolution Order - Orden de Búsqueda de Métodos</text>
+
+  <!-- Diamond Inheritance Diagram -->
+  <g transform="translate(100, 100)">
+    <rect x="180" y="0" width="200" height="40" class="box-a"/>
+    <text x="280" y="25" class="text">Animal</text>
+
+    <rect x="80" y="90" width="180" height="40" class="box-b"/>
+    <text x="170" y="115" class="text">Mamifero</text>
+
+    <rect x="300" y="90" width="180" height="40" class="box-c"/>
+    <text x="390" y="115" class="text">Volador</text>
+
+    <rect x="180" y="180" width="200" height="40" class="box-d"/>
+    <text x="280" y="205" class="text">Murcielago (Múltiple)</text>
+
+    <!-- Arrows -->
+    <line x1="280" y1="40" x2="170" y2="90" class="arrow"/>
+    <line x1="280" y1="40" x2="390" y2="90" class="arrow"/>
+    <line x1="170" y1="130" x2="280" y2="180" class="arrow"/>
+    <line x1="390" y1="130" x2="280" y2="180" class="arrow"/>
+
+    <text x="280" y="250" class="label" style="font-weight: bold;">Herencia Diamond</text>
+  </g>
+
+  <!-- MRO Visualization -->
+  <g transform="translate(550, 100)">
+    <text x="120" y="10" class="label" style="font-weight: bold; font-size: 14px;">Orden de Búsqueda (MRO)</text>
+
+    <rect x="0" y="30" width="240" height="30" class="mro-box"/>
+    <text x="120" y="50" class="mro-text">Murcielago</text>
+
+    <rect x="0" y="65" width="240" height="30" class="mro-box"/>
+    <text x="120" y="85" class="mro-text">Mamifero</text>
+
+    <rect x="0" y="100" width="240" height="30" class="mro-text" style="fill: #e74c3c;"/>
+    <text x="120" y="120" class="mro-text" style="fill: #e74c3c;">Animal</text>
+
+    <rect x="0" y="135" width="240" height="30" class="mro-text" style="fill: #9b59b6;"/>
+    <text x="120" y="155" class="mro-text" style="fill: #9b59b6;">Volador</text>
+
+    <rect x="0" y="170" width="240" height="30" class="mro-text" style="fill: #e74c3c;"/>
+    <text x="120" y="190" class="mro-text" style="fill: #e74c3c;">Animal</text>
+
+    <rect x="0" y="205" width="240" height="30" class="mro-box"/>
+    <text x="120" y="225" class="mro-text">object</text>
+  </g>
+
+  <!-- Code Example -->
+  <g transform="translate(50, 400)">
+    <text x="0" y="0" class="label" style="font-weight: bold; font-size: 14px;">Código de Ejemplo</text>
+
+    <rect x="0" y="15" width="400" height="180" fill="#2c3e50" rx="8"/>
+    <text x="15" y="40" class="code" fill="#a8e6cf">class Animal:</text>
+    <text x="30" y="60" class="code" fill="#dcedc1">    def speak(self):</text>
+    <text x="45" y="80" class="code" fill="#dcedc1">        print("Sonido")</text>
+
+    <text x="15" y="110" class="code" fill="#ffd3b6">class Mamifero(Animal):</text>
+    <text x="30" y="130" class="code" fill="#ffd3b6">    def speak(self):</text>
+    <text x="45" y="150" class="code" fill="#ffd3b6">        print("Grrr!")</text>
+
+    <text x="15" y="180" class="code" fill="#ffaaa5">class Volador(Animal):</text>
+    <text x="30" y="200" class="code" fill="#ffaaa5">    def speak(self):</text>
+    <text x="45" y="220" class="code" fill="#ffaaa5">        print("Piii!")</text>
+
+    <text x="15" y="250" class="code" fill="#ff8b94">class Murcielago(Mamifero, Volador):</text>
+    <text x="15" y="270" class="code" fill="#ff8b94">    pass</text>
+  </g>
+
+  <!-- super() explanation -->
+  <g transform="translate(480, 400)">
+    <text x="0" y="0" class="label" style="font-weight: bold; font-size: 14px;">Usando super() en Múltiple Herencia</text>
+
+    <rect x="0" y="15" width="380" height="200" fill="#2c3e50" rx="8"/>
+    <text x="15" y="40" class="code" fill="#a8e6cf">class Murcielago(Mamifero, Volador):</text>
+    <text x="15" y="65" class="code" fill="#dcedc1">    def speak(self):</text>
+    <text x="30" y="85" class="code" fill="#dcedc1"># super() busca en MRO</text>
+    <text x="30" y="105" class="code" fill="#dcedc1">        super().speak()  # Mamifero!</text>
+
+    <text x="15" y="140" class="code" fill="#ffd3b6"># Ver MRO:</text>
+    <text x="15" y="160" class="code" fill="#ffd3b6">print(Murcielago.__mro__)</text>
+
+    <text x="15" y="185" class="code" fill="#ffaaa5"># Output:</text>
+    <text x="15" y="205" class="code" fill="#ffaaa5"># (&lt;class 'Murcielago'&gt;, &lt;class</text>
+    <text x="15" y="225" class="code" fill="#ffaaa5">#  'Mamifero'&gt;, &lt;class 'Volador'&gt;, ...)</text>
+  </g>
+
+  <!-- C3 Linearization Note -->
+  <g transform="translate(50, 620)">
+    <rect x="0" y="0" width="850" height="50" fill="#fff3cd" rx="6" stroke="#ffc107"/>
+    <text x="20" y="25" class="note" fill="#856404">Python usa C3 Linearization para calcular MRO. Para verificar: Clase.__mro__ o Clase.mro()</text>
+  </g>
+</svg>

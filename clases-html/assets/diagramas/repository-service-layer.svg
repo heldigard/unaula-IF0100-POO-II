@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <defs>
+    <style>
+      .title { font: bold 24px sans-serif; fill: #2c3e50; }
+      .subtitle { font: 16px sans-serif; fill: #7f8c8d; }
+      .layer { fill: #3498db; stroke: #2980b9; stroke-width: 2; rx: 8; }
+      .layer-api { fill: #27ae60; stroke: #229954; stroke-width: 2; rx: 8; }
+      .layer-service { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; rx: 8; }
+      .layer-repo { fill: #e67e22; stroke: #d35400; stroke-width: 2; rx: 8; }
+      .layer-db { fill: #1abc9c; stroke: #16a085; stroke-width: 2; rx: 8; }
+      .text { font: 13px sans-serif; fill: white; text-anchor: middle; }
+      .text-small { font: 11px sans-serif; fill: white; text-anchor: middle; }
+      .label { font: 12px sans-serif; fill: #7f8c8d; text-anchor: middle; }
+      .arrow { stroke: #34495e; stroke-width: 2; marker-end: url(#arrowhead); }
+      .arrow-dashed { stroke: #95a5a6; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead); }
+      .code { font: 9px monospace; fill: #2c3e50; }
+      .box-code { fill: #2c3e50; rx: 6; }
+      .principle { fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 1; rx: 6; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34495e"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="35" class="title">Repository Pattern + Service Layer</text>
+  <text x="450" y="60" class="subtitle">Arquitecturalimpia para acceso a datos</text>
+
+  <!-- Architecture Layers -->
+  <g transform="translate(150, 90)">
+    <!-- API/Routers Layer -->
+    <rect x="0" y="0" width="600" height="55" class="layer-api"/>
+    <text x="300" y="20" class="text">FastAPI Routers / API Endpoints</text>
+    <text x="300" y="40" class="text-small">Recibe requests, valida con Pydantic, retorna respuestas</text>
+
+    <!-- Arrow down -->
+    <line x1="300" y1="60" x2="300" y2="80" class="arrow"/>
+
+    <!-- Service Layer -->
+    <rect x="0" y="85" width="600" height="65" class="layer-service"/>
+    <text x="300" y="110" class="text">Service Layer (Lógica de Negocio)</text>
+    <text x="300" y="135" class="text-small">Orquesta operaciones, aplica reglas de negocio, coordina repositorios</text>
+
+    <!-- Arrows down -->
+    <line x1="200" y1="155" x2="200" y2="180" class="arrow"/>
+    <line x1="400" y1="155" x2="400" y2="180" class="arrow"/>
+
+    <!-- Repository Layer -->
+    <rect x="50" y="185" width="500" height="55" class="layer-repo"/>
+    <text x="300" y="210" class="text">Repository Layer (Acceso a Datos)</text>
+    <text x="300" y="235" class="text-small">Abstrae la base de datos, proporciona métodos CRUD</text>
+
+    <!-- Arrow down -->
+    <line x1="300" y1="245" x2="300" y2="270" class="arrow"/>
+
+    <!-- Database -->
+    <rect x="100" y="275" width="400" height="50" class="layer-db"/>
+    <text x="300" y="305" class="text">Base de Datos (PostgreSQL / SQLite)</text>
+  </g>
+
+  <!-- Repository Pattern Details -->
+  <g transform="translate(50, 370)">
+    <rect x="0" y="0" width="380" height="150" class="principle"/>
+    <text x="190" y="25" class="text-dark" style="font-weight: bold; fill: #d35400;">Repository Pattern</text>
+    <text x="190" y="50" class="text-dark" style="font-size: 11px;">Abstrae la capa de datos</text>
+
+    <rect x="15" y="65" width="350" height="75" class="box-code"/>
+    <text x="25" y="85" class="code" fill="#a8e6cf">class ProductoRepository:</text>
+    <text x="35" y="105" class="code" fill="#dcedc1">    def get_by_id(self, id: int) -> Producto:</text>
+    <text x="50" y="125" class="code" fill="#ffd3b6">        """Obtiene un producto por ID"""</text>
+
+    <!-- Service Pattern Details -->
+    <rect x="420" y="0" width="380" height="150" class="principle"/>
+    <text x="610" y="25" class="text-dark" style="font-weight: bold; fill: #8e44ad;">Service Layer</text>
+    <text x="610" y="50" class="text-dark" style="font-size: 11px;">Lógica de negocio</text>
+
+    <rect x="435" y="65" width="350" height="75" class="box-code"/>
+    <text x="445" y="85" class="code" fill="#a8e6cf">class InventarioService:</text>
+    <text x="455" y="105" class="code" fill="#dcedc1">    def registrar_entrada(self, datos):</text>
+    <text x="470" y="125" class="code" fill="#ffd3b6">        """Valida, crea movimiento, actualiza stock"""</text>
+  </g>
+
+  <!-- Data Flow Example -->
+  <g transform="translate(50, 540)">
+    <text x="400" y="0" class="label" style="font-weight: bold;">Ejemplo: Crear Producto</text>
+
+    <rect x="0" y="20" width="800" height="130" class="principle"/>
+
+    <!-- Step 1 -->
+    <circle cx="80" cy="75" r="25" fill="#27ae60"/>
+    <text x="80" y="80" class="text" style="font-size: 10px;">1</text>
+    <text x="80" y="115" class="text-dark" style="font-size: 10px;">POST /productos</text>
+    <text x="80" y="130" class="label" style="font-size: 9px;">FastAPI Router</text>
+
+    <!-- Arrow -->
+    <line x1="110" y1="75" x2="140" y2="75" class="arrow"/>
+
+    <!-- Step 2 -->
+    <circle cx="280" cy="75" r="25" fill="#9b59b6"/>
+    <text x="280" y="80" class="text" style="font-size: 10px;">2</text>
+    <text x="280" y="115" class="text-dark" style="font-size: 10px;">Pydantic valida</text>
+    <text x="280" y="130" class="label" style="font-size: 9px;">Schema validation</text>
+
+    <!-- Arrow -->
+    <line x1="310" y1="75" x2="340" y2="75" class="arrow"/>
+
+    <!-- Step 3 -->
+    <circle cx="480" cy="75" r="25" fill="#9b59b6"/>
+    <text x="480" y="80" class="text" style="font-size: 10px;">3</text>
+    <text x="480" y="115" class="text-dark" style="font-size: 10px;">service.crear()</text>
+    <text x="480" y="130" class="label" style="font-size: 9px;">Service Layer</text>
+
+    <!-- Arrow -->
+    <line x1="510" y1="75" x2="540" y2="75" class="arrow"/>
+
+    <!-- Step 4 -->
+    <circle cx="680" cy="75" r="25" fill="#e67e22"/>
+    <text x="680" y="80" class="text" style="font-size: 10px;">4</text>
+    <text x="680" y="115" class="text-dark" style="font-size: 10px;">repo.add(producto)</text>
+    <text x="680" y="130" class="label" style="font-size: 9px;">Repository</text>
+
+    <!-- Arrow down -->
+    <line x1="680" y1="105" x2="680" y2="130" class="arrow"/>
+
+    <!-- Database -->
+    <rect x="600" y="135" width="160" height="30" class="layer-db"/>
+    <text x="680" y="155" class="text" style="font-size: 10px;">PostgreSQL</text>
+  </g>
+
+  <!-- Benefits -->
+  <g transform="translate(50, 630)">
+    <rect x="0" y="0" width="850" height="50" fill="#d4edda" rx="6" stroke="#27ae60"/>
+    <text x="20" y="25" class="label" style="fill: #155724; font-size: 12px;">
+      <tspan font-weight="bold">Beneficios:</tspan>
+      Separación de responsabilidades |
+      <tspan fill="#9b59b6">Facilita testing (mock repos)</tspan> |
+      Código más mantenible |
+      <tspan fill="#e67e22">Abstrae la base de datos</tspan>
+    </text>
+  </g>
+</svg>

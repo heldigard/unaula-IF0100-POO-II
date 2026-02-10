@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" style="width: 100%; height: auto; aspect-ratio: 900 / 550;">
+  <!-- Definitions -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#868e96" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="550" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="40" font-family="Segoe UI, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#212529">
+    Encapsulamiento en Python
+  </text>
+
+  <!-- WITHOUT Encapsulation -->
+  <g transform="translate(50, 100)">
+    <rect width="350" height="350" rx="8" fill="#fff" stroke="#fa5252" stroke-width="3" stroke-dasharray="10,5"/>
+    <text x="175" y="30" font-family="Segoe UI, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#fa5252">
+      ❌ SIN Encapsulamiento
+    </text>
+
+    <g font-family="Consolas, monospace" font-size="13" fill="#495057">
+      <text x="20" y="80">
+        <tspan font-weight="bold">class Usuario:</tspan>
+      </text>
+      <text x="20" y="110" fill="#c92a2a">
+        username  # público - anybody can modify
+      </text>
+
+      <text x="20" y="170">
+        <tspan font-weight="bold" fill="#868e96"># ❌ Problema:</tspan>
+      </text>
+      <text x="20" y="200" fill="#c92a2a">
+        usuario = Usuario()
+      </text>
+      <text x="20" y="230" fill="#c92a2a">
+        usuario.username = ""  # ❌ Empty!
+      </text>
+      <text x="20" y="260" fill="#c92a2a">
+        usuario.username = "a"  # ❌ Too short!
+      </text>
+    </g>
+
+    <rect x="20" y="290" width="310" height="50" rx="4" fill="#ffe3e3" stroke="#fa5252" stroke-width="1"/>
+    <text x="175" y="320" font-family="Segoe UI, sans-serif" font-size="13" text-anchor="middle" fill="#c92a2a">
+      Sin validación, los datos pueden quedar
+    </text>
+    <text x="175" y="338" font-family="Segoe UI, sans-serif" font-size="13" text-anchor="middle" fill="#c92a2a">
+      en estado inválido
+    </text>
+  </g>
+
+  <!-- WITH Encapsulation -->
+  <g transform="translate(500, 100)">
+    <rect width="350" height="350" rx="8" fill="#fff" stroke="#40c057" stroke-width="3"/>
+    <text x="175" y="30" font-family="Segoe UI, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#40c057">
+      ✅ CON Encapsulamiento
+    </text>
+
+    <g font-family="Consolas, monospace" font-size="13" fill="#495057">
+      <text x="20" y="80">
+        <tspan font-weight="bold">class Usuario:</tspan>
+      </text>
+      <text x="20" y="110" fill="#2b8a3e">
+        def __init__(self):
+      </text>
+      <text x="20" y="135" fill="#2b8a3e">
+        self.__username = ""  # privado
+      </text>
+
+      <text x="20" y="175" fill="#2b8a3e">
+        @property
+      </text>
+      <text x="20" y="200" fill="#2b8a3e">
+        def username(self): ...
+      </text>
+
+      <text x="20" y="240" fill="#2b8a3e">
+        @username.setter
+      </text>
+      <text x="20" y="265" fill="#2b8a3e">
+        def username(self, value):
+      </text>
+      <text x="20" y="290" fill="#2b8a3e">
+        if len(value) >= 3:
+      </text>
+      <text x="20" y="315" fill="#2b8a3e">
+        self.__username = value
+      </text>
+    </g>
+
+    <rect x="20" y="290" width="310" height="50" rx="4" fill="#d3f9d8" stroke="#40c057" stroke-width="1"/>
+    <text x="175" y="320" font-family="Segoe UI, sans-serif" font-size="13" text-anchor="middle" fill="#2b8a3e">
+      Los getters/setters validan datos
+    </text>
+  </g>
+
+  <!-- Key comparison -->
+  <g transform="translate(250, 480)">
+    <rect width="400" height="50" rx="8" fill="#e7f5ff" stroke="#339af0" stroke-width="2"/>
+    <text x="200" y="20" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1864ab">
+      Convención Python
+    </text>
+    <text x="200" y="40" font-family="Consolas, monospace" font-size="13" text-anchor="middle" fill="#1864ab">
+      __atributo (privado) | _atributo (protegido)
+    </text>
+  </g>
+</svg>
