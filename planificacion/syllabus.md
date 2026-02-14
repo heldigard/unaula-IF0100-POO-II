@@ -1,5 +1,5 @@
 # IF0100 - Lenguaje de Programación OO II
-## Programa Oficial del Curso (Syllabus)
+## Programa del Curso - Stack Python/FastAPI (Actualizado 2026-1)
 
 ---
 
@@ -27,8 +27,8 @@
 ### Presentación
 La Programación busca capacitar a los alumnos para construir programas legibles, correctos, eficientes y fáciles de mantener. Dentro del marco de la Programación orientada a objetos, se introducen una serie de técnicas que favorecen los criterios de calidad: la facilidad para mantener y modificar los programas, y la posibilidad de desarrollar programas fácilmente reutilizables.
 
-### Justificación
-Al ingeniero informático que se desempeñe como programador, indudablemente le interesará conocer C#. Por decirlo coloquialmente, con C# se sentirá como en casa gracias a que la sintaxis es muy sencilla y amigable. Además, utilizará la última versión del framework .NET y la conectividad con ADO.NET.
+### Justificación (Actualizada 2026-1)
+Al ingeniero informático que se desempeñe como programador, le interesará conocer **Python** y **FastAPI**. Python es uno de los lenguajes más demandados en el mercado laboral actual, con sintaxis clara y amigable. FastAPI permite construir APIs modernas y de alto rendimiento. El stack **Python + FastAPI + SQLAlchemy** representa el estándar actual para desarrollo backend profesional.
 
 ---
 
@@ -49,14 +49,14 @@ Al ingeniero informático que se desempeñe como programador, indudablemente le 
 
 ## Resultados de Aprendizaje
 
-| Resultado de Aprendizaje | Metodología | Porcentaje |
-|--------------------------|-------------|------------|
-| Conoce los conceptos fundamentales de objetos y clases | Examen | 15% |
-| Técnicas de Desarrollo de software | Examen | 15% |
-| Desarrollo Web | Examen | 20% |
-| Construye sistemas con persistencia de datos en archivos planos | Examen | 15% |
-| Desarrolla sistemas con persistencia en bases de datos | Examen | 15% |
-| Conoce e implementa la arquitectura de datos desconectados | Examen | 20% |
+| Resultado de Aprendizaje | Metodología | Porcentaje | Fecha |
+|--------------------------|-------------|------------|-------|
+| Conoce los conceptos fundamentales de objetos clases | Examen | 15% | 26/02/2026 |
+| Técnicas de Desarrollo de software | Taller | 15% | 12/03/2026 |
+| Desarrollo Web | Proyecto | 20% | 26/03/2026 |
+| Construye sistemas con persistencia de datos en archivos planos | Laboratorio | 15% | 23/04/2026 |
+| Desarrolla sistemas con persistencia en bases de datos | Proyecto | 15% | 07/05/2026 |
+| Conoce e implementa la arquitectura de datos desconectados | Proyecto | 20% | 26/05/2026 |
 
 ---
 
@@ -64,169 +64,226 @@ Al ingeniero informático que se desempeñe como programador, indudablemente le 
 
 ### UNIDAD 1: Conceptos fundamentales de objetos y clases
 
-**Duración:** 4 semanas
+**Duración:** 4 semanas | **Evaluación:** E1 (15%) - Examen 26/02/2026
 
-**Temas:**
+**Temas (Python):**
 1. **Lógica de programación**
-   - Estructuras de control en C#
+   - Estructuras de control en Python
    - Algoritmos básicos
-   
+   - List comprehensions y generadores
+
 2. **Modelamiento de bases de datos**
    - Modelo entidad-relación
    - Normalización
    - Diseño de esquemas
 
 3. **Clases, Objeto y Mensaje**
-   - Definición de clases en C#
+   - Definición de clases en Python (`class`)
+   - Constructor `__init__` y `self`
    - Instanciación de objetos
-   - Paso de mensajes entre objetos
+   - Métodos de instancia, clase y estáticos
 
 4. **Encapsulamiento**
-   - Modificadores de acceso (public, private, protected, internal)
-   - Propiedades (get/set)
-   - Campos y métodos
+   - Convenio de privacidad (`_atributo`, `__atributo`)
+   - Properties con `@property`, `@setter`
+   - Dataclasses para modelos simples
 
 5. **Herencia**
    - Clases base y derivadas
-   - Palabra clave `extends` / `:` en C#
-   - Herencia simple vs interfaces
+   - `super()` y MRO (Method Resolution Order)
+   - Herencia múltiple en Python
+   - Mixins
 
 6. **Polimorfismo**
-   - Polimorfismo de inclusión
-   - Métodos virtuales y override
-   - Clases abstractas
+   - Duck typing
+   - Métodos especiales (`__str__`, `__repr__`, `__eq__`)
+   - Clases abstractas con `abc`
 
 7. **Sobrecarga y Sobreescritura**
-   - Sobrecarga de métodos
-   - Sobrecarga de operadores
-   - Diferencia entre override y overload
+   - Sobrecarga con `*args` y `**kwargs`
+   - Valores por defecto
+   - Sobreescritura de métodos
 
-**Metodología:** Clases prácticas en la cual se crea un sistema utilizando una arquitectura que permita aplicar el concepto. Prácticas de clase y exposiciones a los estudiantes. Talleres con retos para aplicar los conceptos de la temática.
+**Metodología:** Clases prácticas creando sistemas en Python. Prácticas de clase y exposiciones. Talleres con retos para aplicar POO.
+
+**Tecnologías:** Python 3.11+, pytest, dataclasses
 
 ---
 
 ### UNIDAD 2: Técnicas de Desarrollo de software
 
-**Duración:** 3 semanas
+**Duración:** 2 semanas | **Evaluación:** E2 (15%) - Taller 12/03/2026
 
-**Temas:**
+**Temas (Python):**
 1. **Test Driven Development (TDD)**
    - Ciclo Red-Green-Refactor
    - Escribir tests antes que código
-   - xUnit / NUnit en C#
+   - pytest: fixtures, parametrize, markers
+   - Cobertura con pytest-cov
 
 2. **Behavior Driven Development (BDD)**
    - Especificación con ejemplos
-   - Gherkin y SpecFlow
+   - Gherkin en español
+   - behave para tests BDD
    - Escenarios Given-When-Then
 
 3. **Domain Driven Design (DDD)**
-   - Entidades y Value Objects
+   - Entidades y Value Objects en Python
    - Agregados y Repositorios
    - Bounded Contexts
+   - Pydantic para validación de dominio
 
-**Metodología:** Clases magistrales en la cual se explican las técnicas de desarrollo de software. Clases prácticas en la cual se crea un sistema utilizando una de las técnicas de desarrollo de software. Talleres con retos para aplicar los conceptos.
+**Metodología:** Clases magistrales explicando técnicas. Clases prácticas desarrollando sistemas con TDD/BDD. Talleres con retos.
+
+**Tecnologías:** pytest, pytest-cov, behave, hypothesis, Pydantic
 
 ---
 
 ### UNIDAD 3: Desarrollo Web
 
-**Duración:** 4 semanas
+**Duración:** 4 semanas | **Evaluación:** E3 (20%) - Proyecto 26/03/2026
 
-**Temas:**
-1. **Excepciones y Controles Avanzados**
-   - Try-catch-finally en C#
+**Temas (Python/FastAPI):**
+1. **Excepciones y Manejo de Errores**
+   - Try-except-finally en Python
    - Excepciones personalizadas
-   - Controles de usuario
+   - HTTPException en FastAPI
+   - Manejadores de errores globales
 
-2. **ASP.NET**
-   - Arquitectura ASP.NET
-   - Razor Pages
-   - Controladores y Vistas (MVC)
-   - Web API básica
+2. **FastAPI**
+   - Arquitectura de FastAPI
+   - Routers y Path Operations
+   - Dependency Injection
+   - Middleware
+   - OpenAPI automático
 
-3. **HTML 5**
+3. **Pydantic y Validación**
+   - Modelos Pydantic
+   - Validación automática
+   - Serialización JSON
+   - Configuración de modelos
+
+4. **Jinja2 Templates**
+   - Templates HTML
+   - Herencia de templates
+   - Filtros personalizados
+   - Context processors
+
+5. **HTML 5**
    - Estructura semántica
    - Formularios HTML5
    - Validaciones nativas
    - Multimedia
 
-4. **Bootstrap**
+6. **HTMX**
+   - Interactividad sin JavaScript
+   - AJAX simplificado
+   - Partial updates
+   - Eventos y atributos
+
+7. **Bootstrap**
    - Sistema de grillas
    - Componentes UI
    - Diseño responsivo
-   - Temas y personalización
+   - Integración con FastAPI
 
-**Metodología:** Clases prácticas en las que se enseñe al estudiante sobre el lenguaje de programación ASP.Net, HTML en su versión más actual. Se realiza una introducción a Bootstrap. Talleres con retos para aplicar los conceptos.
+**Metodología:** Clases prácticas desarrollando aplicaciones web con FastAPI. Introducción a HTMX para interactividad. Talleres con retos.
+
+**Tecnologías:** FastAPI, Uvicorn, Jinja2, HTMX, Bootstrap 5, Pydantic
 
 ---
 
 ### UNIDAD 4: Manejo de persistencia (archivos y bases de datos)
 
-**Duración:** 3 semanas
+**Duración:** 4 semanas | **Evaluaciones:** E4 (15%) + E5 (15%)
 
-**Temas:**
-1. **Beneficios de ADO.NET**
-   - ¿Qué es ADO.NET?
-   - Proveedores de datos
-   - Arquitectura de ADO.NET
+**Temas (Python/SQLAlchemy):**
+1. **Persistencia en archivos planos** (E4 - 23/04/2026)
+   - Lectura y escritura con `pathlib`
+   - Archivos JSON con `json` module
+   - Archivos CSV con `csv` module
+   - Serialización con `pickle`
+   - Configuración con archivos YAML/JSON
 
-2. **Interoperabilidad**
-   - Conexión con diferentes SGBD
-   - Drivers y conectores
-   - Connection strings
+2. **Introducción a SQLAlchemy**
+   - ¿Qué es SQLAlchemy?
+   - Engine y Session
+   - Modelos declarativos
+   - Tipos de columnas
 
-3. **Mantenimiento**
-   - Gestión de conexiones
-   - Pool de conexiones
-   - Mejores prácticas
+3. **ORM SQLAlchemy**
+   - Relaciones (One-to-Many, Many-to-Many)
+   - Foreign Keys
+   - Lazy loading vs Eager loading
+   - Herencia de tablas
 
-4. **Programación**
-   - Ejecutar comandos SQL
-   - Parámetros y prevención de SQL Injection
-   - Transacciones
+4. **CRUD con SQLAlchemy** (E5 - 07/05/2026)
+   - Create, Read, Update, Delete
+   - Queries con ORM
+   - Filtros y ordenamiento
+   - Paginación
 
-5. **Persistencia en archivos planos**
-   - Lectura y escritura de archivos
-   - Serialización JSON/XML
-   - Streams en C#
+5. **Transacciones y Migraciones**
+   - Sesiones y transacciones
+   - Rollback y commit
+   - Alembic para migraciones
+   - Versionado de esquema
 
-6. **Persistencia en bases de datos**
-   - CRUD con SQL Server
-   - Stored Procedures
-   - Triggers
+6. **Integración con FastAPI**
+   - Dependency Injection de sesiones
+   - Endpoints CRUD
+   - Validación con Pydantic + SQLAlchemy
 
-**Metodología:** Clases magistrales en la cual se explican la teoría de ADO.NET y Datos Desconectados. Clases prácticas en la cual se crea un sistema aplicando los conceptos. Talleres con retos para aplicar los conceptos.
+**Metodología:** Clases magistrales de SQLAlchemy. Clases prácticas creando sistemas con persistencia. Talleres con retos.
+
+**Tecnologías:** SQLAlchemy 2.0, Alembic, SQLite, PostgreSQL, Pydantic
 
 ---
 
 ### UNIDAD 5: Arquitectura de datos desconectados
 
-**Duración:** 3 semanas
+**Duración:** 3 semanas | **Evaluación:** E6 (20%) - Proyecto 26/05/2026
 
-**Temas:**
-1. **Dataset ADO.NET y XML**
-   - Clase DataSet
-   - DataTable y DataRow
-   - Serialización a XML
+**Temas (Python/Arquitectura):**
+1. **Patrón Repository**
+   - Abstracción de acceso a datos
+   - Interface Repository genérica
+   - Implementación con SQLAlchemy
+   - Unit of Work pattern
 
-2. **Clases Connection**
-   - SqlConnection
-   - SqlCommand
-   - SqlDataAdapter
-   - SqlDataReader vs DataSet
+2. **Clean Architecture**
+   - Capas: Domain, Use Cases, Infrastructure
+   - Inyección de dependencias
+   - Inversión de control
+   - Separación de responsabilidades
 
-3. **Navegación y edición de registros en modo desconectado**
+3. **DTOs y Serialización**
+   - Dataclasses vs Pydantic
+   - Mapeo objeto-relacional
+   - Serialización JSON
+   - Validación de datos
+
+4. **Caché y Datos Desconectados**
+   - Caché en memoria con `cachetools`
+   - Redis para caché distribuido
+   - Estrategias de invalidación
    - Trabajar offline con datos
-   - Sincronización de cambios
-   - Resolución de conflictos
 
-4. **Enlace de datos a controles**
-   - Data Binding en WinForms
-   - Data Binding en ASP.NET
-   - GridView, Repeater, ListView
+5. **APIs REST Avanzadas**
+   - Paginación
+   - Filtrado y búsqueda
+   - Ordenamiento
+   - HATEOAS básico
 
-**Metodología:** Clases magistrales en la cual se explican la teoría de ADO.NET y Datos Desconectados. Clases prácticas en la cual se crea un sistema aplicando los conceptos. Talleres con retos para aplicar los conceptos.
+6. **Proyecto Integrador**
+   - Aplicación completa FastAPI + SQLAlchemy
+   - Arquitectura limpia
+   - Testing completo
+   - Documentación OpenAPI
+
+**Metodología:** Clases magistrales de arquitectura. Clases prácticas desarrollando proyecto integrador. Sustentación final.
+
+**Tecnologías:** FastAPI, SQLAlchemy, Pydantic, cachetools, Redis (opcional)
 
 ---
 
@@ -262,20 +319,20 @@ Al ingeniero informático que se desempeñe como programador, indudablemente le 
 
 | Eval | % | Semana | Tipo | Descripción |
 |------|---|--------|------|-------------|
-| E1 | 15% | 4 | Taller + Quiz | POO en C#: Clases, herencia, polimorfismo |
-| E2 | 15% | 7 | Lab + Sustentación | TDD/BDD: Sistema con pruebas unitarias |
-| E3 | 20% | 10 | Proyecto parcial | Desarrollo Web: ASP.NET + HTML5 + Bootstrap |
-| E4 | 15% | 14 | Lab + Sustentación | ADO.NET: CRUD completo con SQL Server |
-| E5 | 15% | 16 | Proyecto | Aplicación con datos desconectados |
-| EF | 20% | 19-21 | Examen final | Evaluación integral teórico-práctica |
+| E1 | 15% | 4 | Examen | POO en Python: Clases, herencia, polimorfismo |
+| E2 | 15% | 6 | Taller | TDD/BDD: Sistema con pytest y behave |
+| E3 | 20% | 8 | Proyecto | Desarrollo Web: FastAPI + Jinja2 + HTMX |
+| E4 | 15% | 11 | Laboratorio | Persistencia archivos: JSON, CSV, pathlib |
+| E5 | 15% | 13 | Proyecto | SQLAlchemy ORM: CRUD completo |
+| E6 | 20% | 16 | Proyecto | Arquitectura: Repository + Clean Architecture |
 
 ### Seguimientos Universitarios
 
-| Seguimiento | Porcentaje | Evaluaciones | Fecha Límite |
-|-------------|------------|--------------|--------------|
-| Primer Seguimiento | 50% | E1 (15%) + E2 (15%) + E3 (20%) | 2026-03-27 |
-| Segundo Seguimiento | 80% | E4 (15%) + E5 (15%) | 2026-05-15 |
-| Tercer Seguimiento | 100% | Examen Final (20%) | 2026-05-28 |
+| Seguimiento | Porcentaje | Evaluaciones | Fecha Límite | Estado |
+|-------------|------------|--------------|--------------|--------|
+| Primer Seguimiento | 50% | E1 (15%) + E2 (15%) + E3 (20%) | 2026-03-27 | ✅ E3: 26/03 |
+| Segundo Seguimiento | 80% | E4 (15%) + E5 (15%) | 2026-05-15 | ✅ E5: 07/05 |
+| Tercer Seguimiento | 100% | E6 (20%) | 2026-05-28 | ✅ E6: 26/05 |
 
 ---
 
@@ -283,72 +340,89 @@ Al ingeniero informático que se desempeñe como programador, indudablemente le 
 
 | Lab | Tema | Objetivo |
 |-----|------|----------|
-| 1 | C# Básico | Sintaxis, variables, estructuras de control |
-| 2 | POO en C# | Clases, herencia, polimorfismo, interfaces |
-| 3 | Testing con xUnit | TDD, pruebas unitarias, mocking |
-| 4 | ASP.NET Básico | Crear aplicación web MVC básica |
-| 5 | ADO.NET y SQL Server | Conexión, CRUD, transacciones |
-| 6 | Proyecto Integrador | Aplicación completa con todas las tecnologías |
+| 1 | Python Básico | Sintaxis, variables, estructuras de control |
+| 2 | POO en Python | Clases, herencia, polimorfismo, dataclasses |
+| 3 | Testing con pytest | TDD, fixtures, parametrize, cobertura |
+| 4 | FastAPI Básico | Crear API REST con validación Pydantic |
+| 5 | SQLAlchemy ORM | Modelos, relaciones, CRUD, transacciones |
+| 6 | Proyecto Integrador | Aplicación completa con arquitectura limpia |
 
 ---
 
 ## Proyectos del Curso
 
 ### Proyecto 1: Sistema de Gestión (Semana 1-4)
-- **Objetivo:** Aplicar POO en C#
-- **Tecnología:** C#, Visual Studio
-- **Entrega:** Código + documentación
+- **Objetivo:** Aplicar POO en Python
+- **Tecnología:** Python 3.11+, pytest, dataclasses
+- **Entrega:** Código + tests + documentación
 
-### Proyecto 2: Sistema con Testing (Semana 5-7)
-- **Objetivo:** Implementar TDD
-- **Tecnología:** C#, xUnit
-- **Entrega:** Código con tests + cobertura
+### Proyecto 2: Sistema con Testing (Semana 5-6)
+- **Objetivo:** Implementar TDD/BDD
+- **Tecnología:** Python, pytest, behave
+- **Entrega:** Código con tests + cobertura >80%
 
-### Proyecto 3: Aplicación Web (Semana 8-10)
+### Proyecto 3: Aplicación Web (Semana 7-8)
 - **Objetivo:** Desarrollo web full-stack
-- **Tecnología:** ASP.NET, HTML5, Bootstrap
+- **Tecnología:** FastAPI, Jinja2, HTMX, Bootstrap 5
 - **Entrega:** Aplicación web funcional
 
-### Proyecto 4: Sistema con Base de Datos (Semana 11-14)
-- **Objetivo:** Persistencia con ADO.NET
-- **Tecnología:** C#, ADO.NET, SQL Server
-- **Entrega:** CRUD completo
+### Proyecto 4: Sistema con Base de Datos (Semana 11-13)
+- **Objetivo:** Persistencia con SQLAlchemy
+- **Tecnología:** Python, SQLAlchemy, SQLite/PostgreSQL
+- **Entrega:** CRUD completo + migraciones
 
-### Proyecto Final: Aplicación Empresarial (Semana 15-18)
-- **Objetivo:** Integrar todas las tecnologías
-- **Tecnología:** ASP.NET, ADO.NET, DataSet, SQL Server
-- **Entrega:** Sistema completo + sustentación
+### Proyecto Final: Aplicación Empresarial (Semana 14-16)
+- **Objetivo:** Integrar todas las tecnologías con arquitectura limpia
+- **Tecnología:** FastAPI, SQLAlchemy, Repository, Pydantic
+- **Entrega:** Sistema completo + tests + sustentación
 
 ---
 
 ## Materiales y Recursos
 
 ### Hardware
-- Computadores con Windows 10/11
+- Computadores con Windows 10/11, macOS o Linux
 - Mínimo 8GB RAM
 - Procesador moderno
 
 ### Software
-- Visual Studio 2022 (Community o superior)
-- SQL Server Express / Developer Edition
-- SQL Server Management Studio
-- Git y GitHub Desktop
-- .NET 8 SDK
+- Python 3.11+
+- VS Code o PyCharm
+- Git y GitHub
+- Docker (opcional para PostgreSQL)
 
 ---
 
 ## Bibliografía
 
-### Básica (según PDF oficial)
-1. **"Programación Orientada a Objetos en C#"** - Pérez Chaves, Roger, Universidad de Matanzas, Colombia, 2003
-2. **"C# and the .NET Platform"** - TROELSEN, Andrew, Apress, Colombia, 2000
-3. **"Así es Microsoft Visual Studio .NET"** - Microsoft Corporation, Mc Graw-Hill, Colombia, 2000
-4. **"Microsoft .NET Framework"** - Microsoft Corporation, Mc Graw-Hill, Colombia, 2000
+### Básica (Actualizada Python)
+1. **"Python Crash Course"** - Eric Matthes, No Starch Press, 3rd Edition
+2. **"Fluent Python"** - Luciano Ramalho, O'Reilly Media, 2nd Edition
+3. **"Architecture Patterns with Python"** - Harry Percival & Bob Gregory, O'Reilly
+4. **FastAPI Documentation** - https://fastapi.tiangolo.com/
 
 ### Complementaria
-- Documentación oficial de Microsoft (docs.microsoft.com)
-- Tutoriales de C# en Microsoft Learn
-- Documentación de Bootstrap
+- Documentación oficial de Python (docs.python.org)
+- Documentación de SQLAlchemy 2.0
+- Real Python tutorials
+- Test-Driven Development with Python (Harry Percival)
+
+---
+
+## Stack Tecnológico del Curso
+
+| Componente | Tecnología | Versión |
+|------------|------------|---------|
+| **Lenguaje** | Python | 3.11+ |
+| **Framework Web** | FastAPI | 0.109+ |
+| **ORM** | SQLAlchemy | 2.0+ |
+| **Templates** | Jinja2 | 3.1+ |
+| **Frontend Interactivo** | HTMX | 1.9+ |
+| **CSS Framework** | Bootstrap | 5.3+ |
+| **Testing** | pytest | 8.0+ |
+| **Validación** | Pydantic | 2.5+ |
+| **Base de Datos** | SQLite / PostgreSQL | - |
+| **Migraciones** | Alembic | 1.13+ |
 
 ---
 
@@ -356,14 +430,16 @@ Al ingeniero informático que se desempeñe como programador, indudablemente le 
 
 | Evento | Fecha |
 |--------|-------|
-| Inicio de clases | 2026-01-06 |
+| Inicio de clases | 2026-02-03 (Martes) |
+| Concertación de Evaluación | 2026-02-13 |
 | Semana Santa (receso) | 2026-03-30 al 2026-04-03 |
 | Primer Seguimiento (50%) | Límite: 2026-03-27 |
 | Segundo Seguimiento (80%) | Límite: 2026-05-15 |
 | Tercer Seguimiento (100%) | Límite: 2026-05-28 |
-| Fin del semestre | 2026-05-28 |
+| Finalización de clases | 2026-05-29 |
 
 ---
 
-**Última actualización:** 2026-01-31  
-**Estado:** Corregido según PDF oficial IF0100-v002
+**Última actualización:** 2026-02-14
+**Estado:** Actualizado a Python/FastAPI para 2026-1
+**Nota:** Los resultados de aprendizaje se mantienen según PDF oficial IF0100-v002

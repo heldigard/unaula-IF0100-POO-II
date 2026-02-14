@@ -3,11 +3,11 @@
 ## Unidad 00 - Fundamentos de Python
 
 ### Clase 00 - Introducción a Python
-- **[ESP] Curso Python desde Cero - Píldoras Informáticas**
-  - URL: https://www.youtube.com/watch?v=RkXfQR5aqEE
-  - Duración: 3:42:15
-  - Canal: Píldoras Informáticas (2.6M suscriptores)
-  - Justificación: Excelente introducción en español, cubre instalación y conceptos básicos
+- **[ESP] Curso COMPLETO de Python DESDE CERO (2025)**
+  - URL: https://www.youtube.com/watch?v=TkN2i-_4N4g
+  - Duración: 8+ horas
+  - Canal: midudev (Miguel Ángel Durán)
+  - Justificación: Curso completo y práctico para aprender Python desde cero. Cubre fundamentos, requests, IA, regex y web scraping. Todo el código disponible en GitHub.
 
 ### Clase 01 - Variables y Tipos de Datos
 - **[ESP] Variables y Tipos de Datos en Python**
@@ -59,11 +59,11 @@
 ## Unidad 01 - POO Avanzada
 
 ### Clase 01 - Clases y Objetos
-- **[ESP] Programación Orientada a Objetos en Python**
-  - URL: https://www.youtube.com/watch?v=t6pzQk7K9kI
-  - Duración: 1:02:30
-  - Canal: Píldoras Informáticas
-  - Justificación: Excelente introducción a POO en español
+- **[ESP] Curso de POO con PYTHON desde CERO (Completo)**
+  - URL: https://www.youtube.com/watch?v=HtKqSJX7VoM
+  - Duración: Curso completo
+  - Canal: Soy Dalto (1M+ suscriptores)
+  - Justificación: Curso completo de Programación Orientada a Objetos con Python desde cero. Cubre conceptos de POO, clases, objetos, herencia, polimorfismo y más.
 
 - **[ENG] Python OOP 1: Classes and Instances**
   - URL: https://www.youtube.com/watch?v=ZDa-Z5JzLYM
@@ -157,11 +157,11 @@
 ## Unidad 03 - FastAPI y Persistencia
 
 ### Clase 01 - Introducción a FastAPI
-- **[ESP] FastAPI Curso Completo**
-  - URL: https://www.youtube.com/watch?v=Fn313F3JUYQ
-  - Duración: 1:45:30
-  - Canal: MoureDev by Brais Moure (500K suscriptores)
-  - Justificación: Curso completo en español sobre FastAPI
+- **[ESP] FastAPI desde CERO - Tutorial Mejor Explicado**
+  - URL: https://www.youtube.com/watch?v=TatMVGGMxY0
+  - Duración: Fundamentos completos
+  - Canal: FastAPI en Español
+  - Justificación: El tutorial mejor explicado para aprender FastAPI desde cero. Cubre los fundamentos de FastAPI, instalación e inicio con este framework de Python.
 
 - **[ENG] FastAPI Python Tutorial**
   - URL: https://www.youtube.com/watch?v=7K2pP4tqF0E
