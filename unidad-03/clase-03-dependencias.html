@@ -3,1718 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Inyección de dependencias en FastAPI: Depends(), get_current_user, get_db. Curso IF0100 - POO II">
-    <meta name="author" content="IF0100 - UNAULA">
-    <title>Inyección de Dependencias | IF0100 - POO II</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-
-    <!-- Prism.js para syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet">
-
+    <title>Clase 10: Dependencias en FastAPI | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--dark-text);
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        header h3 {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        /* Navigation */
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
-        }
-
-        .sidebar h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            color: var(--dark-text);
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            display: block;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        section {
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        section h2 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        section h3 {
-            color: var(--dark-text);
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section h4 {
-            color: var(--secondary-color);
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Lists */
-        section ul, section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Code Blocks */
-        pre[class*="language-"] {
-            border-radius: 6px;
-            margin: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        code[class*="language-"] {
-            font-size: 0.9rem;
-        }
-
-        /* Alert Boxes */
-        .alert-note {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-warning-custom {
-            background-color: #fff3cd;
-            border-left: 4px solid var(--warning-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-tip {
-            background-color: #d1e7dd;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            border-left: 4px solid var(--danger-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Tables */
-        .table {
-            margin: 1rem 0;
-        }
-
-        .table thead {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Dependency Diagram */
-        .dependency-flow {
-            background: linear-gradient(to right, #e3f2fd, #bbdefb);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .dependency-step {
-            text-align: center;
-            margin: 0.5rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--light-bg);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-        }
-
-        /* Print Styles */
-        @media print {
-            header {
-                background: white !important;
-                color: black !important;
-                padding: 1rem 0;
-            }
-
-            .navbar, .sidebar, footer {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid var(--border-color);
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header h2 {
-                font-size: 1rem;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Barra de progreso de lectura */
-        .reading-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color) 0%, #0a58ca 100%);
-            width: 0%;
-            z-index: 9999;
-            transition: width 0.1s ease;
-        }
-
-        /* Boton volver arriba */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 9998;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
-        }
-
-        /* Seccion de criterios de evaluacion */
-        .criterios-evaluacion {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .criterios-evaluacion h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .criterio-badge {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .criterio-descripcion {
-            margin-top: 0.5rem;
-            color: var(--secondary-color);
-            font-size: 0.95rem;
-        }
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <!-- Barra de progreso de lectura -->
-    <div class="reading-progress-bar" id="readingProgressBar"></div>
-
-    <!-- Boton volver arriba -->
-    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-        </svg>
-    </button>
-
-    <!-- Header -->
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 3: Desarrollo Backend</h2>
-            <h3>Clase 03: Inyección de Dependencias</h3>
-            <p class="mt-2 mb-0">
-                <span class="badge bg-light text-dark">📅 Semana 10 - Lunes 14/04/2026</span>
-            </p>
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
+            <h3>Clase 10: Dependencias</h3>
+            <p class="mt-2"><span class="badge bg-info">E3: Proyecto Web - Próxima semana</span></p>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-02-pydantic-validacion.html">Anterior: Pydantic</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-04-testing-fastapi.html">Siguiente: Testing</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
-            <!-- Sidebar -->
             <aside class="col-lg-3">
                 <nav class="sidebar">
                     <h5>Contenido</h5>
-                    <ul>
-                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#depends">Función Depends()</a></li>
-                        <li><a href="#dependencias-comunes">Dependencias Comunes</a></li>
-                        <li><a href="#get-db">Sesión de Base de Datos</a></li>
-                        <li><a href="#autenticacion">get_current_user</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
-                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#depends" class="text-decoration-none">Depends()</a></li>
+                        <li><a href="#db" class="text-decoration-none">Conexión a BD</a></li>
+                        <li><a href="#auth" class="text-decoration-none">Autenticación</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
                     </ul>
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
             <main class="col-lg-9">
-                <!-- Sección 1: Objetivos -->
                 <section id="objetivos">
-                    <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
                     <ul>
-                        <li>Comprender qué es inyección de dependencias</li>
-                        <li>Usar Depends() de FastAPI para inyectar dependencias</li>
-                        <li>Crear funciones de dependencia reutilizables</li>
-                        <li>Inyectar sesión de base de datos (get_db)</li>
-                        <li>Implementar get_current_user para autenticación</li>
-                        <li>Manejar el ciclo de vida de dependencias</li>
-                        <li>Sobreescribir dependencias para testing</li>
+                        <li>Entender la inyección de dependencias</li>
+                        <li>Usar Depends() para compartir código</li>
+                        <li>Crear dependencias de base de datos</li>
+                        <li>Implementar autenticación con Depends</li>
                     </ul>
-
-                    <!-- Criterios de Evaluación -->
-                    <div class="criterios-evaluacion">
-                        <h3>Criterios de Evaluación Relacionados</h3>
-                        <div>
-                            <span class="criterio-badge">E3</span>
-                            <span class="criterio-descripcion">Implementa inyección de dependencias para autenticación y acceso a datos</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E5</span>
-                            <span class="criterio-descripcion">Gestiona correctamente el ciclo de vida de recursos con yield</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E6</span>
-                            <span class="criterio-descripcion">Crea dependencias reutilizables y documentadas</span>
-                        </div>
-                    </div>
                 </section>
 
-                <!-- Sección 2: Conceptos Teóricos -->
-                <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
-
-                    <h3>¿Qué es Inyección de Dependencias?</h3>
-                    <p>
-                        <strong>Inyección de Dependencias (DI)</strong> es un patrón donde las dependencias
-                        de un componente se proveen externamente en lugar de crearse internamente.
-                        Esto permite:
-                    </p>
-                    <ul>
-                        <li><strong>Mayor flexibilidad:</strong> Cambiar implementaciones sin modificar código</li>
-                        <li><strong>Mejor testing:</strong> Inyectar mocks en lugar de implementaciones reales</li>
-                        <li><strong>Menos acoplamiento:</strong> Componentes dependen de abstracciones, no implementaciones</li>
-                        <li><strong>Código más limpio:</strong> Separación de responsabilidades</li>
-                    </ul>
-
-                    <div class="alert-tip">
-                        <strong>Analogía:</strong> En lugar de que un teléfono construya su propia cámara,
-                        recibe una cámara inyectada que puede cambiar entre diferentes modelos.
-                    </div>
-
-                    <h3>Inyección de Dependencias en FastAPI</h3>
-
-                    <p>
-                        FastAPI implementa DI usando la función <code>Depends()</code>, que permite
-                        declarar dependencias que FastAPI resuelve automáticamente antes de ejecutar
-                        el endpoint.
-                    </p>
-
-                    <h3>Flujo de Inyección</h3>
-
-                    <div class="dependency-flow">
-                        <div class="dependency-step">
-                            1️⃣ <strong>Request llega al endpoint</strong>
-                        </div>
-                        <div class="dependency-step">
-                            2️⃣ <strong>FastAPI detecta Depends()</strong>
-                        </div>
-                        <div class="dependency-step">
-                            3️⃣ <strong>Ejecuta función de dependencia</strong>
-                        </div>
-                        <div class="dependency-step">
-                            4️⃣ <strong>Pasa resultado al endpoint</strong>
-                        </div>
-                        <div class="dependency-step">
-                            5️⃣ <strong>Endpoint usa la dependencia</strong>
-                        </div>
-                    </div>
-
-                    <h3>Ventajas de Depends() en FastAPI</h3>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Reutilización</h5>
-                                    <p class="card-text">
-                                        Una función de dependencia puede usarse en múltiples
-                                        endpoints sin duplicar código.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Testing Fácil</h5>
-                                    <p class="card-text">
-                                        Sobreescribe dependencias con mocks para
-                                        testing aislado.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Documentación Auto</h5>
-                                    <p class="card-text">
-                                        Las dependencias se documentan automáticamente
-                                        en OpenAPI.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Optimización</h5>
-                                    <p class="card-text">
-                                        FastAPI optimiza llamadas a dependencias
-                                        compartidas.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Sección 3: Función Depends() -->
                 <section id="depends">
-                    <h2>Función Depends()</h2>
+                    <h2 class="text-primary border-bottom pb-2">Depends() (20 min)</h2>
+                    
+                    <p>La <strong>inyección de dependencias</strong> permite compartir código entre rutas.</p>
 
-                    <h3>Sintaxis Básica</h3>
-
-                    <pre><code class="language-python">from fastapi import FastAPI, Depends
+                    <h4>Ejemplo Básico</h4>
+                    <pre><code class="language-python">from fastapi import Depends, FastAPI
 
 app = FastAPI()
 
-# Función de dependencia simple
-def obtener_usuario_comun():
-    """Retorna un usuario común (sin autenticación)."""
-    return {"username": "anonimo", "rol": "invitado"}
-
-# Usar la dependencia en un endpoint
-@app.get("/datos")
-def leer_datos(usuario: dict = Depends(obtener_usuario_comun)):
-    """
-    FastAPI ejecuta obtener_usuario_comun() automáticamente
-    y pasa el resultado como 'usuario'.
-    """
-    return {
-        "mensaje": f"Hola {usuario['username']}",
-        "tu_rol": usuario["rol"]
-    }</code></pre>
-
-                    <h3>Dependencia con Parámetros</h3>
-
-                    <pre><code class="language-python">from typing import Optional
-
-def obtener_parametros_comunes(
-    skip: int = 0,
-    limit: int = 10,
-    ordenar_por: str = "id"
-):
-    """
-    Función de dependencia que acepta parámetros
-    comunes de query que múltiples endpoints pueden usar.
-    """
-    return {"skip": skip, "limit": limit, "ordenar_por": ordenar_por}
-
-@app.get("/items")
-def listar_items(params: dict = Depends(obtener_parametros_comunes)):
-    """Usa los parámetros comunes de paginación."""
-    return {
-        "items": [],
-        "skip": params["skip"],
-        "limit": params["limit"],
-        "ordenar_por": params["ordenar_por"]
-    }
-
-@app.get("/productos")
-def listar_productos(params: dict = Depends(obtener_parametros_comunes)):
-    """Reutiliza los mismos parámetros de paginación."""
-    return {
-        "productos": [],
-        "skip": params["skip"],
-        "limit": params["limit"],
-        "ordenar_por": params["ordenar_por"]
-    }</code></pre>
-
-                    <h3>Dependencia en Dependencia (Anidada)</h3>
-
-                    <pre><code class="language-python">def obtener_db():
-    """Simula obtener conexión a BD."""
-    return {"conexion": "simulada"}
-
-def obtener_usuario(db: dict = Depends(obtener_db)):
-    """
-    Dependencia que usa otra dependencia.
-
-    FastAPI resuelve las dependencias en orden:
-    1. obtener_db()
-    2. obtener_usuario(resultado de obtener_db)
-    """
-    return {
-        "username": "usuario",
-        "db": db["conexion"]
-    }
-
-@app.get("/datos-usuario")
-def leer_datos_usuario(usuario: dict = Depends(obtener_usuario)):
-    """
-    La cadena de dependencias es:
-    obtener_db() -> obtener_usuario() -> endpoint
-    """
-    return {
-        "usuario": usuario["username"],
-        "db_conexion": usuario["db"]
-    }</code></pre>
-
-                    <h3>Dependencia como Clase</h3>
-
-                    <pre><code class="language-python">from fastapi import Depends
-
-class CommonParams:
-    """
-    Clase de dependencia con parámetros comunes.
-
-    FastAPI soporta dependencias que son clases.
-    Los atributos de la clase se resuelven automáticamente.
-    """
-    def __init__(
-        self,
-        skip: int = 0,
-        limit: int = 10,
-        ordenar_por: str = "id"
-    ):
-        self.skip = skip
-        self.limit = limit
-        self.ordenar_por = ordenar_por
-
-@app.get("/items")
-def listar_items(params: CommonParams = Depends()):
-    """
-    Usa la clase CommonParams como dependencia.
-    """
-    return {
-        "skip": params.skip,
-        "limit": params.limit,
-        "ordenar_por": params.ordenar_por
-    }</code></pre>
-
-                    <h3>Dependencia con yield</h3>
-
-                    <pre><code class="language-python">def obtener_db():
-    """
-    Dependencia con setup y teardown.
-
-    yield separa el setup (antes) del teardown (después).
-    """
-    # SETUP: Crear conexión
-    db = {"conexion": "bd", "estado": "conectado"}
-
-    try:
-        yield db  # Retorna la conexión al endpoint
-
-    finally:
-        # TEARDOWN: Limpiar recursos
-        db["estado"] = "desconectado"
-        print("Conexión cerrada")
-
-@app.get("/datos")
-def leer_datos(db: dict = Depends(obtener_db)):
-    """Usa la BD con limpieza automática."""
-    return {"datos": "...", "estado_db": db["estado"]}</code></pre>
-
-                    <div class="alert-warning-custom">
-                        <strong>Uso de yield:</strong> Útil para recursos que necesitan cleanup,
-                        como conexiones a BD, archivos, transacciones, etc.
-                    </div>
-                </section>
-
-                <!-- Sección 4: Dependencias Comunes -->
-                <section id="dependencias-comunes">
-                    <h2>Dependencias Comunes</h2>
-
-                    <h3>Validación de Headers</h3>
-
-                    <pre><code class="language-python">from fastapi import Header, HTTPException, status
-
-async def verificar_token_header(
-    x_token: str = Header(..., description="Token de autenticación en header")
-):
-    """
-    Verifica que el header X-Token esté presente.
-
-    El '...' indica que es requerido.
-    """
-    if x_token != "token-secreto":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido"
-        )
-    return x_token
-
-@app.get("/protegido", dependencies=[Depends(verificar_token_header)])
-def endpoint_protegido():
-    """
-    Endpoint protegido que requiere token válido.
-
-    Nota: Se puede usar dependencies=[] para dependencias
-    que no necesitan ser pasadas como parámetros.
-    """
-    return {"mensaje": "Acceso concedido"}</code></pre>
-
-                    <h3>Validación de API Key</h3>
-
-                    <pre><code class="language-python">from fastapi import Security, HTTPException, status
-from fastapi.security.api_key import APIKeyHeader
-
-API_KEY_NAME = "x-api-key"
-api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
-
-async def get_api_key(api_key_header: str = Security(api_key_header)):
-    """
-    Valida API Key desde header X-API-Key.
-
-    auto_error=False permite manejar errores manualmente.
-    """
-    if api_key_header == "my-secret-key":
-        return api_key_header
-
-    raise HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="API Key inválida o faltante"
-    )
-
-@app.get("/secure-data", dependencies=[Depends(get_api_key)])
-def leer_datos_seguros():
-    """Endpoint que requiere API Key válida."""
-    return {"datos": "información secreta"}</code></pre>
-
-                    <h3>Límite de Rate (Rate Limiting)</h3>
-
-                    <pre><code class="language-python">from collections import Counter
-from fastapi import Request, HTTPException, status
-
-# Simulación de rate limiting
-request_counts_by_ip = Counter()
-
-async def verificar_rate_limit(request: Request):
-    """Verifica que el IP no exceda el límite de requests."""
-    client_ip = request.client.host
-    request_counts_by_ip[client_ip] += 1
-
-    if request_counts_by_ip[client_ip] > 10:
-        raise HTTPException(
-            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail="Demasiados requests. Intenta más tarde."
-        )
-
-    return client_ip
-
-@app.get("/api-datos", dependencies=[Depends(verificar_rate_limit)])
-def datos_con_rate_limit():
-    """Endpoint con rate limiting."""
-    return {"datos": "información"}</code></pre>
-                </section>
-
-                <!-- Sección 5: Sesión de Base de Datos -->
-                <section id="get-db">
-                    <h2>Sesión de Base de Datos (get_db)</h2>
-
-                    <h3>Crear Dependencia de BD</h3>
-
-                    <pre><code class="language-python"># dependencies/database.py
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from typing import Generator
-
-# URL de la base de datos
-DATABASE_URL = "postgresql://user:password@localhost/dbname"
-
-# Crear engine y SessionLocal
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-def get_db() -> Generator[Session, None, None]:
-    """
-    Dependencia que provee una sesión de BD.
-
-    Yields:
-        Session: Sesión de SQLAlchemy para usar en endpoints
-
-    El cleanup se ejecuta automáticamente después del endpoint.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# main.py
-
-from fastapi import Depends
-from dependencies.database import get_db
-from sqlalchemy.orm import Session
-
-@app.get("/usuarios")
-def listar_usuarios(db: Session = Depends(get_db)):
-    """
-    Endpoint que usa la sesión de BD.
-
-    La sesión se crea automáticamente y se cierra
-    después de que el endpoint termina.
-    """
-    usuarios = db.query(Usuario).all()
-    return usuarios</code></pre>
-
-                    <h3>Operaciones CRUD con get_db</h3>
-
-                    <pre><code class="language-python">from fastapi import Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from dependencies.database import get_db
-from models.usuario import Usuario
-
-@app.post("/usuarios")
-def crear_usuario(
-    username: str,
-    email: str,
-    db: Session = Depends(get_db)
-):
-    """Crea usuario en BD usando la sesión inyectada."""
-    # Verificar duplicados
-    existe = db.query(Usuario).filter(Usuario.username == username).first()
-    if existe:
-        raise HTTPException(status_code=400, detail="Username ya existe")
-
-    # Crear usuario
-    nuevo_usuario = Usuario(username=username, email=email)
-    db.add(nuevo_usuario)
-    db.commit()
-    db.refresh(nuevo_usuario)
-
-    return nuevo_usuario
-
-@app.get("/usuarios/{usuario_id}")
-def obtener_usuario(
-    usuario_id: int,
-    db: Session = Depends(get_db)
-):
-    """Obtiene usuario por ID."""
-    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
-    if not usuario:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    return usuario
-
-@app.delete("/usuarios/{usuario_id}")
-def eliminar_usuario(
-    usuario_id: int,
-    db: Session = Depends(get_db)
-):
-    """Elimina usuario."""
-    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
-    if not usuario:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-
-    db.delete(usuario)
-    db.commit()
-    return {"mensaje": "Usuario eliminado"}</code></pre>
-
-                    <h3>Transacciones con yield</h3>
-
-                    <pre><code class="language-python">def get_db_with_transaction() -> Generator[Session, None, None]:
-    """
-    Sesión de BD con manejo de transacciones.
-
-    Si hay excepción, hace rollback automático.
-    Si todo sale bien, hace commit en el finally.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-        db.commit()  # Commit explícito
-    except Exception:
-        db.rollback()  # Rollback en caso de error
-        raise
-    finally:
-        db.close()
-
-@app.post("/transferir")
-def transferir_datos(
-    origen_id: int,
-    destino_id: int,
-    db: Session = Depends(get_db_with_transaction)
-):
-    """
-    Operación que requiere transacción.
-
-    Si algo falla, todos los cambios se revierten.
-    """
-    # Múltiples operaciones que deben ser atómicas
-    # Si hay error, rollback automático por get_db_with_transaction
-    pass</code></pre>
-                </section>
-
-                <!-- Sección 6: Autenticación -->
-                <section id="autenticacion">
-                    <h2>get_current_user: Autenticación</h2>
-
-                    <h3>Dependencia de Autenticación</h3>
-
-                    <pre><code class="language-python"># dependencies/auth.py
-
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.orm import Session
-from dependencies.database import get_db
-from models.usuario import Usuario
-
-security = HTTPBearer()
-
-def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: Session = Depends(get_db)
-) -> Usuario:
-    """
-    Verifica el token JWT y retorna el usuario autenticado.
-
-    Args:
-        credentials: Credenciales Bearer token extraídas del header
-        db: Sesión de BD para buscar usuario
-
-    Returns:
-        Usuario: Usuario autenticado
-
-    Raises:
-        HTTPException: Si el token es inválido o el usuario no existe
-    """
-    token = credentials.credentials
-
-    # TODO: Validar token JWT (clase siguiente)
-    # Por ahora, simulamos que el token es el username
-    username = token  # Simplificación
-
-    # Buscar usuario en BD
-    usuario = db.query(Usuario).filter(Usuario.username == username).first()
-    if not usuario:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    if not usuario.activo:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Usuario inactivo"
-        )
-
-    return usuario</code></pre>
-
-                    <h3>Usar get_current_user en Endpoints</h3>
-
-                    <pre><code class="language-python"># main.py
-
-from fastapi import Depends
-from dependencies.auth import get_current_user
-from models.usuario import Usuario
-
-@app.get("/usuarios/me")
-def leer_mi_perfil(
-    current_user: Usuario = Depends(get_current_user)
-):
-    """
-    Retorna el perfil del usuario autenticado.
-
-    Si no hay token válido o es inválido, FastAPI
-    retorna 401 automáticamente.
-    """
-    return {
-        "id": current_user.id,
-        "username": current_user.username,
-        "email": current_user.email,
-        "activo": current_user.activo
-    }
-
-@app.put("/usuarios/me")
-def actualizar_mi_perfil(
-    nombre_completo: str | None = None,
-    current_user: Usuario = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """Actualiza el perfil del usuario autenticado."""
-    if nombre_completo:
-        current_user.nombre_completo = nombre_completo
-
-    db.commit()
-    db.refresh(current_user)
-
-    return current_user</code></pre>
-
-                    <h3>get_current_user con Opcionales</h3>
-
-                    <pre><code class="language-python">from typing import Optional
-
-def get_current_user_optional(
-    credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False)),
-    db: Session = Depends(get_db)
-) -> Optional[Usuario]:
-    """
-    Versión opcional de get_current_user.
-
-    Returns:
-        Usuario si está autenticado, None si no
-
-    auto_error=False permite no lanzar error si no hay token.
-    """
-    if not credentials:
-        return None
-
-    token = credentials.credentials
-    usuario = db.query(Usuario).filter(Usuario.username == token).first()
-    return usuario
-
-@app.get("/contenido-publico")
-def contenido_publico(
-    user: Optional[Usuario] = Depends(get_current_user_optional)
-):
-    """
-    Endpoint accesible para todos, pero con contenido
-    personalizado si está autenticado.
-    """
-    if user:
-        return {"mensaje": f"Hola {user.username}", "autenticado": True}
-    else:
-        return {"mensaje": "Hola anónimo", "autenticado": False}</code></pre>
-
-                    <h3>Verificar Roles/Permisos</h3>
-
-                    <pre><code class="language-python">from enum import Enum
-
-class Rol(str, Enum):
-    """Roles disponibles en el sistema."""
-    ADMIN = "admin"
-    USUARIO = "usuario"
-    INVITADO = "invitado"
-
-def require_rol(rol_requerido: Rol):
-    """
-    Factory que crea una dependencia que verifica rol.
-
-    Args:
-        rol_requerido: Rol necesario para acceder
-
-    Returns:
-        Función de dependencia
-    """
-    def dependencia_rol(current_user: Usuario = Depends(get_current_user)) -> Usuario:
-        if current_user.rol != rol_requerido:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Permiso insuficiente"
-            )
-        return current_user
-
-    return dependencia_rol
-
-@app.get("/admin/panel", dependencies=[Depends(require_rol(Rol.ADMIN))])
-def panel_admin():
-    """Solo administradores pueden acceder."""
-    return {"mensaje": "Panel de administración"}</code></pre>
-                </section>
-
-                <!-- Sección 7: Ejemplos Prácticos -->
-                <section id="ejemplos">
-                    <h2>Ejemplos Prácticos</h2>
-
-                    <h3>Ejemplo 1: dependencies.py Completo</h3>
-
-                    <pre><code class="language-python"># dependencies/database.py
-
-from sqlalchemy.orm import Session
-from typing import Generator
-
-def get_db() -> Generator[Session, None, None]:
-    """
-    Provee una sesión de BD con cleanup automático.
-
-    Yields:
-        Session: Sesión de SQLAlchemy
-
-    Example:
-        @app.get("/usuarios")
-        def listar_usuarios(db: Session = Depends(get_db)):
-            return db.query(Usuario).all()
-    """
-    from dependencies.database import SessionLocal
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# dependencies/auth.py
-
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.orm import Session
-from models.usuario import Usuario
-
-security = HTTPBearer()
-
-def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: Session = Depends(get_db)
-) -> Usuario:
-    """
-    Verifica autenticación y retorna usuario actual.
-
-    Args:
-        credentials: Token Bearer del header Authorization
-        db: Sesión de BD
-
-    Returns:
-        Usuario: Usuario autenticado
-
-    Raises:
-        HTTPException: 401 si token inválido, 403 si usuario inactivo
-    """
-    # TODO: Validar token JWT
-    username = credentials.credentials
-
-    usuario = db.query(Usuario).filter(Usuario.username == username).first()
-    if not usuario or not usuario.activo:
-        raise HTTPException(status_code=401, detail="No autenticado")
-
-    return usuario
-
-def get_current_active_user(
-    current_user: Usuario = Depends(get_current_user)
-) -> Usuario:
-    """
-    Verifica que el usuario esté activo.
-
-    Args:
-        current_user: Usuario autenticado
-
-    Returns:
-        Usuario: Usuario activo
-
-    Raises:
-        HTTPException: 403 si usuario inactivo
-    """
-    if not current_user.activo:
-        raise HTTPException(status_code=403, detail="Usuario inactivo")
-    return current_user</code></pre>
-
-                    <h3>Ejemplo 2: Override para Testing</h3>
-
-                    <pre><code class="language-python"># tests/test_api.py
-
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from main import app
-
-# Base de datos de prueba
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-def override_get_db():
-    """Override de get_db para testing."""
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
-
-@app.get("/usuarios")
-def listar_usuarios(db: Session = Depends(get_db)):
-    return db.query(Usuario).all()
-
-# Test con override
-def test_listar_usuarios():
-    """Test que override la dependencia de BD."""
-    # Override get_db
-    app.dependency_overrides[get_db] = override_get_db
-
-    client = TestClient(app)
-
-    # Crear datos de prueba
-    db = TestingSessionLocal()
-    db.add(Usuario(username="test", email="test@example.com"))
-    db.commit()
-
-    # Hacer request
-    response = client.get("/usuarios")
-
-    # Verificar
-    assert response.status_code == 200
-    assert len(response.json()) > 0
-
-    # Limpiar override
-    app.dependency_overrides = {}</code></pre>
-
-                    <h3>Ejemplo 3: Múltiples Dependencias</h3>
-
-                    <pre><code class="language-python"># dependencies/config.py
-
-def obtener_configuracion():
-    """Carga configuración desde variables de entorno."""
-    return {
-        "app_name": "TaskFlow API",
-        "version": "0.1.0",
-        "debug": True
-    }
-
-# main.py
-
-from fastapi import Depends
-from dependencies.database import get_db
-from dependencies.auth import get_current_user
-from dependencies.config import obtener_configuracion
-from models.usuario import Usuario
-
-@app.get("/proyectos/mis-proyectos")
-def listar_mis_proyectos(
-    current_user: Usuario = Depends(get_current_user),
-    db: Session = Depends(get_db),
-    config: dict = Depends(obtener_configuracion)
-):
-    """
-    Endpoint con múltiples dependencias.
-
-    FastAPI resuelve todas antes de ejecutar el endpoint:
-    1. get_current_user (verifica autenticación)
-    2. get_db (provee sesión de BD)
-    3. obtener_configuracion (provee configuración)
-    """
-    proyectos = db.query(Proyecto).filter(
-        Proyecto.usuario_id == current_user.id
-    ).all()
-
-    return {
-        "proyectos": proyectos,
-        "app": config["app_name"],
-        "version": config["version"]
-    }</code></pre>
-                </section>
-
-                <!-- Sección 8: Buenas Prácticas -->
-                <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
-
-                    <h3>Organización de Dependencias</h3>
-
-                    <pre><code class="language-text">dependencies/
-├── __init__.py
-├── database.py          # get_db, get_db_with_transaction
-├── auth.py              # get_current_user, get_current_active_user
-└── config.py            # obtener_configuracion</code></pre>
-
-                    <h3>DO's con Depends()</h3>
-
-                    <ul>
-                        <li><strong>Usa Depends para lógica reutilizable:</strong> Autenticación, BD, configuración</li>
-                        <li><strong>Usa yield para recursos con cleanup:</strong> Conexiones, archivos, transacciones</li>
-                        <li><strong>Documenta con docstrings:</strong> Explica qué hace la dependencia</li>
-                        <li><strong>Usa type hints:</strong> Mejora autocompletado y documentación</li>
-                        <li><strong>Override en tests:</strong> Usa dependency_overrides para testing</li>
-                    </ul>
-
-                    <h3>DON'Ts con Depends()</h3>
-
-                    <ul>
-                        <li><strong No creas conexiones en cada endpoint:</strong> Usa Depends(get_db)</li>
-                        <li><strong No mezcles lógica de negocio:</strong> Solo autenticación/provisión</li>
-                        <li><strong No ignores return types:</strong> Siempre especifica qué retorna</li>
-                        <li><strong No uses dependencias globales:</strong> Rompe testing y mantenibilidad</li>
-                    </ul>
-
-                    <h3>Ciclo de Vida de Dependencias</h3>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Método</th>
-                                <th>Cuándo se Ejecuta</th>
-                                <th>Uso Típico</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Función normal</strong></td>
-                                <td>Cada request</td>
-                                <td>get_db, get_current_user</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Función con yield</strong></td>
-                                <td>Antes y después del endpoint</td>
-                                <td>Conexiones, transacciones</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Clase</strong></td>
-                                <td>Cada request</td>
-                                <td>CommonParams, validadores</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <!-- Sección 9: Ejercicio Guido -->
-                <section id="ejercicio">
-                    <h2>Ejercicio Guido: Endpoint Protegido</h2>
-
-                    <h3>Objetivo</h3>
-                    <p>
-                        Crear un endpoint protegido que usa Depends() para verificar autenticación
-                        y obtener sesión de BD.
-                    </p>
-
-                    <h3>Instrucciones Paso a Paso</h3>
-
-                    <h4>Paso 1: Crear dependencies/ (2 min)</h4>
-
-                    <pre><code class="language-bash"># Crear directorio de dependencias
-mkdir -p dependencies
-touch dependencies/__init__.py</code></pre>
-
-                    <h4>Paso 2: Crear get_db (5 min)</h4>
-
-                    <pre><code class="language-python"># dependencies/database.py
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from typing import Generator
-
-# Para testing, usar SQLite
-DATABASE_URL = "sqlite:///./taskflow.db"
-
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-def get_db() -> Generator[Session, None, None]:
-    """
-    Provee una sesión de BD.
-
-    Yields:
-        Session: Sesión de SQLAlchemy
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()</code></pre>
-
-                    <h4>Paso 3: Crear get_current_user (10 min)</h4>
-
-                    <pre><code class="language-python"># dependencies/auth.py
-
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from sqlalchemy.orm import Session
-from typing import Optional
-
-from dependencies.database import get_db
-from models.usuario import Usuario
-
-security = HTTPBearer()
-
-def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: Session = Depends(get_db)
-) -> Usuario:
-    """
-    Verifica autenticación y retorna usuario actual.
-
-    Args:
-        credentials: Token Bearer del header Authorization
-        db: Sesión de BD para buscar usuario
-
-    Returns:
-        Usuario: Usuario autenticado
-
-    Raises:
-        HTTPException: 401 si no autenticado
-    """
-    # Por ahora, el token es el username (simplificación)
-    # En la siguiente clase veremos JWT real
-    token = credentials.credentials
-
-    # Buscar usuario
-    usuario = db.query(Usuario).filter(
-        Usuario.username == token
-    ).first()
-
-    if not usuario:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    if not usuario.activo:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Usuario inactivo"
-        )
-
-    return usuario</code></pre>
-
-                    <h4>Paso 4: Crear Endpoint Protegido (5 min)</h4>
-
-                    <pre><code class="language-python"># main.py
-
-from fastapi import FastAPI, Depends
-from pydantic import BaseModel
-from typing import List
-from datetime import datetime
-
-from dependencies.auth import get_current_user
-from dependencies.database import get_db
-from models.usuario import Usuario
-from sqlalchemy.orm import Session
+# Función de dependencia
+def parametros_comunes(skip: int = 0, limit: int = 10):
+    return {"skip": skip, "limit": limit}
+
+# Usar Depends en una ruta
+@app.get("/items/")
+async def read_items(params: dict = Depends(parametros_comunes)):
+    return params
+
+# Múltiples rutas usan la misma dependencia
+@app.get("/users/")
+async def read_users(params: dict = Depends(parametros_comunes)):
+    return params
+
+# curl http://localhost:8000/items/?skip=20&limit=5
+# {"skip": 20, "limit": 5}</code></pre>
+
+                    <h4>Dependencias Anidadas</h4>
+                    <pre><code class="language-python">from fastapi import Depends, FastAPI
 
 app = FastAPI()
 
-class UsuarioResponse(BaseModel):
-    id: int
-    username: str
-    email: str
-    activo: bool
+def obtener_query(q: str | None = None):
+    return q
 
-@app.get("/usuarios/me", response_model=UsuarioResponse)
-def leer_mi_perfil(
-    current_user: Usuario = Depends(get_current_user)
+def obtener_skip(skip: int = 0):
+    return skip
+
+# Depende de dos dependencias
+def parametros_completos(
+    q: str | None = Depends(obtener_query),
+    skip: int = Depends(obtener_skip)
 ):
-    """
-    Endpoint protegido que retorna el perfil del usuario autenticado.
+    return {"q": q, "skip": skip}
 
-    Si no hay token o es inválido, retorna 401 automáticamente.
-    """
-    return UsuarioResponse(
-        id=current_user.id,
-        username=current_user.username,
-        email=current_user.email,
-        activo=current_user.activo
-    )
+@app.get("/items/")
+async def read_items(params: dict = Depends(parametros_completos)):
+    return params</code></pre>
+                </section>
 
-@app.get("/usuarios/mis-proyectos", response_model=List[dict])
-def listar_mis_proyectos(
-    current_user: Usuario = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """
-    Lista proyectos del usuario autenticado.
+                <section id="db">
+                    <h2 class="text-primary border-bottom pb-2">Conexión a Base de Datos (20 min)</h2>
+                    
+                    <h4>Simular Conexión a BD</h4>
+                    <pre><code class="language-python">from fastapi import Depends, FastAPI
+from typing import Generator
 
-    Usa dos dependencias:
-    1. get_current_user: Verifica autenticación
-    2. get_db: Provee sesión de BD
-    """
-    from models.proyecto import Proyecto
+app = FastAPI()
 
-    proyectos = db.query(Proyecto).filter(
-        Proyecto.usuario_id == current_user.id
-    ).all()
+# Simular conexión a base de datos
+class Database:
+    def __init__(self):
+        self.connected = False
+    
+    def connect(self):
+        self.connected = True
+        print("Conectando a BD...")
+        return self
+    
+    def disconnect(self):
+        self.connected = False
+        print("Desconectando de BD...")
+    
+    def query(self, sql: str):
+        return [{"id": 1, "name": "Item 1"}]
 
-    return [
-        {
-            "id": p.id,
-            "nombre": p.nombre,
-            "descripcion": p.descripcion
-        }
-        for p in proyectos
-    ]</code></pre>
+# Dependencia que maneja la conexión
+def get_db() -> Generator:
+    db = Database()
+    try:
+        yield db.connect()
+    finally:
+        db.disconnect()
 
-                    <h4>Paso 5: Probar sin Auth (3 min)</h4>
+@app.get("/items/")
+async def get_items(db: Database = Depends(get_db)):
+    # db ya está conectado
+    items = db.query("SELECT * FROM items")
+    return items
 
-                    <pre><code class="language-bash"># Probar endpoint sin token (debe fallar)
-curl http://localhost:8000/usuarios/me
-
-# Respuesta esperada:
-# {
-#   "detail": "Not authenticated"
-# }</code></pre>
-
-                    <h4>Paso 6: Probar con Auth (3 min)</h4>
-
-                    <pre><code class="language-bash"># Probar con token Bearer
-curl http://localhost:8000/usuarios/me \
-  -H "Authorization: Bearer juan" \
-  -H "Content-Type: application/json"
-
-# Respuesta esperada:
-# {
-#   "id": 1,
-#   "username": "juan",
-#   "email": "juan@example.com",
-#   "activo": true
-# }</code></pre>
-
-                    <h4>Paso 7: Probar en /docs (2 min)</h4>
-
-                    <p>
-                        Abrir http://localhost:8000/docs, ir a /usuarios/me, hacer clic en "Try it out",
-                        y agregar el header Authorization con valor "Bearer juan".
-                    </p>
-
-                    <h3>Conexión con TaskFlow</h3>
-                    <p>
-                        Las dependencias que estás creando hoy son la base de la autenticación
-                        y el manejo de BD de TaskFlow. Estas dependencias permitirán:
-                    </p>
-                    <ul>
-                        <li>Proteger endpoints con autenticación JWT (próxima clase)</li>
-                        <li>Acceder a BD PostgreSQL de forma limpia</li>
-                        <li>Testear endpoints con mocks de dependencias</li>
-                        <li>Mantener código DRY (Don't Repeat Yourself)</li>
-                    </ul>
-
-                    <h3>Resultado Esperado</h3>
-                    <p>Al finalizar este ejercicio, tendrás:</p>
-                    <ul>
-                        <li>✅ get_db para inyección de sesión de BD</li>
-                        <li>✅ get_current_user para autenticación básica</li>
-                        <li>✅ Endpoint protegido que usa ambas dependencias</li>
-                        <li>✅ Autenticación probada con curl</li>
-                        <li>✅ Base para JWT en la siguiente clase</li>
-                    </ul>
+# Al finalizar la petición, se desconecta automáticamente</code></pre>
 
                     <div class="alert-note">
-                        <strong>Próxima clase:</strong> Implementaremos JWT real para tokens
-                        seguros y refresh tokens.
+                        <strong>Patrón yield:</strong> El código antes del yield se ejecuta antes, el código después (finally) se ejecuta al terminar.
                     </div>
                 </section>
 
-                <!-- Sección 10: Referencias -->
-                <section id="videos">
-                    <h2>📺 Videos Recomendados</h2>
+                <section id="auth">
+                    <h2 class="text-primary border-bottom pb-2">Autenticación (20 min)</h2>
+                    
+                    <h4>Verificar Token</h4>
+                    <pre><code class="language-python">from fastapi import Depends, FastAPI, HTTPException, Header
+from typing import Optional
 
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-secondary me-2">Inglés</span>
-                                FastAPI Dependencies Explained
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Amigoscode | 24:15 min</h6>
-                            <p class="card-text">
-                                Sistema de dependencias en FastAPI
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=d0xhqBfYqZk" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
+app = FastAPI()
 
+# Base de datos simulada de usuarios
+usuarios_db = {
+    "token-juan": {"username": "juan", "rol": "admin"},
+    "token-ana": {"username": "ana", "rol": "user"}
+}
+
+def verificar_token(x_token: str = Header(...)):
+    """Extrae y verifica el token del header."""
+    if x_token not in usuarios_db:
+        raise HTTPException(status_code=401, detail="Token inválido")
+    return usuarios_db[x_token]
+
+def requerir_admin(usuario: dict = Depends(verificar_token)):
+    """Verifica que el usuario sea admin."""
+    if usuario["rol"] != "admin":
+        raise HTTPException(status_code=403, detail="Requiere rol de admin")
+    return usuario
+
+# Ruta protegida con autenticación
+@app.get("/perfil")
+async def obtener_perfil(usuario: dict = Depends(verificar_token)):
+    return {"usuario": usuario}
+
+# Ruta protegida solo para admins
+@app.delete("/usuarios/{user_id}")
+async def eliminar_usuario(
+    user_id: int,
+    admin: dict = Depends(requerir_admin)
+):
+    return {"message": f"Usuario {user_id} eliminado", "por": admin["username"]}
+
+# Probar:
+# curl -H "X-Token: token-juan" http://localhost:8000/perfil
+# curl -H "X-Token: token-invalido" http://localhost:8000/perfil  # 401</code></pre>
+
+                    <h4>Esquema de Dependencias</h4>
+                    <pre><code class="language-python"># Obtener usuario actual (requiere token)
+async def get_current_user(token: str = Header(...)):
+    # Verificar token...
+    return {"id": 1, "username": "juan"}
+
+# Verificar permisos (requiere usuario)
+async def check_permissions(
+    user: dict = Depends(get_current_user),
+    required_role: str = "admin"
+):
+    if user.get("role") != required_role:
+        raise HTTPException(403, "Sin permisos")
+    return user
+
+# Ruta con múltiples dependencias
+@app.post("/proyectos")
+async def crear_proyecto(
+    proyecto: ProyectoCreate,
+    user: dict = Depends(check_permissions)  # Token + Permisos
+):
+    # Crear proyecto...
+    return proyecto</code></pre>
                 </section>
 
-                <section id="referencias">
-                    <h2>Para Profundizar</h2>
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API Protegida (10 min)</h2>
+                    
+                    <p>Crea una API de tareas con autenticación.</p>
+
+                    <pre><code class="language-python">from fastapi import FastAPI, Depends, HTTPException, Header
+from pydantic import BaseModel
+from typing import Optional, List
+
+app = FastAPI()
+
+# Modelos
+class TareaCreate(BaseModel):
+    titulo: str
+    descripcion: Optional[str] = None
+
+class Tarea(TareaCreate):
+    id: int
+    usuario_id: int
+
+# Usuarios simulados
+USUARIOS = {
+    "token123": {"id": 1, "username": "juan"},
+    "token456": {"id": 2, "username": "ana"}
+}
+
+# Base de datos simulada
+tareas_db = []
+contador_tarea = 1
+
+# Dependencias
+def get_current_user(x_token: str = Header(...)):
+    if x_token not in USUARIOS:
+        raise HTTPException(401, "Token inválido")
+    return USUARIOS[x_token]
+
+# Rutas protegidas
+@app.post("/tareas", response_model=Tarea)
+async def crear_tarea(
+    tarea: TareaCreate,
+    usuario: dict = Depends(get_current_user)
+):
+    global contador_tarea
+    nueva = Tarea(
+        id=contador_tarea,
+        usuario_id=usuario["id"],
+        **tarea.model_dump()
+    )
+    tareas_db.append(nueva)
+    contador_tarea += 1
+    return nueva
+
+@app.get("/tareas/mis-tareas", response_model=List[Tarea])
+async def listar_mis_tareas(
+    usuario: dict = Depends(get_current_user)
+):
+    # Filtrar solo tareas del usuario autenticado
+    return [t for t in tareas_db if t.usuario_id == usuario["id"]]
+
+@app.delete("/tareas/{tarea_id}")
+async def eliminar_tarea(
+    tarea_id: int,
+    usuario: dict = Depends(get_current_user)
+):
+    for i, tarea in enumerate(tareas_db):
+        if tarea.id == tarea_id and tarea.usuario_id == usuario["id"]:
+            del tareas_db[i]
+            return {"message": "Tarea eliminada"}
+    raise HTTPException(404, "Tarea no encontrada o no es tuya")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Beneficio:</strong> Las dependencias evitan repetir código de autenticación/BD en cada ruta.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
                     <ul>
-                        <li>
-                            <a href="https://fastapi.tiangolo.com/tutorial/dependencies/" target="_blank">
-                                FastAPI Tutorial - Dependencies
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://fastapi.tiangolo.com/tutorial/security/" target="_blank">
-                                FastAPI Tutorial - Security
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/watch?v=eCP1qPHBNg4" target="_blank">
-                                Video: FastAPI Dependencies Explained
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/tiangolo/fastapi" target="_blank">
-                                FastAPI en GitHub
-                            </a>
-                        </li>
+                        <li><strong>Depends():</strong> Inyecta dependencias en rutas</li>
+                        <li><strong>yield:</strong> Gestiona recursos (conectar/desconectar BD)</li>
+                        <li><strong>Reutilización:</strong> Múltiples rutas usan la misma dependencia</li>
+                        <li><strong>Autenticación:</strong> Verificar token en dependencia</li>
+                        <li><strong>Jerarquía:</strong> Dependencias pueden depender de otras</li>
                     </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Agrega una dependencia que verifique que el usuario esté activo antes de permitir crear tareas.
+                    </div>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- Google Colab Button -->
-    <div class="alert-tip mt-4">
-        <a href="https://colab.research.google.com/drive/U3C03-DEPS" target="_blank" class="btn btn-primary">
-            <i class="bi bi-laptop me-2"></i>📱 Abrir Notebook en Google Colab
-        </a>
-    </div>
-
-    <!-- Footer -->
-    <footer>
+    <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-14</p>
-            <p class="mt-2">
-                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
-                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
-            </p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-02-pydantic-validacion.html">← Anterior</a> | <a href="clase-04-testing-fastapi.html">Siguiente: Testing FastAPI →</a></p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-
-    <!-- Prism.js Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
-    <!-- Prism.js Language Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-
-    <!-- Highlight code on page load -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-        });
-    </script>
-
-    <!-- Barra de progreso y boton volver arriba -->
-    <script>
-        // Barra de progreso de lectura
-        function updateReadingProgress() {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            document.getElementById('readingProgressBar').style.width = progress + '%';
-        }
-
-        // Boton volver arriba
-        function toggleBackToTop() {
-            const backToTopBtn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        }
-
-        // Scroll suave al top
-        document.getElementById('backToTop').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Event listeners
-        window.addEventListener('scroll', function() {
-            updateReadingProgress();
-            toggleBackToTop();
-        });
-
-        // Inicializar
-        updateReadingProgress();
-    </script>
 </body>
 </html>

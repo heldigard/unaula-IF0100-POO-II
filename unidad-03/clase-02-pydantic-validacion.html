@@ -3,614 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dominar Pydantic: BaseModel, Field, validaciones y schemas request/response. Curso IF0100 - POO II">
-    <meta name="author" content="IF0100 - UNAULA">
-    <title>Pydantic y Validación | IF0100 - POO II</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-
-    <!-- Prism.js para syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet">
-
+    <title>Clase 9: Validación con Pydantic | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--dark-text);
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        header h3 {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        /* Navigation */
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
-        }
-
-        .sidebar h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            color: var(--dark-text);
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            display: block;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        section {
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        section h2 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        section h3 {
-            color: var(--dark-text);
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section h4 {
-            color: var(--secondary-color);
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Lists */
-        section ul, section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Code Blocks */
-        pre[class*="language-"] {
-            border-radius: 6px;
-            margin: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        code[class*="language-"] {
-            font-size: 0.9rem;
-        }
-
-        /* Alert Boxes */
-        .alert-note {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-warning-custom {
-            background-color: #fff3cd;
-            border-left: 4px solid var(--warning-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-tip {
-            background-color: #d1e7dd;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            border-left: 4px solid var(--danger-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Tables */
-        .table {
-            margin: 1rem 0;
-        }
-
-        .table thead {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--light-bg);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-        }
-
-        /* Print Styles */
-        @media print {
-            header {
-                background: white !important;
-                color: black !important;
-                padding: 1rem 0;
-            }
-
-            .navbar, .sidebar, footer {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid var(--border-color);
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header h2 {
-                font-size: 1rem;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Barra de progreso de lectura */
-        .reading-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color) 0%, #0a58ca 100%);
-            width: 0%;
-            z-index: 9999;
-            transition: width 0.1s ease;
-        }
-
-        /* Boton volver arriba */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 9998;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
-        }
-
-        /* Seccion de criterios de evaluacion */
-        .criterios-evaluacion {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .criterios-evaluacion h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .criterio-badge {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .criterio-descripcion {
-            margin-top: 0.5rem;
-            color: var(--secondary-color);
-            font-size: 0.95rem;
-        }
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <!-- Barra de progreso de lectura -->
-    <div class="reading-progress-bar" id="readingProgressBar"></div>
-
-    <!-- Boton volver arriba -->
-    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-        </svg>
-    </button>
-
-    <!-- Header -->
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 3: Desarrollo Backend</h2>
-            <h3>Clase 02: Pydantic y Validación</h3>
-            <p class="mt-2 mb-0">
-                <span class="badge bg-light text-dark">📅 Semana 9 - Miércoles 09/04/2026</span>
-            </p>
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
+            <h3>Clase 9: Validación con Pydantic</h3>
+            <p class="mt-2"><span class="badge bg-info">E3: Proyecto Web - En 2 semanas</span></p>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-01-fastapi-intro.html">Anterior: FastAPI</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-03-dependencias.html">Siguiente: Dependencias</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
-            <!-- Sidebar -->
             <aside class="col-lg-3">
                 <nav class="sidebar">
                     <h5>Contenido</h5>
-                    <ul>
-                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#basemodel">Pydantic BaseModel</a></li>
-                        <li><a href="#field">Field y Validaciones</a></li>
-                        <li><a href="#schemas">Schemas Request/Response</a></li>
-                        <li><a href="#validacion-custom">Validación Personalizada</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
-                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#pydantic" class="text-decoration-none">¿Qué es Pydantic?</a></li>
+                        <li><a href="#modelos" class="text-decoration-none">Modelos BaseModel</a></li>
+                        <li><a href="#validacion" class="text-decoration-none">Validaciones</a></li>
+                        <li><a href="#fastapi" class="text-decoration-none">FastAPI + Pydantic</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
                     </ul>
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
             <main class="col-lg-9">
-                <!-- Sección 1: Objetivos -->
                 <section id="objetivos">
-                    <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
                     <ul>
-                        <li>Comprender qué es Pydantic y su relación con FastAPI</li>
-                        <li>Crear modelos usando BaseModel de Pydantic</li>
-                        <li>Aplicar validaciones automáticas con Field</li>
-                        <li>Diferenciar schemas de request y response</li>
-                        <li>Usar tipos complejos de Pydantic (List, Optional, etc.)</li>
-                        <li>Personalizar mensajes de error de validación</li>
-                        <li>Conectar schemas con modelos de dominio existentes</li>
+                        <li>Entender qué es Pydantic y para qué sirve</li>
+                        <li>Crear modelos con BaseModel</li>
+                        <li>Validar datos automáticamente</li>
+                        <li>Usar Field para validaciones avanzadas</li>
+                        <li>Integrar Pydantic con FastAPI</li>
                     </ul>
-
-                    <!-- Criterios de Evaluación -->
-                    <div class="criterios-evaluacion">
-                        <h3>Criterios de Evaluación Relacionados</h3>
-                        <div>
-                            <span class="criterio-badge">E3</span>
-                            <span class="criterio-descripcion">Implementa validación de datos con Pydantic en schemas request/response</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E5</span>
-                            <span class="criterio-descripcion">Aplica validaciones personalizadas y manejo de errores</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E6</span>
-                            <span class="criterio-descripcion">Diferencia apropiadamente entre schemas de entrada y salida</span>
-                        </div>
-                    </div>
                 </section>
 
-                <!-- Sección 2: Conceptos Teóricos -->
-                <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
+                <section id="pydantic">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es Pydantic? (10 min)</h2>
+                    
+                    <p><strong>Pydantic</strong> es una librería para validación de datos usando type hints de Python.</p>
 
-                    <h3>¿Qué es Pydantic?</h3>
-                    <p>
-                        <strong>Pydantic</strong> es una librería de Python para validación de datos
-                        usando <strong>type hints</strong>. Es el corazón de FastAPI para:
-                    </p>
+                    <h4>Ventajas</h4>
                     <ul>
-                        <li>Validar datos de entrada (request body)</li>
-                        <li>Convertir datos (serialización/deserialización)</li>
-                        <li>Documentar modelos automáticamente (OpenAPI)</li>
-                        <li>Proveer autocompletado en editores</li>
+                        <li>✅ Valida datos automáticamente</li>
+                        <li>✅ Convierte tipos automáticamente (str → int)</li>
+                        <li>✅ Muestra errores claros</li>
+                        <li>✅ Integrado con FastAPI</li>
                     </ul>
 
-                    <div class="alert-tip">
-                        <strong>Integración FastAPI + Pydantic:</strong>
-                        FastAPI usa Pydantic para validar automáticamente todo el
-                        request body, query parameters y path parameters.
-                    </div>
-
-                    <h3>Por qué usar Pydantic</h3>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Validación Automática</h5>
-                                    <p class="card-text">
-                                        Los datos se validan automáticamente antes de que tu
-                                        código se ejecute. Errores se convierten en HTTP 422.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Documentación Auto-Generada</h5>
-                                    <p class="card-text">
-                                        Los schemas Pydantic se convierten automáticamente en
-                                        documentación OpenAPI en /docs.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Type Hints</h5>
-                                    <p class="card-text">
-                                        Usa type hints estándar de Python para definir tipos,
-                                        lo que mejora el autocompletado.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Serialización</h5>
-                                    <p class="card-text">
-                                        Convierte automáticamente objetos Python a JSON y
-                                        viceversa.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>Schema Request vs Response</h3>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Schema</th>
-                                <th>Propósito</th>
-                                <th>Ejemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Request</strong></td>
-                                <td>Validar datos de entrada</td>
-                                <td>UsuarioCreate (con password)</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Response</strong></td>
-                                <td>Definir datos de salida</td>
-                                <td>UsuarioResponse (sin password)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="alert-warning-custom">
-                        <strong>Importante:</strong> Nunca incluyas passwords en schemas de response.
-                        Usa schemas diferentes para request y response.
-                    </div>
+                    <pre><code class="language-bash">pip install pydantic</code></pre>
                 </section>
 
-                <!-- Sección 3: BaseModel -->
-                <section id="basemodel">
-                    <h2>Pydantic BaseModel</h2>
-
-                    <h3>Crear un Schema Básico</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel
-
-class UsuarioBase(BaseModel):
-    """Schema base de usuario."""
-    username: str
-    email: str
-    nombre_completo: str | None = None  # Python 3.10+
-    # o: from typing import Optional
-    # nombre_completo: Optional[str] = None</code></pre>
-
-                    <h3>Uso en FastAPI</h3>
-
-                    <pre><code class="language-python">from fastapi import FastAPI
-from pydantic import BaseModel
-
-app = FastAPI()
-
-class UsuarioCreate(BaseModel):
-    """Schema para crear usuario."""
-    username: str
-    email: str
-    password: str
-
-@app.post("/usuarios")
-def crear_usuario(usuario: UsuarioCreate):
-    """
-    FastAPI valida automáticamente:
-    - username, email, password están presentes
-    - Son del tipo correcto (str)
-    """
-    return {
-        "mensaje": "Usuario creado",
-        "username": usuario.username,
-        "email": usuario.email
-        # Note: password NO se retorna (seguridad)
-    }</code></pre>
-
-                    <h3>Serialización Automática</h3>
+                <section id="modelos">
+                    <h2 class="text-primary border-bottom pb-2">Modelos BaseModel (20 min)</h2>
+                    
+                    <p>Los modelos definen la estructura de los datos.</p>
 
                     <pre><code class="language-python">from pydantic import BaseModel
 
@@ -618,968 +82,291 @@ class Usuario(BaseModel):
     id: int
     username: str
     email: str
+    edad: int
 
 # Crear instancia
-usuario = Usuario(id=1, username="juan", email="juan@example.com")
+usuario = Usuario(
+    id=1,
+    username="juan",
+    email="juan@email.com",
+    edad=25
+)
 
-# Convertir a dict (JSON serializable)
-usuario_dict = usuario.dict()
-# {'id': 1, 'username': 'juan', 'email': 'juan@example.com'}
+print(usuario)
+# id=1 username='juan' email='juan@email.com' edad=25
+
+# Acceder a atributos
+print(usuario.username)  # "juan"
+
+# Convertir a dict
+print(usuario.model_dump())
+# {'id': 1, 'username': 'juan', 'email': 'juan@email.com', 'edad': 25}
 
 # Convertir a JSON
-usuario_json = usuario.json()
-# '{"id": 1, "username": "juan", "email": "juan@example.com"}'</code></pre>
+print(usuario.model_dump_json())
+# '{"id":1,"username":"juan","email":"juan@email.com","edad":25}'</code></pre>
 
-                    <h3>Herencia de Schemas</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel
-
-class UsuarioBase(BaseModel):
-    """Campos compartidos por todos los schemas de usuario."""
-    username: str
-    email: str
-    nombre_completo: str | None = None
-
-class UsuarioCreate(UsuarioBase):
-    """Schema para crear usuario (agrega password)."""
-    password: str
-
-class UsuarioResponse(UsuarioBase):
-    """Schema para respuesta (agrega campos calculados)."""
-    id: int
-    activo: bool = True
-    creado_en: str | None = None  # ISO format
-
-class UsuarioUpdate(BaseModel):
-    """Schema para actualizar usuario (todos opcionales)."""
-    email: str | None = None
-    nombre_completo: str | None = None
-    activo: bool | None = None</code></pre>
-
-                    <h3>Configuración de BaseModel</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, ConfigDict
+                    <h4>Campos Opcionales</h4>
+                    <pre><code class="language-python">from typing import Optional
+from pydantic import BaseModel
 
 class Usuario(BaseModel):
-    """Modelo Pydantic con configuración."""
     id: int
     username: str
     email: str
+    edad: Optional[int] = None  # Opcional
+    telefono: Optional[str] = None  # Opcional
 
-    model_config = ConfigDict(
-        str_strip_whitespace=True,  # Limpiar espacios en strings
-        validate_assignment=True,     # Validar al asignar atributos
-        extra='forbid',               # Rechazar campos extra
-        json_schema_extra={           # Metadata para OpenAPI
-            "example": {
-                "id": 1,
-                "username": "juan",
-                "email": "juan@example.com"
-            }
-        }
-    )</code></pre>
-                </section>
+# Puede no incluir edad ni telefono
+u1 = Usuario(id=1, username="juan", email="juan@email.com")
+u2 = Usuario(id=2, username="ana", email="ana@email.com", edad=30)</code></pre>
 
-                <!-- Sección 4: Field y Validaciones -->
-                <section id="field">
-                    <h2>Field y Validaciones</h2>
-
-                    <h3>Validaciones Básicas con Field</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, Field
-
-class UsuarioCreate(BaseModel):
-    """Schema con validaciones."""
-    username: str = Field(
-        min_length=3,
-        max_length=50,
-        pattern="^[a-zA-Z0-9_]+$",  # Solo alfanuméricos y _
-        description="Nombre de usuario único"
-    )
-    email: str = Field(
-        pattern=r"^[\w\.-]+@[\w\.-]+\.\w+$",  # Regex simple de email
-        description="Email válido del usuario"
-    )
-    password: str = Field(
-        min_length=8,
-        max_length=100,
-        description="Password (mínimo 8 caracteres)"
-    )
-    nombre_completo: str | None = Field(
-        default=None,
-        max_length=100,
-        description="Nombre completo del usuario"
-    )</code></pre>
-
-                    <h3>Mensajes de Error Personalizados</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, Field
-
-class UsuarioCreate(BaseModel):
-    username: str = Field(
-        ...,
-        min_length=3,
-        max_length=50,
-        description="Nombre de usuario único",
-        json_schema_extra={
-            "examples": ["juanperez", "maria_garcia"]
-        }
-    )
-    email: str = Field(
-        ...,
-        pattern=r"^[\w\.-]+@[\w\.-]+\.\w+$",
-        description="Email válido"
-    )
-    password: str = Field(
-        ...,
-        min_length=8,
-        description="Password (mínimo 8 caracteres)",
-        json_schema_extra={
-            "examples": ["pass1234", "SecurePass!2026"]
-        }
-    )
-
-    # Mensajes personalizados
-    nombre_completo: str | None = Field(
-        default=None,
-        max_length=100,
-        json_schema_extra={
-            "description": "Nombre completo",
-            "examples": ["Juan Pérez", "María García"]
-        }
-    )</code></pre>
-
-                    <h3>Validadores Comunes</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, Field, EmailStr, HttpUrl, field_validator
-
-class ProyectoCreate(BaseModel):
-    """Schema para crear proyecto."""
-    nombre: str = Field(
-        ...,
-        min_length=3,
-        max_length=100,
-        description="Nombre del proyecto"
-    )
-    descripcion: str | None = Field(
-        default=None,
-        max_length=500,
-        description="Descripción del proyecto"
-    )
-    url_repositorio: HttpUrl | None = Field(
-        default=None,
-        description="URL del repositorio (opcional)"
-    )
-    usuario_email: EmailStr = Field(
-        ...,
-        description="Email del usuario propietario"
-    )
-
-    @field_validator('nombre')
-    @classmethod
-    def nombre_no_vacio(cls, v: str) -> str:
-        """Valida que el nombre no esté vacío después de strip."""
-        if not v or not v.strip():
-            raise ValueError('El nombre no puede estar vacío')
-        return v.strip()
-
-    @field_validator('descripcion')
-    @classmethod
-    def descripcion_no_vacia_si_se_provee(cls, v: str | None) -> str | None:
-        """Valida descripción si se provee."""
-        if v is not None and not v.strip():
-            raise ValueError('La descripción no puede estar vacía')
-        return v if v is None else v.strip()</code></pre>
-
-                    <h3>Números y Fechas</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, Field, field_validator
-from datetime import datetime
-from typing import Optional
-
-class TareaCreate(BaseModel):
-    """Schema para crear tarea."""
-    titulo: str = Field(
-        ...,
-        min_length=3,
-        max_length=200
-    )
-    prioridad: int = Field(
-        default=2,
-        ge=1,  # Greater than or equal to 1
-        le=5   # Less than or equal to 5
-    )
-    fecha_limite: Optional[datetime] = None
-    porcentaje_completado: float = Field(
-        default=0.0,
-        ge=0.0,   # Mínimo 0
-        le=100.0  # Máximo 100
-    )
-
-    @field_validator('fecha_limite')
-    @classmethod
-    def fecha_limite_futuro(cls, v: Optional[datetime]) -> Optional[datetime]:
-        """Valida que la fecha límite sea futura."""
-        if v is not None and v < datetime.now():
-            raise ValueError('La fecha límite debe ser futura')
-        return v</code></pre>
-                </section>
-
-                <!-- Sección 5: Schemas Request/Response -->
-                <section id="schemas">
-                    <h2>Schemas Request/Response</h2>
-
-                    <h3>Patrón Base-Create-Response</h3>
-
-                    <pre><code class="language-python"># schemas/usuario.py
-
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
-from typing import Optional
-from datetime import datetime
-
-class UsuarioBase(BaseModel):
-    """Campos base compartidos."""
-    username: str = Field(..., min_length=3, max_length=50)
-    email: EmailStr
-    nombre_completo: Optional[str] = Field(None, max_length=100)
-
-class UsuarioCreate(UsuarioBase):
-    """Schema para crear usuario (INCLUYE PASSWORD)."""
-    password: str = Field(..., min_length=8)
-
-class UsuarioUpdate(BaseModel):
-    """Schema para actualizar usuario (TODOS OPCIONALES)."""
-    email: Optional[EmailStr] = None
-    nombre_completo: Optional[str] = Field(None, max_length=100)
-    password: Optional[str] = Field(None, min_length=8)
-
-class UsuarioResponse(UsuarioBase):
-    """Schema para respuesta (SIN PASSWORD, con ID)."""
+                    <h4>Valores por Defecto</h4>
+                    <pre><code class="language-python">class Tarea(BaseModel):
     id: int
-    activo: bool = True
-    creado_en: datetime
+    titulo: str
+    descripcion: str = ""  # Valor por defecto
+    completada: bool = False  # Valor por defecto
+    prioridad: int = 1  # Baja=1, Media=2, Alta=3
 
-    model_config = ConfigDict(from_attributes=True)  # Pydantic v2</code></pre>
+t = Tarea(id=1, titulo="Hacer ejercicio")
+print(t.descripcion)   # ""
+print(t.completada)    # False
+print(t.prioridad)     # 1</code></pre>
+                </section>
 
-                    <h3>Usar Schemas en FastAPI</h3>
+                <section id="validacion">
+                    <h2 class="text-primary border-bottom pb-2">Validaciones (20 min)</h2>
+                    
+                    <h4>Validación Básica</h4>
+                    <pre><code class="language-python">from pydantic import BaseModel, EmailStr, Field
 
-                    <pre><code class="language-python"># main.py
-from fastapi import FastAPI, HTTPException, status
-from typing import List
-from schemas.usuario import UsuarioCreate, UsuarioResponse
+class Usuario(BaseModel):
+    id: int
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr  # Valida formato de email
+    edad: int = Field(..., ge=0, le=120)  # ge=greater/equal, le=less/equal
+
+# ✅ Válido
+u = Usuario(id=1, username="juan", email="juan@email.com", edad=25)
+
+# ❌ Error: username muy corto
+u = Usuario(id=1, username="ab", email="juan@email.com", edad=25)
+# ValidationError: username: ensure this value has at least 3 characters
+
+# ❌ Error: edad fuera de rango
+u = Usuario(id=1, username="juan", email="juan@email.com", edad=150)
+# ValidationError: edad: ensure this value is less than or equal to 120
+
+# ❌ Error: email inválido
+u = Usuario(id=1, username="juan", email="no-es-email", edad=25)
+# ValidationError: email: value is not a valid email address</code></pre>
+
+                    <h4>Field - Opciones de Validación</h4>
+                    <table class="table">
+                        <tr><th>Parámetro</th><th>Descripción</th><th>Ejemplo</th></tr>
+                        <tr><td><code>min_length</code></td><td>Longitud mínima</td><td><code>Field(min_length=3)</code></td></tr>
+                        <tr><td><code>max_length</code></td><td>Longitud máxima</td><td><code>Field(max_length=50)</code></td></tr>
+                        <tr><td><code>ge</code></td><td>Mayor o igual</td><td><code>Field(ge=0)</code></td></tr>
+                        <tr><td><code>le</code></td><td>Menor o igual</td><td><code>Field(le=100)</code></td></tr>
+                        <tr><td><code>gt</code></td><td>Mayor que</td><td><code>Field(gt=0)</code></td></tr>
+                        <tr><td><code>lt</code></td><td>Menor que</td><td><code>Field(lt=100)</code></td></tr>
+                        <tr><td><code>pattern</code></td><td>Regex</td><td><code>Field(pattern=r'^[a-z]+$')</code></td></tr>
+                    </table>
+
+                    <h4>Ejemplo Completo: Tarea</h4>
+                    <pre><code class="language-python">from pydantic import BaseModel, Field
+from typing import Optional
+from datetime import datetime
+
+class Tarea(BaseModel):
+    id: int = Field(..., ge=1)
+    titulo: str = Field(..., min_length=1, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
+    completada: bool = False
+    prioridad: int = Field(default=1, ge=1, le=5)
+    fecha_creacion: datetime = Field(default_factory=datetime.now)
+    
+    class Config:
+        # Permite crear desde atributos (usuario.titulo)
+        from_attributes = True
+
+t = Tarea(
+    id=1,
+    titulo="Aprender Pydantic",
+    descripcion="Estudiar validación de datos",
+    prioridad=3
+)
+
+print(t.model_dump())</code></pre>
+                </section>
+
+                <section id="fastapi">
+                    <h2 class="text-primary border-bottom pb-2">FastAPI + Pydantic (10 min)</h2>
+                    
+                    <h4>Request Body con Modelos</h4>
+                    <pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
-# Base de datos simulada
-db_usuarios = []
-next_id = 1
-
-@app.post("/usuarios", response_model=UsuarioResponse, status_code=201)
-def crear_usuario(usuario: UsuarioCreate):
-    """
-    Crea un nuevo usuario.
-
-    - request body: UsuarioCreate (con password)
-    - response: UsuarioResponse (sin password)
-    """
-    global next_id
-
-    # Verificar duplicados
-    for u in db_usuarios:
-        if u["username"] == usuario.username:
-            raise HTTPException(
-                status_code=400,
-                detail="Username ya existe"
-            )
-
-    # Crear usuario
-    nuevo_usuario = UsuarioResponse(
-        id=next_id,
-        username=usuario.username,
-        email=usuario.email,
-        nombre_completo=usuario.nombre_completo,
-        activo=True,
-        creado_en=datetime.now()
-    )
-
-    db_usuarios.append(nuevo_usuario.dict())
-    next_id += 1
-
-    return nuevo_usuario
-
-@app.get("/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios():
-    """Retorna lista de usuarios SIN passwords."""
-    return db_usuarios
-
-@app.get("/usuarios/{usuario_id}", response_model=UsuarioResponse)
-def obtener_usuario(usuario_id: int):
-    """Retorna un usuario específico."""
-    for usuario in db_usuarios:
-        if usuario["id"] == usuario_id:
-            return usuario
-
-    raise HTTPException(status_code=404, detail="Usuario no encontrado")</code></pre>
-
-                    <h3>Schemas Anidados</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel
-from typing import List
-
-class TareaResponse(BaseModel):
-    """Schema de tarea."""
-    id: int
-    titulo: str
-    estado: str
-
-class ProyectoResponse(BaseModel):
-    """Schema de proyecto CON tareas anidadas."""
-    id: int
-    nombre: str
-    tareas: List[TareaResponse] = []  # Lista anidada
-
-@app.get("/proyectos/{proyecto_id}", response_model=ProyectoResponse)
-def obtener_proyecto(proyecto_id: int):
-    """Retorna proyecto con sus tareas."""
-    # ... código que obtiene proyecto con tareas
-    return proyecto</code></pre>
-                </section>
-
-                <!-- Sección 6: Validación Personalizada -->
-                <section id="validacion-custom">
-                    <h2>Validación Personalizada</h2>
-
-                    <h3>Validadores con @field_validator</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, field_validator, ValidationInfo
-
-class UsuarioCreate(BaseModel):
-    username: str
+class CrearUsuarioRequest(BaseModel):
+    username: str = Field(..., min_length=3)
     email: str
-    password: str
-    password_confirm: str
-
-    @field_validator('username')
-    @classmethod
-    def username_alphanumerico(cls, v: str) -> str:
-        """Valida que username sea alfanumérico."""
-        if not v.isalnum():
-            raise ValueError('Username debe ser alfanumérico')
-        return v
-
-    @field_validator('password_confirm')
-    @classmethod
-    def passwords_coinciden(cls, v: str, info: ValidationInfo) -> str:
-        """Valida que passwords coincidan."""
-        if 'password' in info.data and v != info.data['password']:
-            raise ValueError('Los passwords no coinciden')
-        return v
-
-    @field_validator('password')
-    @classmethod
-    def password_fuerte(cls, v: str) -> str:
-        """Valida que el password sea fuerte."""
-        if len(v) < 8:
-            raise ValueError('Password muy corto (mínimo 8)')
-        if not any(c.isupper() for c in v):
-            raise ValueError('Password debe tener al menos una mayúscula')
-        if not any(c.isdigit() for c in v):
-            raise ValueError('Password debe tener al menos un número')
-        return v</code></pre>
-
-                    <h3>Validador con Múltiples Campos</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, field_validator, ValidationInfo, model_validator
-
-class ProyectoCreate(BaseModel):
-    nombre: str
-    usuario_id: int
-    fecha_inicio: datetime | None = None
-    fecha_fin: datetime | None = None
-
-    @model_validator(mode='after')
-    def validar_fechas(self) -> 'ProyectoCreate':
-        """Valida que fecha_fin sea posterior a fecha_inicio."""
-        if self.fecha_inicio and self.fecha_fin:
-            if self.fecha_fin <= self.fecha_inicio:
-                raise ValueError('fecha_fin debe ser posterior a fecha_inicio')
-        return self</code></pre>
-
-                    <h3>Root Validators (Pydantic v2)</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel, model_validator
-
-class TareaUpdate(BaseModel):
-    titulo: str | None = None
-    estado: str | None = None
-    prioridad: int | None = None
-
-    @model_validator(mode='after')
-    def validar_estado_prioridad(cls, model: 'TareaUpdate') -> 'TareaUpdate':
-        """Valida combinación de estado y prioridad."""
-        if model.estado == "completada" and model.prioridad == 1:
-            # Tarea completada no puede ser prioridad urgente
-            model.prioridad = 3  # Bajar prioridad automáticamente
-        return model</code></pre>
-                </section>
-
-                <!-- Sección 7: Ejemplos Prácticos -->
-                <section id="ejemplos">
-                    <h2>Ejemplos Prácticos</h2>
-
-                    <h3>Ejemplo 1: Schemas Completos de Usuario</h3>
-
-                    <pre><code class="language-python"># schemas/usuario.py
-
-from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
-from typing import Optional
-from datetime import datetime
-
-class UsuarioBase(BaseModel):
-    """Campos base de usuario."""
-    username: str = Field(
-        ...,
-        min_length=3,
-        max_length=50,
-        pattern="^[a-zA-Z0-9_]+$"
-    )
-    email: EmailStr
-    nombre_completo: Optional[str] = Field(None, max_length=100)
-
-class UsuarioCreate(UsuarioBase):
-    """Schema para crear usuario."""
-    password: str = Field(..., min_length=8)
-    password_confirm: str
-
-    @field_validator('password_confirm')
-    @classmethod
-    def passwords_coinciden(cls, v: str, info: ValidationInfo) -> str:
-        if 'password' in info.data and v != info.data['password']:
-            raise ValueError('Los passwords no coinciden')
-        return v
-
-class UsuarioUpdate(BaseModel):
-    """Schema para actualizar usuario."""
-    email: Optional[EmailStr] = None
-    nombre_completo: Optional[str] = Field(None, max_length=100)
-    password: Optional[str] = Field(None, min_length=8)
-
-class UsuarioInDB(UsuarioBase):
-    """Usuario como está en BD."""
-    id: int
-    password_hash: str
-    activo: bool = True
-    creado_en: datetime
-
-    model_config = ConfigDict(from_attributes=True)
-
-class UsuarioResponse(UsuarioBase):
-    """Usuario en respuesta (sin password)."""
-    id: int
-    activo: bool = True
-    creado_en: datetime</code></pre>
-
-                    <h3>Ejemplo 2: Schemas con Relaciones</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel
-from typing import List, Optional
-
-class TareaBase(BaseModel):
-    titulo: str
-    descripcion: Optional[str] = None
-    estado: str = "pendiente"
-    prioridad: int = 2
-
-class TareaCreate(TareaBase):
-    """Schema para crear tarea."""
-    proyecto_id: int
-
-class TareaResponse(TareaBase):
-    """Schema de respuesta de tarea."""
-    id: int
-    proyecto_id: int
-    creada_por: int
-
-class ProyectoBase(BaseModel):
-    nombre: str
-    descripcion: Optional[str] = None
-
-class ProyectoCreate(ProyectoBase):
-    """Schema para crear proyecto."""
-    usuario_id: int
-
-class ProyectoResponse(ProyectoBase):
-    """Schema de respuesta de proyecto."""
-    id: int
-    usuario_id: int
-    activo: bool = True
-    tareas: List[TareaResponse] = []</code></pre>
-
-                    <h3>Ejemplo 3: Conexión con Modelos de Dominio</h3>
-
-                    <pre><code class="language-python"># schemas/usuario.py
-
-from pydantic import BaseModel
-from models.usuario import Usuario as UsuarioModel
+    edad: int = Field(..., ge=0, le=120)
 
 class UsuarioResponse(BaseModel):
-    """Schema compatible con modelo de dominio."""
     id: int
     username: str
     email: str
-    activo: bool
+    edad: int
 
-    @classmethod
-    def from_model(cls, usuario: UsuarioModel) -> 'UsuarioResponse':
-        """Crea schema desde modelo de dominio."""
-        return cls(
-            id=usuario.id,
-            username=usuario.username,
-            email=usuario.email,
-            activo=usuario.activo
-        )
-
-# Uso en endpoint
-@app.get("/usuarios/{usuario_id}")
-def obtener_usuario(usuario_id: int):
-    usuario_model = repo.obtener_por_id(usuario_id)
-    return UsuarioResponse.from_model(usuario_model)</code></pre>
-                </section>
-
-                <!-- Sección 8: Buenas Prácticas -->
-                <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
-
-                    <h3>Organización de Schemas</h3>
-
-                    <pre><code class="language-text">schemas/
-├── __init__.py
-├── usuario.py          # UsuarioBase, Create, Update, Response
-├── proyecto.py         # ProyectoBase, Create, Update, Response
-└── tarea.py            # TareaBase, Create, Update, Response</code></pre>
-
-                    <h3>DO's con Pydantic</h3>
-
-                    <ul>
-                        <li><strong>Usa Field para validaciones:</strong> Más expresivo que type hints solos</li>
-                        <li><strong>Crea schemas separados:</strong> Create, Update, Response</li>
-                        <li><strong>Nunca incluyas passwords en response:</strong> Vulnerabilidad de seguridad</li>
-                        <li><strong>Usa from_attributes=True:</strong> Para crear desde modelos ORM</li>
-                        <li><strong>Documenta con description:</strong> Aparece en /docs</li>
-                        <li><strong>Usa examples:</strong> Para mostrar ejemplos en documentación</li>
-                    </ul>
-
-                    <h3>DON'T's con Pydantic</h3>
-
-                    <ul>
-                        <li><strong No uses el mismo schema para request/response:</strong> Problema de seguridad</li>
-                        <li><strong No omitas validaciones:</strong> Siempre valida datos de entrada</li>
-                        <li><strong No mezclas lógica de negocio:</strong> Solo validación de datos</li>
-                        <li><strong No uses schemas como modelos:</strong> Los modelos son otra capa</li>
-                    </ul>
-
-                    <h3>Patrón Base-Create-Update-Response</h3>
-
-                    <pre><code class="language-python"># Patrón recomendado
-
-# 1. Base: campos compartidos
-class UsuarioBase(BaseModel):
-    username: str
-    email: EmailStr
-
-# 2. Create: para POST (agrega campos requeridos)
-class UsuarioCreate(UsuarioBase):
-    password: str
-
-# 3. Update: para PUT/PATCH (todos opcionales)
-class UsuarioUpdate(BaseModel):
-    email: Optional[EmailStr] = None
-    password: Optional[str] = None
-
-# 4. Response: para GET (sin passwords sensibles)
-class UsuarioResponse(UsuarioBase):
-    id: int
-    creado_en: datetime</code></pre>
-                </section>
-
-                <!-- Sección 9: Ejercicio Guido -->
-                <section id="ejercicio">
-                    <h2>Ejercicio Guido: Schemas para Usuario</h2>
-
-                    <h3>Objetivo</h3>
-                    <p>
-                        Crear schemas Pydantic completos para el modelo Usuario de TaskFlow,
-                        conectándolos con la estructura existente del proyecto.
-                    </p>
-
-                    <h3>Instrucciones Paso a Paso</h3>
-
-                    <h4>Paso 1: Crear Estructura de Schemas (2 min)</h4>
-
-                    <pre><code class="language-bash"># Crear directorio
-mkdir -p schemas
-touch schemas/__init__.py</code></pre>
-
-                    <h4>Paso 2: Schema Base (5 min)</h4>
-
-                    <pre><code class="language-python"># schemas/usuario.py
-
-from pydantic import BaseModel, EmailStr, Field, field_validator
-from typing import Optional
-from datetime import datetime
-
-class UsuarioBase(BaseModel):
-    """
-    Schema base con campos compartidos.
-
-    Estos campos se usan tanto para crear como
-    para responder usuarios.
-    """
-    username: str = Field(
-        ...,
-        min_length=3,
-        max_length=50,
-        pattern="^[a-zA-Z0-9_]+$",
-        description="Nombre de usuario único (solo alfanuméricos y _)"
-    )
-    email: EmailStr = Field(
-        ...,
-        description="Email válido del usuario"
-    )
-    nombre_completo: Optional[str] = Field(
-        default=None,
-        max_length=100,
-        description="Nombre completo del usuario"
-    )</code></pre>
-
-                    <h4>Paso 3: Schema Create (5 min)</h4>
-
-                    <pre><code class="language-python"># Agregar a schemas/usuario.py
-
-class UsuarioCreate(UsuarioBase):
-    """
-    Schema para crear un nuevo usuario.
-
-    Incluye password que no está en el base
-    y password_confirm para verificación.
-    """
-    password: str = Field(
-        ...,
-        min_length=8,
-        max_length=100,
-        description="Password (mínimo 8 caracteres)"
-    )
-    password_confirm: str
-
-    @field_validator('password_confirm')
-    @classmethod
-    def passwords_coinciden(cls, v: str, info) -> str:
-        """Valida que los passwords coincidan."""
-        if 'password' in info.data and v != info.data['password']:
-            raise ValueError('Los passwords no coinciden')
-        return v
-
-    @field_validator('password')
-    @classmethod
-    def password_valido(cls, v: str) -> str:
-        """Valida requisitos del password."""
-        if len(v) < 8:
-            raise ValueError('Password muy corto (mínimo 8 caracteres)')
-        return v</code></pre>
-
-                    <h4>Paso 4: Schema Response (5 min)</h4>
-
-                    <pre><code class="language-python"># Agregar a schemas/usuario.py
-
-class UsuarioResponse(UsuarioBase):
-    """
-    Schema para respuesta de usuario.
-
-    NO incluye password por seguridad.
-    Incluye campos calculados/derivados.
-    """
-    id: int
-    activo: bool = True
-    creado_en: datetime
-
-    class Config:
-        from_attributes = True  # Pydantic v2
-        # o para Pydantic v1: orm_mode = True</code></pre>
-
-                    <h4>Paso 5: Schema Update (3 min)</h4>
-
-                    <pre><code class="language-python"># Agregar a schemas/usuario.py
-
-class UsuarioUpdate(BaseModel):
-    """
-    Schema para actualizar usuario.
-
-    Todos los campos son opcionales para permitir
-    actualizaciones parciales.
-    """
-    email: Optional[EmailStr] = None
-    nombre_completo: Optional[str] = Field(None, max_length=100)
-    password: Optional[str] = Field(None, min_length=8)
-    activo: Optional[bool] = None</code></pre>
-
-                    <h4>Paso 6: Usar Schemas en FastAPI (10 min)</h4>
-
-                    <pre><code class="language-python"># main.py
-from fastapi import FastAPI, HTTPException, status
-from schemas.usuario import UsuarioCreate, UsuarioResponse, UsuarioUpdate
-
-app = FastAPI()
-
-# Base de datos simulada
-db_usuarios = []
-next_id = 1
-
-@app.post("/usuarios", response_model=UsuarioResponse, status_code=201)
-def crear_usuario(usuario: UsuarioCreate):
-    """
-    Crea un nuevo usuario.
-
-    El request body se valida automáticamente con UsuarioCreate.
-    La respuesta se formatea con UsuarioResponse.
-    """
-    global next_id
-
-    # Verificar username único
-    for u in db_usuarios:
-        if u["username"] == usuario.username:
-            raise HTTPException(status_code=400, detail="Username ya existe")
-
-    # Crear usuario (sin password en response)
-    nuevo_usuario = UsuarioResponse(
-        id=next_id,
-        username=usuario.username,
-        email=usuario.email,
-        nombre_completo=usuario.nombre_completo,
-        activo=True,
-        creado_en=datetime.now()
-    )
-
-    db_usuarios.append(nuevo_usuario.model_dump())
-    next_id += 1
-
+# POST con modelo
+@app.post("/usuarios", response_model=UsuarioResponse)
+def crear_usuario(usuario: CrearUsuarioRequest):
+    # FastAPI valida automáticamente el request body
+    # Si los datos son inválidos, retorna error 422
+    
+    # Simular creación en BD
+    nuevo_usuario = {
+        "id": 1,
+        "username": usuario.username,
+        "email": usuario.email,
+        "edad": usuario.edad
+    }
     return nuevo_usuario
 
-@app.get("/usuarios", response_model=list[UsuarioResponse])
-def listar_usuarios():
-    """Lista todos los usuarios."""
-    return db_usuarios
+# PUT con modelo
+@app.put("/usuarios/{usuario_id}")
+def actualizar_usuario(
+    usuario_id: int,
+    usuario: CrearUsuarioRequest
+):
+    return {
+        "id": usuario_id,
+        "username": usuario.username,
+        "message": "Usuario actualizado"
+    }</code></pre>
 
-@app.put("/usuarios/{usuario_id}", response_model=UsuarioResponse)
-def actualizar_usuario(usuario_id: int, usuario: UsuarioUpdate):
-    """Actualiza un usuario."""
-    # Buscar usuario
-    usuario_existente = None
-    for u in db_usuarios:
-        if u["id"] == usuario_id:
-            usuario_existente = u
-            break
-
-    if not usuario_existente:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-
-    # Actualizar solo campos proveídos
-    if usuario.email is not None:
-        usuario_existente["email"] = usuario.email
-    if usuario.nombre_completo is not None:
-        usuario_existente["nombre_completo"] = usuario.nombre_completo
-    if usuario.activo is not None:
-        usuario_existente["activo"] = usuario.activo
-
-    return UsuarioResponse(**usuario_existente)</code></pre>
-
-                    <h4>Paso 7: Probar Validación (5 min)</h4>
-
-                    <pre><code class="language-bash"># Probar con validaciones correctas
-curl -X POST http://localhost:8000/usuarios \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "juan",
-    "email": "juan@example.com",
-    "password": "pass1234",
-    "password_confirm": "pass1234"
-  }'
-
-# Probar validación de username corto (debe fallar)
-curl -X POST http://localhost:8000/usuarios \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "ab",
-    "email": "test@example.com",
-    "password": "pass1234",
-    "password_confirm": "pass1234"
-  }'</code></pre>
-
-                    <h3>Conexión con TaskFlow</h3>
-                    <p>
-                        Los schemas que estás creando hoy son la interfaz de la API REST de TaskFlow.
-                        Estos schemas:
-                    </p>
-                    <ul>
-                        <li>Validan automáticamente todos los datos de entrada</li>
-                        <li>Documentan la API en /docs</li>
-                        <li>Protegen contra datos inválidos o maliciosos</li>
-                        <li>Facilitan el frontend (know what to expect)</li>
-                    </ul>
-
-                    <h3>Resultado Esperado</h3>
-                    <p>Al finalizar este ejercicio, tendrás:</p>
-                    <ul>
-                        <li>✅ UsuarioBase con campos compartidos</li>
-                        <li>✅ UsuarioCreate con validaciones</li>
-                        <li>✅ UsuarioResponse sin passwords</li>
-                        <li>✅ UsuarioUpdate con campos opcionales</li>
-                        <li>✅ Endpoints usando los schemas</li>
-                        <li>✅ Validación automática probada</li>
-                        <li>✅ Base para schemas de Proyecto y Tarea</li>
-                    </ul>
+                    <h4>Errores de Validación</h4>
+                    <p>FastAPI retorna automáticamente errores 422 con detalles:</p>
+                    <pre><code class="language-json">{
+  "detail": [
+    {
+      "loc": ["body", "username"],
+      "msg": "ensure this value has at least 3 characters",
+      "type": "value_error.any_str.min_length",
+      "ctx": {"limit_value": 3}
+    }
+  ]
+}</code></pre>
                 </section>
 
-                <!-- Sección 10: Referencias -->
-                <section id="videos">
-                    <h2>📺 Videos Recomendados</h2>
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API con Validación (10 min)</h2>
+                    
+                    <p>Crea la API de Tareas con validación completa.</p>
 
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-success me-2">Español</span>
-                                Pydantic Validación de Datos
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">MoureDev | 22:30 min</h6>
-                            <p class="card-text">
-                                Validación con Pydantic v2
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=3PjNzCW22M0" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
+                    <pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import Optional, List
+from datetime import datetime
+
+app = FastAPI(title="TaskFlow API con Validación")
+
+class TareaBase(BaseModel):
+    titulo: str = Field(..., min_length=1, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
+    prioridad: int = Field(default=1, ge=1, le=5)
+
+class TareaCreate(TareaBase):
+    pass
+
+class Tarea(TareaBase):
+    id: int
+    completada: bool = False
+    fecha_creacion: datetime
+
+# Base de datos simulada
+tareas_db = []
+contador_id = 1
+
+@app.post("/tareas", response_model=Tarea, status_code=201)
+def crear_tarea(tarea: TareaCreate):
+    global contador_id
+    nueva_tarea = Tarea(
+        id=contador_id,
+        **tarea.model_dump(),
+        fecha_creacion=datetime.now()
+    )
+    tareas_db.append(nueva_tarea)
+    contador_id += 1
+    return nueva_tarea
+
+@app.get("/tareas", response_model=List[Tarea])
+def listar_tareas():
+    return tareas_db
+
+@app.get("/tareas/{tarea_id}", response_model=Tarea)
+def obtener_tarea(tarea_id: int):
+    for tarea in tareas_db:
+        if tarea.id == tarea_id:
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.put("/tareas/{tarea_id}", response_model=Tarea)
+def actualizar_tarea(tarea_id: int, tarea_data: TareaCreate):
+    for i, tarea in enumerate(tareas_db):
+        if tarea.id == tarea_id:
+            # Actualizar campos
+            tareas_db[i].titulo = tarea_data.titulo
+            tareas_db[i].descripcion = tarea_data.descripcion
+            tareas_db[i].prioridad = tarea_data.prioridad
+            return tareas_db[i]
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.delete("/tareas/{tarea_id}")
+def eliminar_tarea(tarea_id: int):
+    for i, tarea in enumerate(tareas_db):
+        if tarea.id == tarea_id:
+            del tareas_db[i]
+            return {"message": "Tarea eliminada"}
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Beneficio:</strong> Con Pydantic, no necesitas escribir código de validación manual. FastAPI valida automáticamente y devuelve errores claros.
                     </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-secondary me-2">Inglés</span>
-                                Pydantic v2 Tutorial
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Samuel Colvin | 31:45 min</h6>
-                            <p class="card-text">
-                                Tutorial del creador de Pydantic
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=Vr17i0n14AY" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
                 </section>
 
-                <section id="referencias">
-                    <h2>Para Profundizar</h2>
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
                     <ul>
-                        <li>
-                            <a href="https://docs.pydantic.dev/latest/" target="_blank">
-                                Documentación Oficial de Pydantic
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://fastapi.tiangolo.com/tutorial/body/" target="_blank">
-                                FastAPI Tutorial - Request Body
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/watch?v=tM6ar0dGVJE" target="_blank">
-                                Video: Pydantic v2 Tutorial
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/pydantic/pydantic" target="_blank">
-                                Pydantic en GitHub
-                            </a>
-                        </li>
+                        <li><strong>Pydantic:</strong> Valida datos con type hints</li>
+                        <li><strong>BaseModel:</strong> Clase base para modelos</li>
+                        <li><strong>Field:</strong> Valida longitud, rango, regex</li>
+                        <li><strong>Optional:</strong> Campos que pueden ser None</li>
+                        <li><strong>EmailStr:</strong> Valida emails</li>
+                        <li><strong>FastAPI:</strong> Usa modelos para request/response</li>
+                        <li><strong>Errores 422:</strong> Datos inválidos retornan error automático</li>
                     </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Agrega validación al modelo de Usuario: username único, email válido, contraseña mínima 8 caracteres.
+                    </div>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <span class="btn btn-warning disabled" style="cursor: not-allowed;">
-            <i class="bi bi-clock me-2"></i>⚠️ Notebook pendiente de creacion
-        </span>
-    </div>
-
-    <!-- Footer -->
-    <footer>
+    <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-14</p>
-            <p class="mt-2">
-                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
-                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
-            </p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-01-fastapi-intro.html">← Anterior</a> | <a href="clase-03-dependencias.html">Siguiente: Dependencias →</a></p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-
-    <!-- Prism.js Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
-    <!-- Prism.js Language Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-
-    <!-- Highlight code on page load -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-        });
-    </script>
-
-    <!-- Barra de progreso y boton volver arriba -->
-    <script>
-        // Barra de progreso de lectura
-        function updateReadingProgress() {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            document.getElementById('readingProgressBar').style.width = progress + '%';
-        }
-
-        // Boton volver arriba
-        function toggleBackToTop() {
-            const backToTopBtn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        }
-
-        // Scroll suave al top
-        document.getElementById('backToTop').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Event listeners
-        window.addEventListener('scroll', function() {
-            updateReadingProgress();
-            toggleBackToTop();
-        });
-
-        // Inicializar
-        updateReadingProgress();
-    </script>
 </body>
 </html>

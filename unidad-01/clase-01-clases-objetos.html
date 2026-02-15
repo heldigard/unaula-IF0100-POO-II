@@ -3,1184 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Aprende a definir clases y crear objetos en Python. Domina __init__, self, atributos, métodos y dataclasses. Crea el modelo Usuario para el proyecto TaskFlow.">
-    <meta name="author" content="IF0100 - UNAULA">
-    <title>Clases y Objetos | IF0100 - POO II</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-
-    <!-- Prism.js para syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet">
-
+    <title>Clase 3: Clases y Objetos | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--dark-text);
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        header h3 {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
-        }
-
-        .sidebar h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            color: var(--dark-text);
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            display: block;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        main {
-            padding: 2rem 0;
-        }
-
-        section {
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        section h2 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        section h3 {
-            color: var(--dark-text);
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section h4 {
-            color: var(--secondary-color);
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        section ul, section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section li {
-            margin-bottom: 0.5rem;
-        }
-
-        pre[class*="language-"] {
-            border-radius: 6px;
-            margin: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        code[class*="language-"] {
-            font-size: 0.9rem;
-        }
-
-        .alert-note {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-warning-custom {
-            background-color: #fff3cd;
-            border-left: 4px solid var(--warning-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-tip {
-            background-color: #d1e7dd;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            border-left: 4px solid var(--danger-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .table {
-            margin: 1rem 0;
-        }
-
-        .table thead {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        footer {
-            background-color: var(--light-bg);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-        }
-
-        @media print {
-            header {
-                background: white !important;
-                color: black !important;
-                padding: 1rem 0;
-            }
-
-            .navbar, .sidebar, footer {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid var(--border-color);
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-            }
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header h2 {
-                font-size: 1rem;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                margin-bottom: 1rem;
-            }
-        }
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 1: POO Avanzada</h2>
-            <h3>Clase 1: Clases y Objetos</h3>
-            <p class="mt-2 mb-0">
-                <span class="badge bg-light text-dark">📅 Semana 3 - Lunes 17/02/2026</span>
-                <span class="badge bg-warning text-dark ms-1">📢 E1 Examen en 9 días (26/02)</span>
-                <span class="badge bg-info ms-1">📋 E1: 15% | E2: 15%</span>
-            </p>
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h3>Clase 3: Clases y Objetos</h3>
+            <p class="mt-2"><span class="badge bg-warning text-dark">E1: Examen POO - 9 días</span></p>
         </div>
     </header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../unidad-00/clase-03-estructuras-datos.html">Anterior: Estructuras de Datos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-02-encapsulamiento.html">Siguiente: Encapsulamiento</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             <aside class="col-lg-3">
                 <nav class="sidebar">
                     <h5>Contenido</h5>
-                    <ul>
-                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
-                        <li><a href="#ejercicio">Ejercicio Guidado</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#clase" class="text-decoration-none">¿Qué es una Clase?</a></li>
+                        <li><a href="#init" class="text-decoration-none">Constructor __init__</a></li>
+                        <li><a href="#self" class="text-decoration-none">El parámetro self</a></li>
+                        <li><a href="#metodos" class="text-decoration-none">Métodos</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio: Clase Usuario</a></li>
                     </ul>
                 </nav>
             </aside>
 
             <main class="col-lg-9">
+                <!-- OBJETIVOS -->
                 <section id="objetivos">
-                    <h2>Objetivos de Aprendizaje</h2>
-                    <div class="alert-note">
-                        <strong>📋 Relación con Rúbricas E1 y E2:</strong> Esta clase cubre los criterios de <strong>Definición de Clases (25 pts)</strong> y <strong>Atributos y Métodos (25 pts)</strong> de la Evaluación 1, y <strong>Diseño de Clases (25 pts)</strong> de la Evaluación 2.
-                    </div>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
                     <ul>
-                        <li>Comprender los conceptos fundamentales de la Programación Orientada a Objetos (POO)</li>
-                        <li>Definir clases en Python usando la sintaxis <code>class</code> con <strong>type hints</strong> y <strong>docstrings</strong></li>
-                        <li>Comprender el propósito y uso de <code>self</code> en métodos de instancia</li>
-                        <li>Implementar el método <code>__init__</code> para inicializar objetos</li>
-                        <li>Crear atributos y métodos de instancia siguiendo <strong>PEP 8</strong></li>
-                        <li>Diferenciar entre atributos de instancia y de clase</li>
-                        <li>Usar <code>dataclasses</code> para definir clases de manera concisa</li>
-                        <li>Crear el modelo Usuario completo para el proyecto TaskFlow</li>
+                        <li>Definir clases en Python usando <code>class</code></li>
+                        <li>Crear objetos (instancias) de una clase</li>
+                        <li>Usar <code>__init__</code> para inicializar objetos</li>
+                        <li>Comprender el propósito de <code>self</code></li>
+                        <li>Crear métodos para definir comportamientos</li>
+                        <li>Implementar el modelo Usuario para TaskFlow</li>
                     </ul>
                 </section>
 
-                <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
-
-                    <h3>¿Qué es la Programación Orientada a Objetos?</h3>
-                    <p>La Programación Orientada a Objetos (POO) es un paradigma de programación que organiza el software en <strong>objetos</strong>, que son instancias de <strong>clases</strong>. Cada objeto contiene:</p>
-                    <ul>
-                        <li><strong>Atributos:</strong> Datos/propiedades del objeto</li>
-                        <li><strong>Métodos:</strong> Comportamientos/funciones del objeto</li>
-                    </ul>
+                <!-- CLASES -->
+                <section id="clase">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es una Clase? (10 min)</h2>
+                    
+                    <p>Una <strong>clase</strong> es un molde o plantilla para crear objetos. Define <strong>atributos</strong> (datos) y <strong>métodos</strong> (comportamientos).</p>
 
                     <div class="alert-note">
-                        <strong>📝 Analogía:</strong> Una clase es como un plano de casa, mientras que un objeto es una casa construida a partir de ese plano. Puedes construir muchas casas (objetos) del mismo plano (clase).
+                        <strong>Analogía:</strong> Una clase es como un plano de una casa, mientras que un objeto es una casa construida a partir de ese plano.
                     </div>
-
-                    <figure class="text-center my-4">
-                        <img src="../assets/infografias/clase-02-clase-vs-objeto.png" alt="Clase vs Objeto" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
-                        <figcaption class="figure-caption mt-2">Figura 1: Diferencia entre Clase y Objeto</figcaption>
-                    </figure>
-
-                    <h3>Pilares de la POO</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Pilar</th>
-                                <th>Descripción</th>
-                                <th>Ejemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Abstracción</strong></td>
-                                <td>Ocultar detalles complejos, mostrar solo lo esencial</td>
-                                <td>Un auto tiene un método <code>acelerar()</code>, no necesitas saber cómo funciona el motor</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Encapsulamiento</strong></td>
-                                <td>Agrupar datos y métodos que operan sobre esos datos</td>
-                                <td>Los datos del usuario están protegidos dentro de la clase Usuario</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Herencia</strong></td>
-                                <td>Crear nuevas clases basadas en clases existentes</td>
-                                <td>La clase <code>UsuarioAdmin</code> hereda de <code>Usuario</code></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Polimorfismo</strong></td>
-                                <td>Mismo método se comporta diferente según el objeto</td>
-                                <td>El método <code>to_string()</code> retorna diferentes formatos según la clase</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Definición de Clases en Python</h3>
 
                     <h4>Sintaxis Básica</h4>
-                    <pre><code class="language-python">class MiClase:
-    """Esta es la documentación de la clase."""
-
-    # Atributo de clase (compartido por todas las instancias)
+                    <pre><code class="language-python">class NombreClase:
+    """Descripción de la clase."""
+    
+    # Atributo de clase (compartido por todos los objetos)
     atributo_clase = "valor"
-
-    def __init__(self, param1, param2):
-        """Constructor: inicializa una nueva instancia."""
+    
+    def __init__(self, parametro1, parametro2):
+        """Constructor: inicializa el objeto."""
         # Atributos de instancia (únicos para cada objeto)
-        self.atributo1 = param1
-        self.atributo2 = param2
-
+        self.atributo1 = parametro1
+        self.atributo2 = parametro2
+    
     def metodo(self):
         """Método de instancia."""
-        return f"Valor: {self.atributo1}"
+        return f"Atributo 1: {self.atributo1}"
 
-    @classmethod
-    def metodo_clase(cls):
-        """Método de clase."""
-        return f"Atributo de clase: {cls.atributo_clase}"
+# Crear objetos (instancias)
+objeto1 = NombreClase("valor1", "valor2")
+objeto2 = NombreClase("otro1", "otro2")
 
-    @staticmethod
-    def metodo_estatico():
-        """Método estático (no accede a instancia ni clase)."""
-        return "Soy un método estático"</code></pre>
+print(objeto1.atributo1)  # "valor1"
+print(objeto2.atributo1)  # "otro1"</code></pre>
 
-                    <h3>El Método __init__</h3>
-                    <p>El método <code>__init__</code> es el <strong>constructor</strong> de la clase. Se llama automáticamente cuando creas una nueva instancia.</p>
-                    <pre><code class="language-python">class Persona:
-    def __init__(self, nombre, edad):
-        """Se ejecuta al crear una nueva Persona."""
-        print(f"Creando persona: {nombre}")
-        self.nombre = nombre
-        self.edad = edad
-
-# Crear instancia (se llama __init__ automáticamente)
-persona = Persona("Juan", 25)
-# Salida: Creando persona: Juan</code></pre>
-
-                    <div class="alert-warning-custom">
-                        <strong>⚠️ Nota:</strong> <code>__init__</code> NO es un constructor en el sentido tradicional. Es un inicializador. El verdadero constructor es <code>__new__</code>, pero raramente necesitas sobrescribirlo.
-                    </div>
-
-                    <h3>El Parámetro self</h3>
-                    <p><code>self</code> es una convención en Python que representa la instancia actual de la clase. Es similar a <code>this</code> en Java o C++, pero en Python es explícito.</p>
-                    <pre><code class="language-python">class Ejemplo:
-    def __init__(self, valor):
-        # self.valor es un atributo de la instancia
-        self.valor = valor
-
-    def mostrar(self):
-        # self permite acceder a los atributos de esta instancia
-        return f"Valor: {self.valor}"
-
-    def actualizar(self, nuevo_valor):
-        # self permite modificar los atributos
-        self.valor = nuevo_valor</code></pre>
-
-                    <h3>Atributos de Instancia vs de Clase</h3>
+                    <h4>Ejemplo: Clase Perro</h4>
                     <pre><code class="language-python">class Perro:
-        # Atributo de clase (compartido)
-        especie = "Canis familiaris"
+    """Representa un perro con nombre y edad."""
+    
+    especie = "Canis familiaris"  # Atributo de clase
+    
+    def __init__(self, nombre, edad):
+        self.nombre = nombre  # Atributo de instancia
+        self.edad = edad      # Atributo de instancia
+    
+    def ladrar(self):
+        return f"{self.nombre} dice: ¡Guau!"
+    
+    def es_cachorro(self):
+        return self.edad < 2
 
-        def __init__(self, nombre):
-            # Atributo de instancia (único para cada perro)
-            self.nombre = nombre
+# Crear perros
+mi_perro = Perro("Fido", 3)
+otro_perro = Perro("Rex", 1)
 
-# Crear instancias
-perro1 = Perro("Fido")
-perro2 = Perro("Rex")
+print(mi_perro.ladrar())       # "Fido dice: ¡Guau!"
+print(mi_perro.es_cachorro())  # False
+print(otro_perro.es_cachorro()) # True</code></pre>
+                </section>
 
-print(perro1.especie)  # Canis familiaris (compartido)
-print(perro2.especie)  # Canis familiaris
-print(perro1.nombre)   # Fido (único)
-print(perro2.nombre)   # Rex (único)
+                <!-- CONSTRUCTOR -->
+                <section id="init">
+                    <h2 class="text-primary border-bottom pb-2">Constructor __init__ (15 min)</h2>
+                    
+                    <p>El método <code>__init__</code> se ejecuta automáticamente cuando se crea un objeto. Sirve para <strong>inicializar</strong> los atributos.</p>
 
-# Modificar atributo de clase (afecta a todas las instancias)
-Perro.especie = "Canis lupus"
-print(perro1.especie)  # Canis lupus
-print(perro2.especie)  # Canis lupus</code></pre>
-
-                    <h3>Dataclasses (Python 3.7+)</h3>
-                    <p>Las <code>dataclasses</code> permiten definir clases con menos código boilerplate.</p>
-                    <pre><code class="language-python">from dataclasses import dataclass
-
-# ✅ Con dataclass (Python 3.7+)
-@dataclass
-class Persona:
-    nombre: str
-    edad: int
-    email: str | None = None
-
-# Uso
-persona = Persona("Juan", 25)
-print(persona)  # Persona(nombre='Juan', edad=25, email=None)
-
-# ❌ Sin dataclass (más código)
-class PersonaManual:
+                    <h4>Ejemplo: Clase Persona</h4>
+                    <pre><code class="language-python">class Persona:
     def __init__(self, nombre, edad, email=None):
+        """Constructor: inicializa una persona."""
         self.nombre = nombre
         self.edad = edad
         self.email = email
+        self.activo = True  # Valor por defecto
+    
+    def presentarse(self):
+        return f"Hola, soy {self.nombre} y tengo {self.edad} años."
 
-    def __repr__(self):
-        return f"PersonaManual(nombre='{self.nombre}', edad={self.edad}, email={self.email})"</code></pre>
+# Crear personas
+juan = Persona("Juan", 25, "juan@email.com")
+ana = Persona("Ana", 30)
 
-                    <h3>Métodos Especiales (Dunder Methods)</h3>
-                    <p>Python tiene métodos especiales que comienzan y terminan con <code>__</code> (double underscore, o "dunder").</p>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Método</th>
-                                <th>Propósito</th>
-                                <th>Ejemplo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>__init__</code></td>
-                                <td>Inicializador</td>
-                                <td><code>obj = MiClase()</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>__str__</code></td>
-                                <td>Representación string (para usuarios)</td>
-                                <td><code>print(obj)</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>__repr__</code></td>
-                                <td>Representación (para debugging)</td>
-                                <td><code>repr(obj)</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>__eq__</code></td>
-                                <td>Comparación de igualdad</td>
-                                <td><code>obj1 == obj2</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>__len__</code></td>
-                                <td>Longitud</td>
-                                <td><code>len(obj)</code></td>
-                            </tr>
-                            <tr>
-                                <td><code>__bool__</code></td>
-                                <td>Valor booleano</td>
-                                <td><code>if obj:</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
+print(juan.presentarse())
+print(f"Email de Juan: {juan.email}")
+print(f"Email de Ana: {ana.email}")  # None</code></pre>
 
-                <section id="ejemplos">
-                    <h2>Ejemplos Prácticos</h2>
-
-                    <h3>Ejemplo 1: Clase Simple - Punto 2D</h3>
-                    <pre><code class="language-python">class Punto:
-    """Representa un punto en el espacio 2D."""
-
-    def __init__(self, x: float, y: float):
-        """Inicializa un punto con coordenadas x e y."""
-        self.x = x
-        self.y = y
-
-    def __str__(self) -> str:
-        """Representación string amigable."""
-        return f"({self.x}, {self.y})"
-
-    def __repr__(self) -> str:
-        """Representación para debugging."""
-        return f"Punto(x={self.x}, y={self.y})"
-
-    def mover(self, dx: float, dy: float) -> None:
-        """Mueve el punto por dx y dy."""
-        self.x += dx
-        self.y += dy
-
-    def distancia_a(self, otro: 'Punto') -> float:
-        """Calcula la distancia euclidiana a otro punto."""
-        dx = self.x - otro.x
-        dy = self.y - otro.y
-        return (dx**2 + dy**2) ** 0.5
+                    <h4>Valores por Defecto</h4>
+                    <pre><code class="language-python">class Producto:
+    def __init__(self, nombre, precio, cantidad=0):
+        self.nombre = nombre
+        self.precio = precio
+        self.cantidad = cantidad  # Si no se pasa, es 0
 
 # Uso
-p1 = Punto(0, 0)
+p1 = Producto("Laptop", 1000, 5)  # cantidad = 5
+p2 = Producto("Mouse", 25)         # cantidad = 0 (por defecto)
+
+print(f"{p1.nombre}: {p1.cantidad} unidades")
+print(f"{p2.nombre}: {p2.cantidad} unidades")</code></pre>
+                </section>
+
+                <!-- SELF -->
+                <section id="self">
+                    <h2 class="text-primary border-bottom pb-2">El parámetro self (10 min)</h2>
+                    
+                    <p><code>self</code> representa la instancia actual del objeto. Permite acceder a sus atributos y métodos.</p>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Aunque <code>self</code> es el primer parámetro de los métodos, <strong>NO</strong> lo pasas al llamar el método. Python lo hace automáticamente.
+                    </div>
+
+                    <pre><code class="language-python">class CuentaBancaria:
+    def __init__(self, titular, saldo_inicial=0):
+        self.titular = titular
+        self.saldo = saldo_inicial
+    
+    def depositar(self, cantidad):
+        """self permite modificar los atributos del objeto."""
+        if cantidad > 0:
+            self.saldo += cantidad
+            return f"Depósito exitoso. Nuevo saldo: ${self.saldo}"
+        return "Cantidad inválida"
+    
+    def retirar(self, cantidad):
+        """self permite leer y modificar atributos."""
+        if cantidad <= self.saldo:
+            self.saldo -= cantidad
+            return f"Retiro exitoso. Nuevo saldo: ${self.saldo}"
+        return "Saldo insuficiente"
+    
+    def consultar_saldo(self):
+        """self permite leer atributos."""
+        return f"Saldo de {self.titular}: ${self.saldo}"
+
+# Uso - ¡No pasamos self!
+cuenta = CuentaBancaria("Juan", 1000)
+print(cuenta.consultar_saldo())  # Saldo de Juan: $1000
+print(cuenta.depositar(500))     # Depósito exitoso...
+print(cuenta.retirar(200))       # Retiro exitoso...
+print(cuenta.consultar_saldo())  # Saldo de Juan: $1300</code></pre>
+                </section>
+
+                <!-- MÉTODOS -->
+                <section id="metodos">
+                    <h2 class="text-primary border-bottom pb-2">Métodos Especiales (10 min)</h2>
+                    
+                    <p>Python tiene métodos especiales (dunder methods) que comienzan y terminan con <code>__</code>.</p>
+
+                    <table class="table">
+                        <tr>
+                            <th>Método</th>
+                            <th>Cuándo se usa</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                        <tr>
+                            <td><code>__init__</code></td>
+                            <td>Crear objeto</td>
+                            <td><code>obj = Clase()</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__str__</code></td>
+                            <td>Imprimir objeto</td>
+                            <td><code>print(obj)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__repr__</code></td>
+                            <td>Representación técnica</td>
+                            <td><code>repr(obj)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__eq__</code></td>
+                            <td>Comparar objetos</td>
+                            <td><code>obj1 == obj2</code></td>
+                        </tr>
+                    </table>
+
+                    <pre><code class="language-python">class Punto:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        """Representación amigable para usuarios."""
+        return f"({self.x}, {self.y})"
+    
+    def __repr__(self):
+        """Representación técnica para debugging."""
+        return f"Punto(x={self.x}, y={self.y})"
+    
+    def __eq__(self, otro):
+        """Comparar dos puntos."""
+        return self.x == otro.x and self.y == otro.y
+
+p1 = Punto(3, 4)
 p2 = Punto(3, 4)
+p3 = Punto(1, 2)
 
-print(p1)  # (0, 0)
-print(p2)  # (3, 4)
-print(f"Distancia: {p1.distancia_a(p2)}")  # 5.0</code></pre>
+print(p1)           # (3, 4) - usa __str__
+print(repr(p1))     # Punto(x=3, y=4) - usa __repr__
+print(p1 == p2)     # True - usa __eq__
+print(p1 == p3)     # False</code></pre>
+                </section>
 
-                    <h3>Ejemplo 2: Clase Usuario con Validación</h3>
-                    <pre><code class="language-python">from typing import Optional
-from datetime import datetime
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Clase Usuario (25 min)</h2>
+                    
+                    <p>Vamos a crear el modelo <strong>Usuario</strong> para el proyecto TaskFlow.</p>
 
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Atributos: username, email, nombre_completo (opcional)</li>
+                        <li>Métodos: presentarse(), es_valido(), activar(), desactivar()</li>
+                        <li>Validar que username tenga al menos 3 caracteres</li>
+                        <li>Validar que email contenga "@"</li>
+                    </ul>
+
+                    <pre><code class="language-python"># usuario.py
 class Usuario:
     """Representa un usuario en el sistema TaskFlow."""
-
-    contador_usuarios = 0  # Atributo de clase
-
-    def __init__(
-        self,
-        username: str,
-        email: str,
-        nombre_completo: Optional[str] = None
-    ):
-        """Inicializa un nuevo usuario."""
-        self.id = Usuario.contador_usuarios
+    
+    def __init__(self, username, email, nombre_completo=None):
+        """Inicializa un usuario."""
         self.username = username
         self.email = email
         self.nombre_completo = nombre_completo
-        self.creado_en = datetime.now()
         self.activo = True
-
-        # Incrementar contador
-        Usuario.contador_usuarios += 1
-
-    def __str__(self) -> str:
-        """Representación string amigable."""
+    
+    def __str__(self):
         return f"@{self.username}"
-
-    def __repr__(self) -> str:
-        """Representación para debugging."""
-        return (f"Usuario(id={self.id}, username='{self.username}', "
-                f"email='{self.email}', activo={self.activo})")
-
-    def desactivar(self) -> None:
-        """Desactiva el usuario."""
-        self.activo = False
-
-    def activar(self) -> None:
-        """Activa el usuario."""
-        self.activo = True
-
-    def es_valido(self) -> bool:
-        """Verifica si el usuario es válido."""
-        errores = self.validar()
-        return len(errores) == 0
-
-    def validar(self) -> list[str]:
-        """Valida los campos del usuario."""
-        errores = []
-
-        if not self.username or len(self.username) < 3:
-            errores.append("Username debe tener al menos 3 caracteres")
-
-        if not self.email or "@" not in self.email:
-            errores.append("Email inválido")
-
-        return errores
-
-# Uso
-usuario1 = Usuario("juan", "juan@example.com", "Juan Pérez")
-usuario2 = Usuario("maria", "maria@example.com")
-
-print(usuario1)  # @juan
-print(repr(usuario1))  # Usuario(id=0, username='juan', email='juan@example.com', activo=True)
-print(f"Total usuarios: {Usuario.contador_usuarios}")  # 2
-
-# Validar
-if usuario1.es_valido():
-    print("Usuario válido")
-else:
-    print("Errores:", usuario1.validar())</code></pre>
-
-                    <h3>Ejemplo 3: Usuario como Dataclass</h3>
-                    <pre><code class="language-python">from dataclasses import dataclass, field
-from typing import Optional
-from datetime import datetime
-
-@dataclass
-class UsuarioDataclass:
-    """Usuario implementado con dataclass."""
-    username: str
-    email: str
-    nombre_completo: Optional[str] = None
-    activo: bool = True
-    creado_en: datetime = field(default_factory=datetime.now)
-
-    def __post_init__(self):
-        """Se ejecuta después de __init__."""
-        # Validaciones post-inicialización
+    
+    def __repr__(self):
+        return f"Usuario('{self.username}', '{self.email}')"
+    
+    def presentarse(self):
+        """Retorna una presentación del usuario."""
+        if self.nombre_completo:
+            return f"Hola, soy {self.nombre_completo} (@{self.username})"
+        return f"Hola, soy @{self.username}"
+    
+    def es_valido(self):
+        """Valida los datos del usuario."""
         if len(self.username) < 3:
-            raise ValueError("Username debe tener al menos 3 caracteres")
-
+            return False, "Username debe tener al menos 3 caracteres"
+        
         if "@" not in self.email:
-            raise ValueError("Email inválido")
-
-    def __str__(self) -> str:
-        """Representación string amigable."""
-        return f"@{self.username}"
-
-    def desactivar(self) -> None:
-        """Desactiva el usuario."""
+            return False, "Email debe contener @"
+        
+        return True, "Válido"
+    
+    def activar(self):
+        """Activa la cuenta del usuario."""
+        self.activo = True
+    
+    def desactivar(self):
+        """Desactiva la cuenta del usuario."""
         self.activo = False
+    
+    def esta_activo(self):
+        """Retorna True si el usuario está activo."""
+        return self.activo
 
-# Uso
-try:
-    usuario = UsuarioDataclass("juan", "juan@example.com")
-    print(usuario)  # @juan
-    print(repr(usuario))  # UsuarioDataclass(username='juan', email='juan@example.com', ...)
-except ValueError as e:
-    print(f"Error: {e}")</code></pre>
-                </section>
 
-                <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
-
-                    <h3>Usar Type Hints</h3>
-                    <pre><code class="language-python"># ✅ Bien: Con type hints
-class Usuario:
-    def __init__(self, username: str, email: str) -> None:
-        self.username: str = username
-        self.email: str = email
-
-    def get_email(self) -> str:
-        return self.email
-
-# ❌ Evitar: Sin type hints
-class Usuario:
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email</code></pre>
-
-                    <h3>Docstrings Completos</h3>
-                    <pre><code class="language-python"># ✅ Bien: Con docstrings Google style
-class Usuario:
-    """Representa un usuario del sistema.
-
-    Attributes:
-        username: Nombre de usuario único.
-        email: Correo electrónico del usuario.
-        activo: Indica si el usuario está activo.
-    """
-
-    def __init__(self, username: str, email: str) -> None:
-        """Inicializa un nuevo usuario.
-
-        Args:
-            username: Nombre de usuario único (mínimo 3 caracteres).
-            email: Correo electrónico válido.
-
-        Raises:
-            ValueError: Si username o email son inválidos.
-        """
-        self.username = username
-        self.email = email</code></pre>
-
-                    <h3>Usar Dataclasses para Clases de Datos</h3>
-                    <pre><code class="language-python"># ✅ Bien: Para clases que principalmente almacenan datos
-from dataclasses import dataclass
-
-@dataclass
-class Usuario:
-    username: str
-    email: str
-    activo: bool = True
-
-# ⚠️ Considerar: Para clases con mucha lógica
-class Usuario:
-    def __init__(self, username: str, email: str):
-        self.username = username
-        self.email = email
-        # ... lógica compleja</code></pre>
-
-                    <h3>Convenciones de Nombres</h3>
-                    <pre><code class="language-python"># ✅ Bien: Classes en PascalCase, variables en snake_case
-class UsuarioAdministrador:
-    def __init__(self):
-        self.max_intentos = 3
-        self.nombre_completo = ""
-
-# ❌ Evitar
-class usuarioAdministrador:  # Debe ser PascalCase
-    def __init__(self):
-        self.maxIntentos = 3   # Debe ser snake_case</code></pre>
-                </section>
-
-                <section id="ejercicio">
-                    <h2>Ejercicio Guidado</h2>
-
-                    <h3>🎯 Ejercicio: Clase Usuario Completa para TaskFlow</h3>
-                    <p>Vamos a crear la clase Usuario completa con todos los elementos aprendidos.</p>
-
-                    <pre><code class="language-python"># usuario.py
-"""
-Modelo de Usuario para TaskFlow
-Sistema de gestión de proyectos y tareas.
-"""
-
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Optional, List
-from enum import Enum
-
-class EstadoUsuario(Enum):
-    """Estados posibles de un usuario."""
-    PENDIENTE = "pendiente"
-    ACTIVO = "activo"
-    BLOQUEADO = "bloqueado"
-
-@dataclass
-class Usuario:
-    """Representa un usuario en el sistema TaskFlow.
-
-    Esta clase es el modelo principal de usuarios y será la base
-    para el sistema de autenticación y gestión de proyectos.
-
-    Attributes:
-        id: Identificador único del usuario (None para nuevos usuarios).
-        username: Nombre de usuario único (3-50 caracteres alfanuméricos).
-        email: Correo electrónico único y válido.
-        password_hash: Hash del password (nunca almacenar en texto plano).
-        nombre_completo: Nombre completo del usuario.
-        estado: Estado actual del usuario (pendiente, activo, bloqueado).
-        creado_en: Fecha y hora de creación del usuario.
-        actualizado_en: Fecha y hora de última actualización.
-    """
-
-    username: str
-    email: str
-    password_hash: str
-    id: Optional[int] = None
-    nombre_completo: Optional[str] = None
-    estado: EstadoUsuario = EstadoUsuario.PENDIENTE
-    creado_en: Optional[datetime] = None
-    actualizado_en: Optional[datetime] = None
-
-    def __post_init__(self):
-        """Validaciones post-inicialización."""
-        # Establecer fecha de creación si no se proporcionó
-        if self.creado_en is None:
-            self.creado_en = datetime.now()
-
-        # Establecer fecha de actualización si no se proporcionó
-        if self.actualizado_en is None:
-            self.actualizado_en = datetime.now()
-
-        # Validar campos
-        errores = self.validar()
-        if errores:
-            raise ValueError(f"Usuario inválido: {', '.join(errores)}")
-
-    def __str__(self) -> str:
-        """Representación string amigable."""
-        return f"@{self.username}"
-
-    def __repr__(self) -> str:
-        """Representación para debugging."""
-        return (f"Usuario(id={self.id}, username='{self.username}', "
-                f"email='{self.email}', estado={self.estado.value})")
-
-    def __eq__(self, other) -> bool:
-        """Comparación de igualdad basada en ID y username."""
-        if not isinstance(other, Usuario):
-            return NotImplemented
-        return self.id == other.id if self.id and other.id else self.username == other.username
-
-    def __hash__(self) -> int:
-        """Hash basado en username."""
-        return hash(self.username)
-
-    def validar(self) -> List[str]:
-        """Valida todos los campos del usuario.
-
-        Returns:
-            Lista de errores de validación (vacía si es válido).
-        """
-        errores = []
-
-        # Validar username
-        if not self.username:
-            errores.append("Username es requerido")
-        elif len(self.username) < 3:
-            errores.append("Username debe tener al menos 3 caracteres")
-        elif len(self.username) > 50:
-            errores.append("Username no puede exceder 50 caracteres")
-        elif not self._username_valido(self.username):
-            errores.append("Username solo puede contener letras, números y _")
-
-        # Validar email
-        if not self.email:
-            errores.append("Email es requerido")
-        elif "@" not in self.email or "." not in self.email.split("@")[1]:
-            errores.append("Email inválido")
-
-        # Validar password_hash
-        if not self.password_hash or len(self.password_hash) < 10:
-            errores.append("Password hash inválido")
-
-        # Validar nombre_completo si se proporciona
-        if self.nombre_completo and len(self.nombre_completo) > 100:
-            errores.append("Nombre completo no puede exceder 100 caracteres")
-
-        # Validar estado
-        if not isinstance(self.estado, EstadoUsuario):
-            errores.append("Estado debe ser un EstadoUsuario válido")
-
-        return errores
-
-    @staticmethod
-    def _username_valido(username: str) -> bool:
-        """Verifica si el username solo contiene caracteres válidos."""
-        return all(c.isalnum() or c == "_" for c in username)
-
-    def es_valido(self) -> bool:
-        """Verifica si el usuario es válido.
-
-        Returns:
-            True si no hay errores de validación, False en caso contrario.
-        """
-        return len(self.validar()) == 0
-
-    def activar(self) -> None:
-        """Activa el usuario."""
-        self.estado = EstadoUsuario.ACTIVO
-        self.actualizado_en = datetime.now()
-
-    def desactivar(self) -> None:
-        """Desactiva el usuario."""
-        self.estado = EstadoUsuario.BLOQUEADO
-        self.actualizado_en = datetime.now()
-
-    def esta_activo(self) -> bool:
-        """Verifica si el usuario está activo.
-
-        Returns:
-            True si el estado es ACTIVO, False en caso contrario.
-        """
-        return self.estado == EstadoUsuario.ACTIVO
-
-    def verificar_password(self, password: str, password_hasher) -> bool:
-        """Verifica si el password proporcionado coincide.
-
-        Args:
-            password: Password en texto plano a verificar.
-            password_hasher: Función para hashear y comparar passwords.
-
-        Returns:
-            True si el password es correcto, False en caso contrario.
-        """
-        hash_proporcionado = password_hasher(password)
-        return hash_proporcionado == self.password_hash
-
-    def actualizar_email(self, nuevo_email: str) -> None:
-        """Actualiza el email del usuario.
-
-        Args:
-            nuevo_email: Nuevo correo electrónico.
-
-        Raises:
-            ValueError: Si el nuevo email es inválido.
-        """
-        if "@" not in nuevo_email or "." not in nuevo_email.split("@")[1]:
-            raise ValueError("Email inválido")
-
-        self.email = nuevo_email
-        self.actualizado_en = datetime.now()
-
-    def to_dict(self) -> dict:
-        """Convierte el usuario a diccionario.
-
-        Returns:
-            Diccionario con los datos del usuario.
-        """
-        return {
-            "id": self.id,
-            "username": self.username,
-            "email": self.email,
-            "nombre_completo": self.nombre_completo,
-            "estado": self.estado.value,
-            "creado_en": self.creado_en.isoformat() if self.creado_en else None,
-            "actualizado_en": self.actualizado_en.isoformat() if self.actualizado_en else None
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict) -> "Usuario":
-        """Crea un Usuario desde un diccionario.
-
-        Args:
-            data: Diccionario con los datos del usuario.
-
-        Returns:
-            Nueva instancia de Usuario.
-        """
-        estado = EstadoUsuario(data.get("estado", "pendiente"))
-
-        return cls(
-            id=data.get("id"),
-            username=data["username"],
-            email=data["email"],
-            password_hash=data.get("password_hash", ""),
-            nombre_completo=data.get("nombre_completo"),
-            estado=estado
-        )
-
-# Función simple para hashear passwords (en producción, usar bcrypt)
-def hashear_password(password: str) -> str:
-    """Hashea un password (simplificado para demostración)."""
-    # NOTA: En producción, usar bcrypt o argon2
-    return f"hash_{password}"  # Simplificado
-
-# Ejemplo de uso
+# === PRUEBAS ===
 if __name__ == "__main__":
-    print("=== Creando Usuario ===")
-
-    # Crear usuario válido
-    try:
-        usuario = Usuario(
-            username="juan123",
-            email="juan@example.com",
-            password_hash=hashear_password("MiPassword123"),
-            nombre_completo="Juan Pérez"
-        )
-        print(f"✅ Usuario creado: {usuario}")
-        print(f"   Email: {usuario.email}")
-        print(f"   Estado: {usuario.estado.value}")
-        print(f"   ¿Válido? {usuario.es_valido()}")
-
-        # Activar usuario
-        usuario.activar()
-        print(f"   Estado después de activar: {usuario.estado.value}")
-        print(f"   ¿Está activo? {usuario.esta_activo()}")
-
-        # Verificar password
-        password_correcto = usuario.verificar_password("MiPassword123", hashear_password)
-        print(f"   Password correcto: {password_correcto}")
-
-        # Convertir a dict
-        usuario_dict = usuario.to_dict()
-        print(f"\n   Como diccionario:")
-        for key, value in usuario_dict.items():
-            print(f"   - {key}: {value}")
-
-    except ValueError as e:
-        print(f"❌ Error: {e}")
-
-    # Intentar crear usuario inválido
-    print("\n=== Probando Validación ===")
-    try:
-        usuario_invalido = Usuario(
-            username="ab",  # Muy corto
-            email="invalido",  # Email inválido
-            password_hash="corto"
-        )
-    except ValueError as e:
-        print(f"❌ Error esperado: {e}")</code></pre>
-
-                    <h4>Paso 1: Ejecuta el Código</h4>
-                    <pre><code class="language-bash">python usuario.py</code></pre>
-
-                    <h4>Paso 2: Prueba Diferentes Casos</h4>
-                    <ul>
-                        <li>Crear un usuario válido con todos los campos</li>
-                        <li>Crear un usuario con valores inválidos (username corto, email sin @)</li>
-                        <li>Verificar la validación de password</li>
-                        <li>Activar y desactivar el usuario</li>
-                        <li>Convertir a diccionario y crear desde diccionario</li>
-                    </ul>
-
-                    <div class="alert-warning-custom">
-                        <strong>⚠️ Reto adicional:</strong> Agrega un método <code>agregar_tarea(tarea_id: int)</code> y <code>obtener_tareas()</code> para gestionar las tareas asociadas al usuario.
-                    </div>
-
-                    <h3>🚀 Conexión con el Proyecto TaskFlow</h3>
-                    <p>La clase Usuario que acabamos de crear es la base del modelo de dominio de TaskFlow:</p>
-                    <ul>
-                        <li><strong>Autenticación:</strong> El username y password_hash se usarán para el login</li>
-                        <li><strong>Autorización:</strong> El estado determina si el usuario puede acceder al sistema</li>
-                        <li><strong>Persistencia:</strong> <code>to_dict()</code> y <code>from_dict()</code> facilitan guardar/cargar desde BD o archivos</li>
-                        <li><strong>Validación:</strong> <code>validar()</code> asegura datos consistentes antes de guardar</li>
-                    </ul>
+    # Crear usuarios
+    usuario1 = Usuario("juan123", "juan@example.com", "Juan Pérez")
+    usuario2 = Usuario("ana", "ana@example.com")
+    usuario3 = Usuario("ab", "email-invalido")  # Inválido
+    
+    # Probar presentación
+    print(usuario1.presentarse())
+    print(usuario2.presentarse())
+    
+    # Probar validación
+    for u in [usuario1, usuario2, usuario3]:
+        valido, mensaje = u.es_valido()
+        estado = "✅" if valido else "❌"
+        print(f"{estado} {u}: {mensaje}")
+    
+    # Probar activación
+    usuario1.desactivar()
+    print(f"\n{usuario1} activo: {usuario1.esta_activo()}")
+    usuario1.activar()
+    print(f"{usuario1} activo: {usuario1.esta_activo()}")
+    
+    # Mostrar representación
+    print(f"\nRepresentación: {repr(usuario1)}")</code></pre>
 
                     <div class="alert-note">
-                        <strong>📝 Para la próxima clase:</strong> En la siguiente clase aprenderás sobre encapsulamiento, donde mejoraremos esta clase usando propiedades (@property) para controlar el acceso a los atributos.
+                        <strong>Conexión con TaskFlow:</strong> Esta clase Usuario es la base del sistema. En las siguientes clases agregaremos: encapsulamiento (propiedades), herencia (tipos de usuarios), y persistencia (guardar en base de datos).
                     </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li>Agrega atributo <code>fecha_registro</code> que se establezca automáticamente</li>
+                        <li>Agrega método <code>cambiar_email(nuevo_email)</code> con validación</li>
+                        <li>Agrega método <code>to_dict()</code> que retorne un diccionario con los datos</li>
+                    </ol>
                 </section>
 
-                <section id="videos">
-                    <h2>📺 Videos Recomendados</h2>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-success me-2">Español</span>
-                                Curso de POO con PYTHON desde CERO (Completo)
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Soy Dalto | Curso completo</h6>
-                            <p class="card-text">
-                                Curso completo de Programación Orientada a Objetos con Python desde cero. Cubre conceptos de POO, clases, objetos, herencia, polimorfismo y más.
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=HtKqSJX7VoM" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-secondary me-2">Inglés</span>
-                                Python OOP 1: Classes and Instances
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Corey Schafer | 23:15 min</h6>
-                            <p class="card-text">
-                                Serie completa de POO muy recomendada
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=ZDa-Z5JzLYM" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                </section>
-
-                <section id="diagramas">
-                    <h2>📊 Diagramas Ilustrativos</h2>
-                    <div class="text-center my-4">
-                        <img src="../assets/diagramas/poo-clase-objeto.svg"
-                             alt="poo-clase-objeto.svg"
-                             class="img-fluid rounded shadow"
-                             style="max-width: 100%; height: auto;">
-                    </div>
-                </section>
-
-                <section id="referencias">
-                    <h2>Para Profundizar</h2>
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
                     <ul>
-                        <li><a href="https://docs.python.org/es/3/tutorial/classes.html" target="_blank">Clases - Tutorial Oficial de Python</a></li>
-                        <li><a href="https://docs.python.org/es/3/library/dataclasses.html" target="_blank">Dataclasses - Documentación Oficial</a></li>
-                        <li><a href="https://realpython.com/python-data-classes/" target="_blank">Real Python - Guía de Dataclasses</a></li>
-                        <li><a href="https://docs.python.org/es/3/reference/datamodel.html" target="_blank">Modelo de Datos Python - Métodos Especiales</a></li>
+                        <li><strong>Clase:</strong> Plantilla que define atributos y métodos</li>
+                        <li><strong>Objeto:</strong> Instancia creada a partir de una clase</li>
+                        <li><strong>__init__:</strong> Constructor que inicializa el objeto</li>
+                        <li><strong>self:</strong> Referencia al objeto actual (no se pasa al llamar)</li>
+                        <li><strong>Atributos:</strong> Variables que almacenan datos del objeto</li>
+                        <li><strong>Métodos:</strong> Funciones que definen comportamientos del objeto</li>
                     </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Para el examen E1:</strong> Practica crear clases con __init__, atributos y métodos. Será parte de la evaluación.
+                    </div>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-01/01-01-clases-objetos.ipynb"
-           target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
-        </a>
-    </div>
-
-    <!-- Botón Volver Arriba -->
-    <button id="btnVolverArriba" class="btn btn-primary btn-lg"
-            style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; padding: 0;"
-            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
-        ↑
-    </button>
-
-    <footer>
+    <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-14</p>
-            <p class="mt-2">
-                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
-                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
-            </p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../unidad-00/clase-02-estructuras-datos.html">← Anterior</a> | <a href="clase-02-encapsulamiento.html">Siguiente: Encapsulamiento →</a></p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-
-            // Botón Volver Arriba
-            const btnVolverArriba = document.getElementById('btnVolverArriba');
-
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    btnVolverArriba.style.display = 'block';
-                } else {
-                    btnVolverArriba.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

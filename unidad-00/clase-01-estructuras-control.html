@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Estructuras de Control | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 0: Fundamentos de Python</h2>
+            <h3>Clase 1: Estructuras de Control</h3>
+            <p class="mt-2"><span class="badge bg-light text-dark">Semana 1 - 70 minutos</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#condicionales" class="text-decoration-none">Condicionales</a></li>
+                        <li><a href="#bucles" class="text-decoration-none">Bucles</a></li>
+                        <li><a href="#control" class="text-decoration-none">Control de Flujo</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Usar <code>if</code>, <code>elif</code>, <code>else</code> para tomar decisiones</li>
+                        <li>Crear bucles <code>for</code> para repetir acciones con listas y rangos</li>
+                        <li>Usar <code>while</code> para repetir mientras se cumpla una condición</li>
+                        <li>Controlar bucles con <code>break</code> y <code>continue</code></li>
+                        <li>Crear un menú interactivo para el proyecto TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- CONDICIONALES -->
+                <section id="condicionales">
+                    <h2 class="text-primary border-bottom pb-2">Condicionales: if/elif/else (20 min)</h2>
+                    
+                    <p>Los <strong>condicionales</strong> permiten que el programa tome decisiones.</p>
+
+                    <h4>Sintaxis Básica</h4>
+                    <pre><code class="language-python">if condicion:
+    # Código si es True
+    pass
+elif otra_condicion:
+    # Código si otra es True
+    pass
+else:
+    # Código si ninguna es True
+    pass</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Python usa <strong>indentación</strong> (4 espacios), no llaves. ¡Todo lo indentado pertenece al if!
+                    </div>
+
+                    <h4>Ejemplo: Clasificar Edad</h4>
+                    <pre><code class="language-python">edad = int(input("Ingresa tu edad: "))
+
+if edad < 13:
+    print("Eres un niño")
+elif edad < 20:
+    print("Eres un adolescente")
+elif edad < 65:
+    print("Eres un adulto")
+else:
+    print("Eres un adulto mayor")
+
+print("Programa terminado")  # Esto siempre se ejecuta</code></pre>
+
+                    <h4>Operadores Lógicos</h4>
+                    <pre><code class="language-python"># and - Ambos deben ser True
+if edad >= 18 and tiene_licencia:
+    print("Puede conducir")
+
+# or - Al menos uno debe ser True
+if es_estudiante or es_profesor:
+    print("Tiene acceso a la biblioteca")
+
+# not - Invierte el valor
+if not es_bloqueado:
+    print("Usuario activo")
+
+# Combinados
+if (edad >= 18 and tiene_licencia) or es_emergencia:
+    print("Puede conducir")  </code></pre>
+
+                    <h4>Operador in</h4>
+                    <pre><code class="language-python">frutas = ["manzana", "banana", "naranja"]
+
+if "manzana" in frutas:
+    print("Tenemos manzanas en stock")
+
+# También funciona con strings
+if "@" in email:
+    print("Email parece válido")
+
+# Negado
+if "admin" not in roles:
+    print("No tienes permisos de administrador")  </code></pre>
+                </section>
+
+                <!-- BUCLES -->
+                <section id="bucles">
+                    <h2 class="text-primary border-bottom pb-2">Bucles: for y while (25 min)</h2>
+                    
+                    <h4>Bucle for - Iterar sobre colecciones</h4>
+                    <pre><code class="language-python"># Iterar sobre una lista
+frutas = ["manzana", "banana", "naranja"]
+for fruta in frutas:
+    print(f"Tengo una {fruta}")
+
+# Iterar sobre un string (caracter por caracter)
+for letra in "Python":
+    print(letra)
+
+# range() - Generar números
+for i in range(5):          # 0, 1, 2, 3, 4
+    print(i)
+
+for i in range(1, 6):       # 1, 2, 3, 4, 5
+    print(i)
+
+for i in range(0, 10, 2):   # 0, 2, 4, 6, 8 (pares)
+    print(i)
+
+# enumerate() - Índice y valor
+for indice, fruta in enumerate(frutas):
+    print(f"{indice}: {fruta}")
+    
+# enumerate con inicio en 1
+for numero, fruta in enumerate(frutas, 1):
+    print(f"{numero}. {fruta}")</code></pre>
+
+                    <h4>Bucle while - Repetir mientras se cumpla</h4>
+                    <pre><code class="language-python"># Contador simple
+contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1  # IMPORTANTE: modificar la variable
+
+# Validar entrada
+while True:
+    edad = input("Ingresa tu edad (número positivo): ")
+    if edad.isdigit() and int(edad) > 0:
+        edad = int(edad)
+        break  # Sale del bucle
+    print("Por favor ingresa un número válido.")
+
+print(f"Edad registrada: {edad}")</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Precaución:</strong> Siempre asegúrate de que la condición del <code>while</code> eventualmente sea <code>False</code>, o tendrás un bucle infinito.
+                    </div>
+                </section>
+
+                <!-- CONTROL DE FLUJO -->
+                <section id="control">
+                    <h2 class="text-primary border-bottom pb-2">Control de Flujo (10 min)</h2>
+                    
+                    <h4>break - Salir del bucle</h4>
+                    <pre><code class="language-python"># Buscar un elemento y detenerse
+usuarios = ["ana", "juan", "maria", "pedro", "luisa"]
+buscar = "maria"
+
+for usuario in usuarios:
+    print(f"Buscando: {usuario}")
+    if usuario == buscar:
+        print(f"¡Encontrado! {usuario}")
+        break  # Sale del bucle inmediatamente</code></pre>
+
+                    <h4>continue - Saltar a la siguiente iteración</h4>
+                    <pre><code class="language-python"># Mostrar solo números pares
+for numero in range(1, 11):
+    if numero % 2 != 0:  # Si es impar
+        continue         # Salta al siguiente número
+    print(numero)        # Solo imprime pares: 2, 4, 6, 8, 10</code></pre>
+
+                    <h4>else en bucles - Se ejecuta si NO hubo break</h4>
+                    <pre><code class="language-python"># Buscar usuario
+usuarios = ["ana", "juan", "pedro"]
+buscar = "maria"
+
+for usuario in usuarios:
+    if usuario == buscar:
+        print(f"{buscar} encontrado")
+        break
+else:
+    # Solo se ejecuta si no encontramos el usuario
+    print(f"{buscar} NO está en la lista")</code></pre>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Menú de Usuarios (15 min)</h2>
+                    
+                    <p>Crea un menú interactivo para gestionar usuarios (base del proyecto TaskFlow).</p>
+
+                    <pre><code class="language-python"># sistema_usuarios.py
+usuarios = []
+
+def mostrar_menu():
+    print("\n=== SISTEMA DE USUARIOS ===")
+    print("1. Ver usuarios")
+    print("2. Agregar usuario")
+    print("3. Buscar usuario")
+    print("4. Salir")
+
+def ver_usuarios():
+    if len(usuarios) == 0:
+        print("\nNo hay usuarios registrados.")
+        return
+    
+    print("\n--- Lista de Usuarios ---")
+    for i, usuario in enumerate(usuarios, 1):
+        print(f"{i}. {usuario}")
+
+def agregar_usuario():
+    nombre = input("\nIngresa el nombre del usuario: ")
+    
+    # Validar que no esté vacío
+    if not nombre.strip():
+        print("❌ El nombre no puede estar vacío.")
+        return
+    
+    # Validar que no exista
+    if nombre in usuarios:
+        print("❌ Ese usuario ya existe.")
+        return
+    
+    usuarios.append(nombre)
+    print(f"✅ Usuario '{nombre}' agregado correctamente.")
+
+def buscar_usuario():
+    if len(usuarios) == 0:
+        print("\nNo hay usuarios para buscar.")
+        return
+    
+    nombre = input("\n¿Qué usuario buscas? ")
+    
+    for usuario in usuarios:
+        if usuario.lower() == nombre.lower():
+            print(f"✅ Usuario encontrado: {usuario}")
+            return
+    
+    print(f"❌ Usuario '{nombre}' no encontrado.")
+
+# Programa principal
+while True:
+    mostrar_menu()
+    opcion = input("\nSelecciona una opción (1-4): ")
+    
+    if opcion == "1":
+        ver_usuarios()
+    elif opcion == "2":
+        agregar_usuario()
+    elif opcion == "3":
+        buscar_usuario()
+    elif opcion == "4":
+        print("\n¡Hasta luego!")
+        break
+    else:
+        print("\n❌ Opción no válida. Intenta de nuevo.")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este menú es la base del sistema. Más adelante agregaremos: validaciones de email, contraseñas, estados (activo/inactivo), y persistencia en base de datos.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ul>
+                        <li>Agrega opción 5: Eliminar usuario por nombre</li>
+                        <li>Valida que el nombre tenga al menos 3 caracteres</li>
+                        <li>Permite buscar coincidencias parciales (ej: "ju" encuentra "juan")</li>
+                    </ul>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <table class="table">
+                        <tr>
+                            <th>Estructura</th>
+                            <th>Uso</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                        <tr>
+                            <td><code>if/elif/else</code></td>
+                            <td>Tomar decisiones</td>
+                            <td><code>if edad >= 18:</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>for</code></td>
+                            <td>Iterar colecciones</td>
+                            <td><code>for u in usuarios:</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>while</code></td>
+                            <td>Repetir condicionalmente</td>
+                            <td><code>while opcion != "4":</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>break</code></td>
+                            <td>Salir del bucle</td>
+                            <td>Al encontrar elemento</td>
+                        </tr>
+                        <tr>
+                            <td><code>continue</code></td>
+                            <td>Saltar iteración</td>
+                            <td>Omitir elementos</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Modifica el sistema para que cada usuario sea un diccionario con nombre y email. Usa un <code>for</code> con <code>enumerate</code> para mostrarlos numerados.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-00-introduccion.html">← Anterior</a> | <a href="clase-02-estructuras-datos.html">Siguiente: Estructuras de Datos</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
