@@ -277,6 +277,11 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 1: POO Avanzada</h2>
             <h3>Clase 2: Encapsulamiento y Propiedades</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 5 - Lunes 03/03/2026</span>
+                <span class="badge bg-warning text-dark ms-1">📢 E1: 15% (26/02) | E2: 15% (12/03)</span>
+                <span class="badge bg-info ms-1">📋 Encapsulamiento: 20 pts E1 / 20 pts E2</span>
+            </p>
         </div>
     </header>
 
@@ -329,12 +334,15 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2>Objetivos de Aprendizaje</h2>
+                    <div class="alert-note">
+                        <strong>📋 Relación con Rúbricas E1 y E2:</strong> Esta clase cubre el criterio de <strong>Encapsulamiento (20 pts E1, 20 pts E2)</strong>. Se evalúa el uso correcto de <code>_privado</code> y <code>@property</code> con validación completa.
+                    </div>
                     <p>Al finalizar esta clase, usted será capaz de:</p>
                     <ul>
                         <li>Comprender el concepto de encapsulamiento y su importancia en POO</li>
                         <li>Aplicar las convenciones de Python para atributos privados (<code>_</code> y <code>__</code>)</li>
-                        <li>Usar <code>@property</code> para crear getters pythonicos</li>
-                        <li>Implementar setters con <code>@atributo.setter</code></li>
+                        <li>Usar <code>@property</code> para crear getters pythonicos con <strong>type hints</strong></li>
+                        <li>Implementar setters con <code>@atributo.setter</code> y <strong>validación completa</strong></li>
                         <li>Entender la diferencia entre atributos "protegidos" y "privados" en Python</li>
                         <li>Usar <code>dataclasses</code> con <code>frozen=True</code> para objetos inmutables</li>
                         <li>Aplicar encapsulamiento apropiado en el modelo Usuario de TaskFlow</li>
@@ -1164,11 +1172,21 @@ if __name__ == "__main__":
         </a>
     </div>
 
+    <!-- Botón Volver Arriba -->
+    <button id="btnVolverArriba" class="btn btn-primary btn-lg"
+            style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; padding: 0;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
+
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1180,6 +1198,17 @@ if __name__ == "__main__":
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const btnVolverArriba = document.getElementById('btnVolverArriba');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    btnVolverArriba.style.display = 'block';
+                } else {
+                    btnVolverArriba.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

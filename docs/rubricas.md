@@ -1,384 +1,241 @@
-# Rubricas de Evaluacion - IF0100 POO-II
-
-## Informacion del Curso
-
-| Campo | Detalle |
-|-------|---------|
-| **Codigo del Curso** | IF0100-POO-II |
-| **Nombre del Curso** | Programacion Orientada a Objetos II |
-| **Programa** | Ingenieria de Sistemas |
-| **Institucion** | UNAULA - Universidad Autonoma Latinoamericana |
-| **Periodo Academico** | 2026-I |
-| **Docente** | [Nombre del Docente] |
-| **Correo** | [Correo Institucional] |
-| **Version del Documento** | 2.0 |
-| **Ultima Actualizacion** | Febrero 2026 |
+# Rúbricas de Evaluación - IF0100 POO II
+## Semestre 2026-1 | Python/FastAPI
 
 ---
 
-## Introduccion
+## Sistema de Evaluación Oficial
 
-Este documento establece las rubricas de evaluacion para el curso de Programacion Orientada a Objetos II. Cada rubrica define los criterios, indicadores de logro y niveles de desempeno que se utilizaran para valorar el trabajo de los estudiantes. La evaluacion se realiza de manera integral, considerando tanto los aspectos tecnicos como la calidad del codigo y las buenas practicas de desarrollo.
+| # | Resultado de Aprendizaje | Tipo | Peso | Fecha |
+|---|--------------------------|------|------|-------|
+| **E1** | Conoce los conceptos fundamentales de objetos clases | Examen | 15% | 26/02/2026 |
+| **E2** | Técnicas de Desarrollo de software | Taller | 15% | 12/03/2026 |
+| **E3** | Desarrollo Web | Proyecto | 20% | 26/03/2026 |
+| **E4** | Construye sistemas con persistencia de datos en archivos planos | Laboratorio | 15% | 23/04/2026 |
+| **E5** | Desarrolla sistemas con persistencia en bases de datos | Proyecto | 15% | 07/05/2026 |
+| **E6** | Conoce e implementa las arquitectura de datos desconectados | Proyecto | 20% | 26/05/2026 |
 
-Es fundamental que los estudiantes comprendan que la evaluacion no se limita a verificar que el codigo funcione, sino que tambien se valora la capacidad de escribir codigo mantenible, siguiendo estandares reconocidos y aplicando patrones de diseno apropiados. La escala de calificacion va desde el nivel Excelente (5.0) hasta Insuficiente (1.0-2.9), pasando por los niveles Bueno (4.0-4.9) y Suficiente (3.0-3.9).
-
----
-
-## Resumen de Evaluaciones
-
-### Distribucion por Seguimientos
-
-| Seguimiento | Porcentaje Acumulado | Evaluaciones | Fecha Limite |
-|-------------|---------------------|--------------|--------------|
-| **Primer Seguimiento** | 50% | Quiz 1 (15%) + Taller 1 (15%) + Parcial 1 (20%) | 27 marzo 2026 |
-| **Segundo Seguimiento** | 80% | Taller 2 (15%) + Proyecto Parcial (15%) | 15 mayo 2026 |
-| **Tercer Seguimiento** | 100% | Proyecto Final (20%) | 28 mayo 2026 |
-
-### Calendario de Evaluaciones
-
-| # | Evaluacion | Peso | Fecha | Unidad | Seguimiento |
-|---|------------|------|-------|--------|-------------|
-| 1 | **Quiz 1** - Fundamentos Python | 15% | 19/02/2026 | U00 | 1er (50%) |
-| 2 | **Taller 1** - Modelado OO | 15% | 03/03/2026 | U01 | 1er (50%) |
-| 3 | **Parcial 1** - Python + POO | 20% | 12/03/2026 | U01 | 1er (50%) |
-| 4 | **Taller 2** - TDD + Testing | 15% | 19/03/2026 | U02 | 2do (30%) |
-| 5 | **Proyecto Parcial** - TaskFlow API | 15% | 16/04/2026 | U03 | 2do (30%) |
-| 6 | **Proyecto Final** - TaskFlow Completo | 20% | 07/05/2026 | U03 | 3er (20%) |
-| | **TOTAL** | **100%** | | | |
+**Total: 100%**
 
 ---
 
-## 1. Quiz 1 - Fundamentos Python
+## E1: Conceptos Fundamentales de Objetos y Clases
+### Examen Teórico-Práctico | 15% | 26/02/2026
 
-**Porcentaje del Curso:** 15%
-**Fecha:** 19 de febrero de 2026
-**Duracion:** 45 minutos
-**Unidad:** U00 - Fundamentos Python
+**Unidades:** U00 (Introducción Python) + U01 (POO)
 
-### Descripcion
+#### Competencias Evaluadas
+- Conocer y aplicar conceptos de Programación Orientada a Objetos
+- Implementar clases, objetos, atributos y métodos en Python
+- Aplicar encapsulamiento, herencia y polimorfismo
 
-Este quiz evalua los conocimientos fundamentales de Python adquiridos en las primeras semanas del curso. Incluye preguntas teoricas y ejercicios practicos cortos sobre sintaxis, tipos de datos, estructuras de control, funciones y manejo de excepciones.
+#### Rúbrica de Calificación (100 puntos)
 
-### Distribucion de Temas
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Definición de Clases (25 pts)** | Clases bien estructuradas con `__init__`, type hints y docstrings | Clases correctas con `__init__`, faltan type hints o docstrings | Clases funcionales pero sin buenas prácticas | Errores en sintaxis de clases |
+| **Atributos y Métodos (25 pts)** | Atributos públicos/privados correctos, métodos con `self` | Atributos y métodos correctos, faltan convenios | Métodos sin `self` o atributos mal definidos | Errores conceptuales graves |
+| **Encapsulamiento (20 pts)** | Uso correcto de `_privado` y `@property` | Encapsulamiento básico funcional | Intenta encapsular sin éxito | No aplica encapsulamiento |
+| **Herencia (15 pts)** | Herencia correcta con `super()` | Herencia funcional sin `super()` | Herencia con errores menores | No implementa herencia |
+| **Polimorfismo (15 pts)** | Métodos sobrescritos correctamente | Polimorfismo básico | Intento de polimorfismo | No aplica polimorfismo |
 
-| Tema | Porcentaje del Quiz |
-|------|---------------------|
-| Variables y tipos de datos | 20% |
-| Estructuras de control (if, for, while) | 25% |
-| Funciones y ambito | 25% |
-| Estructuras de datos (listas, diccionarios) | 20% |
-| Manejo de excepciones | 10% |
-
-### Rubrica de Calificacion
-
-| Nivel | Puntuacion | Descripcion |
-|-------|------------|-------------|
-| **Excelente** | 5.0 | 90-100% de respuestas correctas. Dominio completo de la sintaxis y conceptos. Codigo limpio y eficiente. |
-| **Bueno** | 4.0 | 75-89% de respuestas correctas. Comprension solida con pequenos errores menores. |
-| **Suficiente** | 3.0 | 60-74% de respuestas correctas. Comprension basica, errores que no impiden funcionamiento. |
-| **Insuficiente** | 1.0-2.9 | Menos del 60% de respuestas correctas. Comprension insuficiente de los conceptos basicos. |
-
-### Criterios de Evaluacion Practica
-
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Sintaxis Python** | Codigo 100% valido, uso correcto de indentacion, estructuras y convenciones | Pequenos errores de sintaxis que no afectan ejecucion | Errores de sintaxis que requieren correccion | Errores graves de sintaxis que impiden ejecucion |
-| **Logica de Solucion** | Solucion optima, eficiente y bien estructurada | Solucion correcta con pequenas ineficiencias | Solucion funcional pero suboptima | Solucion incorrecta o incompleta |
-| **Manejo de Errores** | Manejo apropiado de casos limite y excepciones | Manejo basico de errores presente | Manejo de errores parcial | Sin manejo de errores |
+#### Formato del Examen
+- **Parte Teórica (30%):** Preguntas de selección múltiple y verdadero/falso
+- **Parte Práctica (70%):** 2-3 ejercicios de código
 
 ---
 
-## 2. Taller 1 - Modelado Orientado a Objetos
+## E2: Técnicas de Desarrollo de Software
+### Taller Práctico | 15% | 12/03/2026
 
-**Porcentaje del Curso:** 15%
-**Fecha:** 03 de marzo de 2026
-**Unidad:** U01 - Programacion Orientada a Objetos
+**Unidad:** U01 (POO Avanzada - Clases, Encapsulamiento, Herencia, Polimorfismo)
 
-### Descripcion
+#### Competencias Evaluadas
+- Diseñar jerarquías de clases con herencia
+- Aplicar encapsulamiento con propiedades
+- Implementar clases abstractas e interfaces
+- Usar polimorfismo para comportamiento flexible
 
-Este taller evalua la capacidad de los estudiantes para modelar soluciones utilizando los pilares de la programacion orientada a objetos: encapsulamiento, herencia y polimorfismo. Los estudiantes deben disenar e implementar un sistema de clases que resuelva un problema propuesto.
+#### Rúbrica de Calificación (100 puntos)
 
-### Rubrica de Evaluacion
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Diseño de Clases (25 pts)** | Jerarquía bien diseñada con SRP | Diseño funcional con mejoras posibles | Diseño básico pero funcional | Diseño confuso o sin sentido |
+| **Herencia (25 pts)** | Herencia correcta con super() y method overriding | Herencia funcional con errores menores | Herencia básica | No usa herencia correctamente |
+| **Encapsulamiento (20 pts)** | Propiedades con @property, validación completa | Encapsulamiento parcial | Atributos públicos sin protección | Sin encapsulamiento |
+| **Polimorfismo (15 pts)** | Métodos polimórficos bien implementados | Polimorfismo funcional | Polimorfismo básico | No aplica polimorfismo |
+| **Clases Abstractas (15 pts)** | ABCs bien definidos con métodos abstractos | Clases abstractas funcionales | Uso básico de ABCs | No usa clases abstractas |
 
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Diseno de Clases** (25%) | Clases bien disenadas con responsabilidades claras, uso apropiado de abstraccion, constructores y metodos correctamente implementados | Clases funcionales con pequenas inconsistencias en el diseno | Clases basicas que funcionan pero con responsabilidades poco claras | Clases mal definidas o con errores de implementacion |
-| **Encapsulamiento** (20%) | Uso correcto de modificadores de acceso, propiedades con getters/setters cuando necesario, datos protegidos | Encapsulamiento basico con pequenos vacios | Encapsulamiento presente pero con inconsistencias | Ausencia de encapsulamiento |
-| **Herencia** (20%) | Herencia correctamente implementada con jerarquia apropiada, uso de super() | Herencia funcional con pequenas inconsistencias | Herencia basica presente pero con problemas en la jerarquia | Herencia incorrecta o sin relacion logica |
-| **Polimorfismo** (20%) | Polimorfismo implementado con metodos sobreescritos, duck typing cuando es apropiado | Polimorfismo funcional con pequenas limitaciones | Polimorfismo basico presente | Ausencia de polimorfismo |
-| **Pruebas** (15%) | Tests unitarios completos con cobertura alta, asserts significativos | Tests funcionales con buena cobertura | Tests basicos presentes | Ausencia de tests |
-
-### Pesos de los Criterios
-
-| Criterio | Peso |
-|----------|------|
-| Diseno de Clases | 25% |
-| Encapsulamiento | 20% |
-| Herencia | 20% |
-| Polimorfismo | 20% |
-| Pruebas | 15% |
+#### Entregable
+- Repositorio Git con modelo de dominio TaskFlow
+- Mínimo 5 clases con relaciones de herencia
+- Uso de @property para encapsulamiento
+- Al menos 1 clase abstracta (ABC)
 
 ---
 
-## 3. Parcial 1 - Python y Programacion Orientada a Objetos
+## E3: Desarrollo Web
+### Proyecto API REST | 20% | 26/03/2026
 
-**Porcentaje del Curso:** 20%
-**Fecha:** 12 de marzo de 2026
-**Duracion:** 90 minutos
-**Unidad:** U00-U01
+**Unidad:** U03 (FastAPI, Pydantic, Jinja2, HTMX)
 
-### Descripcion
+#### Competencias Evaluadas
+- Crear APIs REST con FastAPI
+- Validar datos con Pydantic
+- Implementar operaciones CRUD
+- Documentar API con OpenAPI
 
-El primer parcial evalua los conocimientos adquiridos en las primeras semanas del curso, abarcando fundamentos de Python y programacion orientada a objetos. La evaluacion combina preguntas teoricas con ejercicios practicos de programacion.
+#### Rúbrica de Calificación (100 puntos)
 
-### Distribucion de Temas
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Estructura API (20 pts)** | Routers organizados, separación de responsabilidades | Estructura clara pero mejorable | Todo en main.py pero funcional | Estructura confusa |
+| **Endpoints CRUD (25 pts)** | GET, POST, PUT, DELETE implementados correctamente | CRUD funcional con errores menores | CRUD parcial | Endpoints incompletos |
+| **Pydantic Models (20 pts)** | Schemas separados para request/response con validación | Modelos funcionales sin validación completa | Modelos básicos | Sin uso de Pydantic |
+| **Manejo de Errores (15 pts)** | HTTPException con códigos correctos (404, 422, etc.) | Manejo básico de errores | Poco manejo de errores | Sin manejo de errores |
+| **Documentación (10 pts)** | Docstrings en endpoints, descripción en FastAPI() | Documentación parcial | Poca documentación | Sin documentación |
+| **Tests de API (10 pts)** | Tests con TestClient para endpoints | Tests básicos | Tests insuficientes | Sin tests |
 
-| Tema | Porcentaje | Contenidos |
-|------|------------|------------|
-| Python Basics | 30% | Sintaxis, tipos de datos, estructuras de control, funciones, comprehensions |
-| Programacion Orientada a Objetos | 40% | Clases, objetos, encapsulamiento, herencia, polimorfismo, metodos especiales |
-| Testing Basico | 20% | pytest, assertions, fixtures basicos |
-| Domain-Driven Design | 10% | Conceptos basicos de DDD, Entities, Value Objects |
-
-### Rubrica de Calificacion Teorica
-
-| Nivel | Puntuacion | Descripcion |
-|-------|------------|-------------|
-| Excelente | 5.0 | Respuestas completas y precisas, demuestra comprension profunda, ejemplos correctos |
-| Bueno | 4.0 | Respuestas correctas con pequenos detalles faltantes |
-| Suficiente | 3.0 | Comprension basica, respuestas incompletas o con algunos errores |
-| Insuficiente | 1.0-2.9 | Comprension insuficiente, respuestas incorrectas o ausentes |
-
-### Rubrica de Calificacion Practica
-
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Correctitud del Codigo** | Codigo funciona perfectamente para todos los casos | Codigo funciona para casos principales | Codigo funciona parcialmente | Codigo no funciona o solo para casos basicos |
-| **Calidad del Codigo** | Codigo limpio, bien estructurado, sigue mejores practicas | Codigo legible con pequenas areas de mejora | Codigo funcional pero dificil de leer | Codigo confuso, mal estructurado |
-| **Solucion Propuesta** | Solucion elegante, eficiente, buen uso de POO | Solucion funcional con pequena area de mejora | Solucion basica que funciona | Solucion ineficiente o incorrecta |
-| **Manejo de Errores** | Manejo apropiado de excepciones, validaciones completas | Manejo basico de errores | Manejo de errores parcial | Ausencia de manejo de errores |
+#### Entregable
+- API REST funcional con FastAPI
+- Mínimo 3 recursos (ej: Usuarios, Proyectos, Tareas)
+- Documentación en /docs funcional
+- Colección de tests
 
 ---
 
-## 4. Taller 2 - TDD y Testing con pytest
+## E4: Persistencia en Archivos Planos
+### Laboratorio Práctico | 15% | 23/04/2026
 
-**Porcentaje del Curso:** 15%
-**Fecha:** 19 de marzo de 2026
-**Unidad:** U02 - Tecnica de Desarrollo
+**Unidad:** U04 (JSON, CSV, pickle, pathlib)
 
-### Descripcion
+#### Competencias Evaluadas
+- Leer y escribir archivos JSON y CSV
+- Serializar objetos con pickle
+- Manejar rutas con pathlib
+- Implementar patrón Repository básico
 
-Este taller se centra en el desarrollo de pruebas unitarias utilizando pytest y la metodologia TDD (Test-Driven Development). Los estudiantes deben demostrar capacidad para escribir tests que verifiquen el comportamiento del codigo, utilizando fixtures, parametrizacion, mocks y asserts apropiados.
+#### Rúbrica de Calificación (100 puntos)
 
-### Rubrica de Evaluacion
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Lectura JSON/CSV (25 pts)** | Lectura robusta con manejo de errores | Lectura funcional | Lectura básica | Errores en lectura |
+| **Escritura JSON/CSV (25 pts)** | Escritura con formato y validación | Escritura funcional | Escritura básica | Errores en escritura |
+| **Uso de pathlib (20 pts)** | Path usado consistentemente, rutas cross-platform | Uso parcial de pathlib | Mezcla de pathlib y strings | Sin pathlib |
+| **Manejo de Excepciones (15 pts)** | try/except para FileNotFoundError, JSONDecodeError | Manejo básico de excepciones | Poco manejo | Sin manejo |
+| **Estructura de Código (15 pts)** | Funciones separadas, código limpio | Código organizado | Código funcional pero desordenado | Código desestructurado |
 
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Cobertura de Tests** (25%) | Cobertura superior al 90%, todos los paths probados | Cobertura entre 75-90% | Cobertura entre 50-75% | Cobertura inferior al 50% |
-| **Fixtures** (20%) | Fixtures bien disenados con alcance apropiado, reutilizables | Fixtures funcionales con pequenos problemas | Fixtures basicos presentes | Ausencia de fixtures |
-| **Parametrizacion** (20%) | Parametrizacion maxima de tests, datos de prueba diversos | Parametrizacion presente | Parametrizacion basica | Sin parametrizacion |
-| **Mocks y Patching** (20%) | Uso correcto de mocks para aislar unidades | Mocks funcionales | Mocks basicos presentes | Ausencia de mocks |
-| **TDD** (15%) | Aplicacion correcta del ciclo red-green-refactor | TDD aplicado con pequenas inconsistencias | Intento de aplicar TDD | No aplica TDD |
-
-### Pesos de los Criterios
-
-| Criterio | Peso |
-|----------|------|
-| Cobertura de Tests | 25% |
-| Fixtures | 20% |
-| Parametrizacion | 20% |
-| Mocks y Patching | 20% |
-| TDD | 15% |
+#### Entregable
+- Módulo de persistencia con JSON
+- Módulo de persistencia con CSV
+- Ejemplos de uso funcionando
+- Manejo de errores documentado
 
 ---
 
-## 5. Proyecto Parcial - TaskFlow API
+## E5: Persistencia en Bases de Datos
+### Proyecto con SQLAlchemy | 15% | 07/05/2026
 
-**Porcentaje del Curso:** 15%
-**Fecha:** 16 de abril de 2026
-**Unidad:** U03 - FastAPI y Persistencia
+**Unidad:** U04 (SQLAlchemy ORM, Alembic, SQLite/PostgreSQL)
 
-### Descripcion
+#### Competencias Evaluadas
+- Definir modelos con SQLAlchemy ORM
+- Crear relaciones (One-to-Many, Many-to-Many)
+- Implementar CRUD con sesiones
+- Usar migrations con Alembic
 
-El Proyecto Parcial consiste en desarrollar una API REST funcional utilizando FastAPI. El sistema TaskFlow debe incluir gestion de usuarios, proyectos y tareas con persistencia en base de datos, autenticacion JWT y documentacion automatica.
+#### Rúbrica de Calificación (100 puntos)
 
-### Requisitos Minimos
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Modelos SQLAlchemy (25 pts)** | Modelos con relaciones, constraints y tipos correctos | Modelos funcionales con relaciones básicas | Modelos sin relaciones | Modelos incorrectos |
+| **Relaciones (25 pts)** | One-to-Many y Many-to-Many implementadas | Una relación implementada correctamente | Relaciones con errores | Sin relaciones |
+| **CRUD con Sesiones (20 pts)** | Operaciones con commit/rollback correctos | CRUD funcional | CRUD con errores | CRUD incompleto |
+| **Alembic Migrations (15 pts)** | Migrations creadas y aplicadas | Migration inicial creada | Intento de migrations | Sin migrations |
+| **Integración API (15 pts)** | API conectada a BD, endpoints funcionales | Integración parcial | Integración con errores | Sin integración |
 
-- API REST con endpoints CRUD para usuarios, proyectos y tareas
-- Autenticacion y autorizacion con JWT
-- Validacion de datos con Pydantic
-- Persistencia con SQLAlchemy
-- Tests de integracion
-- Documentacion Swagger/OpenAPI
-
-### Rubrica de Evaluacion
-
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Funcionalidad API** (30%) | API completa, todos los endpoints funcionan correctamente | API funcional con pequenas limitaciones | API basica con funcionalidad parcial | API incompleta o no funcional |
-| **Modelos Pydantic** (20%) | Modelos completos con validaciones personalizadas | Modelos funcionales | Modelos basicos | Modelos incorrectos |
-| **Autenticacion JWT** (20%) | Implementacion correcta de JWT, manejo de tokens | Autenticacion funcional | Autenticacion basica | Sin autenticacion |
-| **Persistencia** (15%) | Uso correcto de SQLAlchemy, relaciones bien definidas | Persistencia funcional | Persistencia basica | Sin persistencia |
-| **Testing API** (15%) | Tests de integracion completos, cobertura alta | Tests funcionales | Tests basicos | Sin tests |
-
-### Pesos de los Criterios
-
-| Criterio | Peso |
-|----------|------|
-| Funcionalidad API | 30% |
-| Modelos Pydantic | 20% |
-| Autenticacion JWT | 20% |
-| Persistencia | 15% |
-| Testing API | 15% |
+#### Entregable
+- Modelos SQLAlchemy completos
+- Base de datos SQLite con datos de prueba
+- Migrations de Alembic
+- API conectada a la base de datos
 
 ---
 
-## 6. Proyecto Final - TaskFlow Completo
+## E6: Arquitectura de Datos Desconectados
+### Proyecto Integrador Final | 20% | 26/05/2026
 
-**Porcentaje del Curso:** 20%
-**Fecha:** 07 de mayo de 2026
-**Unidad:** U03 - FastAPI y Persistencia
+**Unidad:** U05 (Repository Pattern, Clean Architecture, Caché)
 
-### Descripcion
+#### Competencias Evaluadas
+- Implementar patrón Repository
+- Aplicar arquitectura limpia
+- Usar DTOs con Pydantic
+- Implementar caché básico
 
-El Proyecto Final TaskFlow es un sistema de gestion de tareas y proyectos que integra todos los conceptos aprendidos durante el curso. Los estudiantes deben desarrollar una aplicacion completa utilizando arquitectura Domain-Driven Design (DDD), API REST con FastAPI, pruebas unitarias comprehensivas y documentacion profesional.
+#### Rúbrica de Calificación (100 puntos)
 
-### Requisitos del Proyecto
+| Criterio | Excelente (90-100) | Bueno (70-89) | Aceptable (60-69) | Insuficiente (0-59) |
+|----------|-------------------|---------------|-------------------|---------------------|
+| **Patrón Repository (25 pts)** | Repository completo con interfaz y implementación | Repository funcional | Repository básico | Sin Repository |
+| **Arquitectura en Capas (25 pts)** | Separación clara: models/repositories/services/api | Alguna separación de capas | Capas mezcladas | Sin arquitectura |
+| **DTOs Pydantic (20 pts)** | DTOs separados para cada operación | DTOs básicos | Un solo modelo para todo | Sin DTOs |
+| **Caché (15 pts)** | Caché implementado con cachetools o similar | Intento de caché | Caché conceptual | Sin caché |
+| **Documentación y Tests (15 pts)** | README completo, tests de integración | Documentación básica, algunos tests | Poca documentación | Sin documentación |
 
-El sistema TaskFlow debe incluir:
-- Gestion de usuarios con autenticacion
-- Creacion y administracion de proyectos
-- Gestion de tareas con estados y prioridades
-- Comentarios en tareas
-- Arquitectura DDD con separation of concerns
-- Cobertura de tests > 70%
-
-### Rubrica de Evaluacion
-
-| Criterio | Excelente (5.0) | Bueno (4.0) | Suficiente (3.0) | Insuficiente (1.0-2.9) |
-|----------|-----------------|-------------|------------------|------------------------|
-| **Funcionalidad** (30%) | Sistema completamente funcional, todas las caracteristicas implementadas | Sistema funcional con pequenas limitaciones | Sistema basico funcional | Sistema no funcional o con caracteristicas criticas faltantes |
-| **Arquitectura DDD** (20%) | Arquitectura DDD completa, Entities, Value Objects, Repositories bien definidos | Arquitectura DDD funcional con pequenas inconsistencias | Arquitectura basica presente | Ausencia de arquitectura DDD |
-| **API REST** (20%) | API REST completa y bien disenada, endpoints intuitivos | API funcional con pequenas inconsistencias | API basica presente | API mal disenada |
-| **Testing** (15%) | Cobertura superior al 85%, tests unitarios e integracion | Buena cobertura (70-85%) | Tests basicos (50-70%) | Cobertura inferior al 50% |
-| **Calidad del Codigo** (10%) | Codigo limpio, DRY, SRP, typing completo | Codigo legible con pequenas areas de mejora | Codigo funcional pero con code smells | Codigo dificil de mantener |
-| **Documentacion** (5%) | Documentacion completa: README, API docs, guia de instalacion | Documentacion funcional | Documentacion basica | Documentacion minima |
-
-### Pesos de los Criterios
-
-| Criterio | Peso |
-|----------|------|
-| Funcionalidad | 30% |
-| Arquitectura DDD | 20% |
-| API REST | 20% |
-| Testing | 15% |
-| Calidad del Codigo | 10% |
-| Documentacion | 5% |
-
-### Requisitos Minimos para Aprobar
-
-Para que el proyecto sea considerado para calificacion, debe cumplir con:
-- Codigo que ejecute sin errores criticos
-- API que responda a peticiones basicas
-- Al menos 50% de coverage en pruebas unitarias
-
-Proyectos que no cumplan estos requisitos seran calificados como Insuficientes (1.0-2.9).
+#### Entregable
+- Proyecto TaskFlow completo
+- Arquitectura limpia implementada
+- Patrón Repository funcional
+- Caché implementado
+- README con instrucciones
 
 ---
 
-## Politica de Entregas Tardias
+## Seguimientos Académicos
 
-### Aplicacion de Penalizaciones
+### Primer Seguimiento (50%) - 27/03/2026
+| Evaluación | % | Fecha |
+|------------|---|-------|
+| E1 - Conceptos fundamentales | 15% | 26/02/2026 |
+| E2 - Técnicas de desarrollo | 15% | 12/03/2026 |
+| E3 - Desarrollo Web | 20% | 26/03/2026 |
 
-Todas las entregas tienen una politica de penalizacion progresiva:
+### Segundo Seguimiento (80%) - 15/05/2026
+| Evaluación | % | Fecha |
+|------------|---|-------|
+| E4 - Persistencia archivos | 15% | 23/04/2026 |
+| E5 - Persistencia BD | 15% | 07/05/2026 |
 
-| Tiempo de Demora | Penalizacion |
-|------------------|--------------|
-| Hasta 24 horas | 10% de la nota |
-| 24-48 horas | 20% de la nota |
-| 48-72 horas | 30% de la nota |
-| Mas de 72 horas | 50% de la nota o no aceptado |
-
-### Entregas Tardias en Parciales
-
-Los parciales tienen tolerancia de 15 minutos para el inicio. Despues de este tiempo, el estudiante debera justificar su ausencia para presentar en fecha alternativa.
-
----
-
-## Escala de Calificacion Final
-
-| Rango | Nota | Descriptor |
-|-------|------|------------|
-| 4.6 - 5.0 | Sobresaliente | Dominio completo de los objetivos, trabajo de alta calidad |
-| 4.0 - 4.5 | Bueno | Cumplimiento satisfactorio de los objetivos |
-| 3.0 - 3.9 | Aprobado | Cumplimiento minimo de los objetivos |
-| 1.0 - 2.9 | No Aprobado | No cumplimiento de los objetivos |
-
-### Requisitos para Aprobar el Curso
-
-- Nota definitiva igual o superior a 3.0
-- Haber presentado todas las evaluaciones
-- Haber presentado ambos parciales
+### Tercer Seguimiento (100%) - 28/05/2026
+| Evaluación | % | Fecha |
+|------------|---|-------|
+| E6 - Datos desconectados | 20% | 26/05/2026 |
 
 ---
 
-## Anexos
+## Criterios Generales de Calificación
 
-### Anexo A: Formato de Entrega
+### Escala de Calificación
+| Rango | Calificación | Descripción |
+|-------|-------------|-------------|
+| 90-100 | Excelente | Supera expectativas, trabajo de calidad profesional |
+| 80-89 | Muy Bueno | Cumple todos los requisitos con calidad |
+| 70-79 | Bueno | Cumple requisitos básicos |
+| 60-69 | Aceptable | Cumple mínimamente, necesita mejoras |
+| 0-59 | Insuficiente | No cumple requisitos mínimos |
 
-Todo el codigo fuente debe entregarse en un repositorio Git con la siguiente estructura:
+### Políticas de Entrega
+- **Entrega puntual:** 100% de la calificación
+- **Entrega tardía (24h):** -10% de la calificación
+- **Entrega tardía (48h):** -20% de la calificación
+- **Sin entrega:** 0%
 
-```
-proyecto/
-├── src/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── models/
-│   ├── schemas/
-│   ├── routers/
-│   ├── services/
-│   └── repositories/
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py
-│   ├── unit/
-│   └── integration/
-├── docs/
-├── requirements.txt
-├── pytest.ini
-└── README.md
-```
-
-### Anexo B: Checklist de Entrega
-
-- [ ] Codigo en repositorio Git con commits descriptivos
-- [ ] Todos los tests pasan correctamente (pytest)
-- [ ] Coverage es el esperado segun la rubrica
-- [ ] requirements.txt incluye todas las dependencias
-- [ ] README.md tiene instrucciones claras
-- [ ] No hay archivos de cache ni datos sensibles
-- [ ] Documentacion completa y actualizada
-
-### Anexo C: Recursos de Apoyo
-
-- **Python**: Documentacion oficial, PEP 8, Fluent Python (Luciano Ramalho)
-- **POO**: Design Patterns (Gang of Four)
-- **pytest**: Python Testing with pytest (Brian Okken)
-- **FastAPI**: Documentacion oficial de FastAPI
-- **DDD**: Domain-Driven Design (Eric Evans)
+### Detección de Plagio
+- Todo código será revisado con herramientas de detección de similitud
+- Plagio resultará en calificación de 0 y reporte a coordinación
+- Se permite y fomenta la colaboración, pero el código debe ser original
 
 ---
 
-## Informacion del Documento
-
-| Campo | Valor |
-|-------|-------|
-| **Version** | 2.0 |
-| **Autor** | [Nombre del Docente] |
-| **Fecha de Creacion** | Febrero 2026 |
-| **Ultima Revision** | 08 de febrero 2026 |
-| **Aprobado por** | [Nombre del coordinador] |
-
----
-
-*Este documento esta sujeto a modificaciones. Cualquier cambio sera comunicado con al menos dos semanas de anticipacion.*
+*Documento actualizado: 14 de febrero de 2026*
+*Universidad Autónoma Latinoamericana - UNAULA*

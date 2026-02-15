@@ -277,6 +277,11 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 1: POO Avanzada</h2>
             <h3>Clase 3: Herencia y Polimorfismo</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 5 - Miércoles 05/03/2026</span>
+                <span class="badge bg-warning text-dark ms-1">📢 E2 Taller: 15% (12/03)</span>
+                <span class="badge bg-info ms-1">📋 Herencia: 25 pts E2 | Polimorfismo: 15 pts E2</span>
+            </p>
         </div>
     </header>
 
@@ -323,10 +328,13 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2>Objetivos de Aprendizaje</h2>
+                    <div class="alert-note">
+                        <strong>📋 Relación con Rúbricas E1 y E2:</strong> Esta clase cubre <strong>Herencia (15 pts E1, 25 pts E2)</strong> y <strong>Polimorfismo (15 pts E1, 15 pts E2)</strong>. Se evalúa el uso correcto de <code>super()</code> y method overriding.
+                    </div>
                     <p>Al finalizar esta clase, usted será capaz de:</p>
                     <ul>
                         <li>Comprender el concepto de herencia en POO y su importancia</li>
-                        <li>Implementar herencia simple y jerarquías de clases en Python</li>
+                        <li>Implementar herencia simple y jerarquías de clases en Python con <strong>type hints</strong></li>
                         <li>Aplicar override de métodos para modificar comportamiento heredado</li>
                         <li>Usar <code>super()</code> correctamente para llamar a la clase padre</li>
                         <li>Comprender y aplicar polimorfismo en el código</li>
@@ -1256,19 +1264,29 @@ class TareaConDeadline(Tarea):
         </div>
     </div>
 
+    <!-- Botón Volver Arriba -->
+    <button id="btnVolverArriba" class="btn btn-primary btn-lg"
+            style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; padding: 0;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
+
     <!-- Boton de Notebook -->
     <div class="alert-tip mt-4">
         <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-01/01-03-herencia-composicion.ipynb"
            target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
+            <i class="bi bi-github me-2"></i>📥 Ver Notebook de Herencia y Composición
         </a>
     </div>
 
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1280,6 +1298,17 @@ class TareaConDeadline(Tarea):
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const btnVolverArriba = document.getElementById('btnVolverArriba');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    btnVolverArriba.style.display = 'block';
+                } else {
+                    btnVolverArriba.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
