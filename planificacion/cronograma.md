@@ -1,5 +1,5 @@
 # IF0100 - Lenguaje de Programación OO II
-## Cronograma Detallado 2026-I (ACTUALIZADO)
+## Cronograma Detallado 2026-I (Python/FastAPI)
 
 ---
 
@@ -14,6 +14,7 @@
 | **Horario** | **Martes 06:00-08:00** (2h) + **Jueves 06:00-07:00** (1h) |
 | **Aula** | TU301 |
 | **Total Sesiones** | 16 martes (2h) + 16 jueves (1h) = 32 sesiones = 48 horas |
+| **Stack** | Python 3.11+ / FastAPI / SQLAlchemy |
 
 ---
 
@@ -23,87 +24,96 @@
 
 | Semana | Martes (2h) | Jueves (1h) | Unidad | Temas | Eval |
 |--------|-------------|-------------|--------|-------|------|
-| **1** | M1: 2026-02-03 | J1: 2026-02-05 | U1 | Intro C# y .NET / Conceptos OO | - |
-| **2** | M2: 2026-02-10 | J2: 2026-02-12 | U1 | Clases y objetos / Encapsulamiento | - |
-| **3** | M3: 2026-02-17 | J3: 2026-02-19 | U1 | Herencia / Polimorfismo | - |
-| **4** | M4: 2026-02-24 | J4: 2026-02-26 | U1 | Sobrecarga, Sobreescritura / Modelado BD | **Eval 1 (15% Examen)** |
-| **5** | M5: 2026-03-03 | J5: 2026-03-05 | U2 | Intro TDD / Pruebas unitarias | - |
-| **6** | M6: 2026-03-10 | J6: 2026-03-12 | U2 | BDD / DDD | **Eval 2 (15% Examen)** |
+| **1** | M1: 2026-02-03 | J1: 2026-02-05 | U0 | Intro Python / Variables / Tipos | - |
+| **2** | M2: 2026-02-10 | J2: 2026-02-12 | U0 | Estructuras Control / Estructuras Datos | - |
+| **3** | M3: 2026-02-17 | J3: 2026-02-19 | U1 | Clases y Objetos / Encapsulamiento | - |
+| **4** | M4: 2026-02-24 | J4: 2026-02-26 | U1 | Herencia / Polimorfismo / Clases Abstractas | **Eval 1 (15% Examen)** |
+| **5** | M5: 2026-03-03 | J5: 2026-03-05 | U2 | Intro TDD / pytest / Ciclo Red-Green-Refactor | - |
+| **6** | M6: 2026-03-10 | J6: 2026-03-12 | U2 | BDD / DDD / Repository Pattern | **Eval 2 (15% Taller)** |
 | **7** | M7: 2026-03-17 | J7: 2026-03-19 | U2 | Práctica TDD/BDD / Proyecto | - |
-| **8** | M8: 2026-03-24 | J8: 2026-03-26 | U3 | Intro ASP.NET / Controles | **Eval 3 (20% Examen)** |
+| **8** | M8: 2026-03-24 | J8: 2026-03-26 | U3 | Intro FastAPI / Rutas / Pydantic | **Eval 3 (20% Proyecto)** |
 | **-** | **M: 2026-03-31 SEMANA SANTA** | **J: 2026-04-02 SEMANA SANTA** | **-** | **Receso** | **-** |
-| **9** | M9: 2026-04-07 | J9: 2026-04-09 | U3 | HTML5 / CSS | - |
-| **10** | M10: 2026-04-14 | J10: 2026-04-16 | U3 | Bootstrap / Responsive | - |
-| **11** | M11: 2026-04-21 | J11: 2026-04-23 | U3 | Proyecto Web / Excepciones | **Eval 4 (15% Examen)** |
-| **12** | M12: 2026-04-28 | J12: 2026-04-30 | U4 | Intro ADO.NET / Conexión BD | - |
-| **13** | M13: 2026-05-05 | J13: 2026-05-07 | U4 | CRUD con ADO.NET / SQL Server | **Eval 5 (15% Examen)** |
-| **14** | M14: 2026-05-12 | J14: 2026-05-14 | U5 | Dataset / DataAdapter | - |
-| **15** | M15: 2026-05-19 | J15: 2026-05-21 | U5 | DataBinding / XML | - |
+| **9** | M9: 2026-04-07 | J9: 2026-04-09 | U3 | Dependency Injection / SQLAlchemy | - |
+| **10** | M10: 2026-04-14 | J10: 2026-04-16 | U3 | CRUD / JWT Authentication | - |
+| **11** | M11: 2026-04-21 | J11: 2026-04-23 | U4 | Persistencia Archivos / JSON / CSV | **Eval 4 (15% Laboratorio)** |
+| **12** | M12: 2026-04-28 | J12: 2026-04-30 | U4 | SQLAlchemy ORM / Modelos / Relaciones | - |
+| **13** | M13: 2026-05-05 | J13: 2026-05-07 | U4 | CRUD SQLAlchemy / Alembic | **Eval 5 (15% Proyecto)** |
+| **14** | M14: 2026-05-12 | J14: 2026-05-14 | U5 | Repository Pattern / Clean Architecture | - |
+| **15** | M15: 2026-05-19 | J15: 2026-05-21 | U5 | API REST Avanzada / Caché | - |
 | **16** | M16: 2026-05-26 | J16: 2026-05-28 | U5 | **Proyecto integrador / EXAMEN FINAL** | **Final (20%)** |
 
 ---
 
 ## Distribución de Contenido por Unidad
 
-### Unidad 1: Conceptos Fundamentales de Objetos y Clases (8 sesiones)
-**M1-M4 + J1-J4: Feb 03 - Feb 26**
-- Introducción a C# y el ecosistema .NET
-- Lógica de programación orientada a objetos
-- Clases, objetos y mensajes
-- Encapsulamiento, herencia, polimorfismo
-- Sobrecarga y sobreescritura
-- Modelamiento de bases de datos
+### Unidad 0: Fundamentos de Python (3 clases)
+**M1-M2 + J1-J2: Feb 03 - Feb 12**
+- Introducción a Python y configuración del entorno
+- Variables, tipos de datos y operadores
+- Estructuras de control (if, for, while)
+- Estructuras de datos (listas, diccionarios, tuplas, sets)
+
+**Sin evaluación - Preparación para POO**
+
+---
+
+### Unidad 1: Conceptos Fundamentales de POO (5 clases)
+**M3-M4 + J3-J4: Feb 17 - Feb 26**
+- Clases, objetos, __init__, self
+- Encapsulamiento con @property
+- Herencia y super()
+- Polimorfismo y sobreescritura
+- Clases abstractas con ABC
 
 **Evaluación 1 (15% Examen):** Jueves 26 de febrero
 
 ---
 
-### Unidad 2: Técnicas de Desarrollo de Software (6 sesiones)
+### Unidad 2: Técnicas de Desarrollo de Software (5 clases)
 **M5-M7 + J5-J7: Mar 03 - Mar 19**
 - Test Driven Development (TDD)
-- Pruebas unitarias con NUnit/xUnit
-- Behavior Driven Development (BDD)
+- pytest: fixtures, parametrize, markers
+- Behavior Driven Development (BDD) con behave
 - Domain Driven Design (DDD)
-- Práctica con proyecto TDD/BDD
+- Patrón Repository
 
-**Evaluación 2 (15% Examen):** Jueves 12 de marzo
+**Evaluación 2 (15% Taller):** Jueves 12 de marzo
 
 ---
 
-### Unidad 3: Desarrollo Web (8 sesiones)
+### Unidad 3: Desarrollo Web con FastAPI (5 clases)
 **M8-M11 + J8-J11: Mar 24 - Abr 23 (con receso Semana Santa)**
-- Introducción a ASP.NET
-- Excepciones y controles avanzados
-- HTML5 y CSS3
-- Bootstrap para diseño responsive
-- Proyecto web completo
+- Introducción a FastAPI
+- Pydantic y validación
+- Dependency Injection
+- SQLAlchemy ORM
+- JWT Authentication
 
-**Evaluación 3 (20% Examen):** Lunes 23 de marzo (antes de Semana Santa)
-
----
-
-### Unidad 4: Manejo de Persistencia (4 sesiones)
-**M12-M13 + J12-J13: Abr 28 - May 07**
-- Persistencia en archivos planos
-- Persistencia en bases de datos
-- Introducción a ADO.NET
-- Beneficios de ADO.NET
-- Operaciones CRUD con ADO.NET
-
-**Evaluación 4 (15% Examen):** Lunes 20 de abril
+**Evaluación 3 (20% Proyecto):** Jueves 26 de marzo
 
 ---
 
-### Unidad 5: Arquitectura de Datos Desconectados (6 sesiones)
+### Unidad 4: Manejo de Persistencia (5 clases)
+**M11-M13 + J11-J13: Abr 21 - May 07**
+- Persistencia en archivos planos (JSON, CSV)
+- SQLAlchemy: modelos y relaciones
+- CRUD con SQLAlchemy
+- Migraciones con Alembic
+- Integración con FastAPI
+
+**Evaluación 4 (15% Laboratorio):** Jueves 23 de abril
+**Evaluación 5 (15% Proyecto):** Jueves 07 de mayo
+
+---
+
+### Unidad 5: Arquitectura de Datos Desconectados (5 clases)
 **M14-M16 + J14-J16: May 12 - May 28**
-- Dataset y DataAdapter
-- ADO.NET y XML
-- Clases Connection, Command, DataReader
-- Navegación y edición en modo desconectado
-- DataBinding a controles
-- Proyecto integrador final
+- Patrón Repository con SQLAlchemy
+- Clean Architecture
+- DTOs y serialización
+- APIs REST avanzadas
+- Proyecto integrador
 
-**Evaluación 5 (15% Examen):** Lunes 4 de mayo  
 **Examen Final (20%):** Jueves 28 de mayo
 
 ---
@@ -112,16 +122,16 @@
 
 ### Primer Seguimiento (50%) - Límite: 2026-03-27
 **Evaluaciones:**
-- Eval 1 (15%): Examen - Conceptos OO (Feb 26)
-- Eval 2 (15%): Examen - Técnicas de desarrollo (Mar 12)
-- Eval 3 (20%): Examen - Desarrollo Web (Mar 24)
+- Eval 1 (15%): Examen - POO Python (Feb 26)
+- Eval 2 (15%): Taller - TDD/BDD (Mar 12)
+- Eval 3 (20%): Proyecto - FastAPI (Mar 26)
 
 **✅ CUMPLE:** Todas antes del 27 de marzo
 
 ### Segundo Seguimiento (80%) - Límite: 2026-05-15
 **Evaluaciones:**
-- Eval 4 (15%): Examen - Persistencia (Abr 21)
-- Eval 5 (15%): Examen - ADO.NET (May 05)
+- Eval 4 (15%): Laboratorio - Persistencia archivos (Abr 23)
+- Eval 5 (15%): Proyecto - SQLAlchemy (May 07)
 
 **✅ CUMPLE:** Todas antes del 15 de mayo
 
@@ -136,8 +146,8 @@
 ## Estrategia de Clases
 
 ### Martes (2 horas): Teoría + Práctica
-- **30 min:** Exposición teórica del tema
-- **60 min:** Desarrollo práctico en Visual Studio
+- **40 min:** Exposición teórica del tema
+- **50 min:** Desarrollo práctico con código
 - **30 min:** Ejercicio guiado y resolución de dudas
 
 ### Jueves (1 hora): Refuerzo + Taller
@@ -147,49 +157,47 @@
 
 ---
 
-## Evaluaciones según PDF IF0100-v002
+## Evaluaciones según Syllabus
 
 | Eval | % | Tipo | Resultado de Aprendizaje | Fecha |
 |------|---|------|--------------------------|-------|
-| 1 | 15% | Examen | Conceptos fundamentales OO | J4: Feb 26 |
-| 2 | 15% | Examen | Técnicas de desarrollo (TDD/BDD/DDD) | J6: Mar 12 |
-| 3 | **20%** | **Examen** | Desarrollo Web (ASP.NET, HTML5, Bootstrap) | M8: Mar 24 |
-| 4 | 15% | Examen | Persistencia en archivos y BD | M11: Abr 21 |
-| 5 | 15% | Examen | ADO.NET y SQL Server | M13: May 05 |
-| Final | **20%** | **Examen** | Arquitectura de datos desconectados | J16: May 28 |
+| 1 | 15% | Examen | Conceptos fundamentales POO | J4: Feb 26 |
+| 2 | 15% | Taller | Técnicas de desarrollo (TDD/BDD/DDD) | J6: Mar 12 |
+| 3 | **20%** | **Proyecto** | Desarrollo Web (FastAPI, Pydantic, SQLAlchemy) | J8: Mar 26 |
+| 4 | 15% | Laboratorio | Persistencia en archivos | J11: Abr 23 |
+| 5 | 15% | Proyecto | SQLAlchemy ORM: CRUD completo | J13: May 07 |
+| Final | **20%** | **Proyecto** | Arquitectura: Repository + Clean Architecture | J16: May 28 |
 
 ---
 
 ## Tecnologías y Herramientas
 
 ### Software Requerido:
-- **Visual Studio 2022** Community/Professional (con .NET 8)
-- **SQL Server 2022** Express o Developer
-- **SQL Server Management Studio** (SSMS)
+- **Python 3.11+** (lenguaje principal)
+- **VS Code** con extensiones Python
 - **Git** para control de versiones
+- **PostgreSQL** (base de datos)
 
-### Lenguajes:
-- **C#** (.NET 8)
-- **T-SQL** (Transact-SQL)
-- **HTML5, CSS3, JavaScript**
-
-### Frameworks:
-- **ASP.NET Core** (Web)
-- **ADO.NET** (Datos)
-- **Bootstrap 5** (UI)
-- **NUnit/xUnit** (Testing)
+### Frameworks y Librerías:
+- **FastAPI** (framework web)
+- **SQLAlchemy 2.0** (ORM)
+- **Pydantic 2.5+** (validación)
+- **pytest** (testing)
+- **Alembic** (migraciones)
+- **Jinja2** (templates)
+- **HTMX** (frontend interactivo)
 
 ---
 
 ## Notas Importantes
 
-1. **Semana Santa:** No hay clases del 30 de marzo al 3 de abril (M8/J8 → M9/J9)
+1. **Semana Santa:** No hay clases del 31 de marzo al 3 de abril
 2. **Formato mixto:** Martes (teoría extensa) + Jueves (práctica intensiva)
-3. **Evaluaciones:** Todas son exámenes según PDF oficial
+3. **Proyecto TaskFlow:** Sistema de gestión de tareas que se desarrolla durante todo el curso
 4. **Talleres:** En parejas con sustentación para prevenir uso indebido de IA
-5. **Proyecto integrador:** Aplicación web con BD que integra todas las unidades
+5. **Proyecto integrador:** API REST con arquitectura limpia
 
 ---
 
-**Última actualización:** 2026-01-31 (Corrección de horario según Horario.png)  
-**Basado en:** PDF oficial IF0100-v002 + Cálculo real de fechas 2026-I
+**Última actualización:** 2026-02-14 (Actualizado a stack Python/FastAPI)
+**Basado en:** Syllabus actualizado + Cálculo real de fechas 2026-I

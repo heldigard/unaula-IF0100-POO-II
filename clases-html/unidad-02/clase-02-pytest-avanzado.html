@@ -3,2271 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dominar pytest avanzado: fixtures, parametrización y mocks. Curso IF0100 - POO II">
-    <meta name="author" content="IF0100 - UNAULA">
-    <title>pytest Avanzado | IF0100 - POO II</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-
-    <!-- Prism.js para syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet">
-
+    <title>pytest Avanzado | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--dark-text);
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        header h3 {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        /* Navigation */
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
-        }
-
-        .sidebar h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            color: var(--dark-text);
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            display: block;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        section {
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        section h2 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        section h3 {
-            color: var(--dark-text);
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section h4 {
-            color: var(--secondary-color);
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Lists */
-        section ul, section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Code Blocks */
-        pre[class*="language-"] {
-            border-radius: 6px;
-            margin: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        code[class*="language-"] {
-            font-size: 0.9rem;
-        }
-
-        /* Alert Boxes */
-        .alert-note {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-warning-custom {
-            background-color: #fff3cd;
-            border-left: 4px solid var(--warning-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-tip {
-            background-color: #d1e7dd;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            border-left: 4px solid var(--danger-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Tables */
-        .table {
-            margin: 1rem 0;
-        }
-
-        .table thead {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* Fixture Diagram */
-        .fixture-flow {
-            background: linear-gradient(to right, #e3f2fd, #bbdefb);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .fixture-step {
-            text-align: center;
-            margin: 0.5rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--light-bg);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-        }
-
-        /* Print Styles */
-        @media print {
-            header {
-                background: white !important;
-                color: black !important;
-                padding: 1rem 0;
-            }
-
-            .navbar, .sidebar, footer, .back-to-top, .progress-indicator {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid var(--border-color);
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-            }
-        }
-
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1000;
-            border: none;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
-        }
-
-        .back-to-top svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Progress Indicator */
-        .progress-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
-            z-index: 9999;
-            transition: width 0.1s ease;
-        }
-
-        /* Evaluation Criteria Box */
-        .eval-criteria {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid var(--primary-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .eval-criteria h4 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header h2 {
-                font-size: 1rem;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                margin-bottom: 1rem;
-            }
-
-            .back-to-top {
-                bottom: 1rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
-            }
-        }
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
+            <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 2: Técnicas de Desarrollo</h2>
             <h3>Clase 02: pytest Avanzado</h3>
-            <p class="mt-2 mb-0">
-                <span class="badge bg-light text-dark">📅 Semana 7 - Miércoles 19/03/2026</span>
-            </p>
+            <p class="mt-2"><span class="badge bg-info">E2: Taller TDD/BDD - En 2 semanas</span></p>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-01-tdd-intro.html">Anterior: TDD</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-03-bdd-intro.html">Siguiente: BDD</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressBar"></div>
-
-    <!-- Main Content -->
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
-            <!-- Sidebar -->
             <aside class="col-lg-3">
                 <nav class="sidebar">
                     <h5>Contenido</h5>
-                    <ul>
-                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#fixtures">Fixtures en pytest</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos">Objetivos</a></li>
+                        <li><a href="#fixtures">Fixtures</a></li>
                         <li><a href="#parametrizacion">Parametrización</a></li>
-                        <li><a href="#mocks">Mocks y Monkeypatch</a></li>
-                        <li><a href="#fastapi-testing">Testing de APIs FastAPI</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
-                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
-                        <li><a href="#evaluacion">Criterios de Evaluación E2</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
+                        <li><a href="#mocks">Mocks</a></li>
+                        <li><a href="#testclient">TestClient</a></li>
+                        <li><a href="#ejercicio">Ejercicio</a></li>
                     </ul>
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
             <main class="col-lg-9">
-                <!-- Sección 1: Objetivos -->
                 <section id="objetivos">
-                    <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
                     <ul>
-                        <li>Crear y usar fixtures de pytest para setup compartido</li>
-                        <li>Aplicar scopes de fixtures (function, class, module, session)</li>
-                        <li>Usar parametrización para ejecutar tests con múltiples datos</li>
-                        <li>Crear mocks y patches con unittest.mock</li>
-                        <li>Aplicar monkeypatch para modificar comportamiento en tests</li>
-                        <li>Organizar tests en clases y usar fixtures de conftest.py</li>
+                        <li>Crear fixtures para setup compartido</li>
+                        <li>Usar scopes de fixtures (function, class, module)</li>
+                        <li>Parametrizar tests con múltiples datos</li>
+                        <li>Crear mocks para aislar dependencias</li>
+                        <li>Testear APIs FastAPI con TestClient</li>
                     </ul>
                 </section>
 
-                <!-- Sección 2: Conceptos Teóricos -->
-                <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
-
-                    <h3>¿Por qué pytest Avanzado?</h3>
-                    <p>
-                        En la clase anterior aprendimos lo básico de pytest: escribir tests con <code>assert</code>.
-                        Ahora vamos a explorar características avanzadas que hacen que nuestros tests sean:
-                    </p>
-                    <ul>
-                        <li><strong>Más mantenibles:</strong> Fixtures eliminan duplicación</li>
-                        <li><strong>Más completos:</strong> Parametrización prueba más casos</li>
-                        <li><strong>Más aislados:</strong> Mocks aislan dependencias externas</li>
-                    </ul>
-
-                    <h3>Fixtures: El Poder de pytest</h3>
-                    <p>
-                        Una <strong>fixture</strong> es una función que prepara el entorno para un test.
-                        Puede crear datos, inicializar recursos, configurar estado, etc.
-                    </p>
-
-                    <div class="alert-tip">
-                        <strong> Analogía:</strong> Una fixture es como el "setup" de un laboratorio
-                        antes de un experimento. Prepara todo lo necesario para que el test se ejecute.
-                    </div>
-
-                    <h4>Ventajas de Usar Fixtures</h4>
-                    <ul>
-                        <li><strong>Reutilización:</strong> Escribir una vez, usar en muchos tests</li>
-                        <li><strong>Legibilidad:</strong> Los tests son más claros y enfocados</li>
-                        <li><strong>Mantenibilidad:</strong> Cambios en un lugar afectan todos los tests</li>
-                        <li><strong>inyección de dependencias:</strong> pytest las inyecta automáticamente</li>
-                    </ul>
-
-                    <h3>Parametrización: Un Test, Muchos Datos</h3>
-                    <p>
-                        La <strong>parametrización</strong> permite ejecutar el mismo test con diferentes
-                        entradas, generando múltiples casos de prueba automáticamente.
-                    </p>
-
-                    <h3>Mocks: Aislando Dependencias</h3>
-                    <p>
-                        Un <strong>mock</strong> es un objeto simulado que imita el comportamiento de
-                        objetos reales. Nos permite probar código en aislamiento sin dependencias externas.
-                    </p>
-
-                    <div class="alert-warning-custom">
-                        <strong>¿Cuándo usar mocks?</strong>
-                        <ul>
-                            <li>Cuando el código depende de servicios externos (API, BD)</li>
-                            <li>Cuando queremos probar comportamiento específico</li>
-                            <li>Cuando queremos simular errores o casos borde</li>
-                            <li>Cuando las dependencias son lentas o no deterministas</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Sección 3: Fixtures en pytest -->
                 <section id="fixtures">
-                    <h2>Fixtures en pytest</h2>
+                    <h2 class="text-primary border-bottom pb-2">Fixtures (25 min)</h2>
+                    
+                    <p>Una <strong>fixture</strong> prepara el entorno para un test. pytest la inyecta automáticamente.</p>
 
-                    <h3>Sintaxis Básica</h3>
+                    <h4>Fixture Básica</h4>
                     <pre><code class="language-python">import pytest
 
 @pytest.fixture
 def usuario():
     """Fixture que crea un usuario de prueba."""
-    from taskflow.models.usuario import Usuario
-    return Usuario(username="testuser", email="test@example.com")
+    return {"id": 1, "username": "testuser", "email": "test@example.com"}
 
-def test_username(usuario):  # pytest inyecta la fixture automáticamente
-    """Test que el username es correcto."""
-    assert usuario.username == "testuser"
-    assert usuario.email == "test@example.com"</code></pre>
+def test_usuario(usuario):  # pytest inyecta la fixture
+    assert usuario["username"] == "testuser"</code></pre>
 
-                    <h3>Fixture con Setup y Teardown</h3>
-                    <div class="fixture-flow">
-                        <div class="fixture-step">🔧 <strong>SETUP:</strong> yield antes del código</div>
-                        <div class="fixture-step">🧪 <strong>TEST:</strong> código del test se ejecuta</div>
-                        <div class="fixture-step">🧹 <strong>TEARDOWN:</strong> código después de yield</div>
-                    </div>
-
-                    <pre><code class="language-python">import pytest
-
-@pytest.fixture
+                    <h4>Fixture con Setup/Teardown</h4>
+                    <pre><code class="language-python">@pytest.fixture
 def archivo_temporal():
-    """Fixture que crea un archivo temporal y lo limpia después."""
-    import tempfile
-    import os
-
-    # SETUP: Crear archivo temporal
+    """Crea archivo temporal y lo limpia después."""
+    import tempfile, os
+    
     fd, ruta = tempfile.mkstemp()
     with os.fdopen(fd, 'w') as f:
         f.write("contenido de prueba")
+    
+    yield ruta  # Entrega al test
+    
+    os.unlink(ruta)  # Cleanup después del test
 
-    # Yield el objeto al test
-    yield ruta
-
-    # TEARDOWN: Limpiar archivo
-    os.unlink(ruta)
-
-def test_leer_archivo_temporal(archivo_temporal):
-    """Test que lee el archivo temporal creado por la fixture."""
+def test_leer_archivo(archivo_temporal):
     with open(archivo_temporal, 'r') as f:
-        contenido = f.read()
+        assert f.read() == "contenido de prueba"</code></pre>
 
-    assert contenido == "contenido de prueba"
-
-# El archivo temporal ya fue eliminado aquí</code></pre>
-
-                    <h3>Scopes de Fixtures</h3>
-                    <p>
-                        El scope define cuántas veces se crea la fixture durante la ejecución de tests.
-                    </p>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Scope</th>
-                                <th>Frecuencia</th>
-                                <th>Uso Típico</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>function</code> (default)</td>
-                                <td>Una vez por test</td>
-                                <td>Datos específicos del test</td>
-                            </tr>
-                            <tr>
-                                <td><code>class</code></td>
-                                <td>Una vez por clase de tests</td>
-                                <td>Setup compartido por clase</td>
-                            </tr>
-                            <tr>
-                                <td><code>module</code></td>
-                                <td>Una vez por módulo</td>
-                                <td>Recursos costosos (conexión BD)</td>
-                            </tr>
-                            <tr>
-                                <td><code>session</code></td>
-                                <td>Una vez por sesión de pytest</td>
-                                <td>Recursos globales (configuración)</td>
-                            </tr>
-                        </tbody>
+                    <h4>Scopes de Fixtures</h4>
+                    <table class="table">
+                        <tr><th>Scope</th><th>Cuándo se crea</th><th>Uso</th></tr>
+                        <tr><td><code>function</code></td><td>Cada test</td><td>Default</td></tr>
+                        <tr><td><code>class</code></td><td>Una vez por clase</td><td>Setup compartido</td></tr>
+                        <tr><td><code>module</code></td><td>Una vez por módulo</td><td>Conexión BD</td></tr>
+                        <tr><td><code>session</code></td><td>Una vez por sesión</td><td>Configuración global</td></tr>
                     </table>
 
-                    <pre><code class="language-python">import pytest
-
-@pytest.fixture(scope="module")
+                    <pre><code class="language-python">@pytest.fixture(scope="module")
 def conexion_db():
-    """Fixture de módulo: una conexión compartida para todos los tests."""
-    print("\n[SETUP] Creando conexión a BD...")
-    conexion = {"conexion": "simulada", "datos": []}
-    yield conexion
-    print("\n[TEARDOWN] Cerrando conexión a BD...")
+    """Fixture de módulo: una conexión para todos los tests."""
+    print("\n[SETUP] Conectando a BD...")
+    db = {"conexion": "simulada", "datos": []}
+    yield db
+    print("\n[TEARDOWN] Cerrando conexión...")
 
-def test_agregar_dato(conexion_db):
-    """Test que agrega un dato a la BD."""
+def test_agregar(conexion_db):
     conexion_db["datos"].append("dato1")
     assert len(conexion_db["datos"]) == 1
 
-def test_agregar_otro_dato(conexion_db):
-    """Test que agrega otro dato (conexion_db conserva estado)."""
+def test_agregar_otro(conexion_db):
     conexion_db["datos"].append("dato2")
-    # dato1 sigue ahí porque es la misma conexión
-    assert len(conexion_db["datos"]) == 2</code></pre>
+    assert len(conexion_db["datos"]) == 2  # dato1 sigue ahí</code></pre>
 
-                    <h3>Fixture que Retorna Múltiples Valores</h3>
-                    <pre><code class="language-python">@pytest.fixture
-def usuario_y_proyecto():
-    """Fixture que retorna múltiples valores."""
-    from taskflow.models.usuario import Usuario
-    from taskflow.models.proyecto import Proyecto
-
-    usuario = Usuario(username="jdoe", email="john@example.com")
-    proyecto = Proyecto(nombre="TaskFlow", usuario_id=1)
-
-    return usuario, proyecto  # Retorna tupla
-
-def test_usuario_tiene_proyecto(usuario_y_proyecto):
-    """Test que usuario tiene proyecto."""
-    usuario, proyecto = usuario_y_proyecto  # Desempaquetar
-
-    assert usuario.username == "jdoe"
-    assert proyecto.nombre == "TaskFlow"
-    assert proyecto.usuario_id == 1</code></pre>
-
-                    <h3>Usar una Fixture en Otra</h3>
-                    <pre><code class="language-python">@pytest.fixture
-def usuario():
-    """Fixture base: usuario."""
-    return Usuario(username="test", email="test@example.com")
-
-@pytest.fixture
-def proyecto_con_usuario(usuario):  # Depende de la fixture 'usuario'
-    """Fixture que usa otra fixture."""
-    return Proyecto(nombre="Proyecto Test", usuario_id=usuario.id)
-
-def test_proyecto_tiene_usuario(proyecto_con_usuario, usuario):
-    """Test que el proyecto está asociado al usuario."""
-    assert proyecto_con_usuario.usuario_id == usuario.id</code></pre>
-
-                    <h3>conftest.py: Fixtures Compartidas</h3>
-                    <p>
-                        El archivo <code>conftest.py</code> permite compartir fixtures entre múltiples
-                        archivos de tests. pytest lo descubre automáticamente.
-                    </p>
-
+                    <h4>conftest.py: Fixtures Compartidas</h4>
                     <pre><code class="language-python"># tests/conftest.py
 import pytest
-from taskflow.models.usuario import Usuario
-from taskflow.models.proyecto import Proyecto
 
 @pytest.fixture
 def usuario_base():
     """Fixture compartida por todos los tests."""
-    return Usuario(username="base", email="base@example.com")
+    return {"username": "base", "email": "base@example.com"}
 
-@pytest.fixture
-def proyecto_base():
-    """Otra fixture compartida."""
-    return Proyecto(nombre="Proyecto Base", usuario_id=1)
-
-# tests/test_usuario.py
-def test_usa_fixture_compartida(usuario_base):
-    """Test que usa fixture de conftest.py."""
-    assert usuario_base.username == "base"
-
-# tests/test_proyecto.py
-def test_tambien_usa_fixture_compartida(usuario_base, proyecto_base):
-    """Test en otro archivo que usa las mismas fixtures."""
-    assert proyecto_base.nombre == "Proyecto Base"</code></pre>
+# tests/test_usuario.py - usa la fixture automáticamente
+def test_usa_fixture(usuario_base):
+    assert usuario_base["username"] == "base"</code></pre>
                 </section>
 
-                <!-- Sección 4: Parametrización -->
                 <section id="parametrizacion">
-                    <h2>Parametrización</h2>
+                    <h2 class="text-primary border-bottom pb-2">Parametrización (15 min)</h2>
+                    
+                    <p>Ejecutar el mismo test con diferentes datos.</p>
 
-                    <h3>Básico: @pytest.mark.parametrize</h3>
                     <pre><code class="language-python">import pytest
 
 @pytest.mark.parametrize("email, esperado", [
-    ("usuario@example.com", True),     # Email válido
-    ("user.name@example.com", True),   # Email con punto
-    ("user+tag@example.com", True),    # Email con +
-    ("invalido", False),               # Sin @
-    ("@example.com", False),           # Sin usuario
-    ("usuario@", False),               # Sin dominio
+    ("usuario@example.com", True),
+    ("user.name@example.com", True),
+    ("invalido", False),
+    ("@example.com", False),
+    ("usuario@", False),
 ])
 def test_validar_email(email, esperado):
-    """Test parametrizado que valida múltiples emails."""
+    """Test parametrizado: 5 casos en 1 test."""
     from taskflow.utils import validar_email
+    assert validar_email(email) == esperado</code></pre>
 
-    resultado = validar_email(email)
-    assert resultado == esperado</code></pre>
-
-                    <p>Al ejecutar, pytest genera un test por cada caso:</p>
-                    <pre><code class="language-bash">$ pytest tests/test_utils.py -v
-...
+                    <p>pytest genera un test por cada caso:</p>
+                    <pre><code class="language-bash">$ pytest -v
 test_validar_email[usuario@example.com-True] PASSED
-test_validar_email[user.name@example.com-True] PASSED
-test_validar_email[user+tag@example.com-True] PASSED
 test_validar_email[invalido-False] PASSED
-test_validar_email[@example.com-False] PASSED
-test_validar_email[usuario@-False] PASSED</code></pre>
+...</code></pre>
 
-                    <h3>Múltiples Parámetros</h3>
-                    <pre><code class="language-python">@pytest.mark.parametrize("username, email, valido", [
-    ("abc", "test@example.com", False),     # Username muy corto
-    ("valido", "test@example.com", True),   # Todo válido
-    ("valido", "invalido", False),          # Email inválido
-    ("ab", "test@example.com", False),      # Ambos inválidos
+                    <h4>Múltiples Parámetros</h4>
+                    <pre><code class="language-python">@pytest.mark.parametrize("username, valido", [
+    ("abc", False),      # Muy corto
+    ("valido", True),    # Válido
+    ("ab", False),       # Muy corto
 ])
-def test_validar_usuario(username, email, valido):
-    """Test parametrizado con múltiples campos."""
-    from taskflow.models.usuario import Usuario
-
-    usuario = Usuario(username=username, email=email)
-    assert usuario.es_valido() == valido</code></pre>
-
-                    <h3>Parametrización con IDs</h3>
-                    <pre><code class="language-python">@pytest.mark.parametrize("entrada, esperado", [
-    ("admin", True),           # admin-1
-    ("user", False),           # user-2
-    ("superuser", True),       # superuser-3
-], ids=["admin-access", "user-access", "super-access"])
-def test_verificar_permiso(entrada, esperado):
-    """Test con IDs personalizados."""
-    from taskflow.auth import tiene_permiso_admin
-
-    resultado = tiene_permiso_admin(entrada)
-    assert resultado == esperado</code></pre>
-
-                    <h3>Combinar Múltiples Parametrize</h3>
-                    <pre><code class="language-python">@pytest.mark.parametrize("username", ["user1", "user2"])
-@pytest.mark.parametrize("email", ["valid@example.com", "invalido"])
-def test_combinaciones(username, email):
-    """Este test se ejecuta 2 x 2 = 4 veces."""
-    usuario = Usuario(username=username, email=email)
-    print(f"Probando: {username} + {email}")
-    # ... asserts</code></pre>
-
-                    <h3>Parametrización con Fixtures</h3>
-                    <pre><code class="language-python">@pytest.fixture
-def datos_usuarios():
-    """Fixture que retorna datos de prueba."""
-    return [
-        ("user1", "user1@example.com", True),
-        ("ab", "user2@example.com", False),  # Username corto
-        ("user3", "invalido", False),        # Email inválido
-    ]
-
-@pytest.mark.parametrize("username, email, esperado", [
-    ("user1", "user1@example.com", True),
-    ("ab", "user2@example.com", False),
-    ("user3", "invalido", False),
-])
-def test_con_fixture_y_parametrize(usuario_base, username, email, esperado):
-    """Combina fixture y parametrización."""
-    usuario = Usuario(username=username, email=email)
-    assert usuario.es_valido() == esperado</code></pre>
+def test_validar_username(username, valido):
+    assert len(username) >= 3 == valido</code></pre>
                 </section>
 
-                <!-- Sección 5: Mocks y Monkeypatch -->
                 <section id="mocks">
-                    <h2>Mocks y Monkeypatch</h2>
+                    <h2 class="text-primary border-bottom pb-2">Mocks (15 min)</h2>
+                    
+                    <p>Un <strong>mock</strong> simula objetos reales para aislar el código bajo prueba.</p>
 
-                    <h3>¿Qué es un Mock?</h3>
-                    <p>
-                        Un <strong>mock</strong> es un objeto simulado que imita el comportamiento de un
-                        objeto real. Nos permite:
-                    </p>
-                    <ul>
-                        <li>Aislar el código bajo prueba</li>
-                        <li>Controlar respuestas de dependencias externas</li>
-                        <li>Verificar interacciones (llamadas a métodos)</li>
-                        <li>Simular errores y casos excepcionales</li>
-                    </ul>
+                    <pre><code class="language-python">from unittest.mock import Mock, patch
 
-                    <h3>unittest.mock.Mock Básico</h3>
-                    <pre><code class="language-python">from unittest.mock import Mock
-
-# Crear un mock simple
+# Mock simple
 mock_db = Mock()
-
-# Configurar retorno
-mock_db.obtener_usuario.return_value = Usuario(id=1, username="test")
-
-# Usar el mock
+mock_db.obtener_usuario.return_value = {"id": 1, "username": "test"}
 usuario = mock_db.obtener_usuario(1)
-assert usuario.username == "test"
-
-# Verificar que se llamó
+assert usuario["username"] == "test"
 mock_db.obtener_usuario.assert_called_once_with(1)</code></pre>
 
-                    <h3>Mock con Patch (Decorator)</h3>
+                    <h4>Mock con Patch</h4>
                     <pre><code class="language-python">from unittest.mock import patch
-from taskflow.services.usuario_service import UsuarioService
 
 @patch('taskflow.services.usuario_service.UsuarioRepository')
-def test_crear_usuario_con_mock(MockRepo):
-    """Test que crea usuario usando repositorio mockeado."""
-    # Configurar el mock
+def test_crear_usuario(MockRepo):
+    """Test que mockea el repositorio."""
     mock_repo = MockRepo.return_value
-    mock_repo.guardar.return_value = Usuario(id=1, username="newuser")
-
-    # Usar el servicio
+    mock_repo.guardar.return_value = {"id": 1, "username": "newuser"}
+    
     service = UsuarioService(mock_repo)
-    usuario = service.crear_usuario(username="newuser", email="new@example.com")
+    usuario = service.crear_usuario("newuser", "new@example.com")
+    
+    assert usuario["username"] == "newuser"
+    mock_repo.guardar.assert_called_once()</code></pre>
 
-    # Verificaciones
-    assert usuario.username == "newuser"
-    mock_repo.guardar.assert_called_once()
-
-@patch('taskflow.services.usuario_service.UsuarioRepository')
-def test_error_al_crear_usuario(MockRepo):
-    """Test que maneja error del repositorio."""
-    # Configurar el mock para lanzar excepción
-    mock_repo = MockRepo.return_value
-    mock_repo.guardar.side_effect = Exception("Error de BD")
-
-    # Usar el servicio y verificar excepción
-    service = UsuarioService(mock_repo)
-
-    with pytest.raises(Exception, match="Error de BD"):
-        service.crear_usuario(username="user", email="user@example.com")</code></pre>
-
-                    <h3>Monkeypatch: Modificar Comportamiento</h3>
-                    <p>
-                        <code>monkeypatch</code> es una fixture de pytest que permite modificar objetos
-                        y atributos durante los tests.
-                    </p>
-
-                    <pre><code class="language-python">import pytest
-
-def test_leer_archivo_usando_monkeypatch(monkeypatch, tmp_path):
-    """Test que mockea la función open()."""
-    # Crear un archivo falso en memoria
-    fake_content = "contenido falso del archivo"
-
-    # Crear archivo temporal
-    fake_file = tmp_path / "test.txt"
-    fake_file.write_text(fake_content)
-
-    # Monkeypatch para cambiar el comportamiento
-    def mock_open(path, *args, **kwargs):
-        if "test.txt" in str(path):
-            return open(fake_file, *args, **kwargs)
-        return open(path, *args, **kwargs)
-
-    monkeypatch.setattr("builtins.open", mock_open)
-
-    # Usar la función que debería leer el archivo
-    from taskfly.utils import leer_configuracion
-    contenido = leer_configuracion("test.txt")
-
-    assert contenido == fake_content</code></pre>
-
-                    <h3>Ejemplo: Mockear Llamada HTTP</h3>
-                    <pre><code class="language-python">import pytest
-from unittest.mock import patch, Mock
-from taskflow.services.external_api import obtener_usuario_desde_api
-
-@patch('taskflow.services.external_api.requests.get')
-def test_obtener_usuario_api(mock_get):
-    """Test que mockea llamada HTTP."""
-    # Configurar respuesta mockeada
+                    <h4>Mock de Llamada HTTP</h4>
+                    <pre><code class="language-python">@patch('requests.get')
+def test_obtener_api(mock_get):
+    """Mockea llamada HTTP."""
     mock_response = Mock()
     mock_response.status_code = 200
-    mock_response.json.return_value = {
-        "id": 1,
-        "username": "testuser",
-        "email": "test@example.com"
-    }
+    mock_response.json.return_value = {"id": 1, "nombre": "Test"}
     mock_get.return_value = mock_response
-
-    # Llamar a la función
-    usuario = obtener_usuario_desde_api(1)
-
-    # Verificar resultado
-    assert usuario.username == "testuser"
-    assert mock_get.call_count == 1
-    mock_get.assert_called_with("https://api.example.com/usuarios/1")</code></pre>
-
-                    <h3>Mockear Repositorio de Archivos</h3>
-                    <pre><code class="language-python">import pytest
-from unittest.mock import Mock
-from taskflow.services.proyecto_service import ProyectoService
-
-def test_proyecto_service_con_repo_mockeado():
-    """Test de servicio usando repositorio mockeado."""
-    # Crear mock del repositorio
-    mock_repo = Mock()
-
-    # Configurar comportamiento del mock
-    mock_repo.obtener_todos.return_value = [
-        Proyecto(id=1, nombre="Proyecto 1"),
-        Proyecto(id=2, nombre="Proyecto 2"),
-    ]
-
-    # Crear servicio con el mock
-    service = ProyectoService(mock_repo)
-
-    # Ejecutar método
-    proyectos = service.obtener_todos_los_proyectos()
-
-    # Verificaciones
-    assert len(proyectos) == 2
-    assert proyectos[0].nombre == "Proyecto 1"
-    mock_repo.obtener_todos.assert_called_once()</code></pre>
-
-                    <h3>Verificar Interacciones</h3>
-                    <pre><code class="language-python">def test_verificar_llamadas_al_repo():
-    """Test que verifica las llamadas al repositorio."""
-    mock_repo = Mock()
-    service = ProyectoService(mock_repo)
-
-    # Ejecutar acción
-    service.crear_proyecto("Nuevo Proyecto", usuario_id=1)
-
-    # Verificar que se llamó al repo con los argumentos correctos
-    mock_repo.guardar.assert_called_once()
-
-    # Verificar argumentos de la llamada
-    args, kwargs = mock_repo.guardar.call_args
-    proyecto_guardado = args[0]
-    assert proyecto_guardado.nombre == "Nuevo Proyecto"
-    assert proyecto_guardado.usuario_id == 1
-
-    # Otra forma: verificar con assert_called_with
-    # (requiere que el objeto tenga __eq__ implementado)
-    mock_repo.guardar.assert_called_once()
-
-    # Verificar número de llamadas
-    assert mock_repo.guardar.call_count == 1</code></pre>
+    
+    from taskflow.services import obtener_desde_api
+    resultado = obtener_desde_api(1)
+    
+    assert resultado["nombre"] == "Test"</code></pre>
                 </section>
 
-                <!-- Sección 6: Ejemplos Prácticos -->
-                <section id="ejemplos">
-                    <h2>Ejemplos Prácticos</h2>
+                <section id="testclient">
+                    <h2 class="text-primary border-bottom pb-2">TestClient FastAPI (10 min)</h2>
+                    
+                    <p><strong>TestClient</strong> permite testear APIs sin levantar servidor.</p>
 
-                    <h3>Ejemplo 1: Tests Parametrizados de ProyectoService</h3>
-                    <pre><code class="language-python"># tests/test_services/test_proyecto_service.py
+                    <pre><code class="language-bash">pip install httpx pytest</code></pre>
 
-import pytest
-from unittest.mock import Mock
-from taskflow.services.proyecto_service import ProyectoService
-from taskflow.models.proyecto import Proyecto
+                    <pre><code class="language-python">from fastapi.testclient import TestClient
+from taskflow.main import app
 
-class TestProyectoService:
-    """Tests para ProyectoService usando fixtures y mocks."""
+client = TestClient(app)
 
-    @pytest.fixture
-    def mock_repo(self):
-        """Fixture que crea repositorio mockeado."""
-        return Mock()
+def test_listar_tareas():
+    response = client.get("/tareas")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
 
-    @pytest.fixture
-    def service(self, mock_repo):
-        """Fixture que crea servicio con repo mockeado."""
-        return ProyectoService(mock_repo)
+def test_crear_tarea():
+    response = client.post(
+        "/tareas",
+        json={"titulo": "Nueva tarea", "descripcion": "Test"}
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["titulo"] == "Nueva tarea"
 
-    @pytest.mark.parametrize("nombre, usuario_id, valido", [
-        ("Proyecto Válido", 1, True),
-        ("P", 1, False),             # Nombre muy corto
-        ("Proyecto Sin Usuario", None, False),  # Sin usuario
-    ])
-    def test_crear_proyecto(self, service, mock_repo, nombre, usuario_id, valido):
-        """Test parametrizado de creación de proyectos."""
-        if valido:
-            mock_repo.guardar.return_value = Proyecto(
-                id=1,
-                nombre=nombre,
-                usuario_id=usuario_id
-            )
-            proyecto = service.crear_proyecto(nombre, usuario_id)
-            assert proyecto.nombre == nombre
-            mock_repo.guardar.assert_called_once()
-        else:
-            with pytest.raises(ValueError):
-                service.crear_proyecto(nombre, usuario_id)
+def test_obtener_tarea_no_existe():
+    response = client.get("/tareas/99999")
+    assert response.status_code == 404</code></pre>
 
-    def test_obtener_proyectos_de_usuario(self, service, mock_repo):
-        """Test obtener proyectos de un usuario específico."""
-        # Configurar mock
-        mock_repo.obtener_por_usuario.return_value = [
-            Proyecto(id=1, nombre="Proyecto 1", usuario_id=1),
-            Proyecto(id=2, nombre="Proyecto 2", usuario_id=1),
-        ]
-
-        # Ejecutar
-        proyectos = service.obtener_proyectos_de_usuario(usuario_id=1)
-
-        # Verificar
-        assert len(proyectos) == 2
-        mock_repo.obtener_por_usuario.assert_called_once_with(1)
-
-    @pytest.mark.parametrize("estado", ["activo", "archivado", "completado"])
-    def test_filtrar_proyectos_por_estado(self, service, mock_repo, estado):
-        """Test parametrizado de filtrado por estado."""
-        mock_repo.obtener_por_estado.return_value = [
-            Proyecto(id=1, nombre=f"Proyecto {estado}", estado=estado)
-        ]
-
-        proyectos = service.obtener_proyectos_por_estado(estado)
-
-        assert len(proyectos) >= 1
-        assert all(p.estado == estado for p in proyectos)
-        mock_repo.obtener_por_estado.assert_called_once_with(estado)</code></pre>
-
-                    <h3>Ejemplo 2: Fixture Compleja para Integración</h3>
+                    <h4>Fixture de TestClient</h4>
                     <pre><code class="language-python"># tests/conftest.py
-
-import pytest
-from taskflow.models.usuario import Usuario
-from taskflow.models.proyecto import Proyecto
-from taskflow.models.tarea import Tarea
-
-@pytest.fixture(scope="module")
-def datos_bd_prueba():
-    """Fixture que crea datos de prueba completos."""
-    usuarios = [
-        Usuario(id=1, username="admin", email="admin@example.com"),
-        Usuario(id=2, username="user1", email="user1@example.com"),
-        Usuario(id=3, username="user2", email="user2@example.com"),
-    ]
-
-    proyectos = [
-        Proyecto(id=1, nombre="TaskFlow", usuario_id=1),
-        Proyecto(id=2, nombre="Curso POO", usuario_id=2),
-    ]
-
-    tareas = [
-        Tarea(id=1, titulo="Configurar", proyecto_id=1, asignado_a=1),
-        Tarea(id=2, titulo="Implementar", proyecto_id=1, asignado_a=2),
-        Tarea(id=3, titulo="Documentar", proyecto_id=2, asignado_a=3),
-    ]
-
-    return {
-        "usuarios": usuarios,
-        "proyectos": proyectos,
-        "tareas": tareas,
-    }
-
-# tests/test_integration.py
-
-def test_flujo_completo_usuario_proyecto_tarea(datos_bd_prueba):
-    """Test de flujo completo usando fixture compleja."""
-    usuarios = datos_bd_prueba["usuarios"]
-    proyectos = datos_bd_prueba["proyectos"]
-    tareas = datos_bd_prueba["tareas"]
-
-    # Verificar que usuario admin tiene proyectos
-    proyectos_admin = [p for p in proyectos if p.usuario_id == 1]
-    assert len(proyectos_admin) == 1
-
-    # Verificar que proyecto tiene tareas
-    tareas_proyecto = [t for t in tareas if t.proyecto_id == 1]
-    assert len(tareas_proyecto) == 2
-
-    # Verificar asignaciones
-    assert tareas_proyecto[0].asignado_a == 1
-    assert tareas_proyecto[1].asignado_a == 2</code></pre>
-
-                    <h3>Ejemplo 3: Tests con Context Manager</h3>
-                    <pre><code class="language-python">@pytest.fixture
-def session_db():
-    """Fixture que crea una sesión de BD para tests."""
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
-
-    # Usar BD en memoria para tests
-    engine = create_engine("sqlite:///:memory:")
-    Session = sessionmaker(bind=engine)
-
-    # Crear tablas
-    from taskflow.models.base import Base
-    Base.metadata.create_all(engine)
-
-    session = Session()
-    yield session
-
-    # Cleanup
-    session.close()
-    engine.dispose()
-
-def test_crud_con_session_db(session_db):
-    """Test CRUD usando fixture de sesión."""
-    from taskflow.models.usuario import Usuario
-
-    # Create
-    usuario = Usuario(username="test", email="test@example.com")
-    session_db.add(usuario)
-    session_db.commit()
-
-    # Read
-    from_db = session_db.query(Usuario).filter_by(username="test").first()
-    assert from_db is not None
-    assert from_db.username == "test"
-
-    # Update
-    from_db.nombre_completo = "Test User"
-    session_db.commit()
-
-    # Delete
-    session_db.delete(from_db)
-    session_db.commit()
-
-    # Verificar que se eliminó
-    assert session_db.query(Usuario).filter_by(username="test").first() is None</code></pre>
-                </section>
-
-                <!-- Sección 7: Buenas Prácticas -->
-
-                <!-- Seccion 6.5: Testing de APIs FastAPI -->
-                <section id="fastapi-testing">
-                    <h2>Testing de APIs FastAPI con TestClient</h2>
-
-                    <h3>Introduccion al TestClient</h3>
-                    <p>
-                        El <strong>TestClient</strong> de FastAPI es una herramienta que permite realizar
-                        pruebas de integracion de tus endpoints HTTP sin necesidad de levantar un servidor
-                        real. Funciona como un cliente HTTP que realiza peticiones a tu aplicacion FastAPI
-                        en memoria, lo que hace que las pruebas sean rapidas y aisladas.
-                    </p>
-
-                    <div class="alert-note">
-                        <strong>Por que usar TestClient?</strong>
-                        <ul>
-                            <li>Pruebas de integracion rapidas sin levantar servidor</li>
-                            <li>Permite probar toda la pila HTTP de la aplicacion</li>
-                            <li>Compatible con pytest y sus fixtures</li>
-                            <li>Soporta todos los metodos HTTP (GET, POST, PUT, DELETE, etc.)</li>
-                        </ul>
-                    </div>
-
-                    <h3>Instalacion de Dependencias</h3>
-                    <p>
-                        Para usar TestClient necesitas instalar <code>httpx</code>, que es la libreria
-                        base que FastAPI utiliza internamente:
-                    </p>
-                    <pre><code class="language-bash"># Instalar httpx (necesario para TestClient)
-pip install httpx
-
-# Verificar instalacion
-pip show httpx</code></pre>
-
-                    <div class="alert-tip">
-                        <strong>Tip:</strong> Si estas usando FastAPI, <code>httpx</code> ya suele estar
-                        incluida como dependencia transitiva. Verificalo en tu archivo requirements.txt
-                        o pyproject.toml.
-                    </div>
-
-                    <h3>Crear TestClient para FastAPI</h3>
-                    <pre><code class="language-python"># tests/conftest.py - Configuracion de TestClient
 import pytest
 from fastapi.testclient import TestClient
 from taskflow.main import app
 
 @pytest.fixture
 def client():
-    """Fixture que crea un TestClient para la aplicacion FastAPI."""
     return TestClient(app)
 
-@pytest.fixture
-def client_with_auth(client):
-    """Fixture que crea un TestClient con autenticacion."""
-    client.headers.update({"Authorization": "Bearer test_token"})
-    return client</code></pre>
-
-                    <h3>Estructura de la Aplicacion FastAPI</h3>
-                    <p>Antes de ver los tests, necesitamos una aplicacion FastAPI de ejemplo:</p>
-                    <pre><code class="language-python"># src/taskflow/main.py
-from fastapi import FastAPI, HTTPException, Depends
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel, EmailStr
-from typing import List, Optional
-from uuid import uuid4
-
-app = FastAPI(
-    title="TaskFlow API",
-    description="API REST para gestion de tareas y proyectos",
-    version="1.0.0"
-)
-
-security = HTTPBearer()
-
-class UsuarioCreate(BaseModel):
-    username: str
-    email: EmailStr
-    password: str
-
-class UsuarioResponse(BaseModel):
-    id: str
-    username: str
-    email: str
-
-class TareaCreate(BaseModel):
-    titulo: str
-    descripcion: Optional[str] = None
-    usuario_id: str
-
-class TareaResponse(BaseModel):
-    id: str
-    titulo: str
-    descripcion: Optional[str]
-    estado: str
-    usuario_id: str
-
-usuarios_db = {}
-tareas_db = {}
-
-def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    token = credentials.credentials
-    if token != "valid_token":
-        raise HTTPException(status_code=401, detail="Token invalido")
-    return {"id": "user_1", "username": "testuser", "email": "test@example.com"}
-
-@app.post("/api/usuarios", response_model=UsuarioResponse, status_code=201)
-def crear_usuario(usuario: UsuarioCreate):
-    if any(u.email == usuario.email for u in usuarios_db.values()):
-        raise HTTPException(status_code=400, detail="Email ya registrado")
-    user_id = str(uuid4())
-    usuarios_db[user_id] = {
-        "id": user_id,
-        "username": usuario.username,
-        "email": usuario.email,
-        "password": usuario.password
-    }
-    return {"id": user_id, "username": usuario.username, "email": usuario.email}
-
-@app.get("/api/usuarios/{user_id}", response_model=UsuarioResponse)
-def obtener_usuario(user_id: str):
-    if user_id not in usuarios_db:
-        raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    user = usuarios_db[user_id]
-    return {"id": user_id, "username": user["username"], "email": user["email"]}
-
-@app.get("/api/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios():
-    return [{"id": uid, "username": u["username"], "email": u["email"]} for uid, u in usuarios_db.items()]
-
-@app.post("/api/tareas", response_model=TareaResponse, status_code=201)
-def crear_tarea(tarea: TareaCreate, current_user: dict = Depends(get_current_user)):
-    tarea_id = str(uuid4())
-    nueva_tarea = {
-        "id": tarea_id,
-        "titulo": tarea.titulo,
-        "descripcion": tarea.descripcion,
-        "estado": "pendiente",
-        "usuario_id": tarea.usuario_id
-    }
-    tareas_db[tarea_id] = nueva_tarea
-    return nueva_tarea
-
-@app.get("/api/tareas", response_model=List[TareaResponse])
-def listar_tareas(usuario_id: Optional[str] = None):
-    if usuario_id:
-        return [t for t in tareas_db.values() if t["usuario_id"] == usuario_id]
-    return list(tareas_db.values())
-
-@app.get("/api/tareas/{tarea_id}", response_model=TareaResponse)
-def obtener_tarea(tarea_id: str):
-    if tarea_id not in tareas_db:
-        raise HTTPException(status_code=404, detail="Tarea no encontrada")
-    return tareas_db[tarea_id]
-
-@app.put("/api/tareas/{tarea_id}", response_model=TareaResponse)
-def actualizar_tarea(tarea_id: str, tarea_update: TareaCreate):
-    if tarea_id not in tareas_db:
-        raise HTTPException(status_code=404, detail="Tarea no encontrada")
-    tarea = tareas_db[tarea_id]
-    tarea["titulo"] = tarea_update.titulo
-    tarea["descripcion"] = tarea_update.descripcion
-    return tarea
-
-@app.delete("/api/tareas/{tarea_id}", status_code=204)
-def eliminar_tarea(tarea_id: str):
-    if tarea_id not in tareas_db:
-        raise HTTPException(status_code=404, detail="Tarea no encontrada")
-    del tareas_db[tarea_id]</code></pre>
-
-                    <h2>Ejemplos Practicos de Testing de APIs</h2>
-
-                    <h3>Testing de Endpoints GET</h3>
-                    <pre><code class="language-python"># tests/api/test_usuarios.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestUsuariosEndpoints:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_listar_usuarios_vacio(self, client):
-        response = client.get("/api/usuarios")
-        assert response.status_code == 200
-        assert response.json() == []
-
-    def test_crear_y_listar_usuario(self, client):
-        usuario_data = {
-            "username": "johndoe",
-            "email": "john@example.com",
-            "password": "secure123"
-        }
-        response = client.post("/api/usuarios", json=usuario_data)
-        assert response.status_code == 201
-        data = response.json()
-        assert data["username"] == "johndoe"
-        assert "id" in data
-        response = client.get("/api/usuarios")
-        assert response.status_code == 200
-        usuarios = response.json()
-        assert len(usuarios) == 1
-
-    def test_obtener_usuario_existente(self, client):
-        usuario_data = {
-            "username": "testuser",
-            "email": "test@example.com",
-            "password": "testpass"
-        }
-        create_response = client.post("/api/usuarios", json=usuario_data)
-        user_id = create_response.json()["id"]
-        response = client.get(f"/api/usuarios/{user_id}")
-        assert response.status_code == 200
-        data = response.json()
-        assert data["id"] == user_id
-
-    def test_obtener_usuario_inexistente(self, client):
-        response = client.get("/api/usuarios/usuario_inexistente")
-        assert response.status_code == 404
-        assert "no encontrado" in response.json()["detail"].lower()</code></pre>
-
-                    <h3>Testing de Endpoints POST/PUT/DELETE</h3>
-                    <pre><code class="language-python"># tests/api/test_tareas.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestTareasEndpoints:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    @pytest.fixture
-    def usuario_creado(self, client):
-        usuario_data = {
-            "username": "taskuser",
-            "email": "task@example.com",
-            "password": "taskpass"
-        }
-        response = client.post("/api/usuarios", json=usuario_data)
-        return response.json()["id"]
-
-    def test_crear_tarea_basica(self, client, usuario_creado):
-        tarea_data = {
-            "titulo": "Mi primera tarea",
-            "descripcion": "Descripcion de la tarea",
-            "usuario_id": usuario_creado
-        }
-        response = client.post("/api/tareas", json=tarea_data)
-        assert response.status_code == 201
-        data = response.json()
-        assert data["titulo"] == "Mi primera tarea"
-        assert data["estado"] == "pendiente"
-        assert "id" in data
-
-    def test_listar_tareas_vacio(self, client):
-        response = client.get("/api/tareas")
-        assert response.status_code == 200
-        assert response.json() == []
-
-    def test_actualizar_tarea(self, client, usuario_creado):
-        tarea_data = {
-            "titulo": "Tarea a actualizar",
-            "descripcion": "Descripcion original",
-            "usuario_id": usuario_creado
-        }
-        create_response = client.post("/api/tareas", json=tarea_data)
-        tarea_id = create_response.json()["id"]
-        update_data = {
-            "titulo": "Tarea actualizada",
-            "descripcion": "Nueva descripcion",
-            "usuario_id": usuario_creado
-        }
-        response = client.put(f"/api/tareas/{tarea_id}", json=update_data)
-        assert response.status_code == 200
-        data = response.json()
-        assert data["titulo"] == "Tarea actualizada"
-
-    def test_eliminar_tarea(self, client, usuario_creado):
-        tarea_data = {
-            "titulo": "Tarea a eliminar",
-            "usuario_id": usuario_creado
-        }
-        create_response = client.post("/api/tareas", json=tarea_data)
-        tarea_id = create_response.json()["id"]
-        response = client.delete(f"/api/tareas/{tarea_id}")
-        assert response.status_code == 204
-        get_response = client.get(f"/api/tareas/{tarea_id}")
-        assert get_response.status_code == 404</code></pre>
-
-                    <h3>Testing de Validacion Pydantic</h3>
-                    <pre><code class="language-python"># tests/api/test_validacion.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestValidacionPydantic:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_email_invalido(self, client):
-        usuario_data = {
-            "username": "testuser",
-            "email": "email_invalido",
-            "password": "testpass123"
-        }
-        response = client.post("/api/usuarios", json=usuario_data)
-        assert response.status_code == 422
-
-    def test_username_vacio(self, client):
-        usuario_data = {"username": "", "email": "test@example.com", "password": "testpass123"}
-        response = client.post("/api/usuarios", json=usuario_data)
-        assert response.status_code == 422
-
-    def test_tarea_sin_titulo(self, client):
-        tarea_data = {"titulo": "", "descripcion": "Una descripcion", "usuario_id": "user_1"}
-        response = client.post("/api/tareas", json=tarea_data)
-        assert response.status_code == 422</code></pre>
-
-                    <h3>Testing de Status Codes</h3>
-                    <pre><code class="language-python"># tests/api/test_status_codes.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestStatusCodes:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_creacion_exitosa_201(self, client):
-        usuario_data = {"username": "newuser", "email": "new@example.com", "password": "pass123"}
-        response = client.post("/api/usuarios", json=usuario_data)
-        assert response.status_code == 201
-
-    def test_listado_exitoso_200(self, client):
-        response = client.get("/api/usuarios")
-        assert response.status_code == 200
-
-    def test_no_encontrado_404(self, client):
-        response = client.get("/api/usuarios/id_inexistente")
-        assert response.status_code == 404
-
-    def test_validacion_422(self, client):
-        usuario_data = {"username": "test", "email": "email_invalido", "password": "test"}
-        response = client.post("/api/usuarios", json=usuario_data)
-        assert response.status_code == 422</code></pre>
-
-                    <h3>Testing de Autenticacion</h3>
-                    <pre><code class="language-python"># tests/api/test_autenticacion.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestAutenticacion:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_endpoint_protegido_sin_token(self, client):
-        tarea_data = {"titulo": "Tarea protegida", "usuario_id": "user_1"}
-        response = client.post("/api/tareas", json=tarea_data)
-        assert response.status_code == 401
-        assert "Token" in response.json()["detail"]
-
-    def test_endpoint_protegido_token_valido(self, client):
-        tarea_data = {"titulo": "Tarea con auth", "descripcion": "Requiere auth", "usuario_id": "user_1"}
-        response = client.post("/api/tareas", json=tarea_data, headers={"Authorization": "Bearer valid_token"})
-        assert response.status_code == 201
-
-    @pytest.fixture
-    def auth_client(self, client):
-        client.headers.update({"Authorization": "Bearer valid_token"})
-        return client
-
-    def test_con_cliente_autenticado(self, auth_client):
-        tarea_data = {"titulo": "Tarea usando auth_client", "descripcion": "Mas facil", "usuario_id": "user_1"}
-        response = auth_client.post("/api/tareas", json=tarea_data)
-        assert response.status_code == 201</code></pre>
-
-                    <h2>Fixtures Especializadas para FastAPI</h2>
-
-                    <h3>Fixture para TestClient</h3>
-                    <pre><code class="language-python"># tests/conftest.py - Fixtures para FastAPI
-import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, StaticPool
-from sqlalchemy.orm import sessionmaker
-from taskflow.main import app
-from taskflow.models.base import Base
-from taskflow.database import get_db
-
-SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}, poolclass=StaticPool)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base.metadata.create_all(bind=engine)
-
-@pytest.fixture(scope="function")
-def db_session():
-    connection = engine.connect()
-    transaction = connection.begin()
-    session = TestingSessionLocal(bind=connection)
-    yield session
-    transaction.rollback()
-    connection.close()
-    session.close()
-
-@pytest.fixture(scope="function")
-def client(db_session):
-    def override_get_db():
-        yield db_session
-    app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app) as test_client:
-        yield test_client
-    app.dependency_overrides.clear()</code></pre>
-
-                    <h3>Fixture para Test Data</h3>
-                    <pre><code class="language-python"># tests/conftest.py - continued
-import pytest
-from uuid import uuid4
-
-@pytest.fixture
-def usuario_data():
-    return {
-        "username": f"user_{uuid4().hex[:8]}",
-        "email": f"user_{uuid4().hex[:8]}@example.com",
-        "password": "SecurePass123!"
-    }
-
-@pytest.fixture
-def tarea_data():
-    return {
-        "titulo": "Tarea de prueba",
-        "descripcion": "Descripcion de la tarea de prueba",
-        "usuario_id": "user_1"
-    }
-
-@pytest.fixture
-def tareas_de_prueba():
-    return [{"titulo": f"Tarea {i}", "descripcion": f"Descripcion {i}", "usuario_id": "user_1"} for i in range(1, 6)]</code></pre>
-
-                    <h2>Patrones de Testing para APIs</h2>
-
-                    <h3>Test Isolation</h3>
-                    <pre><code class="language-python"># tests/test_isolation.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestIsolation:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        from taskflow import db
-        db.clear()
-        return TestClient(app)
-
-    def test_no_comparte_datos(self, client):
-        response = client.get("/api/usuarios")
-        assert response.json() == []
-
-    def test_cada_test_empieza_vacio(self, client):
-        response = client.get("/api/usuarios")
-        assert response.status_code == 200
-        assert len(response.json()) == 0</code></pre>
-
-                    <h3>Testing de Errores</h3>
-                    <pre><code class="language-python"># tests/test_errores.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestErrores:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_error_404_estructura_correcta(self, client):
-        response = client.get("/api/recurso_inexistente")
-        assert response.status_code == 404
-        data = response.json()
-        assert "detail" in data
-
-    def test_error_422_tiene_errores_detalle(self, client):
-        response = client.post("/api/usuarios", json={"invalid": "data"})
-        assert response.status_code == 422
-        data = response.json()
-        assert "detail" in data
-        assert isinstance(data["detail"], list)
-
-    def test_manejo_graceful_de_errores(self, client):
-        response = client.post("/api/usuarios", data="{ bad json }", headers={"Content-Type": "application/json"})
-        assert response.status_code < 500</code></pre>
-
-                    <h2>Conexion con TaskFlow</h2>
-
-                    <h3>Tests para API de Usuarios de TaskFlow</h3>
-                    <pre><code class="language-python"># tests/api/test_taskflow_usuarios.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestTaskFlowUsuarios:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    def test_crear_usuario_taskflow(self, client):
-        data = {"username": "nuevo_usuario", "email": "nuevo@taskflow.com", "password": "Password123!"}
-        response = client.post("/api/usuarios", json=data)
-        assert response.status_code == 201
-        usuario = response.json()
-        assert usuario["username"] == "nuevo_usuario"
-        assert "id" in usuario
-
-    def test_listar_usuarios_taskflow(self, client):
-        for i in range(3):
-            data = {"username": f"user_{i}", "email": f"user_{i}@taskflow.com", "password": f"pass{i}"}
-            client.post("/api/usuarios", json=data)
-        response = client.get("/api/usuarios")
-        assert response.status_code == 200
-        usuarios = response.json()
-        assert len(usuarios) == 3
-
-    def test_email_unico_taskflow(self, client):
-        data = {"username": "user1", "email": "test@taskflow.com", "password": "pass"}
-        client.post("/api/usuarios", json=data)
-        data["username"] = "user2"
-        response = client.post("/api/usuarios", json=data)
-        assert response.status_code == 400</code></pre>
-
-                    <h3>Tests para API de Tareas de TaskFlow</h3>
-                    <pre><code class="language-python"># tests/api/test_taskflow_tareas.py
-import pytest
-from fastapi.testclient import TestClient
-
-class TestTaskFlowTareas:
-    @pytest.fixture
-    def client(self):
-        from taskflow.main import app
-        return TestClient(app)
-
-    @pytest.fixture
-    def usuario_taskflow(self, client):
-        data = {"username": "tarea_user", "email": "tareas@taskflow.com", "password": "TaskPass123"}
-        response = client.post("/api/usuarios", json=data)
-        assert response.status_code == 201
-        return response.json()
-
-    def test_crear_tarea_taskflow(self, client, usuario_taskflow):
-        tarea_data = {"titulo": "Implementar modulo", "descripcion": "Crear API REST", "usuario_id": usuario_taskflow["id"]}
-        response = client.post("/api/tareas", json=tarea_data)
-        assert response.status_code == 201
-        tarea = response.json()
-        assert tarea["titulo"] == "Implementar modulo"
-        assert tarea["estado"] == "pendiente"
-
-    def test_listar_tareas_taskflow(self, client, usuario_taskflow):
-        for i in range(5):
-            tarea_data = {"titulo": f"Tarea {i+1}", "descripcion": f"Descripcion {i+1}", "usuario_id": usuario_taskflow["id"]}
-            client.post("/api/tareas", json=tarea_data)
-        response = client.get("/api/tareas")
-        assert response.status_code == 200
-        tareas = response.json()
-        assert len(tareas) == 5
-
-    def test_flujo_completo_tarea(self, client, usuario_taskflow):
-        tarea_data = {"titulo": "Tarea del flujo completo", "descripcion": "Completo", "usuario_id": usuario_taskflow["id"]}
-        create_response = client.post("/api/tareas", json=tarea_data)
-        assert create_response.status_code == 201
-        tarea_id = create_response.json()["id"]
-        read_response = client.get(f"/api/tareas/{tarea_id}")
-        assert read_response.status_code == 200
-        update_data = {"titulo": "Tarea actualizada", "descripcion": "Nueva", "usuario_id": usuario_taskflow["id"]}
-        update_response = client.put(f"/api/tareas/{tarea_id}", json=update_data)
-        assert update_response.status_code == 200
-        delete_response = client.delete(f"/api/tareas/{tarea_id}")
-        assert delete_response.status_code == 204
-        verify_response = client.get(f"/api/tareas/{tarea_id}")
-        assert verify_response.status_code == 404</code></pre>
-
-                    <h3>Ejecutar Tests de API</h3>
-                    <pre><code class="language-bash"># Ejecutar solo tests de API
-pytest tests/api/ -v
-
-# Ejecutar tests de un modulo especifico
-pytest tests/api/test_taskflow_usuarios.py -v
-
-# Ejecutar un test especifico
-pytest tests/api/test_taskflow_tareas.py::TestTaskFlowTareas::test_flujo_completo_tarea -v
-
-# Ver coverage de tests de API
-pytest tests/api/ --cov=src.taskflow.routers --cov-report=html</code></pre>
-
-                    <div class="alert-tip">
-                        <strong>Tip:</strong> Para tests de API que requieren autenticacion,
-                        asegurate de configurar el token en los headers o usar la fixture
-                        <code>client_auth</code> que incluye automaticamente el token valido.
-                    </div>
-
-                    <div class="alert-warning-custom">
-                        <strong>Nota sobre Tests de Integracion:</strong>
-                        Los tests de API con TestClient son tests de integracion porque prueban
-                        toda la pila de la aplicacion. Para tests unitarios mas rapidos,
-                        considera usar mocks para las dependencias de base de datos.
-                    </div>
+# tests/test_api.py
+def test_con_fixture(client):
+    response = client.get("/")
+    assert response.status_code == 200</code></pre>
                 </section>
 
-                <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
-
-                    <h3>Organización de Tests</h3>
-                    <pre><code class="language-text">tests/
-├── __init__.py
-├── conftest.py              # Fixtures compartidas globalmente
-├── test_models/
-│   ├── __init__.py
-│   ├── conftest.py          # Fixtures específicas de modelos
-│   ├── test_usuario.py
-│   └── test_proyecto.py
-├── test_services/
-│   ├── __init__.py
-│   ├── conftest.py          # Fixtures específicas de servicios
-│   ├── test_usuario_service.py
-│   └── test_proyecto_service.py
-└── test_api/
-    ├── __init__.py
-    └── test_endpoints.py</code></pre>
-
-                    <h3>Convenciones de Nombres</h3>
-                    <ul>
-                        <li><strong>Archivos:</strong> <code>test_*.py</code> o <code>*_test.py</code></li>
-                        <li><strong>Clases:</strong> <code>Test*</code> (ej: <code>TestUsuario</code>)</li>
-                        <li><strong>Funciones:</strong> <code>test_*</code></li>
-                        <li><strong>Fixtures:</strong> Nombre descriptivo del recurso que proveen</li>
-                    </ul>
-
-                    <h3>DO's con Fixtures y Mocks</h3>
-                    <ul>
-                        <li><strong>Usa fixtures para setup compartido:</strong> Elimina duplicación</li>
-                        <li><strong>Usa el scope apropiado:</strong> No uses session si function basta</li>
-                        <li><strong>Usa monkeypatch para modificar estado:</strong> Más claro que patch</li>
-                        <li><strong>Verifica interacciones con mocks:</strong> assert_called, etc.</li>
-                        <li><strong>Documenta fixtures complejas:</strong> Docstrings explican qué proveen</li>
-                    </ul>
-
-                    <h3>DON'T's con Fixtures y Mocks</h3>
-                    <ul>
-                        <li><strong>No sobreuses mocks:</strong> Solo para dependencias externas</li>
-                        <li><strong>No mocks en exceso:</strong> Demasiados mocks = tests frágiles</li>
-                        <li><strong>No uses fixtures globales excesivamente:</strong> Hacen tests interdependientes</li>
-                        <li><strong>No ignores el teardow:</strong> Siempre limpia recursos</li>
-                        <li><strong>No mockes el código bajo prueba:</strong> Solo dependencias</li>
-                    </ul>
-
-                    <h3>Cuándo NO Usar Mocks</h3>
-                    <div class="alert-warning-custom">
-                        <strong>Evita mocks cuando:</strong>
-                        <ul>
-                            <li>La dependencia es rápida y determinista (ej: funciones puras)</li>
-                            <li>Quieres probar la integración real</li>
-                            <li>El mock se vuelve tan complejo como lo real</li>
-                            <li>Estás probando una librería o framework (no sus dependencias)</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Sección 8: Ejercicio Guido -->
                 <section id="ejercicio">
-                    <h2>Ejercicio Guido: Tests Parametrizados de ProyectoService</h2>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio (5 min)</h2>
+                    
+                    <p>Crear tests para la API de tareas:</p>
+                    <ol>
+                        <li>Usar fixture de TestClient</li>
+                        <li>Parametrizar test de validación</li>
+                        <li>Mockear el repositorio</li>
+                    </ol>
 
-                    <h3>Objetivo</h3>
-                    <p>
-                        Crear tests parametrizados para la clase ProyectoService usando fixtures
-                        y parametrización de pytest.
-                    </p>
-
-                    <h3>Instrucciones Paso a Paso</h3>
-
-                    <h4>Paso 1: Crear Fixture de Repositorio (5 min)</h4>
-                    <pre><code class="language-python"># tests/conftest.py
-
+                    <pre><code class="language-python"># tests/test_tareas.py
 import pytest
-from unittest.mock import Mock
+from fastapi.testclient import TestClient
+from unittest.mock import Mock, patch
 
 @pytest.fixture
-def mock_proyecto_repo():
-    """Fixture que crea un repositorio de proyectos mockeado."""
-    return Mock()</code></pre>
+def client():
+    from taskflow.main import app
+    return TestClient(app)
 
-                    <h4>Paso 2: RED - Tests Parametrizados (10 min)</h4>
-                    <pre><code class="language-python"># tests/test_services/test_proyecto_service.py
-
-import pytest
-from taskflow.services.proyecto_service import ProyectoService
-
-@pytest.mark.parametrize("nombre, usuario_id, debe_crear", [
-    ("Proyecto Válido", 1, True),
-    ("P", 1, False),           # Nombre muy corto
-    ("", 1, False),            # Nombre vacío
-    ("Proyecto", None, False), # Sin usuario
-])
-def test_crear_proyecto_parametrizado(mock_proyecto_repo, nombre, usuario_id, debe_crear):
-    """Test parametrizado de creación de proyectos."""
-    # RED: Este test aún no tiene implementación
-    service = ProyectoService(mock_proyecto_repo)
-
-    if debe_crear:
-        proyecto = service.crear_proyecto(nombre, usuario_id)
-        assert proyecto.nombre == nombre
-        mock_proyecto_repo.guardar.assert_called_once()
-    else:
-        with pytest.raises(ValueError):
-            service.crear_proyecto(nombre, usuario_id)</code></pre>
-
-                    <h4>Paso 3: GREEN - Implementar ProyectoService (10 min)</h4>
-                    <pre><code class="language-python"># src/taskflow/services/proyecto_service.py
-
-from taskflow.models.proyecto import Proyecto
-
-class ProyectoService:
-    """Servicio de lógica de negocio para proyectos."""
-
-    def __init__(self, repo):
-        """Inicializar servicio con repositorio."""
-        self.repo = repo
-
-    def crear_proyecto(self, nombre, usuario_id):
-        """
-        Crear un nuevo proyecto.
-
-        Args:
-            nombre: Nombre del proyecto (mínimo 3 caracteres)
-            usuario_id: ID del usuario propietario
-
-        Returns:
-            Proyecto creado
-
-        Raises:
-            ValueError: Si los datos son inválidos
-        """
-        # Validaciones
-        if not nombre or len(nombre) < 3:
-            raise ValueError("Nombre debe tener al menos 3 caracteres")
-
-        if usuario_id is None:
-            raise ValueError("Debe especificar usuario_id")
-
-        # Crear proyecto
-        proyecto = Proyecto(nombre=nombre, usuario_id=usuario_id)
-
-        # Guardar usando repositorio
-        return self.repo.guardar(proyecto)</code></pre>
-
-                    <h4>Paso 4: GREEN - Configurar Mock (5 min)</h4>
-                    <pre><code class="language-python"># Agregar al test
-
-def test_crear_proyecto_parametrizado(mock_proyecto_repo, nombre, usuario_id, debe_crear):
-    """Test parametrizado de creación de proyectos."""
-    # Configurar mock para retornar el proyecto que recibe
-    def side_effect_guardar(proyecto):
-        proyecto.id = 1  # Simular ID asignado por BD
-        return proyecto
-
-    mock_proyecto_repo.guardar.side_effect = side_effect_guardar
-
-    service = ProyectoService(mock_proyecto_repo)
-
-    if debe_crear:
-        proyecto = service.crear_proyecto(nombre, usuario_id)
-        assert proyecto.nombre == nombre
-        assert proyecto.usuario_id == usuario_id
-        mock_proyecto_repo.guardar.assert_called_once()
-    else:
-        with pytest.raises(ValueError):
-            service.crear_proyecto(nombre, usuario_id)</code></pre>
-
-                    <h4>Paso 5: Más Tests Parametrizados (10 min)</h4>
-                    <pre><code class="language-python">@pytest.mark.parametrize("estado, cantidad_esperada", [
-    ("activo", 3),
-    ("archivado", 1),
-    ("completado", 2),
-])
-def test_obtener_por_estado(mock_proyecto_repo, estado, cantidad_esperada):
-    """Test parametrizado de obtención por estado."""
-    # Configurar mock
-    from taskflow.models.proyecto import Proyecto
-
-    mock_proyecto_repo.obtener_por_estado.return_value = [
-        Proyecto(id=i, nombre=f"Proyecto {i}", estado=estado)
-        for i in range(cantidad_esperada)
-    ]
-
-    service = ProyectoService(mock_proyecto_repo)
-    proyectos = service.obtener_por_estado(estado)
-
-    assert len(proyectos) == cantidad_esperada
-    assert all(p.estado == estado for p in proyectos)
-    mock_proyecto_repo.obtener_por_estado.assert_called_once_with(estado)</code></pre>
-
-                    <h4>Paso 6: REFACTOR - Mejorar Organización (5 min)</h4>
-                    <pre><code class="language-python"># tests/test_services/test_proyecto_service.py
-
-class TestProyectoServiceCreacion:
-    """Tests agrupados para creación de proyectos."""
-
-    @pytest.fixture
-    def service(self, mock_proyecto_repo):
-        """Fixture que crea servicio para esta clase."""
-        return ProyectoService(mock_proyecto_repo)
-
-    @pytest.mark.parametrize("nombre, usuario_id, debe_crear", [
-        ("Proyecto Válido", 1, True),
-        ("P", 1, False),
-        ("", 1, False),
-        ("Proyecto", None, False),
+class TestTareasAPI:
+    def test_crear_tarea(self, client):
+        response = client.post("/tareas", json={"titulo": "Test"})
+        assert response.status_code == 201
+    
+    @pytest.mark.parametrize("titulo, valido", [
+        ("", False),      # Vacío
+        ("A", True),      # Válido
+        ("x" * 101, False),  # Muy largo
     ])
-    def test_crear_proyecto(self, service, mock_proyecto_repo, nombre, usuario_id, debe_crear):
-        """Test parametrizado dentro de clase de tests."""
-        # ... implementación
-
-class TestProyectoServiceConsulta:
-    """Tests agrupados para consultas."""
-
-    @pytest.fixture
-    def service(self, mock_proyecto_repo):
-        return ProyectoService(mock_proyecto_repo)
-
-    # ... tests de consulta</code></pre>
-
-                    <h3>Conexión con TaskFlow</h3>
-                    <p>
-                        Los tests que estás creando para ProyectoService son la base de la capa de
-                        servicios del proyecto TaskFlow. Estos tests garantizan que:
-                    </p>
-                    <ul>
-                        <li>Las validaciones de negocio funcionan correctamente</li>
-                        <li>El servicio interactúa correctamente con el repositorio</li>
-                        <li>Podemos agregar más servicios con el mismo patrón</li>
-                    </ul>
-
-                    <h3>Resultado Esperado</h3>
-                    <p>Al finalizar este ejercicio, tendrás:</p>
-                    <ul>
-                        <li>✅ ProyectoService con tests parametrizados</li>
-                        <li>✅ Fixtures compartidas en conftest.py</li>
-                        <li>✅ Tests organizados en clases</li>
-                        <li>✅ Base para tests de otros servicios</li>
-                    </ul>
+    def test_validar_titulo(self, client, titulo, valido):
+        response = client.post("/tareas", json={"titulo": titulo})
+        esperado = 201 if valido else 422
+        assert response.status_code == esperado</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Tip:</strong> Ejecuta <code>pytest tests/test_services/test_proyecto_service.py -v</code>
-                        para ver los nombres de los tests parametrizados generados.
+                        <strong>E2:</strong> Entregar tests con cobertura 80% usando fixtures y parametrización.
                     </div>
                 </section>
 
-                <!-- Sección: Criterios de Evaluación E2 -->
-                <section id="evaluacion">
-                    <h2>📝 Criterios de Evaluación E2</h2>
-                    <p class="lead">Esta clase cubre los siguientes criterios de la <strong>Evaluación 2: Técnicas de Desarrollo (15%)</strong></p>
-
-                    <div class="eval-criteria">
-                        <h4>📊 Rúbrica E2 - Competencias Relacionadas con Testing</h4>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Criterio</th>
-                                    <th>Peso</th>
-                                    <th>Cómo se Evalúa</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Tests Unitarios</strong></td>
-                                    <td>25 pts</td>
-                                    <td>Tests con pytest que cubren casos principales</td>
-                                    <td><span class="badge bg-success">Cubierto</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Fixtures y Setup</strong></td>
-                                    <td>20 pts</td>
-                                    <td>Uso de fixtures para datos de prueba</td>
-                                    <td><span class="badge bg-success">Cubierto</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Parametrización</strong></td>
-                                    <td>15 pts</td>
-                                    <td>Tests parametrizados para múltiples casos</td>
-                                    <td><span class="badge bg-success">Cubierto</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Mocking</strong></td>
-                                    <td>15 pts</td>
-                                    <td>Uso de mocks para aislar dependencias</td>
-                                    <td><span class="badge bg-success">Cubierto</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Cobertura de Código</strong></td>
-                                    <td>10 pts</td>
-                                    <td>>80% de cobertura con pytest-cov</td>
-                                    <td><span class="badge bg-warning text-dark">Parcial</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h4>✅ Checklist de Testing para E2</h4>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="alert-tip">
-                                <strong>Requisitos de Testing:</strong>
-                                <ul class="mb-0">
-                                    <li>Tests unitarios para cada clase del modelo</li>
-                                    <li>Uso de fixtures en conftest.py</li>
-                                    <li>Tests parametrizados para validaciones</li>
-                                    <li>Mocks para repositorios externos</li>
-                                    <li>Cobertura mínima del 80%</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="alert-note">
-                                <strong>Comandos de Verificación:</strong>
-                                <pre class="mb-0"><code># Ejecutar todos los tests
-pytest -v
-
-# Ver cobertura
-pytest --cov=src --cov-report=html
-
-# Tests específicos
-pytest tests/test_models/ -v</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h4>🔗 Conexión con Próximas Clases</h4>
-                    <p>Los conceptos avanzados de pytest son fundamentales para:</p>
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
                     <ul>
-                        <li><strong>Clase 03:</strong> BDD con behave (escenarios pasos)</li>
-                        <li><strong>Clase 04:</strong> DDD (tests de dominio)</li>
-                        <li><strong>Evaluación 3:</strong> FastAPI con TestClient</li>
-                        <li><strong>Evaluación 6:</strong> Repository Pattern testing</li>
+                        <li><strong>Fixtures:</strong> Preparan datos reutilizables</li>
+                        <li><strong>Scopes:</strong> Controlan ciclo de vida</li>
+                        <li><strong>Parametrize:</strong> Múltiples casos en un test</li>
+                        <li><strong>Mocks:</strong> Aíslan dependencias externas</li>
+                        <li><strong>TestClient:</strong> Testea APIs sin servidor</li>
                     </ul>
-                </section>
-
-                <!-- Sección 9: Referencias -->
-                <section id="videos">
-                    <h2>📺 Videos Recomendados</h2>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-success me-2">Español</span>
-                                Tutorial de pytest en Python
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Píldoras Informáticas | 24:15 min</h6>
-                            <p class="card-text">
-                                Introducción completa a pytest
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=x1H3a2kkdYM" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-secondary me-2">Inglés</span>
-                                Python Testing with pytest
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">ArjanCodes | 42:30 min</h6>
-                            <p class="card-text">
-                                Tutorial muy completo de pytest
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=JqbOcdNLLaI" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                </section>
-
-                <section id="referencias">
-                    <h2>Para Profundizar</h2>
-                    <ul>
-                        <li>
-                            <a href="https://docs.pytest.org/en/stable/explanation/fixtures.html" target="_blank">
-                                pytest Fixtures - Documentación Oficial
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.pytest.org/en/stable/parametrize.html" target="_blank">
-                                pytest Parametrización - Documentación Oficial
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://docs.python.org/3/library/unittest.mock.html" target="_blank">
-                                unittest.mock - Documentación Python
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://realpython.com/pytest-python-testing/" target="_blank">
-                                Real Python: A Practical Guide to pytest
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/watch?v=6E9tTWKsK_U" target="_blank">
-                                Video: pytest Fixtures Tutorial
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h3>Comandos Útiles</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Comando</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>pytest --fixtures</code></td>
-                                <td>Listar todas las fixtures disponibles</td>
-                            </tr>
-                            <tr>
-                                <td><code>pytest -v --tb=short</code></td>
-                                <td>Output verbose con traceback corto</td>
-                            </tr>
-                            <tr>
-                                <td><code>pytest -k "test_crear"</code></td>
-                                <td>Ejecutar tests que contengan "test_crear"</td>
-                            </tr>
-                            <tr>
-                                <td><code>pytest -x</code></td>
-                                <td>Detenerse en el primer fallo</td>
-                            </tr>
-                            <tr>
-                                <td><code>pytest --lf</code></td>
-                                <td>Ejecutar solo los tests que fallaron la última vez</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-02/02-02-tdd-ciclo.ipynb"
-           target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Ver Notebook de Ciclo TDD
-        </a>
-    </div>
-
-    <!-- Footer -->
-    <footer>
+    <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-14</p>
-            <p class="mt-2">
-                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
-                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
-            </p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-01-tdd-intro.html">← Anterior</a> | <a href="clase-03-bdd-intro.html">Siguiente: BDD →</a></p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-
-    <!-- Prism.js Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
-    <!-- Prism.js Language Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Volver arriba">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
-
-    <!-- Highlight code on page load -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-        });
-
-        // Back to Top functionality
-        const backToTopButton = document.getElementById('backToTop');
-        const progressBar = document.getElementById('progressBar');
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        function updateProgressBar() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrollPercent = (scrollTop / scrollHeight) * 100;
-
-            if (progressBar) {
-                progressBar.style.width = scrollPercent + '%';
-            }
-
-            // Show/hide back to top button
-            if (backToTopButton) {
-                if (scrollTop > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            }
-        }
-
-        // Update progress bar on scroll
-        window.addEventListener('scroll', updateProgressBar);
-
-        // Initial update
-        updateProgressBar();
-
-        // Smooth scroll for sidebar links
-        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>

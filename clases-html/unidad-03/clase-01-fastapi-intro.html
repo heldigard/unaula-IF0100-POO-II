@@ -3,1597 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Introducción a FastAPI: instalación, routing básico y primera API REST. Curso IF0100 - POO II">
-    <meta name="author" content="IF0100 - UNAULA">
-    <title>Introducción a FastAPI | IF0100 - POO II</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-          crossorigin="anonymous">
-
-    <!-- Prism.js para syntax highlighting -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
-          rel="stylesheet">
-
+    <title>Clase 8: Introducción a FastAPI | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #0dcaf0;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --border-color: #dee2e6;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--dark-text);
-        }
-
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h2 {
-            font-size: 1.25rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        header h3 {
-            font-size: 1rem;
-            font-weight: 300;
-            opacity: 0.8;
-        }
-
-        /* Navigation */
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background-color: var(--light-bg);
-            border-radius: 8px;
-            padding: 1.5rem;
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
-        }
-
-        .sidebar h5 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 0.5rem;
-        }
-
-        .sidebar a {
-            color: var(--dark-text);
-            text-decoration: none;
-            padding: 0.5rem 0.75rem;
-            display: block;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        section {
-            margin-bottom: 3rem;
-            padding: 1.5rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        section h2 {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 3px solid var(--primary-color);
-        }
-
-        section h3 {
-            color: var(--dark-text);
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section h4 {
-            color: var(--secondary-color);
-            font-weight: 500;
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
-        }
-
-        /* Lists */
-        section ul, section ol {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Code Blocks */
-        pre[class*="language-"] {
-            border-radius: 6px;
-            margin: 1rem 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        code[class*="language-"] {
-            font-size: 0.9rem;
-        }
-
-        /* Alert Boxes */
-        .alert-note {
-            background-color: #e7f3ff;
-            border-left: 4px solid var(--info-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-warning-custom {
-            background-color: #fff3cd;
-            border-left: 4px solid var(--warning-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-tip {
-            background-color: #d1e7dd;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .alert-error {
-            background-color: #f8d7da;
-            border-left: 4px solid var(--danger-color);
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        /* Cards */
-        .card {
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Tables */
-        .table {
-            margin: 1rem 0;
-        }
-
-        .table thead {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        /* HTTP Methods */
-        .http-get {
-            background-color: #61affe;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .http-post {
-            background-color: #49cc90;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .http-put {
-            background-color: #fca130;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .http-delete {
-            background-color: #f93e3e;
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--light-bg);
-            padding: 2rem 0;
-            margin-top: 3rem;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            margin-bottom: 0.5rem;
-            color: var(--secondary-color);
-        }
-
-        /* Print Styles */
-        @media print {
-            header {
-                background: white !important;
-                color: black !important;
-                padding: 1rem 0;
-            }
-
-            .navbar, .sidebar, footer {
-                display: none;
-            }
-
-            section {
-                page-break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid var(--border-color);
-            }
-
-            a {
-                color: black;
-                text-decoration: none;
-            }
-
-            a[href]:after {
-                content: " (" attr(href) ")";
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-
-            header h2 {
-                font-size: 1rem;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Barra de progreso de lectura */
-        .reading-progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color) 0%, #0a58ca 100%);
-            width: 0%;
-            z-index: 9999;
-            transition: width 0.1s ease;
-        }
-
-        /* Boton volver arriba */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
-            z-index: 9998;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
-        }
-
-        /* Seccion de criterios de evaluacion */
-        .criterios-evaluacion {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .criterios-evaluacion h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .criterio-badge {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .criterio-descripcion {
-            margin-top: 0.5rem;
-            color: var(--secondary-color);
-            font-size: 0.95rem;
-        }
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <!-- Barra de progreso de lectura -->
-    <div class="reading-progress-bar" id="readingProgressBar"></div>
-
-    <!-- Boton volver arriba -->
-    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-        </svg>
-    </button>
-
-    <!-- Header -->
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programación OO II</h1>
-            <h2>Unidad 3: Desarrollo Backend</h2>
-            <h3>Clase 01: Introducción a FastAPI</h3>
-            <p class="mt-2 mb-0">
-                <span class="badge bg-light text-dark">📅 Semana 9 - Lunes 07/04/2026</span>
-            </p>
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
+            <h3>Clase 8: Introducción a FastAPI</h3>
+            <p class="mt-2"><span class="badge bg-info">E3: Proyecto Web - En 2 semanas</span></p>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../unidad-02/clase-04-ddd-intro.html">Anterior: DDD</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-02-pydantic-validacion.html">Siguiente: Pydantic</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
-            <!-- Sidebar -->
             <aside class="col-lg-3">
                 <nav class="sidebar">
                     <h5>Contenido</h5>
-                    <ul>
-                        <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teóricos</a></li>
-                        <li><a href="#instalacion">Instalación de FastAPI</a></li>
-                        <li><a href="#primera-app">Primera Aplicación</a></li>
-                        <li><a href="#rutas">Rutas y Operaciones</a></li>
-                        <li><a href="#parametros">Parámetros en Rutas</a></li>
-                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
-                        <li><a href="#ejercicio">Ejercicio Guido</a></li>
-                        <li><a href="#referencias">Para Profundizar</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#fastapi" class="text-decoration-none">¿Qué es FastAPI?</a></li>
+                        <li><a href="#instalacion" class="text-decoration-none">Instalación</a></li>
+                        <li><a href="#primer-api" class="text-decoration-none">Primera API</a></li>
+                        <li><a href="#rutas" class="text-decoration-none">Rutas HTTP</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
                     </ul>
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
             <main class="col-lg-9">
-                <!-- Sección 1: Objetivos -->
+                <!-- OBJETIVOS -->
                 <section id="objetivos">
-                    <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted será capaz de:</p>
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
                     <ul>
-                        <li>Comprender qué es FastAPI y sus ventajas</li>
-                        <li>Instalar FastAPI y sus dependencias</li>
-                        <li>Crear una aplicación FastAPI básica</li>
-                        <li>Definir rutas y operaciones HTTP</li>
-                        <li>Usar path parameters y query parameters</li>
-                        <li>Ejecutar el servidor de desarrollo</li>
-                        <li>Probar la API con la documentación automática</li>
+                        <li>Entender qué es FastAPI y sus ventajas</li>
+                        <li>Instalar FastAPI y uvicorn</li>
+                        <li>Crear tu primera API REST</li>
+                        <li>Definir rutas GET, POST, PUT, DELETE</li>
+                        <li>Usar parámetros de ruta y query</li>
+                        <li>Probar la API con Swagger UI</li>
+                    </ul>
+                </section>
+
+                <!-- FASTAPI -->
+                <section id="fastapi">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es FastAPI? (10 min)</h2>
+                    
+                    <p><strong>FastAPI</strong> es un framework moderno y rápido para construir APIs con Python.</p>
+
+                    <h4>Ventajas</h4>
+                    <ul>
+                        <li>✅ <strong>Rápido:</strong> Uno de los frameworks más rápidos de Python</li>
+                        <li>✅ <strong>Fácil:</strong> Menos código, menos bugs</li>
+                        <li>✅ <strong>Validación automática:</strong> Usa Pydantic para validar datos</li>
+                        <li>✅ <strong>Documentación automática:</strong> Swagger UI y ReDoc incluidos</li>
+                        <li>✅ <strong>Type hints:</strong> Usa anotaciones de tipo de Python</li>
                     </ul>
 
-                    <!-- Criterios de Evaluación -->
-                    <div class="criterios-evaluacion">
-                        <h3>Criterios de Evaluación Relacionados</h3>
-                        <div>
-                            <span class="criterio-badge">E3</span>
-                            <span class="criterio-descripcion">Implementa APIs RESTful con FastAPI siguiendo buenas prácticas de diseño</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E5</span>
-                            <span class="criterio-descripcion">Utiliza type hints y documentación apropiada en endpoints</span>
-                        </div>
-                        <div class="mt-2">
-                            <span class="criterio-badge">E6</span>
-                            <span class="criterio-descripcion">Configura correctamente el entorno de desarrollo con virtualenv</span>
-                        </div>
+                    <div class="alert-note">
+                        <strong>Comparación:</strong> FastAPI es más moderno que Flask y más simple que Django para APIs.
                     </div>
                 </section>
 
-                <!-- Sección 2: Conceptos Teóricos -->
-                <section id="teoria">
-                    <h2>Conceptos Teóricos</h2>
-
-                    <h3>¿Qué es FastAPI?</h3>
-                    <p>
-                        <strong>FastAPI</strong> es un framework web moderno y rápido para construir
-                        APIs con Python 3.7+ basado en estándares de Python: type hints, Pydantic y
-                        asyncio.
-                    </p>
-
-                    <div class="alert-tip">
-                        <strong>Nombre apropiado:</strong> Es "Fast" porque su rendimiento es comparable
-                        a NodeJS y Go (gracias a Starlette y Pydantic).
-                    </div>
-
-                    <h3>Características Principales</h3>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rápido</h5>
-                                    <p class="card-text">
-                                        Alto rendimiento comparable a NodeJS y Go gracias a Starlette.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rápido de Codificar</h5>
-                                    <p class="card-text">
-                                        Aumenta la velocidad de desarrollo 2-3x con menos bugs.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Menos Bugs</h5>
-                                    <p class="card-text">
-                                        Reduce aproximadamente 40% de errores (inducidos por el desarrollador).
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Intuitivo</h5>
-                                    <p class="card-text">
-                                        Excelente soporte de editores y autocompletado en todas partes.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Fácil</h5>
-                                    <p class="card-text">
-                                        Diseñado para ser fácil de usar y aprender.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Basado en Estándares</h5>
-                                    <p class="card-text">
-                                        Basado en estándares abiertos: OpenAPI, JSON Schema.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>API REST en pocas palabras</h3>
-
-                    <p>
-                        Una <strong>API REST</strong> es una interfaz que permite a diferentes sistemas
-                        comunicarse usando HTTP con operaciones estándar:
-                    </p>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Método HTTP</th>
-                                <th>Operación</th>
-                                <th>Ejemplo</th>
-                                <th>Código FastAPI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="http-get">GET</span></td>
-                                <td>Leer/Obtener</td>
-                                <td>Obtener todos los proyectos</td>
-                                <td><code>@app.get("/proyectos")</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="http-post">POST</span></td>
-                                <td>Crear</td>
-                                <td>Crear un nuevo proyecto</td>
-                                <td><code>@app.post("/proyectos")</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="http-put">PUT</span></td>
-                                <td>Actualizar</td>
-                                <td>Actualizar un proyecto</td>
-                                <td><code>@app.put("/proyectos/{id}")</code></td>
-                            </tr>
-                            <tr>
-                                <td><span class="http-delete">DELETE</span></td>
-                                <td>Eliminar</td>
-                                <td>Eliminar un proyecto</td>
-                                <td><code>@app.delete("/proyectos/{id}")</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Ecosistema de FastAPI</h3>
-
-                    <ul>
-                        <li><strong>Starlette:</strong> Framework base para el manejo de HTTP</li>
-                        <li><strong>Pydantic:</strong> Validación de datos y serialización</li>
-                        <li><strong>Uvicorn:</strong> Servidor ASGI para ejecutar la API</li>
-                        <li><strong>OpenAPI:</strong> Documentación automática de la API</li>
-                    </ul>
-
-                    <figure class="text-center my-4">
-                        <img src="../assets/infografias/clase-08-angular-fastapi.svg" alt="Arquitectura Angular + FastAPI" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
-                        <figcaption class="figure-caption mt-2">Figura 1: Arquitectura Angular + FastAPI</figcaption>
-                    </figure>
-                </section>
-
-                <!-- Sección 3: Instalación -->
+                <!-- INSTALACIÓN -->
                 <section id="instalacion">
-                    <h2>Instalación de FastAPI</h2>
-
-                    <h3>Paso 1: Crear Entorno Virtual</h3>
-
-                    <pre><code class="language-bash"># Crear entorno virtual
+                    <h2 class="text-primary border-bottom pb-2">Instalación (10 min)</h2>
+                    
+                    <pre><code class="language-bash"># Crear entorno virtual (recomendado)
 python -m venv venv
 
 # Activar en Windows
 venv\Scripts\activate
 
-# Activar en Linux/Mac
+# Activar en macOS/Linux
 source venv/bin/activate
 
-# Verificar que está activo (debe ver (venv) al inicio)
-which python</code></pre>
+# Instalar FastAPI y servidor
+pip install fastapi uvicorn
 
-                    <h3>Paso 2: Instalar FastAPI y Uvicorn</h3>
+# Verificar instalación
+pip list | grep fastapi</code></pre>
 
-                    <pre><code class="language-bash"># Instalar FastAPI
-pip install fastapi
-
-# Instalar uvicorn (servidor)
-pip install uvicorn[standard]
-
-# Instalar todo junto
-pip install fastapi uvicorn[standard]
-
-# O con requirements.txt
-# echo "fastapi\nuvicorn[standard]" > requirements.txt
-# pip install -r requirements.txt</code></pre>
-
-                    <h3>Paso 3: Verificar Instalación</h3>
-
-                    <pre><code class="language-bash"># Verificar versión de FastAPI
-python -c "import fastapi; print(fastapi.__version__)"
-
-# Verificar que uvicorn está instalado
-uvicorn --version</code></pre>
-
-                    <div class="alert-warning-custom">
-                        <strong>Nota:</strong> En el curso, usaremos <code>uvicorn</code> como servidor de
-                        desarrollo. En producción podrías usar <strong>Gunicorn</strong> con Uvicorn workers.
-                    </div>
+                    <h4>Estructura del Proyecto</h4>
+                    <pre><code class="language-text">miprojecto/
+├── main.py          # Archivo principal
+├── requirements.txt # Dependencias
+└── venv/           # Entorno virtual</code></pre>
                 </section>
 
-                <!-- Sección 4: Primera Aplicación -->
-                <section id="primera-app">
-                    <h2>Primera Aplicación FastAPI</h2>
-
-                    <h3>Archivo Mínimo: main.py</h3>
-
+                <!-- PRIMERA API -->
+                <section id="primer-api">
+                    <h2 class="text-primary border-bottom pb-2">Tu Primera API (20 min)</h2>
+                    
+                    <h4>Archivo main.py</h4>
                     <pre><code class="language-python"># main.py
 from fastapi import FastAPI
 
-# Crear instancia de FastAPI
+# Crear instancia de la aplicación
 app = FastAPI(
-    title="TaskFlow API",
-    description="API del sistema de gestión de tareas",
-    version="0.1.0"
+    title="Mi Primera API",
+    description="API de ejemplo con FastAPI",
+    version="1.0.0"
 )
 
-# Ruta raíz
+# Ruta GET básica
 @app.get("/")
 def read_root():
-    """
-    Endpoint raíz de la API.
+    """Ruta raíz de la API."""
+    return {"message": "¡Hola, mundo!"}
 
-    Returns:
-        dict: Mensaje de bienvenida
-    """
-    return {
-        "mensaje": "Bienvenido a TaskFlow API",
-        "version": "0.1.0",
-        "documentacion": "/docs"
-    }</code></pre>
+# Ruta con parámetro
+@app.get("/items/{item_id}")
+def read_item(item_id: int):
+    """Obtener un item por ID."""
+    return {"item_id": item_id, "name": f"Item {item_id}"}
 
-                    <h3>Ejecutar el Servidor</h3>
+# Ruta con query parameter
+@app.get("/users/")
+def read_users(skip: int = 0, limit: int = 10):
+    """Obtener usuarios con paginación."""
+    return {"skip": skip, "limit": limit, "users": []}</code></pre>
 
-                    <pre><code class="language-bash"># Ejecutar la aplicación
+                    <h4>Ejecutar el Servidor</h4>
+                    <pre><code class="language-bash"># Ejecutar con recarga automática (desarrollo)
 uvicorn main:app --reload
 
-# Verás:
-# INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-# INFO:     Started reloader process [xxxxx] using StatReload
-# INFO:     Started server process [xxxxx]
-# INFO:     Waiting for application startup.
-# INFO:     Application startup complete.</code></pre>
+# Ejecutar sin recarga (producción)
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Acceder a:
+# - API: http://localhost:8000
+# - Documentación: http://localhost:8000/docs (Swagger UI)
+# - Documentación alternativa: http://localhost:8000/redoc</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Flags útiles de uvicorn:</strong>
-                        <ul>
-                            <li><code>--reload</code>: Recarga automática al cambiar código (desarrollo)</li>
-                            <li><code>--port 8000</code>: Puerto específico</li>
-                            <li><code>--host 0.0.0.0</code>: Escuchar en todas las interfaces</li>
-                        </ul>
+                        <strong>--reload:</strong> Recarga automática al cambiar el código (solo en desarrollo).
                     </div>
-
-                    <h3>Probar la API</h3>
-
-                    <pre><code class="language-bash"># Usar curl
-curl http://localhost:8000/
-
-# O abrir en navegador:
-# http://localhost:8000
-
-# Documentación automática:
-# http://localhost:8000/docs (Swagger UI)
-# http://localhost:8000/redoc (ReDoc)</code></pre>
-
-                    <h3>Documentación Automática</h3>
-
-                    <p>
-                        FastAPI genera automáticamente documentación interactiva usando OpenAPI:
-                    </p>
-                    <ul>
-                        <li><strong>/docs:</strong> Swagger UI (interactiva, con "Try it out")</li>
-                        <li><strong>/redoc:</strong> ReDoc (más limpia, solo lectura)</li>
-                        <li><strong>/openapi.json:</strong> Especificación OpenAPI</li>
-                    </ul>
                 </section>
 
-                <!-- Sección 5: Rutas y Operaciones -->
+                <!-- RUTAS -->
                 <section id="rutas">
-                    <h2>Rutas y Operaciones</h2>
+                    <h2 class="text-primary border-bottom pb-2">Métodos HTTP (20 min)</h2>
+                    
+                    <table class="table">
+                        <tr><th>Método</th><th>Operación</th><th>Uso típico</th></tr>
+                        <tr><td><code>GET</code></td><td>Leer</td><td>Obtener datos</td></tr>
+                        <tr><td><code>POST</code></td><td>Crear</td><td>Crear nuevo recurso</td></tr>
+                        <tr><td><code>PUT</code></td><td>Actualizar</td><td>Actualizar recurso completo</td></tr>
+                        <tr><td><code>DELETE</code></td><td>Eliminar</td><td>Eliminar recurso</td></tr>
+                    </table>
 
-                    <h3>Sintaxis Básica de Rutas</h3>
-
-                    <pre><code class="language-python">from fastapi import FastAPI
-
-app = FastAPI()
-
-# GET - Obtener todos los proyectos
-@app.get("/proyectos")
-def obtener_proyectos():
-    return [
-        {"id": 1, "nombre": "TaskFlow"},
-        {"id": 2, "nombre": "Curso POO II"}
-    ]
-
-# POST - Crear un nuevo proyecto
-@app.post("/proyectos")
-def crear_proyecto(proyecto: dict):
-    return {
-        "mensaje": "Proyecto creado",
-        "proyecto": proyecto
-    }
-
-# PUT - Actualizar un proyecto
-@app.put("/proyectos/{proyecto_id}")
-def actualizar_proyecto(proyecto_id: int, proyecto: dict):
-    return {
-        "mensaje": f"Proyecto {proyecto_id} actualizado",
-        "proyecto": proyecto
-    }
-
-# DELETE - Eliminar un proyecto
-@app.delete("/proyectos/{proyecto_id}")
-def eliminar_proyecto(proyecto_id: int):
-    return {
-        "mensaje": f"Proyecto {proyecto_id} eliminado"
-    }</code></pre>
-
-                    <h3>Operaciones HTTP Disponibles</h3>
-
-                    <pre><code class="language-python"># Todos estos métodos están disponibles:
-@app.get("/items")
-def read_items():
-    pass
-
-@app.post("/items")
-def create_item():
-    pass
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int):
-    pass
-
-@app.patch("/items/{item_id}")
-def partial_update_item(item_id: int):
-    pass
-
-@app.delete("/items/{item_id}")
-def delete_item(item_id: int):
-    pass
-
-@app.options("/items")
-def handle_options():
-    pass
-
-@app.head("/items")
-def handle_head():
-    pass</code></pre>
-
-                    <h3>Organizar Rutas en Módulos</h3>
-
-                    <pre><code class="language-python"># routers/proyectos.py
-from fastapi import APIRouter
-
-router = APIRouter(
-    prefix="/proyectos",
-    tags=["proyectos"]
-)
-
-@router.get("/")
-def obtener_proyectos():
-    pass
-
-@router.post("/")
-def crear_proyecto():
-    pass
-
-# main.py
-from fastapi import FastAPI
-from routers import proyectos
-
-app = FastAPI()
-app.include_router(proyectos.router)</code></pre>
-                </section>
-
-                <!-- Sección 6: Parámetros en Rutas -->
-                <section id="parametros">
-                    <h2>Parámetros en Rutas</h2>
-
-                    <h3>Path Parameters</h3>
-
-                    <p>
-                        Los <strong>path parameters</strong> son parte de la URL y se definen
-                        entre llaves <code>{}</code>.
-                    </p>
-
-                    <pre><code class="language-python">from fastapi import FastAPI
-
-app = FastAPI()
-
-# Path parameter simple
-@app.get("/proyectos/{proyecto_id}")
-def obtener_proyecto(proyecto_id: int):
-    """
-    Obtiene un proyecto por su ID.
-
-    Args:
-        proyecto_id: ID del proyecto (debe ser entero)
-
-    Returns:
-        dict: Datos del proyecto
-    """
-    return {
-        "id": proyecto_id,
-        "nombre": f"Proyecto {proyecto_id}",
-        "descripcion": "Descripción del proyecto"
-    }
-
-# Múltiples path parameters
-@app.get("/usuarios/{usuario_id}/proyectos/{proyecto_id}")
-def obtener_proyecto_usuario(usuario_id: int, proyecto_id: int):
-    return {
-        "usuario_id": usuario_id,
-        "proyecto_id": proyecto_id,
-        "mensaje": f"Proyecto {proyecto_id} del usuario {usuario_id}"
-    }</code></pre>
-
-                    <div class="alert-warning-custom">
-                        <strong>Tipos de datos:</strong> FastAPI convierte automáticamente los tipos.
-                        Si pasas "abc" donde espera <code>int</code>, devuelve un error 422.
-                    </div>
-
-                    <h3>Query Parameters</h3>
-
-                    <p>
-                        Los <strong>query parameters</strong> son opcionales y van después del <code>?</code>
-                        en la URL.
-                    </p>
-
-                    <pre><code class="language-python">from typing import Optional
-
-@app.get("/proyectos")
-def listar_proyectos(
-    skip: int = 0,
-    limit: int = 10,
-    activo: Optional[bool] = None
-):
-    """
-    Lista proyectos con paginación y filtros.
-
-    Args:
-        skip: Cantidad a saltar (default: 0)
-        limit: Cantidad máxima a retornar (default: 10)
-        activo: Filtrar por estado activo (opcional)
-
-    Returns:
-        list: Lista de proyectos
-    """
-    proyectos = [
-        {"id": i, "nombre": f"Proyecto {i}", "activo": i % 2 == 0}
-        for i in range(1, 21)
-    ]
-
-    # Aplicar filtros
-    if activo is not None:
-        proyectos = [p for p in proyectos if p["activo"] == activo]
-
-    # Aplicar paginación
-    return proyectos[skip : skip + limit]</code></pre>
-
-                    <p>Ejemplos de URLs:</p>
-                    <pre><code class="language-text">/proyectos                    # skip=0, limit=10, activo=None
-/proyectos?skip=5             # skip=5, limit=10, activo=None
-/proyectos?activo=true         # skip=0, limit=10, activo=True
-/proyectos?activo=true&limit=5 # skip=0, limit=5, activo=True</code></pre>
-
-                    <h3>Parámetros Opcionales y Requeridos</h3>
-
-                    <pre><code class="language-python">@app.get("/items/{item_id}")
-def read_item(
-    item_id: int,                    # Requerido (path parameter)
-    nombre: Optional[str] = None,    # Opcional (query parameter)
-    descripcion: Optional[str] = None # Opcional (query parameter)
-):
-    """
-    item_id es requerido.
-    nombre y descripcion son opcionales.
-    """
-    return {
-        "item_id": item_id,
-        "nombre": nombre or "Sin nombre",
-        "descripcion": descripcion or "Sin descripción"
-    }</code></pre>
-
-                    <h3>Request Body</h3>
-
-                    <pre><code class="language-python">from pydantic import BaseModel
-
-class ProyectoCreate(BaseModel):
-    """Modelo para crear un proyecto."""
-    nombre: str
-    descripcion: Optional[str] = None
-
-@app.post("/proyectos")
-def crear_proyecto(proyecto: ProyectoCreate):
-    """
-    Crea un proyecto.
-
-    El cuerpo del request se valida automáticamente con Pydantic.
-    """
-    return {
-        "mensaje": "Proyecto creado exitosamente",
-        "proyecto": {
-            "id": 1,
-            **proyecto.dict()  # Convierte el modelo a dict
-        }
-    }</code></pre>
-
-                    <h3>Combinando Todos los Tipos</h3>
-
-                    <pre><code class="language-python">@app.put("/proyectos/{proyecto_id}")
-def actualizar_proyecto(
-    proyecto_id: int,                          # Path parameter
-    proyecto: ProyectoCreate,                   # Request body
-    usuario_id: Optional[int] = None            # Query parameter
-):
-    """
-    Actualiza un proyecto.
-
-    Combina path parameter, request body y query parameter.
-    """
-    return {
-        "proyecto_id": proyecto_id,
-        "usuario_id": usuario_id,
-        "proyecto_actualizado": proyecto.dict()
-    }</code></pre>
-                </section>
-
-                <!-- Sección 7: Ejemplos Prácticos -->
-                <section id="ejemplos">
-                    <h2>Ejemplos Prácticos</h2>
-
-                    <h3>Ejemplo 1: API de Usuarios</h3>
-
+                    <h4>Ejemplo CRUD Completo</h4>
                     <pre><code class="language-python"># main.py
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 
-app = FastAPI(title="API de Usuarios")
-
-# Modelos Pydantic
-class UsuarioBase(BaseModel):
-    """Campos base de usuario."""
-    username: str
-    email: EmailStr
-    nombre_completo: Optional[str] = None
-
-class UsuarioCreate(UsuarioBase):
-    """Modelo para crear usuario."""
-    password: str
-
-class UsuarioResponse(UsuarioBase):
-    """Modelo para respuesta de usuario."""
-    id: int
-    activo: bool = True
+app = FastAPI()
 
 # Base de datos simulada
-db_usuarios = []
-next_id = 1
+usuarios_db = [
+    {"id": 1, "nombre": "Juan", "email": "juan@email.com"},
+    {"id": 2, "nombre": "Ana", "email": "ana@email.com"}
+]
 
-@app.post("/usuarios", response_model=UsuarioResponse, status_code=201)
-def crear_usuario(usuario: UsuarioCreate):
-    """
-    Crea un nuevo usuario.
+# GET - Obtener todos los usuarios
+@app.get("/usuarios", response_model=List[dict])
+def obtener_usuarios():
+    return usuarios_db
 
-    Returns:
-        UsuarioResponse: Usuario creado (sin password)
-    """
-    global next_id
-
-    # Verificar duplicados
-    for u in db_usuarios:
-        if u["username"] == usuario.username:
-            raise HTTPException(
-                status_code=400,
-                detail="Username ya existe"
-            )
-
-    # Crear usuario
-    nuevo_usuario = {
-        "id": next_id,
-        **usuario.dict(),
-        "activo": True
-    }
-    # Eliminar password (no se guarda en texto plano)
-    del nuevo_usuario["password"]
-
-    db_usuarios.append(nuevo_usuario)
-    next_id += 1
-
-    return nuevo_usuario
-
-@app.get("/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios(
-    skip: int = 0,
-    limit: int = 10,
-    activo: Optional[bool] = None
-):
-    """Lista todos los usuarios con paginación."""
-    usuarios = db_usuarios
-
-    if activo is not None:
-        usuarios = [u for u in usuarios if u["activo"] == activo]
-
-    return usuarios[skip : skip + limit]
-
-@app.get("/usuarios/{usuario_id}", response_model=UsuarioResponse)
+# GET - Obtener usuario por ID
+@app.get("/usuarios/{usuario_id}")
 def obtener_usuario(usuario_id: int):
-    """Obtiene un usuario por su ID."""
-    for usuario in db_usuarios:
+    for usuario in usuarios_db:
         if usuario["id"] == usuario_id:
             return usuario
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    raise HTTPException(
-        status_code=404,
-        detail="Usuario no encontrado"
-    )</code></pre>
+# POST - Crear usuario
+@app.post("/usuarios", status_code=201)
+def crear_usuario(nombre: str, email: str):
+    nuevo_id = max(u["id"] for u in usuarios_db) + 1
+    nuevo_usuario = {"id": nuevo_id, "nombre": nombre, "email": email}
+    usuarios_db.append(nuevo_usuario)
+    return nuevo_usuario
 
-                    <h3>Ejemplo 2: Manejo de Errores</h3>
+# PUT - Actualizar usuario
+@app.put("/usuarios/{usuario_id}")
+def actualizar_usuario(usuario_id: int, nombre: str, email: str):
+    for usuario in usuarios_db:
+        if usuario["id"] == usuario_id:
+            usuario["nombre"] = nombre
+            usuario["email"] = email
+            return usuario
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-                    <pre><code class="language-python">from fastapi import HTTPException, status
+# DELETE - Eliminar usuario
+@app.delete("/usuarios/{usuario_id}")
+def eliminar_usuario(usuario_id: int):
+    for i, usuario in enumerate(usuarios_db):
+        if usuario["id"] == usuario_id:
+            del usuarios_db[i]
+            return {"message": "Usuario eliminado"}
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")</code></pre>
 
-@app.get("/proyectos/{proyecto_id}")
-def obtener_proyecto(proyecto_id: int):
-    """
-    Obtiene un proyecto.
+                    <h4>Probar con curl o HTTPie</h4>
+                    <pre><code class="language-bash"># Obtener todos los usuarios
+curl http://localhost:8000/usuarios
 
-    Raises:
-        HTTPException: Si el proyecto no existe
-    """
-    proyecto = buscar_proyecto(proyecto_id)
+# Obtener usuario específico
+curl http://localhost:8000/usuarios/1
 
-    if not proyecto:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail={
-                "error": "Proyecto no encontrado",
-                "proyecto_id": proyecto_id
-            },
-            headers={"X-Error": "Proyecto no existe"}
-        )
+# Crear usuario
+curl -X POST "http://localhost:8000/usuarios?nombre=Carlos&email=carlos@email.com"
 
-    return proyecto
+# Actualizar usuario
+curl -X PUT "http://localhost:8000/usuarios/1?nombre=Juan%20Pérez&email=juan.perez@email.com"
 
-@app.post("/proyectos")
-def crear_proyecto(proyecto: ProyectoCreate):
-    """
-    Crea un proyecto.
-
-    Raises:
-        HTTPException: Si los datos son inválidos
-    """
-    if len(proyecto.nombre) < 3:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Nombre muy corto (mínimo 3 caracteres)"
-        )
-
-    return guardar_proyecto(proyecto)</code></pre>
-
-                    <h3>Ejemplo 3: Respuestas con Diferentes Códigos</h3>
-
-                    <pre><code class="language-python">from fastapi import status
-
-@app.post("/usuarios", status_code=status.HTTP_201_CREATED)
-def crear_usuario(usuario: UsuarioCreate):
-    """
-    Retorna 201 Created al crear un usuario exitosamente.
-    """
-    return guardar_usuario(usuario)
-
-@app.delete("/proyectos/{proyecto_id}", status_code=status.HTTP_204_NO_CONTENT)
-def eliminar_proyecto(proyecto_id: int):
-    """
-    Retorna 204 No Content al eliminar (no retorna cuerpo).
-    """
-    eliminar_proyecto_bd(proyecto_id)
-    return None  # FastAPI retorna 204 automáticamente</code></pre>
+# Eliminar usuario
+curl -X DELETE http://localhost:8000/usuarios/3</code></pre>
                 </section>
 
-                <!-- Sección 8: Buenas Prácticas -->
-                <section id="buenas-practicas">
-                    <h2>Buenas Prácticas</h2>
-
-                    <h3>Estructura de Proyecto</h3>
-
-                    <pre><code class="language-text">taskflow-api/
-├── app/
-│   ├── __init__.py
-│   ├── main.py              # Aplicación FastAPI
-│   ├── api/
-│   │   ├── __init__.py
-│   │   └── v1/
-│   │       ├── __init__.py
-│   │       ├── endpoints/
-│   │       │   ├── __init__.py
-│   │       │   ├── usuarios.py
-│   │       │   ├── proyectos.py
-│   │       │   └── tareas.py
-│   │       └── api.py      # Router principal
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── usuario.py
-│   │   └── proyecto.py
-│   ├── schemas/
-│   │   ├── __init__.py
-│   │   ├── usuario.py      # Schemas Pydantic
-│   │   └── proyecto.py
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── config.py
-│   │   └── security.py
-│   └── db/
-│       ├── __init__.py
-│       └── database.py
-├── tests/
-├── requirements.txt
-├── alembic.ini
-└── README.md</code></pre>
-
-                    <h3>Convenciones de Nombres</h3>
-
-                    <div class="alert-tip">
-                        <strong>Para endpoints:</strong>
-                        <ul>
-                            <li>Usar nombres en plural: <code>/usuarios</code>, no <code>/usuario</code></li>
-                            <li>Usar minúsculas y guiones: <code>/usuarios-activos</code></li>
-                            <li>Sustantivos, no verbos: <code>/proyectos</code>, no <code>/obtener-proyectos</code></li>
-                            <li>El método HTTP indica la acción: GET = leer, POST = crear</li>
-                        </ul>
-                    </div>
-
-                    <h3>DO's con FastAPI</h3>
-
-                    <ul>
-                        <li><strong>Usa type hints:</strong> Ayuda con autocompletado y validación</li>
-                        <li><strong>Usa Pydantic:</strong> Para validación de request/response</li>
-                        <li><strong>Documenta con docstrings:</strong> Aparece en /docs</li>
-                        <li><strong>Usa response_model:</strong> Para documentar respuestas</li>
-                        <li><strong>Maneja errores con HTTPException:</strong> Respuestas consistentes</li>
-                        <li><strong>Usa status codes correctos:</strong> 201, 404, 422, etc.</li>
-                    </ul>
-
-                    <h3>DON'T's con FastAPI</h3>
-
-                    <ul>
-                        <li><strong>No omitas type hints:</strong> Pierdes validación automática</li>
-                        <li><strong No mezcles lógica de negocio en endpoints:</strong> Usa servicios</li>
-                        <li><strong>No uses colores en rutas:</strong> <code>/api/v1/usuarios</code>, no <code>/api/v1/Usuarios</code></li>
-                        <li><strong No retornes strings en POST:</strong> Usa JSON consistente</li>
-                    </ul>
-                </section>
-
-                <!-- Sección 9: Ejercicio Guido -->
+                <!-- EJERCICIO -->
                 <section id="ejercicio">
-                    <h2>Ejercicio Guido: Endpoint /api/hola-mundo</h2>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API de Tareas (10 min)</h2>
+                    
+                    <p>Crea una API para gestionar tareas del proyecto TaskFlow.</p>
 
-                    <h3>Objetivo</h3>
-                    <p>
-                        Crear un endpoint básico en FastAPI que retorne un mensaje de bienvenida.
-                    </p>
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>GET /tareas - Listar todas las tareas</li>
+                        <li>GET /tareas/{id} - Obtener tarea específica</li>
+                        <li>POST /tareas - Crear nueva tarea (título, descripción)</li>
+                        <li>PUT /tareas/{id} - Actualizar tarea</li>
+                        <li>DELETE /tareas/{id} - Eliminar tarea</li>
+                    </ul>
 
-                    <h3>Instrucciones Paso a Paso</h3>
+                    <pre><code class="language-python"># tareas_api.py
+from fastapi import FastAPI, HTTPException
+from typing import List
 
-                    <h4>Paso 1: Crear Estructura (2 min)</h4>
-                    <pre><code class="language-bash"># Crear directorio del proyecto
-mkdir taskflow-api
-cd taskflow-api
+app = FastAPI(title="TaskFlow API")
 
-# Crear entorno virtual
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# o: venv\Scripts\activate  # Windows
+# Base de datos en memoria
+tareas = []
+contador_id = 1
 
-# Instalar dependencias
-pip install fastapi uvicorn[standard]</code></pre>
+@app.get("/tareas")
+def listar_tareas():
+    return tareas
 
-                    <h4>Paso 2: Crear main.py (5 min)</h4>
+@app.get("/tareas/{tarea_id}")
+def obtener_tarea(tarea_id: int):
+    for tarea in tareas:
+        if tarea["id"] == tarea_id:
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
 
-                    <pre><code class="language-python"># main.py
-from fastapi import FastAPI
-
-# Crear aplicación
-app = FastAPI(
-    title="TaskFlow API",
-    description="API del sistema de gestión de tareas TaskFlow",
-    version="0.1.0"
-)
-
-# Endpoint raíz
-@app.get("/")
-def read_root():
-    """Retorna mensaje de bienvenida."""
-    return {
-        "mensaje": "Bienvenido a TaskFlow API",
-        "version": "0.1.0",
-        "documentacion": "/docs",
-        "docs_alternativa": "/redoc"
+@app.post("/tareas", status_code=201)
+def crear_tarea(titulo: str, descripcion: str = ""):
+    global contador_id
+    tarea = {
+        "id": contador_id,
+        "titulo": titulo,
+        "descripcion": descripcion,
+        "completada": False
     }
+    tareas.append(tarea)
+    contador_id += 1
+    return tarea
 
-# Endpoint /api/hola-mundo
-@app.get("/api/hola-mundo")
-def hola_mundo():
-    """
-    Endpoint simple que retorna un saludo.
+@app.put("/tareas/{tarea_id}")
+def actualizar_tarea(tarea_id: int, titulo: str, descripcion: str, completada: bool):
+    for tarea in tareas:
+        if tarea["id"] == tarea_id:
+            tarea["titulo"] = titulo
+            tarea["descripcion"] = descripcion
+            tarea["completada"] = completada
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
 
-    Returns:
-        dict: Saludo con información de la API
-    """
-    return {
-        "mensaje": "¡Hola, Mundo!",
-        "api": "TaskFlow API",
-        "status": "funcionando"
-    }</code></pre>
-
-                    <h4>Paso 3: Ejecutar Servidor (2 min)</h4>
-
-                    <pre><code class="language-bash"># Ejecutar con recarga automática
-uvicorn main:app --reload
-
-# Verás:
-# INFO:     Uvicorn running on http://127.0.0.1:8000</code></pre>
-
-                    <h4>Paso 4: Probar Endpoint (3 min)</h4>
-
-                    <pre><code class="language-bash"># Usar curl
-curl http://localhost:8000/api/hola-mundo
-
-# Usar Python
-import requests
-response = requests.get("http://localhost:8000/api/hola-mundo")
-print(response.json())
-
-# O abrir en navegador:
-# http://localhost:8000/api/hola-mundo</code></pre>
-
-                    <h4>Paso 5: Explorar Documentación (3 min)</h4>
-
-                    <p>Abrir en el navegador:</p>
-                    <ul>
-                        <li><strong>http://localhost:8000/docs</strong> - Swagger UI</li>
-                        <li><strong>http://localhost:8000/redoc</strong> - ReDoc</li>
-                    </ul>
-
-                    <p>Probar el endpoint desde la documentación:</p>
-                    <ol>
-                        <li>Hacer clic en <code>GET /api/hola-mundo</code></li>
-                        <li>Hacer clic en "Try it out"</li>
-                        <li>Hacer clic en "Execute"</li>
-                        <li>Ver la respuesta</li>
-                    </ol>
-
-                    <h4>Paso 6: Agregar Parámetros (5 min)</h4>
-
-                    <pre><code class="language-python"># Agregar a main.py
-from typing import Optional
-
-@app.get("/api/saludar")
-def saludar(
-    nombre: str = "Mundo",
-    idioma: Optional[str] = None
-):
-    """
-    Saluda personalizado con parámetros.
-
-    Args:
-        nombre: Nombre a saludar (default: "Mundo")
-        idioma: Idioma del saludo ("es", "en")
-
-    Returns:
-        dict: Saludo personalizado
-    """
-    if idioma == "en":
-        mensaje = f"Hello, {nombre}!"
-    elif idioma == "es":
-        mensaje = f"¡Hola, {nombre}!"
-    else:
-        mensaje = f"¡Hola, {nombre}!"
-
-    return {
-        "mensaje": mensaje,
-        "nombre": nombre,
-        "idioma": idioma or "es"
-    }</code></pre>
-
-                    <p>Probar diferentes URLs:</p>
-                    <pre><code class="language-bash">/api/saludar
-/api/saludar?nombre=Juan
-/api/saludar?nombre=María&idioma=en
-/api/saludar?nombre=Pedro&idioma=es</code></pre>
-
-                    <h3>Conexión con TaskFlow</h3>
-                    <p>
-                        Este endpoint es el punto de partida de la API REST de TaskFlow.
-                        En las próximas clases agregaremos:
-                    </p>
-                    <ul>
-                        <li>Endpoints de usuarios (CRUD completo)</li>
-                        <li>Endpoints de proyectos</li>
-                        <li>Endpoints de tareas</li>
-                        <li>Autenticación con JWT</li>
-                        <li>Conexión con PostgreSQL</li>
-                    </ul>
-
-                    <h3>Resultado Esperado</h3>
-                    <p>Al finalizar este ejercicio, tendrás:</p>
-                    <ul>
-                        <li>✅ FastAPI instalado y configurado</li>
-                        <li>✅ Primera aplicación ejecutándose</li>
-                        <li>✅ Endpoint /api/hola-mundo funcionando</li>
-                        <li>✅ Documentación automática explorada</li>
-                        <li>✅ Base para agregar más endpoints</li>
-                    </ul>
+@app.delete("/tareas/{tarea_id}")
+def eliminar_tarea(tarea_id: int):
+    for i, tarea in enumerate(tareas):
+        if tarea["id"] == tarea_id:
+            del tareas[i]
+            return {"message": "Tarea eliminada"}
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")</code></pre>
 
                     <div class="alert-note">
-                        <strong>Próximos pasos:</strong> En la siguiente clase aprenderemos a usar
-                        Pydantic para validación de datos y crear schemas request/response.
+                        <strong>Conexión con TaskFlow:</strong> Esta es la base de la API del proyecto. En las siguientes clases agregaremos: validación con Pydantic, dependencias, y persistencia en base de datos.
                     </div>
                 </section>
 
-                <!-- Sección 10: Referencias -->
-                <section id="videos">
-                    <h2>📺 Videos Recomendados</h2>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-success me-2">Español</span>
-                                FastAPI desde CERO - Tutorial Mejor Explicado
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">FastAPI en Español | Fundamentos completos</h6>
-                            <p class="card-text">
-                                El tutorial mejor explicado para aprender FastAPI desde cero. Aprende los fundamentos de FastAPI, cómo instalarlo e iniciar con este framework de Python.
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=TatMVGGMxY0" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-secondary me-2">Inglés</span>
-                                FastAPI Python Tutorial
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Amigoscode | 58:15 min</h6>
-                            <p class="card-text">
-                                Introducción práctica a FastAPI
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=7K2pP4tqF0E" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
-                        </div>
-                    </div>
-
-                </section>
-
-                <section id="diagramas">
-                    <h2>📊 Diagramas Ilustrativos</h2>
-                    <div class="text-center my-4">
-                        <img src="../assets/diagramas/fastapi-request-flow.svg"
-                             alt="fastapi-request-flow.svg"
-                             class="img-fluid rounded shadow"
-                             style="max-width: 100%; height: auto;">
-                    </div>
-                </section>
-
-                <section id="referencias">
-                    <h2>Para Profundizar</h2>
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
                     <ul>
-                        <li>
-                            <a href="https://fastapi.tiangolo.com/" target="_blank">
-                                Documentación Oficial de FastAPI
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://fastapi.tiangolo.com/tutorial/" target="_blank">
-                                Tutorial de FastAPI (User Guide)
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.youtube.com/watch?v=7t2alSnE48I" target="_blank">
-                                Video: FastAPI en 10 minutos
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/tiangolo/fastapi" target="_blank">
-                                FastAPI en GitHub
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://testdriven.io/blog/fastapi-vs-flask/" target="_blank">
-                                Comparativa: FastAPI vs Flask
-                            </a>
-                        </li>
+                        <li><strong>FastAPI:</strong> Framework rápido y moderno para APIs</li>
+                        <li><strong>Instalación:</strong> <code>pip install fastapi uvicorn</code></li>
+                        <li><strong>Ejecutar:</strong> <code>uvicorn main:app --reload</code></li>
+                        <li><strong>GET:</strong> Leer datos</li>
+                        <li><strong>POST:</strong> Crear datos</li>
+                        <li><strong>PUT:</strong> Actualizar datos</li>
+                        <li><strong>DELETE:</strong> Eliminar datos</li>
+                        <li><strong>Documentación:</strong> /docs (Swagger UI)</li>
                     </ul>
-
-                    <h3>Comandos Útiles</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Comando</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>uvicorn main:app</code></td>
-                                <td>Ejecutar servidor (sin recarga)</td>
-                            </tr>
-                            <tr>
-                                <td><code>uvicorn main:app --reload</code></td>
-                                <td>Ejecutar con recarga automática</td>
-                            </tr>
-                            <tr>
-                                <td><code>uvicorn main:app --port 8080</code></td>
-                                <td>Ejecutar en puerto específico</td>
-                            </tr>
-                            <tr>
-                                <td><code>uvicorn main:app --host 0.0.0.0</code></td>
-                                <td>Escuchar en todas las interfaces</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:>/strong> Crea una API de "Productos" con los mismos endpoints (GET, POST, PUT, DELETE) y pruébala en Swagger UI.
+                    </div>
                 </section>
             </main>
         </div>
     </div>
 
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <span class="btn btn-warning disabled" style="cursor: not-allowed;">
-            <i class="bi bi-clock me-2"></i>⚠️ Notebook pendiente de creacion
-        </span>
-    </div>
-
-    <!-- Footer -->
-    <footer>
+    <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-14</p>
-            <p class="mt-2">
-                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
-                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
-            </p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../unidad-02/clase-01-tdd-intro.html">← Anterior</a> | <a href="clase-02-pydantic-validacion.html">Siguiente: Pydantic →</a></p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-
-    <!-- Prism.js Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
-    <!-- Prism.js Language Support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-
-    <!-- Highlight code on page load -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Prism.highlightAll();
-        });
-    </script>
-
-    <!-- Barra de progreso y boton volver arriba -->
-    <script>
-        // Barra de progreso de lectura
-        function updateReadingProgress() {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            document.getElementById('readingProgressBar').style.width = progress + '%';
-        }
-
-        // Boton volver arriba
-        function toggleBackToTop() {
-            const backToTopBtn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        }
-
-        // Scroll suave al top
-        document.getElementById('backToTop').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Event listeners
-        window.addEventListener('scroll', function() {
-            updateReadingProgress();
-            toggleBackToTop();
-        });
-
-        // Inicializar
-        updateReadingProgress();
-    </script>
 </body>
 </html>
