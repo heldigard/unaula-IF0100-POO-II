@@ -274,9 +274,14 @@
 <body>
     <header>
         <div class="container">
-            <h1>IF0100 - Lenguaje de Programacion OO II</h1>
+            <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 1: POO Avanzada</h2>
             <h3>Clase 4: Clases Abstractas e Interfaces</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 6 - Lunes 10/03/2026</span>
+                <span class="badge bg-warning text-dark ms-1">📢 E2 Taller: 15% (12/03)</span>
+                <span class="badge bg-info ms-1">📋 Clases Abstractas: 15 pts E2</span>
+            </p>
         </div>
     </header>
 
@@ -310,11 +315,11 @@
                     <h5>Contenido</h5>
                     <ul>
                         <li><a href="#objetivos">Objetivos de Aprendizaje</a></li>
-                        <li><a href="#teoria">Conceptos Teoricos</a></li>
-                        <li><a href="#ejemplos">Ejemplos Practicos</a></li>
-                        <li><a href="#buenas-practicas">Buenas Practicas</a></li>
+                        <li><a href="#teoria">Conceptos Teóricos</a></li>
+                        <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
+                        <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
                         <li><a href="#ejercicio">Ejercicio Guiado</a></li>
-                        <li><a href="#taskflow">Conexion con TaskFlow</a></li>
+                        <li><a href="#taskflow">Conexión con TaskFlow</a></li>
                         <li><a href="#referencias">Para Profundizar</a></li>
                     </ul>
                 </nav>
@@ -323,31 +328,34 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2>Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, usted sera capaz de:</p>
+                    <div class="alert-note">
+                        <strong>📋 Relación con Rúbricas E1 y E2:</strong> Esta clase cubre <strong>Clases Abstractas (15 pts E2)</strong>. Se evalúa el uso correcto de <code>ABC</code>, <code>@abstractmethod</code> y <code>Protocol</code>.
+                    </div>
+                    <p>Al finalizar esta clase, usted será capaz de:</p>
                     <ul>
-                        <li>Comprender que son las clases abstractas y su proposito en el diseno de software</li>
-                        <li>Implementar clases abstractas utilizando el modulo ABC (Abstract Base Classes)</li>
-                        <li>Definir metodos abstractos con el decorador <code>@abstractmethod</code></li>
+                        <li>Comprender qué son las clases abstractas y su propósito en el diseño de software</li>
+                        <li>Implementar clases abstractas utilizando el módulo <code>ABC</code> (Abstract Base Classes) con <strong>type hints</strong></li>
+                        <li>Definir métodos abstractos con el decorador <code>@abstractmethod</code></li>
                         <li>Crear propiedades abstractas con <code>@property</code> y <code>@abstractmethod</code></li>
-                        <li>Entender y aplicar Protocols para tipado estructural en Python 3.8+</li>
+                        <li>Entender y aplicar <code>Protocol</code> para tipado estructural en Python 3.8+</li>
                         <li>Diferenciar entre Abstract Base Classes e Interfaces</li>
                         <li>Aplicar clases abstractas en el proyecto TaskFlow (entidades base abstractas)</li>
-                        <li>Disenar jerarquias de clases con contratos bien definidos</li>
+                        <li>Diseñar jerarquías de clases con contratos bien definidos</li>
                     </ul>
                 </section>
 
                 <section id="teoria">
-                    <h2>Conceptos Teoricos</h2>
+                    <h2>Conceptos Teóricos</h2>
 
-                    <h3>¿Que es una Clase Abstracta?</h3>
-                    <p>Una <strong>clase abstracta</strong> es una clase que no puede ser instanciada directamente y esta disenada para ser heredada por otras clases. Sirve como <strong>plantilla</strong> o <strong>contrato</strong> que define que metodos y propiedades deben implementar las subclases, pero no proporciona la implementacion completa.</p>
+                    <h3>¿Qué es una Clase Abstracta?</h3>
+                    <p>Una <strong>clase abstracta</strong> es una clase que no puede ser instanciada directamente y está diseñada para ser heredada por otras clases. Sirve como <strong>plantilla</strong> o <strong>contrato</strong> que define qué métodos y propiedades deben implementar las subclases, pero no proporciona la implementación completa.</p>
 
                     <div class="alert-note">
-                        <strong>Analogia:</strong> Piensa en una clase abstracta como el plano de una casa. El plano define que la casa debe tener puertas, ventanas y un techo, pero no construye una casa habitable por si mismo. Los constructores (subclases) usan el plano para construir casas reales.
+                        <strong>Analogía:</strong> Piensa en una clase abstracta como el plano de una casa. El plano define que la casa debe tener puertas, ventanas y un techo, pero no construye una casa habitable por sí mismo. Los constructores (subclases) usan el plano para construir casas reales.
                     </div>
 
                     <h3>ABC (Abstract Base Classes)</h3>
-                    <p>Python proporciona el modulo <code>abc</code> para crear clases abstractas. Una clase se convierte en abstracta cuando hereda de <code>ABC</code>.</p>
+                    <p>Python proporciona el módulo <code>abc</code> para crear clases abstractas. Una clase se convierte en abstracta cuando hereda de <code>ABC</code>.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 
 # Clase abstracta base
@@ -375,11 +383,11 @@ class Figura(ABC):
         pass</code></pre>
 
                     <div class="alert-warning-custom">
-                        <strong>Importante:</strong> Si una clase tiene al menos un metodo abstracto, no se puede instanciar directamente. Las subclases DEBEN implementar todos los metodos abstractos.
+                        <strong>Importante:</strong> Si una clase tiene al menos un método abstracto, no se puede instanciar directamente. Las subclases DEBEN implementar todos los métodos abstractos.
                     </div>
 
                     <h3>El Decorador @abstractmethod</h3>
-                    <p>El decorador <code>@abstractmethod</code> marca un metodo como abstracto, lo que significa que debe ser implementado por cualquier subclase concreta.</p>
+                    <p>El decorador <code>@abstractmethod</code> marca un método como abstracto, lo que significa que debe ser implementado por cualquier subclase concreta.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 
 class Vehiculo(ABC):
@@ -456,7 +464,7 @@ persona = Persona("Juan", 25)
 print(f"{persona.nombre} tiene {persona.edad} anos")  # Juan tiene 25 anos</code></pre>
 
                     <h3>Protocols en Python 3.8+</h3>
-                    <p>Los <strong>Protocols</strong> son una forma de lograr tipado estructural en Python. Definen una interfaz sin usar herencia. Un tipo es compatible con un Protocol si tiene todos los metodos requeridos, sin importar su jerarquia de clases.</p>
+                    <p>Los <strong>Protocols</strong> son una forma de lograr tipado estructural en Python. Definen una interfaz sin usar herencia. Un tipo es compatible con un Protocol si tiene todos los métodos requeridos, sin importar su jerarquía de clases.</p>
                     <pre><code class="language-python">from typing import Protocol, runtime_checkable
 
 # Definicion de un Protocol
@@ -562,11 +570,11 @@ print(isinstance(Coche(), Verificable))    # False (no tiene guardar)</code></pr
                     </table>
 
                     <div class="alert-tip">
-                        <strong>Regla practica:</strong> Usa <strong>ABC</strong> cuando necesitas compartir implementacion entre clases relacionadas. Usa <strong>Protocol</strong> cuando solo necesitas definir un contrato de tipos sin importar la jerarquia de clases.
+                        <strong>Regla práctica:</strong> Usa <strong>ABC</strong> cuando necesitas compartir implementación entre clases relacionadas. Usa <strong>Protocol</strong> cuando solo necesitas definir un contrato de tipos sin importar la jerarquía de clases.
                     </div>
 
-                    <h3>Mixins y Herencia Multiple</h3>
-                    <p>Los <strong>mixins</strong> son clases diseadas para ser heredadas junto con otras, proporcionando funcionalidad adicional especifica.</p>
+                    <h3>Mixins y Herencia Múltiple</h3>
+                    <p>Los <strong>mixins</strong> son clases diseñadas para ser heredadas junto con otras, proporcionando funcionalidad adicional específica.</p>
                     <pre><code class="language-python">from abc import ABC, abstractmethod
 from datetime import datetime
 
@@ -618,7 +626,7 @@ print(f"¿Valido? {usuario.validar()}")  # ¿Valido? True</code></pre>
                 </section>
 
                 <section id="ejemplos">
-                    <h2>Ejemplos Practicos</h2>
+                    <h2>Ejemplos Prácticos</h2>
 
                     <h3>Ejemplo 1: ABC Basico - Figura Geometrica</h3>
                     <pre><code class="language-python">"""
@@ -990,7 +998,7 @@ print(f"Creado: {usuario.creado_en}")</code></pre>
                 </section>
 
                 <section id="buenas-practicas">
-                    <h2>Buenas Practicas</h2>
+                    <h2>Buenas Prácticas</h2>
 
                     <h3>ABC Cuando Necesitas Shared Implementation</h3>
                     <pre><code class="language-python"># Bien: ABC cuando hay codigo compartido
@@ -1433,7 +1441,7 @@ Tarea Recurrente: Hacer respaldo
                 </section>
 
                 <section id="taskflow">
-                    <h2>Conexion con TaskFlow</h2>
+                    <h2>Conexión con TaskFlow</h2>
 
                     <h3>BaseModel Abstracto para TaskFlow</h3>
                     <p>En TaskFlow, utilizaremos clases abstractas para definir la estructura base de nuestros modelos de dominio:</p>
@@ -1603,7 +1611,7 @@ class Repositorio(Protocol):
         ...</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Aplicacion en TaskFlow:</strong> BaseModel y los Protocols nos permiten:
+                        <strong>Aplicación en TaskFlow:</strong> BaseModel y los Protocols nos permiten:
                         <ul>
                             <li>Definir contratos claros para todos los modelos</li>
                             <li>Validar tipos en tiempo de compilacion con mypy</li>
@@ -1664,19 +1672,29 @@ class Repositorio(Protocol):
         </div>
     </div>
 
+    <!-- Botón Volver Arriba -->
+    <button id="btnVolverArriba" class="btn btn-primary btn-lg"
+            style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; padding: 0;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
+
     <!-- Boton de Notebook -->
     <div class="alert-tip mt-4">
         <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-01/01-05-interfaces.ipynb"
            target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
+            <i class="bi bi-github me-2"></i>📥 Ver Notebook de Interfaces
         </a>
     </div>
 
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Ultima actualizacion: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1688,6 +1706,17 @@ class Repositorio(Protocol):
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const btnVolverArriba = document.getElementById('btnVolverArriba');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    btnVolverArriba.style.display = 'block';
+                } else {
+                    btnVolverArriba.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

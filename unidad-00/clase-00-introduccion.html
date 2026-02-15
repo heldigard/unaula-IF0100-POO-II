@@ -265,6 +265,17 @@
             }
         }
 
+        /* Botón Volver Arriba */
+        #backToTop {
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        #backToTop:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             header h1 {
@@ -280,6 +291,13 @@
                 max-height: none;
                 margin-bottom: 1rem;
             }
+
+            #backToTop {
+                bottom: 20px;
+                right: 20px;
+                padding: 0.5rem 0.75rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -290,6 +308,9 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 0: Fundamentos de Python</h2>
             <h3>Clase 0: Introducción a Python</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 1 - Lunes 03/02/2026</span>
+            </p>
         </div>
     </header>
 
@@ -830,25 +851,60 @@ python3 imc.py</code></pre>
                 <section id="videos">
                     <h2>📺 Videos Recomendados</h2>
 
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <span class="badge bg-success me-2">Español</span>
-                                Curso Python desde Cero
-                            </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Píldoras Informáticas | 3:42:15 min</h6>
-                            <p class="card-text">
-                                Excelente introducción en español, cubre instalación y conceptos básicos
-                            </p>
-                            <a href="https://www.youtube.com/watch?v=RkXfQR5aqEE" target="_blank" class="btn btn-primary btn-sm">
-                                <i class="bi bi-youtube me-2"></i>Ver Video
-                            </a>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <span class="badge bg-success me-2">Español</span>
+                                        Curso COMPLETO de Python DESDE CERO
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">midudev | 8+ horas</h6>
+                                    <p class="card-text">
+                                        Curso completo y práctico para aprender Python desde cero. Cubre fundamentos, requests, IA, regex y web scraping.
+                                    </p>
+                                    <a href="https://www.youtube.com/watch?v=TkN2i-_4N4g" target="_blank" class="btn btn-primary btn-sm">
+                                        ▶️ Ver Video
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <span class="badge bg-success me-2">Español</span>
+                                        Python en 2 Horas - Curso Intensivo
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">MoureDev | 2 horas</h6>
+                                    <p class="card-text">
+                                        Curso rápido y directo al grano. Perfecto para repasar conceptos básicos antes de la clase.
+                                    </p>
+                                    <a href="https://www.youtube.com/watch?v=Kp4Mv94o2b8" target="_blank" class="btn btn-primary btn-sm">
+                                        ▶️ Ver Video
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-tip mt-3">
+                        <strong>💡 Tip de Estudio:</strong> Mira el video de MoureDev (2h) antes de la clase como preparación, y el de midudev (8h) después para profundizar.
                     </div>
 
                 </section>
 
-                <section id="referencias">
+                <!-- Boton de Notebook -->
+                <div class="alert-note mt-4">
+                    <h5>📚 Material de Práctica</h5>
+                    <p>Descarga el notebook de esta clase para practicar en tu propio entorno:</p>
+                    <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-00/00-01-introduccion-python.ipynb"
+                       target="_blank" class="btn btn-primary">
+                        📥 Descargar Notebook en GitHub
+                    </a>
+                </div>
+
+                <section id="referencias" class="mt-4">
                     <h2>Para Profundizar</h2>
                     <ul>
                         <li><a href="https://docs.python.org/es/3/tutorial/" target="_blank">Tutorial Oficial de Python (español)</a></li>
@@ -863,20 +919,22 @@ python3 imc.py</code></pre>
         </div>
     </div>
 
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-00/00-01-introduccion-python.ipynb"
-           target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
-        </a>
-    </div>
+    <!-- Botón Volver Arriba -->
+    <a href="#" id="backToTop" class="btn btn-primary btn-lg rounded-circle shadow"
+       style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000;"
+       title="Volver arriba">
+        ↑
+    </a>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -896,6 +954,22 @@ python3 imc.py</code></pre>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const backToTopBtn = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.display = 'block';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     </script>
 </body>

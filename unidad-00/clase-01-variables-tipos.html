@@ -254,6 +254,22 @@
             }
         }
 
+        /* Botón Volver Arriba */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        #backToTop:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 1.5rem;
@@ -268,6 +284,95 @@
                 max-height: none;
                 margin-bottom: 1rem;
             }
+
+            #backToTop {
+                bottom: 20px;
+                right: 20px;
+                padding: 0.5rem 0.75rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb-nav {
+            background-color: var(--light-bg);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-nav .breadcrumb {
+            margin-bottom: 0;
+            background: none;
+            padding: 0;
+        }
+
+        .breadcrumb-nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Improved Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .nav-buttons .btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            border-radius: 6px;
+        }
+
+        .nav-buttons .btn-outline-light {
+            border-width: 2px;
+        }
+
+        .nav-buttons .btn-outline-light:hover {
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .nav-buttons .btn-home {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .nav-buttons .btn-prev {
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .nav-buttons .btn-prev:hover {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .nav-buttons .btn-next {
+            border-color: var(--info-color);
+            color: var(--info-color);
+        }
+
+        .nav-buttons .btn-next:hover {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .nav-buttons .nav-unit {
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
         }
     </style>
 </head>
@@ -277,31 +382,31 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 0: Fundamentos de Python</h2>
             <h3>Clase 1: Variables y Tipos de Datos</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 1 - Miércoles 05/02/2026</span>
+            </p>
         </div>
     </header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-00-introduccion.html">Anterior: Introducción</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="clase-02-estructuras-control.html">Siguiente: Estructuras de Control</a>
-                    </li>
-                </ul>
-            </div>
+    <!-- Breadcrumb Navigation -->
+    <div class="container mt-3">
+        <nav class="breadcrumb-nav" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html"><i class="bi bi-house-door"></i> Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#clases">Clases</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#accordionClases">Unidad 0: Python</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Clase 01: Variables y Tipos</li>
+            </ol>
+        </nav>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons mb-3">
+            <a href="../index.html" class="btn btn-home text-white"><i class="bi bi-house"></i> Inicio</a>
+            <a href="clase-00-introduccion.html" class="btn btn-prev"><i class="bi bi-arrow-left"></i> Anterior</a>
+            <a href="clase-02-estructuras-control.html" class="btn btn-next">Siguiente <i class="bi bi-arrow-right"></i></a>
+            <span class="nav-unit"><i class="bi bi-collection"></i> Unidad 0</span>
         </div>
-    </nav>
+    </div>
 
     <div class="container">
         <div class="row">
@@ -948,27 +1053,33 @@ else:
                         <li><a href="https://docs.python.org/es/3/library/exceptions.html" target="_blank">Excepciones Incorporadas - Python Docs</a></li>
                     </ul>
                 </section>
+
+                <!-- Material de Práctica -->
+                <div class="alert-note mt-4">
+                    <h5>📚 Material de Práctica</h5>
+                    <p>Practica estos conceptos en el notebook de la siguiente clase:</p>
+                    <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-00/00-02-estructuras-control.ipynb"
+                       target="_blank" class="btn btn-primary">
+                        📥 Ver Notebook en GitHub
+                    </a>
+                </div>
             </main>
         </div>
-    </div>
-
-    <!-- Boton de Notebook -->
-    <div class="alert-tip mt-4">
-        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-00/00-01-introduccion-python.ipynb"
-           target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
-        </a>
     </div>
 
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
-    </footer>
+    <!-- Botón Volver Arriba -->
+    <a href="#" id="backToTop" class="btn btn-primary btn-lg rounded-circle shadow" title="Volver arriba">↑</a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <footer>
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
@@ -976,6 +1087,22 @@ else:
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const backToTopBtn = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.style.display = 'block';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
     </script>
 </body>

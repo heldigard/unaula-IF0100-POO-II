@@ -270,7 +270,7 @@
                 padding: 1rem 0;
             }
 
-            .navbar, .sidebar, footer {
+            .navbar, .sidebar, footer, .back-to-top, .progress-indicator {
                 display: none;
             }
 
@@ -290,6 +290,74 @@
             }
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Evaluation Criteria Box */
+        .eval-criteria {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .eval-criteria h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             header h1 {
@@ -305,6 +373,13 @@
                 max-height: none;
                 margin-bottom: 1rem;
             }
+
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
         }
     </style>
 </head>
@@ -315,6 +390,9 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 2: Técnicas de Desarrollo</h2>
             <h3>Clase 03: Introducción a BDD</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 8 - Lunes 24/03/2026</span>
+            </p>
         </div>
     </header>
 
@@ -332,15 +410,18 @@
                         <a class="nav-link" href="../index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                        <a class="nav-link" href="clase-02-pytest-avanzado.html">Anterior: pytest</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                        <a class="nav-link" href="clase-04-ddd-intro.html">Siguiente: DDD</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressBar"></div>
 
     <!-- Main Content -->
     <div class="container">
@@ -357,6 +438,7 @@
                         <li><a href="#ejemplos">Ejemplos Prácticos</a></li>
                         <li><a href="#buenas-practicas">Buenas Prácticas</a></li>
                         <li><a href="#ejercicio">Ejercicio Guido</a></li>
+                        <li><a href="#evaluacion">Criterios de Evaluación E2</a></li>
                         <li><a href="#referencias">Para Profundizar</a></li>
                     </ul>
                 </nav>
@@ -598,7 +680,7 @@
                         <strong>DON'T's:</strong>
                         <ul>
                             <li>No incluir detalles de implementación</li>
-                            <li No escenarios muy largos (más de 10 pasos)</li>
+                            <li>No escenarios muy largos (más de 10 pasos)</li>
                             <li>No hacer asserts técnicos en Gherkin</li>
                             <li>No mezclar múltiples comportamientos</li>
                         </ul>
@@ -1201,6 +1283,87 @@ behave features/login.feature
                     </div>
                 </section>
 
+                <!-- Sección: Criterios de Evaluación E2 -->
+                <section id="evaluacion">
+                    <h2>📝 Criterios de Evaluación E2</h2>
+                    <p class="lead">Esta clase cubre los siguientes criterios de la <strong>Evaluación 2: Técnicas de Desarrollo (15%)</strong></p>
+
+                    <div class="eval-criteria">
+                        <h4>📊 Rúbrica E2 - Competencias Relacionadas con BDD</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Criterio</th>
+                                    <th>Peso</th>
+                                    <th>Cómo se Evalúa</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Tests de Comportamiento</strong></td>
+                                    <td>20 pts</td>
+                                    <td>Escenarios BDD que cubren flujos principales</td>
+                                    <td><span class="badge bg-success">Cubierto</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lenguaje Gherkin</strong></td>
+                                    <td>15 pts</td>
+                                    <td>Sintaxis correcta Given-When-Then</td>
+                                    <td><span class="badge bg-success">Cubierto</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Steps Implementados</strong></td>
+                                    <td>15 pts</td>
+                                    <td>Pasos Python que ejecutan escenarios</td>
+                                    <td><span class="badge bg-success">Cubierto</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Documentación Viva</strong></td>
+                                    <td>10 pts</td>
+                                    <td>Features comprensibles para stakeholders</td>
+                                    <td><span class="badge bg-success">Cubierto</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>✅ Checklist de BDD para E2</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert-tip">
+                                <strong>Requisitos de BDD:</strong>
+                                <ul class="mb-0">
+                                    <li>Directorio features/ con archivos .feature</li>
+                                    <li>Mínimo 3 escenarios por feature</li>
+                                    <li>Steps implementados en features/steps/</li>
+                                    <li>Uso de Background y Scenario Outline</li>
+                                    <li>Tests ejecutables con behave</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="alert-note">
+                                <strong>Estructura Esperada:</strong>
+                                <pre class="mb-0"><code>features/
+├── login.feature
+├── proyecto.feature
+└── steps/
+    ├── __init__.py
+    └── login_steps.py</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>🔗 Conexión con Próximas Clases</h4>
+                    <p>Los conceptos de BDD son fundamentales para:</p>
+                    <ul>
+                        <li><strong>Clase 04:</strong> DDD (definir comportamiento de dominio)</li>
+                        <li><strong>Evaluación 3:</strong> FastAPI (tests de integración)</li>
+                        <li><strong>Evaluación 6:</strong> Documentación viva del sistema</li>
+                    </ul>
+                </section>
+
                 <!-- Sección 8: Referencias -->
                 <section id="videos">
                     <h2>📺 Videos Recomendados</h2>
@@ -1307,9 +1470,9 @@ behave features/login.feature
 
     <!-- Boton de Notebook -->
     <div class="alert-tip mt-4">
-        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-02/02-04-bdd-intro.ipynb"
+        <a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-02/02-03-testing-avanzado.ipynb"
            target="_blank" class="btn btn-primary">
-            <i class="bi bi-github me-2"></i>📥 Descargar Notebook en GitHub
+            <i class="bi bi-github me-2"></i>📥 Ver Notebook de Testing Avanzado
         </a>
     </div>
 
@@ -1317,8 +1480,11 @@ behave features/login.feature
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Nota: El link de Google Colab se activara cuando el notebook sea creado.</p>
-            <p>Ultima actualizacion: 2026-02-08</p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1334,10 +1500,67 @@ behave features/login.feature
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Volver arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+
     <!-- Highlight code on page load -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+        });
+
+        // Back to Top functionality
+        const backToTopButton = document.getElementById('backToTop');
+        const progressBar = document.getElementById('progressBar');
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function updateProgressBar() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+
+            if (progressBar) {
+                progressBar.style.width = scrollPercent + '%';
+            }
+
+            // Show/hide back to top button
+            if (backToTopButton) {
+                if (scrollTop > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            }
+        }
+
+        // Update progress bar on scroll
+        window.addEventListener('scroll', updateProgressBar);
+
+        // Initial update
+        updateProgressBar();
+
+        // Smooth scroll for sidebar links
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
     </script>
 </body>

@@ -277,6 +277,11 @@
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 1: POO Avanzada</h2>
             <h3>Clase 1: Clases y Objetos</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 3 - Lunes 17/02/2026</span>
+                <span class="badge bg-warning text-dark ms-1">📢 E1 Examen en 9 días (26/02)</span>
+                <span class="badge bg-info ms-1">📋 E1: 15% | E2: 15%</span>
+            </p>
         </div>
     </header>
 
@@ -322,13 +327,16 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2>Objetivos de Aprendizaje</h2>
+                    <div class="alert-note">
+                        <strong>📋 Relación con Rúbricas E1 y E2:</strong> Esta clase cubre los criterios de <strong>Definición de Clases (25 pts)</strong> y <strong>Atributos y Métodos (25 pts)</strong> de la Evaluación 1, y <strong>Diseño de Clases (25 pts)</strong> de la Evaluación 2.
+                    </div>
                     <p>Al finalizar esta clase, usted será capaz de:</p>
                     <ul>
                         <li>Comprender los conceptos fundamentales de la Programación Orientada a Objetos (POO)</li>
-                        <li>Definir clases en Python usando la sintaxis <code>class</code></li>
+                        <li>Definir clases en Python usando la sintaxis <code>class</code> con <strong>type hints</strong> y <strong>docstrings</strong></li>
                         <li>Comprender el propósito y uso de <code>self</code> en métodos de instancia</li>
                         <li>Implementar el método <code>__init__</code> para inicializar objetos</li>
-                        <li>Crear atributos y métodos de instancia</li>
+                        <li>Crear atributos y métodos de instancia siguiendo <strong>PEP 8</strong></li>
                         <li>Diferenciar entre atributos de instancia y de clase</li>
                         <li>Usar <code>dataclasses</code> para definir clases de manera concisa</li>
                         <li>Crear el modelo Usuario completo para el proyecto TaskFlow</li>
@@ -1074,13 +1082,13 @@ if __name__ == "__main__":
                         <div class="card-body">
                             <h5 class="card-title">
                                 <span class="badge bg-success me-2">Español</span>
-                                Programación Orientada a Objetos en Python
+                                Curso de POO con PYTHON desde CERO (Completo)
                             </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Píldoras Informáticas | 1:02:30 min</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Soy Dalto | Curso completo</h6>
                             <p class="card-text">
-                                Excelente introducción a POO en español
+                                Curso completo de Programación Orientada a Objetos con Python desde cero. Cubre conceptos de POO, clases, objetos, herencia, polimorfismo y más.
                             </p>
-                            <a href="https://www.youtube.com/watch?v=t6pzQk7K9kI" target="_blank" class="btn btn-primary btn-sm">
+                            <a href="https://www.youtube.com/watch?v=HtKqSJX7VoM" target="_blank" class="btn btn-primary btn-sm">
                                 <i class="bi bi-youtube me-2"></i>Ver Video
                             </a>
                         </div>
@@ -1135,11 +1143,21 @@ if __name__ == "__main__":
         </a>
     </div>
 
+    <!-- Botón Volver Arriba -->
+    <button id="btnVolverArriba" class="btn btn-primary btn-lg"
+            style="position: fixed; bottom: 30px; right: 30px; display: none; z-index: 1000; border-radius: 50%; width: 50px; height: 50px; padding: 0;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
+
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Última actualización: 2026-02-08</p>
-            <p class="mt-2"><em>Nota: El link de Google Colab se activara cuando el notebook sea creado.</em></p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1151,6 +1169,17 @@ if __name__ == "__main__":
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
+
+            // Botón Volver Arriba
+            const btnVolverArriba = document.getElementById('btnVolverArriba');
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    btnVolverArriba.style.display = 'block';
+                } else {
+                    btnVolverArriba.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>

@@ -318,15 +318,108 @@
                 margin-bottom: 1rem;
             }
         }
+
+        /* Barra de progreso de lectura */
+        .reading-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, #0a58ca 100%);
+            width: 0%;
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Boton volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0a58ca 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 9998;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+        }
+
+        /* Seccion de criterios de evaluacion */
+        .criterios-evaluacion {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .criterios-evaluacion h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .criterio-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .criterio-descripcion {
+            margin-top: 0.5rem;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
+    <!-- Barra de progreso de lectura -->
+    <div class="reading-progress-bar" id="readingProgressBar"></div>
+
+    <!-- Boton volver arriba -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
+
     <!-- Header -->
     <header>
         <div class="container">
             <h1>IF0100 - Lenguaje de Programación OO II</h1>
             <h2>Unidad 3: Desarrollo Backend</h2>
             <h3>Clase 01: Introducción a FastAPI</h3>
+            <p class="mt-2 mb-0">
+                <span class="badge bg-light text-dark">📅 Semana 9 - Lunes 07/04/2026</span>
+            </p>
         </div>
     </header>
 
@@ -344,10 +437,10 @@
                         <a class="nav-link" href="../index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html#clases">Clases</a>
+                        <a class="nav-link" href="../unidad-02/clase-04-ddd-intro.html">Anterior: DDD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.html#recursos">Recursos</a>
+                        <a class="nav-link" href="clase-02-pydantic-validacion.html">Siguiente: Pydantic</a>
                     </li>
                 </ul>
             </div>
@@ -391,6 +484,23 @@
                         <li>Ejecutar el servidor de desarrollo</li>
                         <li>Probar la API con la documentación automática</li>
                     </ul>
+
+                    <!-- Criterios de Evaluación -->
+                    <div class="criterios-evaluacion">
+                        <h3>Criterios de Evaluación Relacionados</h3>
+                        <div>
+                            <span class="criterio-badge">E3</span>
+                            <span class="criterio-descripcion">Implementa APIs RESTful con FastAPI siguiendo buenas prácticas de diseño</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="criterio-badge">E5</span>
+                            <span class="criterio-descripcion">Utiliza type hints y documentación apropiada en endpoints</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="criterio-badge">E6</span>
+                            <span class="criterio-descripcion">Configura correctamente el entorno de desarrollo con virtualenv</span>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- Sección 2: Conceptos Teóricos -->
@@ -1308,13 +1418,13 @@ def saludar(
                         <div class="card-body">
                             <h5 class="card-title">
                                 <span class="badge bg-success me-2">Español</span>
-                                FastAPI Curso Completo
+                                FastAPI desde CERO - Tutorial Mejor Explicado
                             </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">MoureDev by Brais Moure | 1:45:30 min</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">FastAPI en Español | Fundamentos completos</h6>
                             <p class="card-text">
-                                Curso completo en español sobre FastAPI
+                                El tutorial mejor explicado para aprender FastAPI desde cero. Aprende los fundamentos de FastAPI, cómo instalarlo e iniciar con este framework de Python.
                             </p>
-                            <a href="https://www.youtube.com/watch?v=Fn313F3JUYQ" target="_blank" class="btn btn-primary btn-sm">
+                            <a href="https://www.youtube.com/watch?v=TatMVGGMxY0" target="_blank" class="btn btn-primary btn-sm">
                                 <i class="bi bi-youtube me-2"></i>Ver Video
                             </a>
                         </div>
@@ -1421,8 +1531,11 @@ def saludar(
     <footer>
         <div class="container">
             <p>&copy; 2026 IF0100 - UNAULA | Todos los derechos reservados</p>
-            <p>Nota: El link de Google Colab se activara cuando el notebook sea creado.</p>
-            <p>Ultima actualizacion: 2026-02-08</p>
+            <p>Última actualización: 2026-02-14</p>
+            <p class="mt-2">
+                <a href="../docs/cronograma.html" class="text-decoration-none me-3">📅 Cronograma</a> |
+                <a href="../docs/rubricas.html" class="text-decoration-none ms-3">📋 Rúbricas</a>
+            </p>
         </div>
     </footer>
 
@@ -1443,6 +1556,44 @@ def saludar(
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
         });
+    </script>
+
+    <!-- Barra de progreso y boton volver arriba -->
+    <script>
+        // Barra de progreso de lectura
+        function updateReadingProgress() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('readingProgressBar').style.width = progress + '%';
+        }
+
+        // Boton volver arriba
+        function toggleBackToTop() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+
+        // Scroll suave al top
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Event listeners
+        window.addEventListener('scroll', function() {
+            updateReadingProgress();
+            toggleBackToTop();
+        });
+
+        // Inicializar
+        updateReadingProgress();
     </script>
 </body>
 </html>
