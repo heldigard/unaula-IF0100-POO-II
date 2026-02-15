@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3: SQLAlchemy Relaciones | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programacion OO II</h1>
+            <h2>Unidad 4: Manejo de Persistencia</h2>
+            <h3>Clase 3: SQLAlchemy - Relaciones</h3>
+            <p class="mt-2"><span class="badge bg-info">E4: Laboratorio - En 1 semana</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#onetomany" class="text-decoration-none">Uno a Muchos</a></li>
+                        <li><a href="#manytoone" class="text-decoration-none">Muchos a Uno</a></li>
+                        <li><a href="#onetomany2" class="text-decoration-none">Uno a Muchos (Bidireccional)</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Crear relaciones <strong>Uno a Muchos (One-to-Many)</strong></li>
+                        <li>Crear relaciones <strong>Muchos a Uno (Many-to-One)</strong></li>
+                        <li>Usar <code>relationship()</code> y <code>ForeignKey</code></li>
+                        <li>Navegar relaciones como atributos</li>
+                        <li>Configurar <code>back_populates</code></li>
+                    </ul>
+                </section>
+
+                <section id="onetomany">
+                    <h2 class="text-primary border-bottom pb-2">Relacion Uno a Muchos (20 min)</h2>
+                    
+                    <p>Un <strong>Usuario</strong> tiene muchos <strong>Proyectos</strong>.</p>
+
+                    <pre><code class="language-python"># models/usuario.py
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import List
+
+class Usuario(Base):
+    __tablename__ = "usuarios"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(50), unique=True)
+    
+    # RELACION: Un usuario tiene muchos proyectos
+    proyectos: Mapped[List["Proyecto"]] = relationship(
+        back_populates="usuario",
+        cascade="all, delete-orphan"
+    )</code></pre>
+
+                    <div class="alert-note">
+                        <strong>cascade="all, delete-orphan":</strong> Al eliminar un usuario, se eliminan sus proyectos.
+                    </div>
+                </section>
+
+                <section id="manytoone">
+                    <h2 class="text-primary border-bottom pb-2">Relacion Muchos a Uno (15 min)</h2>
+                    
+                    <p>Muchos <strong>Proyectos</strong> pertenecen a un <strong>Usuario</strong>.</p>
+
+                    <pre><code class="language-python"># models/proyecto.py
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+class Proyecto(Base):
+    __tablename__ = "proyectos"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(100))
+    
+    # CLAVE FORANEA: Referencia al usuario
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    
+    # RELACION: Un proyecto pertenece a un usuario
+    usuario: Mapped["Usuario"] = relationship(back_populates="proyectos")</code></pre>
+                </section>
+
+                <section id="onetomany2">
+                    <h2 class="text-primary border-bottom pb-2">Relacion Bidireccional (20 min)</h2>
+                    
+                    <p><strong>Proyecto</strong> tiene muchas <strong>Tareas</strong>. <strong>Tarea</strong> pertenece a un <strong>Proyecto</strong>.</p>
+
+                    <pre><code class="language-python"># models/proyecto.py (actualizado)
+from typing import List
+
+class Proyecto(Base):
+    __tablename__ = "proyectos"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(100))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    
+    # Relaciones
+    usuario: Mapped["Usuario"] = relationship(back_populates="proyectos")
+    tareas: Mapped[List["Tarea"]] = relationship(back_populates="proyecto")
+
+
+# models/tarea.py
+class Tarea(Base):
+    __tablename__ = "tareas"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(200))
+    proyecto_id: Mapped[int] = mapped_column(ForeignKey("proyectos.id"))
+    
+    # Relacion
+    proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")</code></pre>
+
+                    <h4>Navegar Relaciones</h4>
+                    <pre><code class="language-python">from sqlalchemy.orm import Session
+from database import SessionLocal
+
+db: Session = SessionLocal()
+
+# Obtener usuario con sus proyectos
+usuario = db.query(Usuario).filter_by(username="juan").first()
+
+# Acceder a proyectos como atributo
+for proyecto in usuario.proyectos:
+    print(f"Proyecto: {proyecto.nombre}")
+    
+    # Acceder a tareas del proyecto
+    for tarea in proyecto.tareas:
+        print(f"  - Tarea: {tarea.titulo}")
+
+# Desde una tarea, acceder al proyecto y usuario
+tarea = db.query(Tarea).first()
+print(f"Tarea: {tarea.titulo}")
+print(f"Proyecto: {tarea.proyecto.nombre}")
+print(f"Usuario: {tarea.proyecto.usuario.username}")</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Modelo Comentario (20 min)</h2>
+                    
+                    <p>Crear un modelo <strong>Comentario</strong> que pertenezca a una <strong>Tarea</strong>:</p>
+
+                    <pre><code class="language-python"># models/comentario.py
+from sqlalchemy import String, ForeignKey, DateTime, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime
+
+class Comentario(Base):
+    __tablename__ = "comentarios"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    contenido: Mapped[str] = mapped_column(Text, nullable=False)
+    tarea_id: Mapped[int] = mapped_column(ForeignKey("tareas.id"))
+    creado_en: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    
+    # Relacion: Un comentario pertenece a una tarea
+    tarea: Mapped["Tarea"] = relationship(back_populates="comentarios")
+
+
+# Actualizar Tarea
+class Tarea(Base):
+    __tablename__ = "tareas"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(200))
+    proyecto_id: Mapped[int] = mapped_column(ForeignKey("proyectos.id"))
+    
+    # Relaciones
+    proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")
+    comentarios: Mapped[List["Comentario"]] = relationship(
+        back_populates="tarea",
+        cascade="all, delete-orphan"
+    )</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E4 Laboratorio:</strong> Implementa CRUD completo con las relaciones Usuario-Proyecto-Tarea-Comentario.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>ForeignKey:</strong> Define la columna que referencia otra tabla</li>
+                        <li><strong>relationship():</strong> Crea la relacion navegable</li>
+                        <li><strong>back_populates:</strong> Conecta relaciones bidireccionales</li>
+                        <li><strong>cascade:</strong> Define comportamiento al eliminar</li>
+                        <li><strong>List["Modelo"]:</strong> Indica relacion uno-a-muchos</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-02-sqlalchemy-modelos.html">← Anterior</a> | <a href="clase-04-crud-sqlalchemy.html">Siguiente: CRUD →</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

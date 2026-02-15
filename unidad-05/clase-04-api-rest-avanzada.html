@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4: API REST Avanzada | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programacion OO II</h1>
+            <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
+            <h3>Clase 4: API REST Avanzada</h3>
+            <p class="mt-2"><span class="badge bg-danger">E6: Proyecto Final - En 7 dias</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#paginacion" class="text-decoration-none">Paginacion</a></li>
+                        <li><a href="#filtros" class="text-decoration-none">Filtros y Busqueda</a></li>
+                        <li><a href="#errores" class="text-decoration-none">Manejo de Errores</a></li>
+                        <li><a href="#versionado" class="text-decoration-none">Versionado</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Implementar <strong>paginacion</strong> en endpoints</li>
+                        <li>Crear <strong>filtros y busqueda</strong> avanzada</li>
+                        <li>Manejar <strong>errores HTTP</strong> correctamente</li>
+                        <li>Implementar <strong>versionado</strong> de API</li>
+                        <li>Documentar API con <strong>OpenAPI</strong></li>
+                    </ul>
+                </section>
+
+                <section id="paginacion">
+                    <h2 class="text-primary border-bottom pb-2">Paginacion (20 min)</h2>
+                    
+                    <pre><code class="language-python">from fastapi import Query
+from typing import Generic, TypeVar, List
+from pydantic import BaseModel
+
+T = TypeVar("T")
+
+class Paginado(BaseModel, Generic[T]):
+    items: List[T]
+    total: int
+    pagina: int
+    por_pagina: int
+    total_paginas: int
+
+def calcular_offset(pagina: int, por_pagina: int) -> int:
+    return (pagina - 1) * por_pagina
+
+@router.get("/tareas", response_model=Paginado[TareaResponse])
+def listar_tareas(
+    pagina: int = Query(1, ge=1),
+    por_pagina: int = Query(10, ge=1, le=100),
+    repo: TareaRepositorio = Depends(get_tarea_repo)
+):
+    # Calcular offset
+    offset = calcular_offset(pagina, por_pagina)
+    
+    # Obtener datos
+    tareas = repo.obtener_todos(skip=offset, limit=por_pagina)
+    total = repo.contar()
+    
+    # Calcular total paginas
+    total_paginas = (total + por_pagina - 1) // por_pagina
+    
+    return Paginado(
+        items=[TareaResponse.from_entity(t) for t in tareas],
+        total=total,
+        pagina=pagina,
+        por_pagina=por_pagina,
+        total_paginas=total_paginas
+    )</code></pre>
+                </section>
+
+                <section id="filtros">
+                    <h2 class="text-primary border-bottom pb-2">Filtros y Busqueda (20 min)</h2>
+                    
+                    <pre><code class="language-python">from fastapi import Query
+from typing import Optional
+from enum import Enum
+from datetime import datetime
+
+class OrdenDireccion(str, Enum):
+    ASC = "asc"
+    DESC = "desc"
+
+class TareaFiltro(BaseModel):
+    """Filtros para tareas."""
+    completada: Optional[bool] = None
+    prioridad: Optional[Prioridad] = None
+    proyecto_id: Optional[int] = None
+    buscar: Optional[str] = None
+    fecha_desde: Optional[datetime] = None
+    fecha_hasta: Optional[datetime] = None
+    ordenar_por: str = "creado_en"
+    orden_dir: OrdenDireccion = OrdenDireccion.DESC
+
+@router.get("/tareas")
+def listar_tareas(
+    completada: Optional[bool] = Query(None),
+    prioridad: Optional[Prioridad] = Query(None),
+    proyecto_id: Optional[int] = Query(None),
+    buscar: Optional[str] = Query(None, min_length=2),
+    pagina: int = Query(1, ge=1),
+    por_pagina: int = Query(10, ge=1, le=100),
+    repo: TareaRepositorio = Depends(get_tarea_repo)
+):
+    # Construir query
+    query = repo.db.query(Tarea)
+    
+    # Aplicar filtros
+    if completada is not None:
+        query = query.filter(Tarea.completada == completada)
+    
+    if prioridad:
+        query = query.filter(Tarea.prioridad == prioridad)
+    
+    if proyecto_id:
+        query = query.filter(Tarea.proyecto_id == proyecto_id)
+    
+    if buscar:
+        query = query.filter(
+            Tarea.titulo.ilike(f"%{buscar}%") |
+            Tarea.descripcion.ilike(f"%{buscar}%")
+        )
+    
+    # Contar total
+    total = query.count()
+    
+    # Aplicar paginacion
+    offset = calcular_offset(pagina, por_pagina)
+    tareas = query.offset(offset).limit(por_pagina).all()
+    
+    return construir_respuesta_paginada(tareas, total, pagina, por_pagina)</code></pre>
+                </section>
+
+                <section id="errores">
+                    <h2 class="text-primary border-bottom pb-2">Manejo de Errores (15 min)</h2>
+                    
+                    <pre><code class="language-python">from fastapi import HTTPException, Request
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+
+# Excepciones personalizadas
+class AppException(Exception):
+    def __init__(self, status_code: int, mensaje: str, detalle: dict = None):
+        self.status_code = status_code
+        self.mensaje = mensaje
+        self.detalle = detalle or {}
+
+class NoEncontradoException(AppException):
+    def __init__(self, recurso: str, id: int):
+        super().__init__(
+            status_code=404,
+            mensaje=f"{recurso} no encontrado",
+            detalle={"id": id}
+        )
+
+class ConflictoException(AppException):
+    def __init__(self, mensaje: str):
+        super().__init__(status_code=409, mensaje=mensaje)
+
+# Handler global
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": True,
+            "mensaje": exc.mensaje,
+            "detalle": exc.detalle
+        }
+    )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": True,
+            "mensaje": "Datos de entrada invalidos",
+            "errores": exc.errors()
+        }
+    )
+
+# Uso en endpoints
+@router.get("/tareas/{id}")
+def obtener_tarea(id: int, repo: TareaRepositorio = Depends(get_tarea_repo)):
+    tarea = repo.obtener_por_id(id)
+    if not tarea:
+        raise NoEncontradoException("Tarea", id)
+    return TareaResponse.from_entity(tarea)</code></pre>
+                </section>
+
+                <section id="versionado">
+                    <h2 class="text-primary border-bottom pb-2">Versionado de API (15 min)</h2>
+                    
+                    <pre><code class="language-python">from fastapi import APIRouter
+
+# Estrategia: URL path versioning
+
+# v1
+router_v1 = APIRouter(prefix="/api/v1")
+
+@router_v1.get("/tareas")
+def listar_tareas_v1():
+    # Version 1: Lista simple
+    return {"tareas": []}
+
+# v2
+router_v2 = APIRouter(prefix="/api/v2")
+
+@router_v2.get("/tareas")
+def listar_tareas_v2(
+    pagina: int = 1,
+    por_pagina: int = 10
+):
+    # Version 2: Con paginacion
+    return {
+        "items": [],
+        "total": 0,
+        "pagina": pagina,
+        "por_pagina": por_pagina
+    }
+
+# Registrar en app
+app.include_router(router_v1)
+app.include_router(router_v2)
+
+# Otra opcion: Header versioning
+@app.middleware("http")
+async def version_middleware(request: Request, call_next):
+    version = request.headers.get("X-API-Version", "v1")
+    request.state.api_version = version
+    return await call_next(request)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Mejores practicas:</strong>
+                        <ul class="mb-0">
+                            <li>Mantener retrocompatibilidad</li>
+                            <li>Documentar cambios entre versiones</li>
+                            <li>Deprecar versiones antiguas gradualmente</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API Completa (15 min)</h2>
+                    
+                    <p>Implementar endpoint completo para Tareas:</p>
+                    <ul>
+                        <li>GET /tareas - Listar con paginacion y filtros</li>
+                        <li>GET /tareas/{id} - Obtener por ID</li>
+                        <li>POST /tareas - Crear</li>
+                        <li>PATCH /tareas/{id} - Actualizar</li>
+                        <li>DELETE /tareas/{id} - Eliminar</li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>E6 Proyecto Final:</strong> La API debe implementar todas las practicas vistas.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Paginacion:</strong> Limitar resultados con offset/limit</li>
+                        <li><strong>Filtros:</strong> Parametros Query para filtrar</li>
+                        <li><strong>Errores:</strong> HTTPException y handlers globales</li>
+                        <li><strong>Versionado:</strong> URL path o header versioning</li>
+                        <li><strong>Documentacion:</strong> OpenAPI automatico de FastAPI</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-03-dtos-serializacion.html">← Anterior</a> | <a href="clase-05-proyecto-final.html">Siguiente: Proyecto Final →</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

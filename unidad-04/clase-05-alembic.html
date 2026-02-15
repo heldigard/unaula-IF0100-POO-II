@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5: Alembic Migraciones | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 4: Manejo de Persistencia</h2>
+            <h3>Clase 5: Alembic - Migraciones</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark">Semana 13 - Martes (120 minutos)</span>
+                <span class="badge bg-info text-dark">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2"><span class="badge bg-success">E5: Proyecto - Mañana</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#quees" class="text-decoration-none">Que es Alembic</a></li>
+                        <li><a href="#config" class="text-decoration-none">Configuracion</a></li>
+                        <li><a href="#migraciones" class="text-decoration-none">Crear Migraciones</a></li>
+                        <li><a href="#aplicar" class="text-decoration-none">Aplicar Migraciones</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Entender qué son las <strong>migraciones</strong> de base de datos</li>
+                        <li>Configurar <strong>Alembic</strong> en un proyecto de Python</li>
+                        <li>Crear migraciones <strong>automáticas</strong> y <strong>manuales</strong></li>
+                        <li>Aplicar y revertir migraciones de esquema</li>
+                        <li>Manejar cambios de base de datos en entornos de producción</li>
+                    </ul>
+                </section>
+
+                <section id="quees">
+                    <h2 class="text-primary border-bottom pb-2">Que es Alembic? (10 min)</h2>
+                    
+                    <p><strong>Alembic</strong> es una herramienta de migracion para SQLAlchemy. Permite:</p>
+                    <ul>
+                        <li>Versionar cambios en el esquema de base de datos</li>
+                        <li>Aplicar cambios de forma controlada</li>
+                        <li>Revertir cambios si algo falla</li>
+                        <li>Mantener sincronizados modelos y base de datos</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Cuando usar migraciones:</strong>
+                        <ul class="mb-0">
+                            <li>Agregar/eliminar tablas</li>
+                            <li>Agregar/eliminar columnas</li>
+                            <li>Cambiar tipos de datos</li>
+                            <li>Crear indices</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="config">
+                    <h2 class="text-primary border-bottom pb-2">Configuracion (15 min)</h2>
+                    
+                    <h4>Instalacion</h4>
+                    <pre><code class="language-bash">pip install alembic</code></pre>
+
+                    <h4>Inicializar Alembic</h4>
+                    <pre><code class="language-bash"># En la raiz del proyecto
+alembic init alembic</code></pre>
+
+                    <h4>Configurar alembic.ini</h4>
+                    <pre><code class="language-ini"># alembic.ini
+[alembic]
+script_location = alembic
+prepend_sys_path = .
+version_path_separator = os
+
+sqlalchemy.url = sqlite:///./taskflow.db</code></pre>
+
+                    <h4>Configurar env.py</h4>
+                    <pre><code class="language-python"># alembic/env.py
+from logging.config import fileConfig
+from sqlalchemy import engine_from_config, pool
+from alembic import context
+import sys
+import os
+
+# Agregar el path del proyecto
+sys.path.insert(0, os.getcwd())
+
+# Importar modelos
+from database import Base
+from models.usuario import Usuario
+from models.proyecto import Proyecto
+from models.tarea import Tarea
+from models.comentario import Comentario
+
+config = context.config
+fileConfig(config.config_file_name)
+target_metadata = Base.metadata</code></pre>
+                </section>
+
+                <section id="migraciones">
+                    <h2 class="text-primary border-bottom pb-2">Crear Migraciones (20 min)</h2>
+                    
+                    <h4>Migracion Automatica</h4>
+                    <pre><code class="language-bash"># Detectar cambios automaticamente
+alembic revision --autogenerate -m "Crear tablas iniciales"</code></pre>
+
+                    <h4>Migracion Manual</h4>
+                    <pre><code class="language-bash"># Crear migracion vacia
+alembic revision -m "Agregar columna avatar a usuarios"</code></pre>
+
+                    <h4>Contenido de una migracion</h4>
+                    <pre><code class="language-python"># alembic/versions/xxxx_agregar_avatar.py
+from alembic import op
+import sqlalchemy as sa
+
+def upgrade():
+    # Agregar columna
+    op.add_column('usuarios', 
+        sa.Column('avatar', sa.String(255), nullable=True)
+    )
+
+def downgrade():
+    # Eliminar columna
+    op.drop_column('usuarios', 'avatar')</code></pre>
+
+                    <h4>Operaciones comunes</h4>
+                    <pre><code class="language-python">def upgrade():
+    # Crear tabla
+    op.create_table(
+        'notificaciones',
+        sa.Column('id', sa.Integer(), primary_key=True),
+        sa.Column('mensaje', sa.String(200), nullable=False),
+        sa.Column('leida', sa.Boolean(), default=False),
+        sa.Column('usuario_id', sa.Integer(), sa.ForeignKey('usuarios.id'))
+    )
+    
+    # Agregar columna
+    op.add_column('tareas', sa.Column('prioridad', sa.String(20), default='media'))
+    
+    # Crear indice
+    op.create_index('ix_tareas_prioridad', 'tareas', ['prioridad'])
+    
+    # Modificar columna
+    op.alter_column('usuarios', 'email', nullable=False)
+
+def downgrade():
+    op.drop_index('ix_tareas_prioridad', 'tareas')
+    op.drop_column('tareas', 'prioridad')
+    op.drop_table('notificaciones')</code></pre>
+                </section>
+
+                <section id="aplicar">
+                    <h2 class="text-primary border-bottom pb-2">Aplicar Migraciones (10 min)</h2>
+                    
+                    <pre><code class="language-bash"># Aplicar todas las migraciones pendientes
+alembic upgrade head
+
+# Aplicar una migracion especifica
+alembic upgrade +1
+
+# Revertir ultima migracion
+alembic downgrade -1
+
+# Revertir todo
+alembic downgrade base
+
+# Ver historial
+alembic history
+
+# Ver version actual
+alembic current</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Siempre revisa el SQL generado antes de aplicar en produccion.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Agregar Tabla Etiquetas (20 min)</h2>
+                    
+                    <p>Crear migracion para agregar sistema de etiquetas a las tareas:</p>
+
+                    <pre><code class="language-python"># 1. Crear modelo Etiqueta
+# models/etiqueta.py
+from sqlalchemy import String, Table, Column, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import List
+
+# Tabla de asociacion (muchos a muchos)
+tarea_etiqueta = Table(
+    'tarea_etiqueta',
+    Base.metadata,
+    Column('tarea_id', ForeignKey('tareas.id'), primary_key=True),
+    Column('etiqueta_id', ForeignKey('etiquetas.id'), primary_key=True)
+)
+
+class Etiqueta(Base):
+    __tablename__ = "etiquetas"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(50), unique=True)
+    color: Mapped[str] = mapped_column(String(7), default="#3498db")  # Hex
+    
+    # Relacion muchos a muchos
+    tareas: Mapped[List["Tarea"]] = relationship(
+        secondary=tarea_etiqueta,
+        back_populates="etiquetas"
+    )
+
+# 2. Actualizar Tarea
+class Tarea(Base):
+    # ... columnas existentes ...
+    etiquetas: Mapped[List["Etiqueta"]] = relationship(
+        secondary=tarea_etiqueta,
+        back_populates="tareas"
+    )
+
+# 3. Crear migracion
+# alembic revision --autogenerate -m "Agregar tabla etiquetas"
+
+# 4. Aplicar migracion
+# alembic upgrade head</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E5 Proyecto:</strong> Implementa el sistema de etiquetas y migra la base de datos.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Alembic:</strong> Sistema de migraciones para SQLAlchemy</li>
+                        <li><strong>upgrade():</strong> Aplicar cambios</li>
+                        <li><strong>downgrade():</strong> Revertir cambios</li>
+                        <li><strong>revision --autogenerate:</strong> Crear migracion automatica</li>
+                        <li><strong>upgrade head:</strong> Aplicar todas las migraciones</li>
+                        <li><strong>downgrade -1:</strong> Revertir ultima migracion</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-04-crud-sqlalchemy.html">← Anterior</a> | <a href="../unidad-05/clase-01-repository-pattern.html">Siguiente: Repository Pattern →</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

@@ -27,7 +27,12 @@
         <div class="container">
             <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 2: Técnicas de Desarrollo</h2>
-            <h3>Clase 04: Introducción a DDD</h3>
+            <h3>Clase 4: Introducción a DDD</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark">Semana 8 - Jueves (60 minutos)</span>
+                <span class="badge bg-info text-dark">30 min Teoría</span>
+                <span class="badge bg-success text-white">30 min Práctica</span>
+            </p>
             <p class="mt-2"><span class="badge bg-danger">E2: Taller TDD/BDD - Entrega esta semana</span></p>
         </div>
     </header>
@@ -63,7 +68,7 @@
                 <section id="teoria">
                     <h2 class="text-primary border-bottom pb-2">¿Qué es DDD? (10 min)</h2>
                     
-                    <p><strong>Domain Driven Design (DDD)</strong> se centra en el dominio del problema y la lógica de negocio.</p>
+                    <p><strong>DDD (Domain-Driven Design / Diseño Guiado por el Dominio)</strong> se centra en el dominio del problema y la lógica de negocio.</p>
 
                     <div class="alert-tip">
                         <strong>Idea clave:</strong> El código debe reflejar el lenguaje del dominio. Terminología de negocio = código.
@@ -219,7 +224,7 @@ class Monto:
 
                     <h4>Interfaz de Repository</h4>
                     <pre><code class="language-python"># repositories/base.py
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # ABC (Abstract Base Class)
 from typing import TypeVar, Generic, List, Optional
 
 T = TypeVar('T')

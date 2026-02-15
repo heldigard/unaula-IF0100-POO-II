@@ -22,7 +22,12 @@
         <div class="container">
             <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
-            <h3>Clase 10: Dependencias</h3>
+            <h3>Clase 3: Inyección de Dependencias</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark">Semana 10 - Martes (120 minutos)</span>
+                <span class="badge bg-info text-dark">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
             <p class="mt-2"><span class="badge bg-info">E3: Proyecto Web - Próxima semana</span></p>
         </div>
     </header>
@@ -152,6 +157,8 @@ async def get_items(db: Database = Depends(get_db)):
 
                 <section id="auth">
                     <h2 class="text-primary border-bottom pb-2">Autenticación (20 min)</h2>
+                    
+                    <p>En APIs modernas, se suele usar <strong>JWT (JSON Web Token)</strong> para manejar la autenticación de forma segura y escalable.</p>
                     
                     <h4>Verificar Token</h4>
                     <pre><code class="language-python">from fastapi import Depends, FastAPI, HTTPException, Header

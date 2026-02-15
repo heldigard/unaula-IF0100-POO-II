@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Repository Pattern | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
+            <h3>Clase 1: Patrón Repository</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark">Semana 14 - Martes (120 minutos)</span>
+                <span class="badge bg-info text-dark">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2"><span class="badge bg-danger">E6: Proyecto Final - En 14 días</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#quees" class="text-decoration-none">Que es Repository</a></li>
+                        <li><a href="#interfaz" class="text-decoration-none">Interfaz Generica</a></li>
+                        <li><a href="#implementacion" class="text-decoration-none">Implementacion</a></li>
+                        <li><a href="#inyeccion" class="text-decoration-none">Inyeccion FastAPI</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Entender el patrón <strong>Repository</strong> y su propósito</li>
+                        <li>Crear una <strong>interfaz genérica</strong> de repositorio</li>
+                        <li>Implementar repositorios con <strong>SQLAlchemy ORM (Object-Relational Mapping)</strong></li>
+                        <li>Inyectar repositorios en <strong>FastAPI</strong></li>
+                        <li>Desacoplar la lógica de negocio de la persistencia</li>
+                    </ul>
+                </section>
+
+                <section id="quees">
+                    <h2 class="text-primary border-bottom pb-2">Que es el Patron Repository? (15 min)</h2>
+                    
+                    <p>El <strong>Repository Pattern</strong> abstrae el acceso a datos, simulando una coleccion en memoria.</p>
+
+                    <div class="alert-note">
+                        <strong>Beneficios:</strong>
+                        <ul class="mb-0">
+                            <li>Desacopla logica de negocio de persistencia</li>
+                            <li>Facilita testing (puedes usar repositorios en memoria)</li>
+                            <li>Centraliza logica de acceso a datos</li>
+                            <li>Permite cambiar de base de datos facilmente</li>
+                        </ul>
+                    </div>
+
+                    <h4>Capas de la Arquitectura</h4>
+                    <pre><code>┌─────────────────────────────────────┐
+│           PRESENTACION              │  (FastAPI routes, Jinja2)
+├─────────────────────────────────────┤
+│            SERVICIOS                │  (Logica de negocio)
+├─────────────────────────────────────┤
+│          REPOSITORIOS               │  (Acceso a datos)
+├─────────────────────────────────────┤
+│           MODELOS                   │  (Entidades de dominio)
+├─────────────────────────────────────┤
+│         BASE DE DATOS               │  (PostgreSQL, SQLite)
+└─────────────────────────────────────┘</code></pre>
+                </section>
+
+                <section id="interfaz">
+                    <h2 class="text-primary border-bottom pb-2">Interfaz Generica (20 min)</h2>
+                    
+                    <pre><code class="language-python"># repositories/base.py
+from abc import ABC, abstractmethod
+from typing import TypeVar, Generic, Optional, List
+
+T = TypeVar("T")
+
+class Repositorio(ABC, Generic[T]):
+    """Interfaz generica para repositorios."""
+    
+    @abstractmethod
+    def obtener_por_id(self, id: int) -> Optional[T]:
+        """Obtener entidad por ID."""
+        pass
+    
+    @abstractmethod
+    def obtener_todos(self) -> List[T]:
+        """Obtener todas las entidades."""
+        pass
+    
+    @abstractmethod
+    def crear(self, entidad: T) -> T:
+        """Crear nueva entidad."""
+        pass
+    
+    @abstractmethod
+    def actualizar(self, entidad: T) -> T:
+        """Actualizar entidad existente."""
+        pass
+    
+    @abstractmethod
+    def eliminar(self, id: int) -> bool:
+        """Eliminar entidad por ID."""
+        pass
+    
+    @abstractmethod
+    def existe(self, id: int) -> bool:
+        """Verificar si existe entidad."""
+        pass
+    
+    @abstractmethod
+    def contar(self) -> int:
+        """Contar entidades."""
+        pass</code></pre>
+                </section>
+
+                <section id="implementacion">
+                    <h2 class="text-primary border-bottom pb-2">Implementacion SQLAlchemy (25 min)</h2>
+                    
+                    <pre><code class="language-python"># repositories/usuario_repo.py
+from typing import Optional, List
+from sqlalchemy.orm import Session
+from repositories.base import Repositorio
+from models.usuario import Usuario
+
+class UsuarioRepositorioSQLAlchemy(Repositorio[Usuario]):
+    """Implementacion de repositorio para Usuario con SQLAlchemy."""
+    
+    def __init__(self, db: Session):
+        self.db = db
+    
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        return self.db.query(Usuario).filter(Usuario.id == id).first()
+    
+    def obtener_por_username(self, username: str) -> Optional[Usuario]:
+        return self.db.query(Usuario).filter(Usuario.username == username).first()
+    
+    def obtener_todos(self) -> List[Usuario]:
+        return self.db.query(Usuario).all()
+    
+    def obtener_activos(self) -> List[Usuario]:
+        return self.db.query(Usuario).filter(Usuario.activo == True).all()
+    
+    def crear(self, usuario: Usuario) -> Usuario:
+        self.db.add(usuario)
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+    
+    def actualizar(self, usuario: Usuario) -> Usuario:
+        self.db.commit()
+        self.db.refresh(usuario)
+        return usuario
+    
+    def eliminar(self, id: int) -> bool:
+        usuario = self.obtener_por_id(id)
+        if usuario:
+            self.db.delete(usuario)
+            self.db.commit()
+            return True
+        return False
+    
+    def existe(self, id: int) -> bool:
+        return self.db.query(Usuario).filter(Usuario.id == id).count() > 0
+    
+    def contar(self) -> int:
+        return self.db.query(Usuario).count()
+
+
+# Repositorio en memoria para testing
+class UsuarioRepositorioMemoria(Repositorio[Usuario]):
+    """Implementacion en memoria para pruebas."""
+    
+    def __init__(self):
+        self._datos: dict[int, Usuario] = {}
+        self._next_id = 1
+    
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        return self._datos.get(id)
+    
+    def obtener_todos(self) -> List[Usuario]:
+        return list(self._datos.values())
+    
+    def crear(self, usuario: Usuario) -> Usuario:
+        usuario.id = self._next_id
+        self._next_id += 1
+        self._datos[usuario.id] = usuario
+        return usuario
+    
+    def actualizar(self, usuario: Usuario) -> Usuario:
+        if usuario.id in self._datos:
+            self._datos[usuario.id] = usuario
+        return usuario
+    
+    def eliminar(self, id: int) -> bool:
+        if id in self._datos:
+            del self._datos[id]
+            return True
+        return False
+    
+    def existe(self, id: int) -> bool:
+        return id in self._datos
+    
+    def contar(self) -> int:
+        return len(self._datos)</code></pre>
+                </section>
+
+                <section id="inyeccion">
+                    <h2 class="text-primary border-bottom pb-2">Inyeccion en FastAPI (15 min)</h2>
+                    
+                    <pre><code class="language-python"># api/dependencies.py
+from typing import Generator
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from database import SessionLocal
+from repositories.usuario_repo import UsuarioRepositorioSQLAlchemy
+
+def get_db() -> Generator[Session, None, None]:
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+def get_usuario_repo(db: Session = Depends(get_db)) -> UsuarioRepositorioSQLAlchemy:
+    return UsuarioRepositorioSQLAlchemy(db)
+
+
+# api/routes/usuarios.py
+from fastapi import APIRouter, Depends, HTTPException
+from repositories.usuario_repo import UsuarioRepositorioSQLAlchemy
+from api.dependencies import get_usuario_repo
+
+router = APIRouter(prefix="/api/usuarios", tags=["usuarios"])
+
+@router.get("/{id}")
+def obtener_usuario(
+    id: int,
+    repo: UsuarioRepositorioSQLAlchemy = Depends(get_usuario_repo)
+):
+    usuario = repo.obtener_por_id(id)
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return usuario
+
+@router.get("/")
+def listar_usuarios(
+    repo: UsuarioRepositorioSQLAlchemy = Depends(get_usuario_repo)
+):
+    return repo.obtener_todos()</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Ventaja:</strong> Puedes cambiar la implementacion del repositorio sin modificar los endpoints.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Repositorio Tarea (15 min)</h2>
+                    
+                    <p>Crear <code>TareaRepositorioSQLAlchemy</code> con metodos adicionales:</p>
+
+                    <pre><code class="language-python"># repositories/tarea_repo.py
+class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
+    
+    def obtener_por_proyecto(self, proyecto_id: int) -> List[Tarea]:
+        """Obtener tareas de un proyecto."""
+        return self.db.query(Tarea).filter(
+            Tarea.proyecto_id == proyecto_id
+        ).all()
+    
+    def obtener_completadas(self, proyecto_id: int) -> List[Tarea]:
+        """Obtener tareas completadas."""
+        return self.db.query(Tarea).filter(
+            Tarea.proyecto_id == proyecto_id,
+            Tarea.completada == True
+        ).all()
+    
+    def obtener_pendientes(self, proyecto_id: int) -> List[Tarea]:
+        """Obtener tareas pendientes."""
+        return self.db.query(Tarea).filter(
+            Tarea.proyecto_id == proyecto_id,
+            Tarea.completada == False
+        ).all()
+    
+    def marcar_completada(self, id: int) -> bool:
+        """Marcar tarea como completada."""
+        tarea = self.obtener_por_id(id)
+        if tarea:
+            tarea.completada = True
+            self.db.commit()
+            return True
+        return False</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E6 Proyecto Final:</strong> Implementa todos los repositorios con la interfaz generica.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Repository:</strong> Abstrae acceso a datos como coleccion en memoria</li>
+                        <li><strong>Interfaz generica:</strong> Define operaciones CRUD comunes</li>
+                        <li><strong>Desacoplamiento:</strong> Logica de negocio no conoce implementacion</li>
+                        <li><strong>Testing:</strong> Repositorios en memoria para pruebas</li>
+                        <li><strong>Dependency Injection:</strong> FastAPI inyecta repositorios</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../unidad-04/clase-05-alembic.html">← Anterior</a> | <a href="clase-02-clean-architecture.html">Siguiente: Clean Architecture →</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>
