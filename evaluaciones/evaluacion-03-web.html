@@ -6,12 +6,22 @@
     <title>E3: Prototipo Web - IF0100</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Prism.js CSS para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <style>
         :root { --primary: #fd7e14; }
         header { background: linear-gradient(135deg, var(--primary) 0%, #c75a00 100%); color: white; padding: 2rem 0; }
-        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem; margin: 1rem 0; }
-        .entregable { background: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin: 1rem 0; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h5 { color: var(--primary); margin-bottom: 0.75rem; }
+        .criterio ul { margin-bottom: 0; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .comment { color: #6a9955; }
+        .entregable-box .folder { color: #569cd6; }
+        .penalizacion { background: #f8d7da; border-left: 4px solid #dc3545; padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        code:not([class*="language-"]) { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        pre[class*="language-"] { border-radius: 8px; margin: 0; }
+        .detalle-req { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin: 0.5rem 0; font-size: 0.9rem; }
+        .paso-num { display: inline-block; width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; }
     </style>
 </head>
 <body>
@@ -21,12 +31,12 @@
                 <div class="col-md-8">
                     <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 3</h1>
                     <h2>Prototipo Web Funcional</h2>
-                    <p class="mb-0"><strong>FastAPI + HTMX + Bootstrap</strong></p>
+                    <p class="mb-0"><strong>Entrega Incremental 3 - FastAPI + HTMX + Bootstrap</strong></p>
                 </div>
                 <div class="col-md-4 text-md-end">
                     <span class="badge bg-white text-dark fs-5 mb-2">20%</span><br>
                     <span class="badge bg-warning text-dark">Prototipo</span><br>
-                    <small>Fecha: 26 de marzo de 2026</small>
+                    <small>Fecha límite: 26 de marzo de 2026</small>
                 </div>
             </div>
         </div>
@@ -42,13 +52,13 @@
         </nav>
 
         <div class="alert alert-danger">
-            <h5>⚠️ Requisitos Previos</h5>
-            <p class="mb-0"><strong>REQUIERE E1 (Dominio) y E2 (Testing) completadas.</strong> Se expondrá el mismo dominio vía web.</p>
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Requisitos Previos</h5>
+            <p class="mb-0"><strong>REQUIERE E1 (Dominio) y E2 (Testing) completadas.</strong> Se expondrá el mismo dominio probado vía web. Los tests de E2 deben pasar.</p>
         </div>
 
         <div class="card mb-4 border-warning">
             <div class="card-header bg-warning text-dark">
-                <h5 class="mb-0"><i class="bi bi-book me-2"></i>📚 Clases Relacionadas</h5>
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Clases Relacionadas</h5>
             </div>
             <div class="card-body">
                 <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
@@ -56,96 +66,384 @@
                     <div class="col-md-6">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <i class="bi bi-play-circle text-warning me-2"></i>
+                                <i class="bi bi-play-circle text-success me-2"></i>
                                 <a href="../unidad-03/clase-01-fastapi-intro.html" class="text-decoration-none">Clase 01: Introducción a FastAPI</a>
-                                <small class="d-block text-muted">Rutas, endpoints básicos</small>
+                                <small class="d-block text-muted">Rutas, Path/Query params</small>
                             </li>
                             <li class="list-group-item">
-                                <i class="bi bi-patch-check text-warning me-2"></i>
+                                <i class="bi bi-patch-check text-success me-2"></i>
                                 <a href="../unidad-03/clase-02-pydantic-validacion.html" class="text-decoration-none">Clase 02: Pydantic y Validación</a>
-                                <small class="d-block text-muted">Modelos, validaciones</small>
+                                <small class="d-block text-muted">BaseModel, Field, validators</small>
                             </li>
                             <li class="list-group-item">
-                                <i class="bi bi-diagram-2 text-warning me-2"></i>
+                                <i class="bi bi-diagram-2 text-success me-2"></i>
                                 <a href="../unidad-03/clase-03-dependencias.html" class="text-decoration-none">Clase 03: Dependencias</a>
-                                <small class="d-block text-muted">Inyección de dependencias</small>
+                                <small class="d-block text-muted">Depends, inyección</small>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <i class="bi bi-check2-circle text-warning me-2"></i>
+                                <i class="bi bi-check2-circle text-success me-2"></i>
                                 <a href="../unidad-03/clase-04-testing-fastapi.html" class="text-decoration-none">Clase 04: Testing en FastAPI</a>
                                 <small class="d-block text-muted">TestClient, async tests</small>
                             </li>
                             <li class="list-group-item">
-                                <i class="bi bi-database text-warning me-2"></i>
+                                <i class="bi bi-database text-success me-2"></i>
                                 <a href="../unidad-03/clase-05-persistencia-datos.html" class="text-decoration-none">Clase 05: Persistencia de Datos</a>
                                 <small class="d-block text-muted">Intro a almacenamiento</small>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="alert alert-light mt-3 mb-0">
-                    <small><strong>🔗 Prerequisitos obligatorios:</strong> Debes tener <a href="evaluacion-01-dominio.html">E1</a> y <a href="evaluacion-02-testing.html">E2</a> completadas antes de comenzar esta evaluación.</small>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-bullseye me-2"></i>Objetivo de Aprendizaje</h3>
+        <p class="lead">Convertir el dominio de TaskFlow en una <strong>aplicación web interactiva</strong> usando FastAPI (backend) y HTMX (frontend dinámico sin JavaScript complejo).</p>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-check me-2"></i>Requisitos Técnicos Detallados</h3>
+
+        <!-- API REST -->
+        <div class="criterio">
+            <h5><i class="bi bi-router text-primary me-2"></i>1. API REST con FastAPI</h5>
+            <p><strong>Descripción:</strong> Implementar endpoints CRUD para todas las entidades del dominio.</p>
+
+            <h6 class="mt-3">Endpoints obligatorios:</h6>
+            <ul>
+                <li><strong>Usuarios:</strong> <code>GET /usuarios</code>, <code>POST /usuarios</code>, <code>GET /usuarios/{id}</code></li>
+                <li><strong>Proyectos:</strong> <code>GET /proyectos</code>, <code>POST /proyectos</code>, <code>GET /proyectos/{id}</code>, <code>POST /proyectos/{id}/tareas</code></li>
+                <li><strong>Tareas:</strong> <code>PATCH /tareas/{id}/completar</code>, <code>PATCH /tareas/{id}/prioridad</code></li>
+            </ul>
+
+            <h6>Status codes correctos:</h6>
+            <ul>
+                <li><code>200 OK</code>: Operación exitosa</li>
+                <li><code>201 Created</code>: Recurso creado</li>
+                <li><code>404 Not Found</code>: Recurso no existe</li>
+                <li><code>422 Unprocessable Entity</code>: Validación fallida</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Documentación automática:</strong>
+                <ul class="mb-0">
+                    <li><code>/docs</code> debe mostrar Swagger UI funcional</li>
+                    <li>Todos los endpoints con descripción y ejemplos</li>
+                    <li>Pydantic models para request/response bodies</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PYDANTIC -->
+        <div class="criterio">
+            <h5><i class="bi bi-shield-check text-success me-2"></i>2. Modelos Pydantic</h5>
+            <p><strong>Descripción:</strong> Validación automática de datos con Pydantic.</p>
+
+            <h6 class="mt-3">Modelos obligatorios:</h6>
+            <ul>
+                <li><code>UsuarioCreate</code>: Datos para crear usuario (username, email)</li>
+                <li><code>UsuarioResponse</code>: Respuesta con datos del usuario</li>
+                <li><code>ProyectoCreate</code>: Datos para crear proyecto</li>
+                <li><code>TareaCreate</code>: Datos para crear tarea</li>
+                <li><code>TareaUpdate</code>: Datos para actualizar tarea</li>
+            </ul>
+
+            <h6>Validaciones con Field:</h6>
+            <ul>
+                <li><code>Field(min_length=3, max_length=50)</code> para strings</li>
+                <li><code>Field(default=PrioridadTarea.MEDIA)</code> con valores por defecto</li>
+                <li><code>EmailStr</code> para emails (importar de pydantic)</li>
+            </ul>
+        </div>
+
+        <!-- HTMX FRONTEND -->
+        <div class="criterio">
+            <h5><i class="bi bi-window text-info me-2"></i>3. Frontend con HTMX</h5>
+            <p><strong>Descripción:</strong> Interfaz web dinámica sin JavaScript complejo, usando atributos HTMX.</p>
+
+            <h6 class="mt-3">Funcionalidades obligatorias:</h6>
+            <ul>
+                <li><strong>Lista de proyectos:</strong> <code>hx-get="/proyectos" hx-target="#lista"</code></li>
+                <li><strong>Crear proyecto:</strong> Formulario con <code>hx-post</code></li>
+                <li><strong>Lista de tareas:</strong> Por proyecto, con <code>hx-get</code></li>
+                <li><strong>Completar tarea:</strong> Botón con <code>hx-patch</code>, sin recargar página</li>
+                <li><strong>Cambiar prioridad:</strong> Selector con <code>hx-patch</code></li>
+            </ul>
+
+            <h6>Atributos HTMX a usar:</h6>
+            <ul>
+                <li><code>hx-get</code>, <code>hx-post</code>, <code>hx-patch</code></li>
+                <li><code>hx-target</code>: Donde insertar la respuesta</li>
+                <li><code>hx-swap="innerHTML"</code> o <code>outerHTML</code></li>
+                <li><code>hx-trigger="click"</code> o <code>change</code></li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Sin JavaScript personalizado:</strong> Toda la interactividad debe ser con HTMX. No escribir funciones JS para lo que HTMX ya resuelve.
+            </div>
+        </div>
+
+        <!-- TEMPLATES -->
+        <div class="criterio">
+            <h5><i class="bi bi-file-earmark-code text-secondary me-2"></i>4. Templates Jinja2</h5>
+            <p><strong>Descripción:</strong> Renderizar HTML con Jinja2, no strings en Python.</p>
+
+            <h6 class="mt-3">Templates obligatorios:</h6>
+            <ul>
+                <li><code>templates/base.html</code>: Layout base con Bootstrap 5</li>
+                <li><code>templates/index.html</code>: Página principal</li>
+                <li><code>templates/proyectos/lista.html</code>: Lista de proyectos</li>
+                <li><code>templates/proyectos/form.html</code>: Formulario crear proyecto</li>
+                <li><code>templates/tareas/lista.html</code>: Lista de tareas parcial (HTMX)</li>
+                <li><code>templates/tareas/item.html</code>: Item de tarea para HTMX</li>
+            </ul>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-code-square me-2"></i>Ejemplo de Implementación</h3>
+
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>api/main.py
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-python">from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional
+from src.domain.usuario import Usuario
+from src.domain.proyecto import Proyecto
+from src.domain.tarea import Tarea, PrioridadTarea, EstadoTarea
+
+app = FastAPI(title="TaskFlow API", version="1.0.0")
+templates = Jinja2Templates(directory="templates")
+
+# Almacenamiento en memoria (se reemplazará en E4)
+usuarios_db: dict[int, Usuario] = {}
+proyectos_db: dict[int, Proyecto] = {}
+
+
+class UsuarioCreate(BaseModel):
+    """Modelo para crear usuario."""
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr
+    nombre_completo: Optional[str] = None
+
+
+class UsuarioResponse(BaseModel):
+    """Modelo de respuesta de usuario."""
+    id: int
+    username: str
+    email: str
+    activo: bool
+
+    class Config:
+        from_attributes = True
+
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    """Página principal."""
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "proyectos": list(proyectos_db.values())}
+    )
+
+
+@app.get("/proyectos", response_class=HTMLResponse)
+async def lista_proyectos(request: Request):
+    """Lista de proyectos (parcial para HTMX)."""
+    return templates.TemplateResponse(
+        "proyectos/lista.html",
+        {"request": request, "proyectos": list(proyectos_db.values())}
+    )
+
+
+@app.post("/proyectos", response_model=dict)
+async def crear_proyecto(data: ProyectoCreate):
+    """Crear nuevo proyecto."""
+    nuevo_id = len(proyectos_db) + 1
+    lider = usuarios_db.get(data.lider_id)
+    if not lider:
+        raise HTTPException(status_code=404, detail="Líder no encontrado")
+
+    proyecto = Proyecto(
+        nombre=data.nombre,
+        descripcion=data.descripcion,
+        lider=lider
+    )
+    proyectos_db[nuevo_id] = proyecto
+    return {"id": nuevo_id, "mensaje": "Proyecto creado"}</code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>templates/tareas/item.html
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-html">&lt;div class="list-group-item d-flex justify-content-between align-items-center"
+     id="tarea-{{ tarea.id }}"&gt;
+    &lt;div&gt;
+        &lt;span class="badge bg-{{ prioridad_color }} me-2"&gt;
+            {{ tarea.prioridad.name }}
+        &lt;/span&gt;
+        &lt;span class="{% if tarea.estado == 'completada' %}text-decoration-line-through text-muted{% endif %}"&gt;
+            {{ tarea.titulo }}
+        &lt;/span&gt;
+    &lt;/div&gt;
+
+    {% if tarea.estado != 'completada' %}
+    &lt;button class="btn btn-sm btn-success"
+            hx-patch="/tareas/{{ tarea.id }}/completar"
+            hx-target="#tarea-{{ tarea.id }}"
+            hx-swap="outerHTML"&gt;
+        &lt;i class="bi bi-check-lg"&gt;&lt;/i&gt; Completar
+    &lt;/button&gt;
+    {% endif %}
+&lt;/div&gt;</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-box-seam me-2"></i>Estructura de Entrega</h3>
+        <div class="card border-primary mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-folder2-open me-2"></i>Organización de Archivos Obligatoria
+            </div>
+            <div class="card-body">
+                <div class="entregable-box"><span class="folder">src/</span>                      <span class="comment"># Dominio (de E1)</span>
+└── <span class="folder">domain/</span>                 <span class="comment"># Sin cambios</span>
+
+<span class="folder">api/</span>                        <span class="comment"># Backend FastAPI</span>
+├── <span class="folder">__init__.py</span>
+├── <span class="folder">main.py</span>               <span class="comment"># App FastAPI + rutas</span>
+├── <span class="folder">models.py</span>             <span class="comment"># Modelos Pydantic</span>
+└── <span class="folder">routes/</span>
+    ├── <span class="folder">__init__.py</span>
+    ├── <span class="folder">usuarios.py</span>         <span class="comment"># Rutas de usuarios</span>
+    ├── <span class="folder">proyectos.py</span>        <span class="comment"># Rutas de proyectos</span>
+    └── <span class="folder">tareas.py</span>           <span class="comment"># Rutas de tareas</span>
+
+<span class="folder">templates/</span>                  <span class="comment"># Templates Jinja2</span>
+├── <span class="folder">base.html</span>              <span class="comment"># Layout base con Bootstrap</span>
+├── <span class="folder">index.html</span>             <span class="comment"># Página principal</span>
+├── <span class="folder">proyectos/</span>
+│   ├── <span class="folder">lista.html</span>         <span class="comment"># Lista de proyectos</span>
+│   └── <span class="folder">form.html</span>          <span class="comment"># Formulario crear</span>
+└── <span class="folder">tareas/</span>
+    ├── <span class="folder">lista.html</span>         <span class="comment"># Lista parcial HTMX</span>
+    └── <span class="folder">item.html</span>          <span class="comment"># Item individual HTMX</span>
+
+<span class="folder">static/</span>                     <span class="comment"># CSS/JS personalizado (mínimo)</span>
+└── <span class="folder">css/</span>
+    └── <span class="folder">custom.css</span>          <span class="comment"># Estilos adicionales</span>
+
+<span class="folder">requirements.txt</span>          <span class="comment"># fastapi, uvicorn, jinja2</span>
+<span class="folder">README.md</span>                 <span class="comment"># Cómo ejecutar el servidor</span></div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-ol me-2"></i>Pasos para Completar la Evaluación</h3>
+        <div class="card border-secondary mb-4">
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="paso-num">1</span><strong>Instalar FastAPI y dependencias</strong>
+                    <p class="ms-4 mt-1 text-muted"><code>pip install fastapi uvicorn jinja2 python-multipart</code></p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">2</span><strong>Crear modelos Pydantic</strong>
+                    <p class="ms-4 mt-1 text-muted">UsuarioCreate, ProyectoCreate, TareaCreate, Response models</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">3</span><strong>Implementar endpoints de usuarios</strong>
+                    <p class="ms-4 mt-1 text-muted">GET lista, POST crear, GET por ID</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">4</span><strong>Implementar endpoints de proyectos</strong>
+                    <p class="ms-4 mt-1 text-muted">CRUD completo + agregar tareas</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">5</span><strong>Implementar endpoints de tareas</strong>
+                    <p class="ms-4 mt-1 text-muted">Completar y cambiar prioridad</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">6</span><strong>Crear templates Jinja2</strong>
+                    <p class="ms-4 mt-1 text-muted">Base layout, listas, formularios</p>
+                </div>
+                <div class="mb-0">
+                    <span class="paso-num">7</span><strong>Agregar HTMX a templates</strong>
+                    <p class="ms-4 mt-1 text-muted">Atributos hx-get, hx-post, hx-target en botones y forms</p>
                 </div>
             </div>
         </div>
 
-        <h3><i class="bi bi-bullseye me-2"></i>Objetivo</h3>
-        <p class="lead">Convertir el dominio de TaskFlow en una aplicación web interactiva usando FastAPI y HTMX.</p>
-
-        <h3 class="mt-4">Requisitos Técnicos</h3>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <div class="criterio">
-                    <h5>1. API REST (FastAPI)</h5>
-                    <ul>
-                        <li>Endpoints CRUD para todas las entidades</li>
-                        <li>Validación con Pydantic</li>
-                        <li>Status codes correctos (200, 201, 404, 422)</li>
-                        <li>Documentación en /docs funcional</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="criterio">
-                    <h5>2. Frontend (HTMX)</h5>
-                    <ul>
-                        <li>Lista de proyectos y tareas</li>
-                        <li>Formularios para crear/editar</li>
-                        <li>Botón completar sin recargar (hx-post)</li>
-                        <li>Bootstrap 5 responsivo</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <h3>Rúbrica de Evaluación</h3>
+        <h3 class="mt-4 mb-3"><i class="bi bi-award me-2"></i>Rúbrica de Evaluación (100%)</h3>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-hover">
                 <thead class="table-dark">
-                    <tr><th>Criterio</th><th>Peso</th></tr>
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Excelente (5.0)</th>
+                        <th>Aceptable (3.5)</th>
+                        <th>Insuficiente</th>
+                        <th>Peso</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <tr><td>API REST funcional</td><td class="fw-bold text-success">30%</td></tr>
-                    <tr><td>Interfaz HTMX sin recargas</td><td class="fw-bold text-success">25%</td></tr>
-                    <tr><td>Diseño responsivo Bootstrap</td><td class="fw-bold text-success">20%</td></tr>
-                    <tr><td>Integración E1+E2</td><td class="fw-bold text-success">15%</td></tr>
-                    <tr><td>Documentación /docs</td><td class="fw-bold text-success">10%</td></tr>
+                    <tr>
+                        <td><strong>API REST</strong></td>
+                        <td>Todos los endpoints funcionan, status codes correctos, /docs completo</td>
+                        <td>Endpoints básicos, algunos status incorrectos</td>
+                        <td>API incompleta o no funciona</td>
+                        <td class="fw-bold text-success">30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frontend HTMX</strong></td>
+                        <td>Sin recargas, hx-post/get/patch bien usados, UX fluida</td>
+                        <td>Algunas recargas, HTMX parcial</td>
+                        <td>Sin HTMX o JavaScript puro</td>
+                        <td class="fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Templates Jinja2</strong></td>
+                        <td>Templates organizados, herencia base.html, sin HTML en Python</td>
+                        <td>Templates básicos sin herencia</td>
+                        <td>HTML como strings en Python</td>
+                        <td class="fw-bold text-success">20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diseño Bootstrap</strong></td>
+                        <td>Responsivo, profesional, formularios y tablas bien estilados</td>
+                        <td>Diseño funcional pero básico</td>
+                        <td>Sin Bootstrap o diseño roto</td>
+                        <td class="fw-bold text-success">15%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integración E1+E2</strong></td>
+                        <td>Usa dominio real de E1, tests de E2 pasan</td>
+                        <td>Dominio copiado/modificado</td>
+                        <td>No usa el dominio de E1</td>
+                        <td class="fw-bold text-success">10%</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="alert alert-warning">
-            <h6>❌ Prohibiciones:</h6>
+        <div class="penalizacion">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Penalizaciones</h5>
             <ul class="mb-0">
-                <li>Usar JavaScript puro en lugar de HTMX</li>
-                <li>No usar Jinja2 (strings HTML en Python)</li>
-                <li>Errores 500 sin manejo</li>
+                <li><strong>Usar JavaScript puro:</strong> -1.5 puntos (debe usar HTMX)</li>
+                <li><strong>HTML en strings Python:</strong> -1.0 punto (usar Jinja2)</li>
+                <li><strong>Errores 500 sin manejo:</strong> -0.5 por cada endpoint sin try/except</li>
+                <li><strong>Sin /docs funcional:</strong> -0.5 puntos</li>
+                <li><strong>Diseño no responsivo:</strong> -0.5 puntos</li>
             </ul>
+        </div>
+
+        <div class="alert alert-warning mt-4">
+            <h5><i class="bi bi-link-45deg me-2"></i>Conexión con E4</h5>
+            <p class="mb-0">El prototipo que construyas aquí <strong>perderá datos al reiniciar</strong>. En <a href="evaluacion-04-archivos.html">E4: Persistencia</a> agregarás almacenamiento en archivos JSON.</p>
         </div>
 
         <div class="mt-4">
@@ -159,5 +457,12 @@
             <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
         </div>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js para syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
 </body>
 </html>
