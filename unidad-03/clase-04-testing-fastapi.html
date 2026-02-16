@@ -6,6 +6,7 @@
     <title>Clase 11: Testing FastAPI | IF0100</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
         header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
@@ -23,7 +24,13 @@
             <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
             <h3>Clase 11: Testing de APIs</h3>
-            <p class="mt-2"><span class="badge bg-info">E3: Proyecto Web - Esta semana</span></p>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 21 de abril de 2026</span>
+                <span class="badge bg-info text-dark">Semana 12 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2"><span class="badge bg-danger">E4: Lab Persistencia - Jueves 23/04/2026 (2 días)</span></p>
         </div>
     </header>
 
@@ -291,9 +298,28 @@ def test_eliminar_tarea_de_otro_usuario(client):
         </div>
     </div>
 
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-03-dependencias.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Dependencias
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 14 de 25</span>
+            </div>
+            <div>
+                <a href="clase-05-persistencia-datos.html" class="btn btn-primary btn-sm">
+                    Siguiente: Persistencia →
+                </a>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-03-dependencias.html">← Anterior</a> | <a href="clase-05-persistencia-datos.html">Siguiente: Persistencia →</a></p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
 
