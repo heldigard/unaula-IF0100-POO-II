@@ -48,7 +48,8 @@
                         <li><a href="#listas" class="text-decoration-none">Listas</a></li>
                         <li><a href="#diccionarios" class="text-decoration-none">Diccionarios</a></li>
                         <li><a href="#tuplas" class="text-decoration-none">Tuplas y Sets</a></li>
-                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#github" class="text-decoration-none">GitHub: Subir Código</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Laboratorios</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -248,6 +249,134 @@ print(f"Edad promedio: {promedio}")
                             <li>Elimina un contacto</li>
                         </ol>
                         <p class="mt-2"><strong>Desafío:</strong> Usa <code>.get()</code> para buscar un contacto que no existe y mostrar "No encontrado".</p>
+                    </div>
+                </section>
+
+                <!-- GITHUB -->
+                <section id="github">
+                    <h2 class="text-primary border-bottom pb-2">GitHub: Subir Código a la Nube (20 min)</h2>
+                    
+                    <p>Ahora que tienes commits locales, es momento de subirlos a <strong>GitHub</strong>.</p>
+
+                    <h4>1. Conectar tu Repo Local con GitHub</h4>
+                    <pre><code class="language-bash"># Ver la URL de tu repo en GitHub (botón verde "Code")
+# Luego en tu terminal local:
+
+# Agregar remoto (reemplaza con tu URL)
+git remote add origin https://github.com/tuusuario/poo2-practicas.git
+
+# Verificar que se agregó
+git remote -v</code></pre>
+
+                    <h4>2. Subir Código (Push)</h4>
+                    <pre><code class="language-bash"># Subir tus commits a GitHub
+git push -u origin main
+
+# En el futuro, solo necesitarás:
+git push</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Nota:</strong> Si usas Windows y tienes problemas de autenticación, configura <strong>Git Credential Manager</strong> o usa un <strong>Personal Access Token</strong>.
+                    </div>
+
+                    <h4>3. Clonar un Repositorio</h4>
+                    <pre><code class="language-bash"># Descargar un repo existente de GitHub
+git clone https://github.com/usuario/repo.git
+
+# Entrar a la carpeta
+cd repo
+
+# Ver los commits
+git log --oneline</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Práctico: Sube tu Código (15 min)</h5>
+                        <p class="mb-2">Completa el flujo Git → GitHub:</p>
+                        <ol class="mb-0">
+                            <li>Asegúrate de tener commits locales de la clase anterior</li>
+                            <li>En GitHub, copia la URL HTTPS de tu repo</li>
+                            <li>En terminal: <code>git remote add origin TU_URL</code></li>
+                            <li>Verifica: <code>git remote -v</code></li>
+                            <li>Sube código: <code>git push -u origin main</code></li>
+                            <li>Ve a GitHub y verifica que tus archivos aparecen</li>
+                            <li>En GitHub, edita el README.md agregando tu nombre</li>
+                            <li>En terminal local: <code>git pull</code> para descargar el cambio</li>
+                        </ol>
+                    </div>
+
+                    <h4>4. Flujo de Trabajo Completo</h4>
+                    <pre><code class="language-bash"># Tu día a día con Git:
+
+# 1. Trabajar en tu código
+...
+
+# 2. Ver qué cambió
+git status
+git diff
+
+# 3. Preparar cambios
+git add .
+
+# 4. Guardar versión
+git commit -m "feat: nuevo sistema de inventario"
+
+# 5. Subir a GitHub
+git push
+
+# 6. Si alguien más modificó el código
+git pull</code></pre>
+
+                    <h4>5. README.md Profesional</h4>
+                    <p>El archivo README es la carta de presentación de tu proyecto:</p>
+                    <pre><code class="language-markdown"># POO2 - Prácticas
+
+Repositorio de prácticas de Programación Orientada a Objetos II.
+
+## 📁 Estructura
+
+```
+clase-01/       # Estructuras de control
+clase-02/       # Estructuras de datos
+clase-03/       # Clases y objetos
+```
+
+## 🚀 Cómo ejecutar
+
+```bash
+python clase-01/sistema_usuarios.py
+```
+
+## 📚 Contenido
+
+- Clase 1: Condicionales y bucles
+- Clase 2: Listas, diccionarios, tuplas
+- Clase 3: POO con Python
+
+## ✏️ Autor
+
+[Tu Nombre] - 2026</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio: Mejora tu README (10 min)</h5>
+                        <p class="mb-2">Edita tu README.md para que sea profesional:</p>
+                        <ol class="mb-0">
+                            <li>Cambia el título y agrega descripción</li>
+                            <li>Agrega sección de estructura de carpetas</li>
+                            <li>Agrega instrucciones de ejecución</li>
+                            <li>Agrega tu nombre al final</li>
+                            <li>Guarda, commit y push</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Comandos clave de GitHub:</strong>
+                        <ul class="mb-0">
+                            <li><code>git remote add origin URL</code> - Conectar con GitHub</li>
+                            <li><code>git push -u origin main</code> - Subir primera vez</li>
+                            <li><code>git push</code> - Subir cambios</li>
+                            <li><code>git pull</code> - Descargar cambios</li>
+                            <li><code>git clone URL</code> - Descargar repo nuevo</li>
+                        </ul>
                     </div>
                 </section>
 

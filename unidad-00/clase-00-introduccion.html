@@ -45,11 +45,12 @@
                     <h5>Contenido</h5>
                     <ul class="list-unstyled">
                         <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
-                        <li><a href="#instalacion" class="text-decoration-none">Instalación</a></li>
+                        <li><a href="#instalacion" class="text-decoration-none">Instalación Python/VSCode</a></li>
+                        <li><a href="#git-intro" class="text-decoration-none">Git y GitHub</a></li>
                         <li><a href="#variables" class="text-decoration-none">Variables y Tipos</a></li>
                         <li><a href="#operadores" class="text-decoration-none">Operadores</a></li>
                         <li><a href="#entrada" class="text-decoration-none">Input/Output</a></li>
-                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Laboratorios</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -92,6 +93,65 @@
                     </div>
                 </section>
 
+                <!-- GIT INTRODUCCIÓN -->
+                <section id="git-intro">
+                    <h2 class="text-primary border-bottom pb-2">Introducción a Git y GitHub (15 min)</h2>
+                    
+                    <p><strong>Git</strong> es un sistema de control de versiones que te permite:</p>
+                    <ul>
+                        <li>Guardar el historial de cambios de tu código</li>
+                        <li>Volver a versiones anteriores si algo falla</li>
+                        <li>Trabajar en equipo sin sobrescribir el trabajo de otros</li>
+                        <li>Subir tu código a la nube (GitHub)</li>
+                    </ul>
+
+                    <h4>1. Instalar Git</h4>
+                    <ol>
+                        <li>Ve a <a href="https://git-scm.com" target="_blank">git-scm.com</a></li>
+                        <li>Descarga e instala Git</li>
+                        <li>Verifica en terminal: <code>git --version</code></li>
+                    </ol>
+
+                    <h4>2. Configurar Git</h4>
+                    <pre><code class="language-bash"># Configurar tu nombre (aparecerá en tus commits)
+git config --global user.name "Tu Nombre"
+
+# Configurar tu email (usa el mismo de GitHub)
+git config --global user.email "tu@email.com"
+
+# Verificar configuración
+git config --list</code></pre>
+
+                    <h4>3. Crear cuenta en GitHub</h4>
+                    <ol>
+                        <li>Ve a <a href="https://github.com" target="_blank">github.com</a></li>
+                        <li>Crea una cuenta gratuita con tu email institucional</li>
+                        <li>Verifica tu email</li>
+                    </ol>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido: Tu Primer Repositorio (10 min)</h5>
+                        <p class="mb-2">Sigue estos pasos para crear tu primer repo:</p>
+                        <ol class="mb-0">
+                            <li>En GitHub, haz clic en "New Repository"</li>
+                            <li>Nombra: <code>poo2-practicas</code></li>
+                            <li>Marca "Add a README file"</li>
+                            <li>Haz clic en "Create repository"</li>
+                            <li>Copia la URL del repo (botón verde "Code")</li>
+                        </ol>
+                        <p class="mt-2 mb-0"><strong>Resultado:</strong> Tendrás tu repositorio en la nube donde subirás todos los ejercicios.</p>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Conceptos clave:</strong>
+                        <ul>
+                            <li><strong>Repositorio:</strong> Carpeta que Git controla</li>
+                            <li><strong>Commit:</strong> Foto de tu código en un momento específico</li>
+                            <li><strong>GitHub:</strong> Servicio en la nube para almacenar repos</li>
+                        </ul>
+                    </div>
+                </section>
+
                 <!-- VARIABLES -->
                 <section id="variables">
                     <h2 class="text-primary border-bottom pb-2">Variables y Tipos de Datos (20 min)</h2>
@@ -118,6 +178,17 @@ esta_completado = False
 # None (sin valor)
 resultado = None</code></pre>
 
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Tipos de Datos (5 min)</h5>
+                        <p class="mb-2">Abre VSCode y crea un archivo <code>ejercicio1.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea 3 variables: tu nombre (str), tu edad (int), tu altura (float)</li>
+                            <li>Usa <code>type()</code> para verificar el tipo de cada una</li>
+                            <li>Imprime los valores con f-strings</li>
+                        </ol>
+                        <p class="mt-2 mb-0"><strong>Verificación:</strong> ¿Coinciden los tipos con lo que esperabas?</p>
+                    </div>
+
                     <h4>Conversión entre Tipos</h4>
                     <pre><code class="language-python"># Convertir a entero
 edad = int("25")        # 25
@@ -133,14 +204,18 @@ texto = str(100)        # "100"</code></pre>
                     </div>
 
                     <div class="alert-tip">
-                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Tipos de Datos (5 min)</h5>
-                        <p class="mb-2">Abre VSCode y crea un archivo <code>ejercicio1.py</code>:</p>
-                        <ol class="mb-0">
-                            <li>Crea 3 variables: tu nombre (str), tu edad (int), tu altura (float)</li>
-                            <li>Usa <code>type()</code> para verificar el tipo de cada una</li>
-                            <li>Imprime los valores con f-strings</li>
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Calculadora Geométrica (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio2.py</code>:</p>
+                        <ol class="mb-2">
+                            <li>Pide al usuario el radio de un círculo</li>
+                            <li>Calcula el área: <code>area = 3.14159 * radio ** 2</code></li>
+                            <li>Calcula el perímetro: <code>perimetro = 2 * 3.14159 * radio</code></li>
+                            <li>Muestra los resultados formateados a 2 decimales</li>
                         </ol>
-                        <p class="mt-2 mb-0"><strong>Verificación:</strong> ¿Coinciden los tipos con lo que esperabas?</p>
+                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
+                        <pre class="mb-0 bg-light p-2"><code>Radio: 5
+Área: 78.54
+Perímetro: 31.42</code></pre>
                     </div>
                 </section>
 
@@ -159,6 +234,16 @@ texto = str(100)        # "100"</code></pre>
                         <tr><td><code>**</code></td><td>Potencia</td><td><code>2 ** 3 = 8</code></td></tr>
                     </table>
 
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Mini Calculadora (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio3.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Pide dos números al usuario</li>
+                            <li>Muestra: suma, resta, multiplicación, división, módulo</li>
+                            <li>Usa f-strings para formatear resultados a 2 decimales</li>
+                        </ol>
+                    </div>
+
                     <h4>Comparación (retornan True/False)</h4>
                     <table class="table table-sm">
                         <tr><td><code>==</code></td><td>Igual</td><td><code>5 == 5 → True</code></td></tr>
@@ -168,18 +253,14 @@ texto = str(100)        # "100"</code></pre>
                     </table>
 
                     <div class="alert-tip">
-                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Calculadora Geométrica (5 min)</h5>
-                        <p class="mb-2">En tu archivo <code>ejercicio2.py</code>:</p>
-                        <ol class="mb-2">
-                            <li>Pide al usuario el radio de un círculo</li>
-                            <li>Calcula el área: <code>area = 3.14159 * radio ** 2</code></li>
-                            <li>Calcula el perímetro: <code>perimetro = 2 * 3.14159 * radio</code></li>
-                            <li>Muestra los resultados formateados a 2 decimales</li>
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 4: Comparador de Edades (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio4.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Pide la edad de dos personas</li>
+                            <li>Compara quién es mayor usando operadores de comparación</li>
+                            <li>Muestra si son de la misma edad</li>
+                            <li>Muestra si la diferencia es menor a 5 años</li>
                         </ol>
-                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
-                        <pre class="mb-0 bg-light p-2"><code>Radio: 5
-Área: 78.54
-Perímetro: 31.42</code></pre>
                     </div>
                 </section>
 
@@ -203,6 +284,16 @@ print(f"Hola, {nombre}. Tienes {edad} años.")
 precio = 19.999
 print(f"Precio: ${precio:.2f}")  # Precio: $20.00</code></pre>
 
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 5: Formato de Factura (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio5.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea variables: producto, cantidad, precio_unitario</li>
+                            <li>Calcula subtotal, IVA (19%), total</li>
+                            <li>Muestra una factura formateada con alineación</li>
+                        </ol>
+                    </div>
+
                     <h4>Leer información (input)</h4>
                     <pre><code class="language-python"># Leer texto
 nombre = input("¿Cuál es tu nombre? ")
@@ -214,8 +305,8 @@ altura = float(input("¿Cuánto mides (metros)? "))
 print(f"Hola {nombre}, tienes {edad} años y mides {altura}m")</code></pre>
 
                     <div class="alert-tip">
-                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Conversor de Temperatura (5 min)</h5>
-                        <p class="mb-2">En tu archivo <code>ejercicio3.py</code>:</p>
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 6: Conversor de Temperatura (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio6.py</code>:</p>
                         <ol class="mb-2">
                             <li>Pide al usuario una temperatura en Celsius</li>
                             <li>Convierte a Fahrenheit: <code>F = (C × 9/5) + 32</code></li>
@@ -410,7 +501,7 @@ print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}
                         <div class="col-md-6">
                             <div class="card mb-3">
                                 <div class="card-header bg-primary text-white">
-                                    <strong>Ejercicio 4: Conversor de Monedas</strong>
+                                    <strong>Ejercicio 7: Conversor de Monedas</strong>
                                 </div>
                                 <div class="card-body">
                                     <p>Crea un conversor USD ↔ COP. Usa tasa de cambio actual (ej: 1 USD = 4,000 COP).</p>
@@ -425,7 +516,7 @@ print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}
                         <div class="col-md-6">
                             <div class="card mb-3">
                                 <div class="card-header bg-success text-white">
-                                    <strong>Ejercicio 5: Calculadora de Propinas</strong>
+                                    <strong>Ejercicio 8: Calculadora de Propinas</strong>
                                 </div>
                                 <div class="card-body">
                                     <p>Calcula la propina y el total a pagar en un restaurante.</p>
@@ -444,7 +535,7 @@ print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}
                         <div class="col-md-6">
                             <div class="card mb-3">
                                 <div class="card-header bg-info text-white">
-                                    <strong>Ejercicio 6: Calculadora de Interés Simple</strong>
+                                    <strong>Ejercicio 9: Calculadora de Interés Simple</strong>
                                 </div>
                                 <div class="card-body">
                                     <p>Calcula el interés simple y el monto final de una inversión.</p>
@@ -460,7 +551,7 @@ print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}
                         <div class="col-md-6">
                             <div class="card mb-3">
                                 <div class="card-header bg-warning text-dark">
-                                    <strong>Ejercicio 7: Divisor de Cuentas</strong>
+                                    <strong>Ejercicio 10: Divisor de Cuentas</strong>
                                 </div>
                                 <div class="card-body">
                                     <p>Divide una cuenta entre varias personas considerando quién consumió qué.</p>

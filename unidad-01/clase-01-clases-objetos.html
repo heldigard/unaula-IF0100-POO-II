@@ -49,6 +49,7 @@
                         <li><a href="#init" class="text-decoration-none">Constructor __init__</a></li>
                         <li><a href="#self" class="text-decoration-none">El parámetro self</a></li>
                         <li><a href="#metodos" class="text-decoration-none">Métodos</a></li>
+                        <li><a href="#git-avanzado" class="text-decoration-none">Git: Ramas y Merge</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio: Clase Usuario</a></li>
                     </ul>
                 </nav>
@@ -635,6 +636,169 @@ while True:
                     </ol>
                 </section>
 
+                <!-- GIT AVANZADO -->
+                <section id="git-avanzado">
+                    <h2 class="text-primary border-bottom pb-2">Git: Ramas (Branches) y Merge (20 min)</h2>
+                    
+                    <p>Las <strong>ramas</strong> te permiten desarrollar funcionalidades aisladas sin afectar el código principal.</p>
+
+                    <h4>¿Qué son las Ramas?</h4>
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> Imagina que estás escribiendo un libro. La rama <code>main</code> es la versión publicada. Cuando quieres agregar un capítulo nuevo, creas una copia (rama), trabajas en ella, y cuando está listo la fusionas (merge) con el libro principal.
+                    </div>
+
+                    <h4>Comandos de Ramas</h4>
+                    <pre><code class="language-bash"># Ver en qué rama estás
+git branch
+
+# Crear nueva rama
+git branch nombre-rama
+
+# Cambiar a una rama
+git checkout nombre-rama
+
+# Crear y cambiar en un solo paso
+git checkout -b nombre-rama
+
+# Ver todas las ramas (locales y remotas)
+git branch -a</code></pre>
+
+                    <h4>Flujo de Trabajo con Ramas</h4>
+                    <pre><code class="language-bash"># 1. Estás en main y todo funciona
+git checkout main
+
+# 2. Creas rama para nueva funcionalidad
+git checkout -b feature/clase-usuario
+
+# 3. Trabajas en tu código (creas archivos, modificas, etc.)
+# ... código código código ...
+
+# 4. Guardas cambios en la rama
+git add .
+git commit -m "feat: agregada clase Usuario con validaciones"
+
+# 5. Vuelves a main
+git checkout main
+
+# 6. Fusionas la rama
+git merge feature/clase-usuario
+
+# 7. Opcional: eliminar rama ya fusionada
+git branch -d feature/clase-usuario</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Práctico: Tu Primera Rama (15 min)</h5>
+                        <p class="mb-2">Vamos a crear una nueva funcionalidad usando ramas:</p>
+                        <ol class="mb-0">
+                            <li>En tu repo local: <code>git status</code> (deberías estar en main)</li>
+                            <li>Crea rama: <code>git checkout -b feature/clase-cuenta-bancaria</code></li>
+                            <li>Crea el archivo <code>clase-03/cuenta_bancaria.py</code> con la clase CuentaBancaria</li>
+                            <li>Prueba que funcione</li>
+                            <li>Agrega a Git: <code>git add .</code></li>
+                            <li>Commit: <code>git commit -m "feat: agregada clase CuentaBancaria"</code></li>
+                            <li>Vuelve a main: <code>git checkout main</code></li>
+                            <li>Fusiona: <code>git merge feature/clase-cuenta-bancaria</code></li>
+                            <li>Sube a GitHub: <code>git push</code></li>
+                            <li>Verifica en GitHub que aparecen los archivos</li>
+                        </ol>
+                    </div>
+
+                    <h4>Resolución de Conflictos Básica</h4>
+                    <p>A veces al hacer merge aparecen conflictos cuando dos personas modificaron las mismas líneas:</p>
+                    <pre><code class="language-bash"># Intentas hacer merge
+$ git merge otra-rama
+
+# Aparece conflicto
+Auto-merging archivo.py
+CONFLICT (content): Merge conflict in archivo.py
+Automatic merge failed; fix conflicts and then commit the result.
+
+# Abres el archivo y verás marcadores:
+<<<<<<< HEAD
+print("Mi versión")
+=======
+print("Otra versión")
+>>>>>>> otra-rama
+
+# Editas y eliges qué quedarse
+print("Versión final combinada")
+
+# Guardas y completas el merge
+git add archivo.py
+git commit -m "Merge: resuelto conflicto en archivo.py"</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Tip:</strong> Los conflictos son normales en trabajo colaborativo. Siempre revisa cuidadosamente qué código conservar.
+                    </div>
+
+                    <h4>Git Ignore para Python</h4>
+                    <p>Actualiza tu <code>.gitignore</code> para proyectos Python más profesionales:</p>
+                    <pre><code class="language-bash"># Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
+.env.local</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio: Flujo Completo (10 min)</h5>
+                        <p class="mb-2">Practica el flujo profesional completo:</p>
+                        <ol class="mb-0">
+                            <li>Crea una rama <code>feature/mejora-readme</code></li>
+                            <li>Mejora tu README.md con emojis y mejor formato</li>
+                            <li>Commit: <code>git commit -m "docs: mejorado README con formato profesional"</code></li>
+                            <li>Merge a main</li>
+                            <li>Push a GitHub</li>
+                            <li>Verifica que el README se ve bien en GitHub</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Convención de Nombres de Ramas:</strong>
+                        <ul class="mb-0">
+                            <li><code>feature/nueva-funcionalidad</code> - Nueva característica</li>
+                            <li><code>fix/correccion-bug</code> - Corrección de error</li>
+                            <li><code>docs/actualizacion-readme</code> - Documentación</li>
+                            <li><code>refactor/mejorar-codigo</code> - Refactorización</li>
+                        </ul>
+                    </div>
+                </section>
+
                 <!-- EJERCICIOS ADICIONALES -->
                 <section>
                     <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (10 min)</h2>
@@ -677,6 +841,7 @@ while True:
                 <section>
                     <h2 class="text-primary border-bottom pb-2">Resumen</h2>
                     
+                    <h4 class="mt-4">Python - POO</h4>
                     <ul>
                         <li><strong>Clase:</strong> Plantilla que define atributos y métodos</li>
                         <li><strong>Objeto:</strong> Instancia creada a partir de una clase</li>
@@ -685,6 +850,34 @@ while True:
                         <li><strong>Atributos:</strong> Variables que almacenan datos del objeto</li>
                         <li><strong>Métodos:</strong> Funciones que definen comportamientos del objeto</li>
                     </ul>
+
+                    <h4 class="mt-4">Git - Ramas</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Comando</th>
+                            <th>Función</th>
+                        </tr>
+                        <tr>
+                            <td><code>git branch</code></td>
+                            <td>Ver ramas existentes</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout -b nombre</code></td>
+                            <td>Crear y cambiar a rama</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout main</code></td>
+                            <td>Cambiar a main</td>
+                        </tr>
+                        <tr>
+                            <td><code>git merge rama</code></td>
+                            <td>Fusionar rama a actual</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch -d rama</code></td>
+                            <td>Eliminar rama fusionada</td>
+                        </tr>
+                    </table>
                     
                     <div class="alert-tip">
                         <strong>Para el examen E1:</strong> Practica crear clases con __init__, atributos y métodos. Será parte de la evaluación.
