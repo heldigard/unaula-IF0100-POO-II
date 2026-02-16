@@ -3,21 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glosario Técnico | IF0100</title>
+    <title>Glosario Técnico Completo | IF0100</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        :root { --primary: #0d6efd; --dark: #212529; }
-        header { background: var(--dark); color: white; padding: 2rem 0; }
-        .term { color: var(--primary); font-weight: bold; font-size: 1.2rem; }
+        :root { --primary: #0d6efd; --dark: #212529; --success: #198754; --warning: #ffc107; --info: #0dcaf0; --purple: #6f42c1; }
+        header { background: linear-gradient(135deg, var(--dark) 0%, #495057 100%); color: white; padding: 3rem 0; }
+        .term { color: var(--primary); font-weight: bold; font-size: 1.1rem; }
+        .term-acronym { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.9rem; margin-right: 8px; }
+        .category-header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 1rem; margin-top: 2rem; margin-bottom: 1rem; border-radius: 8px; }
+        .category-header.poo { background: linear-gradient(135deg, #dc3545 0%, #a71d2a 100%); }
+        .category-header.testing { background: linear-gradient(135deg, var(--purple) 0%, #4a2c7a 100%); }
+        .category-header.web { background: linear-gradient(135deg, #fd7e14 0%, #c75a00 100%); }
+        .category-header.db { background: linear-gradient(135deg, var(--info) 0%, #055160 100%); }
+        .category-header.arch { background: linear-gradient(135deg, var(--success) 0%, #0f5132 100%); }
+        .category-header.tools { background: linear-gradient(135deg, #6c757d 0%, #495057 100%); }
         section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .acronym-item { padding: 0.75rem; border-left: 4px solid var(--primary); background: #f8f9fa; margin-bottom: 0.5rem; border-radius: 0 4px 4px 0; }
+        .acronym-item.poo { border-left-color: #dc3545; }
+        .acronym-item.testing { border-left-color: var(--purple); }
+        .acronym-item.web { border-left-color: #fd7e14; }
+        .acronym-item.db { border-left-color: var(--info); }
+        .acronym-item.arch { border-left-color: var(--success); }
+        .example { font-style: italic; color: #6c757d; font-size: 0.9rem; margin-top: 0.25rem; }
+        .quick-nav { position: sticky; top: 20px; }
+        .nav-link-custom { padding: 0.5rem 1rem; border-radius: 4px; margin-bottom: 0.25rem; }
+        .nav-link-custom:hover { background: #e9ecef; }
     </style>
 </head>
 <body class="bg-light">
     <header class="text-center">
         <div class="container">
-            <h1><i class="bi bi-book me-2"></i>Glosario de Términos</h1>
-            <p class="lead">Diccionario de acrónimos y conceptos del curso IF0100</p>
+            <h1><i class="bi bi-book me-2"></i>Glosario de Términos Técnicos</h1>
+            <p class="lead mb-0">Diccionario completo de acrónimos y conceptos del curso IF0100</p>
+            <small>Proyecto TaskFlow | Python / FastAPI / SQLAlchemy</small>
         </div>
     </header>
 
@@ -29,36 +48,536 @@
             </ol>
         </nav>
 
-        <section>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <p><span class="term">POO:</span> <strong>Programación Orientada a Objetos.</strong> Paradigma basado en el uso de objetos que interactúan entre sí.</p>
-                    <p><span class="term">TDD:</span> <strong>Test-Driven Development.</strong> Desarrollo guiado por pruebas (escribir el test antes que el código).</p>
-                    <p><span class="term">BDD:</span> <strong>Behavior-Driven Development.</strong> Desarrollo guiado por comportamiento (usando lenguaje Gherkin).</p>
-                    <p><span class="term">DDD:</span> <strong>Domain-Driven Design.</strong> Diseño orientado al dominio (enfocarse en la lógica de negocio).</p>
-                    <p><span class="term">API:</span> <strong>Application Programming Interface.</strong> Conjunto de reglas que permiten que dos aplicaciones se comuniquen.</p>
-                </div>
-                <div class="col-md-6">
-                    <p><span class="term">ORM:</span> <strong>Object-Relational Mapping.</strong> Técnica para mapear objetos de código a tablas de base de datos SQL.</p>
-                    <p><span class="term">JWT:</span> <strong>JSON Web Token.</strong> Estándar para transmitir información de forma segura para autenticación.</p>
-                    <p><span class="term">HTMX:</span> Librería que permite acceder a funciones AJAX y transiciones directamente desde HTML.</p>
-                    <p><span class="term">DTO:</span> <strong>Data Transfer Object.</strong> Objetos simples usados para transportar datos entre capas (en Python usamos Pydantic).</p>
-                    <p><span class="term">MRO:</span> <strong>Method Resolution Order.</strong> El orden en que Python busca métodos en jerarquías de herencia múltiple.</p>
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3">
+                <div class="quick-nav">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <i class="bi bi-list me-2"></i>Categorías
+                        </div>
+                        <div class="card-body p-2">
+                            <a href="#poo" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-danger me-2" style="font-size: 0.5rem;"></i>POO y Principios</a>
+                            <a href="#testing" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-purple me-2" style="font-size: 0.5rem;"></i>Testing y Calidad</a>
+                            <a href="#web" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-warning me-2" style="font-size: 0.5rem;"></i>Web y APIs</a>
+                            <a href="#db" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-info me-2" style="font-size: 0.5rem;"></i>Bases de Datos</a>
+                            <a href="#arch" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-success me-2" style="font-size: 0.5rem;"></i>Arquitectura</a>
+                            <a href="#python" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-primary me-2" style="font-size: 0.5rem;"></i>Python Específico</a>
+                            <a href="#tools" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-secondary me-2" style="font-size: 0.5rem;"></i>Herramientas</a>
+                            <a href="#project" class="nav-link-custom d-block text-decoration-none"><i class="bi bi-circle-fill text-dark me-2" style="font-size: 0.5rem;"></i>Proyecto TaskFlow</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <section>
-            <h3 class="border-bottom pb-2">Conceptos de Arquitectura</h3>
-            <p><span class="term">Clean Architecture:</span> Arquitectura limpia que busca la independencia de frameworks y bases de datos.</p>
-            <p><span class="term">Patrón Repository:</span> Abstracción que desacopla la lógica de negocio del acceso real a los datos (archivos o SQL).</p>
-        </section>
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                
+                <!-- Category: POO and Principles -->
+                <h2 id="poo" class="category-header poo"><i class="bi bi-box-seam me-2"></i>1. Programación Orientada a Objetos y Principios</h2>
+                
+                <div class="acronym-item poo">
+                    <span class="term">POO:</span> <strong>Programación Orientada a Objetos.</strong> Paradigma donde el software se estructura como objetos que encapsulan datos (atributos) y comportamientos (métodos). Los cuatro pilares son: encapsulamiento, herencia, polimorfismo y abstracción.
+                    <div class="example">Ejemplo: En TaskFlow, `Usuario`, `Proyecto` y `Tarea` son objetos con sus propios datos y comportamientos.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">SOLID:</span> <strong>5 Principios de Diseño.</strong> 
+                    <ul class="mb-0 mt-1">
+                        <li><strong>S</strong>ingle Responsibility: Una clase = una responsabilidad</li>
+                        <li><strong>O</strong>pen/Closed: Abierto a extensión, cerrado a modificación</li>
+                        <li><strong>L</strong>iskov Substitution: Clases hijas sustituibles por padres</li>
+                        <li><strong>I</strong>nterface Segregation: Interfaces pequeñas y específicas</li>
+                        <li><strong>D</strong>ependency Inversion: Depender de abstracciones, no concreciones</li>
+                    </ul>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">DRY:</span> <strong>Don't Repeat Yourself.</strong> Principio que busca eliminar duplicación de código. Si repites lógica, extrae a una función/clase.
+                    <div class="example">Ejemplo: Si validas emails en 3 lugares, crea una función `validar_email()` reutilizable.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">KISS:</span> <strong>Keep It Simple, Stupid.</strong> Mantén el código simple y directo. La simplicidad es mejor que la complejidad innecesaria.
+                    <div class="example">Ejemplo: Usa una lista simple en lugar de una estructura de datos compleja si no es necesario.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">YAGNI:</span> <strong>You Ain't Gonna Need It.</strong> No implementes funcionalidades que crees que podrías necesitar en el futuro. Implementa solo lo que necesitas AHORA.
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">OOP:</span> <strong>Object-Oriented Programming.</strong> Versión en inglés de POO.
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Encapsulamiento:</span> Ocultar los detalles internos de un objeto y exponer solo lo necesario mediante interfaces públicas. En Python se usa el prefijo `_` (protegido) o `__` (privado).
+                    <div class="example">Ejemplo: `usuario._password` es protegido, no debería accederse directamente desde fuera.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Herencia:</span> Mecanismo donde una clase (hija) hereda atributos y métodos de otra (padre). Permite reutilización y especialización.
+                    <div class="example">Ejemplo: `UsuarioAdmin` hereda de `Usuario` pero añade permisos especiales.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Polimorfismo:</span> Capacidad de diferentes objetos de responder al mismo mensaje de diferentes formas. Permite tratar objetos de diferentes clases de manera uniforme.
+                    <div class="example">Ejemplo: Tanto `Usuario` como `Proyecto` podrían tener método `to_dict()`, cada uno implementándolo a su manera.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Abstracción:</span> Proceso de identificar características esenciales de un objeto y ignorar detalles irrelevantes. Las clases abstractas definen interfaces sin implementación.
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">MRO:</span> <strong>Method Resolution Order.</strong> Orden en que Python busca métodos en jerarquías de herencia múltiple. Se puede consultar con `Clase.__mro__`.
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">ABC:</span> <strong>Abstract Base Class.</strong> Clase abstracta en Python (módulo `abc`). No puede instanciarse, solo heredarse. Define métodos que las subclases deben implementar.
+                    <div class="example">Ejemplo: `IRepository` como ABC con método abstracto `save()`.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Property / @property:</span> Decorador que permite acceder a métodos como atributos, implementando getters, setters y deleters controlados.
+                    <div class="example">Ejemplo: `@property def email(self):` permite acceder como `usuario.email` en lugar de `usuario.email()`.</div>
+                </div>
+
+                <div class="acronym-item poo">
+                    <span class="term">Type Hints:</span> Anotaciones de tipo en Python (PEP 484). Indican qué tipos de datos se esperan (no son obligatorias en runtime pero ayudan al desarrollo).
+                    <div class="example">Ejemplo: `def crear_usuario(nombre: str, edad: int) -> Usuario:`</div>
+                </div>
+
+                <!-- Category: Testing and Quality -->
+                <h2 id="testing" class="category-header testing"><i class="bi bi-bug me-2"></i>2. Testing, TDD y Calidad de Código</h2>
+
+                <div class="acronym-item testing">
+                    <span class="term">TDD:</span> <strong>Test-Driven Development.</strong> Desarrollo guiado por pruebas. Ciclo Red-Green-Refactor: 1) Escribe test que falla, 2) Escribe código mínimo para pasar, 3) Refactoriza.
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">BDD:</span> <strong>Behavior-Driven Development.</strong> Desarrollo guiado por comportamiento. Usa lenguaje Gherkin (Given-When-Then) para describir comportamiento en términos de negocio.
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">DDD:</span> <strong>Domain-Driven Design.</strong> Diseño orientado al dominio. Enfoque en modelar el software basado en el dominio de negocio real. Usa lenguaje ubicuo (ubiquitous language).
+                    <div class="example">Ejemplo: En TaskFlow, las entidades Usuario, Proyecto, Tarea reflejan el dominio real de gestión de tareas.</div>
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Gherkin:</span> Lenguaje específico de dominio para describir comportamiento en BDD. Sintaxis: Given (Dado), When (Cuando), Then (Entonces).
+                    <div class="example">Ejemplo: `Dado que tengo un proyecto | Cuando agrego una tarea | Entonces aparece en la lista`</div>
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Fixture:</span> Función pytest que proporciona datos/estado para tests. Se usa con decorador `@pytest.fixture`. Permite reutilizar setup de pruebas.
+                    <div class="example">Ejemplo: Fixture que crea un usuario de prueba antes de cada test.</div>
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Mock:</span> Objeto simulado que imita el comportamiento de objetos reales. Se usa para aislar tests de dependencias externas (DB, API, email).
+                    <div class="example">Ejemplo: Simular el envío de email sin enviarlo realmente.</div>
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Cobertura (Coverage):</span> Porcentaje de código ejecutado por los tests. Se mide con `pytest --cov`. Objetivo mínimo en este curso: 80%.
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">PEP 8:</span> <strong>Python Enhancement Proposal 8.</strong> Guía de estilo oficial de Python. Define convenciones de formato: espacios, nombres, longitud de líneas (79 chars), etc.
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Refactorización:</span> Proceso de mejorar el código interno sin cambiar su comportamiento externo. Hacer el código más limpio, legible y mantenible.
+                </div>
+
+                <div class="acronym-item testing">
+                    <span class="term">Linter:</span> Herramienta que analiza código fuente para detectar errores, violaciones de estilo y malas prácticas. Ejemplos: flake8, pylint, ruff.
+                </div>
+
+                <!-- Category: Web and APIs -->
+                <h2 id="web" class="category-header web"><i class="bi bi-globe me-2"></i>3. Desarrollo Web y APIs</h2>
+
+                <div class="acronym-item web">
+                    <span class="term">API:</span> <strong>Application Programming Interface.</strong> Conjunto de reglas que permiten que dos aplicaciones se comuniquen. Define cómo hacer requests y qué respuestas esperar.
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">REST:</span> <strong>Representational State Transfer.</strong> Estilo arquitectónico para diseñar APIs. Usa métodos HTTP (GET, POST, PUT, DELETE) y URLs semánticas.
+                    <div class="example">Ejemplo: `GET /usuarios` lista usuarios, `POST /usuarios` crea uno nuevo.</div>
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">HTTP:</span> <strong>HyperText Transfer Protocol.</strong> Protocolo de comunicación web. Métodos principales:
+                    <ul class="mb-0">
+                        <li><strong>GET:</strong> Obtener recursos (lectura)</li>
+                        <li><strong>POST:</strong> Crear recursos</li>
+                        <li><strong>PUT/PATCH:</strong> Actualizar recursos</li>
+                        <li><strong>DELETE:</strong> Eliminar recursos</li>
+                    </ul>
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">Status Codes:</span> Códigos de respuesta HTTP que indican el resultado de una petición:
+                    <ul class="mb-0">
+                        <li><strong>2xx:</strong> Éxito (200 OK, 201 Created, 204 No Content)</li>
+                        <li><strong>3xx:</strong> Redirecciones (301, 302)</li>
+                        <li><strong>4xx:</strong> Errores cliente (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 422 Unprocessable Entity)</li>
+                        <li><strong>5xx:</strong> Errores servidor (500 Internal Server Error)</li>
+                    </ul>
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">JSON:</span> <strong>JavaScript Object Notation.</strong> Formato de intercambio de datos ligero y legible. Estándar para APIs modernas.
+                    <div class="example">Ejemplo: `{"nombre": "Juan", "edad": 25}`</div>
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">URL:</span> <strong>Uniform Resource Locator.</strong> Dirección de un recurso en la web. Ejemplo: `https://api.taskflow.com/usuarios`
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">Endpoint:</span> Punto final de una API. URL específica donde un servicio puede ser accedido. Ejemplo: `/usuarios/{id}` es un endpoint.
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">CRUD:</span> <strong>Create, Read, Update, Delete.</strong> Las 4 operaciones básicas de persistencia. En REST corresponden a POST, GET, PUT/PATCH, DELETE.
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">HTMX:</span> Librería JavaScript que permite crear interfaces dinámicas usando atributos HTML. Permite hacer peticiones AJAX sin escribir JavaScript.
+                    <div class="example">Ejemplo: `<button hx-post="/completar" hx-target="#result">`</div>
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">Jinja2:</span> Motor de templates para Python. Permite generar HTML dinámico con sintaxis de templates (`{{ variable }}`, `{% for %}`).
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">Bootstrap:</span> Framework CSS que proporciona componentes pre-diseñados y sistema de grid responsivo. Versión 5 es la usada en el curso.
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">JWT:</span> <strong>JSON Web Token.</strong> Estándar para transmitir información de forma segura entre partes. Usado para autenticación (tokens de sesión).
+                </div>
+
+                <div class="acronym-item web">
+                    <span class="term">AJAX:</span> <strong>Asynchronous JavaScript and XML.</strong> Técnica para actualizar partes de una página web sin recargarla completa.
+                </div>
+
+                <!-- Category: Databases -->
+                <h2 id="db" class="category-header db"><i class="bi bi-database me-2"></i>4. Bases de Datos y Persistencia</h2>
+
+                <div class="acronym-item db">
+                    <span class="term">ORM:</span> <strong>Object-Relational Mapping.</strong> Técnica para mapear objetos de código a tablas de base de datos SQL. SQLAlchemy es el ORM usado en el curso.
+                    <div class="example">Ejemplo: Un objeto `Usuario` en Python se guarda automáticamente en tabla `usuarios`.</div>
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">SQL:</span> <strong>Structured Query Language.</strong> Lenguaje para gestionar bases de datos relacionales. Instrucciones: SELECT, INSERT, UPDATE, DELETE.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">CSV:</span> <strong>Comma-Separated Values.</strong> Formato de archivo plano donde los datos se separan por comas. Fácil de leer/escribir pero sin estructura compleja.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Migration:</span> Script que modifica el esquema de base de datos (crear tablas, agregar columnas, etc.). Alembic es la herramienta de migraciones usada.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Session:</span> En SQLAlchemy, representa una conversación con la base de datos. Agrupa operaciones y permite commit/rollback de transacciones.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Transaction:</span> Unidad de trabajo atómica. O se completa toda o no se aplica nada (ACID). Se confirma con `commit()` o revierte con `rollback()`.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Foreign Key:</span> Clave foránea. Campo que referencia la clave primaria de otra tabla. Establece relaciones entre tablas.
+                    <div class="example">Ejemplo: `tarea.proyecto_id` referencia `proyecto.id`.</div>
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Primary Key:</span> Clave primaria. Identificador único de cada fila en una tabla. Generalmente es un ID autoincremental.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Query:</span> Consulta a la base de datos. En SQLAlchemy se construyen con métodos como `.filter()`, `.all()`, `.first()`.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Schema:</span> Estructura de la base de datos (tablas, columnas, relaciones, índices). Define cómo se organizan los datos.
+                </div>
+
+                <div class="acronym-item db">
+                    <span class="term">Connection Pool:</span> Conjunto de conexiones reutilizables a la base de datos. Mejora el rendimiento evitando crear/eliminar conexiones constantemente.
+                </div>
+
+                <!-- Category: Architecture -->
+                <h2 id="arch" class="category-header arch"><i class="bi bi-diagram-3 me-2"></i>5. Arquitectura de Software y Patrones</h2>
+
+                <div class="acronym-item arch">
+                    <span class="term">Clean Architecture:</span> Arquitectura limpia propuesta por Robert C. Martin (Uncle Bob). Separa el software en capas concéntricas: Entities (Domain), Use Cases (Application), Interface Adapters (Infrastructure), Frameworks (API).
+                    <div class="example">Regla de dependencia: Las capas internas no conocen las externas.</div>
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">Repository Pattern:</span> Patrón que abstrae el acceso a datos. Define una interfaz para operaciones CRUD sin exponer detalles de implementación (JSON, SQL, etc.).
+                    <div class="example">Ejemplo: `IUsuarioRepository` con métodos `save()`, `get_by_id()`, `delete()`.</div>
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">DTO:</span> <strong>Data Transfer Object.</strong> Objeto simple usado para transportar datos entre capas. En Python usamos Pydantic para validación automática.
+                    <div class="example">Ejemplo: `UsuarioCreateDTO` para datos de entrada vs `UsuarioResponseDTO` para respuesta.</div>
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">DI:</span> <strong>Dependency Injection.</strong> Inyección de dependencias. Patrón donde las dependencias se proporcionan desde fuera en lugar de crearse internamente. Facilita testing y desacoplamiento.
+                    <div class="example">Ejemplo: Inyectar `IRepository` en el servicio en lugar de crear `SQLRepository()` dentro.</div>
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">IoC:</span> <strong>Inversion of Control.</strong> Inversión de control. El framework (FastAPI) llama a tu código en lugar de tu código llamar al framework. FastAPI maneja el ciclo de vida de requests.
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">MVC:</span> <strong>Model-View-Controller.</strong> Patrón arquitectónico que separa datos (Model), presentación (View) y lógica de control (Controller). FastAPI usa variación similar.
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">Layered Architecture:</span> Arquitectura en capas: Presentation → Application → Domain → Infrastructure. Cada capa solo puede comunicarse con la inmediatamente inferior.
+                </div>
+
+                <div class="acronym-item arch">
+                    <span class="term">Separation of Concerns:</span> Principio de separación de responsabilidades. Cada módulo/clase debe tener una única responsabilidad bien definida.
+                </div>
+
+                <!-- Category: Python Specific -->
+                <h2 id="python" class="category-header"><i class="bi bi-filetype-py me-2"></i>6. Python Específico</h2>
+
+                <div class="acronym-item">
+                    <span class="term">PEP:</span> <strong>Python Enhancement Proposal.</strong> Documento que describe nuevas características de Python o sus procesos. PEP 8 = estilo, PEP 484 = type hints.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">pip:</span> <strong>Pip Installs Packages.</strong> Gestor de paquetes de Python. Instala librerías desde PyPI. Ejemplo: `pip install fastapi`
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">venv:</span> <strong>Virtual Environment.</strong> Entorno virtual aislado para proyectos Python. Permite tener diferentes versiones de librerías por proyecto sin conflictos.
+                    <div class="example">Ejemplo: `python -m venv venv` crea entorno virtual.</div>
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">REPL:</span> <strong>Read-Eval-Print Loop.</strong> Entorno interactivo de Python (la consola `>>>`). Lee entrada, evalúa, imprime resultado, repite.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Pydantic:</span> Librería para validación de datos usando type hints. Define modelos con validación automática, serialización y documentación.
+                    <div class="example">Ejemplo: `class Usuario(BaseModel): nombre: str = Field(..., min_length=3)`</div>
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Pathlib:</span> Módulo moderno de Python para manejo de rutas de archivos. Orientado a objetos y multiplataforma (Windows/Linux/Mac).
+                    <div class="example">Ejemplo: `Path("data/usuarios.json")` funciona en cualquier SO.</div>
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Decorator (@):</span> Función que modifica otra función. En Python se usa `@`. Ejemplos: `@property`, `@staticmethod`, `@app.get()`.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Comprehension:</span> Sintaxis concisa para crear listas/diccionarios. `[x for x in range(10)]` vs bucle for tradicional.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">f-string:</span> <strong>Formatted string literal.</strong> Strings con formato (Python 3.6+). `f"Hola {nombre}"` interpola variables.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Context Manager:</span> Protocolo para manejar recursos (archivos, conexiones). Usa `with` para garantizar cierre automático.
+                    <div class="example">Ejemplo: `with open("file.txt") as f:` cierra el archivo automáticamente.</div>
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Import:</span> Forma de incluir código de otros módulos. `import modulo`, `from modulo import funcion`, `import modulo as m`.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Module:</span> Archivo Python (.py). Un programa Python está compuesto de múltiples módulos importados.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Package:</span> Directorio con múltiples módulos. Debe contener `__init__.py` (aunque en Python 3.3+ es opcional).
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Lambda:</span> Función anónima de una línea. `lambda x: x * 2`. Útil para operaciones simples.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Iterator / Iterable:</span> Objeto que puede ser iterado (recorrido). `list`, `dict`, `str` son iterables. Generadores son iteradores lazy.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Generator:</span> Función que produce secuencia de valores lazy (bajo demanda). Usa `yield` en lugar de `return`. Ahorra memoria.
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Async / Await:</span> Sintaxis para programación asíncrona (Python 3.5+). Permite ejecutar múltiples tareas concurrentemente sin bloquear.
+                    <div class="example">Ejemplo: `async def fetch_data(): ... await response()`</div>
+                </div>
+
+                <div class="acronym-item">
+                    <span class="term">Exception Handling:</span> Manejo de errores con `try-except-finally`. Captura y maneja excepciones para evitar que el programa se cierre abruptamente.
+                </div>
+
+                <!-- Category: Tools -->
+                <h2 id="tools" class="category-header tools"><i class="bi bi-tools me-2"></i>7. Herramientas y Entornos de Desarrollo</h2>
+
+                <div class="acronym-item tools">
+                    <span class="term">IDE:</span> <strong>Integrated Development Environment.</strong> Entorno de desarrollo integrado. Ejemplos: VS Code, PyCharm. Incluye editor, debugger, terminal integrada.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">CLI:</span> <strong>Command Line Interface.</strong> Interfaz de línea de comandos. Terminal/bash donde escribes comandos de texto.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">GUI:</span> <strong>Graphical User Interface.</strong> Interfaz gráfica de usuario. Ventanas, botones, menús (vs CLI).
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Git:</span> Sistema de control de versiones distribuido. Permite rastrear cambios en código, colaborar en equipo y volver a versiones anteriores.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">GitHub:</span> Plataforma web para alojar repositorios Git. Incluye issues, pull requests, actions (CI/CD), pages.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Git Bash:</span> Terminal de Git para Windows. Proporciona comandos Unix (ls, grep, cat) en Windows.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Colab:</span> <strong>Google Colaboratory.</strong> Entorno Jupyter notebook en la nube. Permite ejecutar Python desde el navegador con GPU/TPU gratuita.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Jupyter:</span> Aplicación web para crear notebooks interactivos. Combina código, texto, gráficos en un solo documento.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Docker:</span> Plataforma de contenedores. Empaqueta aplicaciones con todas sus dependencias para ejecutar de forma consistente en cualquier entorno.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Venv:</span> Abreviatura común de Virtual Environment. Ver definición completa arriba.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">LSP:</span> <strong>Language Server Protocol.</strong> Protocolo para que editores (VS Code) obtengan autocompletado, navegación de código, refactorización.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">PyPI:</span> <strong>Python Package Index.</strong> Repositorio oficial de paquetes Python. `pip` instala desde aquí.
+                </div>
+
+                <div class="acronym-item tools">
+                    <span class="term">Requirements.txt:</span> Archivo que lista las dependencias del proyecto. Se genera con `pip freeze > requirements.txt`.
+                </div>
+
+                <!-- Category: Project Specific -->
+                <h2 id="project" class="category-header bg-dark text-white"><i class="bi bi-kanban me-2"></i>8. Términos del Proyecto TaskFlow</h2>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">TaskFlow:</span> Sistema de gestión de tareas y proyectos que construyes durante el curso. Es el proyecto integrador incremental.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Entidad:</span> Objeto de dominio con identidad propia. En DDD, una entidad se diferencia de otros por su ID, no por sus atributos.
+                    <div class="example">Ejemplo: Dos usuarios con mismo nombre son diferentes si tienen diferente ID.</div>
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Value Object:</span> Objeto sin identidad conceptual, definido solo por sus atributos. Son inmutables.
+                    <div class="example">Ejemplo: `Direccion` (calle, ciudad, código_postal). Si cambia, es una dirección diferente.</div>
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Aggregate:</span> Agrupación de entidades y value objects tratados como una unidad. Tiene una entidad raíz (root).
+                    <div class="example">Ejemplo: `Proyecto` es el aggregate root que contiene `Tareas`.</div>
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Servicio:</span> Lógica de negocio que no pertenece naturalmente a ninguna entidad. Coordina operaciones entre múltiples entidades.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Repositorio:</span> Abstracción que encapsula el acceso a datos. Permite cambiar la implementación (JSON, SQL, API) sin afectar el dominio.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Capa de Dominio:</span> Núcleo de la aplicación. Contiene entidades, value objects, servicios de dominio. Es independiente de frameworks y bases de datos.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Capa de Aplicación:</span> Orquesta casos de uso. Coordina el flujo entre UI y dominio. Contiene servicios de aplicación y DTOs.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Capa de Infraestructura:</span> Implementaciones técnicas concretas. Repositorios SQL, envío de emails, APIs externas. Depende de frameworks y librerías.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">MVP:</span> <strong>Minimum Viable Product.</strong> Producto mínimo viable. Versión funcional con características justas para probar el concepto. E3 es el MVP de TaskFlow.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Sustentación:</span> Presentación oral y defensa del proyecto ante el docente. Se evalúa comprensión, calidad de código y funcionamiento.
+                </div>
+
+                <div class="acronym-item" style="border-left-color: #212529;">
+                    <span class="term">Proyecto Incremental:</span> Metodología donde el proyecto se construye por partes acumulativas. Cada entrega (E1-E6) agrega funcionalidad sobre lo anterior.
+                </div>
+
+                <!-- Footer Section -->
+                <section class="mt-5 text-center">
+                    <div class="alert alert-info">
+                        <h5><i class="bi bi-lightbulb me-2"></i>¿Encontraste un término que falta?</h5>
+                        <p class="mb-0">Si encuentras acrónimos en el curso que no estén en este glosario, por favor notifica al docente para agregarlos.</p>
+                    </div>
+                    
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            <a href="index.html" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-house me-2"></i>Inicio del Curso
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="concertacion.html" class="btn btn-outline-success w-100">
+                                <i class="bi bi-file-text me-2"></i>Concertación
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="evaluaciones/index.html" class="btn btn-outline-warning w-100">
+                                <i class="bi bi-clipboard-check me-2"></i>Evaluaciones
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 
     <footer class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
-            <p class="mb-0">&copy; 2026 IF0100 - UNAULA</p>
+            <p class="mb-1"><strong>IF0100 - Lenguaje de Programación OO II</strong></p>
+            <p class="mb-0 text-muted">Universidad Autónoma Latinoamericana (UNAULA) | Semestre 2026-1</p>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
