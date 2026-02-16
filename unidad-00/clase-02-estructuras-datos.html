@@ -26,9 +26,9 @@
             <h3>Clase 2: Estructuras de Datos</h3>
             <p class="mt-2">
                 <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 12 de febrero de 2026</span>
-                <span class="badge bg-info text-dark">Semana 2 - Jueves (60 minutos)</span>
-                <span class="badge bg-primary">30 min Teoría</span>
-                <span class="badge bg-success text-white">30 min Práctica</span>
+                <span class="badge bg-info text-dark">Semana 2 - Jueves (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
             </p>
             <p class="mt-2">
                 <a href="../evaluaciones/evaluacion-01-conceptos-poo.html" class="badge bg-danger text-decoration-none">
@@ -139,6 +139,18 @@ for edad in [15, 22, 18, 30, 12]:
     if edad >= 18:
         mayores.append(edad)
 print(mayores)  # [22, 18, 30]</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Manipulación de Listas (5 min)</h5>
+                        <p class="mb-2">Crea una lista de tus 5 comidas favoritas y practica:</p>
+                        <ol class="mb-0">
+                            <li>Agrega una nueva comida al final</li>
+                            <li>Inserta una comida en la posición 2</li>
+                            <li>Elimina la última comida</li>
+                            <li>Ordena la lista alfabéticamente</li>
+                            <li>Muestra solo las primeras 3 comidas</li>
+                        </ol>
+                    </div>
                 </section>
 
                 <!-- DICCIONARIOS -->
@@ -221,7 +233,22 @@ total_edades = 0
 for u in usuarios:
     total_edades += u["edad"]
 promedio = total_edades / len(usuarios)
-print(f"Edad promedio: {promedio}")</code></pre>
+print(f"Edad promedio: {promedio}")
+
+                    
+                    
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Agenda Telefónica (5 min)</h5>
+                        <p class="mb-2">Crea una agenda telefónica:</p>
+                        <ol class="mb-0">
+                            <li>Crea un diccionario vacío <code>agenda = {}</code></li>
+                            <li>Agrega 3 contactos (nombre → teléfono)</li>
+                            <li>Busca un contacto por nombre</li>
+                            <li>Actualiza el teléfono de un contacto</li>
+                            <li>Elimina un contacto</li>
+                        </ol>
+                        <p class="mt-2"><strong>Desafío:</strong> Usa <code>.get()</code> para buscar un contacto que no existe y mostrar "No encontrado".</p>
+                    </div>
                 </section>
 
                 <!-- TUPLAS Y SETS -->
@@ -272,7 +299,24 @@ diferencia = a - b      # {1, 2}
 
 # Verificar pertenencia
 if 2 in a:
-    print("2 está en el set")</code></pre>
+    print("2 está en el set")
+
+                    
+                    
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Sets y Tuplas (5 min)</h5>
+                        <p class="mb-2">Resuelve estos problemas:</p>
+                        <ol class="mb-0">
+                            <li><strong>Tuplas:</strong> Crea una tupla con las coordenadas (x, y) de un punto. Intenta modificarla y observa el error.</li>
+                            <li><strong>Sets:</strong> Tienes dos listas de estudiantes de dos cursos diferentes. Usa sets para encontrar:
+                                <ul>
+                                    <li>Estudiantes que están en ambos cursos (intersección)</li>
+                                    <li>Estudiantes que solo están en el primer curso (diferencia)</li>
+                                    <li>Todos los estudiantes únicos (unión)</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
 
                     <div class="alert-note">
                         <strong>¿Cuándo usar cada uno?</strong>
@@ -284,89 +328,496 @@ if 2 in a:
                         </ul>
                     </div>
                 </section>
-
-                <!-- EJERCICIO -->
+        
+                <!-- EJERCICIO PRINCIPAL -->
                 <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Gestor de Contactos (10 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 1: Gestor de Contactos Mejorado (25 min)</h2>
                     
-                    <p>Sistema completo usando listas y diccionarios (base para TaskFlow).</p>
+                    <p>Sistema completo usando listas y diccionarios con validaciones y categorías (base para TaskFlow).</p>
 
                     <pre><code class="language-python"># contactos.py
 contactos = []
+categorias_validas = {"amigo", "familia", "trabajo", "otro"}
 
-def agregar_contacto(nombre, telefono, email):
-    """Agrega un contacto nuevo."""
+def validar_email(email):
+    """Valida que el email contenga @ y ."""
+    return "@" in email and "." in email
+
+def agregar_contacto(nombre, telefono, email, categoria="otro"):
+    """Agrega un contacto nuevo con validaciones."""
+    # Validaciones
+    if not nombre.strip():
+        print("❌ El nombre no puede estar vacío")
+        return False
+    
+    if not validar_email(email):
+        print("❌ Email inválido. Debe contener @ y punto")
+        return False
+    
+    if categoria.lower() not in categorias_validas:
+        print(f"❌ Categoría inválida. Opciones: {', '.join(categorias_validas)}")
+        return False
+    
+    # Verificar duplicado por email
+    for c in contactos:
+        if c["email"].lower() == email.lower():
+            print("❌ Ya existe un contacto con ese email")
+            return False
+    
     contacto = {
         "nombre": nombre,
         "telefono": telefono,
-        "email": email
+        "email": email,
+        "categoria": categoria.lower()
     }
     contactos.append(contacto)
-    print(f"✅ Contacto '{nombre}' agregado.")
+    print(f"✅ Contacto '{nombre}' agregado correctamente.")
+    return True
 
-def mostrar_contactos():
-    """Muestra todos los contactos."""
+def mostrar_contactos(filtrar_categoria=None):
+    """Muestra contactos, opcionalmente filtrados por categoría."""
     if not contactos:
-        print("No hay contactos.")
+        print("📭 No hay contactos registrados.")
         return
     
-    print("\n--- Contactos ---")
-    for i, c in enumerate(contactos, 1):
-        print(f"{i}. {c['nombre']}")
-        print(f"   Tel: {c['telefono']}")
-        print(f"   Email: {c['email']}")
+    contactos_mostrar = contactos
+    if filtrar_categoria:
+        contactos_mostrar = [c for c in contactos if c["categoria"] == filtrar_categoria]
+    
+    if not contactos_mostrar:
+        print(f"📭 No hay contactos en la categoría '{filtrar_categoria}'")
+        return
+    
+    print("\n" + "="*60)
+    print(f"{'N°':<4} {'NOMBRE':<20} {'TELÉFONO':<15} {'CATEGORÍA'}")
+    print("="*60)
+    
+    for i, c in enumerate(contactos_mostrar, 1):
+        print(f"{i:<4} {c['nombre']:<20} {c['telefono']:<15} {c['categoria']}")
+        print(f"     📧 {c['email']}")
+    print("="*60)
+    print(f"Total: {len(contactos_mostrar)} contacto(s)")
 
-def buscar_contacto(nombre):
-    """Busca contactos por nombre."""
+def buscar_contacto(termino):
+    """Busca contactos por nombre, teléfono o email."""
+    if not contactos:
+        print("📭 No hay contactos registrados")
+        return
+    
+    termino = termino.lower()
     encontrados = []
+    
     for c in contactos:
-        if nombre.lower() in c["nombre"].lower():
+        if (termino in c["nombre"].lower() or 
+            termino in c["telefono"] or 
+            termino in c["email"].lower()):
             encontrados.append(c)
     
     if encontrados:
-        print(f"\n🔍 {len(encontrados)} encontrado(s):")
+        print(f"\n🔍 {len(encontrados)} resultado(s) para '{termino}':")
         for c in encontrados:
-            print(f"   - {c['nombre']}")
+            print(f"  • {c['nombre']} ({c['categoria']})")
     else:
-        print(f"❌ No se encontró '{nombre}'")
+        print(f"❌ No se encontraron resultados para '{termino}'")
+
+def eliminar_contacto(email):
+    """Elimina un contacto por email."""
+    for i, c in enumerate(contactos):
+        if c["email"].lower() == email.lower():
+            confirmar = input(f"¿Eliminar a {c['nombre']}? (s/n): ")
+            if confirmar.lower() == 's':
+                contactos.pop(i)
+                print(f"✅ Contacto '{c['nombre']}' eliminado")
+                return True
+            else:
+                print("Cancelado")
+                return False
+    print(f"❌ No se encontró contacto con email '{email}'")
+    return False
+
+def mostrar_estadisticas():
+    """Muestra estadísticas de los contactos."""
+    if not contactos:
+        print("📭 No hay datos para estadísticas")
+        return
+    
+    total = len(contactos)
+    print("\n" + "="*40)
+    print("📊 ESTADÍSTICAS")
+    print("="*40)
+    print(f"Total de contactos: {total}")
+    
+    # Contar por categoría
+    conteo = {}
+    for c in contactos:
+        cat = c["categoria"]
+        conteo[cat] = conteo.get(cat, 0) + 1
+    
+    print("\nPor categoría:")
+    for cat, cantidad in sorted(conteo.items()):
+        porcentaje = (cantidad / total) * 100
+        print(f"  • {cat.capitalize():<12}: {cantidad:>2} ({porcentaje:.1f}%)")
+    print("="*40)
 
 # Programa principal
 while True:
-    print("\n=== GESTOR DE CONTACTOS ===")
+    print("\n" + "="*50)
+    print("📒 GESTOR DE CONTACTOS")
+    print("="*50)
     print("1. Agregar contacto")
-    print("2. Ver contactos")
-    print("3. Buscar contacto")
-    print("4. Salir")
+    print("2. Ver todos los contactos")
+    print("3. Filtrar por categoría")
+    print("4. Buscar contacto")
+    print("5. Eliminar contacto")
+    print("6. Estadísticas")
+    print("7. Salir")
     
-    opcion = input("\nOpción: ")
+    opcion = input("\nSelecciona una opción: ")
     
     if opcion == "1":
-        nombre = input("Nombre: ")
-        telefono = input("Teléfono: ")
-        email = input("Email: ")
-        agregar_contacto(nombre, telefono, email)
+        nombre = input("Nombre: ").strip()
+        telefono = input("Teléfono: ").strip()
+        email = input("Email: ").strip()
+        print(f"Categorías disponibles: {', '.join(categorias_validas)}")
+        categoria = input("Categoría (Enter para 'otro'): ").strip() or "otro"
+        agregar_contacto(nombre, telefono, email, categoria)
+    
     elif opcion == "2":
         mostrar_contactos()
+    
     elif opcion == "3":
-        nombre = input("Nombre a buscar: ")
-        buscar_contacto(nombre)
+        print(f"Categorías: {', '.join(categorias_validas)}")
+        cat = input("Filtrar por categoría: ").strip().lower()
+        mostrar_contactos(filtrar_categoria=cat)
+    
     elif opcion == "4":
-        print("¡Hasta luego!")
+        termino = input("Buscar (nombre, teléfono o email): ").strip()
+        buscar_contacto(termino)
+    
+    elif opcion == "5":
+        email = input("Email del contacto a eliminar: ").strip()
+        eliminar_contacto(email)
+    
+    elif opcion == "6":
+        mostrar_estadisticas()
+    
+    elif opcion == "7":
+        print("👋 ¡Hasta luego!")
         break
+    
     else:
-        print("❌ Opción inválida")</code></pre>
+        print("❌ Opción no válida")
 
                     <div class="alert-note">
-                        <strong>Conexión con TaskFlow:</strong> Este sistema es la base del proyecto. En las siguientes clases agregaremos: clases, validaciones, persistencia en archivos y base de datos.
+                        <strong>Conexión con TaskFlow:</strong> Este sistema es la base del proyecto. En las siguientes clases agregaremos: clases, validaciones más avanzadas, persistencia en archivos y base de datos.
                     </div>
 
                     <h4>Retos Adicionales</h4>
                     <ul>
-                        <li>Agrega funcionalidad para eliminar contactos</li>
-                        <li>Valida que el email contenga "@" antes de agregar</li>
-                        <li>Agrega campo "categoria" (amigo, familia, trabajo)</li>
-                        <li>Permite filtrar por categoría</li>
+                        <li><strong>Validación avanzada:</strong> Verifica que el email tenga formato válido (texto@dominio.com)</li>
+                        <li><strong>Ordenamiento:</strong> Permite ordenar contactos por nombre o categoría</li>
+                        <li><strong>Exportar:</strong> Guarda los contactos en un archivo CSV</li>
+                        <li><strong>Editar:</strong> Permite modificar datos de un contacto existente</li>
                     </ul>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Sistema de Inventario (25 min)</h2>
+                    
+                    <p>Gestiona un inventario de productos usando listas de diccionarios con funcionalidades avanzadas.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Registrar productos con: nombre, categoría, precio, cantidad, código único</li>
+                        <li>Calcular valor total del inventario (precio × cantidad)</li>
+                        <li>Identificar productos con bajo stock (< 5 unidades)</li>
+                        <li>Buscar productos por nombre o categoría</li>
+                        <li>Actualizar cantidad de productos (entradas y salidas)</li>
+                        <li>Generar alertas de stock mínimo</li>
+                    </ul>
+
+                    <h4>Código Base</h4>
+                    <pre><code class="language-python"># inventario.py
+print("📦 SISTEMA DE INVENTARIO 📦\n")
+
+inventario = []
+id_contador = 1
+
+def generar_id():
+    """Genera un ID único para cada producto."""
+    global id_contador
+    id_actual = f"PROD-{id_contador:04d}"
+    id_contador += 1
+    return id_actual
+
+def agregar_producto(nombre, categoria, precio, cantidad):
+    """Agrega un nuevo producto al inventario."""
+    if precio <= 0 or cantidad < 0:
+        print("❌ Precio y cantidad deben ser positivos")
+        return None
+    
+    producto = {
+        "id": generar_id(),
+        "nombre": nombre,
+        "categoria": categoria,
+        "precio": precio,
+        "cantidad": cantidad
+    }
+    inventario.append(producto)
+    print(f"✅ Producto '{nombre}' agregado con ID: {producto['id']}")
+    return producto
+
+def calcular_valor_inventario():
+    """Calcula el valor total del inventario."""
+    total = 0
+    for p in inventario:
+        total += p["precio"] * p["cantidad"]
+    return total
+
+def productos_bajo_stock(limite=5):
+    """Retorna lista de productos con stock bajo."""
+    return [p for p in inventario if p["cantidad"] < limite]
+
+def buscar_producto(termino):
+    """Busca productos por nombre o categoría."""
+    termino = termino.lower()
+    resultados = []
+    for p in inventario:
+        if termino in p["nombre"].lower() or termino in p["categoria"].lower():
+            resultados.append(p)
+    return resultados
+
+def actualizar_stock(id_producto, cantidad, es_entrada=True):
+    """Actualiza el stock de un producto."""
+    for p in inventario:
+        if p["id"] == id_producto:
+            if es_entrada:
+                p["cantidad"] += cantidad
+                print(f"✅ Entrada: {cantidad} unidades de {p['nombre']}")
+            else:
+                if p["cantidad"] >= cantidad:
+                    p["cantidad"] -= cantidad
+                    print(f"✅ Salida: {cantidad} unidades de {p['nombre']}")
+                else:
+                    print(f"❌ Stock insuficiente. Disponible: {p['cantidad']}")
+            return True
+    print(f"❌ Producto con ID '{id_producto}' no encontrado")
+    return False
+
+def mostrar_inventario():
+    """Muestra todo el inventario en formato tabla."""
+    if not inventario:
+        print("📭 Inventario vacío")
+        return
+    
+    print("\n" + "="*90)
+    print(f"{'ID':<12} {'NOMBRE':<20} {'CATEGORÍA':<15} {'PRECIO':<10} {'CANT':<6} {'VALOR'}")
+    print("="*90)
+    
+    for p in inventario:
+        valor = p["precio"] * p["cantidad"]
+        print(f"{p['id']:<12} {p['nombre']:<20} {p['categoria']:<15} "
+              f"${p['precio']:<9.2f} {p['cantidad']:<6} ${valor:.2f}")
+    
+    print("="*90)
+    print(f"💰 Valor total del inventario: ${calcular_valor_inventario():.2f}")
+
+def mostrar_alertas_stock():
+    """Muestra productos con stock bajo."""
+    bajos = productos_bajo_stock()
+    if bajos:
+        print("\n⚠️  ALERTAS DE STOCK BAJO:")
+        for p in bajos:
+            print(f"  • {p['nombre']} ({p['id']}): {p['cantidad']} unidades")
+    else:
+        print("\n✅ Todos los productos tienen stock adecuado")
+
+def resumen_por_categoria():
+    """Muestra resumen agrupado por categoría."""
+    if not inventario:
+        return
+    
+    categorias = {}
+    for p in inventario:
+        cat = p["categoria"]
+        if cat not in categorias:
+            categorias[cat] = {"cantidad": 0, "valor": 0}
+        categorias[cat]["cantidad"] += p["cantidad"]
+        categorias[cat]["valor"] += p["precio"] * p["cantidad"]
+    
+    print("\n📊 RESUMEN POR CATEGORÍA:")
+    print("="*60)
+    for cat, datos in sorted(categorias.items()):
+        print(f"{cat.capitalize():<20}: {datos['cantidad']:>4} unidades - ${datos['valor']:.2f}")
+    print("="*60)
+
+# Menú principal
+while True:
+    print("\n" + "="*50)
+    print("📦 MENÚ DE INVENTARIO")
+    print("="*50)
+    print("1. Agregar producto")
+    print("2. Ver inventario completo")
+    print("3. Buscar producto")
+    print("4. Registrar entrada de stock")
+    print("5. Registrar salida de stock")
+    print("6. Ver alertas de stock bajo")
+    print("7. Resumen por categoría")
+    print("8. Salir")
+    
+    opcion = input("\nSelecciona una opción: ")
+    
+    if opcion == "1":
+        nombre = input("Nombre del producto: ").strip()
+        categoria = input("Categoría: ").strip()
+        try:
+            precio = float(input("Precio unitario: $"))
+            cantidad = int(input("Cantidad inicial: "))
+            agregar_producto(nombre, categoria, precio, cantidad)
+        except ValueError:
+            print("❌ Precio y cantidad deben ser números")
+    
+    elif opcion == "2":
+        mostrar_inventario()
+    
+    elif opcion == "3":
+        termino = input("Buscar (nombre o categoría): ").strip()
+        resultados = buscar_producto(termino)
+        if resultados:
+            print(f"\n✅ {len(resultados)} resultado(s):")
+            for p in resultados:
+                print(f"  • {p['nombre']} ({p['id']}) - Stock: {p['cantidad']}")
+        else:
+            print(f"❌ No se encontraron productos")
+    
+    elif opcion == "4":
+        id_prod = input("ID del producto: ").strip()
+        try:
+            cantidad = int(input("Cantidad de entrada: "))
+            if cantidad > 0:
+                actualizar_stock(id_prod, cantidad, es_entrada=True)
+            else:
+                print("❌ La cantidad debe ser positiva")
+        except ValueError:
+            print("❌ Ingresa un número válido")
+    
+    elif opcion == "5":
+        id_prod = input("ID del producto: ").strip()
+        try:
+            cantidad = int(input("Cantidad de salida: "))
+            if cantidad > 0:
+                actualizar_stock(id_prod, cantidad, es_entrada=False)
+            else:
+                print("❌ La cantidad debe ser positiva")
+        except ValueError:
+            print("❌ Ingresa un número válido")
+    
+    elif opcion == "6":
+        mostrar_alertas_stock()
+    
+    elif opcion == "7":
+        resumen_por_categoria()
+    
+    elif opcion == "8":
+        print("👋 ¡Hasta luego!")
+        break
+    
+    else:
+        print("❌ Opción no válida")
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este sistema de inventario usa las mismas estructuras de datos que necesitarás para gestionar proyectos y tareas: listas de objetos complejos, filtros, cálculos de totales y estadísticas.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Historial:</strong> Registra un historial de movimientos (entradas/salidas) para cada producto</li>
+                        <li><strong>Descuentos:</strong> Permite aplicar descuentos por categoría</li>
+                        <li><strong>Búsqueda avanzada:</strong> Filtra por rango de precios (mínimo y máximo)</li>
+                        <li><strong>Productos más vendidos:</strong> Lleva un contador de salidas y muestra los top 5</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (5 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 4: Análisis de Texto</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un analizador de texto que:</p>
+                                    <ul class="mb-0">
+                                        <li>Cuente palabras únicas usando un set</li>
+                                        <li>Cuente frecuencia de cada palabra (diccionario)</li>
+                                        <li>Encuentre la palabra más larga</li>
+                                        <li>Muestre las 5 palabras más frecuentes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 5: Sistema de Biblioteca</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Gestiona una biblioteca simple:</p>
+                                    <ul class="mb-0">
+                                        <li>Libros: título, autor, ISBN, disponible (bool)</li>
+                                        <li>Préstamos: fecha, lector, libro</li>
+                                        <li>Funciones: prestar, devolver, buscar</li>
+                                        <li>Lista de libros prestados vs disponibles</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Estructura</th>
+                                <th>Sintaxis</th>
+                                <th>Usar cuando...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Lista</strong></td>
+                                <td><code>[1, 2, 3]</code></td>
+                                <td>Colección ordenada, se modifica</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Diccionario</strong></td>
+                                <td><code>{"a": 1}</code></td>
+                                <td>Datos con propiedades/claves</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tupla</strong></td>
+                                <td><code>(1, 2, 3)</code></td>
+                                <td>Datos inmutables, constantes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Set</strong></td>
+                                <td><code>{1, 2, 3}</code></td>
+                                <td>Eliminar duplicados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Modifica el gestor de contactos para que cada contacto también tenga una lista de "tags" (etiquetas). Usa un set para obtener todos los tags únicos del sistema.
+                    </div>
                 </section>
 
                 <!-- RESUMEN -->

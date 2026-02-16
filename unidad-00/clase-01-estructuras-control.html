@@ -88,6 +88,17 @@ else:
                         <strong>Importante:</strong> Python usa <strong>indentación</strong> (4 espacios), no llaves. ¡Todo lo indentado pertenece al if!
                     </div>
 
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Clasificar Números (5 min)</h5>
+                        <p class="mb-2">Crea un programa que:</p>
+                        <ol class="mb-0">
+                            <li>Pida un número al usuario</li>
+                            <li>Diga si es positivo, negativo o cero</li>
+                            <li>Diga si es par o impar</li>
+                        </ol>
+                        <p class="mt-2"><strong>Pista:</strong> Usa el operador <code>%</code> (módulo) para saber si es par: <code>numero % 2 == 0</code></p>
+                    </div>
+
                     <h4>Ejemplo: Clasificar Edad</h4>
                     <pre><code class="language-python">edad = int(input("Ingresa tu edad: "))
 
@@ -183,6 +194,17 @@ while True:
 
 print(f"Edad registrada: {edad}")</code></pre>
 
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Validación de Entrada (5 min)</h5>
+                        <p class="mb-2">Mejora el ejemplo anterior para validar:</p>
+                        <ol class="mb-0">
+                            <li>Que la edad sea un número válido</li>
+                            <li>Que la edad esté entre 0 y 120 años</li>
+                            <li>Que no esté vacía la entrada</li>
+                        </ol>
+                        <p class="mt-2"><strong>Desafío:</strong> Usa un bucle <code>while</code> que siga pidiendo la edad hasta que sea válida.</p>
+                    </div>
+
                     <div class="alert-warning">
                         <strong>Precaución:</strong> Siempre asegúrate de que la condición del <code>while</code> eventualmente sea <code>False</code>, o tendrás un bucle infinito.
                     </div>
@@ -221,12 +243,24 @@ for usuario in usuarios:
         break
 else:
     # Solo se ejecuta si no encontramos el usuario
-    print(f"{buscar} NO está en la lista")</code></pre>
+    print(f"{buscar} NO está en la lista")
+
+                    
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Buscar en Lista (5 min)</h5>
+                        <p class="mb-2">Crea un programa que:</p>
+                        <ol class="mb-0">
+                            <li>Tenga una lista de 5 nombres</li>
+                            <li>Pida al usuario un nombre a buscar</li>
+                            <li>Use <code>for</code> con <code>break</code> para detenerse cuando lo encuentre</li>
+                            <li>Indique si lo encontró o no usando <code>else</code> del for</li>
+                        </ol>
+                    </div>
                 </section>
 
-                <!-- EJERCICIO -->
+                <!-- EJERCICIO PRINCIPAL -->
                 <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Menú de Usuarios (15 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 1: Menú de Usuarios Mejorado (25 min)</h2>
                     
                     <p>Crea un menú interactivo para gestionar usuarios (base del proyecto TaskFlow).</p>
 
@@ -306,6 +340,262 @@ while True:
                         <li>Valida que el nombre tenga al menos 3 caracteres</li>
                         <li>Permite buscar coincidencias parciales (ej: "ju" encuentra "juan")</li>
                     </ul>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Sistema de Calificaciones (25 min)</h2>
+                    
+                    <p>Crea un sistema completo para gestionar calificaciones de estudiantes con múltiples evaluaciones.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Registrar múltiples estudiantes</li>
+                        <li>Cada estudiante tiene 3 calificaciones (parcial 1, parcial 2, final)</li>
+                        <li>Calcular promedio ponderado: P1(30%) + P2(30%) + Final(40%)</li>
+                        <li>Determinar si aprobó (promedio >= 3.0)</li>
+                        <li>Mostrar estadísticas: mejor estudiante, promedio general, tasa de aprobación</li>
+                    </ul>
+
+                    <h4>Código Base</h4>
+                    <pre><code class="language-python"># sistema_calificaciones.py
+print("📚 SISTEMA DE CALIFICACIONES 📚\n")
+
+estudiantes = []
+
+while True:
+    print("\n" + "="*50)
+    print("MENÚ PRINCIPAL")
+    print("="*50)
+    print("1. Registrar estudiante")
+    print("2. Ver todos los estudiantes")
+    print("3. Ver estadísticas")
+    print("4. Buscar estudiante")
+    print("5. Salir")
+    
+    opcion = input("\nSelecciona una opción: ")
+    
+    if opcion == "1":
+        nombre = input("Nombre del estudiante: ").strip()
+        
+        if not nombre:
+            print("❌ El nombre no puede estar vacío")
+            continue
+        
+        # Verificar si ya existe
+        ya_existe = False
+        for est in estudiantes:
+            if est["nombre"].lower() == nombre.lower():
+                ya_existe = True
+                break
+        
+        if ya_existe:
+            print("❌ Este estudiante ya está registrado")
+            continue
+        
+        # Pedir calificaciones con validación
+        def pedir_nota(mensaje):
+            while True:
+                try:
+                    nota = float(input(mensaje))
+                    if 0 <= nota <= 5:
+                        return nota
+                    print("❌ La nota debe estar entre 0 y 5")
+                except ValueError:
+                    print("❌ Ingresa un número válido")
+        
+        p1 = pedir_nota("Parcial 1 (30%): ")
+        p2 = pedir_nota("Parcial 2 (30%): ")
+        final = pedir_nota("Final (40%): ")
+        
+        # Calcular promedio ponderado
+        promedio = (p1 * 0.3) + (p2 * 0.3) + (final * 0.4)
+        
+        # Determinar estado
+        if promedio >= 3.0:
+            estado = "✅ Aprobado"
+        else:
+            estado = "❌ Reprobado"
+        
+        estudiante = {
+            "nombre": nombre,
+            "p1": p1,
+            "p2": p2,
+            "final": final,
+            "promedio": promedio,
+            "estado": estado
+        }
+        
+        estudiantes.append(estudiante)
+        print(f"\n✅ Estudiante registrado. Promedio: {promedio:.2f} - {estado}")
+    
+    elif opcion == "2":
+        if not estudiantes:
+            print("\n📭 No hay estudiantes registrados")
+            continue
+        
+        print("\n" + "="*70)
+        print(f"{'NOMBRE':<20} {'P1':<6} {'P2':<6} {'FINAL':<6} {'PROM':<6} {'ESTADO'}")
+        print("="*70)
+        
+        for est in estudiantes:
+            print(f"{est['nombre']:<20} {est['p1']:<6.1f} {est['p2']:<6.1f} "
+                  f"{est['final']:<6.1f} {est['promedio']:<6.2f} {est['estado']}")
+        print("="*70)
+    
+    elif opcion == "3":
+        if not estudiantes:
+            print("\n📭 No hay datos para estadísticas")
+            continue
+        
+        # Calcular estadísticas
+        total_est = len(estudiantes)
+        aprobados = 0
+        suma_promedios = 0
+        mejor_estudiante = estudiantes[0]
+        
+        for est in estudiantes:
+            suma_promedios += est["promedio"]
+            if "Aprobado" in est["estado"]:
+                aprobados += 1
+            if est["promedio"] > mejor_estudiante["promedio"]:
+                mejor_estudiante = est
+        
+        promedio_general = suma_promedios / total_est
+        tasa_aprobacion = (aprobados / total_est) * 100
+        
+        print("\n" + "="*50)
+        print("📊 ESTADÍSTICAS")
+        print("="*50)
+        print(f"Total estudiantes: {total_est}")
+        print(f"Aprobados: {aprobados}")
+        print(f"Reprobados: {total_est - aprobados}")
+        print(f"Tasa de aprobación: {tasa_aprobacion:.1f}%")
+        print(f"Promedio general: {promedio_general:.2f}")
+        print(f"\n🏆 Mejor estudiante: {mejor_estudiante['nombre']}")
+        print(f"   Promedio: {mejor_estudiante['promedio']:.2f}")
+        print("="*50)
+    
+    elif opcion == "4":
+        if not estudiantes:
+            print("\n📭 No hay estudiantes registrados")
+            continue
+        
+        buscar = input("Nombre a buscar: ").strip().lower()
+        encontrados = []
+        
+        for est in estudiantes:
+            if buscar in est["nombre"].lower():
+                encontrados.append(est)
+        
+        if encontrados:
+            print(f"\n✅ {len(encontrados)} estudiante(s) encontrado(s):")
+            for est in encontrados:
+                print(f"  • {est['nombre']}: {est['promedio']:.2f} {est['estado']}")
+        else:
+            print(f"❌ No se encontró '{buscar}'")
+    
+    elif opcion == "5":
+        print("\n👋 ¡Hasta luego!")
+        break
+    
+    else:
+        print("\n❌ Opción no válida")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este sistema de calificaciones usa las mismas estructuras de control que necesitarás para calcular métricas de proyectos y tareas (promedios, porcentajes, filtrados).
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Validación:</strong> Agrega límite máximo de 20 estudiantes</li>
+                        <li><strong>Editar:</strong> Permite modificar calificaciones de un estudiante existente</li>
+                        <li><strong>Histórico:</strong> Muestra la nota más alta y más baja de cada parcial</li>
+                        <li><strong>Ranking:</strong> Muestra los estudiantes ordenados por promedio</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (10 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 4: Juego "Adivina el Número"</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un juego donde:</p>
+                                    <ul class="mb-0">
+                                        <li>La computadora genera un número aleatorio (1-100)</li>
+                                        <li>El usuario tiene 7 intentos para adivinar</li>
+                                        <li>Después de cada intento, indica "mayor" o "menor"</li>
+                                        <li>Muestra mensaje de victoria o derrota</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa <code>import random</code> y <code>random.randint(1, 100)</code></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 5: Validador de Contraseñas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un validador que verifique:</p>
+                                    <ul class="mb-0">
+                                        <li>Mínimo 8 caracteres</li>
+                                        <li>Al menos una letra mayúscula</li>
+                                        <li>Al menos un número</li>
+                                        <li>Al menos un caracter especial (!@#$%^&*)</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa bucles <code>for</code> para recorrer la contraseña</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>Ejercicio 6: Patrones con Bucles</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Usa bucles anidados para crear:</p>
+                                    <pre class="mb-0 bg-light p-2"><code>*
+**
+***
+****
+*****
+
+    *
+   ***
+  *****
+ *******
+*********</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>Ejercicio 7: Calculadora Científica</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Extiende la calculadora para incluir:</p>
+                                    <ul class="mb-0">
+                                        <li>Potencia (base^exponente)</li>
+                                        <li>Raíz cuadrada</li>
+                                        <li>Factorial</li>
+                                        <li>Logaritmo</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa <code>import math</code></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- RESUMEN -->

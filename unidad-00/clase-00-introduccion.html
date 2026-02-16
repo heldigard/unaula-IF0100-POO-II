@@ -131,6 +131,17 @@ texto = str(100)        # "100"</code></pre>
                     <div class="alert-warning">
                         <strong>Atención:</strong> <code>input()</code> siempre retorna texto (str). Debes convertirlo si necesitas números.
                     </div>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Tipos de Datos (5 min)</h5>
+                        <p class="mb-2">Abre VSCode y crea un archivo <code>ejercicio1.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea 3 variables: tu nombre (str), tu edad (int), tu altura (float)</li>
+                            <li>Usa <code>type()</code> para verificar el tipo de cada una</li>
+                            <li>Imprime los valores con f-strings</li>
+                        </ol>
+                        <p class="mt-2 mb-0"><strong>Verificación:</strong> ¿Coinciden los tipos con lo que esperabas?</p>
+                    </div>
                 </section>
 
                 <!-- OPERADORES -->
@@ -155,6 +166,21 @@ texto = str(100)        # "100"</code></pre>
                         <tr><td><code>&gt;</code></td><td>Mayor</td><td><code>5 > 3 → True</code></td></tr>
                         <tr><td><code>&lt;</code></td><td>Menor</td><td><code>5 < 3 → False</code></td></tr>
                     </table>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Calculadora Geométrica (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio2.py</code>:</p>
+                        <ol class="mb-2">
+                            <li>Pide al usuario el radio de un círculo</li>
+                            <li>Calcula el área: <code>area = 3.14159 * radio ** 2</code></li>
+                            <li>Calcula el perímetro: <code>perimetro = 2 * 3.14159 * radio</code></li>
+                            <li>Muestra los resultados formateados a 2 decimales</li>
+                        </ol>
+                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
+                        <pre class="mb-0 bg-light p-2"><code>Radio: 5
+Área: 78.54
+Perímetro: 31.42</code></pre>
+                    </div>
                 </section>
 
                 <!-- ENTRADA/SALIDA -->
@@ -186,11 +212,26 @@ edad = int(input("¿Cuántos años tienes? "))
 altura = float(input("¿Cuánto mides (metros)? "))
 
 print(f"Hola {nombre}, tienes {edad} años y mides {altura}m")</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Conversor de Temperatura (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio3.py</code>:</p>
+                        <ol class="mb-2">
+                            <li>Pide al usuario una temperatura en Celsius</li>
+                            <li>Convierte a Fahrenheit: <code>F = (C × 9/5) + 32</code></li>
+                            <li>Convierte a Kelvin: <code>K = C + 273.15</code></li>
+                            <li>Muestra las tres temperaturas formateadas</li>
+                        </ol>
+                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
+                        <pre class="mb-0 bg-light p-2"><code>Temperatura en Celsius: 25
+Fahrenheit: 77.0°F
+Kelvin: 298.15K</code></pre>
+                    </div>
                 </section>
 
-                <!-- EJERCICIO -->
+                <!-- EJERCICIO PRINCIPAL -->
                 <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Calculadora de IMC (15 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 1: Calculadora de IMC Mejorada (20 min)</h2>
                     
                     <p>Vamos a crear un programa que calcule el Índice de Masa Corporal.</p>
 
@@ -204,29 +245,64 @@ print(f"Hola {nombre}, tienes {edad} años y mides {altura}m")</code></pre>
 
                     <h4>Código</h4>
                     <pre><code class="language-python"># calculadora_imc.py
-print("=== CALCULADORA DE IMC ===")
+print("=== CALCULADORA DE IMC AVANZADA ===")
 
 # Pedir datos al usuario
 nombre = input("¿Cuál es tu nombre? ")
-peso = float(input("¿Cuál es tu peso en kg? "))
-altura = float(input("¿Cuál es tu altura en metros? "))
+
+# Validar entrada de peso
+while True:
+    try:
+        peso = float(input("¿Cuál es tu peso en kg? "))
+        if peso > 0:
+            break
+        print("❌ El peso debe ser mayor que 0")
+    except ValueError:
+        print("❌ Por favor ingresa un número válido")
+
+# Validar entrada de altura
+while True:
+    try:
+        altura = float(input("¿Cuál es tu altura en metros? "))
+        if altura > 0:
+            break
+        print("❌ La altura debe ser mayor que 0")
+    except ValueError:
+        print("❌ Por favor ingresa un número válido")
 
 # Calcular IMC
 imc = peso / (altura ** 2)
 
+# Calcular peso ideal (IMC = 22)
+peso_ideal = 22 * (altura ** 2)
+diferencia = peso - peso_ideal
+
 # Mostrar resultado
-print(f"\nHola {nombre}!")
+print(f"\n📊 RESULTADOS PARA {nombre.upper()}")
+print("=" * 40)
 print(f"Tu IMC es: {imc:.2f}")
 
-# Clasificar
+# Clasificar con emojis
 if imc < 18.5:
-    print("Clasificación: Bajo peso")
+    print("Clasificación: 🔵 Bajo peso")
+    print("💡 Recomendación: Consulta con un nutricionista")
 elif imc < 25:
-    print("Clasificación: Peso normal")
+    print("Clasificación: 🟢 Peso normal")
+    print("💡 ¡Excelente! Mantén tus hábitos saludables")
 elif imc < 30:
-    print("Clasificación: Sobrepeso")
+    print("Clasificación: 🟡 Sobrepeso")
+    print("💡 Recomendación: Actividad física regular")
 else:
-    print("Clasificación: Obesidad")</code></pre>
+    print("Clasificación: 🔴 Obesidad")
+    print("💡 Importante: Busca orientación médica")
+
+print(f"\n🎯 Peso ideal: {peso_ideal:.2f} kg")
+if diferencia > 0:
+    print(f"📉 Debes bajar: {diferencia:.2f} kg")
+elif diferencia < 0:
+    print(f"📈 Debes subir: {abs(diferencia):.2f} kg")
+else:
+    print("✅ ¡Estás en tu peso ideal!")</code></pre>
 
                     <div class="alert-note">
                         <strong>Conexión con TaskFlow:</strong> Este ejercicio te prepara para manejar datos de usuario (nombre, valores numéricos) que usarás en el proyecto.
@@ -238,6 +314,165 @@ else:
                         <tr><td>Juan</td><td>70</td><td>1.75</td><td>22.86 (Normal)</td></tr>
                         <tr><td>María</td><td>55</td><td>1.60</td><td>21.48 (Normal)</td></tr>
                     </table>
+
+                    <div class="alert-tip mt-3">
+                        <h5><i class="bi bi-star-fill me-2"></i>Reto Adicional</h5>
+                        <p class="mb-0">Modifica el programa para procesar múltiples usuarios usando un bucle <code>while</code> que pregunte "¿Deseas calcular otro IMC? (s/n)" hasta que el usuario responda 'n'.</p>
+                    </div>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Calculadora de Finanzas Personales (25 min)</h2>
+                    
+                    <p>Crea un sistema para gestionar tus finanzas personales mensuales.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Registrar ingresos mensuales</li>
+                        <li>Registrar gastos por categoría (vivienda, alimentación, transporte, entretenimiento, otros)</li>
+                        <li>Calcular balance (ingresos - gastos)</li>
+                        <li>Mostrar porcentaje de gastos por categoría</li>
+                        <li>Determinar si hay superávit o déficit</li>
+                    </ul>
+
+                    <h4>Código Base</h4>
+                    <pre><code class="language-python"># finanzas_personales.py
+print("💰 CALCULADORA DE FINANZAS PERSONALES 💰\n")
+
+# Ingresos
+print("💵 INGRESOS")
+salario = float(input("Salario mensual: $"))
+ingresos_extra = float(input("Ingresos extras (freelance, etc.): $"))
+ingresos_totales = salario + ingresos_extra
+
+print(f"\n📊 Ingresos totales: ${ingresos_totales:.2f}\n")
+
+# Gastos por categoría
+print("💸 GASTOS POR CATEGORÍA")
+vivienda = float(input("Vivienda (arriendo, servicios): $"))
+alimentacion = float(input("Alimentación: $"))
+transporte = float(input("Transporte: $"))
+entretenimiento = float(input("Entretenimiento: $"))
+otros = float(input("Otros gastos: $"))
+
+gastos_totales = vivienda + alimentacion + transporte + entretenimiento + otros
+
+# Cálculos
+balance = ingresos_totales - gastos_totales
+porcentaje_gastos = (gastos_totales / ingresos_totales) * 100
+
+# Resultados
+print("\n" + "="*50)
+print("📈 RESUMEN FINANCIERO")
+print("="*50)
+print(f"Ingresos totales:  ${ingresos_totales:>10.2f}")
+print(f"Gastos totales:    ${gastos_totales:>10.2f}")
+print(f"Balance:          ${balance:>10.2f}")
+print("="*50)
+
+# Análisis
+if balance > 0:
+    print(f"\n✅ ¡SUPERÁVIT! Estás ahorrando ${balance:.2f}")
+    print(f"💡 Estás gastando el {porcentaje_gastos:.1f}% de tus ingresos")
+    print(f"📊 Puedes ahorrar: ${balance:.2f} este mes")
+elif balance < 0:
+    print(f"\n⚠️  DÉFICIT: Te faltan ${abs(balance):.2f}")
+    print(f"💡 Revisa tus gastos, especialmente en entretenimiento")
+else:
+    print("\n⚖️  Estás exactamente al día (sin ahorros)")
+
+# Desglose por categoría
+print(f"\n📋 DESGLOSE DE GASTOS:")
+print(f"  🏠 Vivienda:        ${vivienda:>8.2f} ({(vivienda/gastos_totales)*100:.1f}%)")
+print(f"  🍽️  Alimentación:   ${alimentacion:>8.2f} ({(alimentacion/gastos_totales)*100:.1f}%)")
+print(f"  🚗 Transporte:      ${transporte:>8.2f} ({(transporte/gastos_totales)*100:.1f}%)")
+print(f"  🎮 Entretenimiento: ${entretenimiento:>8.2f} ({(entretenimiento/gastos_totales)*100:.1f}%)")
+print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}%)")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este ejercicio te enseña a manejar múltiples variables y realizar cálculos complejos, habilidades que usarás para calcular estadísticas de proyectos y tareas.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Meta de ahorro:</strong> Pide una meta de ahorro mensual y calcula cuánto te falta o sobra</li>
+                        <li><strong>Comparación:</strong> Almacena el balance en una variable y compara con el mes anterior (simulado)</li>
+                        <li><strong>Alertas:</strong> Si alguna categoría supera el 30% de los ingresos, muestra una alerta</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (15 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 4: Conversor de Monedas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un conversor USD ↔ COP. Usa tasa de cambio actual (ej: 1 USD = 4,000 COP).</p>
+                                    <ul class="mb-0">
+                                        <li>Pide al usuario el monto</li>
+                                        <li>Pide la dirección de conversión (1: USD→COP, 2: COP→USD)</li>
+                                        <li>Muestra el resultado formateado</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 5: Calculadora de Propinas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Calcula la propina y el total a pagar en un restaurante.</p>
+                                    <ul class="mb-0">
+                                        <li>Total de la cuenta</li>
+                                        <li>Porcentaje de propina (10%, 15%, 20%)</li>
+                                        <li>Número de personas para dividir</li>
+                                        <li>Muestra: propina, total, total por persona</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>Ejercicio 6: Calculadora de Interés Simple</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Calcula el interés simple y el monto final de una inversión.</p>
+                                    <ul class="mb-0">
+                                        <li>Fórmula: I = P × r × t</li>
+                                        <li>P = capital inicial</li>
+                                        <li>r = tasa de interés anual (decimal)</li>
+                                        <li>t = tiempo en años</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>Ejercicio 7: Divisor de Cuentas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Divide una cuenta entre varias personas considerando quién consumió qué.</p>
+                                    <ul class="mb-0">
+                                        <li>Registra consumo por persona</li>
+                                        <li>Calcula subtotal + propina</li>
+                                        <li>Muestra cuánto debe pagar cada uno</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- RESUMEN -->

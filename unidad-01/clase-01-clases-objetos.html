@@ -269,6 +269,18 @@ print(p1)           # (3, 4) - usa __str__
 print(repr(p1))     # Punto(x=3, y=4) - usa __repr__
 print(p1 == p2)     # True - usa __eq__
 print(p1 == p3)     # False</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Clase Rectángulo (5 min)</h5>
+                        <p class="mb-2">Crea una clase Rectángulo que tenga:</p>
+                        <ol class="mb-0">
+                            <li>Atributos: base y altura</li>
+                            <li>Método area() que retorne base × altura</li>
+                            <li>Método perimetro() que retorne 2×(base+altura)</li>
+                            <li>Método __str__ que muestre "Rectángulo de base=X y altura=Y"</li>
+                        </ol>
+                        <p class="mt-2">Crea 2 rectángulos diferentes y compara sus áreas.</p>
+                    </div>
                 </section>
 
                 <!-- EJERCICIO -->
@@ -367,6 +379,298 @@ if __name__ == "__main__":
                         <li>Agrega método <code>cambiar_email(nuevo_email)</code> con validación</li>
                         <li>Agrega método <code>to_dict()</code> que retorne un diccionario con los datos</li>
                     </ol>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Sistema de Cuentas Bancarias (25 min)</h2>
+                    
+                    <p>Crea un sistema de cuentas bancarias con múltiples cuentas y transferencias entre ellas.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Clase CuentaBancaria con número de cuenta único, titular y saldo</li>
+                        <li>Métodos: depositar(), retirar(), transferir(), consultar_saldo()</li>
+                        <li>Historial de transacciones (lista de diccionarios)</li>
+                        <li>Validaciones: saldo insuficiente, montos negativos</li>
+                        <li>Interfaz de menú para gestionar múltiples cuentas</li>
+                    </ul>
+
+                    <pre><code class="language-python"># sistema_bancario.py
+import random
+import datetime
+
+class CuentaBancaria:
+    """Representa una cuenta bancaria."""
+    
+    def __init__(self, titular, saldo_inicial=0):
+        self.numero = f"10{random.randint(10000000, 99999999)}"
+        self.titular = titular
+        self.saldo = saldo_inicial
+        self.transacciones = []
+        
+        # Registrar saldo inicial
+        if saldo_inicial > 0:
+            self._registrar_transaccion("APERTURA", saldo_inicial, "Depósito inicial")
+    
+    def _registrar_transaccion(self, tipo, monto, descripcion):
+        """Registra una transacción en el historial."""
+        transaccion = {
+            "fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "tipo": tipo,
+            "monto": monto,
+            "descripcion": descripcion,
+            "saldo_resultante": self.saldo
+        }
+        self.transacciones.append(transaccion)
+    
+    def depositar(self, monto, descripcion="Depósito"):
+        """Deposita dinero en la cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        self.saldo += monto
+        self._registrar_transaccion("DEPÓSITO", monto, descripcion)
+        return True, f"Depósito exitoso. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def retirar(self, monto, descripcion="Retiro"):
+        """Retira dinero de la cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        if monto > self.saldo:
+            return False, "Saldo insuficiente"
+        
+        self.saldo -= monto
+        self._registrar_transaccion("RETIRO", monto, descripcion)
+        return True, f"Retiro exitoso. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def transferir(self, monto, cuenta_destino, descripcion="Transferencia"):
+        """Transfiere dinero a otra cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        if monto > self.saldo:
+            return False, "Saldo insuficiente para transferencia"
+        
+        # Retirar de esta cuenta
+        self.saldo -= monto
+        self._registrar_transaccion(
+            "TRANSFERENCIA SALIDA", 
+            monto, 
+            f"{descripcion} a cuenta {cuenta_destino.numero}"
+        )
+        
+        # Depositar en cuenta destino
+        cuenta_destino.saldo += monto
+        cuenta_destino._registrar_transaccion(
+            "TRANSFERENCIA ENTRADA",
+            monto,
+            f"{descripcion} desde cuenta {self.numero}"
+        )
+        
+        return True, f"Transferencia exitosa. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def consultar_saldo(self):
+        """Retorna el saldo actual."""
+        return self.saldo
+    
+    def obtener_historial(self):
+        """Muestra el historial de transacciones."""
+        return self.transacciones
+    
+    def __str__(self):
+        return f"Cuenta {self.numero} - {self.titular}: ${self.saldo:.2f}"
+    
+    def __repr__(self):
+        return f"CuentaBancaria(numero='{self.numero}', titular='{self.titular}', saldo={self.saldo})"
+
+
+# Sistema de gestión de cuentas
+class SistemaBancario:
+    """Gestiona múltiples cuentas bancarias."""
+    
+    def __init__(self):
+        self.cuentas = {}
+    
+    def crear_cuenta(self, titular, saldo_inicial=0):
+        """Crea una nueva cuenta."""
+        cuenta = CuentaBancaria(titular, saldo_inicial)
+        self.cuentas[cuenta.numero] = cuenta
+        print(f"✅ Cuenta creada: {cuenta.numero}")
+        return cuenta
+    
+    def obtener_cuenta(self, numero):
+        """Busca una cuenta por número."""
+        return self.cuentas.get(numero)
+    
+    def listar_cuentas(self):
+        """Lista todas las cuentas."""
+        if not self.cuentas:
+            print("📭 No hay cuentas registradas")
+            return
+        
+        print("\n📊 CUENTAS REGISTRADAS:")
+        print("=" * 60)
+        for cuenta in self.cuentas.values():
+            print(f"  • {cuenta}")
+        print("=" * 60)
+
+
+# Programa principal
+sistema = SistemaBancario()
+
+while True:
+    print("\n" + "="*50)
+    print("🏦 SISTEMA BANCARIO")
+    print("="*50)
+    print("1. Crear cuenta")
+    print("2. Listar cuentas")
+    print("3. Depositar")
+    print("4. Retirar")
+    print("5. Transferir")
+    print("6. Consultar saldo")
+    print("7. Ver historial")
+    print("8. Salir")
+    
+    opcion = input("\nSelecciona una opción: ")
+    
+    if opcion == "1":
+        titular = input("Nombre del titular: ").strip()
+        try:
+            saldo = float(input("Saldo inicial: $"))
+            sistema.crear_cuenta(titular, saldo)
+        except ValueError:
+            print("❌ Saldo inválido")
+    
+    elif opcion == "2":
+        sistema.listar_cuentas()
+    
+    elif opcion == "3":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            try:
+                monto = float(input("Monto a depositar: $"))
+                exito, mensaje = cuenta.depositar(monto)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "4":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            try:
+                monto = float(input("Monto a retirar: $"))
+                exito, mensaje = cuenta.retirar(monto)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "5":
+        num_origen = input("Cuenta origen: ").strip()
+        num_destino = input("Cuenta destino: ").strip()
+        
+        cuenta_origen = sistema.obtener_cuenta(num_origen)
+        cuenta_destino = sistema.obtener_cuenta(num_destino)
+        
+        if cuenta_origen and cuenta_destino:
+            try:
+                monto = float(input("Monto a transferir: $"))
+                exito, mensaje = cuenta_origen.transferir(monto, cuenta_destino)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Una o ambas cuentas no existen")
+    
+    elif opcion == "6":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            print(f"\n💰 Saldo actual: ${cuenta.consultar_saldo():.2f}")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "7":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            historial = cuenta.obtener_historial()
+            if historial:
+                print(f"\n📜 HISTORIAL DE {cuenta.titular}:")
+                print("=" * 80)
+                print(f"{'Fecha':<20} {'Tipo':<20} {'Monto':<12} {'Descripción'}")
+                print("=" * 80)
+                for t in historial:
+                    print(f"{t['fecha']:<20} {t['tipo']:<20} ${t['monto']:<11.2f} {t['descripcion']}")
+                print("=" * 80)
+            else:
+                print("📭 No hay transacciones")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "8":
+        print("👋 ¡Hasta luego!")
+        break
+    
+    else:
+        print("❌ Opción no válida")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este sistema usa clases, validaciones, historial de operaciones y múltiples objetos relacionados, conceptos fundamentales para el modelo de dominio de TaskFlow.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Interés:</strong> Agrega método para calcular y aplicar interés mensual</li>
+                        <li><strong>Límites:</strong> Establece límites diarios de retiro por cuenta</li>
+                        <li><strong>Estadísticas:</strong> Calcula total de dinero en el sistema bancario</li>
+                        <li><strong>Reportes:</strong> Genera reporte de cuentas con saldo negativo</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (10 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 2: Clase Libro</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea una clase Libro con:</p>
+                                    <ul class="mb-0">
+                                        <li>Atributos: título, autor, ISBN, año, disponible (bool)</li>
+                                        <li>Métodos: prestar(), devolver(), info()</li>
+                                        <li>__str__ que muestre "Título por Autor (Año)"</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 3: Clase Estudiante</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea una clase Estudiante con:</p>
+                                    <ul class="mb-0">
+                                        <li>Lista de calificaciones</li>
+                                        <li>Métodos: agregar_nota(), promedio(), aprobo()</li>
+                                        <li>Método para mostrar todas las notas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- RESUMEN -->
