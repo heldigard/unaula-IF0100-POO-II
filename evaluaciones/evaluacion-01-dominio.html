@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E1: Modelado del Dominio - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Prism.js CSS para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #dc3545; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #a71d2a 100%); color: white; padding: 2rem 0; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h5 { color: var(--primary); margin-bottom: 0.75rem; }
+        .criterio ul { margin-bottom: 0; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .comment { color: #6a9955; }
+        .entregable-box .folder { color: #569cd6; }
+        .penalizacion { background: #f8d7da; border-left: 4px solid #dc3545; padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        code:not([class*="language-"]) { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        pre[class*="language-"] { border-radius: 8px; margin: 0; }
+        .detalle-req { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin: 0.5rem 0; font-size: 0.9rem; }
+        .paso-num { display: inline-block; width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 1</h1>
+                    <h2>Modelado del Dominio POO</h2>
+                    <p class="mb-0"><strong>Entrega Incremental 1 - Base del Proyecto TaskFlow</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-white text-dark fs-5 mb-2">15%</span><br>
+                    <span class="badge bg-warning text-dark">Taller Práctico</span><br>
+                    <small>Fecha límite: 26 de febrero de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E1 - Dominio</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-info">
+            <h5><i class="bi bi-info-circle me-2"></i>¿Qué es el Proyecto Incremental?</h5>
+            <p class="mb-0">TaskFlow es un sistema de gestión de tareas que construirás durante todo el semestre. <strong>Esta entrega (E1) es la base</strong>. Todo lo que construyas aquí lo usarás en E2, E3, E4, E5 y E6. Es fundamental que quede bien.</p>
+        </div>
+
+        <div class="card mb-4 border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-gear text-success me-2"></i>
+                                <a href="../unidad-01/clase-01-clases-objetos.html" class="text-decoration-none">Clase 01: Clases y Objetos</a>
+                                <small class="d-block text-muted">Conceptos básicos de POO</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-shield-lock text-success me-2"></i>
+                                <a href="../unidad-01/clase-02-encapsulamiento.html" class="text-decoration-none">Clase 02: Encapsulamiento</a>
+                                <small class="d-block text-muted">@property, validaciones</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-diagram-3 text-success me-2"></i>
+                                <a href="../unidad-01/clase-03-herencia-polimorfismo.html" class="text-decoration-none">Clase 03: Herencia y Polimorfismo</a>
+                                <small class="d-block text-muted">Jerarquías de clases</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-gem text-success me-2"></i>
+                                <a href="../unidad-01/clase-04-clases-abstractas.html" class="text-decoration-none">Clase 04: Clases Abstractas</a>
+                                <small class="d-block text-muted">ABC, interfaces</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-bullseye me-2"></i>Objetivo de Aprendizaje</h3>
+        <p class="lead">Implementar la capa de dominio del sistema TaskFlow utilizando <strong>Programación Orientada a Objetos</strong> avanzada en Python. Aplicar encapsulamiento, herencia, polimorfismo y clases abstractas.</p>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-check me-2"></i>Requisitos Técnicos Detallados</h3>
+
+        <!-- CLASE USUARIO -->
+        <div class="criterio">
+            <h5><i class="bi bi-person text-primary me-2"></i>1. Clase Usuario</h5>
+            <p><strong>Descripción:</strong> Representa un usuario del sistema TaskFlow que puede crear proyectos y tareas.</p>
+
+            <h6 class="mt-3">Atributos obligatorios:</h6>
+            <ul>
+                <li><code>username</code> (str, inmutable): Identificador único, mínimo 3 caracteres, solo letras y números</li>
+                <li><code>email</code> (str): Correo electrónico validado (debe contener @ y .)</li>
+                <li><code>nombre_completo</code> (str, opcional): Nombre real del usuario</li>
+                <li><code>activo</code> (bool): Estado de la cuenta, por defecto True</li>
+                <li><code>fecha_registro</code> (datetime): Se asigna automáticamente al crear</li>
+            </ul>
+
+            <h6>Métodos obligatorios:</h6>
+            <ul>
+                <li><code>activar() -> None</code>: Activa la cuenta del usuario</li>
+                <li><code>desactivar() -> None</code>: Desactiva la cuenta</li>
+                <li><code>__str__() -> str</code>: Retorna <code>@username</code></li>
+                <li><code>__repr__() -> str</code>: Retorna <code>Usuario('username', 'email')</code></li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Validaciones requeridas:</strong>
+                <ul class="mb-0">
+                    <li>Username: mínimo 3 caracteres, solo alfanuméricos</li>
+                    <li>Email: debe contener @ y punto (validación en setter con @property)</li>
+                    <li>Lanzar <code>ValueError</code> con mensaje descriptivo si falla</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CLASE PROYECTO -->
+        <div class="criterio">
+            <h5><i class="bi bi-folder text-success me-2"></i>2. Clase Proyecto</h5>
+            <p><strong>Descripción:</strong> Un proyecto agrupa múltiples tareas y tiene un líder (Usuario).</p>
+
+            <h6 class="mt-3">Atributos obligatorios:</h6>
+            <ul>
+                <li><code>nombre</code> (str): Nombre del proyecto, mínimo 3 caracteres</li>
+                <li><code>descripcion</code> (str, opcional): Descripción del proyecto</li>
+                <li><code>lider</code> (Usuario): Referencia al usuario líder del proyecto</li>
+                <li><code>tareas</code> (list[Tarea]): Lista de tareas, inicia vacía (composición)</li>
+                <li><code>fecha_creacion</code> (datetime): Se asigna automáticamente</li>
+            </ul>
+
+            <h6>Métodos obligatorios:</h6>
+            <ul>
+                <li><code>agregar_tarea(tarea: Tarea) -> None</code>: Agrega una tarea al proyecto</li>
+                <li><code>obtener_tareas_pendientes() -> list[Tarea]</code>: Retorna tareas no completadas</li>
+                <li><code>obtener_tareas_por_prioridad(prioridad: PrioridadTarea) -> list[Tarea]</code></li>
+                <li><code>__str__() -> str</code>: Retorna el nombre del proyecto</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Relación de composición:</strong> El proyecto "posee" las tareas. Si se elimina el proyecto, sus tareas también deberían eliminarse conceptualmente.
+            </div>
+        </div>
+
+        <!-- CLASE TAREA -->
+        <div class="criterio">
+            <h5><i class="bi bi-check-square text-warning me-2"></i>3. Clase Tarea</h5>
+            <p><strong>Descripción:</strong> Una tarea individual dentro de un proyecto con estado y prioridad.</p>
+
+            <h6 class="mt-3">Atributos obligatorios:</h6>
+            <ul>
+                <li><code>titulo</code> (str): Título de la tarea, mínimo 3 caracteres</li>
+                <li><code>descripcion</code> (str, opcional): Detalles de la tarea</li>
+                <li><code>prioridad</code> (PrioridadTarea): Enum con valores ALTA, MEDIA, BAJA</li>
+                <li><code>estado</code> (EstadoTarea): Enum con valores PENDIENTE, EN_PROGRESO, COMPLETADA</li>
+                <li><code>fecha_creacion</code> (datetime): Se asigna automáticamente</li>
+                <li><code>fecha_completado</code> (datetime, opcional): Se asigna al completar</li>
+            </ul>
+
+            <h6>Métodos obligatorios:</h6>
+            <ul>
+                <li><code>completar() -> None</code>: Marca la tarea como completada y registra fecha</li>
+                <li><code>cambiar_prioridad(nueva_prioridad: PrioridadTarea) -> None</code></li>
+                <li><code>iniciar() -> None</code>: Cambia estado a EN_PROGRESO</li>
+                <li><code>__str__() -> str</code>: Retorna <code>[PRIORIDAD] titulo (estado)</code></li>
+            </ul>
+        </div>
+
+        <!-- ENUMS -->
+        <div class="criterio">
+            <h5><i class="bi bi-list-ol text-info me-2"></i>4. Enums (enums.py)</h5>
+            <p><strong>Descripción:</strong> Definir enumeraciones para tipos seguros usando <code>enum.Enum</code>.</p>
+
+            <h6 class="mt-3">PrioridadTarea:</h6>
+            <ul>
+                <li><code>ALTA = 1</code></li>
+                <li><code>MEDIA = 2</code></li>
+                <li><code>BAJA = 3</code></li>
+            </ul>
+
+            <h6>EstadoTarea:</h6>
+            <ul>
+                <li><code>PENDIENTE = "pendiente"</code></li>
+                <li><code>EN_PROGRESO = "en_progreso"</code></li>
+                <li><code>COMPLETADA = "completada"</code></li>
+            </ul>
+        </div>
+
+        <!-- CALIDAD DE CÓDIGO -->
+        <div class="criterio">
+            <h5><i class="bi bi-shield-check text-info me-2"></i>5. Calidad de Código</h5>
+
+            <h6 class="mt-3">Estándares obligatorios:</h6>
+            <ul>
+                <li><strong>PEP 8:</strong> Código formateado según estándares Python (usar <code>black</code> o <code>autopep8</code>)</li>
+                <li><strong>Type Hints:</strong> Todos los parámetros y retornos deben estar tipados</li>
+                <li><strong>Docstrings:</strong> Formato Google en todas las clases y métodos públicos</li>
+                <li><strong>Validaciones:</strong> <code>ValueError</code> con mensajes claros y descriptivos</li>
+                <li><strong>Encapsulamiento:</strong> Atributos privados con <code>_</code>, acceso vía <code>@property</code></li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Ejemplo de docstring formato Google:</strong>
+                <pre class="mb-0 mt-2"><code class="language-python">def agregar_tarea(self, tarea: Tarea) -> None:
+    """Agrega una tarea al proyecto.
+
+    Args:
+        tarea: La tarea a agregar. No puede ser None.
+
+    Raises:
+        ValueError: Si la tarea es None o ya existe en el proyecto.
+    """</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-code-square me-2"></i>Ejemplo de Implementación</h3>
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>src/domain/usuario.py
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-python">from datetime import datetime
+from typing import Optional
+
+
+class Usuario:
+    """Representa un usuario en el sistema TaskFlow.
+
+    Attributes:
+        username: Identificador único del usuario (inmutable).
+        email: Correo electrónico validado.
+        nombre_completo: Nombre completo del usuario (opcional).
+        activo: Estado de la cuenta.
+        fecha_registro: Fecha de creación de la cuenta.
+    """
+
+    def __init__(
+        self,
+        username: str,
+        email: str,
+        nombre_completo: Optional[str] = None
+    ) -> None:
+        """Inicializa un nuevo usuario.
+
+        Args:
+            username: Identificador único (mínimo 3 caracteres, alfanumérico).
+            email: Correo electrónico válido.
+            nombre_completo: Nombre completo opcional.
+
+        Raises:
+            ValueError: Si el username tiene menos de 3 caracteres.
+            ValueError: Si el email no tiene formato válido.
+        """
+        if len(username) < 3:
+            raise ValueError("Username debe tener al menos 3 caracteres")
+        if not username.isalnum():
+            raise ValueError("Username solo puede contener letras y números")
+
+        self._username = username  # Atributo privado (inmutable)
+        self._email = None
+        self.email = email  # Usa el setter para validar
+        self.nombre_completo = nombre_completo
+        self.activo = True
+        self.fecha_registro = datetime.now()
+
+    @property
+    def username(self) -> str:
+        """Username inmutable del usuario."""
+        return self._username
+
+    @property
+    def email(self) -> str:
+        """Email del usuario."""
+        return self._email
+
+    @email.setter
+    def email(self, valor: str) -> None:
+        """Valida y asigna el email.
+
+        Args:
+            valor: Email a validar.
+
+        Raises:
+            ValueError: Si el email no contiene @ o punto.
+        """
+        if "@" not in valor or "." not in valor:
+            raise ValueError(f"Email inválido: {valor}")
+        self._email = valor
+
+    def activar(self) -> None:
+        """Activa la cuenta del usuario."""
+        self.activo = True
+
+    def desactivar(self) -> None:
+        """Desactiva la cuenta del usuario."""
+        self.activo = False
+
+    def __str__(self) -> str:
+        return f"@{self.username}"
+
+    def __repr__(self) -> str:
+        return f"Usuario('{self.username}', '{self.email}')"</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-box-seam me-2"></i>Estructura de Entrega</h3>
+        <div class="card border-primary mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-folder2-open me-2"></i>Organización de Archivos Obligatoria
+            </div>
+            <div class="card-body">
+                <div class="entregable-box">
+<span class="folder">src/</span>
+├── <span class="folder">__init__.py</span>
+└── <span class="folder">domain/</span>
+    ├── <span class="folder">__init__.py</span>
+    ├── <span class="folder">enums.py</span>          <span class="comment"># PrioridadTarea, EstadoTarea</span>
+    ├── <span class="folder">usuario.py</span>        <span class="comment"># Clase Usuario</span>
+    ├── <span class="folder">proyecto.py</span>       <span class="comment"># Clase Proyecto</span>
+    └── <span class="folder">tarea.py</span>          <span class="comment"># Clase Tarea</span>
+
+<span class="folder">README.md</span>                 <span class="comment"># Instrucciones para ejecutar el proyecto</span>
+<span class="folder">test_dominio.py</span>           <span class="comment"># Tests básicos (opcional pero recomendado)</span>
+<span class="folder">requirements.txt</span>          <span class="comment"># Dependencias (si las hay)</span>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-ol me-2"></i>Pasos para Completar la Evaluación</h3>
+        <div class="card border-secondary mb-4">
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="paso-num">1</span><strong>Crear la estructura de carpetas</strong>
+                    <p class="ms-4 mt-1 text-muted">Crear <code>src/domain/</code> con los archivos <code>__init__.py</code></p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">2</span><strong>Implementar los Enums</strong>
+                    <p class="ms-4 mt-1 text-muted">Crear <code>PrioridadTarea</code> y <code>EstadoTarea</code> en <code>enums.py</code></p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">3</span><strong>Implementar la clase Usuario</strong>
+                    <p class="ms-4 mt-1 text-muted">Con validaciones, properties y type hints</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">4</span><strong>Implementar la clase Tarea</strong>
+                    <p class="ms-4 mt-1 text-muted">Usando los enums para prioridad y estado</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">5</span><strong>Implementar la clase Proyecto</strong>
+                    <p class="ms-4 mt-1 text-muted">Con la relación de composición con Tarea</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">6</span><strong>Crear tests básicos</strong>
+                    <p class="ms-4 mt-1 text-muted">Verificar que todo funcione correctamente</p>
+                </div>
+                <div class="mb-0">
+                    <span class="paso-num">7</span><strong>Documentar en README.md</strong>
+                    <p class="ms-4 mt-1 text-muted">Cómo ejecutar el código y ejemplos de uso</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-award me-2"></i>Rúbrica de Evaluación (100%)</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Excelente (5.0)</th>
+                        <th>Aceptable (3.5)</th>
+                        <th>Insuficiente</th>
+                        <th>Peso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Funcionalidad</strong></td>
+                        <td>Todas las clases funcionan correctamente, validaciones robustas, manejo de errores completo</td>
+                        <td>Funciona pero validaciones básicas, algunos edge cases sin manejar</td>
+                        <td>No funciona o faltan clases principales</td>
+                        <td class="fw-bold text-success">30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arquitectura POO</strong></td>
+                        <td>Excelente encapsulamiento, properties bien usadas, herencia aplicada donde corresponde</td>
+                        <td>Uso básico de clases, algunos atributos públicos sin razón</td>
+                        <td>No aplica POO, todo procedural o atributos públicos</td>
+                        <td class="fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type Hints</strong></td>
+                        <td>100% del código tipado correctamente, incluyendo Optional, Union donde corresponde</td>
+                        <td>Mayoría tipado, algunos métodos sin tipar</td>
+                        <td>Sin type hints o solo algunos</td>
+                        <td class="fw-bold text-success">20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentación</strong></td>
+                        <td>Docstrings Google style completos en todas las clases y métodos públicos</td>
+                        <td>Algunos docstrings presentes, formato inconsistente</td>
+                        <td>Sin documentación o solo comentarios</td>
+                        <td class="fw-bold text-success">15%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tests (bonus)</strong></td>
+                        <td>Tests exhaustivos con pytest, cubren edge cases y validaciones</td>
+                        <td>Tests básicos funcionales, cobertura parcial</td>
+                        <td>Sin tests</td>
+                        <td class="fw-bold text-success">10%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="penalizacion">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Penalizaciones</h5>
+            <ul class="mb-0">
+                <li><strong>Código sin type hints:</strong> Nota máxima 3.5</li>
+                <li><strong>Sin validaciones:</strong> Nota máxima 3.0</li>
+                <li><strong>Atributos públicos sin razón:</strong> -0.5 por cada uno</li>
+                <li><strong>Sin docstrings:</strong> -1.0 punto</li>
+                <li><strong>README vacío o sin instrucciones:</strong> -0.5 puntos</li>
+                <li><strong>Código que no ejecuta:</strong> Nota máxima 2.0</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning mt-4">
+            <h5><i class="bi bi-link-45deg me-2"></i>Conexión con E2</h5>
+            <p class="mb-0">El dominio que construyas aquí será la base para <a href="evaluacion-02-testing.html">E2: Testing y Calidad</a>. Asegúrate de que funcione correctamente porque lo testearás en la siguiente entrega.</p>
+        </div>
+
+        <div class="mt-4">
+            <a href="../index.html" class="btn btn-outline-primary">← Inicio</a>
+            <a href="evaluacion-02-testing.html" class="btn btn-outline-secondary ms-2">E2: Testing →</a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js para syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

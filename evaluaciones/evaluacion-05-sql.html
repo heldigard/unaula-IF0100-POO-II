@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E5: Base de Datos SQL - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #198754; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0f5132 100%); color: white; padding: 2rem 0; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem; margin: 1rem 0; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 5</h1>
+                    <h2>Persistencia Relacional SQL</h2>
+                    <p class="mb-0"><strong>SQLAlchemy ORM y Alembic</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-white text-success fs-5 mb-2">15%</span><br>
+                    <span class="badge bg-dark">Software</span><br>
+                    <small>Fecha: 7 de mayo de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E5 - SQL</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-danger">
+            <h5>⚠️ Requisitos Previos</h5>
+            <p class="mb-0"><strong>REQUIERE E4 (Persistencia Archivos).</strong> Se migrará de JSON a SQL manteniendo el mismo interfaz.</p>
+        </div>
+
+        <div class="card mb-4 border-success">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>📚 Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-table text-success me-2"></i>
+                                <a href="../unidad-04/clase-02-sqlalchemy-modelos.html" class="text-decoration-none">Clase 02: SQLAlchemy Modelos</a>
+                                <small class="d-block text-muted">DeclarativeBase, Columnas</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-diagram-3 text-success me-2"></i>
+                                <a href="../unidad-04/clase-03-sqlalchemy-relaciones.html" class="text-decoration-none">Clase 03: SQLAlchemy Relaciones</a>
+                                <small class="d-block text-muted">ForeignKey, relationship</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-save text-success me-2"></i>
+                                <a href="../unidad-04/clase-04-crud-sqlalchemy.html" class="text-decoration-none">Clase 04: CRUD SQLAlchemy</a>
+                                <small class="d-block text-muted">Create, Read, Update, Delete</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-arrow-up-right-circle text-success me-2"></i>
+                                <a href="../unidad-04/clase-05-alembic.html" class="text-decoration-none">Clase 05: Alembic Migraciones</a>
+                                <small class="d-block text-muted">Versionado de base de datos</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-light mt-3 mb-0">
+                    <small><strong>🔗 Prerequisito obligatorio:</strong> Debes tener <a href="evaluacion-04-archivos.html">E4 completada</a> antes de comenzar esta evaluación.</small>
+                </div>
+            </div>
+        </div>
+
+        <h3>Objetivo</h3>
+        <p class="lead">Migrar la persistencia a base de datos relacional con SQLAlchemy ORM y migraciones Alembic.</p>
+
+        <h3 class="mt-4">Requisitos Técnicos</h3>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h5>1. SQLAlchemy ORM</h5>
+                    <ul>
+                        <li>Modelos con relaciones One-to-Many</li>
+                        <li>Foreign Keys reales</li>
+                        <li>Sessions y transacciones</li>
+                        <li>Dependency injection en FastAPI</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h5>2. Alembic Migraciones</h5>
+                    <ul>
+                        <li>Configuración funcional</li>
+                        <li>Migración inicial (create tables)</li>
+                        <li>Migración de relaciones (FKs)</li>
+                        <li><strong>Prohibido:</strong> create_all()</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h3>Rúbrica de Evaluación</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr><th>Criterio</th><th>Peso</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ORM y Modelos</td><td class="fw-bold text-success">30%</td></tr>
+                    <tr><td>Migraciones Alembic</td><td class="fw-bold text-success">25%</td></tr>
+                    <tr><td>Integración Repository</td><td class="fw-bold text-success">25%</td></tr>
+                    <tr><td>FastAPI + DB</td><td class="fw-bold text-success">20%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-danger">
+            <h6>❌ Penalizaciones:</h6>
+            <ul class="mb-0">
+                <li>SQL crudo (strings): Nota máx 2.0</li>
+                <li>Sin Alembic: Nota máx 3.0</li>
+                <li>Filtrar en Python (no SQL): Ineficiente</li>
+            </ul>
+        </div>
+
+        <div class="mt-4">
+            <a href="evaluacion-04-archivos.html" class="btn btn-outline-primary">← E4: Archivos</a>
+            <a href="evaluacion-06-final.html" class="btn btn-outline-secondary ms-2">E6: Final →</a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        header { background: linear-gradient(135deg, #212529 0%, #0d6efd 100%); color: white; padding: 2rem 0; }
+        .eval-card { transition: transform 0.2s; height: 100%; }
+        .eval-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-light">
+    <header class="text-center">
+        <div class="container">
+            <h1><i class="bi bi-clipboard-data me-2"></i>Evaluaciones del Curso</h1>
+            <p class="lead">Proyecto Integrador Incremental - TaskFlow</p>
+            <div class="mt-3">
+                <span class="badge bg-primary fs-6 me-2">6 Entregas</span>
+                <span class="badge bg-success fs-6 me-2">100% Práctico</span>
+                <span class="badge bg-info fs-6">Sin Exámenes</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item active">Evaluaciones</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-info">
+            <h5>Metodología de Evaluación</h5>
+            <p class="mb-0">Este curso utiliza un <strong>Proyecto Integrador Incremental</strong>. Cada evaluación construye sobre la anterior. <strong>No hay exámenes teóricos.</strong></p>
+        </div>
+
+        <div class="row g-4">
+            <!-- E1 -->
+            <div class="col-md-4">
+                <a href="evaluacion-01-dominio.html" class="text-decoration-none">
+                    <div class="card eval-card border-danger h-100">
+                        <div class="card-header bg-danger text-white"><h5 class="mb-0">E1: Dominio</h5></div>
+                        <div class="card-body">
+                            <span class="badge bg-danger mb-2">Taller - 15%</span>
+                            <p><strong>Base del Proyecto</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ Clases y POO</li>
+                                <li>✓ Type Hints</li>
+                                <li>✓ Validaciones</li>
+                            </ul>
+                            <p class="text-muted small mb-0">26 Feb 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- E2 -->
+            <div class="col-md-4">
+                <a href="evaluacion-02-testing.html" class="text-decoration-none">
+                    <div class="card eval-card h-100" style="border-color: #6f42c1;">
+                        <div class="card-header text-white" style="background-color: #6f42c1;"><h5 class="mb-0">E2: Testing</h5></div>
+                        <div class="card-body">
+                            <span class="badge mb-2" style="background-color: #6f42c1;">Laboratorio - 15%</span>
+                            <p><strong>Calidad</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ pytest</li>
+                                <li>✓ TDD/BDD</li>
+                                <li>✓ 80% Cobertura</li>
+                            </ul>
+                            <p class="text-muted small mb-0">12 Mar 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- E3 -->
+            <div class="col-md-4">
+                <a href="evaluacion-03-web.html" class="text-decoration-none">
+                    <div class="card eval-card border-warning h-100">
+                        <div class="card-header bg-warning text-dark"><h5 class="mb-0">E3: Web</h5></div>
+                        <div class="card-body">
+                            <span class="badge bg-warning text-dark mb-2">Prototipo - 20%</span>
+                            <p><strong>Interfaz</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ FastAPI</li>
+                                <li>✓ HTMX</li>
+                                <li>✓ Bootstrap</li>
+                            </ul>
+                            <p class="text-muted small mb-0">26 Mar 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- E4 -->
+            <div class="col-md-4">
+                <a href="evaluacion-04-archivos.html" class="text-decoration-none">
+                    <div class="card eval-card border-info h-100">
+                        <div class="card-header bg-info text-white"><h5 class="mb-0">E4: Archivos</h5></div>
+                        <div class="card-body">
+                            <span class="badge bg-info mb-2">Software - 15%</span>
+                            <p><strong>Persistencia v1</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ JSON/CSV</li>
+                                <li>✓ Repository</li>
+                                <li>✓ Pathlib</li>
+                            </ul>
+                            <p class="text-muted small mb-0">23 Abr 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- E5 -->
+            <div class="col-md-4">
+                <a href="evaluacion-05-sql.html" class="text-decoration-none">
+                    <div class="card eval-card border-success h-100">
+                        <div class="card-header bg-success text-white"><h5 class="mb-0">E5: SQL</h5></div>
+                        <div class="card-body">
+                            <span class="badge bg-success mb-2">Software - 15%</span>
+                            <p><strong>Persistencia v2</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ SQLAlchemy</li>
+                                <li>✓ Alembic</li>
+                                <li>✓ Relaciones</li>
+                            </ul>
+                            <p class="text-muted small mb-0">7 May 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- E6 -->
+            <div class="col-md-4">
+                <a href="evaluacion-06-final.html" class="text-decoration-none">
+                    <div class="card eval-card border-danger h-100">
+                        <div class="card-header bg-danger text-white"><h5 class="mb-0">E6: Final</h5></div>
+                        <div class="card-body">
+                            <span class="badge bg-danger mb-2">Proyecto - 20%</span>
+                            <p><strong>Integración</strong></p>
+                            <ul class="list-unstyled small">
+                                <li>✓ Clean Architecture</li>
+                                <li>✓ Demo</li>
+                                <li>✓ Sustentación</li>
+                            </ul>
+                            <p class="text-muted small mb-0">28 May 2026</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="alert alert-warning mt-5">
+            <h5>Progresión Incremental</h5>
+            <p class="mb-0">E1 → E2 → E3 → E4 → E5 → E6. Cada entrega se construye sobre la anterior.</p>
+        </div>
+
+        <div class="mt-4 mb-5 text-center">
+            <a href="../index.html" class="btn btn-primary btn-lg">
+                <i class="bi bi-house me-2"></i>Volver al Inicio
+            </a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
