@@ -2,7 +2,7 @@ name: Deploy Clases HTML to GitHub Pages
 
 on:
   push:
-    branches: [ main, generate-clases-html-2026-02-01 ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
@@ -10,38 +10,57 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Create output directory
         run: mkdir -p output
 
-      - name: Copy clases HTML
-        run: |
-          cp -r clases-html/*.html output/ 2>/dev/null || true
-          cp -r clases-html/unidad-* output/ 2>/dev/null || true
-          cp -r clases-html/evaluaciones output/ 2>/dev/null || true
-          cp -r clases-html/docs output/ 2>/dev/null || true
-          cp -r clases-html/templates output/ 2>/dev/null || true
-          cp -r clases-html/assets output/ 2>/dev/null || true
+      - name: Copy all HTML files
+        run: cp -r clases-html/*.html output/
 
-      - name: Copy assets
+      - name: Copy subdirectories
+        run: |
+          cp -r clases-html/unidad-* output/ 2>/dev/null || echo "No unidad-* directories"
+          cp -r clases-html/evaluaciones output/ 2>/dev/null || echo "No evaluaciones directory"
+          cp -r clases-html/docs output/ 2>/dev/null || echo "No docs directory"
+          cp -r clases-html/templates output/ 2>/dev/null || echo "No templates directory"
+          cp -r clases-html/assets output/ 2>/dev/null || echo "No assets directory"
+
+      - name: Copy assets from root
         run: |
           mkdir -p output/assets/infografias
-          cp -r assets/infografias/* output/assets/infografias/ 2>/dev/null || true
+          cp -r assets/infografias/* output/assets/infografias/ 2>/dev/null || echo "No infografias"
 
-      - name: Copy index
+      - name: Verify index.html exists
         run: |
-          cp clases-html/index.html output/index.html 2>/dev/null || true
+          if [ ! -f "output/index.html" ]; then
+            echo "ERROR: output/index.html not found!"
+            ls -la output/
+            exit 1
+          fi
+          echo "index.html found, listing output directory:"
+          ls -la output/
 
       - name: Upload artifact for GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./output
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        id: deployment
+        uses: actions/deploy-pages@v4
