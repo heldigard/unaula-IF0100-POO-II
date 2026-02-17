@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Estructuras de Control | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 0: Fundamentos de Python</h2>
+            <h3>Clase 1: Estructuras de Control</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 10 de febrero de 2026</span>
+                <span class="badge bg-info text-dark">Semana 2 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-01-conceptos-poo.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E1: Examen POO - Jueves 26/02/2026 (16 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#condicionales" class="text-decoration-none">Condicionales</a></li>
+                        <li><a href="#bucles" class="text-decoration-none">Bucles</a></li>
+                        <li><a href="#control" class="text-decoration-none">Control de Flujo</a></li>
+                        <li><a href="#git-basico" class="text-decoration-none">Git: Primeros Pasos</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Laboratorios</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Usar <code>if</code>, <code>elif</code>, <code>else</code> para tomar decisiones</li>
+                        <li>Crear bucles <code>for</code> para repetir acciones con listas y rangos</li>
+                        <li>Usar <code>while</code> para repetir mientras se cumpla una condición</li>
+                        <li>Controlar bucles con <code>break</code> y <code>continue</code></li>
+                        <li>Crear un menú interactivo para el proyecto TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- CONDICIONALES -->
+                <section id="condicionales">
+                    <h2 class="text-primary border-bottom pb-2">Condicionales: if/elif/else (20 min)</h2>
+                    
+                    <p>Los <strong>condicionales</strong> permiten que el programa tome decisiones.</p>
+
+                    <h4>Sintaxis Básica</h4>
+                    <pre><code class="language-python">if condicion:
+    # Código si es True
+    pass
+elif otra_condicion:
+    # Código si otra es True
+    pass
+else:
+    # Código si ninguna es True
+    pass</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Python usa <strong>indentación</strong> (4 espacios), no llaves. ¡Todo lo indentado pertenece al if!
+                    </div>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Clasificar Números (5 min)</h5>
+                        <p class="mb-2">Crea un programa que:</p>
+                        <ol class="mb-0">
+                            <li>Pida un número al usuario</li>
+                            <li>Diga si es positivo, negativo o cero</li>
+                            <li>Diga si es par o impar</li>
+                        </ol>
+                        <p class="mt-2"><strong>Pista:</strong> Usa el operador <code>%</code> (módulo) para saber si es par: <code>numero % 2 == 0</code></p>
+                    </div>
+
+                    <h4>Ejemplo: Clasificar Edad</h4>
+                    <pre><code class="language-python">edad = int(input("Ingresa tu edad: "))
+
+if edad < 13:
+    print("Eres un niño")
+elif edad < 20:
+    print("Eres un adolescente")
+elif edad < 65:
+    print("Eres un adulto")
+else:
+    print("Eres un adulto mayor")
+
+print("Programa terminado")  # Esto siempre se ejecuta</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Calculadora de Descuentos (5 min)</h5>
+                        <p class="mb-2">Crea un programa que calcule el precio final con descuentos:</p>
+                        <ol class="mb-0">
+                            <li>Pide el precio original del producto</li>
+                            <li>Si el precio es mayor a $100, aplica 10% de descuento</li>
+                            <li>Si el precio es mayor a $500, aplica 20% de descuento</li>
+                            <li>Muestra: precio original, descuento aplicado, precio final</li>
+                        </ol>
+                    </div>
+
+                    <h4>Operadores Lógicos</h4>
+                    <pre><code class="language-python"># and - Ambos deben ser True
+if edad >= 18 and tiene_licencia:
+    print("Puede conducir")
+
+# or - Al menos uno debe ser True
+if es_estudiante or es_profesor:
+    print("Tiene acceso a la biblioteca")
+
+# not - Invierte el valor
+if not es_bloqueado:
+    print("Usuario activo")
+
+# Combinados
+if (edad >= 18 and tiene_licencia) or es_emergencia:
+    print("Puede conducir")  </code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Validador de Acceso (5 min)</h5>
+                        <p class="mb-2">Crea un validador de acceso a un sistema:</p>
+                        <ol class="mb-0">
+                            <li>Pide: nombre de usuario, contraseña, si tiene código de verificación</li>
+                            <li>Acceso permitido si: (usuario="admin" Y contraseña="1234") O tiene código de verificación</li>
+                            <li>Muestra mensaje de acceso permitido o denegado</li>
+                        </ol>
+                    </div>
+
+                    <h4>Operador in</h4>
+                    <pre><code class="language-python">frutas = ["manzana", "banana", "naranja"]
+
+if "manzana" in frutas:
+    print("Tenemos manzanas en stock")
+
+# También funciona con strings
+if "@" in email:
+    print("Email parece válido")
+
+# Negado
+if "admin" not in roles:
+    print("No tienes permisos de administrador")  </code></pre>
+                </section>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 4: Buscador en Lista (5 min)</h5>
+                        <p class="mb-2">Usa el operador <code>in</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea una lista con 5 nombres de productos</li>
+                            <li>Pide al usuario un producto a buscar</li>
+                            <li>Usa <code>in</code> para verificar si existe</li>
+                            <li>Si no existe, muestra "Producto no disponible"</li>
+                            <li>Agrega opción para agregar producto si no existe</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- BUCLES -->
+                <section id="bucles">
+                    <h2 class="text-primary border-bottom pb-2">Bucles: for y while (25 min)</h2>
+                    
+                    <h4>Bucle for - Iterar sobre colecciones</h4>
+                    <pre><code class="language-python"># Iterar sobre una lista
+frutas = ["manzana", "banana", "naranja"]
+for fruta in frutas:
+    print(f"Tengo una {fruta}")
+
+# Iterar sobre un string (caracter por caracter)
+for letra in "Python":
+    print(letra)
+
+# range() - Generar números
+for i in range(5):          # 0, 1, 2, 3, 4
+    print(i)
+
+for i in range(1, 6):       # 1, 2, 3, 4, 5
+    print(i)
+
+for i in range(0, 10, 2):   # 0, 2, 4, 6, 8 (pares)
+    print(i)
+
+# enumerate() - Índice y valor
+for indice, fruta in enumerate(frutas):
+    print(f"{indice}: {fruta}")
+    
+# enumerate con inicio en 1
+for numero, fruta in enumerate(frutas, 1):
+    print(f"{numero}. {fruta}")</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 5: Tabla de Multiplicar (5 min)</h5>
+                        <p class="mb-2">Usa <code>for</code> con <code>range()</code>:</p>
+                        <ol class="mb-0">
+                            <li>Pide al usuario un número</li>
+                            <li>Muestra la tabla de multiplicar del 1 al 10</li>
+                            <li>Formatea: "5 x 3 = 15"</li>
+                            <li>Usa <code>enumerate()</code> para numerar las filas</li>
+                        </ol>
+                    </div>
+
+                    <h4>Bucle while - Repetir mientras se cumpla</h4>
+                    <pre><code class="language-python"># Contador simple
+contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1  # IMPORTANTE: modificar la variable
+
+# Validar entrada
+while True:
+    edad = input("Ingresa tu edad (número positivo): ")
+    if edad.isdigit() and int(edad) > 0:
+        edad = int(edad)
+        break  # Sale del bucle
+    print("Por favor ingresa un número válido.")
+
+print(f"Edad registrada: {edad}")</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 6: Validación de PIN (5 min)</h5>
+                        <p class="mb-2">Crea un sistema de validación de PIN:</p>
+                        <ol class="mb-0">
+                            <li>Define un PIN correcto (ej: "1234")</li>
+                            <li>Pide al usuario que ingrese el PIN</li>
+                            <li>Usa <code>while</code> para permitir máximo 3 intentos</li>
+                            <li>Si acierta antes de 3 intentos, muestra "Acceso concedido"</li>
+                            <li>Si falla 3 veces, bloquea y muestra "Cuenta bloqueada"</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert-warning">
+                        <strong>Precaución:</strong> Siempre asegúrate de que la condición del <code>while</code> eventualmente sea <code>False</code>, o tendrás un bucle infinito.
+                    </div>
+                </section>
+
+                <!-- CONTROL DE FLUJO -->
+                <section id="control">
+                    <h2 class="text-primary border-bottom pb-2">Control de Flujo (10 min)</h2>
+                    
+                    <h4>break - Salir del bucle</h4>
+                    <pre><code class="language-python"># Buscar un elemento y detenerse
+usuarios = ["ana", "juan", "maria", "pedro", "luisa"]
+buscar = "maria"
+
+for usuario in usuarios:
+    print(f"Buscando: {usuario}")
+    if usuario == buscar:
+        print(f"¡Encontrado! {usuario}")
+        break  # Sale del bucle inmediatamente</code></pre>
+
+                    <h4>continue - Saltar a la siguiente iteración</h4>
+                    <pre><code class="language-python"># Mostrar solo números pares
+for numero in range(1, 11):
+    if numero % 2 != 0:  # Si es impar
+        continue         # Salta al siguiente número
+    print(numero)        # Solo imprime pares: 2, 4, 6, 8, 10</code></pre>
+
+                    <h4>else en bucles - Se ejecuta si NO hubo break</h4>
+                    <pre><code class="language-python"># Buscar usuario
+usuarios = ["ana", "juan", "pedro"]
+buscar = "maria"
+
+for usuario in usuarios:
+    if usuario == buscar:
+        print(f"{buscar} encontrado")
+        break
+else:
+    # Solo se ejecuta si no encontramos el usuario
+    print(f"{buscar} NO está en la lista")
+
+                    
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 7: Filtro de Números (5 min)</h5>
+                        <p class="mb-2">Crea un programa que procese una lista de números:</p>
+                        <ol class="mb-0">
+                            <li>Crea una lista con números del 1 al 20</li>
+                            <li>Usa <code>continue</code> para saltar los números pares</li>
+                            <li>Usa <code>break</code> si encuentra un número divisible por 7</li>
+                            <li>Muestra solo los números impares procesados antes del break</li>
+                            <li>Usa el <code>else</code> del for para mostrar si se encontró o no el número divisible por 7</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- EJERCICIO PRINCIPAL -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 1: Menú de Usuarios Mejorado (25 min)</h2>
+                    
+                    <p>Crea un menú interactivo para gestionar usuarios (base del proyecto TaskFlow).</p>
+
+                    <pre><code class="language-python"># sistema_usuarios.py
+usuarios = []
+
+def mostrar_menu():
+    print("\n=== SISTEMA DE USUARIOS ===")
+    print("1. Ver usuarios")
+    print("2. Agregar usuario")
+    print("3. Buscar usuario")
+    print("4. Salir")
+
+def ver_usuarios():
+    if len(usuarios) == 0:
+        print("\nNo hay usuarios registrados.")
+        return
+    
+    print("\n--- Lista de Usuarios ---")
+    for i, usuario in enumerate(usuarios, 1):
+        print(f"{i}. {usuario}")
+
+def agregar_usuario():
+    nombre = input("\nIngresa el nombre del usuario: ")
+    
+    # Validar que no esté vacío
+    if not nombre.strip():
+        print("❌ El nombre no puede estar vacío.")
+        return
+    
+    # Validar que no exista
+    if nombre in usuarios:
+        print("❌ Ese usuario ya existe.")
+        return
+    
+    usuarios.append(nombre)
+    print(f"✅ Usuario '{nombre}' agregado correctamente.")
+
+def buscar_usuario():
+    if len(usuarios) == 0:
+        print("\nNo hay usuarios para buscar.")
+        return
+    
+    nombre = input("\n¿Qué usuario buscas? ")
+    
+    for usuario in usuarios:
+        if usuario.lower() == nombre.lower():
+            print(f"✅ Usuario encontrado: {usuario}")
+            return
+    
+    print(f"❌ Usuario '{nombre}' no encontrado.")
+
+# Programa principal
+while True:
+    mostrar_menu()
+    opcion = input("\nSelecciona una opción (1-4): ")
+    
+    if opcion == "1":
+        ver_usuarios()
+    elif opcion == "2":
+        agregar_usuario()
+    elif opcion == "3":
+        buscar_usuario()
+    elif opcion == "4":
+        print("\n¡Hasta luego!")
+        break
+    else:
+        print("\n❌ Opción no válida. Intenta de nuevo.")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este menú es la base del sistema. Más adelante agregaremos: validaciones de email, contraseñas, estados (activo/inactivo), y persistencia en base de datos.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ul>
+                        <li>Agrega opción 5: Eliminar usuario por nombre</li>
+                        <li>Valida que el nombre tenga al menos 3 caracteres</li>
+                        <li>Permite buscar coincidencias parciales (ej: "ju" encuentra "juan")</li>
+                    </ul>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Sistema de Calificaciones (25 min)</h2>
+                    
+                    <p>Crea un sistema completo para gestionar calificaciones de estudiantes con múltiples evaluaciones.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Registrar múltiples estudiantes</li>
+                        <li>Cada estudiante tiene 3 calificaciones (parcial 1, parcial 2, final)</li>
+                        <li>Calcular promedio ponderado: P1(30%) + P2(30%) + Final(40%)</li>
+                        <li>Determinar si aprobó (promedio >= 3.0)</li>
+                        <li>Mostrar estadísticas: mejor estudiante, promedio general, tasa de aprobación</li>
+                    </ul>
+
+                    <h4>Código Base</h4>
+                    <pre><code class="language-python"># sistema_calificaciones.py
+print("📚 SISTEMA DE CALIFICACIONES 📚\n")
+
+estudiantes = []
+
+while True:
+    print("\n" + "="*50)
+    print("MENÚ PRINCIPAL")
+    print("="*50)
+    print("1. Registrar estudiante")
+    print("2. Ver todos los estudiantes")
+    print("3. Ver estadísticas")
+    print("4. Buscar estudiante")
+    print("5. Salir")
+    
+    opcion = input("\nSelecciona una opción: ")
+    
+    if opcion == "1":
+        nombre = input("Nombre del estudiante: ").strip()
+        
+        if not nombre:
+            print("❌ El nombre no puede estar vacío")
+            continue
+        
+        # Verificar si ya existe
+        ya_existe = False
+        for est in estudiantes:
+            if est["nombre"].lower() == nombre.lower():
+                ya_existe = True
+                break
+        
+        if ya_existe:
+            print("❌ Este estudiante ya está registrado")
+            continue
+        
+        # Pedir calificaciones con validación
+        def pedir_nota(mensaje):
+            while True:
+                try:
+                    nota = float(input(mensaje))
+                    if 0 <= nota <= 5:
+                        return nota
+                    print("❌ La nota debe estar entre 0 y 5")
+                except ValueError:
+                    print("❌ Ingresa un número válido")
+        
+        p1 = pedir_nota("Parcial 1 (30%): ")
+        p2 = pedir_nota("Parcial 2 (30%): ")
+        final = pedir_nota("Final (40%): ")
+        
+        # Calcular promedio ponderado
+        promedio = (p1 * 0.3) + (p2 * 0.3) + (final * 0.4)
+        
+        # Determinar estado
+        if promedio >= 3.0:
+            estado = "✅ Aprobado"
+        else:
+            estado = "❌ Reprobado"
+        
+        estudiante = {
+            "nombre": nombre,
+            "p1": p1,
+            "p2": p2,
+            "final": final,
+            "promedio": promedio,
+            "estado": estado
+        }
+        
+        estudiantes.append(estudiante)
+        print(f"\n✅ Estudiante registrado. Promedio: {promedio:.2f} - {estado}")
+    
+    elif opcion == "2":
+        if not estudiantes:
+            print("\n📭 No hay estudiantes registrados")
+            continue
+        
+        print("\n" + "="*70)
+        print(f"{'NOMBRE':<20} {'P1':<6} {'P2':<6} {'FINAL':<6} {'PROM':<6} {'ESTADO'}")
+        print("="*70)
+        
+        for est in estudiantes:
+            print(f"{est['nombre']:<20} {est['p1']:<6.1f} {est['p2']:<6.1f} "
+                  f"{est['final']:<6.1f} {est['promedio']:<6.2f} {est['estado']}")
+        print("="*70)
+    
+    elif opcion == "3":
+        if not estudiantes:
+            print("\n📭 No hay datos para estadísticas")
+            continue
+        
+        # Calcular estadísticas
+        total_est = len(estudiantes)
+        aprobados = 0
+        suma_promedios = 0
+        mejor_estudiante = estudiantes[0]
+        
+        for est in estudiantes:
+            suma_promedios += est["promedio"]
+            if "Aprobado" in est["estado"]:
+                aprobados += 1
+            if est["promedio"] > mejor_estudiante["promedio"]:
+                mejor_estudiante = est
+        
+        promedio_general = suma_promedios / total_est
+        tasa_aprobacion = (aprobados / total_est) * 100
+        
+        print("\n" + "="*50)
+        print("📊 ESTADÍSTICAS")
+        print("="*50)
+        print(f"Total estudiantes: {total_est}")
+        print(f"Aprobados: {aprobados}")
+        print(f"Reprobados: {total_est - aprobados}")
+        print(f"Tasa de aprobación: {tasa_aprobacion:.1f}%")
+        print(f"Promedio general: {promedio_general:.2f}")
+        print(f"\n🏆 Mejor estudiante: {mejor_estudiante['nombre']}")
+        print(f"   Promedio: {mejor_estudiante['promedio']:.2f}")
+        print("="*50)
+    
+    elif opcion == "4":
+        if not estudiantes:
+            print("\n📭 No hay estudiantes registrados")
+            continue
+        
+        buscar = input("Nombre a buscar: ").strip().lower()
+        encontrados = []
+        
+        for est in estudiantes:
+            if buscar in est["nombre"].lower():
+                encontrados.append(est)
+        
+        if encontrados:
+            print(f"\n✅ {len(encontrados)} estudiante(s) encontrado(s):")
+            for est in encontrados:
+                print(f"  • {est['nombre']}: {est['promedio']:.2f} {est['estado']}")
+        else:
+            print(f"❌ No se encontró '{buscar}'")
+    
+    elif opcion == "5":
+        print("\n👋 ¡Hasta luego!")
+        break
+    
+    else:
+        print("\n❌ Opción no válida")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este sistema de calificaciones usa las mismas estructuras de control que necesitarás para calcular métricas de proyectos y tareas (promedios, porcentajes, filtrados).
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Validación:</strong> Agrega límite máximo de 20 estudiantes</li>
+                        <li><strong>Editar:</strong> Permite modificar calificaciones de un estudiante existente</li>
+                        <li><strong>Histórico:</strong> Muestra la nota más alta y más baja de cada parcial</li>
+                        <li><strong>Ranking:</strong> Muestra los estudiantes ordenados por promedio</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (10 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 8: Juego "Adivina el Número"</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un juego donde:</p>
+                                    <ul class="mb-0">
+                                        <li>La computadora genera un número aleatorio (1-100)</li>
+                                        <li>El usuario tiene 7 intentos para adivinar</li>
+                                        <li>Después de cada intento, indica "mayor" o "menor"</li>
+                                        <li>Muestra mensaje de victoria o derrota</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa <code>import random</code> y <code>random.randint(1, 100)</code></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 9: Validador de Contraseñas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un validador que verifique:</p>
+                                    <ul class="mb-0">
+                                        <li>Mínimo 8 caracteres</li>
+                                        <li>Al menos una letra mayúscula</li>
+                                        <li>Al menos un número</li>
+                                        <li>Al menos un caracter especial (!@#$%^&*)</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa bucles <code>for</code> para recorrer la contraseña</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>Ejercicio 10: Patrones con Bucles</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Usa bucles anidados para crear:</p>
+                                    <pre class="mb-0 bg-light p-2"><code>*
+**
+***
+****
+*****
+
+    *
+   ***
+  *****
+ *******
+*********</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>Ejercicio 11: Calculadora Científica</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Extiende la calculadora para incluir:</p>
+                                    <ul class="mb-0">
+                                        <li>Potencia (base^exponente)</li>
+                                        <li>Raíz cuadrada</li>
+                                        <li>Factorial</li>
+                                        <li>Logaritmo</li>
+                                    </ul>
+                                    <p class="mt-2 mb-0"><strong>Pista:</strong> Usa <code>import math</code></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GIT BÁSICO -->
+                <section id="git-basico">
+                    <h2 class="text-primary border-bottom pb-2">Git: Primeros Pasos (20 min)</h2>
+                    
+                    <p>Ahora que tienes código, es momento de versionarlo con <strong>Git</strong>.</p>
+
+                    <h4>Inicializar un Repositorio</h4>
+                    <pre><code class="language-bash"># En la terminal, dentro de tu carpeta de proyectos:
+cd poo2-practicas
+
+# Inicializar Git en esta carpeta
+git init
+
+# Verificar que se creó (archivo oculto .git)
+ls -la</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Práctico: Versiona tu Código (10 min)</h5>
+                        <p class="mb-2">Vamos a guardar el sistema de usuarios en Git:</p>
+                        <ol class="mb-0">
+                            <li>Crea una carpeta <code>clase-01</code> dentro de <code>poo2-practicas</code></li>
+                            <li>Copia tu archivo <code>sistema_usuarios.py</code> a esa carpeta</li>
+                            <li>Abre la terminal en VSCode (Ctrl+`)</li>
+                            <li>Ejecuta: <code>git status</code> (verás archivos en rojo)</li>
+                            <li>Agrega el archivo: <code>git add clase-01/sistema_usuarios.py</code></li>
+                            <li>Verifica: <code>git status</code> (ahora en verde)</li>
+                            <li>Crea tu primer commit: <code>git commit -m "Sistema de usuarios básico"</code></li>
+                            <li>Ver historial: <code>git log</code></li>
+                        </ol>
+                    </div>
+
+                    <h4>Los 3 Estados de Git</h4>
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Estado</th>
+                            <th>Descripción</th>
+                            <th>Comando</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Working Directory</strong></td>
+                            <td>Archivos modificados pero no preparados</td>
+                            <td>Editas archivos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Staging Area</strong></td>
+                            <td>Archivos listos para guardar</td>
+                            <td><code>git add</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Repository</strong></td>
+                            <td>Historial guardado</td>
+                            <td><code>git commit</code></td>
+                        </tr>
+                    </table>
+
+                    <h4>Comandos Esenciales</h4>
+                    <pre><code class="language-bash"># Ver estado actual
+$ git status
+
+# Agregar archivo específico
+$ git add nombre_archivo.py
+
+# Agregar todos los cambios
+$ git add .
+
+# Guardar cambios con mensaje
+$ git commit -m "Mensaje descriptivo"
+
+# Ver historial de commits
+$ git log
+
+# Ver historial resumido
+$ git log --oneline</code></pre>
+
+                    <h4>Archivo .gitignore</h4>
+                    <p>Archivos que Git debe ignorar (no versionar):</p>
+                    <pre><code class="language-bash"># Crear archivo .gitignore
+touch .gitignore
+
+# Contenido típico para Python:
+__pycache__/
+*.pyc
+*.pyo
+.env
+.vscode/
+*.log</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Nunca subas información sensible (contraseñas, tokens) a GitHub. Usa <code>.gitignore</code> para excluir archivos <code>.env</code>.
+                    </div>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido: Flujo de Trabajo (5 min)</h5>
+                        <p class="mb-2">Practica el ciclo completo:</p>
+                        <ol class="mb-0">
+                            <li>Modifica el sistema de usuarios (agrega un print de bienvenida)</li>
+                            <li><code>git status</code> - verás el archivo modificado</li>
+                            <li><code>git diff</code> - verás exactamente qué cambió</li>
+                            <li><code>git add .</code> - prepara todos los cambios</li>
+                            <li><code>git commit -m "Agregado mensaje de bienvenida"</code></li>
+                            <li><code>git log --oneline</code> - deberías ver 2 commits</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Convención de Mensajes:</strong>
+                        <ul class="mb-0">
+                            <li><code>"feat: sistema de usuarios básico"</code> - nueva funcionalidad</li>
+                            <li><code>"fix: validación de nombres vacíos"</code> - corrección de bug</li>
+                            <li><code>"docs: agregado README"</code> - documentación</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <h4 class="mt-4">Python</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Estructura</th>
+                            <th>Uso</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                        <tr>
+                            <td><code>if/elif/else</code></td>
+                            <td>Tomar decisiones</td>
+                            <td><code>if edad >= 18:</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>for</code></td>
+                            <td>Iterar colecciones</td>
+                            <td><code>for u in usuarios:</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>while</code></td>
+                            <td>Repetir condicionalmente</td>
+                            <td><code>while opcion != "4":</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>break</code></td>
+                            <td>Salir del bucle</td>
+                            <td>Al encontrar elemento</td>
+                        </tr>
+                        <tr>
+                            <td><code>continue</code></td>
+                            <td>Saltar iteración</td>
+                            <td>Omitir elementos</td>
+                        </tr>
+                    </table>
+
+                    <h4>Git</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Comando</th>
+                            <th>Función</th>
+                        </tr>
+                        <tr>
+                            <td><code>git init</code></td>
+                            <td>Inicializar repositorio</td>
+                        </tr>
+                        <tr>
+                            <td><code>git status</code></td>
+                            <td>Ver estado actual</td>
+                        </tr>
+                        <tr>
+                            <td><code>git add</code></td>
+                            <td>Preparar archivos</td>
+                        </tr>
+                        <tr>
+                            <td><code>git commit</code></td>
+                            <td>Guardar versión</td>
+                        </tr>
+                        <tr>
+                            <td><code>git log</code></td>
+                            <td>Ver historial</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Crea commits cada vez que termines un ejercicio o funcionalidad. Esto te permitirá volver atrás si algo falla.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-00-introduccion.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Introducción
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 1 de 25</span>
+            </div>
+            <div>
+                <a href="clase-02-estructuras-datos.html" class="btn btn-primary btn-sm">
+                    Siguiente: Estructuras de Datos →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

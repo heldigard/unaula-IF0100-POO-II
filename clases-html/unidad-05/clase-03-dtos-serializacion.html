@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3: DTOs y Serialización | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programacion OO II</h1>
+            <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
+            <h3>Clase 3: DTOs y Serialización</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 02 de junio de 2026</span>
+                <span class="badge bg-info text-dark">Semana 18 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2"><span class="badge bg-secondary">Curso completado</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#quees" class="text-decoration-none">Que es un DTO</a></li>
+                        <li><a href="#pydantic" class="text-decoration-none">Pydantic Models</a></li>
+                        <li><a href="#tipos" class="text-decoration-none">Tipos de DTOs</a></li>
+                        <li><a href="#mapeo" class="text-decoration-none">Mapeo Entity-DTO</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Entender que es un <strong>DTO (Data Transfer Object)</strong></li>
+                        <li>Crear DTOs con <strong>Pydantic</strong></li>
+                        <li>Diferenciar DTOs de entrada y salida</li>
+                        <li>Mapear entre <strong>Entities</strong> y <strong>DTOs</strong></li>
+                        <li>Validar datos con Pydantic</li>
+                    </ul>
+                </section>
+
+                <section id="quees">
+                    <h2 class="text-primary border-bottom pb-2">Que es un DTO? (10 min)</h2>
+                    
+                    <p><strong>DTO (Data Transfer Object)</strong> es un objeto que transporta datos entre procesos, sin logica de negocio.</p>
+
+                    <div class="alert-note">
+                        <strong>Por que usar DTOs?</strong>
+                        <ul class="mb-0">
+                            <li>Separar API del modelo de dominio</li>
+                            <li>Controlar que datos se exponen</li>
+                            <li>Validar entrada de usuario</li>
+                            <li>Documentar la API automaticamente</li>
+                        </ul>
+                    </div>
+
+                    <h4>Problema sin DTOs</h4>
+                    <pre><code class="language-python"># ❌ Exponer entity directamente
+@router.get("/usuarios/{id}")
+def obtener(id: int):
+    usuario = repo.obtener(id)
+    return usuario  # Expone password_hash!</code></pre>
+
+                    <h4>Solucion con DTOs</h4>
+                    <pre><code class="language-python"># ✅ Usar DTO para controlar respuesta
+@router.get("/usuarios/{id}", response_model=UsuarioResponse)
+def obtener(id: int):
+    usuario = repo.obtener(id)
+    return UsuarioResponse.from_entity(usuario)  # Sin password</code></pre>
+                </section>
+
+                <section id="pydantic">
+                    <h2 class="text-primary border-bottom pb-2">Pydantic Models (20 min)</h2>
+                    
+                    <pre><code class="language-python">from pydantic import BaseModel, Field, EmailStr, field_validator
+from typing import Optional
+from datetime import datetime
+
+class UsuarioBase(BaseModel):
+    """DTO base con campos comunes."""
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr
+
+class UsuarioCreate(UsuarioBase):
+    """DTO para crear usuario."""
+    password: str = Field(..., min_length=8, max_length=100)
+    nombre_completo: Optional[str] = Field(None, max_length=100)
+    
+    @field_validator('password')
+    @classmethod
+    def validar_password(cls, v: str) -> str:
+        if not any(c.isupper() for c in v):
+            raise ValueError('Password debe tener al menos una mayuscula')
+        if not any(c.isdigit() for c in v):
+            raise ValueError('Password debe tener al menos un numero')
+        return v
+
+class UsuarioUpdate(BaseModel):
+    """DTO para actualizar usuario."""
+    email: Optional[EmailStr] = None
+    nombre_completo: Optional[str] = Field(None, max_length=100)
+
+class UsuarioResponse(UsuarioBase):
+    """DTO para respuesta."""
+    id: int
+    nombre_completo: Optional[str]
+    activo: bool
+    creado_en: datetime
+    
+    model_config = {"from_attributes": True}</code></pre>
+                </section>
+
+                <section id="tipos">
+                    <h2 class="text-primary border-bottom pb-2">Tipos de DTOs (15 min)</h2>
+                    
+                    <table class="table">
+                        <tr><th>Tipo</th><th>Uso</th><th>Ejemplo</th></tr>
+                        <tr><td><strong>Create</strong></td><td>Datos para crear</td><td>UsuarioCreate</td></tr>
+                        <tr><td><strong>Update</strong></td><td>Datos para actualizar</td><td>UsuarioUpdate</td></tr>
+                        <tr><td><strong>Response</strong></td><td>Datos a devolver</td><td>UsuarioResponse</td></tr>
+                        <tr><td><strong>List</strong></td><td>Lista de items</td><td>UsuarioListResponse</td></tr>
+                    </table>
+
+                    <h4>DTO para listar con paginacion</h4>
+                    <pre><code class="language-python">from pydantic import BaseModel
+from typing import Generic, TypeVar, List
+
+T = TypeVar("T")
+
+class PaginatedResponse(BaseModel, Generic[T]):
+    """Respuesta paginada generica."""
+    items: List[T]
+    total: int
+    page: int
+    page_size: int
+    pages: int
+    
+    @classmethod
+    def create(cls, items: List[T], total: int, page: int, page_size: int):
+        return cls(
+            items=items,
+            total=total,
+            page=page,
+            page_size=page_size,
+            pages=(total + page_size - 1) // page_size
+        )
+
+# Uso
+class UsuarioListResponse(PaginatedResponse[UsuarioResponse]):
+    pass</code></pre>
+                </section>
+
+                <section id="mapeo">
+                    <h2 class="text-primary border-bottom pb-2">Mapeo Entity-DTO (20 min)</h2>
+                    
+                    <pre><code class="language-python"># domain/entities.py
+class Usuario:
+    """Entity de dominio."""
+    def __init__(self, id: int, username: str, email: str, 
+                 password_hash: str, activo: bool = True):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.password_hash = password_hash
+        self.activo = activo
+        self.creado_en = datetime.now(timezone.utc)
+
+# api/schemas/usuario.py
+class UsuarioResponse(BaseModel):
+    id: int
+    username: str
+    email: str
+    activo: bool
+    creado_en: datetime
+    
+    @classmethod
+    def from_entity(cls, usuario: Usuario) -> "UsuarioResponse":
+        """Convierte Entity a DTO."""
+        return cls(
+            id=usuario.id,
+            username=usuario.username,
+            email=usuario.email,
+            activo=usuario.activo,
+            creado_en=usuario.creado_en
+        )
+
+# application/services/usuario_service.py
+class UsuarioService:
+    def obtener(self, id: int) -> UsuarioResponse:
+        usuario = self.repo.obtener_por_id(id)
+        if not usuario:
+            raise ValueError("Usuario no encontrado")
+        return UsuarioResponse.from_entity(usuario)
+    
+    def crear(self, data: UsuarioCreate) -> UsuarioResponse:
+        # Convertir DTO a Entity
+        usuario = Usuario(
+            id=0,  # Se asigna en repo
+            username=data.username,
+            email=data.email,
+            password_hash=self._hash_password(data.password)
+        )
+        
+        # Guardar
+        usuario = self.repo.crear(usuario)
+        
+        # Convertir Entity a DTO
+        return UsuarioResponse.from_entity(usuario)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> El mapeo puede automatizarse con librerias como <code>pydantic-mapper</code> o <code>dataclasses</code>.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: DTOs Tarea (15 min)</h2>
+                    
+                    <p>Crear DTOs completos para Tarea:</p>
+
+                    <pre><code class="language-python"># api/schemas/tarea.py
+from pydantic import BaseModel, Field
+from typing import Optional
+from datetime import datetime
+from enum import Enum
+
+class Prioridad(str, Enum):
+    BAJA = "baja"
+    MEDIA = "media"
+    ALTA = "alta"
+    URGENTE = "urgente"
+
+class TareaBase(BaseModel):
+    titulo: str = Field(..., min_length=1, max_length=200)
+    descripcion: Optional[str] = Field(None, max_length=1000)
+    prioridad: Prioridad = Prioridad.MEDIA
+
+class TareaCreate(TareaBase):
+    proyecto_id: int
+
+class TareaUpdate(BaseModel):
+    titulo: Optional[str] = Field(None, min_length=1, max_length=200)
+    descripcion: Optional[str] = Field(None, max_length=1000)
+    completada: Optional[bool] = None
+    prioridad: Optional[Prioridad] = None
+
+class TareaResponse(TareaBase):
+    id: int
+    completada: bool
+    proyecto_id: int
+    creado_en: datetime
+    
+    model_config = {"from_attributes": True}</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E6 Proyecto Final:</strong> Implementa DTOs para todas las entidades del sistema.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>DTO:</strong> Objeto para transferir datos entre capas</li>
+                        <li><strong>Pydantic:</strong> Libreria para crear DTOs con validacion</li>
+                        <li><strong>Create/Update/Response:</strong> Diferentes DTOs por operacion</li>
+                        <li><strong>Mapeo:</strong> Conversion entre Entity y DTO</li>
+                        <li><strong>Validacion:</strong> Pydantic valida automaticamente</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-02-clean-architecture.html">← Anterior</a> | <a href="clase-04-api-rest-avanzada.html">Siguiente: API REST Avanzada →</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

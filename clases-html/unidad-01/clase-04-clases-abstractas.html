@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 6: Clases Abstractas | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h3>Clase 4: Clases Abstractas e Interfaces</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 26 de febrero de 2026</span>
+                <span class="badge bg-info text-dark">Semana 4 - Jueves (60 minutos)</span>
+                <span class="badge bg-primary">30 min Teoría</span>
+                <span class="badge bg-success text-white">30 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-01-dominio.html" class="badge bg-danger text-decoration-none p-2 fs-6">
+                    <i class="bi bi-clipboard-check"></i> E1: Modelado del Dominio - Entrega Hoy (26/02/2026)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#abstractas" class="text-decoration-none">Clases Abstractas</a></li>
+                        <li><a href="#abc" class="text-decoration-none">ABC y @abstractmethod</a></li>
+                        <li><a href="#interfaces" class="text-decoration-none">Interfaces</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio: Repository</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Entender qué son las clases abstractas</li>
+                        <li>Crear clases abstractas con <code>ABC</code> y <code>@abstractmethod</code></li>
+                        <li>Definir interfaces para estandarizar comportamiento</li>
+                        <li>Implementar el patrón Repository para TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- CLASES ABSTRACTAS -->
+                <section id="abstractas">
+                    <h2 class="text-primary border-bottom pb-2">Clases Abstractas (15 min)</h2>
+                    
+                    <p>Una <strong>clase abstracta</strong> es una clase que no puede instanciarse directamente. Sirve como "molde" para otras clases.</p>
+
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> No puedes crear un "Animal" genérico, pero sí un "Perro" o un "Gato". Animal sería abstracta.
+                    </div>
+
+                    <h4>¿Por qué usar clases abstractas?</h4>
+                    <ul>
+                        <li>Forzar a las clases hijas a implementar ciertos métodos</li>
+                        <li>Definir una interfaz común</li>
+                        <li>Evitar instanciar clases incompletas</li>
+                    </ul>
+
+                    <pre><code class="language-python"># Sin clases abstractas - PROBLEMA
+class Animal:
+    def hacer_sonido(self):
+        # ¡No implementado!
+        pass
+
+class Perro(Animal):
+    def hacer_sonido(self):
+        return "Guau"
+
+class Gato(Animal):
+    # Olvidé implementar hacer_sonido!
+    pass
+
+# Funciona pero puede causar errores
+gato = Gato()
+print(gato.hacer_sonido())  # None - ¿Error silencioso?</code></pre>
+                </section>
+
+                <!-- ABC -->
+                <section id="abc">
+                    <h2 class="text-primary border-bottom pb-2">ABC y @abstractmethod (25 min)</h2>
+                    
+                    <p>Python usa el módulo <code>abc</code> (Abstract Base Classes) para crear clases abstractas.</p>
+
+                    <pre><code class="language-python">from abc import ABC, abstractmethod
+
+class Animal(ABC):  # Hereda de ABC
+    """Clase abstracta - no se puede instanciar."""
+    
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    @abstractmethod
+    def hacer_sonido(self):
+        """Método abstracto - DEBE implementarse en la hija."""
+        pass
+    
+    @abstractmethod
+    def moverse(self):
+        """Otro método abstracto."""
+        pass
+    
+    def dormir(self):
+        """Método normal - opcional implementar en hija."""
+        return f"{self.nombre} está durmiendo"
+
+
+class Perro(Animal):
+    def hacer_sonido(self):
+        return "¡Guau!"
+    
+    def moverse(self):
+        return f"{self.nombre} está corriendo en 4 patas"
+
+
+class Gato(Animal):
+    def hacer_sonido(self):
+        return "¡Miau!"
+    
+    def moverse(self):
+        return f"{self.nombre} está saltando silenciosamente"
+
+
+# Uso
+# animal = Animal("Genérico")  # ❌ Error: No se puede instanciar clase abstracta
+
+perro = Perro("Fido")
+gato = Gato("Michi")
+
+print(perro.hacer_sonido())   # "¡Guau!"
+print(gato.hacer_sonido())    # "¡Miau!"
+print(perro.dormir())         # "Fido está durmiendo" (heredado)
+
+# Polimorfismo
+animales = [perro, gato]
+for a in animales:
+    print(f"{a.nombre}: {a.hacer_sonido()}")</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Regla:</strong> Una clase hija <strong>DEBE</strong> implementar todos los métodos abstractos del padre, o también será abstracta y no podrá instanciarse.
+                    </div>
+                </section>
+
+                <!-- INTERFACES -->
+                <section id="interfaces">
+                    <h2 class="text-primary border-bottom pb-2">Interfaces y Protocol (10 min)</h2>
+                    
+                    <p>Una <strong>interfaz</strong> define <em>qué</em> debe hacer una clase, no <em>cómo</em>. En Python moderno usamos <code>Protocol</code>.</p>
+
+                    <pre><code class="language-python">from typing import Protocol
+
+class Guardable(Protocol):
+    """Interfaz para objetos que se pueden guardar."""
+    
+    def guardar(self) -> None:
+        """Guardar el objeto."""
+        ...
+    
+    def cargar(self, id: int) -> None:
+        """Cargar el objeto por ID."""
+        ...
+
+# Cualquier clase que implemente guardar() y cargar()
+# automáticamente cumple con la interfaz Guardable
+
+class Usuario:
+    def __init__(self, username):
+        self.username = username
+    
+    def guardar(self):
+        print(f"Guardando usuario {self.username}")
+    
+    def cargar(self, id):
+        print(f"Cargando usuario con ID {id}")
+
+class Proyecto:
+    def __init__(self, nombre):
+        self.nombre = nombre
+    
+    def guardar(self):
+        print(f"Guardando proyecto {self.nombre}")
+    
+    def cargar(self, id):
+        print(f"Cargando proyecto con ID {id}")
+
+# Función que acepta cualquier objeto "Guardable"
+def procesar_guardado(objeto: Guardable):
+    objeto.guardar()
+
+# Uso
+u = Usuario("juan")
+p = Proyecto("Website")
+
+procesar_guardado(u)  # ✅ Funciona
+procesar_guardado(p)  # ✅ Funciona</code></pre>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Repository Pattern (20 min)</h2>
+                    
+                    <p>Implementa el patrón Repository para TaskFlow usando clases abstractas.</p>
+
+    <div class="alert-note">
+        <strong>CRUD:</strong> Sigla para <em>Create, Read, Update, Delete</em> (Crear, Leer, Actualizar, Eliminar), que representa las cuatro operaciones básicas de la gestión de datos.
+    </div>
+
+                    <pre><code class="language-python"># repository.py
+from abc import ABC, abstractmethod
+from typing import List, Optional
+
+class Usuario:
+    """Modelo simple de usuario."""
+    def __init__(self, id: int, username: str, email: str):
+        self.id = id
+        self.username = username
+        self.email = email
+    
+    def __repr__(self):
+        return f"Usuario({self.id}, {self.username})"
+
+
+class Repository(ABC):
+    """
+    Interfaz abstracta para repositorios.
+    Define las operaciones CRUD que debe implementar cualquier repositorio.
+    """
+    
+    @abstractmethod
+    def crear(self, usuario: Usuario) -> Usuario:
+        """Crea un nuevo usuario."""
+        pass
+    
+    @abstractmethod
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        """Obtiene un usuario por ID."""
+        pass
+    
+    @abstractmethod
+    def obtener_todos(self) -> List[Usuario]:
+        """Obtiene todos los usuarios."""
+        pass
+    
+    @abstractmethod
+    def actualizar(self, usuario: Usuario) -> Usuario:
+        """Actualiza un usuario existente."""
+        pass
+    
+    @abstractmethod
+    def eliminar(self, id: int) -> bool:
+        """Elimina un usuario por ID."""
+        pass
+
+
+class RepositorioEnMemoria(Repository):
+    """
+    Implementación del repositorio en memoria (para pruebas).
+    """
+    
+    def __init__(self):
+        self._usuarios = {}
+        self._contador_id = 1
+    
+    def crear(self, usuario: Usuario) -> Usuario:
+        usuario.id = self._contador_id
+        self._usuarios[usuario.id] = usuario
+        self._contador_id += 1
+        return usuario
+    
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        return self._usuarios.get(id)
+    
+    def obtener_todos(self) -> List[Usuario]:
+        return list(self._usuarios.values())
+    
+    def actualizar(self, usuario: Usuario) -> Usuario:
+        if usuario.id not in self._usuarios:
+            raise ValueError(f"Usuario {usuario.id} no encontrado")
+        self._usuarios[usuario.id] = usuario
+        return usuario
+    
+    def eliminar(self, id: int) -> bool:
+        if id in self._usuarios:
+            del self._usuarios[id]
+            return True
+        return False
+
+
+class RepositorioArchivo(Repository):
+    """
+    Implementación del repositorio en archivo (simulado).
+    """
+    
+    def __init__(self, archivo: str):
+        self._archivo = archivo
+        self._usuarios = {}
+        self._contador_id = 1
+        self._cargar_desde_archivo()
+    
+    def _cargar_desde_archivo(self):
+        """Simula cargar desde archivo."""
+        # En un caso real: leer JSON/CSV
+        pass
+    
+    def _guardar_en_archivo(self):
+        """Simula guardar en archivo."""
+        # En un caso real: escribir JSON/CSV
+        pass
+    
+    def crear(self, usuario: Usuario) -> Usuario:
+        usuario.id = self._contador_id
+        self._usuarios[usuario.id] = usuario
+        self._contador_id += 1
+        self._guardar_en_archivo()
+        return usuario
+    
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        return self._usuarios.get(id)
+    
+    def obtener_todos(self) -> List[Usuario]:
+        return list(self._usuarios.values())
+    
+    def actualizar(self, usuario: Usuario) -> Usuario:
+        if usuario.id not in self._usuarios:
+            raise ValueError(f"Usuario {usuario.id} no encontrado")
+        self._usuarios[usuario.id] = usuario
+        self._guardar_en_archivo()
+        return usuario
+    
+    def eliminar(self, id: int) -> bool:
+        if id in self._usuarios:
+            del self._usuarios[id]
+            self._guardar_en_archivo()
+            return True
+        return False
+
+
+# === PRUEBAS ===
+if __name__ == "__main__":
+    # No podemos instanciar Repository directamente
+    # repo = Repository()  # ❌ Error
+    
+    # Pero sí las implementaciones concretas
+    print("=== Repositorio en Memoria ===")
+    repo_memoria = RepositorioEnMemoria()
+    
+    # Crear usuarios
+    u1 = repo_memoria.crear(Usuario(None, "juan", "juan@email.com"))
+    u2 = repo_memoria.crear(Usuario(None, "ana", "ana@email.com"))
+    print(f"Creados: {u1}, {u2}")
+    
+    # Obtener todos
+    todos = repo_memoria.obtener_todos()
+    print(f"Total usuarios: {len(todos)}")
+    
+    # Obtener por ID
+    encontrado = repo_memoria.obtener_por_id(1)
+    print(f"Encontrado: {encontrado}")
+    
+    # Actualizar
+    u1.email = "juan.nuevo@email.com"
+    repo_memoria.actualizar(u1)
+    print(f"Actualizado: {repo_memoria.obtener_por_id(1)}")
+    
+    # Eliminar
+    repo_memoria.eliminar(2)
+    print(f"Después de eliminar: {len(repo_memoria.obtener_todos())} usuarios")
+    
+    print("\n=== Polimorfismo con Repository ===")
+    
+    def probar_repositorio(repo: Repository):
+        """Funciona con cualquier implementación de Repository."""
+        u = repo.crear(Usuario(None, "test", "test@email.com"))
+        print(f"Creado en {type(repo).__name__}: {u}")
+        return u
+    
+    # Funciona con ambas implementaciones
+    probar_repositorio(RepositorioEnMemoria())
+    probar_repositorio(RepositorioArchivo("usuarios.txt"))</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> El patrón Repository separa la lógica de negocio del acceso a datos. Podemos cambiar de "en memoria" a "base de datos" sin modificar el código que usa el repositorio.
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen y Preparación E1</h2>
+                    
+                    <h4>Unidad 1: POO en Python</h4>
+                    <ol>
+                        <li><strong>Clases y Objetos:</strong> __init__, self, atributos, métodos</li>
+                        <li><strong>Encapsulamiento:</strong> _, __, @property, getters/setters</li>
+                        <li><strong>Herencia:</strong> class Hija(Padre), super(), sobreescritura</li>
+                        <li><strong>Polimorfismo:</strong> Mismo método, distinto comportamiento</li>
+                        <li><strong>Clases Abstractas:</strong> ABC, @abstractmethod, interfaces</li>
+                    </ol>
+
+                    <h4>Tips para el Examen E1 (15%)</h4>
+                    <ul>
+                        <li>Practica crear clases completas con __init__, atributos y métodos</li>
+                        <li>Domina @property para encapsulamiento</li>
+                        <li>Sabe crear jerarquías con herencia y super()</li>
+                        <li>Entiende cuándo usar clases abstractas</li>
+                        <li>Lee atentamente los enunciados antes de escribir código</li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>¡Éxito en el examen!</strong> Recuerda: la POO es el fundamento de todo el curso. Domina estos conceptos y el resto será más fácil.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-03-herencia-polimorfismo.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Herencia y Polimorfismo
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 6 de 25</span>
+            </div>
+            <div>
+                <a href="../unidad-02/clase-01-tdd-intro.html" class="btn btn-primary btn-sm">
+                    Siguiente: Introducción a TDD →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

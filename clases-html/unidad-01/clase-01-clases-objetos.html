@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 3: Clases y Objetos | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h3>Clase 1: Clases y Objetos</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 17 de febrero de 2026</span>
+                <span class="badge bg-info text-dark">Semana 3 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-01-dominio.html" class="badge bg-danger text-decoration-none p-2 fs-6">
+                    <i class="bi bi-clipboard-check"></i> Próxima Entrega: E1 - Dominio POO (26/02/2026)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#clase" class="text-decoration-none">¿Qué es una Clase?</a></li>
+                        <li><a href="#init" class="text-decoration-none">Constructor __init__</a></li>
+                        <li><a href="#self" class="text-decoration-none">El parámetro self</a></li>
+                        <li><a href="#metodos" class="text-decoration-none">Métodos</a></li>
+                        <li><a href="#git-avanzado" class="text-decoration-none">Git: Ramas y Merge</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio: Clase Usuario</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Definir clases en Python usando <code>class</code></li>
+                        <li>Crear objetos (instancias) de una clase</li>
+                        <li>Usar <code>__init__</code> para inicializar objetos</li>
+                        <li>Comprender el propósito de <code>self</code></li>
+                        <li>Crear métodos para definir comportamientos</li>
+                        <li>Implementar el modelo Usuario para TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- CLASES -->
+                <section id="clase">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es una Clase? (10 min)</h2>
+                    
+                    <p>La <strong>POO (Programación Orientada a Objetos)</strong> es un paradigma basado en objetos. Una <strong>clase</strong> es un molde o plantilla para crear objetos. Define <strong>atributos</strong> (datos) y <strong>métodos</strong> (comportamientos).</p>
+
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> Una clase es como un plano de una casa, mientras que un objeto es una casa construida a partir de ese plano.
+                    </div>
+
+                    <h4>Sintaxis Básica</h4>
+                    <pre><code class="language-python">class NombreClase:
+    """Descripción de la clase."""
+    
+    # Atributo de clase (compartido por todos los objetos)
+    atributo_clase = "valor"
+    
+    def __init__(self, parametro1, parametro2):
+        """Constructor: inicializa el objeto."""
+        # Atributos de instancia (únicos para cada objeto)
+        self.atributo1 = parametro1
+        self.atributo2 = parametro2
+    
+    def metodo(self):
+        """Método de instancia."""
+        return f"Atributo 1: {self.atributo1}"
+
+# Crear objetos (instancias)
+objeto1 = NombreClase("valor1", "valor2")
+objeto2 = NombreClase("otro1", "otro2")
+
+print(objeto1.atributo1)  # "valor1"
+print(objeto2.atributo1)  # "otro1"</code></pre>
+
+                    <h4>Ejemplo: Clase Perro</h4>
+                    <pre><code class="language-python">class Perro:
+    """Representa un perro con nombre y edad."""
+    
+    especie = "Canis familiaris"  # Atributo de clase
+    
+    def __init__(self, nombre, edad):
+        self.nombre = nombre  # Atributo de instancia
+        self.edad = edad      # Atributo de instancia
+    
+    def ladrar(self):
+        return f"{self.nombre} dice: ¡Guau!"
+    
+    def es_cachorro(self):
+        return self.edad < 2
+
+# Crear perros
+mi_perro = Perro("Fido", 3)
+otro_perro = Perro("Rex", 1)
+
+print(mi_perro.ladrar())       # "Fido dice: ¡Guau!"
+print(mi_perro.es_cachorro())  # False
+print(otro_perro.es_cachorro()) # True</code></pre>
+                </section>
+
+                <!-- CONSTRUCTOR -->
+                <section id="init">
+                    <h2 class="text-primary border-bottom pb-2">Constructor __init__ (15 min)</h2>
+                    
+                    <p>El método <code>__init__</code> se ejecuta automáticamente cuando se crea un objeto. Sirve para <strong>inicializar</strong> los atributos.</p>
+
+                    <h4>Ejemplo: Clase Persona</h4>
+                    <pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad, email=None):
+        """Constructor: inicializa una persona."""
+        self.nombre = nombre
+        self.edad = edad
+        self.email = email
+        self.activo = True  # Valor por defecto
+    
+    def presentarse(self):
+        return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+
+# Crear personas
+juan = Persona("Juan", 25, "juan@email.com")
+ana = Persona("Ana", 30)
+
+print(juan.presentarse())
+print(f"Email de Juan: {juan.email}")
+print(f"Email de Ana: {ana.email}")  # None</code></pre>
+
+                    <h4>Valores por Defecto</h4>
+                    <pre><code class="language-python">class Producto:
+    def __init__(self, nombre, precio, cantidad=0):
+        self.nombre = nombre
+        self.precio = precio
+        self.cantidad = cantidad  # Si no se pasa, es 0
+
+# Uso
+p1 = Producto("Laptop", 1000, 5)  # cantidad = 5
+p2 = Producto("Mouse", 25)         # cantidad = 0 (por defecto)
+
+print(f"{p1.nombre}: {p1.cantidad} unidades")
+print(f"{p2.nombre}: {p2.cantidad} unidades")</code></pre>
+                </section>
+
+                <!-- SELF -->
+                <section id="self">
+                    <h2 class="text-primary border-bottom pb-2">El parámetro self (10 min)</h2>
+                    
+                    <p><code>self</code> representa la instancia actual del objeto. Permite acceder a sus atributos y métodos.</p>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Aunque <code>self</code> es el primer parámetro de los métodos, <strong>NO</strong> lo pasas al llamar el método. Python lo hace automáticamente.
+                    </div>
+
+                    <pre><code class="language-python">class CuentaBancaria:
+    def __init__(self, titular, saldo_inicial=0):
+        self.titular = titular
+        self.saldo = saldo_inicial
+    
+    def depositar(self, cantidad):
+        """self permite modificar los atributos del objeto."""
+        if cantidad > 0:
+            self.saldo += cantidad
+            return f"Depósito exitoso. Nuevo saldo: ${self.saldo}"
+        return "Cantidad inválida"
+    
+    def retirar(self, cantidad):
+        """self permite leer y modificar atributos."""
+        if cantidad <= self.saldo:
+            self.saldo -= cantidad
+            return f"Retiro exitoso. Nuevo saldo: ${self.saldo}"
+        return "Saldo insuficiente"
+    
+    def consultar_saldo(self):
+        """self permite leer atributos."""
+        return f"Saldo de {self.titular}: ${self.saldo}"
+
+# Uso - ¡No pasamos self!
+cuenta = CuentaBancaria("Juan", 1000)
+print(cuenta.consultar_saldo())  # Saldo de Juan: $1000
+print(cuenta.depositar(500))     # Depósito exitoso...
+print(cuenta.retirar(200))       # Retiro exitoso...
+print(cuenta.consultar_saldo())  # Saldo de Juan: $1300</code></pre>
+                </section>
+
+                <!-- MÉTODOS -->
+                <section id="metodos">
+                    <h2 class="text-primary border-bottom pb-2">Métodos Especiales (10 min)</h2>
+                    
+                    <p>Python tiene métodos especiales (dunder methods) que comienzan y terminan con <code>__</code>.</p>
+
+                    <table class="table">
+                        <tr>
+                            <th>Método</th>
+                            <th>Cuándo se usa</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                        <tr>
+                            <td><code>__init__</code></td>
+                            <td>Crear objeto</td>
+                            <td><code>obj = Clase()</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__str__</code></td>
+                            <td>Imprimir objeto</td>
+                            <td><code>print(obj)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__repr__</code></td>
+                            <td>Representación técnica</td>
+                            <td><code>repr(obj)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>__eq__</code></td>
+                            <td>Comparar objetos</td>
+                            <td><code>obj1 == obj2</code></td>
+                        </tr>
+                    </table>
+
+                    <pre><code class="language-python">class Punto:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    def __str__(self):
+        """Representación amigable para usuarios."""
+        return f"({self.x}, {self.y})"
+    
+    def __repr__(self):
+        """Representación técnica para debugging."""
+        return f"Punto(x={self.x}, y={self.y})"
+    
+    def __eq__(self, otro):
+        """Comparar dos puntos."""
+        return self.x == otro.x and self.y == otro.y
+
+p1 = Punto(3, 4)
+p2 = Punto(3, 4)
+p3 = Punto(1, 2)
+
+print(p1)           # (3, 4) - usa __str__
+print(repr(p1))     # Punto(x=3, y=4) - usa __repr__
+print(p1 == p2)     # True - usa __eq__
+print(p1 == p3)     # False</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Clase Rectángulo (5 min)</h5>
+                        <p class="mb-2">Crea una clase Rectángulo que tenga:</p>
+                        <ol class="mb-0">
+                            <li>Atributos: base y altura</li>
+                            <li>Método area() que retorne base × altura</li>
+                            <li>Método perimetro() que retorne 2×(base+altura)</li>
+                            <li>Método __str__ que muestre "Rectángulo de base=X y altura=Y"</li>
+                        </ol>
+                        <p class="mt-2">Crea 2 rectángulos diferentes y compara sus áreas.</p>
+                    </div>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Clase Usuario (25 min)</h2>
+                    
+                    <p>Vamos a crear el modelo <strong>Usuario</strong> para el proyecto TaskFlow.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Atributos: username, email, nombre_completo (opcional)</li>
+                        <li>Métodos: presentarse(), es_valido(), activar(), desactivar()</li>
+                        <li>Validar que username tenga al menos 3 caracteres</li>
+                        <li>Validar que email contenga "@"</li>
+                    </ul>
+
+                    <pre><code class="language-python"># usuario.py
+class Usuario:
+    """Representa un usuario en el sistema TaskFlow."""
+    
+    def __init__(self, username, email, nombre_completo=None):
+        """Inicializa un usuario."""
+        self.username = username
+        self.email = email
+        self.nombre_completo = nombre_completo
+        self.activo = True
+    
+    def __str__(self):
+        return f"@{self.username}"
+    
+    def __repr__(self):
+        return f"Usuario('{self.username}', '{self.email}')"
+    
+    def presentarse(self):
+        """Retorna una presentación del usuario."""
+        if self.nombre_completo:
+            return f"Hola, soy {self.nombre_completo} (@{self.username})"
+        return f"Hola, soy @{self.username}"
+    
+    def es_valido(self):
+        """Valida los datos del usuario."""
+        if len(self.username) < 3:
+            return False, "Username debe tener al menos 3 caracteres"
+        
+        if "@" not in self.email:
+            return False, "Email debe contener @"
+        
+        return True, "Válido"
+    
+    def activar(self):
+        """Activa la cuenta del usuario."""
+        self.activo = True
+    
+    def desactivar(self):
+        """Desactiva la cuenta del usuario."""
+        self.activo = False
+    
+    def esta_activo(self):
+        """Retorna True si el usuario está activo."""
+        return self.activo
+
+
+# === PRUEBAS ===
+if __name__ == "__main__":
+    # Crear usuarios
+    usuario1 = Usuario("juan123", "juan@example.com", "Juan Pérez")
+    usuario2 = Usuario("ana", "ana@example.com")
+    usuario3 = Usuario("ab", "email-invalido")  # Inválido
+    
+    # Probar presentación
+    print(usuario1.presentarse())
+    print(usuario2.presentarse())
+    
+    # Probar validación
+    for u in [usuario1, usuario2, usuario3]:
+        valido, mensaje = u.es_valido()
+        estado = "✅" if valido else "❌"
+        print(f"{estado} {u}: {mensaje}")
+    
+    # Probar activación
+    usuario1.desactivar()
+    print(f"\n{usuario1} activo: {usuario1.esta_activo()}")
+    usuario1.activar()
+    print(f"{usuario1} activo: {usuario1.esta_activo()}")
+    
+    # Mostrar representación
+    print(f"\nRepresentación: {repr(usuario1)}")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Esta clase Usuario es la base del sistema. En las siguientes clases agregaremos: encapsulamiento (propiedades), herencia (tipos de usuarios), y persistencia (guardar en base de datos).
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li>Agrega atributo <code>fecha_registro</code> que se establezca automáticamente</li>
+                        <li>Agrega método <code>cambiar_email(nuevo_email)</code> con validación</li>
+                        <li>Agrega método <code>to_dict()</code> que retorne un diccionario con los datos</li>
+                    </ol>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Sistema de Cuentas Bancarias (25 min)</h2>
+                    
+                    <p>Crea un sistema de cuentas bancarias con múltiples cuentas y transferencias entre ellas.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Clase CuentaBancaria con número de cuenta único, titular y saldo</li>
+                        <li>Métodos: depositar(), retirar(), transferir(), consultar_saldo()</li>
+                        <li>Historial de transacciones (lista de diccionarios)</li>
+                        <li>Validaciones: saldo insuficiente, montos negativos</li>
+                        <li>Interfaz de menú para gestionar múltiples cuentas</li>
+                    </ul>
+
+                    <pre><code class="language-python"># sistema_bancario.py
+import random
+import datetime
+
+class CuentaBancaria:
+    """Representa una cuenta bancaria."""
+    
+    def __init__(self, titular, saldo_inicial=0):
+        self.numero = f"10{random.randint(10000000, 99999999)}"
+        self.titular = titular
+        self.saldo = saldo_inicial
+        self.transacciones = []
+        
+        # Registrar saldo inicial
+        if saldo_inicial > 0:
+            self._registrar_transaccion("APERTURA", saldo_inicial, "Depósito inicial")
+    
+    def _registrar_transaccion(self, tipo, monto, descripcion):
+        """Registra una transacción en el historial."""
+        transaccion = {
+            "fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "tipo": tipo,
+            "monto": monto,
+            "descripcion": descripcion,
+            "saldo_resultante": self.saldo
+        }
+        self.transacciones.append(transaccion)
+    
+    def depositar(self, monto, descripcion="Depósito"):
+        """Deposita dinero en la cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        self.saldo += monto
+        self._registrar_transaccion("DEPÓSITO", monto, descripcion)
+        return True, f"Depósito exitoso. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def retirar(self, monto, descripcion="Retiro"):
+        """Retira dinero de la cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        if monto > self.saldo:
+            return False, "Saldo insuficiente"
+        
+        self.saldo -= monto
+        self._registrar_transaccion("RETIRO", monto, descripcion)
+        return True, f"Retiro exitoso. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def transferir(self, monto, cuenta_destino, descripcion="Transferencia"):
+        """Transfiere dinero a otra cuenta."""
+        if monto <= 0:
+            return False, "El monto debe ser positivo"
+        
+        if monto > self.saldo:
+            return False, "Saldo insuficiente para transferencia"
+        
+        # Retirar de esta cuenta
+        self.saldo -= monto
+        self._registrar_transaccion(
+            "TRANSFERENCIA SALIDA", 
+            monto, 
+            f"{descripcion} a cuenta {cuenta_destino.numero}"
+        )
+        
+        # Depositar en cuenta destino
+        cuenta_destino.saldo += monto
+        cuenta_destino._registrar_transaccion(
+            "TRANSFERENCIA ENTRADA",
+            monto,
+            f"{descripcion} desde cuenta {self.numero}"
+        )
+        
+        return True, f"Transferencia exitosa. Nuevo saldo: ${self.saldo:.2f}"
+    
+    def consultar_saldo(self):
+        """Retorna el saldo actual."""
+        return self.saldo
+    
+    def obtener_historial(self):
+        """Muestra el historial de transacciones."""
+        return self.transacciones
+    
+    def __str__(self):
+        return f"Cuenta {self.numero} - {self.titular}: ${self.saldo:.2f}"
+    
+    def __repr__(self):
+        return f"CuentaBancaria(numero='{self.numero}', titular='{self.titular}', saldo={self.saldo})"
+
+
+# Sistema de gestión de cuentas
+class SistemaBancario:
+    """Gestiona múltiples cuentas bancarias."""
+    
+    def __init__(self):
+        self.cuentas = {}
+    
+    def crear_cuenta(self, titular, saldo_inicial=0):
+        """Crea una nueva cuenta."""
+        cuenta = CuentaBancaria(titular, saldo_inicial)
+        self.cuentas[cuenta.numero] = cuenta
+        print(f"✅ Cuenta creada: {cuenta.numero}")
+        return cuenta
+    
+    def obtener_cuenta(self, numero):
+        """Busca una cuenta por número."""
+        return self.cuentas.get(numero)
+    
+    def listar_cuentas(self):
+        """Lista todas las cuentas."""
+        if not self.cuentas:
+            print("📭 No hay cuentas registradas")
+            return
+        
+        print("\n📊 CUENTAS REGISTRADAS:")
+        print("=" * 60)
+        for cuenta in self.cuentas.values():
+            print(f"  • {cuenta}")
+        print("=" * 60)
+
+
+# Programa principal
+sistema = SistemaBancario()
+
+while True:
+    print("\n" + "="*50)
+    print("🏦 SISTEMA BANCARIO")
+    print("="*50)
+    print("1. Crear cuenta")
+    print("2. Listar cuentas")
+    print("3. Depositar")
+    print("4. Retirar")
+    print("5. Transferir")
+    print("6. Consultar saldo")
+    print("7. Ver historial")
+    print("8. Salir")
+    
+    opcion = input("\nSelecciona una opción: ")
+    
+    if opcion == "1":
+        titular = input("Nombre del titular: ").strip()
+        try:
+            saldo = float(input("Saldo inicial: $"))
+            sistema.crear_cuenta(titular, saldo)
+        except ValueError:
+            print("❌ Saldo inválido")
+    
+    elif opcion == "2":
+        sistema.listar_cuentas()
+    
+    elif opcion == "3":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            try:
+                monto = float(input("Monto a depositar: $"))
+                exito, mensaje = cuenta.depositar(monto)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "4":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            try:
+                monto = float(input("Monto a retirar: $"))
+                exito, mensaje = cuenta.retirar(monto)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "5":
+        num_origen = input("Cuenta origen: ").strip()
+        num_destino = input("Cuenta destino: ").strip()
+        
+        cuenta_origen = sistema.obtener_cuenta(num_origen)
+        cuenta_destino = sistema.obtener_cuenta(num_destino)
+        
+        if cuenta_origen and cuenta_destino:
+            try:
+                monto = float(input("Monto a transferir: $"))
+                exito, mensaje = cuenta_origen.transferir(monto, cuenta_destino)
+                print(f"{'✅' if exito else '❌'} {mensaje}")
+            except ValueError:
+                print("❌ Monto inválido")
+        else:
+            print("❌ Una o ambas cuentas no existen")
+    
+    elif opcion == "6":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            print(f"\n💰 Saldo actual: ${cuenta.consultar_saldo():.2f}")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "7":
+        num = input("Número de cuenta: ").strip()
+        cuenta = sistema.obtener_cuenta(num)
+        if cuenta:
+            historial = cuenta.obtener_historial()
+            if historial:
+                print(f"\n📜 HISTORIAL DE {cuenta.titular}:")
+                print("=" * 80)
+                print(f"{'Fecha':<20} {'Tipo':<20} {'Monto':<12} {'Descripción'}")
+                print("=" * 80)
+                for t in historial:
+                    print(f"{t['fecha']:<20} {t['tipo']:<20} ${t['monto']:<11.2f} {t['descripcion']}")
+                print("=" * 80)
+            else:
+                print("📭 No hay transacciones")
+        else:
+            print("❌ Cuenta no encontrada")
+    
+    elif opcion == "8":
+        print("👋 ¡Hasta luego!")
+        break
+    
+    else:
+        print("❌ Opción no válida")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este sistema usa clases, validaciones, historial de operaciones y múltiples objetos relacionados, conceptos fundamentales para el modelo de dominio de TaskFlow.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Interés:</strong> Agrega método para calcular y aplicar interés mensual</li>
+                        <li><strong>Límites:</strong> Establece límites diarios de retiro por cuenta</li>
+                        <li><strong>Estadísticas:</strong> Calcula total de dinero en el sistema bancario</li>
+                        <li><strong>Reportes:</strong> Genera reporte de cuentas con saldo negativo</li>
+                    </ol>
+                </section>
+
+                <!-- GIT AVANZADO -->
+                <section id="git-avanzado">
+                    <h2 class="text-primary border-bottom pb-2">Git: Ramas (Branches) y Merge (20 min)</h2>
+                    
+                    <p>Las <strong>ramas</strong> te permiten desarrollar funcionalidades aisladas sin afectar el código principal.</p>
+
+                    <h4>¿Qué son las Ramas?</h4>
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> Imagina que estás escribiendo un libro. La rama <code>main</code> es la versión publicada. Cuando quieres agregar un capítulo nuevo, creas una copia (rama), trabajas en ella, y cuando está listo la fusionas (merge) con el libro principal.
+                    </div>
+
+                    <h4>Comandos de Ramas</h4>
+                    <pre><code class="language-bash"># Ver en qué rama estás
+git branch
+
+# Crear nueva rama
+git branch nombre-rama
+
+# Cambiar a una rama
+git checkout nombre-rama
+
+# Crear y cambiar en un solo paso
+git checkout -b nombre-rama
+
+# Ver todas las ramas (locales y remotas)
+git branch -a</code></pre>
+
+                    <h4>Flujo de Trabajo con Ramas</h4>
+                    <pre><code class="language-bash"># 1. Estás en main y todo funciona
+git checkout main
+
+# 2. Creas rama para nueva funcionalidad
+git checkout -b feature/clase-usuario
+
+# 3. Trabajas en tu código (creas archivos, modificas, etc.)
+# ... código código código ...
+
+# 4. Guardas cambios en la rama
+git add .
+git commit -m "feat: agregada clase Usuario con validaciones"
+
+# 5. Vuelves a main
+git checkout main
+
+# 6. Fusionas la rama
+git merge feature/clase-usuario
+
+# 7. Opcional: eliminar rama ya fusionada
+git branch -d feature/clase-usuario</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Práctico: Tu Primera Rama (15 min)</h5>
+                        <p class="mb-2">Vamos a crear una nueva funcionalidad usando ramas:</p>
+                        <ol class="mb-0">
+                            <li>En tu repo local: <code>git status</code> (deberías estar en main)</li>
+                            <li>Crea rama: <code>git checkout -b feature/clase-cuenta-bancaria</code></li>
+                            <li>Crea el archivo <code>clase-03/cuenta_bancaria.py</code> con la clase CuentaBancaria</li>
+                            <li>Prueba que funcione</li>
+                            <li>Agrega a Git: <code>git add .</code></li>
+                            <li>Commit: <code>git commit -m "feat: agregada clase CuentaBancaria"</code></li>
+                            <li>Vuelve a main: <code>git checkout main</code></li>
+                            <li>Fusiona: <code>git merge feature/clase-cuenta-bancaria</code></li>
+                            <li>Sube a GitHub: <code>git push</code></li>
+                            <li>Verifica en GitHub que aparecen los archivos</li>
+                        </ol>
+                    </div>
+
+                    <h4>Resolución de Conflictos Básica</h4>
+                    <p>A veces al hacer merge aparecen conflictos cuando dos personas modificaron las mismas líneas:</p>
+                    <pre><code class="language-bash"># Intentas hacer merge
+$ git merge otra-rama
+
+# Aparece conflicto
+Auto-merging archivo.py
+CONFLICT (content): Merge conflict in archivo.py
+Automatic merge failed; fix conflicts and then commit the result.
+
+# Abres el archivo y verás marcadores:
+<<<<<<< HEAD
+print("Mi versión")
+=======
+print("Otra versión")
+>>>>>>> otra-rama
+
+# Editas y eliges qué quedarse
+print("Versión final combinada")
+
+# Guardas y completas el merge
+git add archivo.py
+git commit -m "Merge: resuelto conflicto en archivo.py"</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Tip:</strong> Los conflictos son normales en trabajo colaborativo. Siempre revisa cuidadosamente qué código conservar.
+                    </div>
+
+                    <h4>Git Ignore para Python</h4>
+                    <p>Actualiza tu <code>.gitignore</code> para proyectos Python más profesionales:</p>
+                    <pre><code class="language-bash"># Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
+.env.local</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio: Flujo Completo (10 min)</h5>
+                        <p class="mb-2">Practica el flujo profesional completo:</p>
+                        <ol class="mb-0">
+                            <li>Crea una rama <code>feature/mejora-readme</code></li>
+                            <li>Mejora tu README.md con emojis y mejor formato</li>
+                            <li>Commit: <code>git commit -m "docs: mejorado README con formato profesional"</code></li>
+                            <li>Merge a main</li>
+                            <li>Push a GitHub</li>
+                            <li>Verifica que el README se ve bien en GitHub</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Convención de Nombres de Ramas:</strong>
+                        <ul class="mb-0">
+                            <li><code>feature/nueva-funcionalidad</code> - Nueva característica</li>
+                            <li><code>fix/correccion-bug</code> - Corrección de error</li>
+                            <li><code>docs/actualizacion-readme</code> - Documentación</li>
+                            <li><code>refactor/mejorar-codigo</code> - Refactorización</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (10 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 2: Clase Libro</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea una clase Libro con:</p>
+                                    <ul class="mb-0">
+                                        <li>Atributos: título, autor, ISBN, año, disponible (bool)</li>
+                                        <li>Métodos: prestar(), devolver(), info()</li>
+                                        <li>__str__ que muestre "Título por Autor (Año)"</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 3: Clase Estudiante</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea una clase Estudiante con:</p>
+                                    <ul class="mb-0">
+                                        <li>Lista de calificaciones</li>
+                                        <li>Métodos: agregar_nota(), promedio(), aprobo()</li>
+                                        <li>Método para mostrar todas las notas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <h4 class="mt-4">Python - POO</h4>
+                    <ul>
+                        <li><strong>Clase:</strong> Plantilla que define atributos y métodos</li>
+                        <li><strong>Objeto:</strong> Instancia creada a partir de una clase</li>
+                        <li><strong>__init__:</strong> Constructor que inicializa el objeto</li>
+                        <li><strong>self:</strong> Referencia al objeto actual (no se pasa al llamar)</li>
+                        <li><strong>Atributos:</strong> Variables que almacenan datos del objeto</li>
+                        <li><strong>Métodos:</strong> Funciones que definen comportamientos del objeto</li>
+                    </ul>
+
+                    <h4 class="mt-4">Git - Ramas</h4>
+                    <table class="table">
+                        <tr>
+                            <th>Comando</th>
+                            <th>Función</th>
+                        </tr>
+                        <tr>
+                            <td><code>git branch</code></td>
+                            <td>Ver ramas existentes</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout -b nombre</code></td>
+                            <td>Crear y cambiar a rama</td>
+                        </tr>
+                        <tr>
+                            <td><code>git checkout main</code></td>
+                            <td>Cambiar a main</td>
+                        </tr>
+                        <tr>
+                            <td><code>git merge rama</code></td>
+                            <td>Fusionar rama a actual</td>
+                        </tr>
+                        <tr>
+                            <td><code>git branch -d rama</code></td>
+                            <td>Eliminar rama fusionada</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="alert-tip">
+                        <strong>Para el examen E1:</strong> Practica crear clases con __init__, atributos y métodos. Será parte de la evaluación.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="../unidad-00/clase-02-estructuras-datos.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Estructuras de Datos
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 3 de 25</span>
+            </div>
+            <div>
+                <a href="clase-02-encapsulamiento.html" class="btn btn-primary btn-sm">
+                    Siguiente: Encapsulamiento →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

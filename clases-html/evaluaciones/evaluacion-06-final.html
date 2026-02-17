@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E6: Sustentación Final - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #dc3545; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #212529 100%); color: white; padding: 2rem 0; }
+        .timeline { border-left: 3px solid var(--primary); padding-left: 1.5rem; margin: 1.5rem 0; position: relative; }
+        .timeline::before { content: ''; position: absolute; left: -8px; top: 0; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; border: 3px solid white; }
+        .timeline:nth-child(n+2)::before { top: -10px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; font-size: 0.9em; }
+        pre[class*="language-"] { border-radius: 8px; margin: 1rem 0; font-size: 0.85rem; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h6 { color: var(--primary); margin-bottom: 0.5rem; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .folder { color: #569cd6; }
+        .entregable-box .file { color: #ce9178; }
+        .entregable-box .comment { color: #6a9955; }
+        .paso-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; font-weight: bold; font-size: 0.85rem; margin-right: 0.5rem; }
+        .detalle-req { background: #fff3cd; border: 1px solid #ffc107; padding: 0.75rem 1rem; border-radius: 6px; margin: 0.5rem 0; }
+        .penalizacion { background: #f8d7da; border: 1px solid #f5c6cb; padding: 0.75rem 1rem; border-radius: 6px; margin: 0.5rem 0; }
+        .bonus-card { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 2px solid #28a745; }
+        .section-title { color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; margin: 2rem 0 1rem; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 6</h1>
+                    <h2>Sustentación Final del Proyecto</h2>
+                    <p class="mb-0"><strong>Arquitectura Limpia y Demo en Vivo</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-white text-danger fs-5 mb-2">20%</span><br>
+                    <span class="badge bg-dark">Proyecto Integrador</span><br>
+                    <small>Fecha: 28 de mayo de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E6 - Final</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-danger d-flex align-items-center">
+            <i class="bi bi-exclamation-triangle-fill me-3 fs-4"></i>
+            <div>
+                <h5 class="alert-heading mb-1">⚠️ Requisitos Previos Obligatorios</h5>
+                <p class="mb-0"><strong>TODAS las entregas E1-E5 deben estar completadas y funcionando.</strong> Esta evaluación integra todo el proyecto TaskFlow.</p>
+            </div>
+        </div>
+
+        <div class="card mb-4 border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>📚 Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-layers text-danger me-2"></i>
+                                <a href="../unidad-05/clase-01-repository-pattern.html" class="text-decoration-none">Clase 01: Repository Pattern</a>
+                                <small class="d-block text-muted">Abstracción de persistencia</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-bounding-box text-danger me-2"></i>
+                                <a href="../unidad-05/clase-02-clean-architecture.html" class="text-decoration-none">Clase 02: Clean Architecture</a>
+                                <small class="d-block text-muted">Capas y dependencias</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-box-arrow-in-right text-danger me-2"></i>
+                                <a href="../unidad-05/clase-03-dtos-serializacion.html" class="text-decoration-none">Clase 03: DTOs y Serialización</a>
+                                <small class="d-block text-muted">Transferencia de datos</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-lightning text-danger me-2"></i>
+                                <a href="../unidad-05/clase-04-api-rest-avanzada.html" class="text-decoration-none">Clase 04: API REST Avanzada</a>
+                                <small class="d-block text-muted">Buenas prácticas, versionado</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-flag-fill text-danger me-2"></i>
+                                <a href="../unidad-05/clase-05-proyecto-final.html" class="text-decoration-none">Clase 05: Proyecto Final</a>
+                                <small class="d-block text-muted">Integración y despliegue</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-light mt-3 mb-0">
+                    <small><strong>🔗 Prerequisitos obligatorios:</strong> Debes tener todas las evaluaciones <a href="evaluacion-01-dominio.html">E1</a> → <a href="evaluacion-02-testing.html">E2</a> → <a href="evaluacion-03-web.html">E3</a> → <a href="evaluacion-04-archivos.html">E4</a> → <a href="evaluacion-05-sql.html">E5</a> completadas antes de la sustentación final.</small>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">🎯 Objetivo de la Evaluación</h3>
+        <p class="lead">Presentar el proyecto <strong>TaskFlow</strong> completo con Arquitectura Limpia y sustentar técnicamente todas las decisiones de diseño implementadas durante el curso.</p>
+
+        <div class="alert alert-secondary mt-4 mb-4">
+            <h5><i class="bi bi-people me-2"></i>Modalidad de Trabajo</h5>
+            <p class="mb-1"><strong>Individual</strong> o en <strong>parejas</strong> (máximo 2 personas). Debe ser el mismo equipo de todas las entregas previas (E1-E5).</p>
+            <p class="mb-0"><strong>Formato de entrega:</strong> Repositorio GitHub final con todo el proyecto TaskFlow completo, README.md profesional con diagramas, y base de datos inicializada. Los dos miembros del equipo deben presentar juntos.</p>
+        </div>
+
+        <h3 class="section-title">📋 Estructura de la Sustentación</h3>
+        <p>La sustentación tiene una duración máxima de <strong>15 minutos</strong> distribuidos en 3 partes:</p>
+
+        <div class="timeline">
+            <h5><span class="paso-num">1</span>Defensa Arquitectónica (5 min)</h5>
+            <div class="criterio">
+                <h6><i class="bi bi-diagram-3 me-2"></i>Contenido Requerido</h6>
+                <ul class="mb-0">
+                    <li>Explicar separación de capas: <strong>Domain → Application → Infrastructure → API</strong></li>
+                    <li>Justificar el uso de Repository Pattern, Inyección de Dependencias, DTOs</li>
+                    <li>Mostrar diagrama de arquitectura (Mermaid o similar)</li>
+                    <li>Explicar flujo de datos desde HTTP Request hasta la base de datos</li>
+                </ul>
+            </div>
+            <div class="detalle-req">
+                <strong>💡 Tip:</strong> Prepara un diagrama claro que muestre las capas y sus dependencias. El docente preguntará sobre la dirección de las dependencias.
+            </div>
+        </div>
+
+        <div class="timeline">
+            <h5><span class="paso-num">2</span>Demo en Vivo (5 min)</h5>
+            <div class="criterio">
+                <h6><i class="bi bi-play-circle me-2"></i>Escenarios a Demostrar</h6>
+                <ul class="mb-0">
+                    <li><strong>CRUD completo:</strong> Crear usuario, proyecto, tareas en tiempo real</li>
+                    <li><strong>Persistencia:</strong> Reiniciar servidor y verificar que los datos persisten</li>
+                    <li><strong>HTMX:</strong> Demostrar interacciones sin recargas de página</li>
+                    <li><strong>Validaciones:</strong> Mostrar manejo de errores y validaciones</li>
+                </ul>
+            </div>
+            <div class="penalizacion">
+                <strong>⚠️ Importante:</strong> Si el proyecto no ejecuta o tiene errores críticos durante la demo, la evaluación puede ser reprobada directamente.
+            </div>
+        </div>
+
+        <div class="timeline">
+            <h5><span class="paso-num">3</span>Prueba de Robustez (5 min)</h5>
+            <div class="criterio">
+                <h6><i class="bi bi-shield-check me-2"></i>El Docente Podrá:</h6>
+                <ul class="mb-0">
+                    <li>Intentar "romper" el sistema con entradas inválidas</li>
+                    <li>Hacer preguntas técnicas sobre decisiones de diseño</li>
+                    <li>Revisar código fuente en vivo para validar implementación</li>
+                    <li>Solicitar explicación de tests específicos</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3 class="section-title">📁 Estructura de Archivos Requerida</h3>
+        <p>El proyecto final debe seguir la siguiente estructura de Clean Architecture:</p>
+
+        <div class="entregable-box"><span class="folder">taskflow/</span>
+<span class="comment"># === CAPA DE DOMINIO (Core) ===</span>
+<span class="folder">├── src/</span>
+<span class="folder">│   ├── domain/</span>
+<span class="folder">│   │   ├── entities/</span>
+<span class="file">│   │   │   ├── __init__.py</span>
+<span class="file">│   │   │   ├── usuario.py</span>
+<span class="file">│   │   │   ├── proyecto.py</span>
+<span class="file">│   │   │   └── tarea.py</span>
+<span class="folder">│   │   ├── repositories/</span>
+<span class="file">│   │   │   ├── __init__.py</span>
+<span class="file">│   │   │   └── interfaces.py</span>     <span class="comment"># Interfaces abstractas</span>
+<span class="folder">│   │   └── value_objects/</span>
+<span class="file">│   │       └── email.py</span>
+<span class="comment">#</span>
+<span class="comment"># === CAPA DE APLICACIÓN (Use Cases) ===</span>
+<span class="folder">│   ├── application/</span>
+<span class="folder">│   │   ├── services/</span>
+<span class="file">│   │   │   ├── __init__.py</span>
+<span class="file">│   │   │   ├── usuario_service.py</span>
+<span class="file">│   │   │   ├── proyecto_service.py</span>
+<span class="file">│   │   │   └── tarea_service.py</span>
+<span class="folder">│   │   └── dtos/</span>
+<span class="file">│   │       ├── __init__.py</span>
+<span class="file">│   │       ├── usuario_dto.py</span>
+<span class="file">│   │       └── tarea_dto.py</span>
+<span class="comment">#</span>
+<span class="comment"># === CAPA DE INFRAESTRUCTURA ===</span>
+<span class="folder">│   ├── infrastructure/</span>
+<span class="folder">│   │   ├── database/</span>
+<span class="file">│   │   │   ├── __init__.py</span>
+<span class="file">│   │   │   ├── session.py</span>
+<span class="file">│   │   │   └── models.py</span>        <span class="comment"># Modelos SQLAlchemy</span>
+<span class="folder">│   │   ├── repositories/</span>
+<span class="file">│   │   │   ├── __init__.py</span>
+<span class="file">│   │   │   ├── usuario_repo.py</span>   <span class="comment"># Implementación JSON/SQL</span>
+<span class="file">│   │   │   └── tarea_repo.py</span>
+<span class="folder">│   │   └── di/</span>
+<span class="file">│   │       └── container.py</span>      <span class="comment"># Inyección de dependencias</span>
+<span class="comment">#</span>
+<span class="comment"># === CAPA DE API/PRESENTACIÓN ===</span>
+<span class="folder">│   └── api/</span>
+<span class="folder">│       ├── main.py</span>              <span class="comment"># FastAPI app</span>
+<span class="folder">│       ├── routes/</span>
+<span class="file">│       │   ├── __init__.py</span>
+<span class="file">│       │   ├── usuarios.py</span>
+<span class="file">│       │   ├── proyectos.py</span>
+<span class="file">│       │   └── tareas.py</span>
+<span class="folder">│       └── templates/</span>
+<span class="folder">│           ├── base.html</span>
+<span class="folder">│           ├── usuarios/</span>
+<span class="folder">│           ├── proyectos/</span>
+<span class="folder">│           └── tareas/</span>
+<span class="comment">#</span>
+<span class="comment"># === TESTING ===</span>
+<span class="folder">├── tests/</span>
+<span class="folder">│   ├── unit/</span>
+<span class="folder">│   ├── integration/</span>
+<span class="folder">│   └── conftest.py</span>
+<span class="comment">#</span>
+<span class="comment"># === CONFIGURACIÓN ===</span>
+<span class="file">├── alembic/</span>                      <span class="comment"># Migraciones SQL</span>
+<span class="file">├── data/</span>                         <span class="comment"># Persistencia JSON</span>
+<span class="file">├── requirements.txt</span>
+<span class="file">├── alembic.ini</span>
+<span class="file">├── pytest.ini</span>
+<span class="file">└── README.md</span></div>
+
+        <h3 class="section-title">📝 Entregables Finales Detallados</h3>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h6><i class="bi bi-github me-2"></i>Repositorio GitHub</h6>
+                    <ul class="mb-0">
+                        <li>Código fuente completo con estructura Clean Architecture</li>
+                        <li>Commits descriptivos y frecuentes</li>
+                        <li>Sin archivos innecesarios (<code>__pycache__</code>, <code>.pyc</code>, <code>.env</code>)</li>
+                        <li>Branch <code>main</code> con versión final</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h6><i class="bi bi-check-circle me-2"></i>Tests Pasando</h6>
+                    <ul class="mb-0">
+                        <li>Ejecutar <code>pytest</code> sin errores</li>
+                        <li>Cobertura mínima del 70%</li>
+                        <li>Tests unitarios para entidades y servicios</li>
+                        <li>Tests de integración para repositorios</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h6><i class="bi bi-file-text me-2"></i>README.md Profesional</h6>
+                    <ul class="mb-0">
+                        <li>Descripción del proyecto TaskFlow</li>
+                        <li>Instrucciones de instalación y ejecución</li>
+                        <li>Diagramas Mermaid de arquitectura</li>
+                        <li>Ejemplos de uso de la API</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="criterio">
+                    <h6><i class="bi bi-database me-2"></i>Migraciones Alembic</h6>
+                    <ul class="mb-0">
+                        <li><code>alembic upgrade head</code> ejecuta sin errores</li>
+                        <li>Modelos sincronizados con la base de datos</li>
+                        <li>Migraciones reversibles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">💻 Ejemplo: Diagrama de Arquitectura</h3>
+        <p>El README debe incluir un diagrama como este (puedes usar Mermaid en Markdown):</p>
+
+        <div class="card bg-light">
+            <div class="card-body">
+                <pre><code class="language-mermaid">graph TB
+    subgraph "API Layer"
+        A[FastAPI Routes]
+        B[Templates Jinja2]
+    end
+
+    subgraph "Application Layer"
+        C[UsuarioService]
+        D[TareaService]
+        E[DTOs]
+    end
+
+    subgraph "Domain Layer"
+        F[Usuario Entity]
+        G[Tarea Entity]
+        H[Repository Interfaces]
+    end
+
+    subgraph "Infrastructure Layer"
+        I[UsuarioRepositorySQL]
+        J[TareaRepositorySQL]
+        K[Database Session]
+    end
+
+    A --> C
+    A --> D
+    B --> A
+    C --> F
+    D --> G
+    C --> H
+    D --> H
+    I -.implements.-> H
+    J -.implements.-> H
+    I --> K
+    J --> K</code></pre>
+            </div>
+        </div>
+
+        <h3 class="section-title">💻 Ejemplo: Inyección de Dependencias</h3>
+        <p>El contenedor de dependencias debe permitir cambiar entre persistencia JSON y SQL fácilmente:</p>
+
+        <pre><code class="language-python"># src/infrastructure/di/container.py
+from dependency_injector import containers, providers
+from src.domain.repositories.interfaces import IUsuarioRepository, ITareaRepository
+from src.infrastructure.repositories.usuario_repo import UsuarioRepositorySQL, UsuarioRepositoryJSON
+from src.application.services.usuario_service import UsuarioService
+
+class Container(containers.DeclarativeContainer):
+    config = providers.Configuration()
+
+    # Configuración de base de datos
+    database_url = config.database_url
+
+    # Selector de implementación según configuración
+    usuario_repository = providers.Selector(
+        config.storage_type,
+        sql=providers.Factory(UsuarioRepositorySQL, session=database_url),
+        json=providers.Factory(UsuarioRepositoryJSON, path="data/usuarios.json")
+    )
+
+    # Servicios de aplicación
+    usuario_service = providers.Factory(
+        UsuarioService,
+        usuario_repo=usuario_repository
+    )</code></pre>
+
+        <h3 class="section-title">📊 Rúbrica de Evaluación Final</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th class="text-center">Excelente (100%)</th>
+                        <th class="text-center">Aceptable (70%)</th>
+                        <th class="text-center">Insuficiente (40%)</th>
+                        <th class="text-center">Peso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Funcionalidad Completa</strong><br><small>Todas las features de E1-E5 integradas</small></td>
+                        <td class="text-center">CRUD completo, HTMX, persistencia dual, tests pasando</td>
+                        <td class="text-center">Funcionalidad básica con algunos bugs menores</td>
+                        <td class="text-center">Features faltantes o errores críticos</td>
+                        <td class="text-center fw-bold text-success">30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arquitectura Limpia</strong><br><small>Separación de capas y dependencias</small></td>
+                        <td class="text-center">4 capas bien definidas, dependencias correctas (hacia adentro)</td>
+                        <td class="text-center">Capas existentes pero con algunas dependencias cruzadas</td>
+                        <td class="text-center">Arquitectura plana o dependencias invertidas</td>
+                        <td class="text-center fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Calidad de Código</strong><br><small>Patrones, typing, documentación</small></td>
+                        <td class="text-center">Repository, DI, DTOs, type hints completos, PEP 8</td>
+                        <td class="text-center">Patrones parciales, algunos hints faltantes</td>
+                        <td class="text-center">Código spaghetti, sin patrones evidentes</td>
+                        <td class="text-center fw-bold text-success">20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Presentación y Demo</strong><br><small>Claridad y manejo de preguntas</small></td>
+                        <td class="text-center">Demo fluida, respuestas técnicas correctas</td>
+                        <td class="text-center">Demo con pausas, respuestas básicas</td>
+                        <td class="text-center">Demo fallida o sin conocimiento técnico</td>
+                        <td class="text-center fw-bold text-success">15%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentación</strong><br><small>README, diagramas, comentarios</small></td>
+                        <td class="text-center">README profesional con diagramas Mermaid</td>
+                        <td class="text-center">README básico con instrucciones</td>
+                        <td class="text-center">Sin README o documentación incompleta</td>
+                        <td class="text-center fw-bold text-success">10%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="section-title">⚠️ Penalizaciones</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="penalizacion">
+                    <strong><i class="bi bi-dash-circle me-2"></i>Proyecto no ejecuta</strong><br>
+                    <span class="text-danger">-50% de la nota final</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="penalizacion">
+                    <strong><i class="bi bi-dash-circle me-2"></i>Tests con errores</strong><br>
+                    <span class="text-danger">-20% de la nota final</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="penalizacion">
+                    <strong><i class="bi bi-dash-circle me-2"></i>Falta README.md</strong><br>
+                    <span class="text-danger">-10% de la nota final</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="penalizacion">
+                    <strong><i class="bi bi-dash-circle me-2"></i>Evaluaciones previas incompletas</strong><br>
+                    <span class="text-danger">-15% por cada entrega faltante</span>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">🏆 Features Extra (Punto Adicional)</h3>
+        <div class="card bonus-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-star-fill text-warning me-2"></i>Bonus por Features Adicionales</h5>
+                <p class="card-text">Implementar cualquiera de las siguientes features otorga <strong>+1 punto adicional</strong> a la nota final (máximo 1 punto):</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li><i class="bi bi-graph-up me-2 text-success"></i><strong>Dashboard con estadísticas:</strong> Gráficos de tareas completadas por proyecto</li>
+                            <li><i class="bi bi-shield-lock me-2 text-success"></i><strong>Autenticación JWT:</strong> Login/registro con tokens seguros</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li><i class="bi bi-envelope me-2 text-success"></i><strong>Notificaciones por email:</strong> Recordatorios de tareas pendientes</li>
+                            <li><i class="bi bi-bug me-2 text-success"></i><strong>Tests E2E:</strong> Selenium o Playwright para flujos completos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">📅 Checklist Pre-Sustentación</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <strong><i class="bi bi-list-check me-2"></i>Antes de la Sustentación</strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Proyecto ejecuta sin errores (<code>uvicorn api.main:app</code>)
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Tests pasando (<code>pytest</code>)
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Base de datos inicializada (<code>alembic upgrade head</code>)
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> README.md completo con diagramas
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <strong><i class="bi bi-collection me-2"></i>Material a Preparar</strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Diagrama de arquitectura visible
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Escenarios de demo ensayados
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Respuestas preparadas para preguntas técnicas
+                        </li>
+                        <li class="list-group-item">
+                            <input type="checkbox" class="form-check-input me-2" disabled> Código limpio y organizado
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="evaluacion-05-sql.html" class="btn btn-outline-primary">← E5: SQL</a>
+            <a href="../index.html" class="btn btn-success ms-2">🏠 Inicio</a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

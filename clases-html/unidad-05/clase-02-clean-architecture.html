@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2: Clean Architecture | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programacion OO II</h1>
+            <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
+            <h3>Clase 2: Clean Architecture</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 28 de mayo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 17 - Jueves (60 minutos)</span>
+                <span class="badge bg-primary">30 min Teoría</span>
+                <span class="badge bg-success text-white">30 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-06-examen-final.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E6: Proyecto Final - Hoy (Jueves 28/05/2026)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#quees" class="text-decoration-none">Que es Clean Architecture</a></li>
+                        <li><a href="#capas" class="text-decoration-none">Capas</a></li>
+                        <li><a href="#dependencias" class="text-decoration-none">Regla de Dependencias</a></li>
+                        <li><a href="#estructura" class="text-decoration-none">Estructura Proyecto</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Entender los principios de <strong>Clean Architecture</strong></li>
+                        <li>Organizar codigo en <strong>capas</strong> independientes</li>
+                        <li>Aplicar la <strong>regla de dependencias</strong></li>
+                        <li>Estructurar un proyecto con Clean Architecture</li>
+                        <li>Separar dominio de infraestructura</li>
+                    </ul>
+                </section>
+
+                <section id="quees">
+                    <h2 class="text-primary border-bottom pb-2">Que es Clean Architecture? (15 min)</h2>
+                    
+                    <p><strong>Clean Architecture</strong> (Arquitectura Limpia) es un patron propuesto por Robert C. Martin que organiza el software en capas concentricas.</p>
+
+                    <div class="alert-note">
+                        <strong>Principios clave:</strong>
+                        <ul class="mb-0">
+                            <li>Independencia de frameworks</li>
+                            <li>Testeable sin UI, base de datos, servidor</li>
+                            <li>Independencia de UI</li>
+                            <li>Independencia de base de datos</li>
+                            <li>Independencia de agentes externos</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="capas">
+                    <h2 class="text-primary border-bottom pb-2">Capas de Clean Architecture (20 min)</h2>
+                    
+                    <pre><code>                    ┌─────────────────────────────────────────┐
+                    │              FRAMEWORKS                 │
+                    │       (FastAPI, SQLAlchemy, DB)        │
+                    │  ┌─────────────────────────────────┐   │
+                    │  │        INTERFACE ADAPTERS        │   │
+                    │  │    (Controllers, Gateways)      │   │
+                    │  │  ┌───────────────────────────┐  │   │
+                    │  │  │    USE CASES / SERVICES   │  │   │
+                    │  │  │   (Business Rules)        │  │   │
+                    │  │  │  ┌───────────────────┐   │  │   │
+                    │  │  │  │    ENTITIES       │   │  │   │
+                    │  │  │  │  (Enterprise      │   │  │   │
+                    │  │  │  │   Business Rules) │   │  │   │
+                    │  │  │  └───────────────────┘   │  │   │
+                    │  │  └───────────────────────────┘  │   │
+                    │  └─────────────────────────────────┘   │
+                    └─────────────────────────────────────────┘</code></pre>
+
+                    <h4>Capas explicadas</h4>
+                    <table class="table">
+                        <tr><th>Capa</th><th>Responsabilidad</th><th>Ejemplo</th></tr>
+                        <tr><td><strong>Entities</strong></td><td>Reglas de negocio centrales</td><td>Usuario, Tarea, Proyecto</td></tr>
+                        <tr><td><strong>Use Cases</strong></td><td>Logica de aplicacion</td><td>UsuarioService, TareaService</td></tr>
+                        <tr><td><strong>Interface Adapters</strong></td><td>Convierten datos</td><td>Controllers, Repositories, DTOs</td></tr>
+                        <tr><td><strong>Frameworks</strong></td><td>Herramientas externas</td><td>FastAPI, SQLAlchemy, PostgreSQL</td></tr>
+                    </table>
+                </section>
+
+                <section id="dependencias">
+                    <h2 class="text-primary border-bottom pb-2">Regla de Dependencias (15 min)</h2>
+                    
+                    <p>Las dependencias solo pueden apuntar <strong>hacia adentro</strong>:</p>
+
+                    <div class="alert-warning">
+                        <strong>Regla:</strong> El codigo interno NO debe conocer el codigo externo.
+                    </div>
+
+                    <pre><code class="language-python"># ❌ INCORRECTO: Entity depende de infraestructura
+from sqlalchemy import Column, String  # MAL!
+
+class Usuario:
+    username = Column(String(50))  # Entity acoplada a SQLAlchemy
+
+
+# ✅ CORRECTO: Entity es agnostica
+class Usuario:
+    def __init__(self, username: str, email: str):
+        self.username = username
+        self.email = email
+    
+    def es_valido(self) -> tuple[bool, str]:
+        if len(self.username) < 3:
+            return False, "Username muy corto"
+        if "@" not in self.email:
+            return False, "Email invalido"
+        return True, "OK"</code></pre>
+                </section>
+
+                <section id="estructura">
+                    <h2 class="text-primary border-bottom pb-2">Estructura del Proyecto (20 min)</h2>
+                    
+                    <pre><code>taskflow/
+├── domain/                    # ENTITIES (Centro)
+│   ├── entities.py           # Clases de dominio puras
+│   ├── value_objects.py      # Objetos de valor
+│   └── exceptions.py         # Excepciones de dominio
+│
+├── application/               # USE CASES
+│   ├── services/             # Logica de aplicacion
+│   │   ├── usuario_service.py
+│   │   ├── proyecto_service.py
+│   │   └── tarea_service.py
+│   └── interfaces/           # Contratos (ABC)
+│       └── repositories.py
+│
+├── infrastructure/            # INTERFACE ADAPTERS
+│   ├── repositories/         # Implementacion repositorios
+│   │   ├── base.py
+│   │   └── usuario_repo.py
+│   ├── database.py           # Configuracion DB
+│   └── adapters/             # Adaptadores externos
+│
+├── api/                       # FRAMEWORKS
+│   ├── routes/               # Endpoints FastAPI
+│   ├── dependencies.py       # Inyeccion de dependencias
+│   └── schemas/              # Pydantic DTOs
+│
+└── tests/                     # Tests
+    ├── unit/                 # Tests de dominio
+    ├── integration/          # Tests de integracion
+    └── conftest.py</code></pre>
+
+                    <h4>Ejemplo: Flujo completo</h4>
+                    <pre><code class="language-python"># 1. DOMAIN - Entity pura
+class Usuario:
+    def __init__(self, username: str, email: str):
+        self.username = username
+        self.email = email
+        self.activo = True
+
+# 2. APPLICATION - Service
+class UsuarioService:
+    def __init__(self, repo: UsuarioRepository):
+        self.repo = repo
+    
+    def crear_usuario(self, username: str, email: str) -> Usuario:
+        if self.repo.existe_username(username):
+            raise ValueError("Username ya existe")
+        usuario = Usuario(username, email)
+        return self.repo.crear(usuario)
+
+# 3. INFRASTRUCTURE - Repository
+class UsuarioRepositorySQLAlchemy(UsuarioRepository):
+    def crear(self, usuario: Usuario) -> Usuario:
+        modelo = UsuarioModel(
+            username=usuario.username,
+            email=usuario.email
+        )
+        self.db.add(modelo)
+        self.db.commit()
+        return usuario
+
+# 4. API - Route
+@router.post("/usuarios")
+def crear(
+    data: UsuarioCreate,
+    service: UsuarioService = Depends(get_usuario_service)
+):
+    return service.crear_usuario(data.username, data.email)</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Refactorizar TaskFlow (15 min)</h2>
+                    
+                    <p>Reorganiza el proyecto TaskFlow siguiendo Clean Architecture:</p>
+                    <ol>
+                        <li>Mover modelos de dominio a <code>domain/entities.py</code></li>
+                        <li>Crear servicios en <code>application/services/</code></li>
+                        <li>Mover repositorios a <code>infrastructure/repositories/</code></li>
+                        <li>Crear interfaces en <code>application/interfaces/</code></li>
+                    </ol>
+
+                    <div class="alert-tip">
+                        <strong>E6 Proyecto Final:</strong> La arquitectura debe ser Clean Architecture completa.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Clean Architecture:</strong> Organiza codigo en capas concentricas</li>
+                        <li><strong>Dependencias hacia adentro:</strong> El nucleo no conoce lo externo</li>
+                        <li><strong>Entities:</strong> Reglas de negocio centrales</li>
+                        <li><strong>Use Cases:</strong> Logica de aplicacion</li>
+                        <li><strong>Interface Adapters:</strong> Conversion de datos</li>
+                        <li><strong>Frameworks:</strong> Herramientas externas</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-01-repository-pattern.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Repository Pattern
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 22 de 25</span>
+            </div>
+            <div>
+                <a href="clase-03-dtos-serializacion.html" class="btn btn-primary btn-sm">
+                    Siguiente: DTOs y Serialización →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

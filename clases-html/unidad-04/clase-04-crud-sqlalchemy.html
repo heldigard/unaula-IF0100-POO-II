@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 4: CRUD SQLAlchemy | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programacion OO II</h1>
+            <h2>Unidad 4: Manejo de Persistencia</h2>
+            <h3>Clase 4: CRUD con SQLAlchemy</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 12 de mayo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 15 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-06-examen-final.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E6: Proyecto Final - Jueves 28/05/2026 (16 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#session" class="text-decoration-none">Session</a></li>
+                        <li><a href="#create" class="text-decoration-none">Create</a></li>
+                        <li><a href="#read" class="text-decoration-none">Read</a></li>
+                        <li><a href="#update" class="text-decoration-none">Update</a></li>
+                        <li><a href="#delete" class="text-decoration-none">Delete</a></li>
+                        <li><a href="#repositorio" class="text-decoration-none">Repositorio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Usar <strong>Session</strong> para gestionar transacciones</li>
+                        <li>Implementar <strong>Create</strong> - crear registros</li>
+                        <li>Implementar <strong>Read</strong> - consultar registros</li>
+                        <li>Implementar <strong>Update</strong> - actualizar registros</li>
+                        <li>Implementar <strong>Delete</strong> - eliminar registros</li>
+                        <li>Crear un Repositorio generico</li>
+                    </ul>
+                </section>
+
+                <section id="session">
+                    <h2 class="text-primary border-bottom pb-2">Session (10 min)</h2>
+                    
+                    <p>La <strong>Session</strong> gestiona las operaciones de base de datos en una transaccion.</p>
+
+                    <pre><code class="language-python">from sqlalchemy.orm import Session
+from database import SessionLocal
+
+# Crear sesion
+db: Session = SessionLocal()
+
+try:
+    # Operaciones de base de datos aqui
+    db.commit()  # Guardar cambios
+except Exception as e:
+    db.rollback()  # Revertir en caso de error
+    raise e
+finally:
+    db.close()  # Siempre cerrar sesion</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Patron con contexto:</strong>
+                        <code>with SessionLocal() as db: ...</code> cierra automaticamente.
+                    </div>
+                </section>
+
+                <section id="create">
+                    <h2 class="text-primary border-bottom pb-2">CREATE - Crear Registros (10 min)</h2>
+                    
+                    <pre><code class="language-python">from sqlalchemy.orm import Session
+from models.usuario import Usuario
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"])
+
+def crear_usuario(db: Session, username: str, email: str, password: str) -> Usuario:
+    # Crear instancia
+    usuario = Usuario(
+        username=username,
+        email=email,
+        password_hash=pwd_context.hash(password)
+    )
+    
+    # Agregar a la sesion
+    db.add(usuario)
+    
+    # Commit para guardar
+    db.commit()
+    
+    # Refresh para obtener ID generado
+    db.refresh(usuario)
+    
+    return usuario
+
+# Uso
+with SessionLocal() as db:
+    nuevo = crear_usuario(db, "ana", "ana@test.com", "secret123")
+    print(f"Usuario creado con ID: {nuevo.id}")</code></pre>
+                </section>
+
+                <section id="read">
+                    <h2 class="text-primary border-bottom pb-2">READ - Consultar Registros (15 min)</h2>
+                    
+                    <pre><code class="language-python">from typing import Optional, List
+from sqlalchemy import select
+
+def obtener_usuario_por_id(db: Session, id: int) -> Optional[Usuario]:
+    """Obtener un usuario por ID."""
+    return db.query(Usuario).filter(Usuario.id == id).first()
+
+def obtener_usuario_por_username(db: Session, username: str) -> Optional[Usuario]:
+    """Obtener un usuario por username."""
+    return db.query(Usuario).filter(Usuario.username == username).first()
+
+def obtener_todos_usuarios(db: Session, skip: int = 0, limit: int = 100) -> List[Usuario]:
+    """Obtener todos los usuarios con paginacion."""
+    return db.query(Usuario).offset(skip).limit(limit).all()
+
+def buscar_usuarios_activos(db: Session) -> List[Usuario]:
+    """Obtener usuarios activos."""
+    return db.query(Usuario).filter(Usuario.activo == True).all()
+
+def contar_usuarios(db: Session) -> int:
+    """Contar usuarios."""
+    return db.query(Usuario).count()
+
+# Con SELECT moderno (SQLAlchemy 2.0)
+def obtener_usuario_select(db: Session, id: int) -> Optional[Usuario]:
+    stmt = select(Usuario).where(Usuario.id == id)
+    return db.execute(stmt).scalar_one_or_none()</code></pre>
+                </section>
+
+                <section id="update">
+                    <h2 class="text-primary border-bottom pb-2">UPDATE - Actualizar Registros (10 min)</h2>
+                    
+                    <pre><code class="language-python">def actualizar_usuario(
+    db: Session, 
+    id: int, 
+    username: str = None, 
+    email: str = None
+) -> Optional[Usuario]:
+    """Actualizar un usuario."""
+    usuario = db.query(Usuario).filter(Usuario.id == id).first()
+    
+    if not usuario:
+        return None
+    
+    # Actualizar campos
+    if username:
+        usuario.username = username
+    if email:
+        usuario.email = email
+    
+    # Commit para guardar
+    db.commit()
+    db.refresh(usuario)
+    
+    return usuario
+
+def activar_usuario(db: Session, id: int) -> bool:
+    """Activar un usuario."""
+    usuario = db.query(Usuario).filter(Usuario.id == id).first()
+    if usuario:
+        usuario.activo = True
+        db.commit()
+        return True
+    return False</code></pre>
+                </section>
+
+                <section id="delete">
+                    <h2 class="text-primary border-bottom pb-2">DELETE - Eliminar Registros (10 min)</h2>
+                    
+                    <pre><code class="language-python">def eliminar_usuario(db: Session, id: int) -> bool:
+    """Eliminar un usuario."""
+    usuario = db.query(Usuario).filter(Usuario.id == id).first()
+    
+    if not usuario:
+        return False
+    
+    db.delete(usuario)
+    db.commit()
+    
+    return True
+
+# Eliminar con filtro directo
+def eliminar_usuario_por_username(db: Session, username: str) -> int:
+    """Eliminar por username. Retorna filas eliminadas."""
+    resultado = db.query(Usuario).filter(Usuario.username == username).delete()
+    db.commit()
+    return resultado  # 0 si no encontro, 1 si elimino</code></pre>
+                </section>
+
+                <section id="repositorio">
+                    <h2 class="text-primary border-bottom pb-2">Repositorio Generico (20 min)</h2>
+                    
+                    <pre><code class="language-python"># repositories/base.py
+from typing import TypeVar, Generic, Type, Optional, List
+from sqlalchemy.orm import Session
+from database import Base
+
+T = TypeVar("T", bound=Base)
+
+class RepositorioGenerico(Generic[T]):
+    """Repositorio CRUD generico."""
+    
+    def __init__(self, db: Session, modelo: Type[T]):
+        self.db = db
+        self.modelo = modelo
+    
+    def crear(self, entidad: T) -> T:
+        """Crear nueva entidad."""
+        self.db.add(entidad)
+        self.db.commit()
+        self.db.refresh(entidad)
+        return entidad
+    
+    def obtener_por_id(self, id: int) -> Optional[T]:
+        """Obtener por ID."""
+        return self.db.query(self.modelo).filter(self.modelo.id == id).first()
+    
+    def obtener_todos(self, skip: int = 0, limit: int = 100) -> List[T]:
+        """Obtener todos con paginacion."""
+        return self.db.query(self.modelo).offset(skip).limit(limit).all()
+    
+    def actualizar(self, id: int, datos: dict) -> Optional[T]:
+        """Actualizar por ID."""
+        entidad = self.obtener_por_id(id)
+        if not entidad:
+            return None
+        
+        for key, value in datos.items():
+            if hasattr(entidad, key):
+                setattr(entidad, key, value)
+        
+        self.db.commit()
+        self.db.refresh(entidad)
+        return entidad
+    
+    def eliminar(self, id: int) -> bool:
+        """Eliminar por ID."""
+        entidad = self.obtener_por_id(id)
+        if not entidad:
+            return False
+        
+        self.db.delete(entidad)
+        self.db.commit()
+        return True
+
+
+# Uso del repositorio generico
+class UsuarioRepositorio(RepositorioGenerico[Usuario]):
+    def __init__(self, db: Session):
+        super().__init__(db, Usuario)
+    
+    def obtener_por_username(self, username: str) -> Optional[Usuario]:
+        return self.db.query(Usuario).filter(Usuario.username == username).first()
+    
+    def obtener_activos(self) -> List[Usuario]:
+        return self.db.query(Usuario).filter(Usuario.activo == True).all()</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E5 Proyecto:</strong> Implementa repositorios para Usuario, Proyecto, Tarea y Comentario.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Session:</strong> Unidad de trabajo con la base de datos</li>
+                        <li><strong>db.add():</strong> Agregar entidad</li>
+                        <li><strong>db.query():</strong> Crear consulta</li>
+                        <li><strong>.filter():</strong> Filtrar resultados</li>
+                        <li><strong>db.commit():</strong> Guardar cambios</li>
+                        <li><strong>db.rollback():</strong> Revertir cambios</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-03-sqlalchemy-relaciones.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Relaciones
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 19 de 25</span>
+            </div>
+            <div>
+                <a href="clase-05-alembic.html" class="btn btn-primary btn-sm">
+                    Siguiente: Alembic →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

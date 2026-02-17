@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E2: Testing y Calidad - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Prism.js CSS para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #6f42c1; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #4a2c7a 100%); color: white; padding: 2rem 0; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h5 { color: var(--primary); margin-bottom: 0.75rem; }
+        .criterio ul { margin-bottom: 0; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .comment { color: #6a9955; }
+        .entregable-box .folder { color: #569cd6; }
+        .penalizacion { background: #f8d7da; border-left: 4px solid #dc3545; padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        code:not([class*="language-"]) { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        pre[class*="language-"] { border-radius: 8px; margin: 0; }
+        .detalle-req { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin: 0.5rem 0; font-size: 0.9rem; }
+        .paso-num { display: inline-block; width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 2</h1>
+                    <h2>Testing y Calidad de Software</h2>
+                    <p class="mb-0"><strong>Entrega Incremental 2 - TDD, BDD y Cobertura</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-white text-dark fs-5 mb-2">15%</span><br>
+                    <span class="badge bg-info text-dark">Laboratorio</span><br>
+                    <small>Fecha límite: 12 de marzo de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E2 - Testing</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-danger">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Requisito Obligatorio</h5>
+            <p class="mb-0"><strong>Esta evaluación REQUIERE la E1 (Dominio) completada.</strong> Debes tener el dominio funcionando para poder testearlo. Si tu E1 no funciona, no puedes hacer E2.</p>
+        </div>
+
+        <div class="card mb-4" style="border-color: #6f42c1;">
+            <div class="card-header text-white" style="background-color: #6f42c1;">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-check-circle text-success me-2"></i>
+                                <a href="../unidad-02/clase-01-tdd-intro.html" class="text-decoration-none">Clase 01: Introducción al TDD</a>
+                                <small class="d-block text-muted">Ciclo Red-Green-Refactor</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-lightning text-success me-2"></i>
+                                <a href="../unidad-02/clase-02-pytest-avanzado.html" class="text-decoration-none">Clase 02: pytest Avanzado</a>
+                                <small class="d-block text-muted">Fixtures, parametrización, mocks</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-chat-quote text-success me-2"></i>
+                                <a href="../unidad-02/clase-03-bdd-intro.html" class="text-decoration-none">Clase 03: Introducción al BDD</a>
+                                <small class="d-block text-muted">Gherkin, behave, escenarios</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-building text-success me-2"></i>
+                                <a href="../unidad-02/clase-04-ddd-intro.html" class="text-decoration-none">Clase 04: DDD Intro</a>
+                                <small class="d-block text-muted">Domain-Driven Design</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-bullseye me-2"></i>Objetivo de Aprendizaje</h3>
+        <p class="lead">Garantizar la calidad del dominio de TaskFlow mediante <strong>pruebas automatizadas</strong> con pytest (unitarios) y behave (BDD). Aplicar el ciclo TDD y alcanzar cobertura mínima del 80%.</p>
+
+        <div class="alert alert-secondary mt-4">
+            <h5><i class="bi bi-people me-2"></i>Modalidad de Trabajo</h5>
+            <p class="mb-1"><strong>Individual</strong> o en <strong>parejas</strong> (máximo 2 personas). Debe ser el mismo equipo de E1.</p>
+            <p class="mb-0"><strong>Formato de entrega:</strong> Repositorio GitHub con dominio de E1 + carpeta tests/ con todos los tests pytest + archivo .feature para behave. Incluir README.md con comando para ejecutar tests.</p>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-check me-2"></i>Requisitos Técnicos Detallados</h3>
+
+        <!-- TESTS UNITARIOS -->
+        <div class="criterio">
+            <h5><i class="bi bi-check-circle text-primary me-2"></i>1. Tests Unitarios con pytest</h5>
+            <p><strong>Descripción:</strong> Pruebas exhaustivas para todas las clases del dominio usando pytest.</p>
+
+            <h6 class="mt-3">Cobertura mínima requerida: 80%</h6>
+            <ul>
+                <li><code>test_usuario.py</code>: Tests para clase Usuario</li>
+                <li><code>test_proyecto.py</code>: Tests para clase Proyecto</li>
+                <li><code>test_tarea.py</code>: Tests para clase Tarea</li>
+                <li><code>test_enums.py</code>: Tests para enums PrioridadTarea y EstadoTarea</li>
+            </ul>
+
+            <h6>Técnicas obligatorias:</h6>
+            <ul>
+                <li><strong>Fixtures:</strong> Usar <code>@pytest.fixture</code> para datos de prueba reutilizables</li>
+                <li><strong>Parametrización:</strong> Usar <code>@pytest.mark.parametrize</code> para múltiples casos</li>
+                <li><strong>Excepciones:</strong> Usar <code>pytest.raises()</code> para probar errores</li>
+                <li><strong>Setup/Teardown:</strong> Preparar y limpiar estado de pruebas</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Casos de prueba obligatorios por clase:</strong>
+                <ul class="mb-0">
+                    <li><strong>Usuario:</strong> creación válida, username inválido, email inválido, activar/desactivar</li>
+                    <li><strong>Proyecto:</strong> creación, agregar tarea, obtener tareas pendientes, filtrar por prioridad</li>
+                    <li><strong>Tarea:</strong> creación, cambiar estado, cambiar prioridad, completar</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FIXTURES -->
+        <div class="criterio">
+            <h5><i class="bi bi-tools text-secondary me-2"></i>2. Fixtures y Datos de Prueba</h5>
+            <p><strong>Descripción:</strong> Crear fixtures reutilizables para evitar duplicación de código en tests.</p>
+
+            <h6 class="mt-3">Fixtures obligatorios en <code>conftest.py</code>:</h6>
+            <ul>
+                <li><code>usuario_ejemplo()</code>: Usuario válido para pruebas</li>
+                <li><code>proyecto_ejemplo(usuario_ejemplo)</code>: Proyecto con líder</li>
+                <li><code>tarea_ejemplo()</code>: Tarea pendiente por defecto</li>
+                <li><code>proyecto_con_tareas(proyecto_ejemplo, tarea_ejemplo)</code>: Proyecto poblado</li>
+            </ul>
+
+            <h6>Scopes a utilizar:</h6>
+            <ul>
+                <li><code>function</code> (default): Para tests que modifican estado</li>
+                <li><code>module</code>: Para datos de solo lectura compartidos</li>
+            </ul>
+        </div>
+
+        <!-- TESTS BDD -->
+        <div class="criterio">
+            <h5><i class="bi bi-chat-square-text text-info me-2"></i>3. Tests BDD con behave</h5>
+            <p><strong>Descripción:</strong> Escenarios en lenguaje Gherkin que describen comportamiento del sistema.</p>
+
+            <h6 class="mt-3">Archivos .feature obligatorios:</h6>
+            <ul>
+                <li><code>features/usuarios.feature</code>: Gestión de usuarios</li>
+                <li><code>features/proyectos.feature</code>: Gestión de proyectos</li>
+                <li><code>features/tareas.feature</code>: Gestión de tareas</li>
+            </ul>
+
+            <h6>Estructura de escenarios:</h6>
+            <ul>
+                <li>Usar <code>Given</code>, <code>When</code>, <code>Then</code> correctamente</li>
+                <li>Incluir <code>Background</code> para contexto común</li>
+                <li>Usar <code>Scenario Outline</code> con <code>Examples</code></li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Mínimo 3 escenarios por archivo .feature</strong>
+                <ul class="mb-0">
+                    <li>Escenario feliz (happy path)</li>
+                    <li>Escenario de error (validación fallida)</li>
+                    <li>Escenario de edge case (caso límite)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- COBERTURA -->
+        <div class="criterio">
+            <h5><i class="bi bi-percent text-success me-2"></i>4. Cobertura de Código</h5>
+            <p><strong>Descripción:</strong> Medir y reportar cobertura de pruebas con pytest-cov.</p>
+
+            <h6 class="mt-3">Comando obligatorio:</h6>
+            <ul>
+                <li><code>pytest --cov=src --cov-report=html --cov-report=term</code></li>
+            </ul>
+
+            <h6>Umbrales de cobertura:</h6>
+            <ul>
+                <li><strong>≥80%:</strong> Nota completa en cobertura</li>
+                <li><strong>70-79%:</strong> -0.5 puntos</li>
+                <li><strong>60-69%:</strong> -1.0 puntos</li>
+                <li><strong>&lt;60%:</strong> Nota máxima 3.0</li>
+            </ul>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-code-square me-2"></i>Ejemplo de Implementación</h3>
+
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>tests/conftest.py
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-python">import pytest
+from datetime import datetime
+from src.domain.usuario import Usuario
+from src.domain.proyecto import Proyecto
+from src.domain.tarea import Tarea, PrioridadTarea, EstadoTarea
+
+
+@pytest.fixture
+def usuario_ejemplo() -> Usuario:
+    """Fixture que provee un usuario válido para pruebas."""
+    return Usuario(
+        username="testuser",
+        email="test@example.com",
+        nombre_completo="Usuario de Prueba"
+    )
+
+
+@pytest.fixture
+def proyecto_ejemplo(usuario_ejemplo: Usuario) -> Proyecto:
+    """Fixture que provee un proyecto con líder."""
+    return Proyecto(
+        nombre="Proyecto Test",
+        descripcion="Descripción de prueba",
+        lider=usuario_ejemplo
+    )
+
+
+@pytest.fixture
+def tarea_ejemplo() -> Tarea:
+    """Fixture que provee una tarea pendiente."""
+    return Tarea(
+        titulo="Tarea de prueba",
+        descripcion="Descripción de prueba",
+        prioridad=PrioridadTarea.MEDIA
+    )</code></pre>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>tests/test_usuario.py
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-python">import pytest
+from src.domain.usuario import Usuario
+
+
+class TestUsuarioCreacion:
+    """Tests para la creación de usuarios."""
+
+    def test_crear_usuario_valido(self, usuario_ejemplo: Usuario):
+        """Verifica que un usuario válido se crea correctamente."""
+        assert usuario_ejemplo.username == "testuser"
+        assert usuario_ejemplo.email == "test@example.com"
+        assert usuario_ejemplo.activo is True
+
+    @pytest.mark.parametrize("username_invalido,expected_msg", [
+        ("ab", "al menos 3 caracteres"),
+        ("user@name", "solo letras y números"),
+        ("", "al menos 3 caracteres"),
+    ])
+    def test_username_invalido_lanza_error(
+        self, username_invalido: str, expected_msg: str
+    ):
+        """Verifica que usernames inválidos lanzan ValueError."""
+        with pytest.raises(ValueError) as exc_info:
+            Usuario(username=username_invalido, email="test@test.com")
+        assert expected_msg in str(exc_info.value)
+
+    def test_email_invalido_lanza_error(self):
+        """Verifica que emails sin @ lanzan ValueError."""
+        with pytest.raises(ValueError, match="Email inválido"):
+            Usuario(username="testuser", email="emailinvalido.com")</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-box-seam me-2"></i>Estructura de Entrega</h3>
+        <div class="card border-primary mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-folder2-open me-2"></i>Organización de Archivos Obligatoria
+            </div>
+            <div class="card-body">
+                <div class="entregable-box"><span class="folder">src/</span>                    <span class="comment"># Dominio de E1 (ya debe existir)</span>
+├── <span class="folder">__init__.py</span>
+└── <span class="folder">domain/</span>
+    ├── <span class="folder">__init__.py</span>
+    ├── <span class="folder">enums.py</span>
+    ├── <span class="folder">usuario.py</span>
+    ├── <span class="folder">proyecto.py</span>
+    └── <span class="folder">tarea.py</span>
+
+<span class="folder">tests/</span>                      <span class="comment"># Tests unitarios pytest</span>
+├── <span class="folder">__init__.py</span>
+├── <span class="folder">conftest.py</span>            <span class="comment"># Fixtures compartidas</span>
+├── <span class="folder">test_usuario.py</span>       <span class="comment"># Tests de Usuario</span>
+├── <span class="folder">test_proyecto.py</span>      <span class="comment"># Tests de Proyecto</span>
+├── <span class="folder">test_tarea.py</span>         <span class="comment"># Tests de Tarea</span>
+└── <span class="folder">test_enums.py</span>         <span class="comment"># Tests de Enums</span>
+
+<span class="folder">features/</span>                   <span class="comment"># Tests BDD behave</span>
+├── <span class="folder">environment.py</span>        <span class="comment"># Configuración de behave</span>
+├── <span class="folder">steps/</span>
+│   ├── <span class="folder">__init__.py</span>
+│   ├── <span class="folder">usuarios_steps.py</span>
+│   ├── <span class="folder">proyectos_steps.py</span>
+│   └── <span class="folder">tareas_steps.py</span>
+├── <span class="folder">usuarios.feature</span>      <span class="comment"># Escenarios de usuarios</span>
+├── <span class="folder">proyectos.feature</span>     <span class="comment"># Escenarios de proyectos</span>
+└── <span class="folder">tareas.feature</span>        <span class="comment"># Escenarios de tareas</span>
+
+<span class="folder">pytest.ini</span>                 <span class="comment"># Configuración de pytest</span>
+<span class="folder">.coveragerc</span>                <span class="comment"># Configuración de cobertura</span>
+<span class="folder">requirements.txt</span>          <span class="comment"># pytest, pytest-cov, behave</span>
+<span class="folder">README.md</span>                 <span class="comment"># Cómo ejecutar los tests</span></div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-ol me-2"></i>Pasos para Completar la Evaluación</h3>
+        <div class="card border-secondary mb-4">
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="paso-num">1</span><strong>Configurar entorno de testing</strong>
+                    <p class="ms-4 mt-1 text-muted">Instalar pytest, pytest-cov, behave y crear pytest.ini</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">2</span><strong>Crear fixtures en conftest.py</strong>
+                    <p class="ms-4 mt-1 text-muted">Usuario, proyecto, tarea y combinaciones</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">3</span><strong>Implementar tests de Usuario</strong>
+                    <p class="ms-4 mt-1 text-muted">Creación, validaciones, activar/desactivar con parametrize</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">4</span><strong>Implementar tests de Tarea</strong>
+                    <p class="ms-4 mt-1 text-muted">Estados, prioridades, completar</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">5</span><strong>Implementar tests de Proyecto</strong>
+                    <p class="ms-4 mt-1 text-muted">Agregar tareas, filtrar, relaciones</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">6</span><strong>Crear escenarios BDD</strong>
+                    <p class="ms-4 mt-1 text-muted">Archivos .feature y steps correspondientes</p>
+                </div>
+                <div class="mb-0">
+                    <span class="paso-num">7</span><strong>Verificar cobertura ≥80%</strong>
+                    <p class="ms-4 mt-1 text-muted">Ejecutar pytest --cov y ajustar hasta alcanzar</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-award me-2"></i>Rúbrica de Evaluación (100%)</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Excelente (5.0)</th>
+                        <th>Aceptable (3.5)</th>
+                        <th>Insuficiente</th>
+                        <th>Peso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cobertura ≥80%</strong></td>
+                        <td>≥80% con tests significativos que prueban lógica real</td>
+                        <td>70-79% o tests superficiales</td>
+                        <td>&lt;70% o sin medir cobertura</td>
+                        <td class="fw-bold text-success">30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tests Unitarios</strong></td>
+                        <td>Fixtures, parametrize, raises, setup/teardown bien usados</td>
+                        <td>Tests básicos sin técnicas avanzadas</td>
+                        <td>Sin pytest o tests vacíos</td>
+                        <td class="fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tests BDD</strong></td>
+                        <td>3+ escenarios Gherkin claros, steps implementados</td>
+                        <td>Escenarios básicos o pasos incompletos</td>
+                        <td>Sin behave o .feature vacíos</td>
+                        <td class="fw-bold text-success">20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integración E1</strong></td>
+                        <td>Tests pasan contra dominio real de E1</td>
+                        <td>Algunos tests fallan por dominio incompleto</td>
+                        <td>Dominio E1 no funciona</td>
+                        <td class="fw-bold text-success">15%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Documentación</strong></td>
+                        <td>README con comandos, requisitos, cobertura</td>
+                        <td>README básico sin instrucciones claras</td>
+                        <td>Sin README o vacío</td>
+                        <td class="fw-bold text-success">10%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="penalizacion">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Penalizaciones</h5>
+            <ul class="mb-0">
+                <li><strong>Cobertura &lt;60%:</strong> Nota máxima 3.0</li>
+                <li><strong>Tests que no prueban nada:</strong> Nota máxima 2.0 (ej: assert True)</li>
+                <li><strong>No usar pytest:</strong> Nota 0.0</li>
+                <li><strong>Sin fixtures:</strong> -1.0 punto</li>
+                <li><strong>Sin parametrize:</strong> -0.5 puntos</li>
+                <li><strong>Sin behave/BDD:</strong> -20% de la nota</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning mt-4">
+            <h5><i class="bi bi-link-45deg me-2"></i>Conexión con E3</h5>
+            <p class="mb-0">El dominio testeado aquí se expondrá vía web en <a href="evaluacion-03-web.html">E3: Prototipo Web</a>. Asegúrate de que todos los tests pasen antes de continuar.</p>
+        </div>
+
+        <div class="mt-4">
+            <a href="evaluacion-01-dominio.html" class="btn btn-outline-primary">← E1: Dominio</a>
+            <a href="evaluacion-03-web.html" class="btn btn-outline-secondary ms-2">E3: Web →</a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js para syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

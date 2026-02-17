@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a DDD | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+        .alert-error { background: #f8d7da; border-left: 4px solid var(--danger); padding: 1rem; border-radius: 4px; }
+        .ddd-layer { padding: 0.5rem 1rem; border-radius: 4px; margin: 0.25rem 0; text-align: center; }
+        .layer-domain { background: #e8f5e9; border: 2px solid #388e3c; }
+        .layer-app { background: #fff3e0; border: 2px solid #f57c00; }
+        .layer-infra { background: #fce4ec; border: 2px solid #c2185b; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 2: Técnicas de Desarrollo</h2>
+            <h3>Clase 4: Introducción a DDD</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 12 de marzo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 6 - Jueves (60 minutos)</span>
+                <span class="badge bg-primary">30 min Teoría</span>
+                <span class="badge bg-success text-white">30 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-02-testing.html" class="badge bg-danger text-decoration-none p-2 fs-6">
+                    <i class="bi bi-clipboard-check"></i> E2: Testing y Calidad - Entrega Hoy (12/03/2026)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos">Objetivos</a></li>
+                        <li><a href="#teoria">¿Qué es DDD?</a></li>
+                        <li><a href="#entidades">Entidades</a></li>
+                        <li><a href="#value-objects">Value Objects</a></li>
+                        <li><a href="#repositorios">Repositorios</a></li>
+                        <li><a href="#ejercicio">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <ul>
+                        <li>Comprender principios de Domain Driven Design</li>
+                        <li>Distinguir Entidades de Value Objects</li>
+                        <li>Implementar Entidades con identidad</li>
+                        <li>Crear Value Objects inmutables</li>
+                        <li>Aplicar patrón Repository</li>
+                    </ul>
+                </section>
+
+                <section id="teoria">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es DDD? (10 min)</h2>
+                    
+                    <p><strong>DDD (Domain-Driven Design / Diseño Guiado por el Dominio)</strong> se centra en el dominio del problema y la lógica de negocio.</p>
+
+                    <div class="alert-tip">
+                        <strong>Idea clave:</strong> El código debe reflejar el lenguaje del dominio. Terminología de negocio = código.
+                    </div>
+
+                    <h4>Principios Fundamentales</h4>
+                    <ul>
+                        <li><strong>Ubiquitous Language:</strong> Lenguaje compartido entre expertos y desarrolladores</li>
+                        <li><strong>Bounded Contexts:</strong> Fronteras claras entre contextos del dominio</li>
+                        <li><strong>Modelo Rico:</strong> El modelo incluye comportamiento, no solo datos</li>
+                    </ul>
+
+                    <h4>Arquitectura en Capas</h4>
+                    <div class="ddd-layer layer-domain"><strong>Dominio</strong>: Entidades, Value Objects, Servicios de dominio</div>
+                    <div class="ddd-layer layer-app"><strong>Aplicación</strong>: Casos de uso, Servicios de aplicación</div>
+                    <div class="ddd-layer layer-infra"><strong>Infraestructura</strong>: Repositorios, Base de datos, APIs</div>
+
+                    <h4>Bloques Constructivos</h4>
+                    <table class="table">
+                        <tr><th>Elemento</th><th>Propósito</th><th>Ejemplo</th></tr>
+                        <tr><td><strong>Entity</strong></td><td>Objeto con identidad</td><td>Usuario, Tarea</td></tr>
+                        <tr><td><strong>Value Object</strong></td><td>Objeto por atributos</td><td>Email, Prioridad</td></tr>
+                        <tr><td><strong>Repository</strong></td><td>Abstracción de persistencia</td><td>UsuarioRepository</td></tr>
+                        <tr><td><strong>Service</strong></td><td>Lógica transversal</td><td>AuthService</td></tr>
+                    </table>
+                </section>
+
+                <section id="entidades">
+                    <h2 class="text-primary border-bottom pb-2">Entidades (20 min)</h2>
+                    
+                    <p>Una <strong>Entidad</strong> se define por su <strong>identidad</strong>, no por sus atributos.</p>
+
+                    <h4>Características</h4>
+                    <ul>
+                        <li><strong>Identidad única:</strong> Cada entidad tiene un ID</li>
+                        <li><strong>Ciclo de vida:</strong> Puede cambiar a lo largo del tiempo</li>
+                        <li><strong>Comportamiento:</strong> Encapsula lógica de negocio</li>
+                    </ul>
+
+                    <h4>Ejemplo: Entidad Usuario</h4>
+                    <pre><code class="language-python">from dataclasses import dataclass
+from typing import Optional
+
+@dataclass
+class Usuario:
+    """Entidad Usuario: identidad por ID."""
+    id: Optional[int]  # None para nuevos usuarios
+    username: str
+    email: str
+    activo: bool = True
+
+    def __eq__(self, other):
+        """Dos usuarios son iguales si tienen el mismo ID."""
+        if not isinstance(other, Usuario):
+            return False
+        return self.id is not None and self.id == other.id
+
+    def cambiar_email(self, nuevo_email: str):
+        """Regla de negocio: cambiar email."""
+        if "@" not in nuevo_email:
+            raise ValueError("Email inválido")
+        self.email = nuevo_email
+
+    def desactivar(self):
+        """Desactiva el usuario."""
+        self.activo = False
+
+    def puede_crear_proyectos(self) -> bool:
+        """Regla de negocio."""
+        return self.activo</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Identidad:</strong> Dos usuarios son el mismo si tienen igual ID, aunque difieran en username o email.
+                    </div>
+                </section>
+
+                <section id="value-objects">
+                    <h2 class="text-primary border-bottom pb-2">Value Objects (15 min)</h2>
+                    
+                    <p>Un <strong>Value Object</strong> se define por sus atributos. Es <strong>inmutable</strong>.</p>
+
+                    <h4>Características</h4>
+                    <ul>
+                        <li><strong>Sin identidad:</strong> Se define por sus valores</li>
+                        <li><strong>Inmutable:</strong> No cambia después de crearse</li>
+                        <li><strong>Validado:</strong> Se valida al crearse</li>
+                    </ul>
+
+                    <h4>Ejemplo: Value Object Email</h4>
+                    <pre><code class="language-python">from dataclasses import dataclass
+
+@dataclass(frozen=True)  # frozen = inmutable
+class Email:
+    """Value Object: se valida al crearse."""
+    valor: str
+
+    def __post_init__(self):
+        """Validación automática."""
+        partes = self.valor.split("@")
+        if len(partes) != 2 or "." not in partes[1]:
+            raise ValueError(f"Email inválido: {self.valor}")
+
+    def dominio(self) -> str:
+        return self.valor.split("@")[1]
+
+    def __str__(self) -> str:
+        return self.valor
+
+# Uso
+email = Email("juan@example.com")
+print(email.dominio())  # "example.com"
+
+# email.valor = "otro"  # Error: frozen</code></pre>
+
+                    <h4>Entidad vs Value Object</h4>
+                    <table class="table">
+                        <tr><th>Aspecto</th><th>Entidad</th><th>Value Object</th></tr>
+                        <tr><td>Identidad</td><td>Por ID</td><td>Por atributos</td></tr>
+                        <tr><td>Mutable</td><td>Sí</td><td>No (frozen)</td></tr>
+                        <tr><td>Comparación</td><td>Por ID</td><td>Por todos los atributos</td></tr>
+                        <tr><td>Ejemplos</td><td>Usuario, Tarea</td><td>Email, Prioridad, Monto</td></tr>
+                    </table>
+
+                    <h4>Más Value Objects</h4>
+                    <pre><code class="language-python">@dataclass(frozen=True)
+class Prioridad:
+    valor: str
+
+    def __post_init__(self):
+        validas = ["baja", "media", "alta", "urgente"]
+        if self.valor not in validas:
+            raise ValueError(f"Prioridad inválida: {self.valor}")
+
+@dataclass(frozen=True)
+class Monto:
+    valor: float
+    moneda: str = "USD"
+
+    def __post_init__(self):
+        if self.valor < 0:
+            raise ValueError("Monto negativo")
+
+    def __add__(self, otro: 'Monto') -> 'Monto':
+        if self.moneda != otro.moneda:
+            raise ValueError("Monedas diferentes")
+        return Monto(self.valor + otro.valor, self.moneda)</code></pre>
+                </section>
+
+                <section id="repositorios">
+                    <h2 class="text-primary border-bottom pb-2">Patrón Repository (20 min)</h2>
+                    
+                    <p>Un <strong>Repository</strong> abstrae la persistencia. El dominio no sabe CÓMO se guardan los datos.</p>
+
+                    <h4>Interfaz de Repository</h4>
+                    <pre><code class="language-python"># repositories/base.py
+from abc import ABC, abstractmethod  # ABC (Abstract Base Class)
+from typing import TypeVar, Generic, List, Optional
+
+T = TypeVar('T')
+
+class Repository(ABC, Generic[T]):
+    """Interfaz base para repositorios."""
+
+    @abstractmethod
+    def guardar(self, entidad: T) -> T:
+        """Guarda una entidad."""
+        pass
+
+    @abstractmethod
+    def obtener_por_id(self, id: int) -> Optional[T]:
+        """Busca por ID."""
+        pass
+
+    @abstractmethod
+    def obtener_todos(self) -> List[T]:
+        """Obtiene todos."""
+        pass
+
+    @abstractmethod
+    def eliminar(self, entidad: T) -> None:
+        """Elimina una entidad."""
+        pass</code></pre>
+
+                    <h4>Implementación con Diccionario</h4>
+                    <pre><code class="language-python"># repositories/usuario_repo.py
+from typing import Dict, List, Optional
+from .base import Repository
+from ..models.usuario import Usuario
+
+class UsuarioDictRepository(Repository[Usuario]):
+    """Repositorio usando diccionario (para pruebas)."""
+
+    def __init__(self):
+        self._datos: Dict[int, Usuario] = {}
+        self._siguiente_id = 1
+
+    def guardar(self, usuario: Usuario) -> Usuario:
+        if usuario.id is None:
+            usuario.id = self._siguiente_id
+            self._siguiente_id += 1
+        self._datos[usuario.id] = usuario
+        return usuario
+
+    def obtener_por_id(self, id: int) -> Optional[Usuario]:
+        return self._datos.get(id)
+
+    def obtener_todos(self) -> List[Usuario]:
+        return list(self._datos.values())
+
+    def eliminar(self, usuario: Usuario) -> None:
+        if usuario.id in self._datos:
+            del self._datos[usuario.id]</code></pre>
+
+                    <h4>Servicio con Repository Inyectado</h4>
+                    <pre><code class="language-python"># services/usuario_service.py
+from ..models.usuario import Usuario
+from ..repositories.usuario_repo import Repository
+
+class UsuarioService:
+    """Servicio que NO sabe cómo se persisten los datos."""
+
+    def __init__(self, repo: Repository[Usuario]):
+        self.repo = repo  # Inyección de dependencias
+
+    def crear_usuario(self, username: str, email: str) -> Usuario:
+        # Validaciones de dominio
+        if len(username) < 3:
+            raise ValueError("Username muy corto")
+
+        # Crear entidad
+        usuario = Usuario(id=None, username=username, email=email)
+
+        # Guardar usando repositorio
+        return self.repo.guardar(usuario)
+
+    def obtener_usuario(self, id: int) -> Usuario:
+        usuario = self.repo.obtener_por_id(id)
+        if not usuario:
+            raise ValueError("Usuario no encontrado")
+        return usuario</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Inyección de dependencias:</strong> El servicio recibe el repositorio, permitiendo cambiar implementación sin modificar el servicio.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Refactorizar con DDD (10 min)</h2>
+                    
+                    <p>Refactorizar código acoplado a BD usando Repository:</p>
+
+                    <div class="alert-error">
+                        <strong>❌ Antes (acoplado):</strong>
+                        <pre><code class="language-python">class UsuarioService:
+    def crear_usuario(self, username, email):
+        import sqlite3
+        conn = sqlite3.connect('taskflow.db')  # Acoplado a SQLite
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO usuarios ...")
+        conn.commit()</code></pre>
+                    </div>
+
+                    <div class="alert-tip">
+                        <strong>✅ Después (con DDD):</strong>
+                        <pre><code class="language-python">class UsuarioService:
+    def __init__(self, repo: UsuarioRepository):
+        self.repo = repo  # Inyectado, desacoplado
+
+    def crear_usuario(self, username, email):
+        usuario = Usuario(id=None, username=username, email=email)
+        return self.repo.guardar(usuario)  # No sabe CÓMO</code></pre>
+                    </div>
+
+                    <p><strong>Tarea:</strong> Crear entidad <code>Tarea</code> con Value Object <code>Prioridad</code> y repositorio.</p>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>DDD:</strong> Centrado en el dominio, no en tecnología</li>
+                        <li><strong>Entidad:</strong> Identidad por ID, mutable, con comportamiento</li>
+                        <li><strong>Value Object:</strong> Identidad por atributos, inmutable</li>
+                        <li><strong>Repository:</strong> Abstrae persistencia del dominio</li>
+                        <li><strong>Inyección:</strong> El dominio no conoce la infraestructura</li>
+                    </ul>
+                    
+                    <div class="alert-note">
+                        <strong>Regla de oro:</strong> El dominio NO debe importar nada de infraestructura (SQLAlchemy, archivos, APIs externas).
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-03-bdd-intro.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: BDD
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 10 de 25</span>
+            </div>
+            <div>
+                <a href="../unidad-03/clase-01-fastapi-intro.html" class="btn btn-primary btn-sm">
+                    Siguiente: FastAPI →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+name: Deploy Clases HTML to GitHub Pages
+
+on:
+  push:
+    branches: [ main, generate-clases-html-2026-02-01 ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create output directory
+        run: mkdir -p output
+
+      - name: Copy clases HTML
+        run: |
+          cp -r clases-html/*.html output/ 2>/dev/null || true
+          cp -r clases-html/unidad-* output/ 2>/dev/null || true
+          cp -r clases-html/evaluaciones output/ 2>/dev/null || true
+          cp -r clases-html/docs output/ 2>/dev/null || true
+          cp -r clases-html/templates output/ 2>/dev/null || true
+          cp -r clases-html/assets output/ 2>/dev/null || true
+
+      - name: Copy assets
+        run: |
+          mkdir -p output/assets/infografias
+          cp -r assets/infografias/* output/assets/infografias/ 2>/dev/null || true
+
+      - name: Copy index
+        run: |
+          cp clases-html/index.html output/index.html 2>/dev/null || true
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          publish_branch: gh-pages

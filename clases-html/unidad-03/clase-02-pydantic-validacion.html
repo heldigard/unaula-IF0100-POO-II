@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 9: Validación con Pydantic | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
+            <h3>Clase 2: Pydantic y Validación</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 07 de abril de 2026</span>
+                <span class="badge bg-info text-dark">Semana 10 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2"><span class="badge bg-warning text-dark">E4: Lab Persistencia - Jueves 23/04/2026 (16 días)</span></p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#pydantic" class="text-decoration-none">¿Qué es Pydantic?</a></li>
+                        <li><a href="#modelos" class="text-decoration-none">Modelos BaseModel</a></li>
+                        <li><a href="#validacion" class="text-decoration-none">Validaciones</a></li>
+                        <li><a href="#fastapi" class="text-decoration-none">FastAPI + Pydantic</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <ul>
+                        <li>Entender qué es Pydantic y para qué sirve</li>
+                        <li>Crear modelos con BaseModel</li>
+                        <li>Validar datos automáticamente</li>
+                        <li>Usar Field para validaciones avanzadas</li>
+                        <li>Integrar Pydantic con FastAPI</li>
+                    </ul>
+                </section>
+
+                <section id="pydantic">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es Pydantic? (10 min)</h2>
+                    
+                    <p><strong>Pydantic</strong> es una librería para validación de datos usando type hints de Python.</p>
+
+                    <h4>Ventajas</h4>
+                    <ul>
+                        <li>✅ Valida datos automáticamente</li>
+                        <li>✅ Convierte tipos automáticamente (str → int)</li>
+                        <li>✅ Muestra errores claros</li>
+                        <li>✅ Integrado con FastAPI</li>
+                    </ul>
+
+                    <pre><code class="language-bash">pip install pydantic</code></pre>
+                </section>
+
+                <section id="modelos">
+                    <h2 class="text-primary border-bottom pb-2">Modelos BaseModel (20 min)</h2>
+                    
+                    <p>Los modelos definen la estructura de los datos.</p>
+
+                    <pre><code class="language-python">from pydantic import BaseModel
+
+class Usuario(BaseModel):
+    id: int
+    username: str
+    email: str
+    edad: int
+
+# Crear instancia
+usuario = Usuario(
+    id=1,
+    username="juan",
+    email="juan@email.com",
+    edad=25
+)
+
+print(usuario)
+# id=1 username='juan' email='juan@email.com' edad=25
+
+# Acceder a atributos
+print(usuario.username)  # "juan"
+
+# Convertir a dict
+print(usuario.model_dump())
+# {'id': 1, 'username': 'juan', 'email': 'juan@email.com', 'edad': 25}
+
+# Convertir a JSON
+print(usuario.model_dump_json())
+# '{"id":1,"username":"juan","email":"juan@email.com","edad":25}'</code></pre>
+
+                    <h4>Campos Opcionales</h4>
+                    <pre><code class="language-python">from typing import Optional
+from pydantic import BaseModel
+
+class Usuario(BaseModel):
+    id: int
+    username: str
+    email: str
+    edad: Optional[int] = None  # Opcional
+    telefono: Optional[str] = None  # Opcional
+
+# Puede no incluir edad ni telefono
+u1 = Usuario(id=1, username="juan", email="juan@email.com")
+u2 = Usuario(id=2, username="ana", email="ana@email.com", edad=30)</code></pre>
+
+                    <h4>Valores por Defecto</h4>
+                    <pre><code class="language-python">class Tarea(BaseModel):
+    id: int
+    titulo: str
+    descripcion: str = ""  # Valor por defecto
+    completada: bool = False  # Valor por defecto
+    prioridad: int = 1  # Baja=1, Media=2, Alta=3
+
+t = Tarea(id=1, titulo="Hacer ejercicio")
+print(t.descripcion)   # ""
+print(t.completada)    # False
+print(t.prioridad)     # 1</code></pre>
+                </section>
+
+                <section id="validacion">
+                    <h2 class="text-primary border-bottom pb-2">Validaciones (20 min)</h2>
+                    
+                    <h4>Validación Básica</h4>
+                    <pre><code class="language-python">from pydantic import BaseModel, EmailStr, Field
+
+class Usuario(BaseModel):
+    id: int
+    username: str = Field(..., min_length=3, max_length=50)
+    email: EmailStr  # Valida formato de email
+    edad: int = Field(..., ge=0, le=120)  # ge=greater/equal, le=less/equal
+
+# ✅ Válido
+u = Usuario(id=1, username="juan", email="juan@email.com", edad=25)
+
+# ❌ Error: username muy corto
+u = Usuario(id=1, username="ab", email="juan@email.com", edad=25)
+# ValidationError: username: ensure this value has at least 3 characters
+
+# ❌ Error: edad fuera de rango
+u = Usuario(id=1, username="juan", email="juan@email.com", edad=150)
+# ValidationError: edad: ensure this value is less than or equal to 120
+
+# ❌ Error: email inválido
+u = Usuario(id=1, username="juan", email="no-es-email", edad=25)
+# ValidationError: email: value is not a valid email address</code></pre>
+
+                    <h4>Field - Opciones de Validación</h4>
+                    <table class="table">
+                        <tr><th>Parámetro</th><th>Descripción</th><th>Ejemplo</th></tr>
+                        <tr><td><code>min_length</code></td><td>Longitud mínima</td><td><code>Field(min_length=3)</code></td></tr>
+                        <tr><td><code>max_length</code></td><td>Longitud máxima</td><td><code>Field(max_length=50)</code></td></tr>
+                        <tr><td><code>ge</code></td><td>Mayor o igual</td><td><code>Field(ge=0)</code></td></tr>
+                        <tr><td><code>le</code></td><td>Menor o igual</td><td><code>Field(le=100)</code></td></tr>
+                        <tr><td><code>gt</code></td><td>Mayor que</td><td><code>Field(gt=0)</code></td></tr>
+                        <tr><td><code>lt</code></td><td>Menor que</td><td><code>Field(lt=100)</code></td></tr>
+                        <tr><td><code>pattern</code></td><td>Regex</td><td><code>Field(pattern=r'^[a-z]+$')</code></td></tr>
+                    </table>
+
+                    <h4>Ejemplo Completo: Tarea</h4>
+                    <pre><code class="language-python">from pydantic import BaseModel, Field
+from typing import Optional
+from datetime import datetime
+
+class Tarea(BaseModel):
+    id: int = Field(..., ge=1)
+    titulo: str = Field(..., min_length=1, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
+    completada: bool = False
+    prioridad: int = Field(default=1, ge=1, le=5)
+    fecha_creacion: datetime = Field(default_factory=datetime.now)
+    
+    class Config:
+        # Permite crear desde atributos (usuario.titulo)
+        from_attributes = True
+
+t = Tarea(
+    id=1,
+    titulo="Aprender Pydantic",
+    descripcion="Estudiar validación de datos",
+    prioridad=3
+)
+
+print(t.model_dump())</code></pre>
+                </section>
+
+                <section id="fastapi">
+                    <h2 class="text-primary border-bottom pb-2">FastAPI + Pydantic (10 min)</h2>
+                    
+                    <h4>Request Body con Modelos</h4>
+                    <pre><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel, Field
+
+app = FastAPI()
+
+class CrearUsuarioRequest(BaseModel):
+    username: str = Field(..., min_length=3)
+    email: str
+    edad: int = Field(..., ge=0, le=120)
+
+class UsuarioResponse(BaseModel):
+    id: int
+    username: str
+    email: str
+    edad: int
+
+# POST con modelo
+@app.post("/usuarios", response_model=UsuarioResponse)
+def crear_usuario(usuario: CrearUsuarioRequest):
+    # FastAPI valida automáticamente el request body
+    # Si los datos son inválidos, retorna error 422
+    
+    # Simular creación en BD
+    nuevo_usuario = {
+        "id": 1,
+        "username": usuario.username,
+        "email": usuario.email,
+        "edad": usuario.edad
+    }
+    return nuevo_usuario
+
+# PUT con modelo
+@app.put("/usuarios/{usuario_id}")
+def actualizar_usuario(
+    usuario_id: int,
+    usuario: CrearUsuarioRequest
+):
+    return {
+        "id": usuario_id,
+        "username": usuario.username,
+        "message": "Usuario actualizado"
+    }</code></pre>
+
+                    <h4>Errores de Validación</h4>
+                    <p>FastAPI retorna automáticamente errores 422 con detalles:</p>
+                    <pre><code class="language-json">{
+  "detail": [
+    {
+      "loc": ["body", "username"],
+      "msg": "ensure this value has at least 3 characters",
+      "type": "value_error.any_str.min_length",
+      "ctx": {"limit_value": 3}
+    }
+  ]
+}</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API con Validación (10 min)</h2>
+                    
+                    <p>Crea la API de Tareas con validación completa.</p>
+
+                    <pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import Optional, List
+from datetime import datetime
+
+app = FastAPI(title="TaskFlow API con Validación")
+
+class TareaBase(BaseModel):
+    titulo: str = Field(..., min_length=1, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
+    prioridad: int = Field(default=1, ge=1, le=5)
+
+class TareaCreate(TareaBase):
+    pass
+
+class Tarea(TareaBase):
+    id: int
+    completada: bool = False
+    fecha_creacion: datetime
+
+# Base de datos simulada
+tareas_db = []
+contador_id = 1
+
+@app.post("/tareas", response_model=Tarea, status_code=201)
+def crear_tarea(tarea: TareaCreate):
+    global contador_id
+    nueva_tarea = Tarea(
+        id=contador_id,
+        **tarea.model_dump(),
+        fecha_creacion=datetime.now()
+    )
+    tareas_db.append(nueva_tarea)
+    contador_id += 1
+    return nueva_tarea
+
+@app.get("/tareas", response_model=List[Tarea])
+def listar_tareas():
+    return tareas_db
+
+@app.get("/tareas/{tarea_id}", response_model=Tarea)
+def obtener_tarea(tarea_id: int):
+    for tarea in tareas_db:
+        if tarea.id == tarea_id:
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.put("/tareas/{tarea_id}", response_model=Tarea)
+def actualizar_tarea(tarea_id: int, tarea_data: TareaCreate):
+    for i, tarea in enumerate(tareas_db):
+        if tarea.id == tarea_id:
+            # Actualizar campos
+            tareas_db[i].titulo = tarea_data.titulo
+            tareas_db[i].descripcion = tarea_data.descripcion
+            tareas_db[i].prioridad = tarea_data.prioridad
+            return tareas_db[i]
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.delete("/tareas/{tarea_id}")
+def eliminar_tarea(tarea_id: int):
+    for i, tarea in enumerate(tareas_db):
+        if tarea.id == tarea_id:
+            del tareas_db[i]
+            return {"message": "Tarea eliminada"}
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Beneficio:</strong> Con Pydantic, no necesitas escribir código de validación manual. FastAPI valida automáticamente y devuelve errores claros.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <ul>
+                        <li><strong>Pydantic:</strong> Valida datos con type hints</li>
+                        <li><strong>BaseModel:</strong> Clase base para modelos</li>
+                        <li><strong>Field:</strong> Valida longitud, rango, regex</li>
+                        <li><strong>Optional:</strong> Campos que pueden ser None</li>
+                        <li><strong>EmailStr:</strong> Valida emails</li>
+                        <li><strong>FastAPI:</strong> Usa modelos para request/response</li>
+                        <li><strong>Errores 422:</strong> Datos inválidos retornan error automático</li>
+                    </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Agrega validación al modelo de Usuario: username único, email válido, contraseña mínima 8 caracteres.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-01-fastapi-intro.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: FastAPI Intro
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 12 de 25</span>
+            </div>
+            <div>
+                <a href="clase-03-dependencias.html" class="btn btn-primary btn-sm">
+                    Siguiente: Dependencias →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

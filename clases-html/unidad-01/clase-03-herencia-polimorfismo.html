@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5: Herencia y Polimorfismo | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 1: Programación Orientada a Objetos</h2>
+            <h3>Clase 5: Herencia y Polimorfismo</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 24 de febrero de 2026</span>
+                <span class="badge bg-info text-dark">Semana 4 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-01-conceptos-poo.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E1: Examen POO - Jueves 26/02/2026 (2 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#herencia" class="text-decoration-none">Herencia</a></li>
+                        <li><a href="#super" class="text-decoration-none">super()</a></li>
+                        <li><a href="#sobreescritura" class="text-decoration-none">Sobreescritura</a></li>
+                        <li><a href="#polimorfismo" class="text-decoration-none">Polimorfismo</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Crear jerarquías de clases usando herencia</li>
+                        <li>Usar <code>super()</code> para llamar métodos de la clase padre</li>
+                        <li>Sobreescribir métodos para especializar comportamiento</li>
+                        <li>Comprender el polimorfismo (mismo método, distinto comportamiento)</li>
+                        <li>Diseñar Usuario, Admin y Cliente para TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- HERENCIA -->
+                <section id="herencia">
+                    <h2 class="text-primary border-bottom pb-2">Herencia (20 min)</h2>
+                    
+                    <p>La <strong>herencia</strong> permite crear nuevas clases basadas en clases existentes. La clase hija hereda atributos y métodos del padre.</p>
+
+                    <div class="alert-note">
+                        <strong>Analogía:</strong> Un <em>Vehículo</em> es la clase base. Un <em>Coche</em> y una <em>Moto</em> heredan de Vehículo (tienen ruedas, motor) pero cada uno tiene características específicas.
+                    </div>
+
+                    <h4>Sintaxis</h4>
+                    <pre><code class="language-python"># Clase Padre (Base)
+class Animal:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+    
+    def hacer_sonido(self):
+        return "Sonido genérico"
+    
+    def presentarse(self):
+        return f"Soy {self.nombre}, tengo {self.edad} años"
+
+# Clase Hija (hereda de Animal)
+class Perro(Animal):
+    def __init__(self, nombre, edad, raza):
+        # Llamar al constructor del padre
+        super().__init__(nombre, edad)
+        self.raza = raza
+    
+    def hacer_sonido(self):
+        return "¡Guau!"
+    
+    def buscar_pelota(self):
+        return f"{self.nombre} está buscando la pelota"
+
+# Otra clase hija
+class Gato(Animal):
+    def hacer_sonido(self):
+        return "¡Miau!"
+
+# Uso
+mi_perro = Perro("Fido", 3, "Labrador")
+mi_gato = Gato("Michi", 2)
+
+print(mi_perro.presentarse())    # Heredado de Animal
+print(mi_perro.hacer_sonido())   # "¡Guau!" (especializado)
+print(mi_gato.hacer_sonido())    # "¡Miau!" (especializado)</code></pre>
+
+                    <h4>Jerarquía en TaskFlow</h4>
+                    <pre><code class="language-python">class Usuario:
+    """Clase base para todos los usuarios."""
+    
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+        self.activo = True
+    
+    def obtener_rol(self):
+        return "Usuario"
+    
+    def puede_crear_proyectos(self):
+        return True
+
+class Administrador(Usuario):
+    """Admin hereda de Usuario."""
+    
+    def obtener_rol(self):
+        return "Administrador"
+    
+    def puede_eliminar_usuarios(self):
+        return True
+    
+    def puede_crear_proyectos(self):
+        return True  # También puede crear proyectos
+
+class Cliente(Usuario):
+    """Cliente hereda de Usuario."""
+    
+    def __init__(self, username, email, empresa):
+        super().__init__(username, email)
+        self.empresa = empresa
+    
+    def obtener_rol(self):
+        return "Cliente"
+    
+    def puede_crear_proyectos(self):
+        return False  # Los clientes solo ven proyectos
+
+# Uso
+admin = Administrador("admin", "admin@empresa.com")
+cliente = Cliente("cliente1", "cli@empresa.com", "ACME Corp")
+
+print(f"{admin.username} es {admin.obtener_rol()}")
+print(f"{cliente.username} es {cliente.obtener_rol()} de {cliente.empresa}")
+print(f"Admin puede eliminar usuarios: {admin.puede_eliminar_usuarios()}")
+print(f"Cliente puede crear proyectos: {cliente.puede_crear_proyectos()}")</code></pre>
+                </section>
+
+                <!-- SUPER -->
+                <section id="super">
+                    <h2 class="text-primary border-bottom pb-2">super() (10 min)</h2>
+                    
+                    <p><code>super()</code> permite llamar métodos de la clase padre. Es útil en el constructor y para extender funcionalidad.</p>
+
+                    <pre><code class="language-python">class Persona:
+    def __init__(self, nombre, edad):
+        print(f"Inicializando Persona: {nombre}")
+        self.nombre = nombre
+        self.edad = edad
+    
+    def presentarse(self):
+        return f"Hola, soy {self.nombre}"
+
+class Empleado(Persona):
+    def __init__(self, nombre, edad, salario):
+        # Llamar al __init__ del padre
+        super().__init__(nombre, edad)
+        print(f"Inicializando Empleado con salario: {salario}")
+        self.salario = salario
+    
+    def presentarse(self):
+        # Extender el método del padre
+        base = super().presentarse()
+        return f"{base} y gano ${self.salario}"
+
+# Uso
+emp = Empleado("Juan", 30, 50000)
+print(emp.presentarse())
+# Salida:
+# Inicializando Persona: Juan
+# Inicializando Empleado con salario: 50000
+# Hola, soy Juan y gano $50000</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Importante:</strong> Siempre usa <code>super().__init__()</code> en el constructor de la clase hija para asegurar que todos los atributos del padre se inicialicen.
+                    </div>
+                </section>
+
+                <!-- SOBREESCRITURA -->
+                <section id="sobreescritura">
+                    <h2 class="text-primary border-bottom pb-2">Sobreescritura de Métodos (10 min)</h2>
+                    
+                    <p>La <strong>sobreescritura</strong> (override) es redefinir un método del padre en la clase hija para cambiar su comportamiento.</p>
+
+                    <pre><code class="language-python">class UsuarioBase:
+    def __init__(self, username):
+        self.username = username
+    
+    def obtener_permisos(self):
+        return ["ver_tareas"]
+    
+    def __str__(self):
+        return f"Usuario({self.username})"
+
+class UsuarioPro(UsuarioBase):
+    def obtener_permisos(self):
+        # Extender: agregar permisos del padre + nuevos
+        permisos_base = super().obtener_permisos()
+        return permisos_base + ["crear_tareas", "editar_tareas"]
+    
+    def __str__(self):
+        # Sobreescribir completamente
+        return f"UsuarioPro: @{self.username}"
+
+class UsuarioEnterprise(UsuarioBase):
+    def obtener_permisos(self):
+        return ["ver_tareas", "crear_tareas", "editar_tareas", 
+                "eliminar_tareas", "gestionar_usuarios"]
+
+# Uso
+usuario = UsuarioBase("basico")
+pro = UsuarioPro("profesional")
+enterprise = UsuarioEnterprise("empresa")
+
+for u in [usuario, pro, enterprise]:
+    print(f"{u}: {u.obtener_permisos()}")
+    
+# Salida:
+# Usuario(basico): ['ver_tareas']
+# UsuarioPro: @profesional: ['ver_tareas', 'crear_tareas', 'editar_tareas']
+# Usuario(empresa): ['ver_tareas', 'crear_tareas', ...]</code></pre>
+                </section>
+
+                <!-- POLIMORFISMO -->
+                <section id="polimorfismo">
+                    <h2 class="text-primary border-bottom pb-2">Polimorfismo (10 min)</h2>
+                    
+                    <p>El <strong>polimorfismo</strong> significa "múltiples formas". El mismo método se comporta diferente según el objeto que lo ejecuta.</p>
+
+                    <pre><code class="language-python">class Notificacion:
+    def enviar(self, mensaje):
+        raise NotImplementedError("Subclase debe implementar esto")
+
+class NotificacionEmail(Notificacion):
+    def __init__(self, email):
+        self.email = email
+    
+    def enviar(self, mensaje):
+        return f"📧 Enviando email a {self.email}: {mensaje}"
+
+class NotificacionSMS(Notificacion):
+    def __init__(self, telefono):
+        self.telefono = telefono
+    
+    def enviar(self, mensaje):
+        return f"📱 Enviando SMS a {self.telefono}: {mensaje}"
+
+class NotificacionPush(Notificacion):
+    def __init__(self, device_id):
+        self.device_id = device_id
+    
+    def enviar(self, mensaje):
+        return f"🔔 Enviando push a dispositivo {self.device_id}: {mensaje}"
+
+# Función polimórfica
+# Funciona con cualquier tipo de notificación
+def notificar_usuario(notificacion, mensaje):
+    print(notificacion.enviar(mensaje))
+
+# Uso
+email = NotificacionEmail("usuario@email.com")
+sms = NotificacionSMS("+123456789")
+push = NotificacionPush("device123")
+
+notificar_usuario(email, "Tarea completada!")
+notificar_usuario(sms, "Recordatorio: reunión en 5 min")
+notificar_usuario(push, "Nuevo mensaje recibido")
+
+# También podemos iterar sobre diferentes tipos
+notificaciones = [email, sms, push]
+for n in notificaciones:
+    print(n.enviar("Mensaje de prueba"))</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Ventaja:</strong> El código que usa los objetos no necesita saber de qué tipo específico son. Solo necesita saber que tienen el método <code>enviar()</code>.
+                    </div>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Jerarquía de Usuarios (20 min)</h2>
+                    
+                    <p>Crea una jerarquía completa para TaskFlow.</p>
+
+                    <pre><code class="language-python"># jerarquia_usuarios.py
+
+class Usuario:
+    """Clase base para todos los usuarios."""
+    
+    def __init__(self, username, email):
+        self._username = username
+        self._email = email
+        self._activo = True
+    
+    @property
+    def username(self):
+        return self._username
+    
+    @property
+    def email(self):
+        return self._email
+    
+    @email.setter
+    def email(self, valor):
+        if "@" not in valor:
+            raise ValueError("Email inválido")
+        self._email = valor
+    
+    def obtener_rol(self):
+        return "Usuario"
+    
+    def obtener_permisos(self):
+        return ["ver_tareas", "comentar"]
+    
+    def puede_eliminar_proyectos(self):
+        return False
+    
+    def __str__(self):
+        return f"[{self.obtener_rol()}] @{self._username}"
+
+
+class MiembroEquipo(Usuario):
+    """Usuario que puede crear y editar tareas."""
+    
+    def __init__(self, username, email, departamento):
+        super().__init__(username, email)
+        self.departamento = departamento
+    
+    def obtener_rol(self):
+        return f"Miembro ({self.departamento})"
+    
+    def obtener_permisos(self):
+        base = super().obtener_permisos()
+        return base + ["crear_tareas", "editar_tareas", "asignar_tareas"]
+
+
+class Administrador(Usuario):
+    """Admin con todos los permisos."""
+    
+    def obtener_rol(self):
+        return "Administrador"
+    
+    def obtener_permisos(self):
+        return ["ver_tareas", "comentar", "crear_tareas", "editar_tareas",
+                "eliminar_tareas", "gestionar_usuarios", "ver_reportes"]
+    
+    def puede_eliminar_proyectos(self):
+        return True
+
+
+class Cliente(Usuario):
+    """Cliente externo, solo puede ver."""
+    
+    def __init__(self, username, email, empresa):
+        super().__init__(username, email)
+        self.empresa = empresa
+    
+    def obtener_rol(self):
+        return f"Cliente - {self.empresa}"
+    
+    def obtener_permisos(self):
+        # Clientes solo ven, no comentan ni crean
+        return ["ver_tareas"]
+
+
+# === PRUEBAS ===
+if __name__ == "__main__":
+    # Crear diferentes tipos de usuarios
+    usuarios = [
+        Usuario("visitante", "visit@email.com"),
+        MiembroEquipo("desarrollador", "dev@email.com", "Tecnología"),
+        Administrador("admin", "admin@email.com"),
+        Cliente("cliente1", "cli1@empresa.com", "ACME Corp")
+    ]
+    
+    print("=== Jerarquía de Usuarios TaskFlow ===\n")
+    
+    # Polimorfismo: mismo método, distinto comportamiento
+    for u in usuarios:
+        print(f"{u}")
+        print(f"   Permisos: {', '.join(u.obtener_permisos())}")
+        print(f"   Puede eliminar proyectos: {u.puede_eliminar_proyectos()}")
+        print()
+    
+    # Función polimórfica
+    def mostrar_info_usuario(usuario):
+        """Funciona con cualquier tipo de Usuario."""
+        print(f"Usuario: {usuario}")
+        print(f"Rol: {usuario.obtener_rol()}")
+        print(f"Total permisos: {len(usuario.obtener_permisos())}")
+    
+    print("=== Info Detallada ===")
+    for u in usuarios:
+        mostrar_info_usuario(u)
+        print()</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Esta jerarquía permite controlar qué puede hacer cada tipo de usuario en el sistema. Los permisos se verifican antes de permitir acciones.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li>Agrega clase <code>Gerente</code> que herede de <code>MiembroEquipo</code> y pueda aprobar tareas</li>
+                        <li>Crea método <code>tiene_permiso(permiso)</code> que verifique si un usuario tiene un permiso específico</li>
+                        <li>Agrega atributo <code>proyectos_asignados</code> a <code>MiembroEquipo</code></li>
+                    </ol>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <ul>
+                        <li><strong>Herencia:</strong> Clase Hija(Padre) - hereda atributos y métodos</li>
+                        <li><strong>super():</strong> Llama métodos del padre, especialmente <code>__init__</code></li>
+                        <li><strong>Sobreescritura:</strong> Redefinir método del padre en la hija</li>
+                        <li><strong>Polimorfismo:</strong> Mismo método, distinto comportamiento según la clase</li>
+                        <li><strong>Jerarquía TaskFlow:</strong> Usuario → MiembroEquipo/Administrador/Cliente</li>
+                    </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Para el examen E1:</strong> Practica crear jerarquías con super() y sobreescritura. Diseña las clases antes de escribir código.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-02-encapsulamiento.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Encapsulamiento
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 5 de 25</span>
+            </div>
+            <div>
+                <a href="clase-04-clases-abstractas.html" class="btn btn-primary btn-sm">
+                    Siguiente: Clases Abstractas →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

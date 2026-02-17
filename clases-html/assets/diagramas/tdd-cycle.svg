@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" style="width: 100%; height: auto; aspect-ratio: 800 / 400;">
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ee5a5a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#51cf66;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#40c057;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#339af0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#228be6;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#868e96" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="40" font-family="Segoe UI, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#212529">
+    Ciclo TDD: Red-Green-Refactor
+  </text>
+
+  <!-- RED Phase -->
+  <g transform="translate(80, 120)">
+    <circle cx="80" cy="80" r="70" fill="url(#redGrad)" opacity="0.9"/>
+    <text x="80" y="65" font-family="Segoe UI, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
+      RED
+    </text>
+    <text x="80" y="95" font-family="Segoe UI, sans-serif" font-size="14" text-anchor="middle" fill="white">
+      Escribir test
+    </text>
+    <text x="80" y="115" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle" fill="white">
+      que falla
+    </text>
+  </g>
+
+  <!-- GREEN Phase -->
+  <g transform="translate(320, 120)">
+    <circle cx="80" cy="80" r="70" fill="url(#greenGrad)" opacity="0.9"/>
+    <text x="80" y="65" font-family="Segoe UI, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">
+      GREEN
+    </text>
+    <text x="80" y="95" font-family="Segoe UI, sans-serif" font-size="14" text-anchor="middle" fill="white">
+      Escribir código
+    </text>
+    <text x="80" y="115" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle" fill="white">
+      mínimo para pasar
+    </text>
+  </g>
+
+  <!-- REFACTOR Phase -->
+  <g transform="translate(560, 120)">
+    <circle cx="80" cy="80" r="70" fill="url(#blueGrad)" opacity="0.9"/>
+    <text x="80" y="60" font-family="Segoe UI, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="white">
+      REFACTOR
+    </text>
+    <text x="80" y="90" font-family="Segoe UI, sans-serif" font-size="14" text-anchor="middle" fill="white">
+      Mejorar código
+    </text>
+    <text x="80" y="110" font-family="Segoe UI, sans-serif" font-size="12" text-anchor="middle" fill="white">
+      manteniendo tests
+    </text>
+  </g>
+
+  <!-- Arrows -->
+  <g stroke="#868e96" stroke-width="3" fill="none" marker-end="url(#arrowhead)">
+    <!-- RED to GREEN -->
+    <path d="M 230 200 Q 270 200 300 200"/>
+
+    <!-- GREEN to REFACTOR -->
+    <path d="M 470 200 Q 510 200 540 200"/>
+
+    <!-- REFACTOR back to RED -->
+    <path d="M 600 270 Q 600 340 400 340 Q 160 340 160 270"/>
+  </g>
+
+  <!-- Labels -->
+  <text x="400" y="370" font-family="Segoe UI, sans-serif" font-size="14" text-anchor="middle" fill="#495057">
+    El ciclo se repite continuamente para mejorar el código paso a paso
+  </text>
+</svg>

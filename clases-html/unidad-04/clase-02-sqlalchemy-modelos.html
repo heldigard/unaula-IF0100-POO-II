@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2: SQLAlchemy Modelos | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 4: Manejo de Persistencia</h2>
+            <h3>Clase 2: SQLAlchemy - Modelos ORM</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 05 de mayo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 14 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-05-crud-fastapi.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E5: Proyecto SQLAlchemy - Jueves 07/05/2026 (2 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#orm" class="text-decoration-none">Que es ORM</a></li>
+                        <li><a href="#config" class="text-decoration-none">Configuracion</a></li>
+                        <li><a href="#modelos" class="text-decoration-none">Crear Modelos</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, seras capaz de:</p>
+                    <ul>
+                        <li>Entender que es un <strong>ORM (Object Relational Mapper)</strong></li>
+                        <li>Configurar SQLAlchemy con SQLite</li>
+                        <li>Crear modelos con <code>DeclarativeBase</code></li>
+                        <li>Definir columnas con tipos de datos</li>
+                        <li>Crear tablas desde modelos</li>
+                    </ul>
+                </section>
+
+                <section id="orm">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es un ORM? (10 min)</h2>
+                    
+                    <p><strong>ORM (Object-Relational Mapping / Mapeo Objeto-Relacional)</strong> es una técnica que permite mapear objetos de programación a tablas de una base de datos relacional, evitando escribir <strong>SQL (Structured Query Language / Lenguaje de Consulta Estructurado)</strong> manualmente para las operaciones comunes.</p>
+
+                    <div class="alert-note">
+                        <strong>Ventajas del ORM:</strong>
+                        <ul class="mb-0">
+                            <li>Escribes Python, no SQL</li>
+                            <li>Codigo portable entre bases de datos</li>
+                            <li>Autocompletado y type hints</li>
+                            <li>Relaciones como atributos de objetos</li>
+                        </ul>
+                    </div>
+
+                    <h4>Comparacion</h4>
+                    <pre><code class="language-python"># Sin ORM (SQL directo)
+cursor.execute("""
+    INSERT INTO usuarios (username, email) 
+    VALUES (?, ?)
+""", ("juan", "juan@test.com"))
+
+# Con ORM (Python)
+usuario = Usuario(username="juan", email="juan@test.com")
+session.add(usuario)
+session.commit()</code></pre>
+                </section>
+
+                <section id="config">
+                    <h2 class="text-primary border-bottom pb-2">Configuracion (15 min)</h2>
+                    
+                    <h4>Instalacion</h4>
+                    <pre><code class="language-bash">pip install sqlalchemy</code></pre>
+
+                    <h4>Configuracion Base</h4>
+                    <pre><code class="language-python"># database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+
+# Engine: conexion a la base de datos
+engine = create_engine("sqlite:///taskflow.db", echo=True)
+
+# SessionLocal: fabrica de sesiones
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
+# Base: clase base para todos los modelos
+class Base(DeclarativeBase):
+    pass
+
+# Dependencia para FastAPI
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Crear todas las tablas
+def crear_tablas():
+    Base.metadata.create_all(bind=engine)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> <code>echo=True</code> muestra el SQL generado. Desactivalo en produccion.
+                    </div>
+                </section>
+
+                <section id="modelos">
+                    <h2 class="text-primary border-bottom pb-2">Crear Modelos (25 min)</h2>
+                    
+                    <h4>Modelo Usuario</h4>
+                    <pre><code class="language-python"># models/usuario.py
+from sqlalchemy import String, Boolean, DateTime
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime
+from typing import Optional, List
+from database import Base
+
+class Usuario(Base):
+    __tablename__ = "usuarios"
+    
+    # Columnas
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    activo: Mapped[bool] = mapped_column(Boolean, default=True)
+    creado_en: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    
+    # Relaciones
+    proyectos: Mapped[List["Proyecto"]] = relationship(back_populates="usuario")
+    
+    def __repr__(self):
+        return f"<Usuario(id={self.id}, username='{self.username}')>"</code></pre>
+
+                    <h4>Modelo Proyecto</h4>
+                    <pre><code class="language-python"># models/proyecto.py
+from sqlalchemy import String, ForeignKey, DateTime
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime
+from typing import Optional, List
+from database import Base
+
+class Proyecto(Base):
+    __tablename__ = "proyectos"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
+    descripcion: Mapped[Optional[str]] = mapped_column(String(500))
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+    creado_en: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    
+    # Relaciones
+    usuario: Mapped["Usuario"] = relationship(back_populates="proyectos")
+    tareas: Mapped[List["Tarea"]] = relationship(back_populates="proyecto")
+    
+    def __repr__(self):
+        return f"<Proyecto(id={self.id}, nombre='{self.nombre}')>"</code></pre>
+
+                    <h4>Modelo Tarea</h4>
+                    <pre><code class="language-python"># models/tarea.py
+from sqlalchemy import String, Boolean, ForeignKey, DateTime, Enum
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from datetime import datetime
+from enum import Enum as PyEnum
+from typing import Optional
+from database import Base
+
+class EstadoTarea(PyEnum):
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+
+class Prioridad(PyEnum):
+    BAJA = "baja"
+    MEDIA = "media"
+    ALTA = "alta"
+    URGENTE = "urgente"
+
+class Tarea(Base):
+    __tablename__ = "tareas"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(200), nullable=False)
+    descripcion: Mapped[Optional[str]] = mapped_column(String(1000))
+    completada: Mapped[bool] = mapped_column(Boolean, default=False)
+    prioridad: Mapped[Prioridad] = mapped_column(Enum(Prioridad), default=Prioridad.MEDIA)
+    estado: Mapped[EstadoTarea] = mapped_column(Enum(EstadoTarea), default=EstadoTarea.PENDIENTE)
+    proyecto_id: Mapped[int] = mapped_column(ForeignKey("proyectos.id"))
+    creado_en: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    
+    # Relaciones
+    proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")
+    
+    def __repr__(self):
+        return f"<Tarea(id={self.id}, titulo='{self.titulo}', completada={self.completada})>"</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Crear Tablas (15 min)</h2>
+                    
+                    <pre><code class="language-python"># main.py
+from database import engine, Base, crear_tablas
+from models.usuario import Usuario
+from models.proyecto import Proyecto
+from models.tarea import Tarea
+
+# Crear tablas
+if __name__ == "__main__":
+    print("Creando tablas...")
+    crear_tablas()
+    print("Tablas creadas exitosamente!")
+    
+    # Verificar
+    from sqlalchemy import inspect
+    inspector = inspect(engine)
+    tablas = inspector.get_table_names()
+    print(f"Tablas en la base de datos: {tablas}")</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E4 Laboratorio:</strong> Crea un modelo Comentario con relacion a Tarea.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>ORM:</strong> Mapea objetos Python a tablas SQL</li>
+                        <li><strong>DeclarativeBase:</strong> Clase base para modelos</li>
+                        <li><strong>Mapped[T]:</strong> Type hint para columnas</li>
+                        <li><strong>mapped_column():</strong> Define propiedades de columna</li>
+                        <li><strong>relationship():</strong> Define relaciones entre tablas</li>
+                        <li><strong>ForeignKey:</strong> Clave foranea</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-01-archivos-json-csv.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Archivos JSON/CSV
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 17 de 25</span>
+            </div>
+            <div>
+                <a href="clase-03-sqlalchemy-relaciones.html" class="btn btn-primary btn-sm">
+                    Siguiente: Relaciones →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

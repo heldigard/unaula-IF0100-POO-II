@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7: Introducción a TDD | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+        .ciclo-red { background: #f8d7da; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
+        .ciclo-green { background: #d1e7dd; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
+        .ciclo-refactor { background: #e7f3ff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 2: Técnicas de Desarrollo</h2>
+            <h3>Clase 1: Introducción a TDD</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 03 de marzo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 5 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-02-testing.html" class="badge bg-danger text-decoration-none p-2 fs-6">
+                    <i class="bi bi-clipboard-check"></i> Próxima Entrega: E2 - Calidad y Testing (12/03/2026)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#tdd" class="text-decoration-none">¿Qué es TDD?</a></li>
+                        <li><a href="#ciclo" class="text-decoration-none">Ciclo Red-Green-Refactor</a></li>
+                        <li><a href="#pytest" class="text-decoration-none">Instalar pytest</a></li>
+                        <li><a href="#ejemplo" class="text-decoration-none">Ejemplo TDD</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Comprender el ciclo Red-Green-Refactor de TDD</li>
+                        <li>Instalar y configurar pytest</li>
+                        <li>Escribir tests unitarios básicos</li>
+                        <li>Aplicar TDD paso a paso</li>
+                        <li>Testear el modelo Usuario de TaskFlow</li>
+                    </ul>
+                </section>
+
+                <!-- TDD -->
+                <section id="tdd">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es TDD? (10 min)</h2>
+                    
+                    <p><strong>TDD (Test-Driven Development / Desarrollo Guiado por Pruebas)</strong> consiste en escribir las pruebas unitarias <em>antes</em> que el código de producción.</p>
+
+                    <h4>Beneficios</h4>
+                    <ul>
+                        <li>✅ Código más confiable y con menos bugs</li>
+                        <li>✅ Diseño mejor pensado (escribes primero la interfaz)</li>
+                        <li>✅ Documentación viva (los tests muestran cómo usar el código)</li>
+                        <li>✅ Refactorización segura (tests detectan errores)</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Regla de oro:</strong> No escribas código de producción hasta tener un test que falle.
+                    </div>
+                </section>
+
+                <!-- CICLO -->
+                <section id="ciclo">
+                    <h2 class="text-primary border-bottom pb-2">Ciclo Red-Green-Refactor (15 min)</h2>
+                    
+                    <div class="ciclo-red">
+                        <h4>🔴 RED: Escribir test que falle</h4>
+                        <ul>
+                            <li>Escribe un test para la funcionalidad deseada</li>
+                            <li>El test debe fallar (la funcionalidad no existe aún)</li>
+                            <li>Verifica que falle por la razón correcta</li>
+                        </ul>
+                    </div>
+
+                    <div class="ciclo-green">
+                        <h4>🟢 GREEN: Hacer pasar el test</h4>
+                        <ul>
+                            <li>Escribe el código mínimo necesario para pasar el test</li>
+                            <li>No importa si el código es feo, solo debe pasar</li>
+                            <li>Todos los tests deben estar verdes (pasando)</li>
+                        </ul>
+                    </div>
+
+                    <div class="ciclo-refactor">
+                        <h4>🔵 REFACTOR: Mejorar el código</h4>
+                        <ul>
+                            <li>Mejora el código manteniendo los tests verdes</li>
+                            <li>Elimina duplicación, mejora nombres, simplifica</li>
+                            <li>Si un test falla durante refactor, revierte los cambios</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-tip">
+                        <strong>Repite:</strong> Red → Green → Refactor → Red (siguiente feature)
+                    </div>
+                </section>
+
+                <!-- PYTEST -->
+                <section id="pytest">
+                    <h2 class="text-primary border-bottom pb-2">Instalar pytest (10 min)</h2>
+                    
+                    <h4>Instalación</h4>
+                    <pre><code class="language-bash"># Instalar pytest
+pip install pytest
+
+# Verificar instalación
+pytest --version</code></pre>
+
+                    <h4>Convenciones</h4>
+                    <ul>
+                        <li>Archivos de test: <code>test_*.py</code> o <code>*_test.py</code></li>
+                        <li>Funciones de test: <code>def test_nombre():</code></li>
+                        <li>Clases de test: <code>class TestNombre:</code></li>
+                    </ul>
+
+                    <h4>Primer Test</h4>
+                    <pre><code class="language-python"># test_calculadora.py
+
+def test_suma():
+    assert 1 + 1 == 2
+
+def test_resta():
+    assert 5 - 3 == 2
+
+def test_multiplicacion():
+    assert 4 * 3 == 12</code></pre>
+
+                    <pre><code class="language-bash"># Ejecutar tests
+pytest test_calculadora.py -v
+
+# Salida:
+# test_calculadora.py::test_suma PASSED
+# test_calculadora.py::test_resta PASSED
+# test_calculadora.py::test_multiplicacion PASSED</code></pre>
+                </section>
+
+                <!-- EJEMPLO -->
+                <section id="ejemplo">
+                    <h2 class="text-primary border-bottom pb-2">Ejemplo TDD: Calculadora (20 min)</h2>
+                    
+                    <h4>Paso 1: RED - Escribir test</h4>
+                    <pre><code class="language-python"># test_calculadora.py
+
+def test_suma():
+    from calculadora import suma
+    assert suma(2, 3) == 5</code></pre>
+
+                    <pre><code class="language-bash">$ pytest test_calculadora.py
+# ERROR: ModuleNotFoundError: No module named 'calculadora'
+# ✅ RED - El test falla como esperamos</code></pre>
+
+                    <h4>Paso 2: GREEN - Implementar mínimo</h4>
+                    <pre><code class="language-python"># calculadora.py
+
+def suma(a, b):
+    return a + b  # Mínimo para pasar el test</code></pre>
+
+                    <pre><code class="language-bash">$ pytest test_calculadora.py
+# PASSED
+# ✅ GREEN - El test pasa</code></pre>
+
+                    <h4>Paso 3: REFACTOR - Mejorar (si es necesario)</h4>
+                    <p>En este caso, el código es simple. No necesita refactor.</p>
+
+                    <h4>Paso 4: Siguiente feature - Resta</h4>
+                    <pre><code class="language-python"># test_calculadora.py
+
+def test_suma():
+    from calculadora import suma
+    assert suma(2, 3) == 5
+
+def test_resta():
+    from calculadora import resta
+    assert resta(5, 3) == 2  # 🔴 RED</code></pre>
+
+                    <pre><code class="language-python"># calculadora.py
+
+def suma(a, b):
+    return a + b
+
+def resta(a, b):
+    return a - b  # 🟢 GREEN</code></pre>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Testear Usuario (15 min)</h2>
+                    
+                    <p>Aplica TDD para testear el modelo Usuario.</p>
+
+                    <h4>Tests a escribir</h4>
+                    <ul>
+                        <li>Crear usuario con datos válidos</li>
+                        <li>Username debe tener al menos 3 caracteres</li>
+                        <li>Email debe contener "@"</li>
+                        <li>Usuario se crea activo por defecto</li>
+                    </ul>
+
+                    <pre><code class="language-python"># test_usuario.py
+import pytest
+from usuario import Usuario
+
+class TestUsuario:
+    def test_crear_usuario_valido(self):
+        u = Usuario("juan123", "juan@email.com", "Juan Pérez")
+        assert u.username == "juan123"
+        assert u.email == "juan@email.com"
+        assert u.activo is True
+    
+    def test_username_muy_corto(self):
+        with pytest.raises(ValueError):
+            Usuario("ab", "juan@email.com")
+    
+    def test_email_invalido(self):
+        with pytest.raises(ValueError):
+            Usuario("juan123", "email-sin-arroba")
+    
+    def test_activar_desactivar(self):
+        u = Usuario("juan", "juan@email.com")
+        assert u.esta_activo() is True
+        
+        u.desactivar()
+        assert u.esta_activo() is False
+        
+        u.activar()
+        assert u.esta_activo() is True</code></pre>
+
+                    <h4>Comandos útiles</h4>
+                    <pre><code class="language-bash"># Ejecutar todos los tests
+pytest
+
+# Ejecutar con verbose (más detalle)
+pytest -v
+
+# Ejecutar un archivo específico
+pytest test_usuario.py
+
+# Ejecutar una función específica
+pytest test_usuario.py::test_crear_usuario_valido
+
+# Ver cobertura (necesitas pytest-cov)
+pytest --cov=usuario --cov-report=html</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Todo el proyecto debe tener tests. La Evaluación 2 (15%) se basa en la calidad de tus tests y cobertura de código.
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <ul>
+                        <li><strong>TDD:</strong> Tests primero, código después</li>
+                        <li><strong>Red:</strong> Escribe test que falle</li>
+                        <li><strong>Green:</strong> Código mínimo para pasar</li>
+                        <li><strong>Refactor:</strong> Mejora manteniendo tests verdes</li>
+                        <li><strong>pytest:</strong> Framework de testing para Python</li>
+                        <li><strong>assert:</strong> Verifica que algo sea True</li>
+                    </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Antes de la próxima clase, escribe tests para la clase Calculadora completa (suma, resta, multiplicación, división, división por cero).
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="../unidad-01/clase-04-clases-abstractas.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: Clases Abstractas
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 7 de 25</span>
+            </div>
+            <div>
+                <a href="clase-02-pytest-avanzado.html" class="btn btn-primary btn-sm">
+                    Siguiente: pytest Avanzado →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8: Introducción a FastAPI | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 3: Desarrollo Web con FastAPI</h2>
+            <h3>Clase 1: Introducción a FastAPI</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 24 de marzo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 9 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-03-web.html" class="badge bg-danger text-decoration-none p-2 fs-6">
+                    <i class="bi bi-clipboard-check"></i> E3: Prototipo Web - Entrega 26/03/2026
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#fastapi" class="text-decoration-none">¿Qué es FastAPI?</a></li>
+                        <li><a href="#instalacion" class="text-decoration-none">Instalación</a></li>
+                        <li><a href="#primer-api" class="text-decoration-none">Primera API</a></li>
+                        <li><a href="#rutas" class="text-decoration-none">Rutas HTTP</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Entender qué es FastAPI y sus ventajas</li>
+                        <li>Instalar FastAPI y uvicorn</li>
+                        <li>Crear tu primera <strong>API REST (Representational State Transfer)</strong></li>
+                        <li>Definir rutas GET, POST, PUT, DELETE</li>
+                        <li>Usar parámetros de ruta y query</li>
+                        <li>Probar la API con Swagger UI</li>
+                    </ul>
+                </section>
+
+                <!-- FASTAPI -->
+                <section id="fastapi">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es FastAPI? (10 min)</h2>
+                    
+                    <p><strong>FastAPI</strong> es un framework moderno y rápido para construir <strong>APIs (Application Programming Interface / Interfaz de Programación de Aplicaciones)</strong> con Python.</p>
+
+                    <h4>Ventajas</h4>
+                    <ul>
+                        <li>✅ <strong>Rápido:</strong> Uno de los frameworks más rápidos de Python</li>
+                        <li>✅ <strong>Fácil:</strong> Menos código, menos bugs</li>
+                        <li>✅ <strong>Validación automática:</strong> Usa Pydantic para validar datos</li>
+                        <li>✅ <strong>Documentación automática:</strong> Swagger UI y ReDoc incluidos</li>
+                        <li>✅ <strong>Type hints:</strong> Usa anotaciones de tipo de Python</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Comparación:</strong> FastAPI es más moderno que Flask y más simple que Django para APIs.
+                    </div>
+                </section>
+
+                <!-- INSTALACIÓN -->
+                <section id="instalacion">
+                    <h2 class="text-primary border-bottom pb-2">Instalación (10 min)</h2>
+                    
+                    <pre><code class="language-bash"># Crear entorno virtual (recomendado)
+python -m venv venv
+
+# Activar en Windows
+venv\Scripts\activate
+
+# Activar en macOS/Linux
+source venv/bin/activate
+
+# Instalar FastAPI y servidor
+pip install fastapi uvicorn
+
+# Verificar instalación
+pip list | grep fastapi</code></pre>
+
+                    <h4>Estructura del Proyecto</h4>
+                    <pre><code class="language-text">miprojecto/
+├── main.py          # Archivo principal
+├── requirements.txt # Dependencias
+└── venv/           # Entorno virtual</code></pre>
+                </section>
+
+                <!-- PRIMERA API -->
+                <section id="primer-api">
+                    <h2 class="text-primary border-bottom pb-2">Tu Primera API (20 min)</h2>
+                    
+                    <h4>Archivo main.py</h4>
+                    <pre><code class="language-python"># main.py
+from fastapi import FastAPI
+
+# Crear instancia de la aplicación
+app = FastAPI(
+    title="Mi Primera API",
+    description="API de ejemplo con FastAPI",
+    version="1.0.0"
+)
+
+# Ruta GET básica
+@app.get("/")
+def read_root():
+    """Ruta raíz de la API."""
+    return {"message": "¡Hola, mundo!"}
+
+# Ruta con parámetro
+@app.get("/items/{item_id}")
+def read_item(item_id: int):
+    """Obtener un item por ID."""
+    return {"item_id": item_id, "name": f"Item {item_id}"}
+
+# Ruta con query parameter
+@app.get("/users/")
+def read_users(skip: int = 0, limit: int = 10):
+    """Obtener usuarios con paginación."""
+    return {"skip": skip, "limit": limit, "users": []}</code></pre>
+
+                    <h4>Ejecutar el Servidor</h4>
+                    <pre><code class="language-bash"># Ejecutar con recarga automática (desarrollo)
+uvicorn main:app --reload
+
+# Ejecutar sin recarga (producción)
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Acceder a:
+# - API: http://localhost:8000
+# - Documentación: http://localhost:8000/docs (Swagger UI)
+# - Documentación alternativa: http://localhost:8000/redoc</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>--reload:</strong> Recarga automática al cambiar el código (solo en desarrollo).
+                    </div>
+                </section>
+
+                <!-- RUTAS -->
+                <section id="rutas">
+                    <h2 class="text-primary border-bottom pb-2">Métodos HTTP (20 min)</h2>
+                    
+                    <table class="table">
+                        <tr><th>Método</th><th>Operación</th><th>Uso típico</th></tr>
+                        <tr><td><code>GET</code></td><td>Leer</td><td>Obtener datos</td></tr>
+                        <tr><td><code>POST</code></td><td>Crear</td><td>Crear nuevo recurso</td></tr>
+                        <tr><td><code>PUT</code></td><td>Actualizar</td><td>Actualizar recurso completo</td></tr>
+                        <tr><td><code>DELETE</code></td><td>Eliminar</td><td>Eliminar recurso</td></tr>
+                    </table>
+
+                    <h4>Ejemplo CRUD Completo</h4>
+                    <pre><code class="language-python"># main.py
+from fastapi import FastAPI, HTTPException
+from typing import List, Optional
+
+app = FastAPI()
+
+# Base de datos simulada
+usuarios_db = [
+    {"id": 1, "nombre": "Juan", "email": "juan@email.com"},
+    {"id": 2, "nombre": "Ana", "email": "ana@email.com"}
+]
+
+# GET - Obtener todos los usuarios
+@app.get("/usuarios", response_model=List[dict])
+def obtener_usuarios():
+    return usuarios_db
+
+# GET - Obtener usuario por ID
+@app.get("/usuarios/{usuario_id}")
+def obtener_usuario(usuario_id: int):
+    for usuario in usuarios_db:
+        if usuario["id"] == usuario_id:
+            return usuario
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+# POST - Crear usuario
+@app.post("/usuarios", status_code=201)
+def crear_usuario(nombre: str, email: str):
+    nuevo_id = max(u["id"] for u in usuarios_db) + 1
+    nuevo_usuario = {"id": nuevo_id, "nombre": nombre, "email": email}
+    usuarios_db.append(nuevo_usuario)
+    return nuevo_usuario
+
+# PUT - Actualizar usuario
+@app.put("/usuarios/{usuario_id}")
+def actualizar_usuario(usuario_id: int, nombre: str, email: str):
+    for usuario in usuarios_db:
+        if usuario["id"] == usuario_id:
+            usuario["nombre"] = nombre
+            usuario["email"] = email
+            return usuario
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+# DELETE - Eliminar usuario
+@app.delete("/usuarios/{usuario_id}")
+def eliminar_usuario(usuario_id: int):
+    for i, usuario in enumerate(usuarios_db):
+        if usuario["id"] == usuario_id:
+            del usuarios_db[i]
+            return {"message": "Usuario eliminado"}
+    raise HTTPException(status_code=404, detail="Usuario no encontrado")</code></pre>
+
+                    <h4>Probar con curl o HTTPie</h4>
+                    <pre><code class="language-bash"># Obtener todos los usuarios
+curl http://localhost:8000/usuarios
+
+# Obtener usuario específico
+curl http://localhost:8000/usuarios/1
+
+# Crear usuario
+curl -X POST "http://localhost:8000/usuarios?nombre=Carlos&email=carlos@email.com"
+
+# Actualizar usuario
+curl -X PUT "http://localhost:8000/usuarios/1?nombre=Juan%20Pérez&email=juan.perez@email.com"
+
+# Eliminar usuario
+curl -X DELETE http://localhost:8000/usuarios/3</code></pre>
+                </section>
+
+                <!-- EJERCICIO -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: API de Tareas (10 min)</h2>
+                    
+                    <p>Crea una API para gestionar tareas del proyecto TaskFlow.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>GET /tareas - Listar todas las tareas</li>
+                        <li>GET /tareas/{id} - Obtener tarea específica</li>
+                        <li>POST /tareas - Crear nueva tarea (título, descripción)</li>
+                        <li>PUT /tareas/{id} - Actualizar tarea</li>
+                        <li>DELETE /tareas/{id} - Eliminar tarea</li>
+                    </ul>
+
+                    <pre><code class="language-python"># tareas_api.py
+from fastapi import FastAPI, HTTPException
+from typing import List
+
+app = FastAPI(title="TaskFlow API")
+
+# Base de datos en memoria
+tareas = []
+contador_id = 1
+
+@app.get("/tareas")
+def listar_tareas():
+    return tareas
+
+@app.get("/tareas/{tarea_id}")
+def obtener_tarea(tarea_id: int):
+    for tarea in tareas:
+        if tarea["id"] == tarea_id:
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.post("/tareas", status_code=201)
+def crear_tarea(titulo: str, descripcion: str = ""):
+    global contador_id
+    tarea = {
+        "id": contador_id,
+        "titulo": titulo,
+        "descripcion": descripcion,
+        "completada": False
+    }
+    tareas.append(tarea)
+    contador_id += 1
+    return tarea
+
+@app.put("/tareas/{tarea_id}")
+def actualizar_tarea(tarea_id: int, titulo: str, descripcion: str, completada: bool):
+    for tarea in tareas:
+        if tarea["id"] == tarea_id:
+            tarea["titulo"] = titulo
+            tarea["descripcion"] = descripcion
+            tarea["completada"] = completada
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.delete("/tareas/{tarea_id}")
+def eliminar_tarea(tarea_id: int):
+    for i, tarea in enumerate(tareas):
+        if tarea["id"] == tarea_id:
+            del tareas[i]
+            return {"message": "Tarea eliminada"}
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Esta es la base de la API del proyecto. En las siguientes clases agregaremos: validación con Pydantic, dependencias, y persistencia en base de datos.
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    
+                    <ul>
+                        <li><strong>FastAPI:</strong> Framework rápido y moderno para APIs</li>
+                        <li><strong>Instalación:</strong> <code>pip install fastapi uvicorn</code></li>
+                        <li><strong>Ejecutar:</strong> <code>uvicorn main:app --reload</code></li>
+                        <li><strong>GET:</strong> Leer datos</li>
+                        <li><strong>POST:</strong> Crear datos</li>
+                        <li><strong>PUT:</strong> Actualizar datos</li>
+                        <li><strong>DELETE:</strong> Eliminar datos</li>
+                        <li><strong>Documentación:</strong> /docs (Swagger UI)</li>
+                    </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Crea una API de "Productos" con los mismos endpoints (GET, POST, PUT, DELETE) y pruébala en Swagger UI.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="../unidad-02/clase-04-ddd-intro.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: DDD
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 11 de 25</span>
+            </div>
+            <div>
+                <a href="clase-02-pydantic-validacion.html" class="btn btn-primary btn-sm">
+                    Siguiente: Pydantic →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

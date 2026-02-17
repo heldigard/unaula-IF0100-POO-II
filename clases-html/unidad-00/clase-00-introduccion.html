@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 0: Introducción a Python | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 0: Fundamentos de Python</h2>
+            <h3>Clase 0: Introducción y Variables</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 03 de febrero de 2026</span>
+                <span class="badge bg-info text-dark">Semana 1 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-01-conceptos-poo.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E1: Examen POO - Jueves 26/02/2026 (23 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#instalacion" class="text-decoration-none">Instalación Python/VSCode</a></li>
+                        <li><a href="#git-intro" class="text-decoration-none">Git y GitHub</a></li>
+                        <li><a href="#variables" class="text-decoration-none">Variables y Tipos</a></li>
+                        <li><a href="#operadores" class="text-decoration-none">Operadores</a></li>
+                        <li><a href="#entrada" class="text-decoration-none">Input/Output</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Laboratorios</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <!-- OBJETIVOS -->
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Configurar Python y VSCode en tu computadora</li>
+                        <li>Crear variables con los tipos básicos: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code></li>
+                        <li>Usar operadores aritméticos y de comparación</li>
+                        <li>Leer datos del usuario con <code>input()</code> y mostrar resultados con <code>print()</code></li>
+                        <li>Escribir tu primer programa Python funcional</li>
+                    </ul>
+                </section>
+
+                <!-- INSTALACIÓN -->
+                <section id="instalacion">
+                    <h2 class="text-primary border-bottom pb-2">Configuración del Entorno (15 min)</h2>
+                    
+                    <h4>1. Instalar Python</h4>
+                    <ol>
+                        <li>Ve a <a href="https://python.org" target="_blank">python.org</a></li>
+                        <li>Descarga Python 3.11 o superior</li>
+                        <li><strong>IMPORTANTE:</strong> Marca "Add Python to PATH"</li>
+                        <li>Verifica en terminal: <code>python --version</code></li>
+                    </ol>
+
+                    <h4>2. Instalar VSCode</h4>
+                    <ol>
+                        <li>Descarga de <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a></li>
+                        <li>Instala la extensión "Python" de Microsoft</li>
+                        <li>Abre la paleta (Ctrl+Shift+P) → "Python: Select Interpreter"</li>
+                    </ol>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> VSCode te dará autocompletado y resaltado de sintaxis para Python.
+                    </div>
+                </section>
+
+                <!-- GIT INTRODUCCIÓN -->
+                <section id="git-intro">
+                    <h2 class="text-primary border-bottom pb-2">Introducción a Git y GitHub (15 min)</h2>
+                    
+                    <p><strong>Git</strong> es un sistema de control de versiones que te permite:</p>
+                    <ul>
+                        <li>Guardar el historial de cambios de tu código</li>
+                        <li>Volver a versiones anteriores si algo falla</li>
+                        <li>Trabajar en equipo sin sobrescribir el trabajo de otros</li>
+                        <li>Subir tu código a la nube (GitHub)</li>
+                    </ul>
+
+                    <h4>1. Instalar Git</h4>
+                    <ol>
+                        <li>Ve a <a href="https://git-scm.com" target="_blank">git-scm.com</a></li>
+                        <li>Descarga e instala Git</li>
+                        <li>Verifica en terminal: <code>git --version</code></li>
+                    </ol>
+
+                    <h4>2. Configurar Git</h4>
+                    <pre><code class="language-bash"># Configurar tu nombre (aparecerá en tus commits)
+git config --global user.name "Tu Nombre"
+
+# Configurar tu email (usa el mismo de GitHub)
+git config --global user.email "tu@email.com"
+
+# Verificar configuración
+git config --list</code></pre>
+
+                    <h4>3. Crear cuenta en GitHub</h4>
+                    <ol>
+                        <li>Ve a <a href="https://github.com" target="_blank">github.com</a></li>
+                        <li>Crea una cuenta gratuita con tu email institucional</li>
+                        <li>Verifica tu email</li>
+                    </ol>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido: Tu Primer Repositorio (10 min)</h5>
+                        <p class="mb-2">Sigue estos pasos para crear tu primer repo:</p>
+                        <ol class="mb-0">
+                            <li>En GitHub, haz clic en "New Repository"</li>
+                            <li>Nombra: <code>poo2-practicas</code></li>
+                            <li>Marca "Add a README file"</li>
+                            <li>Haz clic en "Create repository"</li>
+                            <li>Copia la URL del repo (botón verde "Code")</li>
+                        </ol>
+                        <p class="mt-2 mb-0"><strong>Resultado:</strong> Tendrás tu repositorio en la nube donde subirás todos los ejercicios.</p>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>Conceptos clave:</strong>
+                        <ul>
+                            <li><strong>Repositorio:</strong> Carpeta que Git controla</li>
+                            <li><strong>Commit:</strong> Foto de tu código en un momento específico</li>
+                            <li><strong>GitHub:</strong> Servicio en la nube para almacenar repos</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- VARIABLES -->
+                <section id="variables">
+                    <h2 class="text-primary border-bottom pb-2">Variables y Tipos de Datos (20 min)</h2>
+                    
+                    <p>Una <strong>variable</strong> es un nombre que almacena un valor en memoria.</p>
+
+                    <h4>Tipos Básicos</h4>
+                    <pre><code class="language-python"># Enteros (int)
+edad = 25
+cantidad = -10
+
+# Decimales (float)
+precio = 19.99
+altura = 1.75
+
+# Texto (str)
+nombre = "Juan"
+mensaje = 'Hola mundo'
+
+# Booleanos (bool)
+es_activo = True
+esta_completado = False
+
+# None (sin valor)
+resultado = None</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 1: Tipos de Datos (5 min)</h5>
+                        <p class="mb-2">Abre VSCode y crea un archivo <code>ejercicio1.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea 3 variables: tu nombre (str), tu edad (int), tu altura (float)</li>
+                            <li>Usa <code>type()</code> para verificar el tipo de cada una</li>
+                            <li>Imprime los valores con f-strings</li>
+                        </ol>
+                        <p class="mt-2 mb-0"><strong>Verificación:</strong> ¿Coinciden los tipos con lo que esperabas?</p>
+                    </div>
+
+                    <h4>Conversión entre Tipos</h4>
+                    <pre><code class="language-python"># Convertir a entero
+edad = int("25")        # 25
+
+# Convertir a decimal
+precio = float("19.99") # 19.99
+
+# Convertir a texto
+texto = str(100)        # "100"</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Atención:</strong> <code>input()</code> siempre retorna texto (str). Debes convertirlo si necesitas números.
+                    </div>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 2: Calculadora Geométrica (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio2.py</code>:</p>
+                        <ol class="mb-2">
+                            <li>Pide al usuario el radio de un círculo</li>
+                            <li>Calcula el área: <code>area = 3.14159 * radio ** 2</code></li>
+                            <li>Calcula el perímetro: <code>perimetro = 2 * 3.14159 * radio</code></li>
+                            <li>Muestra los resultados formateados a 2 decimales</li>
+                        </ol>
+                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
+                        <pre class="mb-0 bg-light p-2"><code>Radio: 5
+Área: 78.54
+Perímetro: 31.42</code></pre>
+                    </div>
+                </section>
+
+                <!-- OPERADORES -->
+                <section id="operadores">
+                    <h2 class="text-primary border-bottom pb-2">Operadores (10 min)</h2>
+                    
+                    <h4>Aritméticos</h4>
+                    <table class="table table-sm">
+                        <tr><td><code>+</code></td><td>Suma</td><td><code>5 + 3 = 8</code></td></tr>
+                        <tr><td><code>-</code></td><td>Resta</td><td><code>5 - 3 = 2</code></td></tr>
+                        <tr><td><code>*</code></td><td>Multiplicación</td><td><code>5 * 3 = 15</code></td></tr>
+                        <tr><td><code>/</code></td><td>División</td><td><code>10 / 3 = 3.33</code></td></tr>
+                        <tr><td><code>//</code></td><td>División entera</td><td><code>10 // 3 = 3</code></td></tr>
+                        <tr><td><code>%</code></td><td>Resto</td><td><code>10 % 3 = 1</code></td></tr>
+                        <tr><td><code>**</code></td><td>Potencia</td><td><code>2 ** 3 = 8</code></td></tr>
+                    </table>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 3: Mini Calculadora (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio3.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Pide dos números al usuario</li>
+                            <li>Muestra: suma, resta, multiplicación, división, módulo</li>
+                            <li>Usa f-strings para formatear resultados a 2 decimales</li>
+                        </ol>
+                    </div>
+
+                    <h4>Comparación (retornan True/False)</h4>
+                    <table class="table table-sm">
+                        <tr><td><code>==</code></td><td>Igual</td><td><code>5 == 5 → True</code></td></tr>
+                        <tr><td><code>!=</code></td><td>Diferente</td><td><code>5 != 3 → True</code></td></tr>
+                        <tr><td><code>&gt;</code></td><td>Mayor</td><td><code>5 > 3 → True</code></td></tr>
+                        <tr><td><code>&lt;</code></td><td>Menor</td><td><code>5 < 3 → False</code></td></tr>
+                    </table>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 4: Comparador de Edades (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio4.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Pide la edad de dos personas</li>
+                            <li>Compara quién es mayor usando operadores de comparación</li>
+                            <li>Muestra si son de la misma edad</li>
+                            <li>Muestra si la diferencia es menor a 5 años</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- ENTRADA/SALIDA -->
+                <section id="entrada">
+                    <h2 class="text-primary border-bottom pb-2">Input y Output (10 min)</h2>
+                    
+                    <h4>Mostrar información (print)</h4>
+                    <pre><code class="language-python"># Básico
+print("Hola, mundo!")
+
+# Múltiples valores
+nombre = "Ana"
+edad = 20
+print("Nombre:", nombre, "Edad:", edad)
+
+# F-strings (recomendado)
+print(f"Hola, {nombre}. Tienes {edad} años.")
+
+# Formatear números
+precio = 19.999
+print(f"Precio: ${precio:.2f}")  # Precio: $20.00</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 5: Formato de Factura (5 min)</h5>
+                        <p class="mb-2">Crea <code>ejercicio5.py</code>:</p>
+                        <ol class="mb-0">
+                            <li>Crea variables: producto, cantidad, precio_unitario</li>
+                            <li>Calcula subtotal, IVA (19%), total</li>
+                            <li>Muestra una factura formateada con alineación</li>
+                        </ol>
+                    </div>
+
+                    <h4>Leer información (input)</h4>
+                    <pre><code class="language-python"># Leer texto
+nombre = input("¿Cuál es tu nombre? ")
+
+# Leer número (convertir)
+edad = int(input("¿Cuántos años tienes? "))
+altura = float(input("¿Cuánto mides (metros)? "))
+
+print(f"Hola {nombre}, tienes {edad} años y mides {altura}m")</code></pre>
+
+                    <div class="alert-tip">
+                        <h5><i class="bi bi-keyboard me-2"></i>Ejercicio Rápido 6: Conversor de Temperatura (5 min)</h5>
+                        <p class="mb-2">En tu archivo <code>ejercicio6.py</code>:</p>
+                        <ol class="mb-2">
+                            <li>Pide al usuario una temperatura en Celsius</li>
+                            <li>Convierte a Fahrenheit: <code>F = (C × 9/5) + 32</code></li>
+                            <li>Convierte a Kelvin: <code>K = C + 273.15</code></li>
+                            <li>Muestra las tres temperaturas formateadas</li>
+                        </ol>
+                        <p class="mb-1"><strong>Ejemplo de ejecución:</strong></p>
+                        <pre class="mb-0 bg-light p-2"><code>Temperatura en Celsius: 25
+Fahrenheit: 77.0°F
+Kelvin: 298.15K</code></pre>
+                    </div>
+                </section>
+
+                <!-- EJERCICIO PRINCIPAL -->
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 1: Calculadora de IMC Mejorada (20 min)</h2>
+                    
+                    <p>Vamos a crear un programa que calcule el Índice de Masa Corporal.</p>
+
+                    <h4>Fórmula</h4>
+                    <p><strong>IMC = peso / (altura × altura)</strong></p>
+                    <ul>
+                        <li>Bajo peso: IMC < 18.5</li>
+                        <li>Normal: 18.5 ≤ IMC < 25</li>
+                        <li>Sobrepeso: 25 ≤ IMC < 30</li>
+                    </ul>
+
+                    <h4>Código</h4>
+                    <pre><code class="language-python"># calculadora_imc.py
+print("=== CALCULADORA DE IMC AVANZADA ===")
+
+# Pedir datos al usuario
+nombre = input("¿Cuál es tu nombre? ")
+
+# Validar entrada de peso
+while True:
+    try:
+        peso = float(input("¿Cuál es tu peso en kg? "))
+        if peso > 0:
+            break
+        print("❌ El peso debe ser mayor que 0")
+    except ValueError:
+        print("❌ Por favor ingresa un número válido")
+
+# Validar entrada de altura
+while True:
+    try:
+        altura = float(input("¿Cuál es tu altura en metros? "))
+        if altura > 0:
+            break
+        print("❌ La altura debe ser mayor que 0")
+    except ValueError:
+        print("❌ Por favor ingresa un número válido")
+
+# Calcular IMC
+imc = peso / (altura ** 2)
+
+# Calcular peso ideal (IMC = 22)
+peso_ideal = 22 * (altura ** 2)
+diferencia = peso - peso_ideal
+
+# Mostrar resultado
+print(f"\n📊 RESULTADOS PARA {nombre.upper()}")
+print("=" * 40)
+print(f"Tu IMC es: {imc:.2f}")
+
+# Clasificar con emojis
+if imc < 18.5:
+    print("Clasificación: 🔵 Bajo peso")
+    print("💡 Recomendación: Consulta con un nutricionista")
+elif imc < 25:
+    print("Clasificación: 🟢 Peso normal")
+    print("💡 ¡Excelente! Mantén tus hábitos saludables")
+elif imc < 30:
+    print("Clasificación: 🟡 Sobrepeso")
+    print("💡 Recomendación: Actividad física regular")
+else:
+    print("Clasificación: 🔴 Obesidad")
+    print("💡 Importante: Busca orientación médica")
+
+print(f"\n🎯 Peso ideal: {peso_ideal:.2f} kg")
+if diferencia > 0:
+    print(f"📉 Debes bajar: {diferencia:.2f} kg")
+elif diferencia < 0:
+    print(f"📈 Debes subir: {abs(diferencia):.2f} kg")
+else:
+    print("✅ ¡Estás en tu peso ideal!")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este ejercicio te prepara para manejar datos de usuario (nombre, valores numéricos) que usarás en el proyecto.
+                    </div>
+
+                    <h4>Prueba tu programa</h4>
+                    <table class="table table-sm">
+                        <tr><th>Nombre</th><th>Peso (kg)</th><th>Altura (m)</th><th>IMC Esperado</th></tr>
+                        <tr><td>Juan</td><td>70</td><td>1.75</td><td>22.86 (Normal)</td></tr>
+                        <tr><td>María</td><td>55</td><td>1.60</td><td>21.48 (Normal)</td></tr>
+                    </table>
+
+                    <div class="alert-tip mt-3">
+                        <h5><i class="bi bi-star-fill me-2"></i>Reto Adicional</h5>
+                        <p class="mb-0">Modifica el programa para procesar múltiples usuarios usando un bucle <code>while</code> que pregunte "¿Deseas calcular otro IMC? (s/n)" hasta que el usuario responda 'n'.</p>
+                    </div>
+                </section>
+
+                <!-- LABORATORIO 2 -->
+                <section id="ejercicio2">
+                    <h2 class="text-primary border-bottom pb-2">Laboratorio 2: Calculadora de Finanzas Personales (25 min)</h2>
+                    
+                    <p>Crea un sistema para gestionar tus finanzas personales mensuales.</p>
+
+                    <h4>Requisitos</h4>
+                    <ul>
+                        <li>Registrar ingresos mensuales</li>
+                        <li>Registrar gastos por categoría (vivienda, alimentación, transporte, entretenimiento, otros)</li>
+                        <li>Calcular balance (ingresos - gastos)</li>
+                        <li>Mostrar porcentaje de gastos por categoría</li>
+                        <li>Determinar si hay superávit o déficit</li>
+                    </ul>
+
+                    <h4>Código Base</h4>
+                    <pre><code class="language-python"># finanzas_personales.py
+print("💰 CALCULADORA DE FINANZAS PERSONALES 💰\n")
+
+# Ingresos
+print("💵 INGRESOS")
+salario = float(input("Salario mensual: $"))
+ingresos_extra = float(input("Ingresos extras (freelance, etc.): $"))
+ingresos_totales = salario + ingresos_extra
+
+print(f"\n📊 Ingresos totales: ${ingresos_totales:.2f}\n")
+
+# Gastos por categoría
+print("💸 GASTOS POR CATEGORÍA")
+vivienda = float(input("Vivienda (arriendo, servicios): $"))
+alimentacion = float(input("Alimentación: $"))
+transporte = float(input("Transporte: $"))
+entretenimiento = float(input("Entretenimiento: $"))
+otros = float(input("Otros gastos: $"))
+
+gastos_totales = vivienda + alimentacion + transporte + entretenimiento + otros
+
+# Cálculos
+balance = ingresos_totales - gastos_totales
+porcentaje_gastos = (gastos_totales / ingresos_totales) * 100
+
+# Resultados
+print("\n" + "="*50)
+print("📈 RESUMEN FINANCIERO")
+print("="*50)
+print(f"Ingresos totales:  ${ingresos_totales:>10.2f}")
+print(f"Gastos totales:    ${gastos_totales:>10.2f}")
+print(f"Balance:          ${balance:>10.2f}")
+print("="*50)
+
+# Análisis
+if balance > 0:
+    print(f"\n✅ ¡SUPERÁVIT! Estás ahorrando ${balance:.2f}")
+    print(f"💡 Estás gastando el {porcentaje_gastos:.1f}% de tus ingresos")
+    print(f"📊 Puedes ahorrar: ${balance:.2f} este mes")
+elif balance < 0:
+    print(f"\n⚠️  DÉFICIT: Te faltan ${abs(balance):.2f}")
+    print(f"💡 Revisa tus gastos, especialmente en entretenimiento")
+else:
+    print("\n⚖️  Estás exactamente al día (sin ahorros)")
+
+# Desglose por categoría
+print(f"\n📋 DESGLOSE DE GASTOS:")
+print(f"  🏠 Vivienda:        ${vivienda:>8.2f} ({(vivienda/gastos_totales)*100:.1f}%)")
+print(f"  🍽️  Alimentación:   ${alimentacion:>8.2f} ({(alimentacion/gastos_totales)*100:.1f}%)")
+print(f"  🚗 Transporte:      ${transporte:>8.2f} ({(transporte/gastos_totales)*100:.1f}%)")
+print(f"  🎮 Entretenimiento: ${entretenimiento:>8.2f} ({(entretenimiento/gastos_totales)*100:.1f}%)")
+print(f"  📦 Otros:           ${otros:>8.2f} ({(otros/gastos_totales)*100:.1f}%)")</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Conexión con TaskFlow:</strong> Este ejercicio te enseña a manejar múltiples variables y realizar cálculos complejos, habilidades que usarás para calcular estadísticas de proyectos y tareas.
+                    </div>
+
+                    <h4>Retos Adicionales</h4>
+                    <ol>
+                        <li><strong>Meta de ahorro:</strong> Pide una meta de ahorro mensual y calcula cuánto te falta o sobra</li>
+                        <li><strong>Comparación:</strong> Almacena el balance en una variable y compara con el mes anterior (simulado)</li>
+                        <li><strong>Alertas:</strong> Si alguna categoría supera el 30% de los ingresos, muestra una alerta</li>
+                    </ol>
+                </section>
+
+                <!-- EJERCICIOS ADICIONALES -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Ejercicios Adicionales (15 min)</h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>Ejercicio 7: Conversor de Monedas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Crea un conversor USD ↔ COP. Usa tasa de cambio actual (ej: 1 USD = 4,000 COP).</p>
+                                    <ul class="mb-0">
+                                        <li>Pide al usuario el monto</li>
+                                        <li>Pide la dirección de conversión (1: USD→COP, 2: COP→USD)</li>
+                                        <li>Muestra el resultado formateado</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <strong>Ejercicio 8: Calculadora de Propinas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Calcula la propina y el total a pagar en un restaurante.</p>
+                                    <ul class="mb-0">
+                                        <li>Total de la cuenta</li>
+                                        <li>Porcentaje de propina (10%, 15%, 20%)</li>
+                                        <li>Número de personas para dividir</li>
+                                        <li>Muestra: propina, total, total por persona</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-info text-white">
+                                    <strong>Ejercicio 9: Calculadora de Interés Simple</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Calcula el interés simple y el monto final de una inversión.</p>
+                                    <ul class="mb-0">
+                                        <li>Fórmula: I = P × r × t</li>
+                                        <li>P = capital inicial</li>
+                                        <li>r = tasa de interés anual (decimal)</li>
+                                        <li>t = tiempo en años</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <strong>Ejercicio 10: Divisor de Cuentas</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Divide una cuenta entre varias personas considerando quién consumió qué.</p>
+                                    <ul class="mb-0">
+                                        <li>Registra consumo por persona</li>
+                                        <li>Calcula subtotal + propina</li>
+                                        <li>Muestra cuánto debe pagar cada uno</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>Variables:</strong> Almacenan datos con nombres descriptivos</li>
+                        <li><strong>Tipos:</strong> int, float, str, bool - cada uno tiene un propósito</li>
+                        <li><strong>input():</strong> Lee texto del usuario (convertir si es número)</li>
+                        <li><strong>print():</strong> Muestra información (usar f-strings)</li>
+                        <li><strong>Operadores:</strong> Aritméticos para cálculos, comparación para decisiones</li>
+                    </ul>
+                    
+                    <div class="alert-tip">
+                        <strong>Práctica:</strong> Modifica el programa para calcular también el peso ideal usando IMC = 22.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="../index.html" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-house-door"></i> Inicio
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 0 de 25</span>
+            </div>
+            <div>
+                <a href="clase-01-estructuras-control.html" class="btn btn-primary btn-sm">
+                    Siguiente: Estructuras de Control →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

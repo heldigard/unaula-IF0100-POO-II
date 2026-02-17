@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a BDD | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+        .gherkin { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 2: Técnicas de Desarrollo</h2>
+            <h3>Clase 3: Introducción a BDD</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 10 de marzo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 6 - Martes (120 minutos)</span>
+                <span class="badge bg-primary">60 min Teoría</span>
+                <span class="badge bg-success text-white">60 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-02-tecnicas-desarrollo.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E2: Taller TDD/BDD - Jueves 12/03/2026 (2 días)
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos">Objetivos</a></li>
+                        <li><a href="#teoria">¿Qué es BDD?</a></li>
+                        <li><a href="#gherkin">Lenguaje Gherkin</a></li>
+                        <li><a href="#behave">behave Framework</a></li>
+                        <li><a href="#ejercicio">Ejercicio</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <ul>
+                        <li>Comprender qué es Behavior Driven Development</li>
+                        <li>Diferenciar TDD de BDD</li>
+                        <li>Escribir escenarios en lenguaje Gherkin</li>
+                        <li>Implementar pasos (steps) con Python</li>
+                        <li>Ejecutar tests BDD con behave</li>
+                    </ul>
+                </section>
+
+                <section id="teoria">
+                    <h2 class="text-primary border-bottom pb-2">¿Qué es BDD? (10 min)</h2>
+                    
+                    <p><strong>Behavior Driven Development (BDD)</strong> es una metodología que busca:</p>
+                    <ul>
+                        <li><strong>Colaboración:</strong> Desarrolladores, <strong>QA (Quality Assurance / Aseguramiento de la Calidad)</strong> y stakeholders hablando el mismo idioma</li>
+                        <li><strong>Valor de negocio:</strong> Enfocarse en comportamientos que agregan valor</li>
+                        <li><strong>Documentación viva:</strong> Los escenarios son documentación ejecutable</li>
+                    </ul>
+
+                    <h4>TDD vs BDD</h4>
+                    <table class="table">
+                        <tr><th>Aspecto</th><th>TDD</th><th>BDD</th></tr>
+                        <tr><td>Enfoque</td><td>Tests unitarios</td><td>Comportamiento del sistema</td></tr>
+                        <tr><td>Lenguaje</td><td>Código</td><td>Gherkin (natural)</td></tr>
+                        <tr><td>Audiencia</td><td>Desarrolladores</td><td>Dev, QA, Negocio</td></tr>
+                        <tr><td>Ejemplo</td><td><code>test_usuario_valido()</code></td><td><code>Given usuario When se registra Then es exitoso</code></td></tr>
+                    </table>
+
+                    <div class="alert-tip">
+                        <strong>Idea clave:</strong> BDD transforma especificaciones técnicas en escenarios comprensibles para todos.
+                    </div>
+                </section>
+
+                <section id="gherkin">
+                    <h2 class="text-primary border-bottom pb-2">Lenguaje Gherkin (20 min)</h2>
+                    
+                    <p><strong>Gherkin</strong> es un <strong>DSL (Domain Specific Language / Lenguaje Específico del Dominio)</strong> para describir comportamientos en lenguaje natural estructurado.</p>
+
+                    <h4>Palabras Clave</h4>
+                    <table class="table">
+                        <tr><th>Palabra</th><th>Propósito</th><th>Ejemplo</th></tr>
+                        <tr><td><code>Feature</code></td><td>Funcionalidad</td><td>Feature: Login</td></tr>
+                        <tr><td><code>Scenario</code></td><td>Caso específico</td><td>Scenario: Login exitoso</td></tr>
+                        <tr><td><code>Given</code></td><td>Contexto inicial</td><td>Given un usuario registrado</td></tr>
+                        <tr><td><code>When</code></td><td>Acción</td><td>When ingresa credenciales</td></tr>
+                        <tr><td><code>Then</code></td><td>Resultado esperado</td><td>Then el login es exitoso</td></tr>
+                        <tr><td><code>And</code></td><td>Adicional</td><td>And es redirigido</td></tr>
+                    </table>
+
+                    <h4>Ejemplo: Feature de Login</h4>
+                    <div class="gherkin">
+                    <pre><code>Feature: Login en TaskFlow
+  Como usuario registrado
+  Quiero iniciar sesión
+  Para acceder a mis proyectos
+
+  Scenario: Login exitoso
+    Given un usuario registrado con username "test" y password "pass123"
+    When ingresa username "test" y password "pass123"
+    Then el login es exitoso
+    And es redirigido al dashboard
+
+  Scenario: Login fallido
+    Given un usuario registrado con username "test" y password "pass123"
+    When ingresa username "test" y password "incorrecto"
+    Then el login falla
+    And ve el error "Credenciales inválidas"</code></pre>
+                    </div>
+
+                    <h4>Scenario Outline: Parametrización</h4>
+                    <div class="gherkin">
+                    <pre><code>Scenario Outline: Validar nombres de proyecto
+  Given un usuario autenticado
+  When intenta crear proyecto con nombre "<nombre>"
+  Then el sistema responde "<resultado>"
+
+  Examples:
+    | nombre   | resultado        |
+    | Valido   | Proyecto creado  |
+    | P        | Nombre muy corto |
+    |          | Nombre requerido |</code></pre>
+                    </div>
+                </section>
+
+                <section id="behave">
+                    <h2 class="text-primary border-bottom pb-2">behave Framework (25 min)</h2>
+                    
+                    <p><strong>behave</strong> ejecuta escenarios Gherkin como tests automatizados.</p>
+
+                    <pre><code class="language-bash">pip install behave</code></pre>
+
+                    <h4>Estructura de Directorios</h4>
+                    <pre><code class="language-text">proyecto/
+├── features/
+│   ├── login.feature      # Escenarios Gherkin
+│   └── steps/
+│       └── login_steps.py # Implementación Python</code></pre>
+
+                    <h4>Implementar Steps</h4>
+                    <pre><code class="language-python"># features/steps/login_steps.py
+from behave import given, when, then
+
+# Servicio simulado
+auth_service = {"usuarios": {}, "tokens": {}}
+
+@given('un usuario registrado con username "{username}" y password "{password}"')
+def step_given_usuario(context, username, password):
+    """Registra usuario para el test."""
+    auth_service["usuarios"][username] = password
+    context.username = username
+
+@when('ingresa username "{username}" y password "{password}"')
+def step_when_login(context, username, password):
+    """Intenta login."""
+    stored_pass = auth_service["usuarios"].get(username)
+    if stored_pass and stored_pass == password:
+        context.resultado = {"exitoso": True, "token": "abc123"}
+    else:
+        context.resultado = {"exitoso": False, "error": "Credenciales inválidas"}
+
+@then('el login es exitoso')
+def step_then_exitoso(context):
+    assert context.resultado["exitoso"] == True
+
+@then('el login falla')
+def step_then_falla(context):
+    assert context.resultado["exitoso"] == False
+
+@then('ve el error "{mensaje}"')
+def step_then_error(context, mensaje):
+    assert mensaje in context.resultado.get("error", "")</code></pre>
+
+                    <h4>Ejecutar behave</h4>
+                    <pre><code class="language-bash"># Ejecutar todos los features
+behave
+
+# Ejecutar uno específico
+behave features/login.feature
+
+# Con formato pretty
+behave --format pretty --color</code></pre>
+
+                    <p>Salida:</p>
+                    <pre><code class="language-text">Feature: Login en TaskFlow
+  Scenario: Login exitoso
+    Given un usuario registrado ... PASSED
+    When ingresa username ... PASSED
+    Then el login es exitoso ... PASSED
+
+  Scenario: Login fallido
+    Given un usuario registrado ... PASSED
+    When ingresa password incorrecto ... PASSED
+    Then el login falla ... PASSED
+
+2 features passed, 0 failed</code></pre>
+
+                    <div class="alert-note">
+                        <strong>Context:</strong> El objeto <code>context</code> comparte datos entre pasos.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Feature de Tareas (10 min)</h2>
+                    
+                    <p>Crear escenario BDD para crear tareas:</p>
+
+                    <div class="gherkin">
+                    <pre><code>Feature: Gestión de Tareas
+  Como usuario de TaskFlow
+  Quiero crear y gestionar tareas
+
+  Scenario: Crear tarea exitosamente
+    Given soy usuario autenticado como "juan"
+    And tengo un proyecto llamado "Mi Proyecto"
+    When creo una tarea con titulo "Implementar login"
+    Then la tarea se crea exitosamente
+    And aparece en el proyecto</code></pre>
+                    </div>
+
+                    <pre><code class="language-python"># features/steps/tarea_steps.py
+from behave import given, when, then
+
+@given('soy usuario autenticado como "{username}"')
+def step_usuario(context, username):
+    context.usuario = {"username": username}
+
+@given('tengo un proyecto llamado "{nombre}"')
+def step_proyecto(context, nombre):
+    context.proyecto = {"nombre": nombre, "tareas": []}
+
+@when('creo una tarea con titulo "{titulo}"')
+def step_crear_tarea(context, titulo):
+    context.tarea = {"titulo": titulo, "estado": "pendiente"}
+    context.proyecto["tareas"].append(context.tarea)
+
+@then('la tarea se crea exitosamente')
+def step_creada(context):
+    assert context.tarea["titulo"] is not None
+
+@then('aparece en el proyecto')
+def step_en_proyecto(context):
+    assert context.tarea in context.proyecto["tareas"]</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>E2:</strong> Crear escenarios BDD para el flujo de registro con behave.
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>BDD:</strong> Desarrollo guiado por comportamiento</li>
+                        <li><strong>Gherkin:</strong> Lenguaje Given-When-Then</li>
+                        <li><strong>Feature:</strong> Describe funcionalidad</li>
+                        <li><strong>Scenario:</strong> Caso específico</li>
+                        <li><strong>Steps:</strong> Implementación Python</li>
+                        <li><strong>behave:</strong> Framework para ejecutar BDD</li>
+                    </ul>
+                    
+                    <div class="alert-note">
+                        <strong>Enfoque híbrido:</strong> Usa BDD para escenarios de usuario y TDD para implementación detallada.
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-02-pytest-avanzado.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: pytest Avanzado
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 9 de 25</span>
+            </div>
+            <div>
+                <a href="clase-04-ddd-intro.html" class="btn btn-primary btn-sm">
+                    Siguiente: DDD →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E4: Persistencia Archivos - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Prism.js CSS para syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #055160 100%); color: #000; padding: 2rem 0; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h5 { color: #055160; margin-bottom: 0.75rem; }
+        .criterio ul { margin-bottom: 0; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .comment { color: #6a9955; }
+        .entregable-box .folder { color: #569cd6; }
+        .penalizacion { background: #f8d7da; border-left: 4px solid #dc3545; padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        code:not([class*="language-"]) { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        pre[class*="language-"] { border-radius: 8px; margin: 0; }
+        .detalle-req { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin: 0.5rem 0; font-size: 0.9rem; }
+        .paso-num { display: inline-block; width: 28px; height: 28px; background: #055160; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 4</h1>
+                    <h2>Persistencia en Archivos</h2>
+                    <p class="mb-0"><strong>Entrega Incremental 4 - JSON, CSV y Patrón Repository</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-dark fs-5 mb-2">15%</span><br>
+                    <span class="badge bg-info text-dark">Software</span><br>
+                    <small>Fecha límite: 23 de abril de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E4 - Archivos</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-danger">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Requisitos Previos</h5>
+            <p class="mb-0"><strong>REQUIERE E3 (Prototipo Web) completada.</strong> Se agregará persistencia al prototipo web manteniendo la misma interfaz.</p>
+        </div>
+
+        <div class="card mb-4 border-info">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-file-earmark-code text-success me-2"></i>
+                                <a href="../unidad-04/clase-01-archivos-json-csv.html" class="text-decoration-none">Clase 01: Archivos JSON y CSV</a>
+                                <small class="d-block text-muted">Lectura/escritura, pathlib</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-table text-success me-2"></i>
+                                <a href="../unidad-04/clase-02-sqlalchemy-modelos.html" class="text-decoration-none">Clase 02: SQLAlchemy - Modelos</a>
+                                <small class="d-block text-muted">Introducción a ORM (para E5)</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-diagram-3 text-success me-2"></i>
+                                <a href="../unidad-05/clase-01-repository-pattern.html" class="text-decoration-none">Clase U5-01: Repository Pattern</a>
+                                <small class="d-block text-muted">Abstracción de persistencia</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-bullseye me-2"></i>Objetivo de Aprendizaje</h3>
+        <p class="lead">Implementar <strong>persistencia real</strong> usando archivos JSON y el patrón Repository. Los datos deben sobrevivir al reinicio del servidor sin cambios en la API.</p>
+
+        <div class="alert alert-secondary mt-4">
+            <h5><i class="bi bi-people me-2"></i>Modalidad de Trabajo</h5>
+            <p class="mb-1"><strong>Individual</strong> o en <strong>parejas</strong> (máximo 2 personas). Debe ser el mismo equipo de E1-E3.</p>
+            <p class="mb-0"><strong>Formato de entrega:</strong> Repositorio GitHub actualizado con carpeta src/infrastructure/ (Repository JSON), carpeta data/ (ejemplo de datos). README.md debe incluir comando para poblar datos de prueba.</p>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-check me-2"></i>Requisitos Técnicos Detallados</h3>
+
+        <!-- PATRÓN REPOSITORY -->
+        <div class="criterio">
+            <h5><i class="bi bi-diagram-3 text-primary me-2"></i>1. Patrón Repository</h5>
+            <p><strong>Descripción:</strong> Abstraer el almacenamiento detrás de interfaces para desacoplar el dominio de la persistencia.</p>
+
+            <h6 class="mt-3">Interfaces obligatorias (ABC):</h6>
+            <ul>
+                <li><code>IUsuarioRepository</code>: Interfaz con métodos <code>guardar()</code>, <code>obtener()</code>, <code>listar()</code>, <code>eliminar()</code></li>
+                <li><code>IProyectoRepository</code>: Interfaz similar para proyectos</li>
+                <li><code>ITareaRepository</code>: Interfaz similar para tareas</li>
+            </ul>
+
+            <h6>Implementaciones JSON:</h6>
+            <ul>
+                <li><code>UsuarioRepositoryJSON(IUsuarioRepository)</code>: Persistencia en <code>data/usuarios.json</code></li>
+                <li><code>ProyectoRepositoryJSON(IProyectoRepository)</code>: Persistencia en <code>data/proyectos.json</code></li>
+                <li><code>TareaRepositoryJSON(ITareaRepository)</code>: Persistencia en <code>data/tareas.json</code></li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Inyección de dependencias:</strong>
+                <ul class="mb-0">
+                    <li>FastAPI debe recibir el repositorio vía <code>Depends()</code></li>
+                    <li>Cambiar de JSON a SQL en E5 NO debe modificar los endpoints</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SERIALIZACIÓN JSON -->
+        <div class="criterio">
+            <h5><i class="bi bi-file-earmark-code text-success me-2"></i>2. Serialización JSON</h5>
+            <p><strong>Descripción:</strong> Convertir objetos del dominio a/desde JSON correctamente.</p>
+
+            <h6 class="mt-3">Métodos obligatorios en cada clase del dominio:</h6>
+            <ul>
+                <li><code>to_dict() -> dict</code>: Serializa el objeto a diccionario</li>
+                <li><code>from_dict(data: dict) -> Clase</code>: Método de clase para deserializar</li>
+            </ul>
+
+            <h6>Manejo de relaciones:</h6>
+            <ul>
+                <li><strong>Proyecto:</strong> Guarda IDs de tareas, no objetos completos</li>
+                <li><strong>Tarea:</strong> Guarda ID del proyecto padre</li>
+                <li>Reconstruir relaciones al cargar (lazy loading)</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Ejemplo de estructura JSON:</strong>
+                <pre class="mb-0 mt-2"><code class="language-json">{
+  "usuarios": [
+    {"id": 1, "username": "juan", "email": "juan@test.com", "activo": true}
+  ],
+  "proyectos": [
+    {"id": 1, "nombre": "TaskFlow", "lider_id": 1, "tarea_ids": [1, 2]}
+  ]
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- MANEJO DE ERRORES -->
+        <div class="criterio">
+            <h5><i class="bi bi-shield-exclamation text-warning me-2"></i>3. Manejo de Errores</h5>
+            <p><strong>Descripción:</strong> El sistema debe ser robusto ante archivos corruptos o inexistentes.</p>
+
+            <h6 class="mt-3">Casos a manejar:</h6>
+            <ul>
+                <li><strong>Archivo no existe:</strong> Crear archivo vacío con estructura inicial</li>
+                <li><strong>JSON corrupto:</strong> Loggear error, crear backup, reiniciar con archivo vacío</li>
+                <li><strong>Permisos denegados:</strong> Lanzar excepción clara con mensaje</li>
+                <li><strong>Disco lleno:</strong> Capturar IOError y reportar</li>
+            </ul>
+
+            <h6>Uso de pathlib:</h6>
+            <ul>
+                <li><strong>PROHIBIDO:</strong> Rutas absolutas como <code>C:\Users\...</code></li>
+                <li><strong>OBLIGATORIO:</strong> <code>Path(__file__).parent / "data" / "usuarios.json"</code></li>
+            </ul>
+        </div>
+
+        <!-- SEGURIDAD -->
+        <div class="criterio">
+            <h5><i class="bi bi-lock text-danger me-2"></i>4. Seguridad</h5>
+            <p><strong>Descripción:</strong> Proteger datos sensibles en archivos.</p>
+
+            <h6 class="mt-3">Requisitos obligatorios:</h6>
+            <ul>
+                <li><strong>Passwords:</strong> NUNCA en texto plano. Usar <code>bcrypt</code> o <code>hashlib.sha256</code></li>
+                <li><strong>Archivos .gitignore:</strong> Excluir <code>data/*.json</code> del repositorio</li>
+                <li><strong>Archivo ejemplo:</strong> Incluir <code>data/ejemplo_usuarios.json</code> con datos de prueba</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Hash de passwords:</strong>
+                <pre class="mb-0 mt-2"><code class="language-python">import hashlib
+
+def hashear_password(password: str) -> str:
+    """Hashea un password con SHA-256."""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def verificar_password(password: str, hash_guardado: str) -> bool:
+    """Verifica si el password coincide con el hash."""
+    return hashear_password(password) == hash_guardado</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-code-square me-2"></i>Ejemplo de Implementación</h3>
+
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-file-earmark-code me-2"></i>src/infrastructure/repository.py
+            </div>
+            <div class="card-body p-0">
+                <pre class="m-0"><code class="language-python">from abc import ABC, abstractmethod
+from pathlib import Path
+import json
+from typing import Optional, List
+from src.domain.usuario import Usuario
+
+
+class IUsuarioRepository(ABC):
+    """Interfaz del repositorio de usuarios."""
+
+    @abstractmethod
+    def guardar(self, usuario: Usuario, usuario_id: int) -> None:
+        """Guarda un usuario."""
+        pass
+
+    @abstractmethod
+    def obtener(self, usuario_id: int) -> Optional[Usuario]:
+        """Obtiene un usuario por ID."""
+        pass
+
+    @abstractmethod
+    def listar(self) -> List[Usuario]:
+        """Lista todos los usuarios."""
+        pass
+
+    @abstractmethod
+    def eliminar(self, usuario_id: int) -> bool:
+        """Elimina un usuario. Retorna True si existía."""
+        pass
+
+
+class UsuarioRepositoryJSON(IUsuarioRepository):
+    """Implementación JSON del repositorio de usuarios."""
+
+    def __init__(self, archivo_path: Path = None):
+        self.archivo_path = archivo_path or Path(__file__).parent.parent / "data" / "usuarios.json"
+        self._asegurar_archivo_existe()
+
+    def _asegurar_archivo_existe(self) -> None:
+        """Crea el archivo si no existe."""
+        if not self.archivo_path.exists():
+            self.archivo_path.parent.mkdir(parents=True, exist_ok=True)
+            self._escribir_datos({"usuarios": {}, "next_id": 1})
+
+    def _leer_datos(self) -> dict:
+        """Lee los datos del archivo JSON."""
+        try:
+            with open(self.archivo_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except json.JSONDecodeError as e:
+            # Crear backup del archivo corrupto
+            backup_path = self.archivo_path.with_suffix('.json.corrupt')
+            self.archivo_path.rename(backup_path)
+            self._asegurar_archivo_existe()
+            raise RuntimeError(f"JSON corrupto, backup creado en {backup_path}") from e
+
+    def _escribir_datos(self, datos: dict) -> None:
+        """Escribe los datos al archivo JSON."""
+        with open(self.archivo_path, 'w', encoding='utf-8') as f:
+            json.dump(datos, f, indent=2, ensure_ascii=False)
+
+    def guardar(self, usuario: Usuario, usuario_id: int) -> None:
+        datos = self._leer_datos()
+        datos["usuarios"][str(usuario_id)] = usuario.to_dict()
+        datos["usuarios"][str(usuario_id)]["id"] = usuario_id
+        self._escribir_datos(datos)
+
+    def obtener(self, usuario_id: int) -> Optional[Usuario]:
+        datos = self._leer_datos()
+        usuario_data = datos["usuarios"].get(str(usuario_id))
+        if usuario_data:
+            return Usuario.from_dict(usuario_data)
+        return None
+
+    def listar(self) -> List[Usuario]:
+        datos = self._leer_datos()
+        return [Usuario.from_dict(u) for u in datos["usuarios"].values()]
+
+    def eliminar(self, usuario_id: int) -> bool:
+        datos = self._leer_datos()
+        if str(usuario_id) in datos["usuarios"]:
+            del datos["usuarios"][str(usuario_id)]
+            self._escribir_datos(datos)
+            return True
+        return False</code></pre>
+            </div>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-box-seam me-2"></i>Estructura de Entrega</h3>
+        <div class="card border-primary mb-4">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-folder2-open me-2"></i>Organización de Archivos Obligatoria
+            </div>
+            <div class="card-body">
+                <div class="entregable-box"><span class="folder">src/</span>
+├── <span class="folder">domain/</span>                 <span class="comment"># Dominio con to_dict/from_dict añadidos</span>
+│   ├── <span class="folder">usuario.py</span>
+│   ├── <span class="folder">proyecto.py</span>
+│   └── <span class="folder">tarea.py</span>
+│
+└── <span class="folder">infrastructure/</span>          <span class="comment"># Nueva capa de persistencia</span>
+    ├── <span class="folder">__init__.py</span>
+    ├── <span class="folder">repository.py</span>        <span class="comment"># Interfaces y implementaciones</span>
+    └── <span class="folder">serializers.py</span>       <span class="comment"># Lógica de serialización</span>
+
+<span class="folder">api/</span>
+├── <span class="folder">main.py</span>                   <span class="comment"># Inyección de repositorios</span>
+└── <span class="folder">dependencies.py</span>          <span class="comment"># Funciones Depends()</span>
+
+<span class="folder">data/</span>                        <span class="comment"># Archivos de datos (en .gitignore)</span>
+├── <span class="folder">.gitkeep</span>
+├── <span class="folder">usuarios.json</span>
+├── <span class="folder">proyectos.json</span>
+├── <span class="folder">tareas.json</span>
+└── <span class="folder">ejemplo_usuarios.json</span>    <span class="comment"># Datos de prueba para el repo</span>
+
+<span class="folder">.gitignore</span>                   <span class="comment"># Debe excluir data/*.json</span>
+<span class="folder">requirements.txt</span>              <span class="comment"># + bcrypt o hashlib</span>
+<span class="folder">README.md</span>                     <span class="comment"># Cómo poblar datos de prueba</span></div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-list-ol me-2"></i>Pasos para Completar la Evaluación</h3>
+        <div class="card border-secondary mb-4">
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="paso-num">1</span><strong>Añadir to_dict/from_dict a clases</strong>
+                    <p class="ms-4 mt-1 text-muted">Serialización bidireccional en Usuario, Proyecto, Tarea</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">2</span><strong>Crear interfaces Repository (ABC)</strong>
+                    <p class="ms-4 mt-1 text-muted">IUsuarioRepository, IProyectoRepository, ITareaRepository</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">3</span><strong>Implementar RepositoryJSON</strong>
+                    <p class="ms-4 mt-1 text-muted">Lectura/escritura JSON con manejo de errores</p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">4</span><strong>Configurar dependencias FastAPI</strong>
+                    <p class="ms-4 mt-1 text-muted"><code>def get_usuario_repo(): return UsuarioRepositoryJSON()</code></p>
+                </div>
+                <div class="mb-3">
+                    <span class="paso-num">5</span><strong>Actualizar endpoints</strong>
+                    <p class="ms-4 mt-1 text-muted">Recibir repo vía Depends(), reemplazar dicts en memoria</p>
+                </div>
+                <div class="mb-0">
+                    <span class="paso-num">6</span><strong>Probar persistencia</strong>
+                    <p class="ms-4 mt-1 text-muted">Crear dato, reiniciar servidor, verificar que persiste</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-award me-2"></i>Rúbrica de Evaluación (100%)</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Excelente (5.0)</th>
+                        <th>Aceptable (3.5)</th>
+                        <th>Insuficiente</th>
+                        <th>Peso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Funcionalidad</strong></td>
+                        <td>Datos persisten tras reinicio, CRUD completo funciona</td>
+                        <td>Persiste pero algunos CRUD fallan</td>
+                        <td>No persiste o pierde datos</td>
+                        <td class="fw-bold text-success">35%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Patrón Repository</strong></td>
+                        <td>Interfaces ABC, inyección Depends(), sin cambios en API</td>
+                        <td>Repository sin interfaz o inyección parcial</td>
+                        <td>Sin Repository o lógica mezclada</td>
+                        <td class="fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integración E3</strong></td>
+                        <td>API idéntica, solo cambió la implementación</td>
+                        <td>Cambios menores en endpoints</td>
+                        <td>Rompió la API o la rehizo</td>
+                        <td class="fw-bold text-success">25%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Seguridad</strong></td>
+                        <td>Passwords hasheados, .gitignore correcto</td>
+                        <td>Passwords hasheados pero sin .gitignore</td>
+                        <td>Passwords en texto plano</td>
+                        <td class="fw-bold text-success">15%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="penalizacion">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Penalizaciones Severas</h5>
+            <ul class="mb-0">
+                <li><strong>Passwords en texto plano:</strong> Nota máxima 2.0</li>
+                <li><strong>Rutas absolutas C:\:</strong> Nota máxima 3.0</li>
+                <li><strong>Sin patrón Repository:</strong> Nota 0.0</li>
+                <li><strong>Sin inyección de dependencias:</strong> -1.5 puntos</li>
+                <li><strong>Datos no persisten:</strong> -2.0 puntos</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning mt-4">
+            <h5><i class="bi bi-link-45deg me-2"></i>Conexión con E5</h5>
+            <p class="mb-0">El patrón Repository que implementes aquí facilitará migrar a SQL en <a href="evaluacion-05-sql.html">E5: Base de Datos</a>. Solo cambiarás la implementación, no la interfaz.</p>
+        </div>
+
+        <div class="mt-4">
+            <a href="evaluacion-03-web.html" class="btn btn-outline-primary">← E3: Web</a>
+            <a href="evaluacion-05-sql.html" class="btn btn-outline-secondary ms-2">E5: SQL →</a>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html" class="text-info">Inicio</a></p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Prism.js para syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+</body>
+</html>

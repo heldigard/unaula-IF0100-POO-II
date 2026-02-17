@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" style="width: 100%; height: auto; aspect-ratio: 900 / 600;">
+  <!-- Definitions -->
+  <defs>
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#74c0fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4dabf7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffa94d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff922b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="serviceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b197fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9775fa;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="repoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#63e6be;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38d9a9;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#868e96" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f8f9fa" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="40" font-family="Segoe UI, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#212529">
+    Flujo de una Petición FastAPI
+  </text>
+
+  <!-- CLIENT -->
+  <g transform="translate(50, 150)">
+    <rect width="120" height="80" rx="8" fill="url(#clientGrad)" stroke="#339af0" stroke-width="2"/>
+    <text x="60" y="45" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">
+      Cliente
+    </text>
+  </g>
+
+  <!-- ROUTE -->
+  <g transform="translate(250, 150)">
+    <rect width="120" height="80" rx="8" fill="url(#routeGrad)" stroke="#fd7e14" stroke-width="2"/>
+    <text x="60" y="35" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">
+      Route
+    </text>
+    <text x="60" y="55" font-family="Segoe UI, sans-serif" font-size="10" text-anchor="middle" fill="white">
+      /api/usuarios
+    </text>
+  </g>
+
+  <!-- SERVICE -->
+  <g transform="translate(450, 150)">
+    <rect width="120" height="80" rx="8" fill="url(#serviceGrad)" stroke="#7950f2" stroke-width="2"/>
+    <text x="60" y="35" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">
+      Service
+    </text>
+    <text x="60" y="55" font-family="Segoe UI, sans-serif" font-size="10" text-anchor="middle" fill="white">
+      Lógica negocio
+    </text>
+  </g>
+
+  <!-- REPOSITORY -->
+  <g transform="translate(650, 150)">
+    <rect width="120" height="80" rx="8" fill="url(#repoGrad)" stroke="#20c997" stroke-width="2"/>
+    <text x="60" y="35" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">
+      Repository
+    </text>
+    <text x="60" y="55" font-family="Segoe UI, sans-serif" font-size="10" text-anchor="middle" fill="white">
+      Acceso datos
+    </text>
+  </g>
+
+  <!-- Arrows - Request flow (top) -->
+  <g stroke="#868e96" stroke-width="2" fill="none" marker-end="url(#arrowhead)">
+    <!-- Client to Route -->
+    <path d="M 170 180 L 240 180"/>
+    <!-- Route to Service -->
+    <path d="M 370 180 L 440 180"/>
+    <!-- Service to Repository -->
+    <path d="M 570 180 L 640 180"/>
+  </g>
+
+  <!-- Request labels -->
+  <text x="205" y="165" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#495057">
+    1. GET
+  </text>
+  <text x="410" y="165" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#495057">
+    2. llama
+  </text>
+  <text x="610" y="165" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#495057">
+    3. get_all()
+  </text>
+
+  <!-- Response flow (bottom) -->
+  <g stroke="#51cf66" stroke-width="2" fill="none" marker-end="url(#arrowhead)">
+    <!-- Repository to Service -->
+    <path d="M 650 230 L 580 230"/>
+    <!-- Service to Route -->
+    <path d="M 450 230 L 380 230"/>
+    <!-- Route to Client -->
+    <path d="M 250 230 L 180 230"/>
+  </g>
+
+  <!-- Response labels -->
+  <text x="615" y="250" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#40c057">
+    4. lista[]
+  </text>
+  <text x="415" y="250" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#40c057">
+    5. retorna
+  </text>
+  <text x="215" y="250" font-family="Segoe UI, sans-serif" font-size="11" text-anchor="middle" fill="#40c057">
+    6. JSON
+  </text>
+
+  <!-- Legend -->
+  <g transform="translate(100, 320)">
+    <rect width="700" height="240" rx="8" fill="#fff" stroke="#dee2e6" stroke-width="2"/>
+    <text x="350" y="30" font-family="Segoe UI, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#495057">
+      Desglose del Flujo
+    </text>
+
+    <g font-family="Segoe UI, sans-serif" font-size="13" fill="#495057">
+      <text x="30" y="70">
+        <tspan font-weight="bold">1. Cliente</tspan> → Navegador (browser) o cliente HTTP
+      </text>
+      <text x="30" y="100">
+        <tspan font-weight="bold">2. Route</tspan> → Endpoint decorado con @router.get()
+      </text>
+      <text x="30" y="130">
+        <tspan font-weight="bold">3. Service</tspan> → UsuarioService con lógica de negocio
+      </text>
+      <text x="30" y="160">
+        <tspan font-weight="bold">4. Repository</tspan> → UsuarioRepository (in-memory o BD)
+      </text>
+      <text x="30" y="190">
+        <tspan font-weight="bold">5. Response</tspan> → JSON serializado con Pydantic
+      </text>
+    </g>
+  </g>
+
+  <!-- Pydantic validation note -->
+  <g transform="translate(100, 580)">
+    <text x="0" y="0" font-family="Segoe UI, sans-serif" font-size="12" fill="#868e96">
+      Nota: FastAPI valida automáticamente los datos con Pydantic antes de procesar
+    </text>
+  </g>
+</svg>
