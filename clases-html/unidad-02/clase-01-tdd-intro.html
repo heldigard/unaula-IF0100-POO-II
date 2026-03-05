@@ -446,8 +446,11 @@ def test_ejemplo_falla():
 def test_suma_dos_numeros_positivos():
     """
     Test para sumar dos números positivos.
-    </p>
-    <pre><code class="language-bash">$ pytest test_calculadora.py::test_suma_dos_numeros_positivos -v
+    """
+    from calculadora import suma
+    assert suma(2, 3) == 5  # 🔴 RED - ImportError: no existe 'suma'</code></pre>
+
+                    <pre><code class="language-bash">$ pytest test_calculadora.py::test_suma_dos_numeros_positivos -v
 
 # ERROR: ModuleNotFoundError: No module named 'calculadora'
 # ✅ RED - El test falla como esperamos porque el módulo no existe</code></pre>
