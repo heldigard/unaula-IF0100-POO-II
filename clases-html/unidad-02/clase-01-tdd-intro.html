@@ -79,6 +79,15 @@
                         
                         <p><strong>TDD (Test-Driven Development / Desarrollo Guiado por Pruebas)</strong> invierte este proceso: primero escribes el test, luego el código.</p>
                     </div>
+
+                    <div class="alert alert-info mt-4">
+                        <h5><i class="bi bi-youtube text-danger"></i> Video Recomendado</h5>
+                        <p>Para entender TDD en 3 minutos, mira este video introductorio:</p>
+                        <a href="https://www.youtube.com/watch?v=Cu9FzBtoEoo" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-play-circle"></i> Ver "Conoce TDD en ESPAÑOL"
+                        </a>
+                        <small class="d-block mt-2 text-muted">Duración: 2:50 minutos | Canal: Developero</small>
+                    </div>
                 </section>
 
                 <section id="objetivos">
@@ -230,11 +239,9 @@
                         </div>
                     </div>
 
-                    <div class="text-center my-4"
->
+                    <div class="text-center my-4">
                         <h5>Flujo del Ciclo</h5>
-                        <div class="d-flex justify-content-center align-items-center"
->
+                        <div class="d-flex justify-content-center align-items-center">
                             <div class="badge bg-danger p-3 mx-2">RED</div>
                             <i class="bi bi-arrow-right fs-4"></i>
                             <div class="badge bg-success p-3 mx-2">GREEN</div>
@@ -245,6 +252,63 @@
                             <i class="bi bi-arrow-repeat fs-4"></i>
                         </div>
                         <p class="text-muted mt-2">Repite para cada nueva funcionalidad</p>
+                    </div>
+
+                    <!-- Diagrama SVG del Ciclo TDD -->
+                    <div class="card mt-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="bi bi-diagram-3"></i> Diagrama Visual del Ciclo</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <svg viewBox="0 0 400 350" class="img-fluid" style="max-width: 400px;">
+                                <defs>
+                                    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#dc3545"/>
+                                    </marker>
+                                    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#198754"/>
+                                    </marker>
+                                    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#0dcaf0"/>
+                                    </marker>
+                                </defs>
+                                
+                                <circle cx="200" cy="175" r="140" fill="none" stroke="#dee2e6" stroke-width="2"/>
+                                
+                                <path d="M 200 45 A 130 130 0 0 1 315 120" fill="none" stroke="#dc3545" stroke-width="5" marker-end="url(#arrow-red)"/>
+                                <path d="M 315 230 A 130 130 0 0 1 200 305" fill="none" stroke="#198754" stroke-width="5" marker-end="url(#arrow-green)"/>
+                                <path d="M 85 230 A 130 130 0 0 1 85 120" fill="none" stroke="#0dcaf0" stroke-width="5" marker-end="url(#arrow-blue)"/>
+                                
+                                <text x="200" y="80" text-anchor="middle" font-size="18" fill="#dc3545" font-weight="bold">RED</text>
+                                <text x="200" y="100" text-anchor="middle" font-size="11" fill="#666">Escribe Test</text>
+                                
+                                <text x="300" y="200" text-anchor="middle" font-size="18" fill="#198754" font-weight="bold">GREEN</text>
+                                <text x="300" y="220" text-anchor="middle" font-size="11" fill="#666">Código Mínimo</text>
+                                
+                                <text x="100" y="200" text-anchor="middle" font-size="18" fill="#0dcaf0" font-weight="bold">REFACTOR</text>
+                                <text x="100" y="220" text-anchor="middle" font-size="11" fill="#666">Mejora Código</text>
+                                
+                                <circle cx="200" cy="175" r="45" fill="#f8f9fa" stroke="#212529" stroke-width="3"/>
+                                <text x="200" y="182" text-anchor="middle" font-size="20" font-weight="bold" fill="#212529">TDD</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Videos adicionales recomendados -->
+                    <div class="alert alert-success mt-4">
+                        <h5><i class="bi bi-collection-play"></i> Videos Adicionales Recomendados</h5>
+                        <ul class="list-unstyled mt-2">
+                            <li class="mb-2">
+                                <a href="https://www.youtube.com/playlist?list=PLRFOqDrY-6nuY8ceutcEN_TbpCQUUDJsv" target="_blank" class="text-decoration-none">
+                                    <i class="bi bi-play-circle text-danger"></i> Curso completo de TDD - ColmenaTEC (9 videos)
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="https://www.youtube.com/watch?v=5uPl25BG52M" target="_blank" class="text-decoration-none">
+                                    <i class="bi bi-play-circle text-danger"></i> TDD Tutorial en español (13 min)
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </section>
 
