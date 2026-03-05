@@ -16,6 +16,8 @@
         .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
         .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
         .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+        .concept-box { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .code-explanation { background: #fff3cd; padding: 0.75rem; border-radius: 4px; margin: 0.5rem 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -23,7 +25,7 @@
         <div class="container">
             <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 2: Técnicas de Desarrollo</h2>
-            <h3>Clase 02: pytest Avanzado</h3>
+            <h3>Clase 02: pytest Avanzado - Fixtures, Mocks y Testing de APIs</h3>
             <p class="mt-2">
                 <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 05 de marzo de 2026</span>
                 <span class="badge bg-info text-dark">Semana 5 - Jueves (60 minutos)</span>
@@ -44,275 +46,1587 @@
                 <nav class="sidebar">
                     <h5>Contenido</h5>
                     <ul class="list-unstyled">
+                        <li><a href="#introduccion">Introducción</a></li>
                         <li><a href="#objetivos">Objetivos</a></li>
-                        <li><a href="#fixtures">Fixtures</a></li>
-                        <li><a href="#parametrizacion">Parametrización</a></li>
-                        <li><a href="#mocks">Mocks</a></li>
-                        <li><a href="#testclient">TestClient</a></li>
-                        <li><a href="#ejercicio">Ejercicio</a></li>
+                        <li><a href="#fixtures">1. Fixtures</a></li>
+                        <li><a href="#parametrizacion">2. Parametrización</a></li>
+                        <li><a href="#mocks">3. Mocks</a></li>
+                        <li><a href="#testclient">4. TestClient</a></li>
+                        <li><a href="#mejores-practicas">5. Mejores Prácticas</a></li>
+                        <li><a href="#ejercicio">Ejercicio Práctico</a></li>
+                        <li><a href="#resumen">Resumen</a></li>
                     </ul>
                 </nav>
             </aside>
 
             <main class="col-lg-9">
+                <section id="introduccion">
+                    <h2 class="text-primary border-bottom pb-2">Introducción</h2>
+                    
+                    <p>En la clase anterior aprendimos los fundamentos de TDD (Test-Driven Development) y cómo escribir tests básicos con pytest. Hoy profundizaremos en <strong>técnicas avanzadas de testing</strong> que nos permitirán escribir tests más robustos, mantenibles y profesionales.</p>
+                    
+                    <div class="concept-box">
+                        <h5>¿Por qué necesitamos técnicas avanzadas de testing?</h5>
+                        <p>Imagina que estás construyendo una aplicación web compleja como TaskFlow. Tus tests necesitan:</p>
+                        <ul>
+                            <li><strong>Preparar datos consistentes:</strong> Cada test necesita un entorno limpio y predecible</li>
+                            <li><strong>Probar múltiples escenarios:</strong> Un mismo comportamiento con diferentes entradas</li>
+                            <li><strong>Aislar dependencias:</strong> No queremos que nuestros tests fallen porque un servicio externo está caído</li>
+                            <li><strong>Testear APIs sin servidor:</strong> Ejecutar tests rápidamente sin levantar todo el sistema</li>
+                        </ul>
+                    </div>
+
+                    <p>Para resolver estos desafíos, pytest proporciona cuatro herramientas fundamentales:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-box-seam text-primary"></i> Fixtures</h5>
+                                    <p class="card-text">Preparan el entorno de prueba de forma reutilizable y automática</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-layers text-success"></i> Parametrización</h5>
+                                    <p class="card-text">Ejecutan el mismo test con múltiples conjuntos de datos</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-shield-check text-warning"></i> Mocks</h5>
+                                    <p class="card-text">Simulan objetos y servicios externos para aislar el código</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="bi bi-lightning-charge text-danger"></i> TestClient</h5>
+                                    <p class="card-text">Testea APIs FastAPI sin necesidad de levantar un servidor real</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <section id="objetivos">
                     <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
                     <ul>
-                        <li>Crear fixtures para setup compartido</li>
-                        <li>Usar scopes de fixtures (function, class, module)</li>
-                        <li>Parametrizar tests con múltiples datos</li>
-                        <li>Crear mocks para aislar dependencias</li>
-                        <li>Testear APIs FastAPI con TestClient</li>
+                        <li><strong>Crear fixtures reutilizables</strong> que automaticen la preparación de datos de prueba</li>
+                        <li><strong>Comprender los scopes</strong> de fixtures y utilizarlos apropiadamente (function, class, module, session)</li>
+                        <li><strong>Parametrizar tests eficientemente</strong> para probar múltiples casos sin repetir código</li>
+                        <li><strong>Crear mocks y patches</strong> para aislar tu código de dependencias externas</li>
+                        <li><strong>Testear APIs FastAPI</strong> usando TestClient de forma integral</li>
+                        <li><strong>Aplicar mejores prácticas</strong> de testing en proyectos Python profesionales</li>
                     </ul>
                 </section>
 
                 <section id="fixtures">
-                    <h2 class="text-primary border-bottom pb-2">Fixtures (25 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">1. Fixtures - La Base del Testing Robusto</h2>
                     
-                    <p>Una <strong>fixture</strong> prepara el entorno para un test. pytest la inyecta automáticamente.</p>
+                    <div class="concept-box">
+                        <h5>¿Qué es una Fixture?</h5>
+                        <p>Una <strong>fixture</strong> es una función que prepara el entorno necesario para ejecutar un test. Piensa en ella como un "setup automático" que pytest ejecuta antes de cada test que la necesita.</p>
+                        
+                        <p><strong>Analogía:</strong> Imagina que vas a cocinar. Una fixture sería como tener un ayudante que prepara todos los ingredientes y utensilios antes de que empieces. Tú solo te concentras en cocinar, no en preparar.</p>
+                    </div>
 
-                    <h4>Fixture Básica</h4>
+                    <h3>1.1 Fixture Básica - El Fundamento</h3>
+                    
+                    <p>Comencemos con el ejemplo más simple. Una fixture se define con el decorador <code>@pytest.fixture</code> y se "inyecta" en los tests que la necesitan como parámetros:</p>
+
                     <pre><code class="language-python">import pytest
 
+# Definimos la fixture
 @pytest.fixture
 def usuario():
-    """Fixture que crea un usuario de prueba."""
-    return {"id": 1, "username": "testuser", "email": "test@example.com"}
+    """
+    Fixture que crea un usuario de prueba estándar.
+    Esta fixture se ejecutará automáticamente antes de cada test
+    que tenga 'usuario' como parámetro.
+    """
+    return {
+        "id": 1,
+        "username": "testuser",
+        "email": "test@example.com",
+        "activo": True
+    }
 
-def test_usuario(usuario):  # pytest inyecta la fixture
-    assert usuario["username"] == "testuser"</code></pre>
+# Usamos la fixture - pytest la inyecta automáticamente
+def test_usuario_tiene_email_valido(usuario):
+    """Test que verifica el email del usuario."""
+    assert "@" in usuario["email"]
+    assert usuario["email"].endswith(".com")
 
-                    <h4>Fixture con Setup/Teardown</h4>
-                    <pre><code class="language-python">@pytest.fixture
+def test_usuario_esta_activo(usuario):
+    """Test que verifica que el usuario está activo."""
+    assert usuario["activo"] is True</code></pre>
+
+                    <div class="code-explanation">
+                        <strong>¿Qué está pasando aquí?</strong>
+                        <ol>
+                            <li>Definimos <code>usuario()</code> como una fixture con <code>@pytest.fixture</code></li>
+                            <li>Los tests <code>test_usuario_tiene_email_valido</code> y <code>test_usuario_esta_activo</code> reciben <code>usuario</code> como parámetro</li>
+                            <li>pytest detecta automáticamente que necesitan la fixture y la ejecuta antes de cada test</li>
+                            <li>Cada test recibe una copia fresca del usuario</li>
+                        </ol>
+                    </div>
+
+                    <h3>1.2 Fixture con Setup y Teardown - Ciclo de Vida Completo</h3>
+
+                    <p>Muchas veces necesitamos no solo preparar datos, sino también <strong>limpiar después</strong>. Por ejemplo, crear archivos temporales, conectar a bases de datos, o inicializar servicios. Para esto usamos <code>yield</code> en lugar de <code>return</code>:</p>
+
+                    <pre><code class="language-python">import pytest
+import tempfile
+import os
+
+@pytest.fixture
 def archivo_temporal():
-    """Crea archivo temporal y lo limpia después."""
-    import tempfile, os
+    """
+    Fixture que crea un archivo temporal y lo limpia después.
     
-    fd, ruta = tempfile.mkstemp()
+    FASE 1 - SETUP: Todo antes del yield se ejecuta ANTES del test
+    FASE 2 - YIELD: Entrega el recurso al test
+    FASE 3 - TEARDOWN: Todo después del yield se ejecuta DESPUÉS del test
+    """
+    # ===== SETUP =====
+    print("\n[SETUP] Creando archivo temporal...")
+    fd, ruta = tempfile.mkstemp(suffix=".txt")
+    
+    # Escribimos contenido inicial
     with os.fdopen(fd, 'w') as f:
         f.write("contenido de prueba")
     
-    yield ruta  # Entrega al test
+    # ===== ENTREGA AL TEST =====
+    yield ruta  # El test recibe esta ruta
     
-    os.unlink(ruta)  # Cleanup después del test
+    # ===== TEARDOWN =====
+    print("\n[TEARDOWN] Eliminando archivo temporal...")
+    os.unlink(ruta)  # Limpiamos después del test
 
 def test_leer_archivo(archivo_temporal):
+    """Test que usa el archivo temporal."""
+    # El archivo ya existe y tiene contenido
     with open(archivo_temporal, 'r') as f:
-        assert f.read() == "contenido de prueba"</code></pre>
+        contenido = f.read()
+    
+    assert contenido == "contenido de prueba"
+    # Al terminar, la fixture limpia automáticamente
 
-                    <h4>Scopes de Fixtures</h4>
-                    <table class="table">
-                        <tr><th>Scope</th><th>Cuándo se crea</th><th>Uso</th></tr>
-                        <tr><td><code>function</code></td><td>Cada test</td><td>Default</td></tr>
-                        <tr><td><code>class</code></td><td>Una vez por clase</td><td>Setup compartido</td></tr>
-                        <tr><td><code>module</code></td><td>Una vez por módulo</td><td>Conexión BD</td></tr>
-                        <tr><td><code>session</code></td><td>Una vez por sesión</td><td>Configuración global</td></tr>
+def test_archivo_existe(archivo_temporal):
+    """Otro test que usa el archivo temporal."""
+    assert os.path.exists(archivo_temporal)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>¿Por qué usar yield en lugar de return?</strong><br>
+                        Cuando usas <code>return</code>, la función termina inmediatamente. Con <code>yield</code>, la función se "pausa", entrega el valor al test, y cuando el test termina, continúa ejecutándose para hacer cleanup. Es como un "préstamo" del recurso.
+                    </div>
+
+                    <h3>1.3 Scopes de Fixtures - Controlando el Ciclo de Vida</h3>
+
+                    <p>Un aspecto crucial es entender <strong>cuándo se crean y destruyen</strong> las fixtures. Por defecto, cada test recibe una instancia nueva. Pero podemos cambiar esto con el parámetro <code>scope</code>:</p>
+
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Scope</th>
+                                <th>Cuándo se crea</th>
+                                <th>Cuándo se destruye</th>
+                                <th>Uso típico</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>function</code> (default)</td>
+                                <td>Antes de cada test</td>
+                                <td>Después de cada test</td>
+                                <td>Datos aislados, tests independientes</td>
+                            </tr>
+                            <tr>
+                                <td><code>class</code></td>
+                                <td>Antes de la primera prueba de la clase</td>
+                                <td>Después de la última prueba</td>
+                                <td>Setup compartido para TestClass</td>
+                            </tr>
+                            <tr>
+                                <td><code>module</code></td>
+                                <td>Antes del primer test del módulo</td>
+                                <td>Después del último test</td>
+                                <td>Conexiones a BD, carga de datos pesados</td>
+                            </tr>
+                            <tr>
+                                <td><code>session</code></td>
+                                <td>Una vez al inicio de la sesión</td>
+                                <td>Al final de todos los tests</td>
+                                <td>Configuración global, conexiones persistentes</td>
+                            </tr>
+                        </tbody>
                     </table>
 
-                    <pre><code class="language-python">@pytest.fixture(scope="module")
-def conexion_db():
-    """Fixture de módulo: una conexión para todos los tests."""
-    print("\n[SETUP] Conectando a BD...")
-    db = {"conexion": "simulada", "datos": []}
-    yield db
-    print("\n[TEARDOWN] Cerrando conexión...")
-
-def test_agregar(conexion_db):
-    conexion_db["datos"].append("dato1")
-    assert len(conexion_db["datos"]) == 1
-
-def test_agregar_otro(conexion_db):
-    conexion_db["datos"].append("dato2")
-    assert len(conexion_db["datos"]) == 2  # dato1 sigue ahí</code></pre>
-
-                    <h4>conftest.py: Fixtures Compartidas</h4>
-                    <pre><code class="language-python"># tests/conftest.py
-import pytest
-
-@pytest.fixture
-def usuario_base():
-    """Fixture compartida por todos los tests."""
-    return {"username": "base", "email": "base@example.com"}
-
-# tests/test_usuario.py - usa la fixture automáticamente
-def test_usa_fixture(usuario_base):
-    assert usuario_base["username"] == "base"</code></pre>
-                </section>
-
-                <section id="parametrizacion">
-                    <h2 class="text-primary border-bottom pb-2">Parametrización (15 min)</h2>
-                    
-                    <p>Ejecutar el mismo test con diferentes datos.</p>
+                    <h4>Ejemplo Práctico: Fixture de Módulo para Base de Datos</h4>
 
                     <pre><code class="language-python">import pytest
 
-@pytest.mark.parametrize("email, esperado", [
-    ("usuario@example.com", True),
-    ("user.name@example.com", True),
-    ("invalido", False),
-    ("@example.com", False),
-    ("usuario@", False),
-])
-def test_validar_email(email, esperado):
-    """Test parametrizado: 5 casos en 1 test."""
+@pytest.fixture(scope="module")
+def conexion_db():
+    """
+    Fixture de módulo: una sola conexión para todos los tests de este archivo.
+    
+    Esto es eficiente porque:
+    1. Evita crear/eliminar conexiones repetidamente (lento)
+    2. Los tests pueden compartir estado si es necesario
+    3. El setup/teardown costoso solo ocurre una vez
+    """
+    print("\n" + "="*50)
+    print("[SETUP] Conectando a base de datos...")
+    print("="*50)
+    
+    # Simulamos una conexión a BD
+    db = {
+        "conexion": "activa",
+        "datos": [],
+        "query_count": 0
+    }
+    
+    yield db  # Compartimos la misma instancia con todos los tests
+    
+    print("\n" + "="*50)
+    print(f"[TEARDOWN] Cerrando conexión. Queries ejecutados: {db['query_count']}")
+    print("="*50)
+
+# Test 1: Agrega un dato
+def test_agregar_dato(conexion_db):
+    conexion_db["datos"].append("dato1")
+    conexion_db["query_count"] += 1
+    assert len(conexion_db["datos"]) == 1
+
+# Test 2: El dato anterior SIGUE AHÍ (misma instancia)
+def test_agregar_otro_dato(conexion_db):
+    print(f"\n   Datos existentes: {conexion_db['datos']}")
+    conexion_db["datos"].append("dato2")
+    conexion_db["query_count"] += 1
+    assert len(conexion_db["datos"]) == 2  # ¡Tiene dato1 + dato2!
+
+# Test 3: Verificamos el estado acumulado
+def test_verificar_estado(conexion_db):
+    print(f"\n   Estado final: {conexion_db}")
+    assert conexion_db["query_count"] == 2</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>⚠️ Advertencia sobre scopes:</strong><br>
+                        Usar <code>scope="module"</code> o <code>scope="session"</code> significa que los tests comparten estado. Esto puede causar que un test afecte a otro si no se tiene cuidado. Úsalo solo cuando:
+                        <ul>
+                            <li>El setup es muy costoso (conexiones a BD, carga de archivos grandes)</li>
+                            <li>Necesitas tests que verifiquen acumulación de datos</li>
+                            <li>Entiendes y controlas las dependencias entre tests</li>
+                        </ul>
+                    </div>
+
+                    <h3>1.4 conftest.py - Fixtures Compartidas Globalmente</h3>
+
+                    <p>Hasta ahora hemos definido fixtures en el mismo archivo de tests. Pero en proyectos reales, necesitamos fixtures disponibles para <strong>múltiples archivos de test</strong>. La solución es <code>conftest.py</code>:</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <code>tests/conftest.py</code>
+                                </div>
+                                <div class="card-body">
+                                    <pre><code class="language-python">import pytest
+
+@pytest.fixture
+def usuario_base():
+    """
+    Fixture disponible para TODOS los tests
+    en este directorio y subdirectorios.
+    """
+    return {
+        "username": "usuario_test",
+        "email": "test@example.com",
+        "rol": "estudiante"
+    }
+
+@pytest.fixture
+def cliente_autenticado():
+    """Fixture para simular usuario logueado."""
+    return {
+        "user_id": 1,
+        "token": "abc123",
+        "permisos": ["read", "write"]
+    }</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <code>tests/test_usuarios.py</code>
+                                </div>
+                                <div class="card-body">
+                                    <pre><code class="language-python"># No necesitamos importar nada!
+# Las fixtures de conftest.py están disponibles automáticamente
+
+def test_usuario_tiene_rol(usuario_base):
+    assert usuario_base["rol"] == "estudiante"
+
+def test_cliente_tiene_permisos(cliente_autenticado):
+    assert "read" in cliente_autenticado["permisos"]</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-note">
+                        <strong>¿Cómo funciona conftest.py?</strong><br>
+                        pytest busca automáticamente archivos <code>conftest.py</code> en cada directorio. Las fixtures definidas en <code>conftest.py</code> están disponibles para todos los tests en ese directorio y sus subdirectorios, sin necesidad de importarlas explícitamente. Esto promueve la reutilización y mantiene los tests limpios.
+                    </div>
+
+                    <h3>1.5 Fixtures que dependen de otras Fixtures</h3>
+
+                    <p>Las fixtures pueden usar otras fixtures, creando <strong>cadenas de dependencias</strong>. Esto es muy poderoso para construir escenarios complejos:</p>
+
+                    <pre><code class="language-python">import pytest
+
+@pytest.fixture
+def configuracion_base():
+    """Fixture base con configuración mínima."""
+    return {
+        "debug": False,
+        "entorno": "testing",
+        "db_url": "sqlite:///:memory:"
+    }
+
+@pytest.fixture
+def configuracion_completa(configuracion_base):
+    """
+    Fixture que extiende la configuración base.
+    Recibe configuracion_base automáticamente.
+    """
+    config = configuracion_base.copy()
+    config.update({
+        "cache_enabled": True,
+        "max_requests": 100,
+        "features": ["auth", "api", "admin"]
+    })
+    return config
+
+@pytest.fixture
+def app_configurada(configuracion_completa):
+    """
+    Fixture que simula una app inicializada
+    con la configuración completa.
+    """
+    class App:
+        def __init__(self, config):
+            self.config = config
+            self.inicializada = True
+    
+    return App(configuracion_completa)
+
+def test_app_esta_inicializada(app_configurada):
+    """Test que usa la cadena completa de fixtures."""
+    assert app_configurada.inicializada is True
+    assert app_configurada.config["entorno"] == "testing"
+    assert "auth" in app_configurada.config["features"]</code></pre>
+
+                    <div class="code-explanation">
+                        <strong>Flujo de ejecución:</strong>
+                        <ol>
+                            <li>pytest detecta que <code>test_app_esta_inicializada</code> necesita <code>app_configurada</code></li>
+                            <li>Para crear <code>app_configurada</code>, necesita <code>configuracion_completa</code></li>
+                            <li>Para crear <code>configuracion_completa</code>, necesita <code>configuracion_base</code></li>
+                            <li>pytest ejecuta en orden: configuracion_base → configuracion_completa → app_configurada</li>
+                            <li>Finalmente ejecuta el test</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="parametrizacion">
+                    <h2 class="text-primary border-bottom pb-2">2. Parametrización - Tests DRY (Don't Repeat Yourself)</h2>
+                    
+                    <div class="concept-box">
+                        <h5>¿Qué es la Parametrización?</h5>
+                        <p>La <strong>parametrización</strong> nos permite ejecutar el <strong>mismo test</strong> con <strong>diferentes conjuntos de datos</strong>. Esto evita copiar y pegar código, hace los tests más mantenibles y asegura que probamos múltiples escenarios.</p>
+                        
+                        <p><strong>Problema sin parametrizar:</strong></p>
+                        <pre><code class="language-python"># ¡MAL! Código repetido
+def test_email_valido_1():
+    assert validar_email("user@example.com") is True
+
+def test_email_valido_2():
+    assert validar_email("user.name@example.com") is True
+
+def test_email_invalido_1():
+    assert validar_email("invalido") is False</code></pre>
+                    </div>
+
+                    <h3>2.1 Parametrización Básica</h3>
+
+                    <p>Usamos el decorador <code>@pytest.mark.parametrize</code> para definir múltiples casos:</p>
+
+                    <pre><code class="language-python">import pytest
+
+# Definimos los casos de prueba como una lista de tuplas
+# Cada tupla representa un caso: (input, expected_output)
+@pytest.mark.parametrize(
+    "email, resultado_esperado",
+    [
+        ("usuario@example.com", True),           # Caso 1: Email válido simple
+        ("user.name@example.com", True),         # Caso 2: Email con punto
+        ("usuario+tag@example.com", True),       # Caso 3: Email con +tag
+        ("invalido", False),                     # Caso 4: Sin @
+        ("@example.com", False),                 # Caso 5: Sin usuario
+        ("usuario@", False),                     # Caso 6: Sin dominio
+        ("", False),                             # Caso 7: Vacío
+        ("usuario@@example.com", False),         # Caso 8: Doble @
+        ("usuario@example", False),              # Caso 9: Sin TLD
+    ]
+)
+def test_validar_email(email, resultado_esperado):
+    """
+    Un solo test que se ejecuta 9 veces con diferentes datos.
+    
+    Args:
+        email: El email a validar (viene de la tupla)
+        resultado_esperado: Lo que esperamos (viene de la tupla)
+    """
     from taskflow.utils import validar_email
-    assert validar_email(email) == esperado</code></pre>
+    
+    resultado = validar_email(email)
+    assert resultado == resultado_esperado, \
+        f"Email '{email}' debería retornar {resultado_esperado}, pero retornó {resultado}"
 
-                    <p>pytest genera un test por cada caso:</p>
-                    <pre><code class="language-bash">$ pytest -v
-test_validar_email[usuario@example.com-True] PASSED
-test_validar_email[invalido-False] PASSED
-...</code></pre>
+# Ejecutar: pytest -v
+# Verás 9 tests individuales:
+# test_validar_email[usuario@example.com-True] PASSED
+# test_validar_email[user.name@example.com-True] PASSED
+# ...</code></pre>
 
-                    <h4>Múltiples Parámetros</h4>
-                    <pre><code class="language-python">@pytest.mark.parametrize("username, valido", [
-    ("abc", False),      # Muy corto
-    ("valido", True),    # Válido
-    ("ab", False),       # Muy corto
-])
-def test_validar_username(username, valido):
-    assert len(username) >= 3 == valido</code></pre>
+                    <div class="code-explanation">
+                        <strong>Sintaxis explicada:</strong>
+                        <ul>
+                            <li><code>"email, resultado_esperado"</code>: Nombres de los parámetros que recibirá el test</li>
+                            <li><code>[...]</code>: Lista de tuplas, cada una es un caso de prueba</li>
+                            <li>pytest ejecutará el test una vez por cada tupla</li>
+                            <li>Si un caso falla, los demás siguen ejecutándose</li>
+                        </ul>
+                    </div>
+
+                    <h3>2.2 Parametrización con Fixtures</h3>
+
+                    <p>Podemos combinar parametrización con fixtures para escenarios más complejos:</p>
+
+                    <pre><code class="language-python">import pytest
+
+@pytest.fixture
+def servicio_email():
+    """Fixture que provee el servicio a testear."""
+    from taskflow.services import EmailService
+    return EmailService()
+
+# Parametrizamos sobre la fixture
+@pytest.mark.parametrize(
+    "username, longitud_minima, es_valido",
+    [
+        ("abc", 3, True),           # Justo en el límite
+        ("ab", 3, False),           # Uno menos del mínimo
+        ("valido", 3, True),        # Bien por encima
+        ("x" * 100, 50, True),      # Límite superior
+        ("x" * 51, 50, False),      # Excede el límite
+        ("", 1, False),             # Vacío
+    ]
+)
+def test_validar_username(servicio_email, username, longitud_minima, es_valido):
+    """
+    Test parametrizado que usa una fixture.
+    
+    El orden de los parámetros importa:
+    1. Primero las fixtures (servicio_email)
+    2. Luego los parámetros parametrizados
+    """
+    resultado = servicio_email.validar_username(username, min_length=longitud_minima)
+    assert resultado == es_valido
+
+# También podemos parametrizar fixtures
+data_usuarios = [
+    ({"username": "admin", "rol": "administrador"}, True),
+    ({"username": "user", "rol": "usuario"}, True),
+    ({"username": "", "rol": "usuario"}, False),
+    ({"username": "test", "rol": ""}, False),
+]
+
+@pytest.fixture(params=[dato[0] for dato in data_usuarios])
+def usuario_data(request):
+    """
+    Fixture parametrizada: se ejecuta una vez por cada usuario.
+    request.param contiene el valor actual.
+    """
+    return request.param
+
+def test_usuario_tiene_datos(usuario_data):
+    """Este test se ejecuta 4 veces (una por cada usuario)."""
+    assert "username" in usuario_data
+    assert "rol" in usuario_data
+    assert usuario_data["username"] != "" or usuario_data["rol"] != ""</code></pre>
+
+                    <h3>2.3 Parametrización Múltiple - Producto Cartesiano</h3>
+
+                    <p>Cuando usamos múltiples <code>@pytest.mark.parametrize</code>, pytest genera el <strong>producto cartesiano</strong> de todas las combinaciones:</p>
+
+                    <pre><code class="language-python">import pytest
+
+@pytest.mark.parametrize("metodo", ["GET", "POST", "PUT", "DELETE"])
+@pytest.mark.parametrize("endpoint", ["/usuarios", "/tareas", "/proyectos"])
+def test_endpoints_responden_200(metodo, endpoint):
+    """
+    Este test se ejecuta 4 métodos × 3 endpoints = 12 veces!
+    
+    Combinaciones:
+    - GET /usuarios
+    - GET /tareas
+    - GET /proyectos
+    - POST /usuarios
+    - POST /tareas
+    - ... (12 total)
+    """
+    response = client.request(metodo, endpoint)
+    assert response.status_code == 200
+
+# Podemos usar ids para nombres más descriptivos
+@pytest.mark.parametrize(
+    "entrada, esperado",
+    [
+        pytest.param(2, 4, id="positivo_simple"),
+        pytest.param(-2, 4, id="negativo"),
+        pytest.param(0, 0, id="cero"),
+        pytest.param(2.5, 6.25, id="decimal"),
+    ]
+)
+def test_cuadrado(entrada, esperado):
+    """Los ids aparecerán en el reporte de pytest."""
+    assert entrada ** 2 == esperado
+
+# Salida: test_cuadrado[positivo_simple], test_cuadrado[negativo], ...</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Beneficios de la parametrización:</strong>
+                        <ul>
+                            <li><strong>Cobertura exhaustiva:</strong> Pruebas múltiples escenarios fácilmente</li>
+                            <li><strong>Mantenibilidad:</strong> Cambias la lógica en un solo lugar</li>
+                            <li><strong>Claridad:</strong> Los casos de prueba son datos, no código repetido</li>
+                            <li><strong>Reportes detallados:</strong> Cada caso aparece como un test individual</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section id="mocks">
-                    <h2 class="text-primary border-bottom pb-2">Mocks (15 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">3. Mocks - Aislando el Código</h2>
                     
-                    <p>Un <strong>mock</strong> simula objetos reales para aislar el código bajo prueba.</p>
+                    <div class="concept-box">
+                        <h5>¿Qué es un Mock?</h5>
+                        <p>Un <strong>mock</strong> es un objeto simulado que imita el comportamiento de objetos reales de forma controlada. Nos permite:</p>
+                        <ul>
+                            <li><strong>Aislar el código:</strong> Testear una unidad sin depender de otras</li>
+                            <li><strong>Controlar el entorno:</strong> Simular errores, respuestas específicas, timeouts</li>
+                            <li><strong>Evitar efectos secundarios:</strong> No enviar emails reales ni modificar bases de datos</li>
+                            <li><strong>Testear más rápido:</strong> No esperar respuestas de servicios lentos</li>
+                        </ul>
+                        
+                        <p><strong>Ejemplo real:</strong> Testear un servicio de pagos sin hacer cobros reales a tarjetas de crédito.</p>
+                    </div>
 
-                    <pre><code class="language-python">from unittest.mock import Mock, patch
+                    <h3>3.1 Mock Básico con unittest.mock</h3>
 
-# Mock simple
-mock_db = Mock()
-mock_db.obtener_usuario.return_value = {"id": 1, "username": "test"}
-usuario = mock_db.obtener_usuario(1)
-assert usuario["username"] == "test"
-mock_db.obtener_usuario.assert_called_once_with(1)</code></pre>
+                    <p>Python incluye el módulo <code>unittest.mock</code> que proporciona la clase <code>Mock</code>:</p>
 
-                    <h4>Mock con Patch</h4>
-                    <pre><code class="language-python">from unittest.mock import patch
+                    <pre><code class="language-python">from unittest.mock import Mock
 
+# Creamos un mock que simula un repositorio de usuarios
+mock_repositorio = Mock()
+
+# Configuramos qué debe retornar cuando se llame a ciertos métodos
+mock_repositorio.obtener_usuario.return_value = {
+    "id": 1,
+    "username": "testuser",
+    "email": "test@example.com"
+}
+
+mock_repositorio.guardar.return_value = True
+mock_repositorio.existe_usuario.return_value = False
+
+# Usamos el mock como si fuera el objeto real
+usuario = mock_repositorio.obtener_usuario(1)
+print(usuario)  # {'id': 1, 'username': 'testuser', ...}
+
+# Verificamos que el método fue llamado correctamente
+mock_repositorio.obtener_usuario.assert_called_once_with(1)
+mock_repositorio.obtener_usuario.assert_called_with(1)  # Más flexible
+
+# También podemos verificar que NO se llamó otro método
+mock_repositorio.eliminar.assert_not_called()
+
+# Verificamos cuántas veces se llamó un método
+print(mock_repositorio.obtener_usuario.call_count)  # 1</code></pre>
+
+                    <div class="code-explanation">
+                        <strong>¿Qué podemos hacer con un Mock?</strong>
+                        <ul>
+                            <li><code>return_value</code>: Define el valor de retorno</li>
+                            <li><code>side_effect</code>: Define una función a ejecutar o excepción a lanzar</li>
+                            <li><code>assert_called_*</code>: Verifica que se llamó como esperamos</li>
+                            <li><code>call_count</code>: Número de veces que se llamó</li>
+                            <li><code>call_args</code>: Argumentos de la última llamada</li>
+                        </ul>
+                    </div>
+
+                    <h3>3.2 Simulando Excepciones con side_effect</h3>
+
+                    <pre><code class="language-python">from unittest.mock import Mock
+import pytest
+
+mock_servicio = Mock()
+
+# Simulamos diferentes comportamientos por llamada
+mock_servicio.procesar.side_effect = [
+    "ok",           # Primera llamada
+    "ok",           # Segunda llamada
+    Exception("Error de conexión"),  # Tercera llamada - lanza excepción
+    "ok",           # Cuarta llamada
+]
+
+# También podemos usar side_effect con una función
+def comportamiento_condicional(*args, **kwargs):
+    if args[0] > 100:
+        return "valor_grande"
+    return "valor_pequeño"
+
+mock_servicio.calcular.side_effect = comportamiento_condicional
+
+# O lanzar siempre la misma excepción
+mock_servicio.conexion_insegura.side_effect = ConnectionError("Timeout")
+
+def test_maneja_excepcion():
+    with pytest.raises(ConnectionError):
+        mock_servicio.conexion_insegura()</code></pre>
+
+                    <h3>3.3 Patch - Reemplazando Objetos en Tiempo de Ejecución</h3>
+
+                    <p>El decorador/context manager <code>patch</code> es la herramienta más poderosa. Permite <strong>reemplazar temporalmente</strong> objetos reales con mocks:</p>
+
+                    <pre><code class="language-python">from unittest.mock import patch, Mock
+
+# Estructura del código a testear:
+# taskflow/services/usuario_service.py
+class UsuarioService:
+    def __init__(self):
+        from taskflow.repositories import UsuarioRepository
+        self.repo = UsuarioRepository()
+    
+    def crear_usuario(self, username, email):
+        if self.repo.existe_username(username):
+            raise ValueError("Username ya existe")
+        
+        usuario = {"username": username, "email": email}
+        return self.repo.guardar(usuario)
+
+# Test usando patch
 @patch('taskflow.services.usuario_service.UsuarioRepository')
-def test_crear_usuario(MockRepo):
-    """Test que mockea el repositorio."""
+def test_crear_usuario_nuevo(MockRepo):
+    """
+    Reemplazamos UsuarioRepository con un Mock durante este test.
+    
+    Importante: patch recibe la RUTA donde se IMPORTA el objeto,
+    no donde se DEFINE.
+    """
+    # Configuramos el mock
     mock_repo = MockRepo.return_value
-    mock_repo.guardar.return_value = {"id": 1, "username": "newuser"}
+    mock_repo.existe_username.return_value = False
+    mock_repo.guardar.return_value = {"id": 1, "username": "newuser", "email": "new@example.com"}
     
-    service = UsuarioService(mock_repo)
-    usuario = service.crear_usuario("newuser", "new@example.com")
+    # Creamos el servicio (ahora usa el mock automáticamente)
+    service = UsuarioService()
     
-    assert usuario["username"] == "newuser"
-    mock_repo.guardar.assert_called_once()</code></pre>
+    # Ejecutamos
+    resultado = service.crear_usuario("newuser", "new@example.com")
+    
+    # Verificamos
+    assert resultado["username"] == "newuser"
+    mock_repo.existe_username.assert_called_once_with("newuser")
+    mock_repo.guardar.assert_called_once()
 
-                    <h4>Mock de Llamada HTTP</h4>
-                    <pre><code class="language-python">@patch('requests.get')
-def test_obtener_api(mock_get):
-    """Mockea llamada HTTP."""
+def test_username_existente():
+    """Mismo test usando patch como context manager."""
+    with patch('taskflow.services.usuario_service.UsuarioRepository') as MockRepo:
+        mock_repo = MockRepo.return_value
+        mock_repo.existe_username.return_value = True
+        
+        service = UsuarioService()
+        
+        with pytest.raises(ValueError, match="Username ya existe"):
+            service.crear_usuario("existente", "email@example.com")
+        
+        mock_repo.guardar.assert_not_called()</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>⚠️ Regla de Oro del Patch:</strong><br>
+                        Siempre parcha donde se <strong>usa</strong> el objeto, no donde se <strong>define</strong>. Si tu código hace <code>from modulo import Clase</code>, debes parchar <code>'modulo.Clase'</code>. Si hace <code>import modulo; modulo.Clase()</code>, debes parchar <code>'modulo.Clase'</code>.
+                    </div>
+
+                    <h3>3.4 Mock de Llamadas HTTP</h3>
+
+                    <p>Uno de los usos más comunes es mockear llamadas a APIs externas:</p>
+
+                    <pre><code class="language-python">from unittest.mock import patch, Mock
+import requests
+
+# Servicio real que queremos testear
+class WeatherService:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = "https://api.weather.com/v1"
+    
+    def obtener_temperatura(self, ciudad):
+        url = f"{self.base_url}/current?city={ciudad}&apikey={self.api_key}"
+        response = requests.get(url)
+        
+        if response.status_code != 200:
+            raise Exception(f"Error {response.status_code}")
+        
+        data = response.json()
+        return data["temperature"]
+
+@patch('requests.get')
+def test_obtener_temperatura_exitosa(mock_get):
+    """Testeamos el servicio sin hacer llamadas HTTP reales."""
+    
+    # Configuramos el mock de la respuesta
     mock_response = Mock()
     mock_response.status_code = 200
-    mock_response.json.return_value = {"id": 1, "nombre": "Test"}
+    mock_response.json.return_value = {
+        "temperature": 25.5,
+        "city": "Bogotá",
+        "unit": "celsius"
+    }
     mock_get.return_value = mock_response
     
-    from taskflow.services import obtener_desde_api
-    resultado = obtener_desde_api(1)
+    # Ejecutamos
+    service = WeatherService(api_key="test-key")
+    temp = service.obtener_temperatura("Bogotá")
     
-    assert resultado["nombre"] == "Test"</code></pre>
+    # Verificamos
+    assert temp == 25.5
+    mock_get.assert_called_once()
+    
+    # Verificamos que se llamó con la URL correcta
+    llamada = mock_get.call_args
+    assert "Bogotá" in llamada[0][0]  # URL contiene la ciudad
+    assert "test-key" in llamada[0][0]  # URL contiene el API key
+
+@patch('requests.get')
+def test_obtener_temperatura_error(mock_get):
+    """Testeamos el manejo de errores."""
+    
+    mock_response = Mock()
+    mock_response.status_code = 404
+    mock_get.return_value = mock_response
+    
+    service = WeatherService(api_key="test-key")
+    
+    with pytest.raises(Exception, match="Error 404"):
+        service.obtener_temperatura("CiudadInexistente")</code></pre>
+
+                    <h3>3.5 Mock con Autospec - Manteniendo la Interfaz</h3>
+
+                    <p>Por defecto, los mocks aceptan cualquier método. Para ser más estrictos, usamos <code>autospec=True</code>:</p>
+
+                    <pre><code class="language-python">from unittest.mock import patch
+
+class EmailService:
+    def enviar_email(self, destinatario, asunto, cuerpo):
+        pass
+    
+    def verificar_email(self, email):
+        return "@" in email
+
+# Sin autospec: el mock acepta cualquier método
+@patch('taskflow.services.EmailService')
+def test_mock_permisivo(MockService):
+    service = MockService.return_value
+    service.enviar_email("test@test.com", "Hola", "Mundo")
+    service.metodo_que_no_existe()  # ¡Esto no falla! Es peligroso
+
+# Con autospec: el mock respeta la interfaz real
+@patch('taskflow.services.EmailService', autospec=True)
+def test_mock_estricto(MockService):
+    service = MockService.return_value
+    service.enviar_email("test@test.com", "Hola", "Mundo")
+    # service.metodo_que_no_existe()  # ¡Esto falla! AttributeError
+    
+    # También verifica argumentos
+    # service.enviar_email("solo_un_arg")  # ¡Falla! Falta asunto y cuerpo</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>¿Cuándo usar mocks?</strong>
+                        <table class="table table-sm">
+                            <tr><td>✅ APIs externas</td><td>No depender de servicios de terceros</td></tr>
+                            <tr><td>✅ Bases de datos</td><td>Tests más rápidos, datos predecibles</td></tr>
+                            <tr><td>✅ Servicios de email</td><td>No enviar spam en tests</td></tr>
+                            <tr><td>✅ Funciones aleatorias</td><td>Tests determinísticos</td></tr>
+                            <tr><td>✅ Reloj/fecha</td><td>Testear comportamiento temporal</td></tr>
+                            <tr><td>❌ No uses para todo</td><td>Algunos tests deben ser de integración reales</td></tr>
+                        </table>
+                    </div>
                 </section>
 
                 <section id="testclient">
-                    <h2 class="text-primary border-bottom pb-2">TestClient FastAPI (10 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">4. TestClient - Testing de APIs FastAPI</h2>
                     
-                    <p><strong>TestClient</strong> permite testear APIs sin levantar servidor.</p>
+                    <div class="concept-box">
+                        <h5>¿Qué es TestClient?</h5>
+                        <p><strong>TestClient</strong> es una utilidad proporcionada por FastAPI (basada en <code>httpx</code> y <code>starlette</code>) que permite testear APIs <strong>sin levantar un servidor real</strong>.</p>
+                        
+                        <p><strong>Ventajas:</strong></p>
+                        <ul>
+                            <li><strong>Velocidad:</strong> Tests en milisegundos, no segundos</li>
+                            <li><strong>Aislamiento:</strong> Cada test tiene su propio contexto</li>
+                            <li><strong>Facilidad:</strong> No necesitas manejar puertos, procesos, o servidores</li>
+                            <li><strong>Debugging:</strong> Puedes usar pdb normalmente</li>
+                            <li><strong>CI/CD:</strong> Funciona perfectamente en pipelines de integración continua</li>
+                        </ul>
+                    </div>
 
-                    <pre><code class="language-bash">pip install httpx pytest</code></pre>
+                    <h3>4.1 Instalación y Configuración Básica</h3>
 
-                    <pre><code class="language-python">from fastapi.testclient import TestClient
+                    <pre><code class="language-bash"># Instalamos las dependencias necesarias
+pip install httpx pytest</code></pre>
+
+                    <pre><code class="language-python"># taskflow/main.py - Nuestra aplicación FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI(title="TaskFlow API")
+
+class Tarea(BaseModel):
+    id: int | None = None
+    titulo: str
+    descripcion: str = ""
+    completada: bool = False
+
+# Base de datos en memoria para el ejemplo
+tareas_db = []
+id_counter = 1
+
+@app.get("/tareas")
+def listar_tareas():
+    """Lista todas las tareas."""
+    return tareas_db
+
+@app.post("/tareas", status_code=201)
+def crear_tarea(tarea: Tarea):
+    """Crea una nueva tarea."""
+    global id_counter
+    tarea.id = id_counter
+    id_counter += 1
+    tareas_db.append(tarea)
+    return tarea
+
+@app.get("/tareas/{tarea_id}")
+def obtener_tarea(tarea_id: int):
+    """Obtiene una tarea específica."""
+    for tarea in tareas_db:
+        if tarea.id == tarea_id:
+            return tarea
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@app.delete("/tareas/{tarea_id}")
+def eliminar_tarea(tarea_id: int):
+    """Elimina una tarea."""
+    global tareas_db
+    tareas_db = [t for t in tareas_db if t.id != tarea_id]
+    return {"message": "Tarea eliminada"}</code></pre>
+
+                    <h3>4.2 Test Básico con TestClient</h3>
+
+                    <pre><code class="language-python"># tests/test_api.py
+from fastapi.testclient import TestClient
+from taskflow.main import app
+
+# Creamos el cliente de test una sola vez
+client = TestClient(app)
+
+def test_listar_tareas_vacio():
+    """Test: GET /tareas cuando no hay tareas."""
+    response = client.get("/tareas")
+    
+    assert response.status_code == 200
+    assert response.json() == []
+    assert response.headers["content-type"] == "application/json"
+
+def test_crear_tarea():
+    """Test: POST /tareas crea una tarea correctamente."""
+    datos_tarea = {
+        "titulo": "Aprender pytest",
+        "descripcion": "Estudiar fixtures y mocks"
+    }
+    
+    response = client.post("/tareas", json=datos_tarea)
+    
+    assert response.status_code == 201
+    
+    data = response.json()
+    assert data["titulo"] == "Aprender pytest"
+    assert data["descripcion"] == "Estudiar fixtures y mocks"
+    assert data["id"] == 1  # Primera tarea
+    assert data["completada"] is False
+
+def test_obtener_tarea_existente():
+    """Test: GET /tareas/{id} devuelve la tarea correcta."""
+    # Primero creamos una tarea
+    client.post("/tareas", json={"titulo": "Tarea de prueba"})
+    
+    # Luego la obtenemos
+    response = client.get("/tareas/1")
+    
+    assert response.status_code == 200
+    assert response.json()["titulo"] == "Tarea de prueba"
+
+def test_obtener_tarea_no_existe():
+    """Test: GET /tareas/{id} con ID inexistente retorna 404."""
+    response = client.get("/tareas/99999")
+    
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Tarea no encontrada"
+
+def test_eliminar_tarea():
+    """Test: DELETE /tareas/{id} elimina la tarea."""
+    # Creamos y luego eliminamos
+    client.post("/tareas", json={"titulo": "Tarea temporal"})
+    
+    response = client.delete("/tareas/1")
+    assert response.status_code == 200
+    
+    # Verificamos que ya no existe
+    response = client.get("/tareas/1")
+    assert response.status_code == 404</code></pre>
+
+                    <div class="code-explanation">
+                        <strong>Métodos disponibles en TestClient:</strong>
+                        <ul>
+                            <li><code>client.get(url, params, headers)</code></li>
+                            <li><code>client.post(url, json, data, headers, files)</code></li>
+                            <li><code>client.put(url, json, data, headers)</code></li>
+                            <li><code>client.patch(url, json, data, headers)</code></li>
+                            <li><code>client.delete(url, headers)</code></li>
+                        </ul>
+                    </div>
+
+                    <h3>4.3 Usando Fixtures con TestClient</h3>
+
+                    <p>La mejor práctica es crear una fixture que resetee el estado entre tests:</p>
+
+                    <pre><code class="language-python"># tests/conftest.py
+import pytest
+from fastapi.testclient import TestClient
+from taskflow.main import app, tareas_db, id_counter
+
+@pytest.fixture
+def client():
+    """
+    Fixture que proporciona un TestClient limpio.
+    Resetea la base de datos antes de cada test.
+    """
+    # Setup: Limpiamos la BD
+    tareas_db.clear()
+    global id_counter
+    id_counter = 1
+    
+    # Creamos y retornamos el cliente
+    with TestClient(app) as test_client:
+        yield test_client
+    
+    # Teardown: Limpiamos después (opcional, ya que el setup del siguiente test lo hará)
+    tareas_db.clear()
+
+# tests/test_tareas.py
+def test_flujo_completo(client):
+    """
+    Test que verifica todo el flujo CRUD.
+    La BD está limpia gracias a la fixture.
+    """
+    # 1. Lista vacía
+    response = client.get("/tareas")
+    assert response.json() == []
+    
+    # 2. Creamos dos tareas
+    client.post("/tareas", json={"titulo": "Tarea 1"})
+    client.post("/tareas", json={"titulo": "Tarea 2"})
+    
+    # 3. Verificamos que hay 2
+    response = client.get("/tareas")
+    assert len(response.json()) == 2
+    
+    # 4. Eliminamos una
+    client.delete("/tareas/1")
+    
+    # 5. Verificamos que queda 1
+    response = client.get("/tareas")
+    assert len(response.json()) == 1</code></pre>
+
+                    <h3>4.4 Test con Autenticación</h3>
+
+                    <pre><code class="language-python"># tests/test_auth.py
+import pytest
+from fastapi.testclient import TestClient
+from taskflow.main import app
+
+@pytest.fixture
+def client():
+    return TestClient(app)
+
+@pytest.fixture
+def token_autenticacion(client):
+    """Fixture que obtiene un token válido."""
+    response = client.post("/auth/login", json={
+        "username": "testuser",
+        "password": "testpass"
+    })
+    return response.json()["access_token"]
+
+def test_acceso_sin_token(client):
+    """Test: Endpoint protegido sin token retorna 401."""
+    response = client.get("/usuarios/perfil")
+    assert response.status_code == 401
+
+def test_acceso_con_token(client, token_autenticacion):
+    """Test: Endpoint protegido con token válido funciona."""
+    headers = {"Authorization": f"Bearer {token_autenticacion}"}
+    response = client.get("/usuarios/perfil", headers=headers)
+    assert response.status_code == 200
+
+def test_header_malformado(client):
+    """Test: Token malformado retorna 403."""
+    headers = {"Authorization": "Token invalido"}
+    response = client.get("/usuarios/perfil", headers=headers)
+    assert response.status_code == 403</code></pre>
+
+                    <h3>4.5 Test con Dependencias Mockeadas</h3>
+
+                    <p>A veces necesitamos mockear dependencias de FastAPI:</p>
+
+                    <pre><code class="language-python">from unittest.mock import patch, Mock
+from fastapi.testclient import TestClient
 from taskflow.main import app
 
 client = TestClient(app)
 
-def test_listar_tareas():
-    response = client.get("/tareas")
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
+def test_con_db_mockeada():
+    """
+    Test que mockea el repositorio de la base de datos.
+    Útil cuando no queremos usar la BD real.
+    """
+    with patch('taskflow.routers.tareas.TareaRepository') as MockRepo:
+        # Configuramos el mock
+        mock_repo = MockRepo.return_value
+        mock_repo.obtener_todas.return_value = [
+            {"id": 1, "titulo": "Mock 1"},
+            {"id": 2, "titulo": "Mock 2"}
+        ]
+        
+        # Ejecutamos el test
+        response = client.get("/tareas")
+        
+        assert response.status_code == 200
+        assert len(response.json()) == 2
+        assert response.json()[0]["titulo"] == "Mock 1"
+        
+        # Verificamos que se llamó al repositorio
+        mock_repo.obtener_todas.assert_called_once()
 
-def test_crear_tarea():
-    response = client.post(
-        "/tareas",
-        json={"titulo": "Nueva tarea", "descripcion": "Test"}
-    )
-    assert response.status_code == 201
-    data = response.json()
-    assert data["titulo"] == "Nueva tarea"
-
-def test_obtener_tarea_no_existe():
-    response = client.get("/tareas/99999")
-    assert response.status_code == 404</code></pre>
-
-                    <h4>Fixture de TestClient</h4>
-                    <pre><code class="language-python"># tests/conftest.py
-import pytest
-from fastapi.testclient import TestClient
-from taskflow.main import app
-
-@pytest.fixture
-def client():
-    return TestClient(app)
-
-# tests/test_api.py
-def test_con_fixture(client):
-    response = client.get("/")
-    assert response.status_code == 200</code></pre>
+def test_con_servicio_externo_mockeado():
+    """
+    Test que mockea un servicio externo (ej: envío de emails).
+    """
+    with patch('taskflow.services.email_service.send_email') as mock_send:
+        mock_send.return_value = {"message_id": "12345", "status": "sent"}
+        
+        response = client.post("/usuarios", json={
+            "email": "nuevo@example.com",
+            "username": "nuevouser"
+        })
+        
+        assert response.status_code == 201
+        # Verificamos que se envió el email de bienvenida
+        mock_send.assert_called_once()
+        assert "bienvenida" in mock_send.call_args[1]["subject"].lower()</code></pre>
                 </section>
 
-                <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio (5 min)</h2>
-                    
-                    <p>Crear tests para la API de tareas:</p>
-                    <ol>
-                        <li>Usar fixture de TestClient</li>
-                        <li>Parametrizar test de validación</li>
-                        <li>Mockear el repositorio</li>
-                    </ol>
+                <section id="mejores-practicas">
+                    <h2 class="text-primary border-bottom pb-2">5. Mejores Prácticas de Testing</h2>
 
-                    <pre><code class="language-python"># tests/test_tareas.py
-import pytest
-from fastapi.testclient import TestClient
-from unittest.mock import Mock, patch
+                    <h3>5.1 Estructura de Tests (Arrange-Act-Assert)</h3>
 
-@pytest.fixture
-def client():
-    from taskflow.main import app
-    return TestClient(app)
-
-class TestTareasAPI:
-    def test_crear_tarea(self, client):
-        response = client.post("/tareas", json={"titulo": "Test"})
-        assert response.status_code == 201
+                    <pre><code class="language-python">def test_ejemplo_estructurado():
+    """
+    Estructura AAA: Arrange - Act - Assert
+    """
+    # ARRANGE: Preparar el contexto
+    usuario_data = {
+        "username": "testuser",
+        "email": "test@example.com"
+    }
+    servicio = UsuarioService()
     
-    @pytest.mark.parametrize("titulo, valido", [
-        ("", False),      # Vacío
-        ("A", True),      # Válido
-        ("x" * 101, False),  # Muy largo
-    ])
-    def test_validar_titulo(self, client, titulo, valido):
-        response = client.post("/tareas", json={"titulo": titulo})
-        esperado = 201 if valido else 422
-        assert response.status_code == esperado</code></pre>
+    # ACT: Ejecutar la acción a testear
+    resultado = servicio.crear_usuario(**usuario_data)
+    
+    # ASSERT: Verificar los resultados
+    assert resultado["username"] == "testuser"
+    assert resultado["email"] == "test@example.com"
+    assert "id" in resultado</code></pre>
+
+                    <h3>5.2 Nombres Descriptivos</h3>
+
+                    <pre><code class="language-python"># ❌ MAL: Nombre poco descriptivo
+def test1():
+    assert calcular(2, 3) == 5
+
+# ✅ BIEN: Describe qué se testea y el resultado esperado
+def test_suma_dos_numeros_positivos_retorna_resultado_correcto():
+    assert calcular(2, 3) == 5
+
+# ❌ MAL: No indica el escenario
+def test_usuario():
+    assert crear_usuario("test")
+
+# ✅ BIEN: Describe el escenario específico
+def test_crear_usuario_con_email_valido_guarda_en_base_de_datos():
+    assert crear_usuario("test@test.com")</code></pre>
+
+                    <h3>5.3 Un Assert por Test (Idealmente)</h3>
+
+                    <pre><code class="language-python"># ❌ MAL: Múltiples asserts no relacionados
+def test_usuario_completo():
+    usuario = crear_usuario("test", "test@test.com")
+    assert usuario.username == "test"
+    assert usuario.email == "test@test.com"
+    assert usuario.esta_activo() is True
+    assert usuario.ultimo_login is None
+
+# ✅ BIEN: Dividir en tests específicos
+def test_usuario_tiene_username_correcto():
+    usuario = crear_usuario("test", "test@test.com")
+    assert usuario.username == "test"
+
+def test_usuario_nuevo_esta_activo():
+    usuario = crear_usuario("test", "test@test.com")
+    assert usuario.esta_activo() is True
+
+def test_usuario_nuevo_no_ha_iniciado_sesion():
+    usuario = crear_usuario("test", "test@test.com")
+    assert usuario.ultimo_login is None</code></pre>
+
+                    <h3>5.4 Tests Independientes</h3>
+
+                    <div class="alert-warning">
+                        <strong>Nunca hagas que un test dependa de otro:</strong>
+                        <ul>
+                            <li>Cada test debe poder ejecutarse solo</li>
+                            <li>El orden de ejecución no debe importar</li>
+                            <li>Usa fixtures con scope="function" para estado limpio</li>
+                        </ul>
+                    </div>
+
+                    <pre><code class="language-python"># ❌ MAL: Test 2 depende del Test 1
+def test_crear_usuario():
+    global usuario_id
+    usuario = crear_usuario("test")
+    usuario_id = usuario.id
+    assert usuario.id is not None
+
+def test_obtener_usuario():  # Falla si test_crear_usuario no se ejecutó primero
+    usuario = obtener_usuario(usuario_id)
+    assert usuario.username == "test"
+
+# ✅ BIEN: Tests independientes
+def test_crear_usuario():
+    usuario = crear_usuario("test")
+    assert usuario.id is not None
+    assert usuario.username == "test"
+
+def test_obtener_usuario():
+    # Crea su propio usuario
+    usuario_creado = crear_usuario("test2")
+    usuario_obtenido = obtener_usuario(usuario_creado.id)
+    assert usuario_obtenido.username == "test2"</code></pre>
+
+                    <h3>5.5 Cobertura de Tests</h3>
+
+                    <pre><code class="language-bash"># Instalar pytest-cov
+pip install pytest-cov
+
+# Ejecutar tests con cobertura
+pytest --cov=taskflow --cov-report=html --cov-report=term-missing
+
+# Generar reporte en HTML (abrir htmlcov/index.html)
+# Ver porcentaje de líneas cubiertas por tests</code></pre>
 
                     <div class="alert-tip">
-                        <strong>E2:</strong> Entregar tests con cobertura 80% usando fixtures y parametrización.
+                        <strong>Meta de cobertura:</strong> Apunta al 80-90% de cobertura. No busques el 100% a costa de tests triviales. Es mejor tener tests significativos que tests que solo ejecutan código.
                     </div>
                 </section>
 
-                <section>
-                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
-                    <ul>
-                        <li><strong>Fixtures:</strong> Preparan datos reutilizables</li>
-                        <li><strong>Scopes:</strong> Controlan ciclo de vida</li>
-                        <li><strong>Parametrize:</strong> Múltiples casos en un test</li>
-                        <li><strong>Mocks:</strong> Aíslan dependencias externas</li>
-                        <li><strong>TestClient:</strong> Testea APIs sin servidor</li>
-                    </ul>
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio Práctico: Sistema de Gestión de Tareas</h2>
+                    
+                    <div class="concept-box">
+                        <h5>Objetivo</h5>
+                        <p>Crear un conjunto completo de tests para el API de TaskFlow aplicando todos los conceptos aprendidos:</p>
+                        <ul>
+                            <li>Fixtures para preparar datos</li>
+                            <li>Parametrización para múltiples casos</li>
+                            <li>Mocks para aislar dependencias</li>
+                            <li>TestClient para testear la API</li>
+                        </ul>
+                    </div>
+
+                    <h3>Pasos del Ejercicio</h3>
+
+                    <h4>Paso 1: Crear conftest.py</h4>
+                    <pre><code class="language-python"># tests/conftest.py
+import pytest
+from fastapi.testclient import TestClient
+from taskflow.main import app, tareas_db
+
+@pytest.fixture
+def client():
+    """Fixture que proporciona un cliente limpio."""
+    tareas_db.clear()
+    with TestClient(app) as test_client:
+        yield test_client
+
+@pytest.fixture
+def tarea_ejemplo():
+    """Fixture con datos de una tarea de ejemplo."""
+    return {
+        "titulo": "Tarea de prueba",
+        "descripcion": "Descripción de ejemplo",
+        "completada": False
+    }</code></pre>
+
+                    <h4>Paso 2: Test de CRUD Básico</h4>
+                    <pre><code class="language-python"># tests/test_tareas_crud.py
+import pytest
+from fastapi.testclient import TestClient
+
+class TestTareasCRUD:
+    """Tests para operaciones CRUD de tareas."""
+    
+    def test_crear_tarea_retorna_201(self, client, tarea_ejemplo):
+        """Crear tarea debe retornar código 201."""
+        response = client.post("/tareas", json=tarea_ejemplo)
+        assert response.status_code == 201
+    
+    def test_crear_tarea_asigna_id(self, client, tarea_ejemplo):
+        """Crear tarea debe asignar un ID automático."""
+        response = client.post("/tareas", json=tarea_ejemplo)
+        data = response.json()
+        assert "id" in data
+        assert data["id"] is not None
+    
+    def test_listar_tareas_retorna_lista(self, client):
+        """Listar tareas debe retornar una lista."""
+        response = client.get("/tareas")
+        assert response.status_code == 200
+        assert isinstance(response.json(), list)
+    
+    def test_obtener_tarea_existente_retorna_200(self, client, tarea_ejemplo):
+        """Obtener tarea existente debe retornar 200."""
+        created = client.post("/tareas", json=tarea_ejemplo).json()
+        response = client.get(f"/tareas/{created['id']}")
+        assert response.status_code == 200
+    
+    def test_obtener_tarea_no_existente_retorna_404(self, client):
+        """Obtener tarea inexistente debe retornar 404."""
+        response = client.get("/tareas/99999")
+        assert response.status_code == 404</code></pre>
+
+                    <h4>Paso 3: Test Parametrizado de Validaciones</h4>
+                    <pre><code class="language-python"># tests/test_tareas_validacion.py
+import pytest
+
+class TestTareasValidacion:
+    """Tests parametrizados para validaciones."""
+    
+    @pytest.mark.parametrize(
+        "titulo, es_valido, descripcion",
+        [
+            ("Tarea válida", True, "Título normal"),
+            ("A", True, "Mínimo 1 caracter (ajuste según tu validación)"),
+            ("", False, "Título vacío no permitido"),
+            ("x" * 101, False, "Título excede 100 caracteres"),
+            ("   ", False, "Título solo espacios"),
+        ]
+    )
+    def test_validacion_titulo(self, client, titulo, es_valido, descripcion):
+        """Test parametrizado para validaciones de título."""
+        print(f"\n   Probando: {descripcion}")
+        
+        response = client.post("/tareas", json={"titulo": titulo})
+        
+        if es_valido:
+            assert response.status_code == 201, f"Esperado 201, obtenido {response.status_code}"
+        else:
+            assert response.status_code == 422, f"Esperado 422, obtenido {response.status_code}"
+    
+    @pytest.mark.parametrize(
+        "campo_extra",
+        [
+            {"prioridad": "alta"},
+            {"fecha_limite": "2026-12-31"},
+            {"asignado_a": "usuario123"},
+        ]
+    )
+    def test_campos_adicionales_son_ignorados(self, client, campo_extra):
+        """Campos no definidos en el modelo deben ser ignorados."""
+        datos = {"titulo": "Tarea", **campo_extra}
+        response = client.post("/tareas", json=datos)
+        assert response.status_code == 201
+        
+        # Verificar que el campo extra no se guardó
+        tarea = response.json()
+        assert "prioridad" not in tarea
+        assert "fecha_limite" not in tarea</code></pre>
+
+                    <h4>Paso 4: Test con Mocks</h4>
+                    <pre><code class="language-python"># tests/test_tareas_mocks.py
+import pytest
+from unittest.mock import patch, Mock
+
+class TestTareasConMocks:
+    """Tests que utilizan mocks para aislar dependencias."""
+    
+    @patch('taskflow.routers.tareas.enviar_notificacion')
+    def test_crear_tarea_envia_notificacion(self, mock_notificacion, client):
+        """Al crear tarea, debe enviarse una notificación."""
+        mock_notificacion.return_value = {"status": "sent"}
+        
+        response = client.post("/tareas", json={"titulo": "Nueva tarea"})
+        
+        assert response.status_code == 201
+        mock_notificacion.assert_called_once()
+        
+        # Verificar que se envió con el título correcto
+        llamada = mock_notificacion.call_args
+        assert "Nueva tarea" in str(llamada)
+    
+    @patch('taskflow.services.notificacion_service.NotificadorEmail')
+    def test_error_notificacion_no_impide_creacion(self, MockNotificador, client):
+        """Si la notificación falla, la tarea igual debe crearse."""
+        mock_notif = MockNotificador.return_value
+        mock_notif.enviar.side_effect = Exception("Servicio de email caído")
+        
+        response = client.post("/tareas", json={"titulo": "Tarea importante"})
+        
+        # La tarea se crea a pesar del error en notificación
+        assert response.status_code == 201
+        assert response.json()["titulo"] == "Tarea importante"
+    
+    def test_creacion_tarea_con_servicio_externo_mockeado(self, client):
+        """Test completo con múltiples mocks."""
+        with patch('taskflow.routers.tareas.validar_titulo') as mock_validar, \
+             patch('taskflow.routers.tareas.registrar_actividad') as mock_registrar:
+            
+            mock_validar.return_value = True
+            mock_registrar.return_value = {"log_id": 123}
+            
+            response = client.post("/tareas", json={"titulo": "Test"})
+            
+            assert response.status_code == 201
+            mock_validar.assert_called_once_with("Test")
+            mock_registrar.assert_called_once()</code></pre>
+
+                    <h4>Paso 5: Test de Integración</h4>
+                    <pre><code class="language-python"># tests/test_tareas_integracion.py
+import pytest
+
+class TestTareasIntegracion:
+    """Tests de integración que verifican flujos completos."""
+    
+    def test_flujo_completo_ciclo_vida_tarea(self, client):
+        """
+        Test de integración: Crear → Listar → Actualizar → Eliminar.
+        """
+        # 1. Crear tarea
+        response = client.post("/tareas", json={
+            "titulo": "Tarea integración",
+            "descripcion": "Flujo completo"
+        })
+        assert response.status_code == 201
+        tarea_id = response.json()["id"]
+        
+        # 2. Verificar que aparece en la lista
+        response = client.get("/tareas")
+        tareas = response.json()
+        assert any(t["id"] == tarea_id for t in tareas)
+        
+        # 3. Obtener detalle
+        response = client.get(f"/tareas/{tarea_id}")
+        assert response.json()["titulo"] == "Tarea integración"
+        
+        # 4. Marcar como completada
+        response = client.patch(f"/tareas/{tarea_id}", json={"completada": True})
+        assert response.json()["completada"] is True
+        
+        # 5. Eliminar
+        response = client.delete(f"/tareas/{tarea_id}")
+        assert response.status_code == 200
+        
+        # 6. Verificar que ya no existe
+        response = client.get(f"/tareas/{tarea_id}")
+        assert response.status_code == 404
+    
+    def test_concurrente_creacion_tareas(self, client):
+        """Test que crea múltiples tareas y verifica independencia."""
+        tareas_creadas = []
+        
+        # Crear 5 tareas
+        for i in range(5):
+            response = client.post("/tareas", json={"titulo": f"Tarea {i}"})
+            tareas_creadas.append(response.json())
+        
+        # Verificar que cada una tiene ID único
+        ids = [t["id"] for t in tareas_creadas]
+        assert len(ids) == len(set(ids)), "Los IDs deben ser únicos"
+        
+        # Verificar que todas están en la lista
+        response = client.get("/tareas")
+        tareas_listadas = response.json()
+        assert len(tareas_listadas) == 5</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Requisitos para E2:</strong>
+                        <ul>
+                            <li>Cobertura mínima del 80%</li>
+                            <li>Al menos 3 fixtures diferentes</li>
+                            <li>Al menos 5 tests parametrizados</li>
+                            <li>Al menos 3 mocks/patches</li>
+                            <li>Tests de integración completos</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="resumen">
+                    <h2 class="text-primary border-bottom pb-2">Resumen y Checklist</h2>
+                    
+                    <p>Hemos cubierto las técnicas avanzadas de testing con pytest:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <i class="bi bi-box-seam"></i> Fixtures
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Preparan datos/entorno automáticamente</li>
+                                        <li>Usan <code>yield</code> para setup/teardown</li>
+                                        <li>Scopes: function, class, module, session</li>
+                                        <li><code>conftest.py</code> para compartir</li>
+                                        <li>Pueden depender de otras fixtures</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-success text-white">
+                                    <i class="bi bi-layers"></i> Parametrización
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Un test, múltiples casos</li>
+                                        <li>Sintaxis: <code>@pytest.mark.parametrize</code></li>
+                                        <li>Evita código duplicado</li>
+                                        <li>Cada caso aparece individualmente</li>
+                                        <li>Producto cartesiano con múltiples</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-warning text-dark">
+                                    <i class="bi bi-shield-check"></i> Mocks
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Aíslan código de dependencias</li>
+                                        <li><code>Mock()</code> para objetos simulados</li>
+                                        <li><code>@patch</code> para reemplazar</li>
+                                        <li><code>return_value</code> y <code>side_effect</code></li>
+                                        <li>Verificación de llamadas</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header bg-danger text-white">
+                                    <i class="bi bi-lightning-charge"></i> TestClient
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li>Testea APIs sin servidor</li>
+                                        <li>Basado en httpx</li>
+                                        <li>Métodos HTTP completos</li>
+                                        <li>Soporte para headers/auth</li>
+                                        <li>Compatible con mocks</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="mt-4">Checklist de Buenas Prácticas</h3>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check1">
+                        <label class="form-check-label" for="check1">Usar fixtures para evitar repetición</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check2">
+                        <label class="form-check-label" for="check2">Estructurar tests: Arrange-Act-Assert</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check3">
+                        <label class="form-check-label" for="check3">Nombres descriptivos que expliquen el comportamiento</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check4">
+                        <label class="form-check-label" for="check4">Tests independientes (no dependen de otros)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check5">
+                        <label class="form-check-label" for="check5">Un assert por test (idealmente)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check6">
+                        <label class="form-check-label" for="check6">Parametrizar casos de borde y edge cases</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check7">
+                        <label class="form-check-label" for="check7">Usar mocks para dependencias externas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="check8">
+                        <label class="form-check-label" for="check8">Mantener cobertura sobre 80%</label>
+                    </div>
                 </section>
             </main>
         </div>
@@ -339,7 +1653,7 @@ class TestTareasAPI:
 
     <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+            <p class="mb-0">© 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
 
