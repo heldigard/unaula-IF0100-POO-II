@@ -78,6 +78,15 @@
                         
                         <p><strong>Respuesta: BDD con Gherkin.</strong></p>
                     </div>
+
+                    <div class="alert alert-info mt-4">
+                        <h5><i class="bi bi-youtube text-danger"></i> Video Recomendado</h5>
+                        <p>Para entender BDD con Behave y Selenium en Python:</p>
+                        <a href="https://www.youtube.com/watch?v=c00OAUeYbYQ" target="_blank" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-play-circle"></i> Ver "BDD con Behave + Selenium + Python"
+                        </a>
+                        <small class="d-block mt-2 text-muted">Duración: 1:06:25 | Tutorial completo paso a paso</small>
+                    </div>
                 </section>
 
                 <section id="objetivos">
@@ -264,6 +273,36 @@
                         </ol>
                         <p>Ejemplo: BDD define "Usuario puede registrarse" → TDD implementa validaciones, encriptación, etc.</p>
                     </div>
+
+                    <!-- Diagrama Venn TDD vs BDD -->
+                    <div class="card mt-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="bi bi-diagram-2"></i> TDD y BDD se Complementan</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <svg viewBox="0 0 600 400" class="img-fluid" style="max-width: 500px;">
+                                <!-- Círculo TDD -->
+                                <circle cx="200" cy="200" r="120" fill="#dc3545" fill-opacity="0.2" stroke="#dc3545" stroke-width="3"/>
+                                <text x="200" y="110" text-anchor="middle" font-weight="bold" fill="#dc3545">TDD</text>
+                                <text x="200" y="140" text-anchor="middle" font-size="11">Tests Unitarios</text>
+                                <text x="200" y="320" text-anchor="middle" font-size="11">Desarrolladores</text>
+                                
+                                <!-- Círculo BDD -->
+                                <circle cx="400" cy="200" r="120" fill="#0d6efd" fill-opacity="0.2" stroke="#0d6efd" stroke-width="3"/>
+                                <text x="400" y="110" text-anchor="middle" font-weight="bold" fill="#0d6efd">BDD</text>
+                                <text x="400" y="140" text-anchor="middle" font-size="11">Comportamiento</text>
+                                <text x="400" y="320" text-anchor="middle" font-size="11">Todo el equipo</text>
+                                
+                                <!-- Intersección -->
+                                <text x="300" y="185" text-anchor="middle" font-size="12" font-weight="bold">✅ Calidad</text>
+                                <text x="300" y="205" text-anchor="middle" font-size="12" font-weight="bold">✅ Tests</text>
+                                <text x="300" y="225" text-anchor="middle" font-size="12" font-weight="bold">✅ Diseño</text>
+                                
+                                <!-- Leyenda -->
+                                <text x="300" y="370" text-anchor="middle" font-size="12">Usa ambos para máxima cobertura</text>
+                            </svg>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="gherkin">
@@ -335,6 +374,47 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- Diagrama: Flujo Given-When-Then -->
+                    <div class="card mt-4 mb-4">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0"><i class="bi bi-arrow-left-right"></i> Estructura Given-When-Then</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <svg viewBox="0 0 800 200" class="img-fluid" style="max-width: 800px;">
+                                <!-- Given -->
+                                <rect x="50" y="50" width="200" height="100" fill="#e7f3ff" stroke="#0d6efd" stroke-width="3" rx="10"/>
+                                <text x="150" y="85" text-anchor="middle" font-size="18" font-weight="bold" fill="#0d6efd">GIVEN</text>
+                                <text x="150" y="110" text-anchor="middle" font-size="11">Contexto Inicial</text>
+                                <text x="150" y="130" text-anchor="middle" font-size="10" fill="#666">(Precondiciones)</text>
+                                
+                                <!-- Flecha -->
+                                <line x1="250" y1="100" x2="300" y2="100" stroke="#333" stroke-width="3" marker-end="url(#arrow-gherkin)"/>
+                                
+                                <!-- When -->
+                                <rect x="300" y="50" width="200" height="100" fill="#fff3cd" stroke="#ffc107" stroke-width="3" rx="10"/>
+                                <text x="400" y="85" text-anchor="middle" font-size="18" font-weight="bold" fill="#856404">WHEN</text>
+                                <text x="400" y="110" text-anchor="middle" font-size="11">Acción/Evento</text>
+                                <text x="400" y="130" text-anchor="middle" font-size="10" fill="#666">(El usuario hace...)</text>
+                                
+                                <!-- Flecha -->
+                                <line x1="500" y1="100" x2="550" y2="100" stroke="#333" stroke-width="3" marker-end="url(#arrow-gherkin)"/>
+                                
+                                <!-- Then -->
+                                <rect x="550" y="50" width="200" height="100" fill="#d1e7dd" stroke="#198754" stroke-width="3" rx="10"/>
+                                <text x="650" y="85" text-anchor="middle" font-size="18" font-weight="bold" fill="#155724">THEN</text>
+                                <text x="650" y="110" text-anchor="middle" font-size="11">Resultado Esperado</text>
+                                <text x="650" y="130" text-anchor="middle" font-size="10" fill="#666">(Verificaciones)</text>
+                                
+                                <!-- Marcadores de flecha -->
+                                <defs>
+                                    <marker id="arrow-gherkin" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
 
                     <h3>3.2 Estructura de un Feature Completo</h3>
 
@@ -1032,6 +1112,37 @@ behave --dry-run
                             <li>Los tests BDD verifican que "el sistema hace lo correcto"</li>
                             <li>Los tests TDD verifican que "el código funciona correctamente"</li>
                         </ul>
+                    </div>
+
+                    <!-- Videos Recomendados -->
+                    <div class="alert alert-info mt-4">
+                        <h5><i class="bi bi-collection-play text-danger"></i> Videos Recomendados</h5>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title"><i class="bi bi-play-circle text-danger"></i> Introducción a BDD</h6>
+                                        <a href="https://www.youtube.com/watch?v=uu6bx-0WCIc" target="_blank" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-play-circle"></i> Ver "Desarrollo dirigido por comportamiento"
+                                        </a>
+                                        <small class="d-block mt-2 text-muted">5:43 min | NullSafe Architect</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title"><i class="bi bi-play-circle text-danger"></i> Cucumber Básico</h6>
+                                        <a href="https://www.youtube.com/watch?v=dipBw1WAg24" target="_blank" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-play-circle"></i> Ver "Tu primer test en BDD"
+                                        </a>
+                                        <small class="d-block mt-2 text-muted">2:20:03 | Curso completo de BDD</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
