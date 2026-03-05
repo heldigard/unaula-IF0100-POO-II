@@ -16,9 +16,11 @@
         .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
         .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
         .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
-        .ciclo-red { background: #f8d7da; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
-        .ciclo-green { background: #d1e7dd; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
-        .ciclo-refactor { background: #e7f3ff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
+        .ciclo-red { background: #f8d7da; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 5px solid var(--danger); }
+        .ciclo-green { background: #d1e7dd; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 5px solid var(--success); }
+        .ciclo-refactor { background: #e7f3ff; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; border-left: 5px solid var(--info); }
+        .concept-box { background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+        .code-explanation { background: #fff3cd; padding: 0.75rem; border-radius: 4px; margin: 0.5rem 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -26,7 +28,7 @@
         <div class="container">
             <h1>IF0100 - Programación OO II</h1>
             <h2>Unidad 2: Técnicas de Desarrollo</h2>
-            <h3>Clase 1: Introducción a TDD</h3>
+            <h3>Clase 1: Introducción a TDD - Test Driven Development</h3>
             <p class="mt-2">
                 <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 03 de marzo de 2026</span>
                 <span class="badge bg-info text-dark">Semana 5 - Martes (120 minutos)</span>
@@ -47,216 +49,769 @@
                 <nav class="sidebar">
                     <h5>Contenido</h5>
                     <ul class="list-unstyled">
+                        <li><a href="#introduccion" class="text-decoration-none">Introducción</a></li>
                         <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
-                        <li><a href="#tdd" class="text-decoration-none">¿Qué es TDD?</a></li>
-                        <li><a href="#ciclo" class="text-decoration-none">Ciclo Red-Green-Refactor</a></li>
-                        <li><a href="#pytest" class="text-decoration-none">Instalar pytest</a></li>
-                        <li><a href="#ejemplo" class="text-decoration-none">Ejemplo TDD</a></li>
-                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#tdd" class="text-decoration-none">1. ¿Qué es TDD?</a></li>
+                        <li><a href="#ciclo" class="text-decoration-none">2. Ciclo Red-Green-Refactor</a></li>
+                        <li><a href="#pytest" class="text-decoration-none">3. Instalar pytest</a></li>
+                        <li><a href="#ejemplo" class="text-decoration-none">4. Ejemplo TDD</a></li>
+                        <li><a href="#buenas-practicas" class="text-decoration-none">5. Buenas Prácticas</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio Práctico</a></li>
+                        <li><a href="#resumen" class="text-decoration-none">Resumen</a></li>
                     </ul>
                 </nav>
             </aside>
 
             <main class="col-lg-9">
-                <!-- OBJETIVOS -->
+                <section id="introduccion">
+                    <h2 class="text-primary border-bottom pb-2">Introducción</h2>
+                    
+                    <p>Hasta ahora has aprendido a programar escribiendo código primero y probándolo después. ¿Y si te dijéramos que hay una forma mejor? Una forma que produce código más confiable, con menos bugs y más fácil de mantener.</p>
+                    
+                    <div class="concept-box">
+                        <h5>El Problema del Desarrollo Tradicional</h5>
+                        <ol>
+                            <li>Escribes mucho código sin probarlo</li>
+                            <li>Descubres bugs cuando ya es tarde (en producción)</li>
+                            <li>Tienes miedo de refactorizar porque algo puede romperse</li>
+                            <li>La documentación queda desactualizada rápidamente</li>
+                        </ol>
+                        
+                        <p><strong>TDD (Test-Driven Development / Desarrollo Guiado por Pruebas)</strong> invierte este proceso: primero escribes el test, luego el código.</p>
+                    </div>
+                </section>
+
                 <section id="objetivos">
                     <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
                     <p>Al finalizar esta clase, serás capaz de:</p>
                     <ul>
-                        <li>Comprender el ciclo Red-Green-Refactor de TDD</li>
-                        <li>Instalar y configurar pytest</li>
-                        <li>Escribir tests unitarios básicos</li>
-                        <li>Aplicar TDD paso a paso</li>
-                        <li>Testear el modelo Usuario de TaskFlow</li>
+                        <li>Comprender el <strong>propósito y beneficios</strong> de TDD en el desarrollo de software</li>
+                        <li>Aplicar el ciclo <strong>Red-Green-Refactor</strong> paso a paso</li>
+                        <li><strong>Instalar y configurar</strong> pytest en un proyecto Python</li>
+                        <li>Escribir <strong>tests unitarios básicos</strong> usando assert</li>
+                        <li>Diseñar la <strong>interfaz pública</strong> de tus clases pensando en los tests primero</li>
+                        <li>Testear el <strong>modelo Usuario</strong> de TaskFlow usando TDD</li>
                     </ul>
                 </section>
 
-                <!-- TDD -->
                 <section id="tdd">
-                    <h2 class="text-primary border-bottom pb-2">¿Qué es TDD? (10 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">1. ¿Qué es TDD? (15 min)</h2>
                     
-                    <p><strong>TDD (Test-Driven Development / Desarrollo Guiado por Pruebas)</strong> consiste en escribir las pruebas unitarias <em>antes</em> que el código de producción.</p>
+                    <div class="concept-box">
+                        <h5>Definición Formal</h5>
+                        <p><strong>TDD (Test-Driven Development)</strong> es una metodología de desarrollo de software donde escribimos las pruebas unitarias <em>antes</em> de escribir el código de producción. Las pruebas guían el diseño y aseguran que el código cumple con los requisitos desde el inicio.</p>
+                    </div>
 
-                    <h4>Beneficios</h4>
-                    <ul>
-                        <li>✅ Código más confiable y con menos bugs</li>
-                        <li>✅ Diseño mejor pensado (escribes primero la interfaz)</li>
-                        <li>✅ Documentación viva (los tests muestran cómo usar el código)</li>
-                        <li>✅ Refactorización segura (tests detectan errores)</li>
-                    </ul>
+                    <h3>1.1 ¿Por qué usar TDD?</h3>
 
-                    <div class="alert-note">
-                        <strong>Regla de oro:</strong> No escribas código de producción hasta tener un test que falle.
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3 border-success">
+                                <div class="card-header bg-success text-white">
+                                    <i class="bi bi-check-circle"></i> Beneficios
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li><strong>Código más confiable:</strong> Tests verifican cada parte del código</li>
+                                        <li><strong>Menos bugs:</strong> Los encuentras al escribir, no en producción</li>
+                                        <li><strong>Diseño mejor:</strong> Piensas en la interfaz antes de implementar</li>
+                                        <li><strong>Documentación viva:</strong> Los tests muestran cómo usar el código</li>
+                                        <li><strong>Refactor seguro:</strong> Los tests detectan si algo se rompe</li>
+                                        <li><strong>Retroalimentación rápida:</strong> Sabes inmediatamente si funciona</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-3 border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <i class="bi bi-exclamation-triangle"></i> Desafíos
+                                </div>
+                                <div class="card-body">
+                                    <ul class="mb-0">
+                                        <li><strong>Curva de aprendizaje:</strong> Requiere cambiar hábitos</li>
+                                        <li><strong>Tiempo inicial:</strong> Parece más lento al principio</li>
+                                        <li><strong>Disciplina:</strong> Hay que resistir escribir código primero</li>
+                                        <li><strong>Diseño de tests:</strong> Escribir buenos tests es una habilidad</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-note"
+                        <strong>Regla de Oro de TDD:</strong> No escribas código de producción hasta tener un test que falle. No escribas más código de producción del necesario para hacer pasar el test.
+                    </div>
+
+                    <h3>1.2 Analogía: Construir una Casa</h3>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-secondary text-white">Sin TDD</div>
+                                <div class="card-body">
+                                    <p>Construyes toda la casa y luego:</p>
+                                    <ul>
+                                        <li>Descubres que la cocina está muy lejos del comedor</li>
+                                        <li>El baño no tiene suficiente ventilación</li>
+                                        <li>Las puertas son demasiado pequeñas</li>
+                                    </ul>
+                                    <p><strong>Resultado:</strong> Cambios costosos y estructurales.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">Con TDD</div>
+                                <div class="card-body">
+                                    <p>Antes de construir:</p>
+                                    <ul>
+                                        <li>Diseñas planos y los revisas con el cliente (tests)</li>
+                                        <li>Construyes habitación por habitación verificando</li>
+                                        <li>Detectas problemas temprano y barato</li>
+                                    </ul>
+                                    <p><strong>Resultado:</strong> Casa bien diseñada desde el inicio.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- CICLO -->
                 <section id="ciclo">
-                    <h2 class="text-primary border-bottom pb-2">Ciclo Red-Green-Refactor (15 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">2. Ciclo Red-Green-Refactor (20 min)</h2>
                     
+                    <p>El corazón de TDD es un ciclo iterativo de tres pasos. Cada nuevo feature, cada nueva función, sigue este ciclo:</p>
+
                     <div class="ciclo-red">
-                        <h4>🔴 RED: Escribir test que falle</h4>
-                        <ul>
-                            <li>Escribe un test para la funcionalidad deseada</li>
-                            <li>El test debe fallar (la funcionalidad no existe aún)</li>
-                            <li>Verifica que falle por la razón correcta</li>
-                        </ul>
+                        <h4><i class="bi bi-circle-fill text-danger"></i> RED: Escribir el test que falle</h4>
+                        <p><strong>¿Qué hacemos?</strong></p>
+                        <ol>
+                            <li>Piensa en el comportamiento que necesitas implementar</li>
+                            <li>Escribe un test que describe ese comportamiento</li>
+                            <li>El test debe fallar porque la funcionalidad no existe aún</li>
+                            <li>Verifica que falle por la razón correcta (no por error en el test)</li>
+                        </ol>
+                        
+                        <div class="alert-warning">
+                            <strong>Importante:</strong> Ver que el test falle confirma que el test está funcionando correctamente. Si pasa de inmediato, algo está mal.
+                        </div>
                     </div>
 
                     <div class="ciclo-green">
-                        <h4>🟢 GREEN: Hacer pasar el test</h4>
-                        <ul>
-                            <li>Escribe el código mínimo necesario para pasar el test</li>
-                            <li>No importa si el código es feo, solo debe pasar</li>
-                            <li>Todos los tests deben estar verdes (pasando)</li>
-                        </ul>
+                        <h4><i class="bi bi-circle-fill text-success"></i> GREEN: Hacer pasar el test</h4>
+                        <p><strong>¿Qué hacemos?</strong></p>
+                        <ol>
+                            <li>Escribe el <strong>código mínimo necesario</strong> para hacer pasar el test</li>
+                            <li>No importa si el código es "feo" o subóptimo</li>
+                            <li>Puedes hacer trampa temporalmente (hardcodear) si es necesario</li>
+                            <li>Todo lo que importa es: <strong>todos los tests verdes</strong></li>
+                        </ol>
+                        
+                        <div class="alert-tip"
+003e
+                            <strong>Truco:</strong> Si no sabes cómo implementar, escribe la solución más tonta que se te ocurra. Por ejemplo, si el test espera 5, retorna 5 directamente. Luego generalizarás en el refactor.
+                        </div>
                     </div>
 
                     <div class="ciclo-refactor">
-                        <h4>🔵 REFACTOR: Mejorar el código</h4>
-                        <ul>
-                            <li>Mejora el código manteniendo los tests verdes</li>
-                            <li>Elimina duplicación, mejora nombres, simplifica</li>
-                            <li>Si un test falla durante refactor, revierte los cambios</li>
-                        </ul>
+                        <h4><i class="bi bi-circle-fill text-info"></i> REFACTOR: Mejorar el código</h4>
+                        <p><strong>¿Qué hacemos?</strong></p>
+                        <ol>
+                            <li>Ahora que tienes un test verde, mejora el código</li>
+                            <li>Elimina duplicación</li>
+                            <li>Mejora nombres de variables y funciones</li>
+                            <li>Simplifica lógica compleja</li>
+                            <li>Mantén los tests verdes durante todo el proceso</li>
+                        </ol>
+                        
+                        <div class="alert-warning"
+                        >
+                            <strong>Seguridad:</strong> Si un test falla durante el refactor, <strong>deshaz los cambios</strong> y vuelve al código que funcionaba. Luego refactoriza en pasos más pequeños.
+                        </div>
                     </div>
 
-                    <div class="alert-tip">
-                        <strong>Repite:</strong> Red → Green → Refactor → Red (siguiente feature)
+                    <div class="text-center my-4"
+003e
+                        <h5>Flujo del Ciclo</h5>
+                        <div class="d-flex justify-content-center align-items-center"
+003e
+                            <div class="badge bg-danger p-3 mx-2">RED</div>
+                            <i class="bi bi-arrow-right fs-4"></i>
+                            <div class="badge bg-success p-3 mx-2">GREEN</div>
+                            <i class="bi bi-arrow-right fs-4"></i>
+                            <div class="badge bg-info p-3 mx-2">REFACTOR</div>
+                            <i class="bi bi-arrow-right fs-4"></i>
+                            <div class="badge bg-danger p-3 mx-2">RED</div>
+                            <i class="bi bi-arrow-repeat fs-4"></i>
+                        </div>
+                        <p class="text-muted mt-2">Repite para cada nueva funcionalidad</p>
                     </div>
                 </section>
 
-                <!-- PYTEST -->
                 <section id="pytest">
-                    <h2 class="text-primary border-bottom pb-2">Instalar pytest (10 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">3. Instalar y Configurar pytest (15 min)</h2>
                     
-                    <h4>Instalación</h4>
+                    <p><strong>pytest</strong> es el framework de testing más popular de Python. Es simple, potente y extensible.</p>
+
+                    <h3>3.1 Instalación</h3>
+
                     <pre><code class="language-bash"># Instalar pytest
 pip install pytest
 
 # Verificar instalación
-pytest --version</code></pre>
+pytest --version
 
-                    <h4>Convenciones</h4>
-                    <ul>
-                        <li>Archivos de test: <code>test_*.py</code> o <code>*_test.py</code></li>
-                        <li>Funciones de test: <code>def test_nombre():</code></li>
-                        <li>Clases de test: <code>class TestNombre:</code></li>
-                    </ul>
+# Instalar plugins útiles (opcional)
+pip install pytest-cov        # Para cobertura de código
+pip install pytest-xdist      # Para ejecutar tests en paralelo</code></pre>
 
-                    <h4>Primer Test</h4>
+                    <h3>3.2 Convenciones de pytest</h3>
+
+                    <p>pytest descubre automáticamente los tests siguiendo estas convenciones:</p>
+
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Elemento</th>
+                                <th>Convención</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Archivos de test</td>
+                                <td><code>test_*.py</code> o <code>*_test.py</code></td>
+                                <td><code>test_calculadora.py</code></td>
+                            </tr>
+                            <tr>
+                                <td>Funciones de test</td>
+                                <td><code>def test_nombre():</code></td>
+                                <td><code>def test_suma():</code></td>
+                            </tr>
+                            <tr>
+                                <td>Clases de test</td>
+                                <td><code>class TestNombre:</code></td>
+                                <td><code>class TestCalculadora:</code></td>
+                            </tr>
+                            <tr>
+                                <td>Métodos de test</td>
+                                <td><code>def test_nombre(self):</code></td>
+                                <td><code>def test_multiplicar(self):</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>3.3 Primer Test con pytest</h3>
+
                     <pre><code class="language-python"># test_calculadora.py
+# Nota: El nombre del archivo comienza con 'test_'
 
 def test_suma():
-    assert 1 + 1 == 2
+    """
+    Test simple que verifica que 1 + 1 = 2.
+    En pytest, usamos 'assert' directamente (no necesitamos unittest.TestCase).
+    """
+    resultado = 1 + 1
+    assert resultado == 2
 
 def test_resta():
+    """Test que verifica resta."""
     assert 5 - 3 == 2
 
 def test_multiplicacion():
-    assert 4 * 3 == 12</code></pre>
+    """Test que verifica multiplicación."""
+    assert 4 * 3 == 12
+    
+def test_division():
+    """Test que verifica división."""
+    assert 10 / 2 == 5.0</code></pre>
 
-                    <pre><code class="language-bash"># Ejecutar tests
-pytest test_calculadora.py -v
+                    <h3>3.4 Ejecutar Tests</h3>
 
-# Salida:
+                    <pre><code class="language-bash"># Ejecutar todos los tests en el directorio actual
+pytest
+
+# Ejecutar con verbose (más detalle)
+pytest -v
+
+# Ejecutar un archivo específico
+pytest test_calculadora.py
+
+# Ejecutar una función específica
+pytest test_calculadora.py::test_suma
+
+# Ejecutar tests que coincidan con un patrón
+pytest -k "suma or resta"
+
+# Ejecutar mostrando prints (útil para debugging)
+pytest -s
+
+# Salida esperada con -v:
 # test_calculadora.py::test_suma PASSED
 # test_calculadora.py::test_resta PASSED
-# test_calculadora.py::test_multiplicacion PASSED</code></pre>
+# test_calculadora.py::test_multiplicacion PASSED
+# test_calculadora.py::test_division PASSED</code></pre>
+
+                    <h3>3.5 Mensajes de Error Claros</h3>
+
+                    <p>Una ventaja de pytest es que cuando un test falla, te da información muy útil:</p>
+
+                    <pre><code class="language-python"># test_ejemplo_falla.py
+
+def test_ejemplo_falla():
+    resultado = 2 + 2
+    assert resultado == 5, "La suma debería ser 4, no 5"
+
+# Al ejecutar, verás:
+# >       assert resultado == 5, "La suma debería ser 4, no 5"
+# E       AssertionError: La suma debería ser 4, no 5
+# E       assert 4 == 5
+# E        +  where 4 = resultado</code></pre>
                 </section>
 
-                <!-- EJEMPLO -->
                 <section id="ejemplo">
-                    <h2 class="text-primary border-bottom pb-2">Ejemplo TDD: Calculadora (20 min)</h2>
+                    <h2 class="text-primary border-bottom pb-2">4. Ejemplo TDD Completo: Calculadora (30 min)</h2>
                     
-                    <h4>Paso 1: RED - Escribir test</h4>
+                    <p>Vamos a implementar una calculadora paso a paso usando TDD. Cada funcionalidad seguirá el ciclo Red-Green-Refactor.</p>
+
+                    <h3>4.1 Funcionalidad: Suma</h3>
+
+                    <h4>Paso 1: RED - Escribir test que falle</h4>
                     <pre><code class="language-python"># test_calculadora.py
 
-def test_suma():
-    from calculadora import suma
-    assert suma(2, 3) == 5</code></pre>
+def test_suma_dos_numeros_positivos():
+    """
+    Test para sumar dos números positivos.
+    </p>
+    <pre><code class="language-bash">$ pytest test_calculadora.py::test_suma_dos_numeros_positivos -v
 
-                    <pre><code class="language-bash">$ pytest test_calculadora.py
 # ERROR: ModuleNotFoundError: No module named 'calculadora'
-# ✅ RED - El test falla como esperamos</code></pre>
+# ✅ RED - El test falla como esperamos porque el módulo no existe</code></pre>
 
                     <h4>Paso 2: GREEN - Implementar mínimo</h4>
                     <pre><code class="language-python"># calculadora.py
 
 def suma(a, b):
-    return a + b  # Mínimo para pasar el test</code></pre>
+    """
+    Suma dos números.
+    
+    Args:
+        a: Primer número
+        b: Segundo número
+    
+    Returns:
+        La suma de a y b
+    """
+    return a + b  # Implementación mínima para pasar el test</code></pre>
 
-                    <pre><code class="language-bash">$ pytest test_calculadora.py
-# PASSED
-# ✅ GREEN - El test pasa</code></pre>
+                    <pre><code class="language-bash">$ pytest test_calculadora.py::test_suma_dos_numeros_positivos -v
+# test_calculadora.py::test_suma_dos_numeros_positivos PASSED
+# ✅ GREEN - El test pasa, ¡excelente!</code></pre>
 
-                    <h4>Paso 3: REFACTOR - Mejorar (si es necesario)</h4>
-                    <p>En este caso, el código es simple. No necesita refactor.</p>
+                    <h4>Paso 3: REFACTOR - En este caso, el código es simple</h4>
+                    <p>La implementación <code>return a + b</code> ya es limpia. No necesitamos refactorizar.</p>
 
-                    <h4>Paso 4: Siguiente feature - Resta</h4>
+                    <h3>4.2 Funcionalidad: Resta</h3>
+
+                    <h4>RED</h4>
                     <pre><code class="language-python"># test_calculadora.py
 
-def test_suma():
+def test_suma_dos_numeros_positivos():
     from calculadora import suma
     assert suma(2, 3) == 5
 
-def test_resta():
+def test_resta_dos_numeros():
+    """Test para restar dos números."""
     from calculadora import resta
-    assert resta(5, 3) == 2  # 🔴 RED</code></pre>
+    assert resta(5, 3) == 2  # 🔴 RED - ImportError: no existe 'resta'
+</code></pre>
 
+                    <h4>GREEN</h4>
                     <pre><code class="language-python"># calculadora.py
 
 def suma(a, b):
     return a + b
 
 def resta(a, b):
+    """Resta dos números."""
     return a - b  # 🟢 GREEN</code></pre>
+
+                    <h3>4.3 Funcionalidad: Multiplicación y División</h3>
+
+                    <pre><code class="language-python"># test_calculadora.py
+
+def test_multiplicacion():
+    from calculadora import multiplicacion
+    assert multiplicacion(4, 3) == 12
+
+def test_division():
+    from calculadora import division
+    assert division(10, 2) == 5.0
+
+def test_division_por_cero():
+    """Test importante: división por cero debe lanzar excepción."""
+    from calculadora import division
+    import pytest
+    
+    with pytest.raises(ValueError, match="No se puede dividir por cero"):
+        division(10, 0)
+</code></pre>
+
+                    <pre><code class="language-python"># calculadora.py
+
+def multiplicacion(a, b):
+    """Multiplica dos números."""
+    return a * b
+
+def division(a, b):
+    """
+    Divide dos números.
+    
+    Raises:
+        ValueError: Si b es cero.
+    """
+    if b == 0:
+        raise ValueError("No se puede dividir por cero")
+    return a / b</code></pre>
+
+                    <h3>4.4 Código Final de Calculadora</h3>
+
+                    <pre><code class="language-python"># calculadora.py
+"""
+Módulo calculadora - Ejemplo TDD completo.
+
+Este módulo fue desarrollado siguiendo TDD, donde cada función
+fue implementada después de escribir su test correspondiente.
+"""
+
+def suma(a, b):
+    """
+    Suma dos números.
+    
+    Args:
+        a: Primer número (int o float)
+        b: Segundo número (int o float)
+    
+    Returns:
+        La suma de a y b
+    
+    Examples:
+        >>> suma(2, 3)
+        5
+        >>> suma(-1, 1)
+        0
+    """
+    return a + b
+
+
+def resta(a, b):
+    """
+    Resta dos números.
+    
+    Args:
+        a: Primer número
+        b: Segundo número
+    
+    Returns:
+        La diferencia a - b
+    """
+    return a - b
+
+
+def multiplicacion(a, b):
+    """
+    Multiplica dos números.
+    
+    Args:
+        a: Primer número
+        b: Segundo número
+    
+    Returns:
+        El producto de a y b
+    """
+    return a * b
+
+
+def division(a, b):
+    """
+    Divide dos números.
+    
+    Args:
+        a: Dividendo
+        b: Divisor
+    
+    Returns:
+        El cociente de a / b
+    
+    Raises:
+        ValueError: Si b es cero
+    
+    Examples:
+        >>> division(10, 2)
+        5.0
+        >>> division(7, 2)
+        3.5
+    """
+    if b == 0:
+        raise ValueError("No se puede dividir por cero")
+    return a / b</code></pre>
                 </section>
 
-                <!-- EJERCICIO -->
-                <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Testear Usuario (15 min)</h2>
-                    
-                    <p>Aplica TDD para testear el modelo Usuario.</p>
+                <section id="buenas-practicas">
+                    <h2 class="text-primary border-bottom pb-2">5. Buenas Prácticas de TDD</h2>
 
-                    <h4>Tests a escribir</h4>
-                    <ul>
-                        <li>Crear usuario con datos válidos</li>
+                    <h3>5.1 Tests Pequeños y Específicos</h3>
+
+                    <pre><code class="language-python"># ❌ MAL: Test que hace muchas cosas
+def test_usuario():
+    usuario = Usuario("juan", "juan@email.com")
+    assert usuario.username == "juan"
+    assert usuario.email == "juan@email.com"
+    assert usuario.activo is True
+    usuario.desactivar()
+    assert usuario.activo is False
+    usuario.cambiar_email("nuevo@email.com")
+    assert usuario.email == "nuevo@email.com"
+
+# ✅ BIEN: Tests pequeños y específicos
+def test_usuario_se_crea_con_datos_correctos():
+    usuario = Usuario("juan", "juan@email.com")
+    assert usuario.username == "juan"
+    assert usuario.email == "juan@email.com"
+
+def test_usuario_nuevo_esta_activo():
+    usuario = Usuario("juan", "juan@email.com")
+    assert usuario.activo is True
+
+def test_desactivar_usuario_lo_desactiva():
+    usuario = Usuario("juan", "juan@email.com")
+    usuario.desactivar()
+    assert usuario.activo is False</code></pre>
+
+                    <h3>5.2 Nombres de Tests Descriptivos</h3>
+
+                    <pre><code class="language-python"># ❌ MAL: Nombre poco claro
+def test1():
+    assert suma(2, 2) == 4
+
+# ✅ BIEN: Nombre describe el comportamiento
+def test_suma_dos_numeros_positivos_retorna_resultado_correcto():
+    assert suma(2, 2) == 4
+
+# ❌ MAL
+def test_division():
+    with pytest.raises(ValueError):
+        division(10, 0)
+
+# ✅ BIEN
+def test_division_por_cero_lanza_valueerror():
+    with pytest.raises(ValueError):
+        division(10, 0)</code></pre>
+
+                    <h3>5.3 Un Assert por Test (Ideal)</h3>
+
+                    <div class="alert-tip"
+                    >
+                        <strong>Regla general:</strong> Un test debería verificar un solo concepto. Si falla, debe ser obvio qué salió mal.
+                    </div>
+
+                    <h3>5.4 Tests Independientes</h3>
+
+                    <pre><code class="language-python"># ❌ MAL: Tests dependientes (no hacer esto)
+usuario_id = None
+
+def test_crear_usuario():
+    global usuario_id
+    usuario = crear_usuario("test")
+    usuario_id = usuario.id
+    assert usuario.id is not None
+
+def test_obtener_usuario():  # Depende del anterior
+    usuario = obtener_usuario(usuario_id)
+    assert usuario.username == "test"
+
+# ✅ BIEN: Tests independientes
+def test_crear_usuario_retorna_usuario_con_id():
+    usuario = crear_usuario("test")
+    assert usuario.id is not None
+    assert usuario.username == "test"
+
+def test_obtener_usuario_existente_retorna_usuario():
+    # Crea su propio usuario
+    usuario_creado = crear_usuario("test2")
+    # Obtiene ese mismo usuario
+    usuario_obtenido = obtener_usuario(usuario_creado.id)
+    assert usuario_obtenido.username == "test2"</code></pre>
+
+                    <h3>5.5 Primero el Test Más Simple</h3>
+
+                    <p>Cuando implementes una nueva funcionalidad:</p>
+                    <ol>
+                        <li>Empieza con el caso más simple y feliz</li>
+                        <li>Luego agrega casos límite</li>
+                        <li>Finalmente agrega casos de error</li>
+                    </ol>
+
+                    <pre><code class="language-python"># Orden recomendado:
+def test_suma_numeros_positivos():
+    assert suma(2, 3) == 5  # Caso feliz simple
+
+def test_suma_con_cero():
+    assert suma(5, 0) == 5  # Caso límite
+
+def test_suma_numeros_negativos():
+    assert suma(-2, -3) == -5  # Otro caso</code></pre>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Testear Modelo Usuario con TDD (30 min)</h2>
+                    
+                    <p>Aplica TDD para implementar el modelo <code>Usuario</code> de TaskFlow.</p>
+
+                    <h3>Requisitos del Modelo Usuario</h3>
+
+                    <ol>
+                        <li>Crear usuario con datos válidos (username, email, nombre completo)</li>
                         <li>Username debe tener al menos 3 caracteres</li>
-                        <li>Email debe contener "@"</li>
+                        <li>Email debe contener "@" y tener dominio válido</li>
                         <li>Usuario se crea activo por defecto</li>
-                    </ul>
+                        <li>Puede activarse y desactivarse</li>
+                        <li>Puede cambiar su email</li>
+                    </ol>
+
+                    <h3>Tests a Implementar</h3>
 
                     <pre><code class="language-python"># test_usuario.py
 import pytest
 from usuario import Usuario
 
 class TestUsuario:
-    def test_crear_usuario_valido(self):
-        u = Usuario("juan123", "juan@email.com", "Juan Pérez")
-        assert u.username == "juan123"
-        assert u.email == "juan@email.com"
-        assert u.activo is True
+    """Tests para el modelo Usuario."""
     
-    def test_username_muy_corto(self):
-        with pytest.raises(ValueError):
-            Usuario("ab", "juan@email.com")
-    
-    def test_email_invalido(self):
-        with pytest.raises(ValueError):
-            Usuario("juan123", "email-sin-arroba")
-    
-    def test_activar_desactivar(self):
-        u = Usuario("juan", "juan@email.com")
-        assert u.esta_activo() is True
+    def test_crear_usuario_con_datos_validos(self):
+        """Usuario se crea correctamente con datos válidos."""
+        usuario = Usuario("juan123", "juan@email.com", "Juan Pérez")
         
-        u.desactivar()
-        assert u.esta_activo() is False
+        assert usuario.username == "juan123"
+        assert usuario.email == "juan@email.com"
+        assert usuario.nombre_completo == "Juan Pérez"
+        assert usuario.activo is True  # Por defecto activo
+    
+    def test_username_muy_corto_lanza_error(self):
+        """Username con menos de 3 caracteres lanza ValueError."""
+        with pytest.raises(ValueError, match="Username debe tener al menos 3 caracteres"):
+            Usuario("ab", "juan@email.com", "Juan Pérez")
+    
+    def test_email_sin_arroba_lanza_error(self):
+        """Email sin @ lanza ValueError."""
+        with pytest.raises(ValueError, match="Email inválido"):
+            Usuario("juan123", "email-sin-arroba", "Juan Pérez")
+    
+    def test_email_sin_dominio_lanza_error(self):
+        """Email sin dominio después de @ lanza ValueError."""
+        with pytest.raises(ValueError, match="Email inválido"):
+            Usuario("juan123", "juan@", "Juan Pérez")
+    
+    def test_desactivar_usuario_lo_desactiva(self):
+        """Desactivar cambia estado a inactivo."""
+        usuario = Usuario("juan123", "juan@email.com", "Juan Pérez")
+        assert usuario.esta_activo() is True
         
-        u.activar()
-        assert u.esta_activo() is True</code></pre>
+        usuario.desactivar()
+        
+        assert usuario.activo is False
+        assert usuario.esta_activo() is False
+    
+    def test_activar_usuario_lo_activa(self):
+        """Activar cambia estado a activo."""
+        usuario = Usuario("juan123", "juan@email.com", "Juan Pérez")
+        usuario.desactivar()
+        assert usuario.esta_activo() is False
+        
+        usuario.activar()
+        
+        assert usuario.activo is True
+        assert usuario.esta_activo() is True
+    
+    def test_cambiar_email_valido_actualiza_email(self):
+        """Cambiar email actualiza el email correctamente."""
+        usuario = Usuario("juan123", "juan@email.com", "Juan Pérez")
+        
+        usuario.cambiar_email("nuevo@email.com")
+        
+        assert usuario.email == "nuevo@email.com"
+    
+    def test_cambiar_email_invalido_lanza_error(self):
+        """Cambiar a email inválido lanza ValueError."""
+        usuario = Usuario("juan123", "juan@email.com", "Juan Pérez")
+        
+        with pytest.raises(ValueError, match="Email inválido"):
+            usuario.cambiar_email("email-invalido")
+    
+    def test_dos_usuarios_con_mismo_username_son_diferentes(self):
+        """Dos usuarios son diferentes objetos aunque tengan mismos datos."""
+        usuario1 = Usuario("juan123", "juan1@email.com", "Juan")
+        usuario2 = Usuario("juan123", "juan2@email.com", "Juan")
+        
+        assert usuario1 is not usuario2</code></pre>
 
-                    <h4>Comandos útiles</h4>
+                    <h3>Implementación Sugerida</h3>
+
+                    <pre><code class="language-python"># usuario.py
+
+class Usuario:
+    """
+    Representa un usuario en el sistema TaskFlow.
+    
+    Attributes:
+        username: Identificador único del usuario
+        email: Correo electrónico del usuario
+        nombre_completo: Nombre completo del usuario
+        activo: Indica si el usuario está activo
+    """
+    
+    def __init__(self, username: str, email: str, nombre_completo: str):
+        # Validaciones
+        if len(username) < 3:
+            raise ValueError("Username debe tener al menos 3 caracteres")
+        
+        if "@" not in email or "." not in email.split("@")[-1]:
+            raise ValueError("Email inválido")
+        
+        self.username = username
+        self.email = email
+        self.nombre_completo = nombre_completo
+        self.activo = True
+    
+    def esta_activo(self) -> bool:
+        """Retorna True si el usuario está activo."""
+        return self.activo
+    
+    def desactivar(self):
+        """Desactiva el usuario."""
+        self.activo = False
+    
+    def activar(self):
+        """Activa el usuario."""
+        self.activo = True
+    
+    def cambiar_email(self, nuevo_email: str):
+        """
+        Cambia el email del usuario.
+        
+        Args:
+            nuevo_email: Nuevo correo electrónico
+            
+        Raises:
+            ValueError: Si el email es inválido
+        """
+        if "@" not in nuevo_email or "." not in nuevo_email.split("@")[-1]:
+            raise ValueError("Email inválido")
+        
+        self.email = nuevo_email</code></pre>
+
+                    <h3>Comandos Útiles</h3>
+
                     <pre><code class="language-bash"># Ejecutar todos los tests
 pytest
 
@@ -267,31 +822,82 @@ pytest -v
 pytest test_usuario.py
 
 # Ejecutar una función específica
-pytest test_usuario.py::test_crear_usuario_valido
+pytest test_usuario.py::test_crear_usuario_con_datos_validos
+
+# Ejecutar una clase de test completa
+pytest test_usuario.py::TestUsuario
 
 # Ver cobertura (necesitas pytest-cov)
-pytest --cov=usuario --cov-report=html</code></pre>
+pytest --cov=usuario --cov-report=html
+# Abre htmlcov/index.html en tu navegador</code></pre>
 
-                    <div class="alert-note">
-                        <strong>Conexión con TaskFlow:</strong> Todo el proyecto debe tener tests. La Evaluación 2 (15%) se basa en la calidad de tus tests y cobertura de código.
+                    <div class="alert-note"
+                    >
+                        <strong>Conexión con TaskFlow:</strong> Todo el proyecto TaskFlow debe tener tests. La Evaluación 2 (15%) se basa en la calidad de tus tests y cobertura de código. <strong>Meta mínima: 80% de cobertura</strong>.
                     </div>
                 </section>
 
-                <!-- RESUMEN -->
-                <section>
-                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                <section id="resumen">
+                    <h2 class="text-primary border-bottom pb-2">Resumen y Checklist</h2>
                     
-                    <ul>
-                        <li><strong>TDD:</strong> Tests primero, código después</li>
-                        <li><strong>Red:</strong> Escribe test que falle</li>
-                        <li><strong>Green:</strong> Código mínimo para pasar</li>
-                        <li><strong>Refactor:</strong> Mejora manteniendo tests verdes</li>
-                        <li><strong>pytest:</strong> Framework de testing para Python</li>
-                        <li><strong>assert:</strong> Verifica que algo sea True</li>
-                    </ul>
+                    <div class="row"
+003e
+                        <div class="col-md-6"
+003e
+                            <h4>Conceptos Clave</h4>
+                            <ul>
+                                <li><strong>TDD:</strong> Tests primero, código después</li>
+                                <li><strong>RED:</strong> Escribe test que falle</li>
+                                <li><strong>GREEN:</strong> Código mínimo para pasar</li>
+                                <li><strong>REFACTOR:</strong> Mejora manteniendo tests verdes</li>
+                                <li><strong>pytest:</strong> Framework de testing para Python</li>
+                                <li><strong>assert:</strong> Verifica condiciones en tests</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6"
+003e
+                            <h4>Checklist</h4>
+                            <div class="form-check"
+003e
+                                <input class="form-check-input" type="checkbox" id="chk1"
+003e
+                                <label class="form-check-label" for="chk1"
+003eEntiendo el ciclo Red-Green-Refactor</label>
+                            </div>
+                            <div class="form-check"
+003e
+                                <input class="form-check-input" type="checkbox" id="chk2"
+003e
+                                <label class="form-check-label" for="chk2"
+003eInstalé pytest correctamente</label>
+                            </div>
+                            <div class="form-check"
+003e
+                                <input class="form-check-input" type="checkbox" id="chk3"
+003e
+                                <label class="form-check-label" for="chk3"
+003eEscrí tests antes que código</label>
+                            </div>
+                            <div class="form-check"
+003e
+                                <input class="form-check-input" type="checkbox" id="chk4"
+003e
+                                <label class="form-check-label" for="chk4"
+003eImplementé la calculadora completa</label>
+                            </div>
+                            <div class="form-check"
+003e
+                                <input class="form-check-input" type="checkbox" id="chk5"
+003e
+                                <label class="form-check-label" for="chk5"
+003eComencé el modelo Usuario</label>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <div class="alert-tip">
-                        <strong>Práctica:</strong> Antes de la próxima clase, escribe tests para la clase Calculadora completa (suma, resta, multiplicación, división, división por cero).
+                    <div class="alert-tip mt-4"
+                    >
+                        <strong>Práctica para Casa:</strong> Antes de la próxima clase, completa los tests para la clase Calculadora (suma, resta, multiplicación, división, división por cero) e implementa al menos 5 tests para el modelo Usuario. Trae tus dudas a la siguiente clase.
                     </div>
                 </section>
             </main>
@@ -299,10 +905,13 @@ pytest --cov=usuario --cov-report=html</code></pre>
     </div>
 
     <!-- Navegación entre clases -->
-    <div class="container mt-4 mb-4">
-        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+    <div class="container mt-4 mb-4"
+003e
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded"
+003e
             <div>
-                <a href="../unidad-01/clase-04-clases-abstractas.html" class="btn btn-outline-secondary btn-sm">
+                <a href="../unidad-01/clase-04-clases-abstractas.html" class="btn btn-outline-secondary btn-sm"
+003e
                     ← Anterior: Clases Abstractas
                 </a>
             </div>
@@ -310,16 +919,19 @@ pytest --cov=usuario --cov-report=html</code></pre>
                 <span class="text-muted small">Clase 7 de 25</span>
             </div>
             <div>
-                <a href="clase-02-pytest-avanzado.html" class="btn btn-primary btn-sm">
+                <a href="clase-02-pytest-avanzado.html" class="btn btn-primary btn-sm"
+003e
                     Siguiente: pytest Avanzado →
                 </a>
             </div>
         </div>
     </div>
 
-    <footer class="bg-light text-center py-3 mt-5">
-        <div class="container">
-            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+    <footer class="bg-light text-center py-3 mt-5"
+003e
+        <div class="container"
+003e
+            <p class="mb-0">© 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
 
