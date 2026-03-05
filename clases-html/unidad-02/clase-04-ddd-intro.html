@@ -38,7 +38,7 @@
             </p>
             <p class="mt-2">
                 <a href="../evaluaciones/evaluacion-02-testing.html" class="badge bg-danger text-decoration-none p-2 fs-6"
-003e
+>
                     <i class="bi bi-clipboard-check"></i> E2: Testing y Calidad - Entrega Hoy (12/03/2026)
                 </a>
             </p>
@@ -46,16 +46,16 @@
     </header>
 
     <div class="container mt-4"
-003e
+>
         <div class="row"
-003e
+>
             <aside class="col-lg-3"
-003e
+>
                 <nav class="sidebar"
-003e
+>
                     <h5>Contenido</h5>
                     <ul class="list-unstyled"
-003e
+>
                         <li><a href="#introduccion">Introducción</a></li>
                         <li><a href="#objetivos">Objetivos</a></li>
                         <li><a href="#teoria">1. ¿Qué es DDD?</a></li>
@@ -70,15 +70,15 @@
             </aside>
 
             <main class="col-lg-9"
-003e
+>
                 <section id="introduccion"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Introducción</h2>
                     
                     <p>Hasta ahora has aprendido a escribir código organizado en clases y objetos. Pero cuando los proyectos crecen, surge una pregunta: <strong>¿Cómo organizamos todo el código?</strong></p>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>El Problema del Código Desorganizado</h5>
                         <p>Imagina que en TaskFlow tienes:</p>
                         <ul>
@@ -93,7 +93,7 @@
                 </section>
 
                 <section id="objetivos"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
                     <p>Al finalizar esta clase, serás capaz de:</p>
                     <ul>
@@ -107,11 +107,11 @@
                 </section>
 
                 <section id="teoria"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">1. ¿Qué es DDD? (15 min)</h2>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>Definición</h5>
                         <p><strong>DDD (Domain-Driven Design / Diseño Guiado por el Dominio)</strong> es un enfoque de desarrollo de software que <strong>pone el foco en el dominio del problema</strong> y la lógica de negocio, manteniéndolos aislados de detalles técnicos como bases de datos, frameworks o interfaces de usuario.</p>
                         
@@ -121,17 +121,17 @@
                     <h3>1.1 Principios Fundamentales</h3>
 
                     <div class="row"
-003e
+>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100 border-primary"
-003e
+>
                                 <div class="card-header bg-primary text-white"
-003e
+>
                                     <i class="bi bi-chat-quote"></i> Ubiquitous Language
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>Lenguaje compartido entre expertos del dominio y desarrolladores.</p>
                                     
                                     <p><strong>Ejemplo:</strong> Si en tu empresa hablan de "Sprint" y "Story Points", tu código debe usar esos términos, no "Iteración" y "Puntos de Tarea".</p>
@@ -139,15 +139,15 @@
                             </div>
                         </div>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100 border-success"
-003e
+>
                                 <div class="card-header bg-success text-white"
-003e
+>
                                     <i class="bi bi-bounding-box"></i> Bounded Contexts
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>Fronteras claras entre diferentes partes del dominio.</p>
                                     
                                     <p><strong>Ejemplo:</strong> "Usuario" en autenticación es diferente a "Usuario" en facturación. Son contextos separados.</p>
@@ -155,15 +155,15 @@
                             </div>
                         </div>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100 border-info"
-003e
+>
                                 <div class="card-header bg-info text-white"
-003e
+>
                                     <i class="bi bi-gem"></i> Modelo Rico
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>El modelo incluye comportamiento, no solo datos (getter/setter anémicos).</p>
                                     
                                     <p><strong>Ejemplo:</strong> <code>usuario.cambiar_email()</code> en lugar de <code>usuario.email = "nuevo"</code></p>
@@ -177,40 +177,40 @@
                     <p>DDD organiza el código en capas con dependencias claras:</p>
 
                     <div class="ddd-layer layer-domain"
-003e
+>
                         <i class="bi bi-box"></i> CAPA DE DOMINIO<br>
                         <small>Entidades, Value Objects, Servicios de Dominio, Eventos</small>
                     </div>
                     <div class="text-center"
-003e
+>
                         <i class="bi bi-arrow-down"></i>
                     </div>
                     <div class="ddd-layer layer-app"
-003e
+>
                         <i class="bi bi-layers"></i> CAPA DE APLICACIÓN<br>
                         <small>Casos de uso, Servicios de aplicación, DTOs</small>
                     </div>
                     <div class="text-center"
-003e
+>
                         <i class="bi bi-arrow-down"></i>
                     </div>
                     <div class="ddd-layer layer-infra"
-003e
+>
                         <i class="bi bi-hdd"></i> CAPA DE INFRAESTRUCTURA<br>
                         <small>Repositorios, Base de datos, APIs externas, Frameworks</small>
                     </div>
 
                     <div class="alert-tip mt-3"
-003e
+>
                         <strong>Regla de Dependencia:</strong> Las capas superiores NO deben depender de las inferiores. El Dominio NO conoce SQL, HTTP, archivos, etc. Solo la Infraestructura conoce al Dominio.
                     </div>
 
                     <h3>1.3 Bloques Constructivos de DDD</h3>
 
                     <table class="table table-bordered"
-003e
+>
                         <thead class="table-dark"
-003e
+>
                             <tr>
                                 <th>Elemento</th>
                                 <th>Definición</th>
@@ -248,11 +248,11 @@
                 </section>
 
                 <section id="entidades"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">2. Entidades - Objetos con Identidad</h2>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>¿Qué es una Entidad?</h5>
                         <p>Una <strong>Entidad</strong> es un objeto que se define por su <strong>identidad</strong>, no por sus atributos. Dos entidades pueden tener exactamente los mismos atributos pero ser diferentes si tienen IDs diferentes.</p>
                         
@@ -386,11 +386,11 @@ if __name__ == "__main__":
                 </section>
 
                 <section id="value-objects"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">3. Value Objects - Objetos por Valor</h2>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>¿Qué es un Value Object?</h5>
                         <p>Un <strong>Value Object</strong> es un objeto que se define por sus atributos, no por identidad. Es <strong>inmutable</strong> (no cambia después de crearse) y se valida al momento de la creación.</p>
                         
@@ -544,9 +544,9 @@ if __name__ == "__main__":
                     <h3>3.3 Entidad vs Value Object: Cuándo Usar Cada Uno</h3>
 
                     <table class="table table-bordered"
-003e
+>
                         <thead class="table-dark"
-003e
+>
                             <tr>
                                 <th>Aspecto</th>
                                 <th>Entidad</th>
@@ -593,11 +593,11 @@ if __name__ == "__main__":
                 </section>
 
                 <section id="repositorios"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">4. Patrón Repository - Abstracción de Persistencia</h2>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>¿Qué es el Patrón Repository?</h5>
                         <p>Un <strong>Repository</strong> es una abstracción que encapsula la lógica de persistencia. Actúa como una colección en memoria de entidades, ocultando si los datos vienen de una base de datos, archivos, API externa, etc.</p>
                         
@@ -815,7 +815,7 @@ class UsuarioSQLAlchemyRepository(Repository[Usuario]):
                 </section>
 
                 <section id="inyeccion"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">5. Inyección de Dependencias</h2>
                     
                     <p>El patrón Repository se combina con <strong>Inyección de Dependencias</strong> para desacoplar completamente el dominio de la infraestructura.</p>
@@ -950,17 +950,17 @@ if __name__ == "__main__":
                     <h3>5.3 Comparación: Antes vs Después DDD</h3>
 
                     <div class="row"
-003e
+>
                         <div class="col-md-6"
-003e
+>
                             <div class="card border-danger"
-003e
+>
                                 <div class="card-header bg-danger text-white"
-003e
+>
                                     ❌ Antes (Código Acoplado)
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <pre class="mb-0"><code class="language-python">class UsuarioService:
     def crear_usuario(self, username, email):
         # ¡ACOPLADO a SQLite!
@@ -986,17 +986,17 @@ if __name__ == "__main__":
                             </div>
                         </div>
                         <div class="col-md-6"
-003e
+>
                             <div class="card border-success"
-003e
+>
                                 <div class="card-header bg-success text-white"
-003e
+>
                                     ✅ Después (Con DDD)
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <pre class="mb-0"><code class="language-python"
-003eclass UsuarioService:
+>class UsuarioService:
     def __init__(self, repo: Repository[Usuario]):
         self._repo = repo  # Inyectado
 
@@ -1025,7 +1025,7 @@ if __name__ == "__main__":
                 </section>
 
                 <section id="ejercicio"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Ejercicio: Refactorizar TaskFlow con DDD</h2>
                     
                     <p>Aplica los conceptos de DDD al módulo de Tareas de TaskFlow.</p>
@@ -1194,13 +1194,13 @@ class TareaService:
                 </section>
 
                 <section id="resumen"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Resumen y Checklist</h2>
                     
                     <div class="row"
-003e
+>
                         <div class="col-md-6"
-003e
+>
                             <h4>Conceptos Clave</h4>
                             <ul>
                                 <li><strong>DDD:</strong> Diseño centrado en el dominio</li>
@@ -1213,10 +1213,10 @@ class TareaService:
                             </ul>
                         </div>
                         <div class="col-md-6"
-003e
+>
                             <h4>Reglas de Oro</h4>
                             <div class="alert-danger"
-003e
+>
                                 <strong>NO hagas esto:</strong><br>
                                 ❌ Importar SQLAlchemy en el dominio<br>
                                 ❌ Llamar a la BD desde entidades<br>
@@ -1224,7 +1224,7 @@ class TareaService:
                                 ❌ Usar modelos anémicos (solo getters/setters)
                             </div>
                             <div class="alert-success"
-003e
+>
                                 <strong>SÍ haz esto:</strong><br>
                                 ✅ Entidades con comportamiento de negocio<br>
                                 ✅ Value Objects inmutables y validados<br>
@@ -1245,12 +1245,12 @@ class TareaService:
 
     <!-- Navegación entre clases -->
     <div class="container mt-4 mb-4"
-003e
+>
         <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded"
-003e
+>
             <div>
                 <a href="clase-03-bdd-intro.html" class="btn btn-outline-secondary btn-sm"
-003e
+>
                     ← Anterior: BDD
                 </a>
             </div>
@@ -1259,7 +1259,7 @@ class TareaService:
             </div>
             <div>
                 <a href="../unidad-03/clase-01-fastapi-intro.html" class="btn btn-primary btn-sm"
-003e
+>
                     Siguiente: FastAPI →
                 </a>
             </div>
@@ -1267,9 +1267,9 @@ class TareaService:
     </div>
 
     <footer class="bg-light text-center py-3 mt-5"
-003e
+>
         <div class="container"
-003e
+>
             <p class="mb-0">© 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
