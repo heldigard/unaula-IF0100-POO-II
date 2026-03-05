@@ -110,45 +110,45 @@
                     <h3>1.1 Los Tres Pilares de BDD</h3>
 
                     <div class="row"
-003e
+>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100"
-003e
+>
                                 <div class="card-header bg-primary text-white"
-003e
+>
                                     <i class="bi bi-people"></i> Colaboración
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>Dev, QA y Negocio hablan el mismo idioma. Los requisitos se escriben juntos.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100"
-003e
+>
                                 <div class="card-header bg-success text-white"
-003e
+>
                                     <i class="bi bi-bullseye"></i> Valor de Negocio
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>Cada feature debe responder: ¿Por qué? ¿Para quién? ¿Qué beneficio aporta?</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4"
-003e
+>
                             <div class="card h-100"
-003e
+>
                                 <div class="card-header bg-info text-white"
-003e
+>
                                     <i class="bi bi-file-earmark-text"></i> Documentación Viva
                                 </div>
                                 <div class="card-body"
-003e
+>
                                     <p>Los escenarios BDD son documentación ejecutable. Siempre están actualizados.</p>
                                 </div>
                             </div>
@@ -158,15 +158,15 @@
                     <h3>1.2 Ejemplo: Antes y Después BDD</h3>
 
                     <div class="row"
-003e
+>
                         <div class="col-md-6"
-003e
+>
                             <div class="card"
-003e
+>
                                 <div class="card-header bg-secondary text-white"
-003eAntes (Requisito Técnico)</div>
+>Antes (Requisito Técnico)</div>
                                 <div class="card-body"
-003e
+>
                                     <pre class="mb-0"><code class="language-text">"El sistema debe validar que:
 - El username tenga al menos 3 caracteres
 - El email tenga formato válido
@@ -179,13 +179,13 @@
                             </div>
                         </div>
                         <div class="col-md-6"
-003e
+>
                             <div class="card"
-003e
+>
                                 <div class="card-header bg-primary text-white"
-003eDespués (BDD con Gherkin)</div>
+>Después (BDD con Gherkin)</div>
                                 <div class="card-body"
-003e
+>
                                     <pre class="mb-0"><code class="language-text">Feature: Registro de Usuarios
   Como visitante
   Quiero registrarme en TaskFlow
@@ -212,9 +212,9 @@
                     <p>TDD y BDD no son competidores, se <strong>complementan</strong>. Aquí está la diferencia:</p>
 
                     <table class="table table-bordered"
-003e
+>
                         <thead class="table-dark"
-003e
+>
                             <tr>
                                 <th>Aspecto</th>
                                 <th>TDD (Test-Driven Development)</th>
@@ -270,7 +270,7 @@
                     <h2 class="text-primary border-bottom pb-2">3. Lenguaje Gherkin - Especificaciones Comprensibles</h2>
                     
                     <div class="concept-box"
-003e
+>
                         <h5>¿Qué es Gherkin?</h5>
                         <p><strong>Gherkin</strong> es un <strong>DSL (Domain Specific Language / Lenguaje Específico del Dominio)</strong> que permite describir comportamientos del software en lenguaje natural estructurado. Es legible por humanos y ejecutable por máquinas.</p>
                     </div>
@@ -278,9 +278,9 @@
                     <h3>3.1 Palabras Clave de Gherkin</h3>
 
                     <table class="table table-bordered"
-003e
+>
                         <thead class="table-dark"
-003e
+>
                             <tr>
                                 <th>Palabra</th>
                                 <th>Propósito</th>
@@ -339,7 +339,7 @@
                     <h3>3.2 Estructura de un Feature Completo</h3>
 
                     <div class="gherkin"
-003e
+>
                     <pre><code class="language-gherkin">Feature: Login en TaskFlow
   Como usuario registrado
   Quiero iniciar sesión con mis credenciales
@@ -387,7 +387,7 @@
                     <p>Cuando tienes múltiples casos similares con diferentes datos, usa <code>Scenario Outline</code>:</p>
 
                     <div class="gherkin"
-003e
+>
                     <pre><code class="language-gherkin">Feature: Validación de Registro de Usuarios
 
   Scenario Outline: Validar nombres de proyecto
@@ -410,7 +410,7 @@
                     </div>
 
                     <div class="code-explanation"
-003e
+>
                         <strong>¿Cómo funciona?</strong>
                         <ol>
                             <li>El <code>Scenario Outline</code> es una plantilla con variables <code><nombre></code>, <code><resultado></code>, <code><codigo></code></li>
@@ -425,7 +425,7 @@
                     <p>Puedes etiquetar scenarios para ejecutarlos selectivamente:</p>
 
                     <div class="gherkin"
-003e
+>
                     <pre><code class="language-gherkin">@regression @login
 Feature: Login
 
@@ -453,7 +453,7 @@ behave --tags=login --tags=regression</code></pre>
                 </section>
 
                 <section id="behave"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">4. behave Framework - De Gherkin a Python</h2>
                     
                     <p><strong>behave</strong> es el framework de Python que ejecuta escenarios Gherkin como tests automatizados.</p>
@@ -664,21 +664,21 @@ behave --dry-run</code></pre>
                 </section>
 
                 <section id="ejemplos"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">5. Ejemplos Completos</h2>
 
                     <h3>5.1 Feature: Gestión de Tareas</h3>
 
                     <div class="row"
-003e
+>
                         <div class="col-md-6"
-003e
+>
                             <div class="card"
-003e
+>
                                 <div class="card-header bg-primary text-white"
-003eGherkin</div>
+>Gherkin</div>
                                 <div class="card-body"
-003e
+>
                                     <pre class="gherkin mb-0"><code>Feature: Gestión de Tareas
   Como usuario de TaskFlow
   Quiero crear y gestionar tareas
@@ -708,13 +708,13 @@ behave --dry-run</code></pre>
                             </div>
                         </div>
                         <div class="col-md-6"
-003e
+>
                             <div class="card"
-003e
+>
                                 <div class="card-header bg-success text-white"
-003ePython (Steps)</div>
+>Python (Steps)</div>
                                 <div class="card-body"
-003e
+>
                                     <pre><code class="language-python">from behave import given, when, then
 from dataclasses import dataclass
 
@@ -813,7 +813,7 @@ def step_field_equals(context, campo, valor):
         f"Esperado {campo}='{valor}', obtenido '{data.get(campo)}'"</code></pre>
 
                     <div class="gherkin"
-003e
+>
                     <pre><code class="language-gherkin">Feature: API de Tareas
 
   Scenario: Listar tareas vacías
@@ -836,7 +836,7 @@ def step_field_equals(context, campo, valor):
                 </section>
 
                 <section id="ejercicio"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Ejercicio: Feature de Registro con behave</h2>
                     
                     <p>Crea un feature completo para el registro de usuarios en TaskFlow.</p>
@@ -859,7 +859,7 @@ def step_field_equals(context, campo, valor):
                     <h3>Feature Sugerida</h3>
 
                     <div class="gherkin"
-003e
+>
                     <pre><code class="language-gherkin">Feature: Registro de Usuarios
   Como visitante de TaskFlow
   Quiero crear una cuenta
@@ -986,13 +986,13 @@ def step_registro_falla(context, error):
                 </section>
 
                 <section id="resumen"
-003e
+>
                     <h2 class="text-primary border-bottom pb-2">Resumen y Checklist</h2>
                     
                     <div class="row"
-003e
+>
                         <div class="col-md-6"
-003e
+>
                             <h4>Conceptos Clave</h4>
                             <ul>
                                 <li><strong>BDD:</strong> Desarrollo guiado por comportamiento</li>
@@ -1006,7 +1006,7 @@ def step_registro_falla(context, error):
                             </ul>
                         </div>
                         <div class="col-md-6"
-003e
+>
                             <h4>Comandos Útiles</h4>
                             <pre><code class="language-bash"># Instalar
 pip install behave
@@ -1040,12 +1040,12 @@ behave --dry-run
 
     <!-- Navegación entre clases -->
     <div class="container mt-4 mb-4"
-003e
+>
         <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded"
-003e
+>
             <div>
                 <a href="clase-02-pytest-avanzado.html" class="btn btn-outline-secondary btn-sm"
-003e
+>
                     ← Anterior: pytest Avanzado
                 </a>
             </div>
@@ -1054,7 +1054,7 @@ behave --dry-run
             </div>
             <div>
                 <a href="clase-04-ddd-intro.html" class="btn btn-primary btn-sm"
-003e
+>
                     Siguiente: DDD →
                 </a>
             </div>
@@ -1062,9 +1062,9 @@ behave --dry-run
     </div>
 
     <footer class="bg-light text-center py-3 mt-5"
-003e
+>
         <div class="container"
-003e
+>
             <p class="mb-0">© 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
