@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E5: CRUD + JWT + Arquitectura - IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .criterio { background: #f8f9fa; border-left: 4px solid var(--primary); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        .criterio h5 { color: #0a58ca; margin-bottom: 0.75rem; }
+        .criterio ul { margin-bottom: 0; }
+        .entregable-box { background: #1e1e1e; color: #d4d4d4; padding: 1.25rem; border-radius: 8px; font-family: 'Consolas', 'Monaco', monospace; overflow-x: auto; white-space: pre; line-height: 1.4; font-size: 0.9rem; }
+        .entregable-box .comment { color: #6a9955; }
+        .entregable-box .folder { color: #569cd6; }
+        .penalizacion { background: #f8d7da; border-left: 4px solid #dc3545; padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 8px 8px 0; }
+        code:not([class*="language-"]) { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        pre[class*="language-"] { border-radius: 8px; margin: 0; }
+        .detalle-req { background: #fff3cd; border-left: 4px solid #ffc107; padding: 0.75rem 1rem; margin: 0.5rem 0; font-size: 0.9rem; }
+        .paso-num { display: inline-block; width: 28px; height: 28px; background: #0a58ca; color: white; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <header class="mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-clipboard-check me-2"></i>Evaluación 5</h1>
+                    <h2>CRUD + JWT + Arquitectura Básica</h2>
+                    <p class="mb-0"><strong>Entrega 5 - FastAPI + SQLAlchemy + JWT en capas</strong></p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-dark fs-5 mb-2">15%</span><br>
+                    <span class="badge bg-info text-dark">Software</span><br>
+                    <small>Fecha límite: 7 de mayo de 2026</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.html">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="../index.html#evaluacion">Evaluaciones</a></li>
+                <li class="breadcrumb-item active">E5 - CRUD + JWT + Arquitectura</li>
+            </ol>
+        </nav>
+
+        <div class="alert alert-danger">
+            <h5><i class="bi bi-exclamation-triangle me-2"></i>Requisitos Previos</h5>
+            <p class="mb-0"><strong>REQUIERE E4 (SQLAlchemy ORM) completada.</strong> Se agregará lógica de negocio, autenticación JWT y arquitectura en capas sobre los modelos ya creados.</p>
+        </div>
+
+        <div class="card mb-4 border-info">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-book me-2"></i>Clases Relacionadas</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-3">Estas clases preparan los conocimientos necesarios para esta evaluación:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-database text-success me-2"></i>
+                                <a href="../unidad-04/clase-04-crud-sqlalchemy.html" class="text-decoration-none">Clase 04: CRUD SQLAlchemy</a>
+                                <small class="d-block text-muted">Session, add, commit, query, delete</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-layers text-success me-2"></i>
+                                <a href="../unidad-05/clase-01-repository-pattern.html" class="text-decoration-none">Clase 05.1: Patrón Repository</a>
+                                <small class="d-block text-muted">Repositorios genéricos e inyección de dependencias</small>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <i class="bi bi-layout-wtf text-success me-2"></i>
+                                <a href="../unidad-05/clase-02-clean-architecture.html" class="text-decoration-none">Clase 05.2: Clean Architecture + JWT</a>
+                                <small class="d-block text-muted">Separación de capas, autenticación JWT y protección de rutas</small>
+                            </li>
+                            <li class="list-group-item">
+                                <i class="bi bi-box-arrow-in-right text-success me-2"></i>
+                                <a href="../unidad-05/clase-03-dtos-serializacion.html" class="text-decoration-none">Clase 05.3: DTOs y Serialización</a>
+                                <small class="d-block text-muted">Schemas Pydantic v2, validación y transferencia de datos</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mt-4 mb-3"><i class="bi bi-bullseye me-2"></i>Objetivo de Aprendizaje</h3>
+        <p class="lead">Construir la <strong>API funcional de TaskFlow</strong> con operaciones CRUD completas, autenticación JWT y arquitectura en capas. Todo debe estar desacoplado: routers llaman a servicios, servicios usan repositorios y los modelos SQLAlchemy nunca exponen directamente la base de datos a los endpoints.</p>
+
+        <div class="alert alert-secondary mt-4">
+            <h5><i class="bi bi-people me-2"></i>Modalidad de Trabajo</h5>
+            <p class="mb-1"><strong>Individual</strong> o en <strong>parejas</strong> (máximo 2 personas). Debe ser el mismo equipo de E1-E4.</p>
+            <p class="mb-0"><strong>Formato de entrega:</strong> Repositorio GitHub con la API ejecutable. README.md debe incluir instrucciones para levantar el servidor, aplicar migraciones y probar los endpoints (puede incluir ejemplos con <code>curl</code>).</p>
+        </div>
+
+        <h3 class="mt-5 mb-3"><i class="bi bi-list-check me-2"></i>Requisitos Técnicos Detallados</h3>
+
+        <!-- CRUD -->
+        <div class="criterio">
+            <h5><i class="bi bi-database text-primary me-2"></i>1. CRUD SQLAlchemy (25%)</h5>
+            <p><strong>Descripción:</strong> Endpoints completos para crear, leer, actualizar y eliminar las entidades principales.</p>
+
+            <h6 class="mt-3">Entidades obligatorias con CRUD:</h6>
+            <ul>
+                <li><code>Usuario</code>: registro, login, obtener perfil, listar usuarios</li>
+                <li><code>Proyecto</code>: crear, listar por usuario, editar, eliminar</li>
+                <li><code>Tarea</code>: crear, listar por proyecto, editar estado, eliminar</li>
+            </ul>
+
+            <h6>Requisitos técnicos:</h6>
+            <ul>
+                <li>Uso correcto de <code>Session</code>: <code>add</code>, <code>commit</code>, <code>rollback</code> en errores, <code>refresh</code></li>
+                <li>Consultas con <code>filter</code>, <code>.first()</code>, <code>.all()</code>, <code>.count()</code></li>
+                <li>No exponer contraseñas en las respuestas JSON</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Ejemplo mínimo de endpoint:</strong>
+                <pre class="mb-0 mt-2"><code class="language-python">@router.post("/proyectos", response_model=ProyectoOut)
+def crear_proyecto(
+    data: ProyectoCreate,
+    db: Session = Depends(get_db),
+    usuario: Usuario = Depends(get_current_user)
+):
+    proyecto = Proyecto(nombre=data.nombre, usuario_id=usuario.id)
+    db.add(proyecto)
+    db.commit()
+    db.refresh(proyecto)
+    return proyecto</code></pre>
+            </div>
+        </div>
+
+        <!-- JWT -->
+        <div class="criterio">
+            <h5><i class="bi bi-shield-lock text-success me-2"></i>2. JWT Authentication (25%)</h5>
+            <p><strong>Descripción:</strong> Implementar registro, login y protección de rutas sensibles usando tokens JWT.</p>
+
+            <h6 class="mt-3">Requisitos obligatorios:</h6>
+            <ul>
+                <li>Endpoint <code>POST /auth/register</code>: crea usuario con contraseña hasheada (<code>passlib</code> / <code>bcrypt</code>)</li>
+                <li>Endpoint <code>POST /auth/login</code>: valida credenciales y retorna <code>access_token</code> (<code>python-jose</code>)</li>
+                <li>Dependencia <code>get_current_user</code> que decodifique el JWT y obtenga el usuario de la base de datos</li>
+                <li>Proteger rutas de creación/edicion/eliminación con <code>Depends(get_current_user)</code></li>
+                <li>Usar <code>OAuth2PasswordBearer</code> para documentación automática en Swagger UI</li>
+            </ul>
+
+            <div class="detalle-req">
+                <strong>Verificación rápida:</strong>
+                <pre class="mb-0 mt-2"><code class="language-bash"># Obtener token
+curl -X POST http://localhost:8000/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=ana&password=secret123"
+
+# Usar token
+curl http://localhost:8000/proyectos \
+  -H "Authorization: Bearer &lt;token&gt;"</code></pre>
+            </div>
+        </div>
+
+        <!-- ARQUITECTURA -->
+        <div class="criterio">
+            <h5><i class="bi bi-layout-wtf text-warning me-2"></i>3. Arquitectura en Capas (20%)</h5>
+            <p><strong>Descripción:</strong> Separar responsabilidades en carpetas claras y usar DTOs con Pydantic v2.</p>
+
+            <h6 class="mt-3">Capas obligatorias:</h6>
+            <ul>
+                <li><code>routers/</code>: define endpoints y dependencias de FastAPI</li>
+                <li><code>services/</code>: lógica de negocio (validaciones, reglas, orquestación)</li>
+                <li><code>repositories/</code>: acceso a datos con SQLAlchemy</li>
+                <li><code>models/</code>: entidades SQLAlchemy</li>
+                <li><code>schemas/</code>: DTOs Pydantic v2 para entrada/salida de datos</li>
+            </ul>
+
+            <h6>Requisitos de schemas:</h6>
+            <ul>
+                <li>Al menos un schema <code>Create</code>, uno <code>Out</code> y uno <code>Update</code> por entidad principal</li>
+                <li>Usar <code>ConfigDict(from_attributes=True)</code> para mapeo con ORM</li>
+                <li>Los routers deben devolver schemas, no modelos SQLAlchemy directamente</li>
+            </ul>
+        </div>
+
+        <!-- MANEJO DE ERRORES -->
+        <div class="criterio">
+            <h5><i class="bi bi-exclamation-diamond text-danger me-2"></i>4. Manejo de Errores (15%)</h5>
+            <p><strong>Descripción:</strong> Responder con códigos HTTP correctos y mensajes consistentes.</p>
+            <ul>
+                <li><code>404 Not Found</code> cuando no existe un recurso</li>
+                <li><code>401 Unauthorized</code> cuando falta o es inválido el token JWT</li>
+                <li><code>400 Bad Request</code> para validaciones de negocio (ej: email duplicado)</li>
+                <li>No devolver <code>500</code> por errores de validación predecibles</li>
+            </ul>
+        </div>
+
+        <!-- DEPENDENCY INJECTION -->
+        <div class="criterio">
+            <h5><i class="bi bi-plug text-info me-2"></i>5. Dependency Injection (10%)</h5>
+            <p><strong>Descripción:</strong> Inyectar sesiones de base de datos y repositorios usando <code>Depends</code> de FastAPI.</p>
+            <ul>
+                <li><code>get_db()</code> como generador de <code>Session</code></li>
+                <li>Repositorios inyectados en los servicios o routers (ej: <code>repo: ProyectoRepo = Depends(get_proyecto_repo)</code>)</li>
+                <li>Cerrar sesiones correctamente con <code>finally: db.close()</code></li>
+            </ul>
+        </div>
+
+        <!-- POO AVANZADA -->
+        <div class="criterio">
+            <h5><i class="bi bi-stars text-secondary me-2"></i>6. POO Avanzada (5%)</h5>
+            <p><strong>Descripción:</strong> Aplicar patrones de diseño y principios POO.</p>
+            <ul>
+                <li>Repository pattern: interfaz genérica <code>Repositorio[T]</code> con ABC</li>
+                <li>Herencia de schemas base si aplica (ej: <code>BaseSchema</code> con <code>model_config</code>)</li>
+                <li>Encapsulamiento: atributos privados o uso de properties cuando sea necesario</li>
+            </ul>
+        </div>
+
+        <!-- ESTRUCTURA ESPERADA -->
+        <h3 class="mt-5 mb-3"><i class="bi bi-folder-check me-2"></i>Estructura Esperada del Repositorio</h3>
+        <div class="entregable-box"><span class="comment"># Estructura mínima esperada</span>
+<span class="folder">taskflow/</span>
+├── app/
+│   ├── <span class="folder">routers/</span>
+│   │   ├── auth.py          <span class="comment"># login, register, get_current_user</span>
+│   │   ├── proyectos.py
+│   │   └── tareas.py
+│   ├── <span class="folder">services/</span>
+│   │   ├── proyecto_service.py
+│   │   └── tarea_service.py
+│   ├── <span class="folder">repositories/</span>
+│   │   ├── base.py          <span class="comment"># Repositorio[T] abstracto</span>
+│   │   ├── usuario_repo.py
+│   │   └── proyecto_repo.py
+│   ├── <span class="folder">models/</span>
+│   │   ├── usuario.py
+│   │   ├── proyecto.py
+│   │   └── tarea.py
+│   ├── <span class="folder">schemas/</span>
+│   │   ├── usuario.py       <span class="comment"># Pydantic v2 Create/Out/Update</span>
+│   │   ├── proyecto.py
+│   │   └── tarea.py
+│   ├── database.py          <span class="comment"># Base, engine, SessionLocal</span>
+│   └── main.py              <span class="comment"># FastAPI app + include_routers</span>
+├── alembic/
+│   └── versions/
+├── requirements.txt
+└── README.md</div>
+
+        <!-- RÚBRICA -->
+        <h3 class="mt-5 mb-3"><i class="bi bi-card-checklist me-2"></i>Rúbrica de Evaluación</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Criterio</th>
+                        <th>Peso</th>
+                        <th>Sobresaliente (5)</th>
+                        <th>Suficiente (3)</th>
+                        <th>Insuficiente (1)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CRUD SQLAlchemy</strong></td>
+                        <td>25%</td>
+                        <td>CRUD completo de 3 entidades; uso correcto de Session, filtros y relaciones</td>
+                        <td>CRUD parcial; falta alguna entidad o no maneja relaciones</td>
+                        <td>Faltan múltiples operaciones CRUD o usa SQL crudo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JWT Authentication</strong></td>
+                        <td>25%</td>
+                        <td>Login/registro funcionan; tokens JWT protegen rutas; passlib configurado</td>
+                        <td>JWT básico pero con fallos de seguridad menores</td>
+                        <td>No hay autenticación o las contraseñas se guardan en texto plano</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arquitectura en Capas</strong></td>
+                        <td>20%</td>
+                        <td>Separación clara routers/services/repositories; DTOs Pydantic v2 en todos los endpoints</td>
+                        <td>Alguna mezcla de capas o schemas incompletos</td>
+                        <td>Todo en un solo archivo o sin schemas Pydantic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Manejo de Errores</strong></td>
+                        <td>15%</td>
+                        <td>HTTPException con status codes correctos; validaciones de negocio claras</td>
+                        <td>Algunos errores manejados pero inconsistentes</td>
+                        <td>Errores no controlados o respuestas 500 genéricas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dependency Injection</strong></td>
+                        <td>10%</td>
+                        <td><code>get_db</code> y repositorios inyectados correctamente con <code>Depends</code></td>
+                        <td>Inyección parcial o sesiones mal cerradas</td>
+                        <td>No usa <code>Depends</code> ni gestiona sesiones</td>
+                    </tr>
+                    <tr>
+                        <td><strong>POO Avanzada</strong></td>
+                        <td>5%</td>
+                        <td>Repositorio genérico con ABC; herencia o polimorfismo aplicado</td>
+                        <td>Repositorios sin interfaz genérica o sin ABC</td>
+                        <td>Sin evidencia de patrones de diseño POO</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- PENALIZACIONES -->
+        <div class="penalizacion">
+            <h5><i class="bi bi-x-octagon me-2"></i>Penalizaciones</h5>
+            <ul class="mb-0">
+                <li><strong>-20%</strong> si no hay autenticación JWT funcional</li>
+                <li><strong>-20%</strong> si no hay separación de capas (todo en main.py)</li>
+                <li><strong>-15%</strong> si no hay schemas Pydantic v2</li>
+                <li><strong>-10%</strong> por cada día de retraso</li>
+                <li><strong>Descalificación</strong> si se entrega sin repositorio GitHub o la API no compila</li>
+            </ul>
+        </div>
+
+        <!-- ENTREGA -->
+        <div class="card mt-5 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="bi bi-upload me-2"></i>Instrucciones de Entrega</h5>
+            </div>
+            <div class="card-body">
+                <p><span class="paso-num">1</span>Crear un commit claro: <code>feat: E5 - CRUD, JWT y arquitectura en capas</code></p>
+                <p><span class="paso-num">2</span>Subir a la rama <code>main</code> del repositorio del proyecto.</p>
+                <p><span class="paso-num">3</span>En el README, incluir:</p>
+                <ul>
+                    <li>Comando para instalar dependencias (<code>pip install -r requirements.txt</code>)</li>
+                    <li>Comando para aplicar migraciones (<code>alembic upgrade head</code>)</li>
+                    <li>Comando para iniciar el servidor (<code>uvicorn app.main:app --reload</code>)</li>
+                    <li>Ejemplos de <code>curl</code> o capturas de pantalla de Swagger UI probando login y CRUD</li>
+                </ul>
+                <p><span class="paso-num">4</span>Compartir el enlace del repositorio por la plataforma antes de la fecha límite.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>
