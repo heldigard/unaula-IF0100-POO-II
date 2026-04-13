@@ -61,6 +61,9 @@
                         <li>Implementar <strong>versionado</strong> de API</li>
                         <li>Documentar API con <strong>OpenAPI</strong></li>
                     </ul>
+                    <div class="alert-note mt-3">
+                        <strong>Contexto TaskFlow:</strong> La API del proyecto final debe ser profesional: paginar listados de tareas, filtrar por proyecto o prioridad, buscar por titulo y devolver errores consistentes.
+                    </div>
                 </section>
 
                 <section id="paginacion">
@@ -114,6 +117,7 @@ def listar_tareas(
 from typing import Optional
 from enum import Enum
 from datetime import datetime
+from sqlalchemy import select, func, or_
 
 class OrdenDireccion(str, Enum):
     ASC = "asc"
@@ -140,32 +144,42 @@ def listar_tareas(
     por_pagina: int = Query(10, ge=1, le=100),
     repo: TareaRepositorio = Depends(get_tarea_repo)
 ):
-    # Construir query
-    query = repo.db.query(Tarea)
-    
+    # Construir statement
+    stmt = select(Tarea)
+    conditions = []
+
     # Aplicar filtros
     if completada is not None:
-        query = query.filter(Tarea.completada == completada)
-    
+        conditions.append(Tarea.completada == completada)
+
     if prioridad:
-        query = query.filter(Tarea.prioridad == prioridad)
-    
+        conditions.append(Tarea.prioridad == prioridad)
+
     if proyecto_id:
-        query = query.filter(Tarea.proyecto_id == proyecto_id)
-    
+        conditions.append(Tarea.proyecto_id == proyecto_id)
+
     if buscar:
-        query = query.filter(
-            Tarea.titulo.ilike(f"%{buscar}%") |
-            Tarea.descripcion.ilike(f"%{buscar}%")
+        conditions.append(
+            or_(
+                Tarea.titulo.ilike(f"%{buscar}%"),
+                Tarea.descripcion.ilike(f"%{buscar}%")
+            )
         )
-    
+
+    if conditions:
+        stmt = stmt.where(*conditions)
+
     # Contar total
-    total = query.count()
-    
+    count_stmt = select(func.count()).select_from(Tarea)
+    if conditions:
+        count_stmt = count_stmt.where(*conditions)
+    total = repo.db.execute(count_stmt).scalar()
+
     # Aplicar paginacion
     offset = calcular_offset(pagina, por_pagina)
-    tareas = query.offset(offset).limit(por_pagina).all()
-    
+    stmt = stmt.offset(offset).limit(por_pagina)
+    tareas = repo.db.execute(stmt).scalars().all()
+
     return construir_respuesta_paginada(tareas, total, pagina, por_pagina)</code></pre>
                 </section>
 

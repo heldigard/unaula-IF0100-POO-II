@@ -67,6 +67,9 @@
                         <li>Implementar <strong>Delete</strong> - eliminar registros</li>
                         <li>Crear un Repositorio generico</li>
                     </ul>
+                    <div class="alert-note mt-3">
+                        <strong>Contexto TaskFlow:</strong> Hoy construyes el motor de persistencia del proyecto final: crear, leer, actualizar y eliminar <strong>usuarios</strong>, <strong>proyectos</strong> y <strong>tareas</strong> directamente desde SQLAlchemy.
+                    </div>
                 </section>
 
                 <section id="session">
@@ -133,64 +136,66 @@ with SessionLocal() as db:
                     <h2 class="text-primary border-bottom pb-2">READ - Consultar Registros (15 min)</h2>
                     
                     <pre><code class="language-python">from typing import Optional, List
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 def obtener_usuario_por_id(db: Session, id: int) -> Optional[Usuario]:
     """Obtener un usuario por ID."""
-    return db.query(Usuario).filter(Usuario.id == id).first()
+    stmt = select(Usuario).where(Usuario.id == id)
+    return db.execute(stmt).scalar_one_or_none()
 
 def obtener_usuario_por_username(db: Session, username: str) -> Optional[Usuario]:
     """Obtener un usuario por username."""
-    return db.query(Usuario).filter(Usuario.username == username).first()
+    stmt = select(Usuario).where(Usuario.username == username)
+    return db.execute(stmt).scalar_one_or_none()
 
 def obtener_todos_usuarios(db: Session, skip: int = 0, limit: int = 100) -> List[Usuario]:
     """Obtener todos los usuarios con paginacion."""
-    return db.query(Usuario).offset(skip).limit(limit).all()
+    stmt = select(Usuario).offset(skip).limit(limit)
+    return db.execute(stmt).scalars().all()
 
 def buscar_usuarios_activos(db: Session) -> List[Usuario]:
     """Obtener usuarios activos."""
-    return db.query(Usuario).filter(Usuario.activo == True).all()
+    stmt = select(Usuario).where(Usuario.activo == True)
+    return db.execute(stmt).scalars().all()
 
 def contar_usuarios(db: Session) -> int:
     """Contar usuarios."""
-    return db.query(Usuario).count()
-
-# Con SELECT moderno (SQLAlchemy 2.0)
-def obtener_usuario_select(db: Session, id: int) -> Optional[Usuario]:
-    stmt = select(Usuario).where(Usuario.id == id)
-    return db.execute(stmt).scalar_one_or_none()</code></pre>
+    stmt = select(func.count()).select_from(Usuario)
+    return db.execute(stmt).scalar()</code></pre>
                 </section>
 
                 <section id="update">
                     <h2 class="text-primary border-bottom pb-2">UPDATE - Actualizar Registros (10 min)</h2>
                     
                     <pre><code class="language-python">def actualizar_usuario(
-    db: Session, 
-    id: int, 
-    username: str = None, 
+    db: Session,
+    id: int,
+    username: str = None,
     email: str = None
 ) -> Optional[Usuario]:
     """Actualizar un usuario."""
-    usuario = db.query(Usuario).filter(Usuario.id == id).first()
-    
+    stmt = select(Usuario).where(Usuario.id == id)
+    usuario = db.execute(stmt).scalar_one_or_none()
+
     if not usuario:
         return None
-    
+
     # Actualizar campos
     if username:
         usuario.username = username
     if email:
         usuario.email = email
-    
+
     # Commit para guardar
     db.commit()
     db.refresh(usuario)
-    
+
     return usuario
 
 def activar_usuario(db: Session, id: int) -> bool:
     """Activar un usuario."""
-    usuario = db.query(Usuario).filter(Usuario.id == id).first()
+    stmt = select(Usuario).where(Usuario.id == id)
+    usuario = db.execute(stmt).scalar_one_or_none()
     if usuario:
         usuario.activo = True
         db.commit()
@@ -203,22 +208,27 @@ def activar_usuario(db: Session, id: int) -> bool:
                     
                     <pre><code class="language-python">def eliminar_usuario(db: Session, id: int) -> bool:
     """Eliminar un usuario."""
-    usuario = db.query(Usuario).filter(Usuario.id == id).first()
-    
+    stmt = select(Usuario).where(Usuario.id == id)
+    usuario = db.execute(stmt).scalar_one_or_none()
+
     if not usuario:
         return False
-    
+
     db.delete(usuario)
     db.commit()
-    
+
     return True
 
 # Eliminar con filtro directo
 def eliminar_usuario_por_username(db: Session, username: str) -> int:
     """Eliminar por username. Retorna filas eliminadas."""
-    resultado = db.query(Usuario).filter(Usuario.username == username).delete()
-    db.commit()
-    return resultado  # 0 si no encontro, 1 si elimino</code></pre>
+    stmt = select(Usuario).where(Usuario.username == username)
+    usuario = db.execute(stmt).scalar_one_or_none()
+    if usuario:
+        db.delete(usuario)
+        db.commit()
+        return 1
+    return 0</code></pre>
                 </section>
 
                 <section id="repositorio">
@@ -226,6 +236,7 @@ def eliminar_usuario_por_username(db: Session, username: str) -> int:
                     
                     <pre><code class="language-python"># repositories/base.py
 from typing import TypeVar, Generic, Type, Optional, List
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from database import Base
 
@@ -233,46 +244,48 @@ T = TypeVar("T", bound=Base)
 
 class RepositorioGenerico(Generic[T]):
     """Repositorio CRUD generico."""
-    
+
     def __init__(self, db: Session, modelo: Type[T]):
         self.db = db
         self.modelo = modelo
-    
+
     def crear(self, entidad: T) -> T:
         """Crear nueva entidad."""
         self.db.add(entidad)
         self.db.commit()
         self.db.refresh(entidad)
         return entidad
-    
+
     def obtener_por_id(self, id: int) -> Optional[T]:
         """Obtener por ID."""
-        return self.db.query(self.modelo).filter(self.modelo.id == id).first()
-    
+        stmt = select(self.modelo).where(self.modelo.id == id)
+        return self.db.execute(stmt).scalar_one_or_none()
+
     def obtener_todos(self, skip: int = 0, limit: int = 100) -> List[T]:
         """Obtener todos con paginacion."""
-        return self.db.query(self.modelo).offset(skip).limit(limit).all()
-    
+        stmt = select(self.modelo).offset(skip).limit(limit)
+        return self.db.execute(stmt).scalars().all()
+
     def actualizar(self, id: int, datos: dict) -> Optional[T]:
         """Actualizar por ID."""
         entidad = self.obtener_por_id(id)
         if not entidad:
             return None
-        
+
         for key, value in datos.items():
             if hasattr(entidad, key):
                 setattr(entidad, key, value)
-        
+
         self.db.commit()
         self.db.refresh(entidad)
         return entidad
-    
+
     def eliminar(self, id: int) -> bool:
         """Eliminar por ID."""
         entidad = self.obtener_por_id(id)
         if not entidad:
             return False
-        
+
         self.db.delete(entidad)
         self.db.commit()
         return True
@@ -282,12 +295,14 @@ class RepositorioGenerico(Generic[T]):
 class UsuarioRepositorio(RepositorioGenerico[Usuario]):
     def __init__(self, db: Session):
         super().__init__(db, Usuario)
-    
+
     def obtener_por_username(self, username: str) -> Optional[Usuario]:
-        return self.db.query(Usuario).filter(Usuario.username == username).first()
-    
+        stmt = select(Usuario).where(Usuario.username == username)
+        return self.db.execute(stmt).scalar_one_or_none()
+
     def obtener_activos(self) -> List[Usuario]:
-        return self.db.query(Usuario).filter(Usuario.activo == True).all()</code></pre>
+        stmt = select(Usuario).where(Usuario.activo == True)
+        return self.db.execute(stmt).scalars().all()</code></pre>
 
                     <div class="alert-tip">
                         <strong>E5 Proyecto:</strong> Implementa repositorios para Usuario, Proyecto, Tarea y Comentario.
@@ -299,7 +314,7 @@ class UsuarioRepositorio(RepositorioGenerico[Usuario]):
                     <ul>
                         <li><strong>Session:</strong> Unidad de trabajo con la base de datos</li>
                         <li><strong>db.add():</strong> Agregar entidad</li>
-                        <li><strong>db.query():</strong> Crear consulta</li>
+                        <li><strong>select():</strong> Crear consulta</li>
                         <li><strong>.filter():</strong> Filtrar resultados</li>
                         <li><strong>db.commit():</strong> Guardar cambios</li>
                         <li><strong>db.rollback():</strong> Revertir cambios</li>

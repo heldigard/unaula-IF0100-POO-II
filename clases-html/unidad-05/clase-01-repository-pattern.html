@@ -74,6 +74,10 @@
                         </a>
                         <small class="d-block mt-2 text-muted">1:40:08 min | Devosqui</small>
                     </div>
+
+                    <div class="alert-note mt-3">
+                        <strong>Contexto TaskFlow:</strong> Cada entidad del proyecto final (usuarios, proyectos, tareas) vivira detras de un <strong>repositorio desacoplado</strong>. Esto facilita testing, cambios de base de datos y mantenimiento a largo plazo.
+                    </div>
                 </section>
 
                 <section id="quees">
@@ -158,39 +162,44 @@ class Repositorio(ABC, Generic[T]):
                     
                     <pre><code class="language-python"># repositories/usuario_repo.py
 from typing import Optional, List
+from sqlalchemy import select, func
 from sqlalchemy.orm import Session
 from repositories.base import Repositorio
 from models.usuario import Usuario
 
 class UsuarioRepositorioSQLAlchemy(Repositorio[Usuario]):
     """Implementacion de repositorio para Usuario con SQLAlchemy."""
-    
+
     def __init__(self, db: Session):
         self.db = db
-    
+
     def obtener_por_id(self, id: int) -> Optional[Usuario]:
-        return self.db.query(Usuario).filter(Usuario.id == id).first()
-    
+        stmt = select(Usuario).where(Usuario.id == id)
+        return self.db.execute(stmt).scalar_one_or_none()
+
     def obtener_por_username(self, username: str) -> Optional[Usuario]:
-        return self.db.query(Usuario).filter(Usuario.username == username).first()
-    
+        stmt = select(Usuario).where(Usuario.username == username)
+        return self.db.execute(stmt).scalar_one_or_none()
+
     def obtener_todos(self) -> List[Usuario]:
-        return self.db.query(Usuario).all()
-    
+        stmt = select(Usuario)
+        return self.db.execute(stmt).scalars().all()
+
     def obtener_activos(self) -> List[Usuario]:
-        return self.db.query(Usuario).filter(Usuario.activo == True).all()
-    
+        stmt = select(Usuario).where(Usuario.activo == True)
+        return self.db.execute(stmt).scalars().all()
+
     def crear(self, usuario: Usuario) -> Usuario:
         self.db.add(usuario)
         self.db.commit()
         self.db.refresh(usuario)
         return usuario
-    
+
     def actualizar(self, usuario: Usuario) -> Usuario:
         self.db.commit()
         self.db.refresh(usuario)
         return usuario
-    
+
     def eliminar(self, id: int) -> bool:
         usuario = self.obtener_por_id(id)
         if usuario:
@@ -198,12 +207,14 @@ class UsuarioRepositorioSQLAlchemy(Repositorio[Usuario]):
             self.db.commit()
             return True
         return False
-    
+
     def existe(self, id: int) -> bool:
-        return self.db.query(Usuario).filter(Usuario.id == id).count() > 0
-    
+        stmt = select(func.count()).select_from(Usuario).where(Usuario.id == id)
+        return self.db.execute(stmt).scalar() > 0
+
     def contar(self) -> int:
-        return self.db.query(Usuario).count()
+        stmt = select(func.count()).select_from(Usuario)
+        return self.db.execute(stmt).scalar()
 
 
 # Repositorio en memoria para testing
@@ -299,28 +310,31 @@ def listar_usuarios(
                     <p>Crear <code>TareaRepositorioSQLAlchemy</code> con metodos adicionales:</p>
 
                     <pre><code class="language-python"># repositories/tarea_repo.py
+from sqlalchemy import select
+
 class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
-    
+
     def obtener_por_proyecto(self, proyecto_id: int) -> List[Tarea]:
         """Obtener tareas de un proyecto."""
-        return self.db.query(Tarea).filter(
-            Tarea.proyecto_id == proyecto_id
-        ).all()
-    
+        stmt = select(Tarea).where(Tarea.proyecto_id == proyecto_id)
+        return self.db.execute(stmt).scalars().all()
+
     def obtener_completadas(self, proyecto_id: int) -> List[Tarea]:
         """Obtener tareas completadas."""
-        return self.db.query(Tarea).filter(
+        stmt = select(Tarea).where(
             Tarea.proyecto_id == proyecto_id,
             Tarea.completada == True
-        ).all()
-    
+        )
+        return self.db.execute(stmt).scalars().all()
+
     def obtener_pendientes(self, proyecto_id: int) -> List[Tarea]:
         """Obtener tareas pendientes."""
-        return self.db.query(Tarea).filter(
+        stmt = select(Tarea).where(
             Tarea.proyecto_id == proyecto_id,
             Tarea.completada == False
-        ).all()
-    
+        )
+        return self.db.execute(stmt).scalars().all()
+
     def marcar_completada(self, id: int) -> bool:
         """Marcar tarea como completada."""
         tarea = self.obtener_por_id(id)

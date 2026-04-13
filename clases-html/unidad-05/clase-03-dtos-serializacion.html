@@ -45,6 +45,7 @@
                         <li><a href="#pydantic" class="text-decoration-none">Pydantic Models</a></li>
                         <li><a href="#tipos" class="text-decoration-none">Tipos de DTOs</a></li>
                         <li><a href="#mapeo" class="text-decoration-none">Mapeo Entity-DTO</a></li>
+                        <li><a href="#minilab" class="text-decoration-none">Mini-lab Endpoint</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
                     </ul>
                 </nav>
@@ -233,6 +234,59 @@ class UsuarioService:
 
                     <div class="alert-tip">
                         <strong>Tip:</strong> El mapeo puede automatizarse con librerias como <code>pydantic-mapper</code> o <code>dataclasses</code>.
+                    </div>
+                </section>
+
+                <section id="minilab">
+                    <h2 class="text-primary border-bottom pb-2">Mini-lab: Crear y validar un endpoint con DTOs (20 min)</h2>
+
+                    <p>Vas a construir un endpoint completo para <strong>Proyecto</strong> desde el modelo SQLAlchemy hasta la respuesta JSON. El objetivo es practicar validacion de entrada con Pydantic y controlar exactamente que datos se devuelven.</p>
+
+                    <h4 class="mt-4">Paso 1: Crea los DTOs</h4>
+                    <pre><code class="language-python"># api/schemas/proyecto.py
+from pydantic import BaseModel, Field
+from typing import Optional
+from datetime import datetime
+
+class ProyectoCreate(BaseModel):
+    nombre: str = Field(..., min_length=3, max_length=100)
+    descripcion: Optional[str] = Field(None, max_length=500)
+
+class ProyectoResponse(BaseModel):
+    id: int
+    nombre: str
+    descripcion: Optional[str]
+    creado_en: datetime
+    model_config = {"from_attributes": True}</code></pre>
+
+                    <h4 class="mt-4">Paso 2: Implementa el endpoint</h4>
+                    <pre><code class="language-python"># api/routes/proyectos.py
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from api.schemas.proyecto import ProyectoCreate, ProyectoResponse
+from infrastructure.database import get_db
+from models.proyecto import Proyecto
+from repositories.proyecto_repo import ProyectoRepositorioSQLAlchemy
+
+router = APIRouter(prefix="/api/v1/proyectos", tags=["proyectos"])
+
+@router.post("", response_model=ProyectoResponse, status_code=status.HTTP_201_CREATED)
+def crear_proyecto(data: ProyectoCreate, db: Session = Depends(get_db)):
+    repo = ProyectoRepositorioSQLAlchemy(db)
+    proyecto = Proyecto(nombre=data.nombre, descripcion=data.descripcion)
+    proyecto = repo.crear(proyecto)
+    return ProyectoResponse.model_validate(proyecto)</code></pre>
+
+                    <h4 class="mt-4">Paso 3: Prueba validaciones en Swagger UI</h4>
+                    <p>Levanta la app con <code>uvicorn app.main:app --reload</code> y prueba en <code>http://localhost:8000/docs</code>:</p>
+                    <ul>
+                        <li>Enviar <code>{"nombre": "AB"}</code> → espera <strong>422</strong> (min_length)</li>
+                        <li>Enviar <code>{"descripcion": "Sin nombre"}</code> → espera <strong>422</strong> (field required)</li>
+                        <li>Enviar <code>{"nombre": "TaskFlow Mobile"}</code> → espera <strong>201</strong> con <code>id</code> y <code>creado_en</code></li>
+                    </ul>
+
+                    <div class="alert-tip">
+                        <strong>Reto en clase:</strong> Agrega un <code>GET /api/v1/proyectos/{id}</code> que devuelva <code>ProyectoResponse</code> o <strong>404</strong> si no existe.
                     </div>
                 </section>
 

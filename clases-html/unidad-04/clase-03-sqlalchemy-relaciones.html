@@ -64,6 +64,9 @@
                         <li>Navegar relaciones como atributos</li>
                         <li>Configurar <code>back_populates</code></li>
                     </ul>
+                    <div class="alert-note mt-3">
+                        <strong>Contexto TaskFlow:</strong> El proyecto final depende de estas relaciones: un <strong>Usuario</strong> tiene muchos <strong>Proyectos</strong>, y cada <strong>Proyecto</strong> tiene muchas <strong>Tareas</strong>. Dominarlas hoy es clave para la entrega.
+                    </div>
                 </section>
 
                 <section id="onetomany">
@@ -147,24 +150,27 @@ class Tarea(Base):
     proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")</code></pre>
 
                     <h4>Navegar Relaciones</h4>
-                    <pre><code class="language-python">from sqlalchemy.orm import Session
+                    <pre><code class="language-python">from sqlalchemy import select
+from sqlalchemy.orm import Session
 from database import SessionLocal
 
 db: Session = SessionLocal()
 
 # Obtener usuario con sus proyectos
-usuario = db.query(Usuario).filter_by(username="juan").first()
+stmt = select(Usuario).where(Usuario.username == "juan")
+usuario = db.execute(stmt).scalar_one_or_none()
 
 # Acceder a proyectos como atributo
 for proyecto in usuario.proyectos:
     print(f"Proyecto: {proyecto.nombre}")
-    
+
     # Acceder a tareas del proyecto
     for tarea in proyecto.tareas:
         print(f"  - Tarea: {tarea.titulo}")
 
 # Desde una tarea, acceder al proyecto y usuario
-tarea = db.query(Tarea).first()
+stmt = select(Tarea)
+tarea = db.execute(stmt).scalars().first()
 print(f"Tarea: {tarea.titulo}")
 print(f"Proyecto: {tarea.proyecto.nombre}")
 print(f"Usuario: {tarea.proyecto.usuario.username}")</code></pre>

@@ -167,6 +167,50 @@ def test_listar_tareas_sin_token(client):
                     <div class="alert-tip">
                         <strong>Meta E6:</strong> Alcanzar al menos 60% de cobertura en tests de integración.
                     </div>
+
+                    <h4 class="mt-4">5. Mini-lab: Completa el test de actualizacion (15 min)</h4>
+                    <p>Abre tu editor y completa los <code>TODO</code>. Luego corre <code>pytest tests/test_tareas_update.py -v</code>.</p>
+                    <pre><code class="language-python"># tests/test_tareas_update.py
+import pytest
+
+@pytest.fixture
+def auth_token(client):
+    client.post("/api/v1/usuarios", json={
+        "username": "tester", "email": "t@test.com", "password": "Test1234"
+    })
+    r = client.post("/api/v1/auth/login", data={
+        "username": "tester", "password": "Test1234"
+    })
+    return r.json()["access_token"]
+
+def test_actualizar_tarea(client, auth_token):
+    headers = {"Authorization": f"Bearer {auth_token}"}
+
+    # Crear tarea
+    create = client.post("/api/v1/tareas", json={
+        "titulo": "Original", "descripcion": "Desc", "prioridad": "media", "proyecto_id": 1
+    }, headers=headers)
+    tarea_id = create.json()["id"]
+
+    # Actualizar
+    response = client.patch(f"/api/v1/tareas/{tarea_id}", json={
+        "titulo": "Actualizado", "completada": True
+    }, headers=headers)
+
+    # TODO: assert response.status_code == ?
+    # TODO: assert response.json()["titulo"] == ?
+    # TODO: assert response.json()["completada"] == ?
+
+def test_actualizar_tarea_inexistente(client, auth_token):
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    response = client.patch("/api/v1/tareas/99999", json={
+        "titulo": "Nada"
+    }, headers=headers)
+    # TODO: assert response.status_code == 404</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>Tip:</strong> Si no tienes PATCH implementado, cambia el metodo a PUT y ajusta el payload.
+                    </div>
                 </section>
 
                 <section id="pulido">
