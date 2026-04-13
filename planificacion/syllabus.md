@@ -54,9 +54,9 @@ Al ingeniero informático que se desempeñe como programador, le interesará con
 | Conoce los conceptos fundamentales de objetos clases | **Taller** (Entrega 1) | 15% | 26/02/2026 |
 | Técnicas de Desarrollo de software | **Laboratorio** (Entrega 2) | 15% | 12/03/2026 |
 | Desarrollo Web | **Prototipo** (Entrega 3) | 20% | 26/03/2026 |
-| Construye sistemas con persistencia de datos en archivos planos | **Software** (Entrega 4) | 15% | 23/04/2026 |
-| Desarrolla sistemas con persistencia en bases de datos | **Software** (Entrega 5) | 15% | 07/05/2026 |
-| Conoce e implementa la arquitectura de datos desconectados | **Proyecto** (Sustentación) | 20% | 28/05/2026 |
+| Desarrolla sistemas con persistencia en bases de datos (SQLAlchemy + Alembic) | **Software** (Entrega 4) | 15% | 23/04/2026 |
+| Implementa autenticación JWT y arquitectura limpia en APIs REST | **Software** (Entrega 5) | 15% | 07/05/2026 |
+| Integra y sustenta proyecto completo con stack profesional Python | **Proyecto** (Sustentación) | 20% | 28/05/2026 |
 
 ---
 
@@ -141,7 +141,7 @@ Al ingeniero informático que se desempeñe como programador, le interesará con
 
 ### UNIDAD 3: Desarrollo Web
 
-**Duración:** 4 semanas | **Evaluación:** E3 (20%) - Proyecto 26/03/2026
+**Duración:** 4 semanas + 1 sesión JWT | **Evaluación:** E3 (20%) - Proyecto 26/03/2026
 
 **Temas (Python/FastAPI):**
 1. **Excepciones y Manejo de Errores**
@@ -187,103 +187,101 @@ Al ingeniero informático que se desempeñe como programador, le interesará con
    - Diseño responsivo
    - Integración con FastAPI
 
-**Metodología:** Clases prácticas desarrollando aplicaciones web con FastAPI. Introducción a HTMX para interactividad. Talleres con retos.
+8. **JWT Authentication** *(Semana 10 - rediseño enfocado a proyecto)*
+   - Fundamentos de JWT
+   - Implementación de login y registro
+   - Protección de endpoints con `Depends`
+   - Aplicación directa al proyecto TaskFlow
 
-**Tecnologías:** FastAPI, Uvicorn, Jinja2, HTMX, Bootstrap 5, Pydantic
+**Metodología:** Clases prácticas desarrollando aplicaciones web con FastAPI. Desde semana 10 todas las sesiones aplican conceptos directamente al proyecto final.
+
+**Tecnologías:** FastAPI, Uvicorn, Jinja2, HTMX, Bootstrap 5, Pydantic, python-jose, passlib
 
 ---
 
-### UNIDAD 4: Manejo de persistencia (archivos y bases de datos)
+### UNIDAD 4: Persistencia Relacional en el Proyecto
 
 **Duración:** 4 semanas | **Evaluaciones:** E4 (15%) + E5 (15%)
 
 **Temas (Python/SQLAlchemy):**
-1. **Persistencia en archivos planos** (E4 - 23/04/2026)
-   - Lectura y escritura con `pathlib`
-   - Archivos JSON con `json` module
-   - Archivos CSV con `csv` module
-   - Serialización con `pickle`
-   - Configuración con archivos YAML/JSON
+1. **Introducción a SQLAlchemy aplicada al proyecto**
+   - Engine y Session configurados para el proyecto
+   - Modelos declarativos: Usuario, Proyecto, Tarea
+   - Tipos de columnas y constraints
+   - Elección de motor: SQLite (dev) / PostgreSQL o MySQL (prod)
 
-2. **Introducción a SQLAlchemy**
-   - ¿Qué es SQLAlchemy?
-   - Engine y Session
-   - Modelos declarativos
-   - Tipos de columnas
-
-3. **ORM SQLAlchemy**
-   - Relaciones (One-to-Many, Many-to-Many)
-   - Foreign Keys
+2. **ORM SQLAlchemy y Relaciones** *(E4 - 23/04/2026)*
+   - Relaciones One-to-Many (Usuario → Proyectos → Tareas)
+   - Foreign Keys y cascadas
    - Lazy loading vs Eager loading
-   - Herencia de tablas
+   - Modelos de dominio mapeados a tablas
 
-4. **CRUD con SQLAlchemy** (E5 - 07/05/2026)
-   - Create, Read, Update, Delete
-   - Queries con ORM
-   - Filtros y ordenamiento
-   - Paginación
+3. **CRUD con SQLAlchemy en el proyecto**
+   - Create, Read, Update, Delete de entidades del proyecto
+   - Queries con filtros y ordenamiento
+   - Paginación de resultados
+   - Validaciones de negocio antes del commit
 
-5. **Transacciones y Migraciones**
-   - Sesiones y transacciones
-   - Rollback y commit
-   - Alembic para migraciones
-   - Versionado de esquema
+4. **Transacciones y Migraciones con Alembic**
+   - Configuración de Alembic en el proyecto
+   - Generación de migraciones automáticas
+   - Rollback y commit seguros
+   - Versionado de esquema en equipo
 
-6. **Integración con FastAPI**
-   - Dependency Injection de sesiones
-   - Endpoints CRUD
+5. **Integración FastAPI + SQLAlchemy + JWT** *(E5 - 07/05/2026)*
+   - Dependency Injection de sesiones de DB
+   - Endpoints CRUD protegidos con JWT
    - Validación con Pydantic + SQLAlchemy
+   - Manejo de errores transaccionales
 
-**Metodología:** Clases magistrales de SQLAlchemy. Clases prácticas creando sistemas con persistencia. Talleres con retos.
+**Metodología:** Cada clase es una sesión de desarrollo del proyecto. No hay ejercicios aislados; todo el código escrito en clase pertenece al proyecto final.
 
-**Tecnologías:** SQLAlchemy 2.0, Alembic, SQLite, PostgreSQL, Pydantic
+**Tecnologías:** SQLAlchemy 2.0, Alembic, SQLite / PostgreSQL / MySQL, Pydantic, python-jose
 
 ---
 
-### UNIDAD 5: Arquitectura de datos desconectados
+### UNIDAD 5: Proyecto Final y Sustentación
 
 **Duración:** 3 semanas | **Evaluación:** E6 (20%) - Proyecto 28/05/2026
 
 **Temas (Python/Arquitectura):**
-1. **Patrón Repository**
-   - Abstracción de acceso a datos
+1. **Patrón Repository en el proyecto**
+   - Abstracción de acceso a datos para cada entidad
    - Interface Repository genérica
    - Implementación con SQLAlchemy
    - Unit of Work pattern
 
-2. **Clean Architecture**
+2. **Clean Architecture aplicada**
    - Capas: Domain, Use Cases, Infrastructure
-   - Inyección de dependencias
+   - Inyección de dependencias en FastAPI
    - Inversión de control
-   - Separación de responsabilidades
+   - Separación de responsabilidades en el código del proyecto
 
 3. **DTOs y Serialización**
-   - Dataclasses vs Pydantic
-   - Mapeo objeto-relacional
-   - Serialización JSON
-   - Validación de datos
+   - Mapeo entre modelos SQLAlchemy y schemas Pydantic
+   - Serialización JSON para la API
+   - Validación de datos de entrada/salida
 
-4. **Caché y Datos Desconectados**
-   - Caché en memoria con `cachetools`
-   - Redis para caché distribuido
-   - Estrategias de invalidación
-   - Trabajar offline con datos
-
-5. **APIs REST Avanzadas**
-   - Paginación
+4. **APIs REST Avanzadas**
+   - Paginación en listados de tareas/proyectos
    - Filtrado y búsqueda
-   - Ordenamiento
-   - HATEOAS básico
+   - Ordenamiento dinámico
+   - Endpoints anidados (proyectos/{id}/tareas)
 
-6. **Proyecto Integrador**
-   - Aplicación completa FastAPI + SQLAlchemy
-   - Arquitectura limpia
-   - Testing completo
-   - Documentación OpenAPI
+5. **Testing e Integración**
+   - Tests de integración con base de datos de prueba
+   - Tests de autenticación JWT
+   - Coverage mínimo 60%
 
-**Metodología:** Clases magistrales de arquitectura. Clases prácticas desarrollando proyecto integrador. Sustentación final.
+6. **Proyecto Integrador y Sustentación**
+   - Aplicación completa FastAPI + SQLAlchemy + JWT
+   - Pulido de funcionalidades y documentación
+   - Preparación de demo y presentación
+   - **Sustentación final:** 1 persona por grupo elegida aleatoriamente
 
-**Tecnologías:** FastAPI, SQLAlchemy, Pydantic, cachetools, Redis (opcional)
+**Metodología:** Clases 100% dedicadas al desarrollo del proyecto integrador. Última semana: preparación de sustentación con sorteo de presentador por grupo.
+
+**Tecnologías:** FastAPI, SQLAlchemy, Pydantic, pytest, python-jose, passlib
 
 ---
 
@@ -322,9 +320,9 @@ Al ingeniero informático que se desempeñe como programador, le interesará con
 | E1 | 15% | 4 | **Taller** | **Entrega 1:** Modelado del Dominio del Proyecto |
 | E2 | 15% | 6 | **Laboratorio** | **Entrega 2:** Testing (TDD/BDD) del Proyecto |
 | E3 | 20% | 8 | **Prototipo** | **Entrega 3:** API Web y UI (FastAPI + Jinja2) |
-| E4 | 15% | 11 | **Software** | **Entrega 4:** Persistencia en Archivos (JSON/CSV) |
-| E5 | 15% | 13 | **Software** | **Entrega 5:** Persistencia en BD (SQLAlchemy) |
-| E6 | 20% | 16 | **Proyecto** | **Sustentación Final:** Arquitectura Limpia |
+| E4 | 15% | 11 | **Software** | **Entrega 4:** SQLAlchemy modelos + migraciones + relaciones |
+| E5 | 15% | 13 | **Software** | **Entrega 5:** CRUD + JWT + arquitectura básica |
+| E6 | 20% | 16 | **Proyecto** | **Sustentación Final:** Sistema completo (1 persona/grupo sorteada) |
 
 ### Seguimientos Universitarios
 
@@ -370,21 +368,26 @@ Este curso se desarrolla como un único **Proyecto de Aula Incremental**. Cada e
 - **Tecnología:** FastAPI, Jinja2, HTMX
 - **Requisito:** Integrar el dominio testeado en la web
 
-### Entrega 4: Persistencia Local (Semana 11)
-- **Objetivo:** Guardar datos sin base de datos
+### Entrega 4: SQLAlchemy Modelos y Migraciones (Semana 11)
+- **Objetivo:** Modelar el dominio en base de datos relacional con SQLAlchemy
 - **Tipo:** Software
-- **Tecnología:** JSON/CSV, pathlib
+- **Tecnología:** SQLAlchemy 2.0, Alembic
+- **Requisito:** SQLite/PostgreSQL/MySQL configurado; modelos de Usuario, Proyecto, Tarea con relaciones
+- **Evaluación:** Jueves 23 de abril
 
-### Entrega 5: Persistencia Relacional (Semana 13)
-- **Objetivo:** Migrar el almacenamiento a SQL
+### Entrega 5: CRUD + JWT + Arquitectura Básica (Semana 13)
+- **Objetivo:** Todos los endpoints CRUD protegidos con JWT y organizados por capas
 - **Tipo:** Software
-- **Tecnología:** SQLAlchemy ORM, Alembic
+- **Tecnología:** FastAPI, SQLAlchemy, python-jose, passlib
+- **Requisito:** Login/registro funcional; CRUD completo de todas las entidades; separación mínima en capas
+- **Evaluación:** Jueves 07 de mayo
 
 ### Entrega 6: Sustentación Final (Semana 14-16)
-- **Objetivo:** Aplicación completa con Arquitectura Limpia
+- **Objetivo:** Aplicación completa con Arquitectura Limpia lista para producción
 - **Tipo:** Proyecto
-- **Tecnología:** Repository Pattern, DTOs
-- **Sustentación:** Defensa del código y arquitectura final
+- **Tecnología:** Repository Pattern, DTOs, Pydantic, pytest
+- **Requisitos técnicos obligatorios:** JWT para autenticación, SQLAlchemy como ORM, base de datos relacional
+- **Sustentación:** Defensa del código por **1 persona por grupo elegida aleatoriamente el día de la sustentación**
 
 ---
 

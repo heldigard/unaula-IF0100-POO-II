@@ -518,7 +518,7 @@
                         <tr class="table-warning">
                             <td rowspan="2"><strong>Segundo (80%)</strong><br><small class="text-muted">Límite: 15/05/2026</small></td>
                             <td><strong>E4</strong></td>
-                            <td>Construye sistemas con persistencia de datos en archivos planos</td>
+                            <td>Desarrolla sistemas con persistencia en bases de datos (SQLAlchemy + Alembic)</td>
                             <td><span class="badge bg-info text-dark">Software</span></td>
                             <td><span class="badge bg-success fs-6">15%</span></td>
                             <td><strong>23/04/2026</strong></td>
@@ -593,25 +593,25 @@
                 <div class="col-md-4">
                     <a href="evaluaciones/evaluacion-04-archivos.html" class="card h-100 text-decoration-none border-info">
                         <div class="card-header bg-info text-white">
-                            <i class="bi bi-clipboard-check me-2"></i>E4: Persistencia Planos
+                            <i class="bi bi-clipboard-check me-2"></i>E4: SQLAlchemy ORM
                         </div>
                         <div class="card-body">
                             <p class="mb-1"><strong>15%</strong> - Software</p>
                             <p class="mb-1 text-muted">23/04/2026</p>
-                            <p class="small text-muted mb-0">JSON, CSV y Pathlib</p>
+                            <p class="small text-muted mb-0">SQLAlchemy, Modelos y Alembic</p>
                         </div>
                     </a>
                 </div>
                 <!-- E5 -->
                 <div class="col-md-4">
-                    <a href="evaluaciones/evaluacion-05-sql.html" class="card h-100 text-decoration-none border-success">
+                    <a href="evaluaciones/evaluacion-05-jwt-arquitectura.html" class="card h-100 text-decoration-none border-success">
                         <div class="card-header bg-success text-white">
-                            <i class="bi bi-clipboard-check me-2"></i>E5: Persistencia SQL
+                            <i class="bi bi-clipboard-check me-2"></i>E5: JWT + Arquitectura
                         </div>
                         <div class="card-body">
                             <p class="mb-1"><strong>15%</strong> - Software</p>
                             <p class="mb-1 text-muted">07/05/2026</p>
-                            <p class="small text-muted mb-0">SQLAlchemy ORM y Alembic</p>
+                            <p class="small text-muted mb-0">CRUD completo, JWT y capas</p>
                         </div>
                     </a>
                 </div>
@@ -732,8 +732,8 @@
                                 </div>
                                 <div class="card-body py-2">
                                     <ul class="list-unstyled mb-0 small">
-                                        <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-01-archivos-json-csv.ipynb" target="_blank"><i class="bi bi-file-earmark-code text-info me-1"></i>04-01 Archivos</a></li>
-                                        <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-02-sqlalchemy-modelos.ipynb" target="_blank"><i class="bi bi-table text-info me-1"></i>04-02 Modelos</a></li>
+                                        <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-01-sqlalchemy-modelos.ipynb" target="_blank"><i class="bi bi-table text-info me-1"></i>04-01 SQLAlchemy Modelos</a></li>
+                                        <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-02-alembic.ipynb" target="_blank"><i class="bi bi-arrow-up-right-circle text-info me-1"></i>04-02 Alembic</a></li>
                                         <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-03-sqlalchemy-relaciones.ipynb" target="_blank"><i class="bi bi-diagram-3 text-info me-1"></i>04-03 Relaciones</a></li>
                                         <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-04-crud-sqlalchemy.ipynb" target="_blank"><i class="bi bi-save text-info me-1"></i>04-04 CRUD ORM</a></li>
                                         <li><a href="https://github.com/heldigard/unaula-IF0100-POO-II/blob/main/notebooks/unidad-04/04-05-alembic.ipynb" target="_blank"><i class="bi bi-arrow-up-right-circle text-info me-1"></i>04-05 Migraciones</a></li>
@@ -973,7 +973,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad4">
-                            <i class="bi bi-database-check text-info me-2"></i>Unidad 4: Persistencia de Datos (5 clases)
+                            <i class="bi bi-database-check text-info me-2"></i>Unidad 4: Persistencia de Datos (4 clases)
                         </button>
                     </h2>
                     <div id="collapseUnidad4" class="accordion-collapse collapse" data-bs-parent="#accordionClases">
@@ -982,24 +982,17 @@
                                 <div class="col-md-6">
                                     <ul class="class-list">
                                         <li>
-                                            <a href="unidad-04/clase-01-archivos-json-csv.html">
-                                                <i class="bi bi-file-earmark-code text-info"></i>
-                                                Clase 01: Archivos JSON y CSV
-                                                <span class="badge bg-danger">Abr 21-23 - E4</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="unidad-04/clase-02-sqlalchemy-modelos.html">
+                                            <a href="unidad-04/clase-01-sqlalchemy-modelos.html">
                                                 <i class="bi bi-table text-info"></i>
-                                                Clase 02: SQLAlchemy Modelos
-                                                <span class="badge bg-secondary">Abr 28</span>
+                                                Clase 01: SQLAlchemy ORM / Modelos
+                                                <span class="badge bg-danger">Abr 21 - E4</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="unidad-04/clase-03-sqlalchemy-relaciones.html">
-                                                <i class="bi bi-diagram-3 text-info"></i>
-                                                Clase 03: SQLAlchemy Relaciones
-                                                <span class="badge bg-secondary">Abr 30</span>
+                                            <a href="unidad-04/clase-02-alembic.html">
+                                                <i class="bi bi-arrow-up-right-circle text-info"></i>
+                                                Clase 02: Alembic / Migraciones
+                                                <span class="badge bg-secondary">Abr 23</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1007,17 +1000,17 @@
                                 <div class="col-md-6">
                                     <ul class="class-list">
                                         <li>
-                                            <a href="unidad-04/clase-04-crud-sqlalchemy.html">
-                                                <i class="bi bi-save text-info"></i>
-                                                Clase 04: CRUD con SQLAlchemy
-                                                <span class="badge bg-secondary">May 05</span>
+                                            <a href="unidad-04/clase-03-sqlalchemy-relaciones.html">
+                                                <i class="bi bi-diagram-3 text-info"></i>
+                                                Clase 03: SQLAlchemy Relaciones
+                                                <span class="badge bg-secondary">Abr 28</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="unidad-04/clase-05-alembic.html">
-                                                <i class="bi bi-arrow-up-right-circle text-info"></i>
-                                                Clase 05: Migraciones con Alembic
-                                                <span class="badge bg-danger">May 07 - E5</span>
+                                            <a href="unidad-04/clase-04-crud-sqlalchemy.html">
+                                                <i class="bi bi-save text-info"></i>
+                                                Clase 04: CRUD con SQLAlchemy
+                                                <span class="badge bg-secondary">Abr 30</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1031,7 +1024,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUnidad5">
-                            <i class="bi bi-diagram-3-fill text-success me-2"></i>Unidad 5: Arquitectura de Software (5 clases)
+                            <i class="bi bi-diagram-3-fill text-success me-2"></i>Unidad 5: Arquitectura de Software (8 clases)
                         </button>
                     </h2>
                     <div id="collapseUnidad5" class="accordion-collapse collapse" data-bs-parent="#accordionClases">
@@ -1043,21 +1036,28 @@
                                             <a href="unidad-05/clase-01-repository-pattern.html">
                                                 <i class="bi bi-layers text-success"></i>
                                                 Clase 01: Repository Pattern
-                                                <span class="badge bg-secondary">May 12</span>
+                                                <span class="badge bg-secondary">May 05</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="unidad-05/clase-02-clean-architecture.html">
                                                 <i class="bi bi-bounding-box text-success"></i>
-                                                Clase 02: Clean Architecture
-                                                <span class="badge bg-secondary">May 14</span>
+                                                Clase 02: Clean Architecture + JWT
+                                                <span class="badge bg-danger">May 07 - E5</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="unidad-05/clase-03-dtos-serializacion.html">
                                                 <i class="bi bi-box-arrow-in-right text-success"></i>
                                                 Clase 03: DTOs y Serialización
-                                                <span class="badge bg-secondary">May 19</span>
+                                                <span class="badge bg-secondary">May 12</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-05/clase-04-api-rest-avanzada.html">
+                                                <i class="bi bi-lightning text-success"></i>
+                                                Clase 04: API REST Avanzada
+                                                <span class="badge bg-secondary">May 14</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1065,17 +1065,31 @@
                                 <div class="col-md-6">
                                     <ul class="class-list">
                                         <li>
-                                            <a href="unidad-05/clase-04-api-rest-avanzada.html">
-                                                <i class="bi bi-lightning text-success"></i>
-                                                Clase 04: API REST Avanzada
+                                            <a href="unidad-05/clase-05-proyecto-final.html">
+                                                <i class="bi bi-check-square text-success"></i>
+                                                Clase 05: Testing de Integración
+                                                <span class="badge bg-secondary">May 19</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-05/clase-05-proyecto-final.html">
+                                                <i class="bi bi-tools text-success"></i>
+                                                Clase 06: Pulido del Proyecto
                                                 <span class="badge bg-secondary">May 21</span>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="unidad-05/clase-05-proyecto-final.html">
+                                                <i class="bi bi-easel text-success"></i>
+                                                Clase 07: Preparación Sustentación
+                                                <span class="badge bg-secondary">May 26</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="unidad-05/clase-05-proyecto-final.html">
                                                 <i class="bi bi-flag-fill text-success"></i>
-                                                Clase 05: Proyecto Final
-                                                <span class="badge bg-danger">May 26-28 - E6</span>
+                                                Clase 08: Sustentación Final
+                                                <span class="badge bg-danger">May 28 - E6</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -1132,22 +1146,16 @@
                                     <td><strong>MVP</strong>: API REST con FastAPI y validación de datos</td>
                                 </tr>
                                 <tr>
-                                    <td>Fase 3: Persistencia Planos</td>
-                                    <td>Semana 9-11 (Abr 07 - Abr 23)</td>
+                                    <td>Fase 3: Persistencia Relacional</td>
+                                    <td>Semana 10-12 (Abr 14 - Abr 30)</td>
                                     <td><strong>15% (E4)</strong></td>
-                                    <td>Implementación de almacenamiento en JSON/CSV con pathlib</td>
+                                    <td>SQLAlchemy ORM, Alembic migraciones y relaciones</td>
                                 </tr>
                                 <tr>
-                                    <td>Fase 4: Persistencia Relacional</td>
-                                    <td>Semana 12-13 (Abr 28 - May 07)</td>
-                                    <td><strong>15% (E5)</strong></td>
-                                    <td>Migración a SQLAlchemy ORM y base de datos PostgreSQL</td>
-                                </tr>
-                                <tr>
-                                    <td>Fase 5: Arquitectura Limpia</td>
-                                    <td>Semana 14-16 (May 12 - May 28)</td>
-                                    <td><strong>20% (E6)</strong></td>
-                                    <td><strong>Entrega Final</strong>: Repository Pattern + Clean Architecture</td>
+                                    <td>Fase 4: Arquitectura y Entrega</td>
+                                    <td>Semana 13-16 (May 05 - May 28)</td>
+                                    <td><strong>35% (E5 + E6)</strong></td>
+                                    <td><strong>Entrega Final</strong>: JWT, Clean Architecture, Repository Pattern y sustentación</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1160,8 +1168,8 @@
                             <h4 class="card-title">TaskFlow 2026</h4>
                             <p class="card-text">Sistema de Gestión de Tareas</p>
                             <hr>
-                            <p class="mb-1"><strong>55%</strong> del curso enfocado en el proyecto</p>
-                            <p class="small mb-0">E3 (20%) + E5 (15%) + E6 (20%)</p>
+                            <p class="mb-1"><strong>70%</strong> del curso enfocado en el proyecto</p>
+                            <p class="small mb-0">E3 (20%) + E4 (15%) + E5 (15%) + E6 (20%)</p>
                             <small class="mt-2 d-block">Desarrollo iterativo y evolutivo</small>
                         </div>
                     </div>

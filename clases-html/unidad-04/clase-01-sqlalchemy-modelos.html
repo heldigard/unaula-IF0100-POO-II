@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: SQLAlchemy ORM / Modelos | IF0100</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #0d6efd; --success: #198754; --warning: #ffc107; --danger: #dc3545; --info: #0dcaf0; }
+        header { background: linear-gradient(135deg, var(--primary) 0%, #0a58ca 100%); color: white; padding: 2rem 0; }
+        .sidebar { background: #f8f9fa; border-radius: 8px; padding: 1.5rem; position: sticky; top: 2rem; }
+        section { margin-bottom: 2rem; padding: 1.5rem; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre[class*="language-"] { border-radius: 6px; }
+        .alert-tip { background: #d1e7dd; border-left: 4px solid var(--success); padding: 1rem; border-radius: 4px; }
+        .alert-warning { background: #fff3cd; border-left: 4px solid var(--warning); padding: 1rem; border-radius: 4px; }
+        .alert-note { background: #e7f3ff; border-left: 4px solid var(--info); padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>IF0100 - Programación OO II</h1>
+            <h2>Unidad 4: Manejo de Persistencia</h2>
+            <h3>Clase 1: SQLAlchemy ORM / Modelos</h3>
+            <p class="mt-2">
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Semana 11: Martes 21 de abril de 2026</span>
+                <span class="badge bg-info text-dark">Martes (80 minutos)</span>
+                <span class="badge bg-primary">40 min Teoría</span>
+                <span class="badge bg-success text-white">40 min Práctica</span>
+            </p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-04-archivos.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E4: SQLAlchemy ORM - Jueves 23/04/2026
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <aside class="col-lg-3">
+                <nav class="sidebar">
+                    <h5>Contenido</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
+                        <li><a href="#sqlalchemy-intro" class="text-decoration-none">Introducción a SQLAlchemy</a></li>
+                        <li><a href="#modelos" class="text-decoration-none">Modelos Declarativos</a></li>
+                        <li><a href="#relaciones" class="text-decoration-none">Relaciones Básicas</a></li>
+                        <li><a href="#ejercicio" class="text-decoration-none">Ejercicio Práctico</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="col-lg-9">
+                <section id="objetivos">
+                    <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
+                    <p>Al finalizar esta clase, serás capaz de:</p>
+                    <ul>
+                        <li>Configurar <strong>SQLAlchemy 2.0</strong> con modelos declarativos</li>
+                        <li>Diseñar entidades con <strong>tipos de columna, constraints y claves primarias</strong></li>
+                        <li>Implementar <strong>relaciones One-to-Many</strong> entre entidades</li>
+                        <li>Aplicar <strong>herencia</strong> con <code>DeclarativeBase</code> para reutilizar comportamiento</li>
+                        <li>Crear y ejecutar <strong>migraciones con Alembic</strong></li>
+                        <li>Modelar las entidades <code>Usuario</code>, <code>Proyecto</code> y <code>Tarea</code> para TaskFlow</li>
+                    </ul>
+                </section>
+
+                <section id="sqlalchemy-intro">
+                    <h2 class="text-primary border-bottom pb-2">¿Por qué SQLAlchemy? (10 min)</h2>
+                    <p>En el desarrollo profesional con Python, <strong>SQLAlchemy</strong> es el ORM estándar. Nos permite:</p>
+                    <ul>
+                        <li>Trabajar con bases de datos usando <strong>objetos Python</strong> en lugar de SQL crudo</li>
+                        <li>Cambiar entre <strong>SQLite (dev)</strong> y <strong>PostgreSQL/MySQL (prod)</strong> sin tocar el código</li>
+                        <li>Aprovechar la <strong>POO</strong>: herencia, polimorfismo y encapsulamiento en nuestros modelos</li>
+                    </ul>
+
+                    <div class="alert-note">
+                        <strong>Stack del curso:</strong> SQLAlchemy 2.0 + SQLite para desarrollo local. En producción puedes migrar a PostgreSQL sin cambiar una línea de tus modelos.
+                    </div>
+                </section>
+
+                <section id="modelos">
+                    <h2 class="text-primary border-bottom pb-2">Modelos Declarativos (30 min)</h2>
+                    <p>SQLAlchemy 2.0 usa el estilo <strong>declarativo</strong>. Todos los modelos heredan de una clase base (<code>DeclarativeBase</code>), aplicando el concepto de <strong>herencia</strong> de POO.</p>
+
+                    <h4>1. Configurar la base</h4>
+                    <pre><code class="language-python">from sqlalchemy import create_engine, String, Integer, Boolean, ForeignKey
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, Session
+from typing import List, Optional
+
+class Base(DeclarativeBase):
+    """Clase base para todos los modelos del proyecto."""
+    pass
+
+# Motor SQLite (archivo local)
+engine = create_engine("sqlite:///taskflow.db", echo=True)</code></pre>
+
+                    <h4>2. Modelo Usuario</h4>
+                    <pre><code class="language-python">class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
+    activo: Mapped[bool] = mapped_column(Boolean, default=True)
+
+    # Relación: un usuario tiene muchos proyectos
+    proyectos: Mapped[List["Proyecto"]] = relationship(back_populates="usuario")
+
+    def __repr__(self) -> str:
+        return f"<Usuario(id={self.id}, username='{self.username}')>"</code></pre>
+
+                    <h4>3. Modelo Proyecto</h4>
+                    <pre><code class="language-python">class Proyecto(Base):
+    __tablename__ = "proyectos"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(100), nullable=False)
+    descripcion: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+
+    # Clave foránea
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"))
+
+    # Relaciones
+    usuario: Mapped["Usuario"] = relationship(back_populates="proyectos")
+    tareas: Mapped[List["Tarea"]] = relationship(back_populates="proyecto")
+
+    def __repr__(self) -> str:
+        return f"<Proyecto(id={self.id}, nombre='{self.nombre}')>"</code></pre>
+
+                    <h4>4. Crear las tablas</h4>
+                    <pre><code class="language-python"># Crear todas las tablas definidas en los modelos que heredan de Base
+Base.metadata.create_all(engine)</code></pre>
+
+                    <div class="alert-tip">
+                        <strong>OOP en acción:</strong> Todos los modelos (<code>Usuario</code>, <code>Proyecto</code>, <code>Tarea</code>) <strong>heredan</strong> de <code>Base</code>. Esto les da automáticamente la capacidad de mapearse a tablas SQL. Es herencia aplicada a persistencia.
+                    </div>
+                </section>
+
+                <section id="relaciones">
+                    <h2 class="text-primary border-bottom pb-2">Relaciones entre Entidades (20 min)</h2>
+                    <p>TaskFlow requiere una jerarquía clara: <strong>Usuario → Proyectos → Tareas</strong>. Esto se modela con relaciones <code>ForeignKey</code> y <code>relationship</code>.</p>
+
+                    <h4>Modelo Tarea</h4>
+                    <pre><code class="language-python">from enum import Enum as PyEnum
+from sqlalchemy import Enum
+
+class EstadoTarea(str, PyEnum):
+    PENDIENTE = "pendiente"
+    EN_PROGRESO = "en_progreso"
+    COMPLETADA = "completada"
+
+class Tarea(Base):
+    __tablename__ = "tareas"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    titulo: Mapped[str] = mapped_column(String(150), nullable=False)
+    descripcion: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    estado: Mapped[EstadoTarea] = mapped_column(
+        Enum(EstadoTarea),
+        default=EstadoTarea.PENDIENTE
+    )
+
+    proyecto_id: Mapped[int] = mapped_column(ForeignKey("proyectos.id"))
+    proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")
+
+    def __repr__(self) -> str:
+        return f"<Tarea(id={self.id}, titulo='{self.titulo}', estado='{self.estado.value}')>"
+
+    def cambiar_estado(self, nuevo_estado: EstadoTarea) -> None:
+        """Cambia el estado de la tarea."""
+        self.estado = nuevo_estado</code></pre>
+
+                    <div class="alert-warning">
+                        <strong>Relaciones en SQLAlchemy 2.0:</strong> Siempre usa <code>Mapped[T]</code> con <code>relationship()</code> para aprovechar el type checking y la autocompletación en el editor.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio Práctico: Modelar TaskFlow (40 min)</h2>
+                    <p>En parejas, completa las siguientes tareas directamente en tu proyecto:</p>
+
+                    <h4>Tarea 1: Definir los 3 modelos (20 min)</h4>
+                    <ul>
+                        <li>Crear <code>models.py</code> con <code>Usuario</code>, <code>Proyecto</code> y <code>Tarea</code></li>
+                        <li>Asegurar que <code>Usuario</code> tenga <code>username</code> y <code>email</code> únicos</li>
+                        <li>Conectar las relaciones: <code>Usuario.proyectos</code>, <code>Proyecto.tareas</code></li>
+                    </ul>
+
+                    <h4>Tarea 2: Validar con SQLite Browser (20 min)</h4>
+                    <ul>
+                        <li>Crear las tablas con <code>Base.metadata.create_all(engine)</code></li>
+                        <li>Abrir <code>taskflow.db</code> con <a href="https://sqlitebrowser.org/" target="_blank">DB Browser for SQLite</a></li>
+                        <li>Verificar que existan las tablas <code>usuarios</code>, <code>proyectos</code> y <code>tareas</code></li>
+                        <li>Confirmar que las <code>ForeignKey</code> estén correctas</li>
+                    </ul>
+
+                    <div class="alert-warning">
+                        <strong>E4 - Criterios de evaluación (Jueves 23/04):</strong>
+                        <ul>
+                            <li>Modelos SQLAlchemy con tipado <code>Mapped[T]</code> (50%)</li>
+                            <li>Relaciones correctas entre entidades (30%)</li>
+                            <li>Alembic configurado y migración aplicada (20%)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-primary border-bottom pb-2">Resumen</h2>
+                    <ul>
+                        <li><strong>DeclarativeBase:</strong> Clase base que aplica herencia para mapeo ORM</li>
+                        <li><strong>Mapped[T]:</strong> Tipado moderno de SQLAlchemy 2.0</li>
+                        <li><strong>relationship():</strong> Define relaciones entre objetos Python y tablas SQL</li>
+                        <li><strong>ForeignKey:</strong> Columna que referencia otra tabla</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="../unidad-03/clase-05-persistencia-datos.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: JWT Authentication
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 16 de 25</span>
+            </div>
+            <div>
+                <a href="clase-02-alembic.html" class="btn btn-primary btn-sm">
+                    Siguiente: Alembic Migraciones →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ini.min.js"></script>
+</body>
+</html>

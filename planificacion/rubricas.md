@@ -161,15 +161,15 @@
 | **Value Objects** | VOs inmutables; igualdad por valor; lógica de dominio | VOs correctamente implementados; buena lógica | VOs básicos; lógica simple | Sin VOs o incorrectos | 10% |
 | **Repositorios** | Interfaces claras; implementaciones probadas; inyección de dependencias | Interfaces buenas; implementaciones correctas; DI básica | Interfaces básicas; implementaciones simples; sin DI | Sin interfaces o incorrectas | 10% |
 
-### 2.4 Rúbrica Específica Taller Unidad 4 (Frontend)
+### 2.4 Rúbrica Específica Software Unidad 4 (SQLAlchemy + Alembic)
 
 | Aspecto | Excelente (25-20) | Bueno (19-15) | Satisfactorio (14-10) | Insuficiente (9-0) | Peso |
 |---------|-------------------|---------------|----------------------|-------------------|------|
-| **Interfaz Funcional** | Todos los formularios funcionan; HTMX actualiza correctamente; sin recargas | Formularios funcionan; HTMX funciona mayormente | Formularios básicos funcionan; HTMX limitado | Formularios no funcionan | 30% |
-| **Diseño Responsive** | Perfecto en móvil, tablet, desktop; Bootstrap bien aplicado | Bueno en todos los dispositivos; Bootstrap adecuado | Responsive básico; Bootstrap aceptable | No responsive; mal uso de Bootstrap | 20% |
-| **UX/UI** | Excelente experiencia; feedback visual; estados claros; sin bugs visuales | Buena experiencia; feedback adecuado; pocos bugs | Experiencia básica; feedback limitado; algunos bugs | Mala experiencia; sin feedback; muchos bugs | 20% |
-| **Validación** | Validación cliente y servidor; mensajes claros; feedback inmediato | Validación completa; mensajes claros | Validación básica; mensajes simples | Sin validación o confusa | 15% |
-| **Componentes Reutilizables** | DRY; componentes modulares; fácil de extender | Bastante DRY; componentes adecuados | Algo de código duplicado; componentes básicos | Mucho código duplicado; sin componentes | 15% |
+| **Modelos SQLAlchemy** | Modelos declarativos con Mapped[T]; relaciones 1-N correctas; índices y constraints | Modelos bien definidos; relaciones básicas correctas | Modelos funcionales; faltan relaciones o constraints | Modelos incorrectos o incompletos | 30% |
+| **Migraciones Alembic** | Migraciones autogeneradas y versionadas; env.py configurado; upgrade/downgrade funcionan | Migraciones generadas correctamente; aplicadas sin errores | Migraciones básicas; algunos problemas de configuración | Sin migraciones o no funcionan | 20% |
+| **Integración FastAPI** | CRUD funcional con SQLAlchemy; manejo de sesiones correcto; transacciones | CRUD básico funcional; buen manejo de sesiones | CRUD parcial; problemas con sesiones o commits | Sin integración o no funciona | 25% |
+| **Calidad de Código** | PEP 8 impecable; type hints completos; separación clara de capas | Buena calidad; type hints en funciones principales | Calidad aceptable; algunos type hints faltantes | Código desorganizado; sin type hints | 15% |
+| **Documentación** | README con instrucciones de ejecución; docstrings; diagrama de entidades | README claro; docstrings básicos | README mínimo; poca documentación | Sin documentación | 10% |
 
 ---
 
@@ -184,12 +184,14 @@
 - Código fuente completo
 - Documentación (README, API docs, diagramas)
 - Sistema desplegado y funcional
-- Sustentación oral (10-15 min)
+- **Sustentación oral (10-15 min) — 1 persona por grupo elegida aleatoriamente el día de la sustentación**
+
+> **Requisitos técnicos obligatorios:** JWT para autenticación, SQLAlchemy como ORM (SQLite/PostgreSQL/MySQL), arquitectura limpia con separación de capas, y aplicación sólida de conceptos POO (herencia, polimorfismo, encapsulamiento).
 
 | Criterio | Excelente (25-20) | Bueno (19-15) | Satisfactorio (14-10) | Insuficiente (9-0) | Peso |
 |----------|-------------------|---------------|----------------------|-------------------|------|
-| **Funcionalidad Completa** | Todos los requisitos implementados; sistema estable; edge cases manejados | Requisitos principales; sistema funcional; algunos edge cases | Requisitos básicos; funcionalidad limitada | Requisitos no cumplidos; sistema inestable | 30% |
-| **Arquitectura y Diseño** | Arquitectura limpia; separación de capas; patrones aplicados correctamente | Buena arquitectura; separación adecuada; patrones usados | Arquitectura básica; algo de separación; patrones limitados | Mala arquitectura; código monolítico | 20% |
+| **Funcionalidad Completa** | Todos los requisitos implementados; JWT + SQLAlchemy funcionando; sistema estable; edge cases manejados | Requisitos principales; JWT y SQLAlchemy presentes; sistema funcional; algunos edge cases | Requisitos básicos; JWT o SQLAlchemy con deficiencias; funcionalidad limitada | Requisitos no cumplidos; falta JWT o SQLAlchemy; sistema inestable | 30% |
+| **Arquitectura y Diseño POO** | Arquitectura limpia; excelente uso de herencia, polimorfismo, encapsulamiento; separación de capas clara; patrones aplicados correctamente | Buena arquitectura; uso adecuado de POO; separación de capas; patrones usados | Arquitectura básica; uso limitado de POO; algo de separación; patrones limitados | Mala arquitectura; no aplica POO; código monolítico | 20% |
 | **Calidad de Código** | PEP 8 perfecto; type hints; docstrings; código modular; sin duplicación | PEP 8 seguido; type hints principales; buenos docstrings | PEP 8 aceptable; algunos type hints; docstrings básicos | No sigue PEP 8; sin type hints; sin docstrings | 15% |
 | **Tests y Calidad** | Coverage > 80%; tests unitarios, integración, E2E; todos pasan | Coverage 60-80%; tests unitarios y integración; pasan | Coverage 40-60%; tests básicos; mayoría pasan | Coverage < 40%; pocos tests; algunos fallan | 15% |
 | **Documentación** | README completo; API documentada; diagramas; guías de uso | README bueno; API documentada; algunos diagramas | README básico; documentación mínima | Sin documentación o muy pobre | 10% |
@@ -197,52 +199,75 @@
 
 ### 3.2 Rúbrica por Entregable del Proyecto
 
-#### MVP (Semana 4) - 5% de nota del proyecto
+#### E1 — Dominio POO (Semana 4) - 15%
 
 | Aspecto | Puntos | Criterio |
 |---------|--------|----------|
-| Modelo de Usuario | 0-20 | Dataclass con validaciones |
-| Modelo de Proyecto | 0-20 | Dataclass con validaciones |
-| Modelo de Tarea | 0-20 | Dataclass con validaciones |
-| Persistencia JSON | 0-20 | Guarda/carga archivos JSON |
-| Funcionalidad Básica | 0-20 | CRUD simple funciona |
+| Modelo de Usuario | 0-20 | Dataclass/clase con validaciones y encapsulamiento |
+| Modelo de Proyecto | 0-20 | Dataclass/clase con validaciones; uso de herencia/composición |
+| Modelo de Tarea | 0-20 | Dataclass/clase con validaciones; polimorfismo en estados/tipos |
+| Relaciones POO | 0-20 | Herencia, polimorfismo o mixins aplicados correctamente |
+| Funcionalidad Básica | 0-20 | CRUD simple funciona en memoria |
 
-#### v1.0 (Semana 8) - 20% de nota del proyecto
-
-| Aspecto | Puntos | Criterio |
-|---------|--------|----------|
-| Autenticación | 0-20 | Login, registro, JWT |
-| Base de Datos | 0-20 | PostgreSQL conectado |
-| API REST | 0-30 | Endpoints CRUD completos |
-| Tests | 0-20 | Tests unitarios y de integración |
-| Documentación | 0-10 | README básico |
-
-#### v2.0 (Semana 12) - 25% de nota del proyecto
+#### E2 — Testing TDD/BDD (Semana 6) - 15%
 
 | Aspecto | Puntos | Criterio |
 |---------|--------|----------|
-| Interfaz Web | 0-25 | Jinja2 templates funcionales |
-| HTMX | 0-20 | Actualizaciones dinámicas |
-| Formularios | 0-20 | Validación y feedback |
-| Diseño UI | 0-15 | Bootstrap responsive |
-| Filtros/Búsqueda | 0-10 | Funcionalidades extra |
-| Dashboard | 0-10 | Vista de estadísticas |
+| Tests de Dominio | 0-30 | Tests unitarios con pytest; cubren casos normales y edge cases |
+| Ciclo R-G-R | 0-20 | Evidencia de Red-Green-Refactor en commits |
+| Separación Dominio-Infra | 0-20 | Dominio puro sin dependencias de framework/DB |
+| Mocks/Fixtures | 0-20 | Uso apropiado de fixtures y mocks donde aplique |
+| Cobertura | 0-10 | Coverage mínimo 60% |
 
-#### Final (Semana 17) - 50% de nota del proyecto
+#### E3 — Prototipo Web (Semana 8) - 20%
 
 | Aspecto | Puntos | Criterio |
 |---------|--------|----------|
-| Integración Completa | 0-25 | Frontend + Backend + DB integrados |
-| Funcionalidad Extra | 0-20 | Notificaciones, exportación, etc. |
-| Calidad de Código | 0-20 | PEP 8, type hints, docstrings |
-| Tests E2E | 0-15 | Pruebas end-to-end |
-| Documentación | 0-10 | Documentación completa |
-| Deployment | 0-10 | Sistema desplegado y accesible |
+| API REST FastAPI | 0-30 | Endpoints CRUD funcionales con Pydantic |
+| Templates Jinja2 | 0-20 | Templates HTML con herencia y contexto |
+| HTMX / Interactividad | 0-20 | Actualizaciones parciales sin recargas completas |
+| Bootstrap / Responsive | 0-15 | Diseño responsivo y componentes UI |
+| Documentación | 0-10 | README con instrucciones de ejecución |
+| Arquitectura POO | 0-5 | Mantiene separación entre modelos de dominio y web |
+
+#### E4 — SQLAlchemy + Migraciones (Semana 11) - 15%
+
+| Aspecto | Puntos | Criterio |
+|---------|--------|----------|
+| Modelos SQLAlchemy | 0-30 | Modelos declarativos Usuario, Proyecto, Tarea con relaciones |
+| Migraciones Alembic | 0-20 | Alembic configurado; migraciones generadas y aplicadas |
+| Relaciones ORM | 0-20 | One-to-Many, Foreign Keys, cascadas correctas |
+| Entidad-Relación | 0-15 | Diagrama ER incluido; normalización adecuada |
+| Docker/Config DB | 0-10 | SQLite/PostgreSQL/MySQL configurado y funcional |
+| POO en Modelos | 0-5 | Uso de properties, métodos de instancia, herencia si aplica |
+
+#### E5 — CRUD + JWT + Arquitectura Básica (Semana 13) - 15%
+
+| Aspecto | Puntos | Criterio |
+|---------|--------|----------|
+| JWT Authentication | 0-25 | Login/registro con JWT; protección de endpoints con `Depends` |
+| CRUD SQLAlchemy | 0-25 | Create, Read, Update, Delete completos de todas las entidades |
+| Arquitectura en Capas | 0-20 | Separación mínima Domain/Use Cases/Infrastructure |
+| Manejo de Errores | 0-15 | HTTPException, validaciones de negocio, respuestas consistentes |
+| Dependency Injection | 0-10 | Inyección de sesiones de DB en FastAPI |
+| POO Avanzada | 0-5 | Repository pattern, clases abstractas o polimorfismo en servicios |
+
+#### E6 — Sustentación Final (Semana 16) - 20%
+
+| Aspecto | Puntos | Criterio |
+|---------|--------|----------|
+| Integración Completa | 0-25 | Backend + DB + JWT integrados y funcionando |
+| Funcionalidad Extra | 0-15 | Filtros, búsqueda, paginación, ordenamiento dinámico |
+| Calidad de Código POO | 0-20 | Herencia, polimorfismo, encapsulamiento, PEP 8, type hints |
+| Tests de Integración | 0-15 | Pruebas de integración con DB de prueba; tests de autenticación JWT |
+| Documentación | 0-10 | README completo; API docs; diagramas de arquitectura |
+| Sustentación Aleatoria | 0-15 | **1 persona por grupo sorteada**; domina el código y responde preguntas |
 
 ### 3.3 Rúbrica de Sustentación Final
 
-**Duración:** 15 minutos por estudiante
+**Duración:** 15 minutos por grupo
 **Formato:** 8-10 min de presentación + 5-7 min de preguntas
+**Modalidad:** Se sortea aleatoriamente **1 persona por grupo** para defender el proyecto el día de la sustentación. Todos los integrantes deben estar preparados.
 
 | Criterio | Excelente (10-8) | Bueno (7-5) | Satisfactorio (4-2) | Insuficiente (1-0) | Peso |
 |----------|-------------------|---------------|----------------------|-------------------|------|
@@ -362,13 +387,12 @@
 
 | Componente | Peso | Nota Base |
 |------------|------|-----------|
-| Evaluación 1 (Unidad 1) | 15% | Entrega 1: Dominio (Taller) |
-| Evaluación 2 (Unidad 2) | 15% | Entrega 2: Testing (Laboratorio) |
-| Evaluación 3 (Unidad 3) | 20% | Entrega 3: Web/API (Prototipo) |
-| Evaluación 4 (Unidad 4.1) | 15% | Entrega 4: Persistencia Local (Software) |
-| Evaluación 5 (Unidad 4.2) | 15% | Entrega 5: Persistencia SQL (Software) |
-| Evaluación Final (Unidad 5) | 20% | Sustentación Final (Proyecto) |
-| Participación y Tareas | 15% | Quizzes + tareas + asistencia |
+| Evaluación 1 (Unidad 1) | 15% | Entrega 1: Dominio POO (Taller) |
+| Evaluación 2 (Unidad 2) | 15% | Entrega 2: Testing TDD/BDD (Laboratorio) |
+| Evaluación 3 (Unidad 3) | 20% | Entrega 3: Prototipo Web (Prototipo) |
+| Evaluación 4 (Unidad 4) | 15% | Entrega 4: SQLAlchemy Modelos + Migraciones (Software) |
+| Evaluación 5 (Unidad 4/5) | 15% | Entrega 5: CRUD + JWT + Arquitectura Básica (Software) |
+| Evaluación Final (Unidad 5) | 20% | Sustentación Final — 1 persona/grupo sorteada (Proyecto) |
 | **TOTAL** | **100%** | - |
 
 ### 5.2 Escala de Calificación

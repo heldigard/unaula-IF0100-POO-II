@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="alert alert-light mt-3 mb-0">
-                    <small><strong>🔗 Prerequisitos obligatorios:</strong> Debes tener todas las evaluaciones <a href="evaluacion-01-dominio.html">E1</a> → <a href="evaluacion-02-testing.html">E2</a> → <a href="evaluacion-03-web.html">E3</a> → <a href="evaluacion-04-archivos.html">E4</a> → <a href="evaluacion-05-sql.html">E5</a> completadas antes de la sustentación final.</small>
+                    <small><strong>🔗 Prerequisitos obligatorios:</strong> Debes tener todas las evaluaciones <a href="evaluacion-01-dominio.html">E1</a> → <a href="evaluacion-02-testing.html">E2</a> → <a href="evaluacion-03-web.html">E3</a> → <a href="evaluacion-04-archivos.html">E4</a> → <a href="evaluacion-05-jwt-arquitectura.html">E5</a> completadas antes de la sustentación final.</small>
                 </div>
             </div>
         </div>
@@ -144,10 +144,10 @@
             <div class="criterio">
                 <h6><i class="bi bi-play-circle me-2"></i>Escenarios a Demostrar</h6>
                 <ul class="mb-0">
+                    <li><strong>JWT Authentication:</strong> Login, registro y rutas protegidas con Swagger UI</li>
                     <li><strong>CRUD completo:</strong> Crear usuario, proyecto, tareas en tiempo real</li>
-                    <li><strong>Persistencia:</strong> Reiniciar servidor y verificar que los datos persisten</li>
-                    <li><strong>HTMX:</strong> Demostrar interacciones sin recargas de página</li>
-                    <li><strong>Validaciones:</strong> Mostrar manejo de errores y validaciones</li>
+                    <li><strong>Persistencia:</strong> Reiniciar servidor y verificar que los datos persisten (SQLAlchemy)</li>
+                    <li><strong>Validaciones:</strong> Mostrar manejo de errores y validaciones Pydantic</li>
                 </ul>
             </div>
             <div class="penalizacion">
@@ -206,7 +206,7 @@
 <span class="file">│   │   │   └── models.py</span>        <span class="comment"># Modelos SQLAlchemy</span>
 <span class="folder">│   │   ├── repositories/</span>
 <span class="file">│   │   │   ├── __init__.py</span>
-<span class="file">│   │   │   ├── usuario_repo.py</span>   <span class="comment"># Implementación JSON/SQL</span>
+<span class="file">│   │   │   ├── usuario_repo.py</span>   <span class="comment"># Implementación SQLAlchemy</span>
 <span class="file">│   │   │   └── tarea_repo.py</span>
 <span class="folder">│   │   └── di/</span>
 <span class="file">│   │       └── container.py</span>      <span class="comment"># Inyección de dependencias</span>
@@ -219,11 +219,12 @@
 <span class="file">│       │   ├── usuarios.py</span>
 <span class="file">│       │   ├── proyectos.py</span>
 <span class="file">│       │   └── tareas.py</span>
-<span class="folder">│       └── templates/</span>
-<span class="folder">│           ├── base.html</span>
-<span class="folder">│           ├── usuarios/</span>
-<span class="folder">│           ├── proyectos/</span>
-<span class="folder">│           └── tareas/</span>
+<span class="folder">│       ├── dependencies.py</span>      <span class="comment"># Inyección de dependencias</span>
+<span class="folder">│       └── schemas/</span>
+<span class="folder">│           ├── __init__.py</span>
+<span class="folder">│           ├── usuario_schema.py</span>
+<span class="folder">│           ├── proyecto_schema.py</span>
+<span class="folder">│           └── tarea_schema.py</span>
 <span class="comment">#</span>
 <span class="comment"># === TESTING ===</span>
 <span class="folder">├── tests/</span>
@@ -233,7 +234,7 @@
 <span class="comment">#</span>
 <span class="comment"># === CONFIGURACIÓN ===</span>
 <span class="file">├── alembic/</span>                      <span class="comment"># Migraciones SQL</span>
-<span class="file">├── data/</span>                         <span class="comment"># Persistencia JSON</span>
+<span class="file">├── scripts/</span>                      <span class="comment"># Seed data / utilidades</span>
 <span class="file">├── requirements.txt</span>
 <span class="file">├── alembic.ini</span>
 <span class="file">├── pytest.ini</span>
@@ -258,7 +259,7 @@
                     <h6><i class="bi bi-check-circle me-2"></i>Tests Pasando</h6>
                     <ul class="mb-0">
                         <li>Ejecutar <code>pytest</code> sin errores</li>
-                        <li>Cobertura mínima del 70%</li>
+                        <li>Cobertura mínima del 60%</li>
                         <li>Tests unitarios para entidades y servicios</li>
                         <li>Tests de integración para repositorios</li>
                     </ul>
@@ -298,7 +299,7 @@
                 <pre><code class="language-mermaid">graph TB
     subgraph "API Layer"
         A[FastAPI Routes]
-        B[Templates Jinja2]
+        B[JWT Auth / OAuth2]
     end
 
     subgraph "Application Layer"
@@ -334,32 +335,27 @@
         </div>
 
         <h3 class="section-title">💻 Ejemplo: Inyección de Dependencias</h3>
-        <p>El contenedor de dependencias debe permitir cambiar entre persistencia JSON y SQL fácilmente:</p>
+        <p>Usa las utilidades de FastAPI para inyectar repositorios y servicios manualmente:</p>
 
-        <pre><code class="language-python"># src/infrastructure/di/container.py
-from dependency_injector import containers, providers
-from src.domain.repositories.interfaces import IUsuarioRepository, ITareaRepository
-from src.infrastructure.repositories.usuario_repo import UsuarioRepositorySQL, UsuarioRepositoryJSON
-from src.application.services.usuario_service import UsuarioService
+        <pre><code class="language-python"># api/dependencies.py
+from fastapi import Depends
+from app.infrastructure.database import get_db
+from app.infrastructure.repositories.usuario_repo import UsuarioRepositorySQLAlchemy
+from app.application.services.usuario_service import UsuarioService
 
-class Container(containers.DeclarativeContainer):
-    config = providers.Configuration()
+def get_usuario_repo(db = Depends(get_db)):
+    return UsuarioRepositorySQLAlchemy(db)
 
-    # Configuración de base de datos
-    database_url = config.database_url
+def get_usuario_service(repo = Depends(get_usuario_repo)):
+    return UsuarioService(repo)
 
-    # Selector de implementación según configuración
-    usuario_repository = providers.Selector(
-        config.storage_type,
-        sql=providers.Factory(UsuarioRepositorySQL, session=database_url),
-        json=providers.Factory(UsuarioRepositoryJSON, path="data/usuarios.json")
-    )
+# api/routes/usuarios.py
+from fastapi import APIRouter, Depends
+from app.api.dependencies import get_usuario_service
 
-    # Servicios de aplicación
-    usuario_service = providers.Factory(
-        UsuarioService,
-        usuario_repo=usuario_repository
-    )</code></pre>
+@router.post("/usuarios", status_code=201)
+def crear(data: UsuarioCreate, service = Depends(get_usuario_service)):
+    return service.crear_usuario(data)</code></pre>
 
         <h3 class="section-title">📊 Rúbrica de Evaluación Final</h3>
         <div class="table-responsive">
@@ -376,7 +372,7 @@ class Container(containers.DeclarativeContainer):
                 <tbody>
                     <tr>
                         <td><strong>Funcionalidad Completa</strong><br><small>Todas las features de E1-E5 integradas</small></td>
-                        <td class="text-center">CRUD completo, HTMX, persistencia dual, tests pasando</td>
+                        <td class="text-center">CRUD completo, JWT funcional, SQLAlchemy, tests pasando, API documentada</td>
                         <td class="text-center">Funcionalidad básica con algunos bugs menores</td>
                         <td class="text-center">Features faltantes o errores críticos</td>
                         <td class="text-center fw-bold text-success">30%</td>
@@ -452,7 +448,7 @@ class Container(containers.DeclarativeContainer):
                     <div class="col-md-6">
                         <ul>
                             <li><i class="bi bi-graph-up me-2 text-success"></i><strong>Dashboard con estadísticas:</strong> Gráficos de tareas completadas por proyecto</li>
-                            <li><i class="bi bi-shield-lock me-2 text-success"></i><strong>Autenticación JWT:</strong> Login/registro con tokens seguros</li>
+                            <li><i class="bi bi-shield-lock me-2 text-success"></i><strong>Refresh tokens o roles:</strong> Extensión avanzada de autenticación JWT</li>
                         </ul>
                     </div>
                     <div class="col-md-6">
@@ -512,7 +508,7 @@ class Container(containers.DeclarativeContainer):
         </div>
 
         <div class="mt-4">
-            <a href="evaluacion-05-sql.html" class="btn btn-outline-primary">← E5: SQL</a>
+            <a href="evaluacion-05-jwt-arquitectura.html" class="btn btn-outline-primary">← E5: JWT + Arquitectura</a>
             <a href="../index.html" class="btn btn-success ms-2">🏠 Inicio</a>
         </div>
     </div>

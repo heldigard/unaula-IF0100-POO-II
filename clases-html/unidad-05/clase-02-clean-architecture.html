@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 2: Clean Architecture | IF0100</title>
+    <title>Clase 2: Clean Architecture + JWT | IF0100</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -23,16 +23,16 @@
         <div class="container">
             <h1>IF0100 - Programacion OO II</h1>
             <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
-            <h3>Clase 2: Clean Architecture</h3>
+            <h3>Clase 2: Clean Architecture + JWT</h3>
             <p class="mt-2">
-                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 28 de mayo de 2026</span>
-                <span class="badge bg-info text-dark">Semana 17 - Jueves (60 minutos)</span>
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Jueves, 07 de mayo de 2026</span>
+                <span class="badge bg-info text-dark">Semana 13 - Jueves (60 minutos)</span>
                 <span class="badge bg-primary">30 min Teoría</span>
                 <span class="badge bg-success text-white">30 min Práctica</span>
             </p>
             <p class="mt-2">
-                <a href="../evaluaciones/evaluacion-06-examen-final.html" class="badge bg-danger text-decoration-none">
-                    <i class="bi bi-clipboard-check"></i> E6: Proyecto Final - Hoy (Jueves 28/05/2026)
+                <a href="../evaluaciones/evaluacion-05-jwt-arquitectura.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E5: CRUD + JWT + Arquitectura - Hoy (Jueves 07/05/2026)
                 </a>
             </p>
         </div>
@@ -49,6 +49,7 @@
                         <li><a href="#capas" class="text-decoration-none">Capas</a></li>
                         <li><a href="#dependencias" class="text-decoration-none">Regla de Dependencias</a></li>
                         <li><a href="#estructura" class="text-decoration-none">Estructura Proyecto</a></li>
+                        <li><a href="#jwt" class="text-decoration-none">JWT Autenticacion</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
                     </ul>
                 </nav>
@@ -62,7 +63,8 @@
                         <li>Entender los principios de <strong>Clean Architecture</strong></li>
                         <li>Organizar codigo en <strong>capas</strong> independientes</li>
                         <li>Aplicar la <strong>regla de dependencias</strong></li>
-                        <li>Estructurar un proyecto con Clean Architecture</li>
+                        <li>Implementar <strong>JWT Authentication</strong> en FastAPI</li>
+                        <li>Proteger endpoints con <strong>OAuth2PasswordBearer</strong></li>
                         <li>Separar dominio de infraestructura</li>
                     </ul>
                 </section>
@@ -218,19 +220,151 @@ def crear(
     return service.crear_usuario(data.username, data.email)</code></pre>
                 </section>
 
-                <section id="ejercicio">
-                    <h2 class="text-primary border-bottom pb-2">Ejercicio: Refactorizar TaskFlow (15 min)</h2>
-                    
-                    <p>Reorganiza el proyecto TaskFlow siguiendo Clean Architecture:</p>
-                    <ol>
-                        <li>Mover modelos de dominio a <code>domain/entities.py</code></li>
-                        <li>Crear servicios en <code>application/services/</code></li>
-                        <li>Mover repositorios a <code>infrastructure/repositories/</code></li>
-                        <li>Crear interfaces en <code>application/interfaces/</code></li>
-                    </ol>
+                <section id="jwt">
+                    <h2 class="text-primary border-bottom pb-2">JWT Authentication Practica (25 min)</h2>
+
+                    <p>La evaluacion <strong>E5</strong> requiere proteger tu API con JWT. Aqui esta la implementacion completa lista para usar en TaskFlow.</p>
+
+                    <h4>1. Dependencias</h4>
+                    <pre><code class="language-python"># requirements.txt
+fastapi
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+sqlalchemy
+pydantic</code></pre>
+
+                    <h4>2. Service de Autenticacion</h4>
+                    <pre><code class="language-python"># application/services/auth_service.py
+from datetime import datetime, timedelta, timezone
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from fastapi.security import OAuth2PasswordBearer
+from typing import Optional
+
+SECRET_KEY = "tu-clave-secreta-cambiar-en-prod"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=15))
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def decode_token(token: str) -> Optional[str]:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload.get("sub")
+    except JWTError:
+        return None</code></pre>
+
+                    <h4>3. Router de Autenticacion</h4>
+                    <pre><code class="language-python"># api/routes/auth.py
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.orm import Session
+from api.dependencies import get_db, get_usuario_repo
+from application.services.auth_service import create_access_token, verify_password
+from application.services.auth_service import ACCESS_TOKEN_EXPIRE_MINUTES
+
+router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
+
+@router.post("/login")
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    repo = Depends(get_usuario_repo)
+):
+    usuario = repo.obtener_por_username(form_data.username)
+    if not usuario or not verify_password(form_data.password, usuario.password_hash):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Usuario o password incorrectos",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    from datetime import timedelta
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": str(usuario.id)}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}</code></pre>
+
+                    <h4>4. Dependencia de Usuario Actual</h4>
+                    <pre><code class="language-python"># api/dependencies.py
+from fastapi import Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from application.services.auth_service import oauth2_scheme, decode_token
+
+def get_current_user(
+    token: str = Depends(oauth2_scheme),
+    db: Session = Depends(get_db)
+):
+    from repositories.usuario_repo import UsuarioRepositorioSQLAlchemy
+
+    user_id = decode_token(token)
+    if user_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token invalido",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    repo = UsuarioRepositorioSQLAlchemy(db)
+    usuario = repo.obtener_por_id(int(user_id))
+    if usuario is None:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return usuario</code></pre>
+
+                    <h4>5. Proteger Endpoints</h4>
+                    <pre><code class="language-python"># api/routes/tareas.py
+from fastapi import APIRouter, Depends
+from api.dependencies import get_current_user
+
+router = APIRouter(prefix="/api/v1/tareas", tags=["tareas"])
+
+@router.get("/")
+def listar_tareas(
+    current_user = Depends(get_current_user),
+    repo = Depends(get_tarea_repo)
+):
+    return repo.obtener_todos()
+
+@router.post("/")
+def crear_tarea(
+    data: TareaCreate,
+    current_user = Depends(get_current_user),
+    repo = Depends(get_tarea_repo)
+):
+    return repo.crear(data)</code></pre>
 
                     <div class="alert-tip">
-                        <strong>E6 Proyecto Final:</strong> La arquitectura debe ser Clean Architecture completa.
+                        <strong>Tip E5:</strong> JWT es el 25% de la rubrica. Asegurate de implementar login, proteccion de rutas y manejo de errores 401/403.
+                    </div>
+                </section>
+
+                <section id="ejercicio">
+                    <h2 class="text-primary border-bottom pb-2">Ejercicio Practico: JWT + Clean Architecture (15 min)</h2>
+
+                    <p>Implementa en tu proyecto TaskFlow:</p>
+                    <ol>
+                        <li>Endpoint <code>POST /api/v1/auth/login</code> con JWT</li>
+                        <li>Hash de passwords con <code>passlib</code> al crear usuario</li>
+                        <li>Proteger <code>GET /api/v1/tareas</code> con <code>Depends(get_current_user)</code></li>
+                        <li>Organizar codigo en capas: <code>domain/</code>, <code>application/</code>, <code>infrastructure/</code>, <code>api/</code></li>
+                    </ol>
+
+                    <div class="alert-warning">
+                        <strong>E5 - Entrega hoy (Jueves 07/05/2026):</strong> CRUD + JWT + Arquitectura en capas.
                     </div>
                 </section>
 

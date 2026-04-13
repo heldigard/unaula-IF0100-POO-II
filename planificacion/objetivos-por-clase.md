@@ -12,9 +12,9 @@
 - [Unidad 0: Fundamentos de Python](#unidad-0-fundamentos-de-python)
 - [Unidad 1: POO Avanzada con Python](#unidad-1-poo-avanzada-con-python)
 - [Unidad 2: Técnicas de Desarrollo](#unidad-2-técnicas-de-desarrollo)
-- [Unidad 3: Desarrollo Backend](#unidad-3-desarrollo-backend)
-- [Unidad 4: Desarrollo Frontend](#unidad-4-desarrollo-frontend)
-- [Unidad 5: Proyecto Final](#unidad-5-proyecto-final)
+- [Unidad 3: Desarrollo Web con FastAPI](#unidad-3-desarrollo-web-con-fastapi)
+- [Unidad 4: Persistencia Relacional en el Proyecto](#unidad-4-persistencia-relacional-en-el-proyecto)
+- [Unidad 5: Proyecto Final y Sustentación](#unidad-5-proyecto-final-y-sustentación)
 
 ---
 
@@ -36,8 +36,18 @@
 | **1.8** | 1 | **Evaluación 1** | 1. Demostrar comprensión de POO<br>2. Aplicar conceptos al proyecto<br>3. Escribir código limpio y documentado | - [ ] Diseñar clases de dominio<br>- [ ] Implementar lógica base<br>- [ ] Entregar repositorio Git | **Taller (15%)** | **Entrega 1:** Dominio del sistema |
 ...
 | **3.7** | 3 | **Evaluación 3** | 1. Construir API funcional<br>2. Implementar autenticación<br>3. Documentar con OpenAPI | - [ ] Implementar rutas FastAPI<br>- [ ] Desplegar API funcional<br>- [ ] Demostrar endpoints en Swagger | **Prototipo (20%)** | **Entrega 3:** API funcionando |
-...
-| **5.4** | 5 | **Sustentación final** | 1. Presentar proyecto completo<br>2. Demostrar funcionalidad<br>3. Responder preguntas<br>4. Reflexionar sobre aprendizaje | - [ ] Presentar (10-15 min)<br>- [ ] Demostrar sistema completo<br>- [ ] Responder preguntas técnicas<br>- [ ] Autoevaluación | **Proyecto (20%)** | **Sustentación Final:** Sistema TaskFlow |
+| **4.1** | 4 | SQLAlchemy ORM / Modelos | 1. Configurar SQLAlchemy 2.0 con modelos declarativos<br>2. Diseñar entidades con tipos de columna y constraints<br>3. Aplicar herencia con DeclarativeBase<br>4. Modelar Usuario, Proyecto y Tarea | - [ ] Crear Base y engine SQLite<br>- [ ] Definir modelos con Mapped[T]<br>- [ ] Implementar __repr__ y métodos de dominio<br>- [ ] Crear tablas con create_all | - | TaskFlow: Modelos de persistencia |
+| **4.2** | 4 | Alembic / Migraciones | 1. Configurar Alembic en el proyecto<br>2. Generar migraciones automáticas<br>3. Aplicar y revertir migraciones<br>4. Versionar esquema en equipo | - [ ] Inicializar Alembic<br>- [ ] Configurar env.py con Base.metadata<br>- [ ] Generar primera migración autogenerada<br>- [ ] Aplicar con upgrade head | **Software (15%)** | **E4:** SQLAlchemy + Alembic (23/04) |
+| **4.3** | 4 | SQLAlchemy Relaciones | 1. Implementar relaciones One-to-Many<br>2. Usar ForeignKey y relationship<br>3. Aplicar cascadas y lazy/eager loading<br>4. Validar integridad referencial | - [ ] Relacionar Usuario → Proyectos → Tareas<br>- [ ] Usar back_populates en relaciones<br>- [ ] Definir Enum para estados<br>- [ ] Consultar con joins | - | TaskFlow: Jerarquía completa |
+| **4.4** | 4 | CRUD con SQLAlchemy | 1. Crear, leer, actualizar y eliminar entidades<br>2. Filtrar, ordenar y paginar queries<br>3. Manejar transacciones y commits<br>4. Validar datos antes de persistir | - [ ] Implementar CRUD completo<br>- [ ] Usar Session con context manager<br>- [ ] Crear queries con filtros<br>- [ ] Manejar rollback en errores | - | TaskFlow: Operaciones de datos |
+| **5.1** | 5 | Repository Pattern | 1. Abstraer acceso a datos con Repository<br>2. Crear interfaces genéricas<br>3. Implementar repositories con SQLAlchemy<br>4. Aplicar inversión de dependencias | - [ ] Definir ABC Repository<br>- [ ] Implementar UserRepository, ProjectRepository<br>- [ ] Inyectar repositories en servicios<br>- [ ] Desacoplar capas | - | TaskFlow: Capa de persistencia |
+| **5.2** | 5 | Clean Architecture + JWT | 1. Separar capas: Domain, Use Cases, Infrastructure<br>2. Implementar JWT Authentication en FastAPI<br>3. Proteger endpoints con OAuth2PasswordBearer<br>4. Organizar código por responsabilidades | - [ ] Crear capas domain/application/infrastructure/api<br>- [ ] Implementar login con JWT<br>- [ ] Proteger rutas con Depends(get_current_user)<br>- [ ] Aplicar inyección de dependencias | **Software (15%)** | **E5:** CRUD + JWT + Arquitectura (07/05) |
+| **5.3** | 5 | DTOs y Serialización | 1. Validar entrada/salida con Pydantic v2<br>2. Serializar relaciones anidadas<br>3. Manejar passwords con hash seguro<br>4. Documentar schemas en OpenAPI | - [ ] Crear schemas anidados<br>- [ ] Serializar listas de tareas<br>- [ ] Integrar passlib para hashing<br>- [ ] Validar con Field constraints | - | TaskFlow: API type-safe |
+| **5.4** | 5 | API REST Avanzada | 1. Implementar paginación en listados<br>2. Crear endpoints anidados (/proyectos/{id}/tareas)<br>3. Aplicar filtrado y búsqueda<br>4. Optimizar queries con eager loading | - [ ] Paginar resultados con limit/offset<br>- [ ] Crear rutas anidadas<br>- [ ] Filtrar por estado y usuario<br>- [ ] Usar joinedload para N+1 | - | TaskFlow: Endpoints avanzados |
+| **5.5** | 5 | Testing de Integración | 1. Escribir tests con base de datos de prueba<br>2. Testear autenticación JWT<br>3. Alcanzar cobertura mínima 60%<br>4. Usar fixtures y dependency overrides | - [ ] Configurar DB de test con SQLite<br>- [ ] Testear login y rutas protegidas<br>- [ ] Medir cobertura con pytest-cov<br>- [ ] Mockear servicios externos | - | TaskFlow: Calidad asegurada |
+| **5.6** | 5 | Pulido del Proyecto | 1. Pulir manejo de errores de la API<br>2. Corregir bugs y edge cases<br>3. Optimizar performance de queries<br>4. Revisar documentación técnica | - [ ] Documentar schemas en OpenAPI<br>- [ ] Optimizar queries lentas<br>- [ ] Revisar manejo de errores<br>- [ ] Actualizar README | - | TaskFlow: Versión pulida |
+| **5.7** | 5 | Preparación Sustentación | 1. Revisar funcionalidad completa<br>2. Preparar demo en vivo<br>3. Ensayar preguntas técnicas<br>4. Organizar repositorio para entrega | - [ ] Checklist de features<br>- [ ] Script de demo<br>- [ ] Revisar código en parejas<br>- [ ] Preparar ambiente de presentación | - | TaskFlow: Listo para demo |
+| **5.8** | 5 | **Sustentación Final** | 1. Presentar proyecto completo<br>2. Demostrar funcionalidad<br>3. Responder preguntas<br>4. Reflexionar sobre aprendizaje | - [ ] Presentar (10-15 min)<br>- [ ] Demostrar sistema completo<br>- [ ] Responder preguntas técnicas<br>- [ ] Autoevaluación | **Proyecto (20%)** | **Sustentación Final:** Sistema TaskFlow (28/05) |
 
 ---
 
@@ -48,9 +58,9 @@
 | Evaluación 1 | 1.8 | 15% | Examen teórico-práctico + modelos | 6 |
 | Evaluación 2 | 2.7 | 15% | Taller práctico + sustentación | 9 |
 | Evaluación 3 | 3.7 | 20% | Examen práctico + API funcionando | 12 |
-| Evaluación 4 | 4.7 | 15% | Taller práctico + sustentación | 15 |
-| Evaluación Final | 5.4 | 20% | Sustentación del proyecto completo | 17 |
-| **Participación y tareas** | - | 15% | Quizzes, ejercicios, tareas | Todo el curso |
+| Evaluación 4 | 4.2 | 15% | Software: SQLAlchemy modelos + migraciones | 11 |
+| Evaluación 5 | 5.2 | 15% | Software: CRUD + JWT + Arquitectura | 13 |
+| Evaluación Final | 5.8 | 20% | Sustentación del proyecto completo | 16 |
 | **TOTAL** | - | **100%** | - | - |
 
 ---
@@ -108,26 +118,28 @@
 - Autenticar usuarios con JWT
 - Documentar API con OpenAPI
 
-### Unidad 4: Desarrollo Frontend (Semana 13-15)
+### Unidad 4: Persistencia Relacional en el Proyecto (Semana 11-12)
 
-**Objetivo General:** Crear una interfaz web moderna con Jinja2 y HTMX.
+**Objetivo General:** Modelar el dominio en base de datos relacional con SQLAlchemy 2.0 y Alembic.
 
 **Objetivos Específicos:**
-- Usar sistema de templates Jinja2
-- Aplicar herencia de templates
-- Implementar interactividad con HTMX
-- Crear formularios con validación
-- Diseñar UI responsiva con Bootstrap 5
-- Gestionar estado en el frontend
-- Crear dashboard con métricas y gráficos
+- Configurar SQLAlchemy con modelos declarativos
+- Diseñar entidades con tipos de columna, constraints y claves primarias
+- Implementar relaciones One-to-Many entre entidades
+- Aplicar herencia con DeclarativeBase para reutilizar comportamiento
+- Crear y ejecutar migraciones con Alembic
+- Implementar CRUD completo con SQLAlchemy
+- Integrar autenticación JWT con base de datos relacional
 
-### Unidad 5: Proyecto Final (Semana 16-17)
+### Unidad 5: Proyecto Final y Sustentación (Semana 13-16)
 
 **Objetivo General:** Integrar, probar, documentar y presentar el sistema completo TaskFlow.
 
 **Objetivos Específicos:**
-- Integrar todos los componentes del sistema
-- Escribir pruebas end-to-end
+- Aplicar patrón Repository y Clean Architecture
+- Crear DTOs y serialización con Pydantic v2
+- Implementar APIs REST avanzadas con paginación y filtros
+- Escribir pruebas de integración con base de datos
 - Optimizar performance y corregir bugs
 - Documentar el proyecto completamente
 - Preparar y ejecutar presentación
@@ -145,7 +157,7 @@ Al finalizar el curso, el estudiante será capaz de:
 4. **TDD:** Aplicar desarrollo guiado por pruebas
 5. **API REST:** Construir APIs con FastAPI y OpenAPI
 6. **Base de Datos:** Diseñar y consultar bases de datos PostgreSQL
-7. **Frontend:** Crear interfaces web con Jinja2 y HTMX
+7. **API REST:** Construir APIs type-safe con FastAPI, Pydantic y OpenAPI
 8. **DevOps:** Usar Git, ambientes virtuales, y configuración
 9. **Documentación:** Escribir documentación técnica clara
 10. **Colaboración:** Trabajar en parejas y sustentar trabajo

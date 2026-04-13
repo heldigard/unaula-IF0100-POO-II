@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 5: Proyecto Final | IF0100</title>
+    <title>Clase 5: Testing, Pulido y Sustentación | IF0100</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -20,6 +20,9 @@
         .checklist { list-style: none; padding-left: 0; }
         .checklist li:before { content: "☐ "; color: var(--primary); }
         .checklist li.done:before { content: "☑ "; color: var(--success); }
+        .dia-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem; }
+        .dia-martes { background: #0d6efd; color: white; }
+        .dia-jueves { background: #198754; color: white; }
     </style>
 </head>
 <body>
@@ -27,14 +30,17 @@
         <div class="container">
             <h1>IF0100 - Programacion OO II</h1>
             <h2>Unidad 5: Arquitectura de Datos Desconectados</h2>
-            <h3>Clase 5: Proyecto Final - E6</h3>
+            <h3>Clase 5: Testing, Pulido y Sustentación</h3>
             <p class="mt-2">
-                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> Martes, 09 de junio de 2026</span>
-                <span class="badge bg-info text-dark">Semana 19 - Martes (120 minutos)</span>
-                <span class="badge bg-primary">60 min Teoría</span>
-                <span class="badge bg-success text-white">60 min Práctica</span>
+                <span class="badge bg-light text-dark"><i class="bi bi-calendar3"></i> 19 - 28 de mayo de 2026</span>
+                <span class="badge bg-info text-dark">Semanas 15-16 (Testing, Pulido, Preparación, Sustentación)</span>
+                <span class="badge bg-primary">Teoría + Práctica</span>
             </p>
-            <p class="mt-2"><span class="badge bg-secondary">Curso completado</span></p>
+            <p class="mt-2">
+                <a href="../evaluaciones/evaluacion-06-final.html" class="badge bg-danger text-decoration-none">
+                    <i class="bi bi-clipboard-check"></i> E6: Proyecto Final - Jueves 28/05/2026
+                </a>
+            </p>
         </div>
     </header>
 
@@ -45,12 +51,10 @@
                     <h5>Contenido</h5>
                     <ul class="list-unstyled">
                         <li><a href="#objetivos" class="text-decoration-none">Objetivos</a></li>
-                        <li><a href="#requisitos" class="text-decoration-none">Requisitos E6</a></li>
-                        <li><a href="#arquitectura" class="text-decoration-none">Arquitectura</a></li>
-                        <li><a href="#estructura" class="text-decoration-none">Estructura Proyecto</a></li>
-                        <li><a href="#endpoints" class="text-decoration-none">Endpoints Requeridos</a></li>
-                        <li><a href="#criterios" class="text-decoration-none">Criterios Evaluacion</a></li>
-                        <li><a href="#presentacion" class="text-decoration-none">Presentacion</a></li>
+                        <li><a href="#testing" class="text-decoration-none">Testing de Integración</a></li>
+                        <li><a href="#pulido" class="text-decoration-none">Pulido del Proyecto</a></li>
+                        <li><a href="#preparacion" class="text-decoration-none">Preparación Sustentación</a></li>
+                        <li><a href="#sustentacion" class="text-decoration-none">Sustentación Final</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -58,265 +62,294 @@
             <main class="col-lg-9">
                 <section id="objetivos">
                     <h2 class="text-primary border-bottom pb-2">Objetivos de Aprendizaje</h2>
-                    <p>Al finalizar esta clase, el estudiante habra demostrado:</p>
+                    <p>En las sesiones finales del curso vas a:</p>
                     <ul>
-                        <li>Dominio de <strong>Programacion Orientada a Objetos</strong> en Python</li>
-                        <li>Implementacion de <strong>API REST</strong> con FastAPI</li>
-                        <li>Uso de <strong>patrones de diseño</strong>: Repository, Factory, DTO</li>
-                        <li>Persistencia con <strong>SQLAlchemy ORM</strong></li>
-                        <li>Aplicacion de <strong>Clean Architecture</strong></li>
+                        <li>Escribir <strong>tests de integración</strong> con FastAPI TestClient y DB real</li>
+                        <li>Testear <strong>autenticación JWT</strong> en endpoints protegidos</li>
+                        <li>Medir <strong>cobertura</strong> con pytest-cov</li>
+                        <li><strong>Pulir</strong> el código: manejo de errores, validaciones, edge cases</li>
+                        <li>Preparar una <strong>demo en vivo</strong> para la sustentación</li>
+                        <li>Organizar el <strong>repositorio y README</strong> para entrega</li>
                     </ul>
                 </section>
 
-                <section id="requisitos">
-                    <h2 class="text-danger border-bottom pb-2">Requisitos del Proyecto E6</h2>
-                    
-                    <div class="alert-danger">
-                        <strong>Fecha de Entrega:</strong> Jueves 28 de Mayo de 2026, 7:00 AM
-                    </div>
+                <section id="testing">
+                    <h2 class="text-primary border-bottom pb-2">
+                        <span class="dia-badge dia-martes">Martes 19/05</span>
+                        Testing de Integración
+                    </h2>
 
-                    <h4 class="mt-4">Descripcion General</h4>
-                    <p>Desarrollar una <strong>API REST</strong> para gestionar un sistema de tareas/proyectos que implemente:</p>
-                    <ul class="checklist">
-                        <li>CRUD completo de al menos 2 entidades relacionadas</li>
-                        <li>Persistencia en SQLite con SQLAlchemy</li>
-                        <li>Arquitectura en capas (Controllers, Services, Repositories)</li>
-                        <li>DTOs con Pydantic</li>
-                        <li>Paginacion y filtros</li>
-                        <li>Manejo de errores HTTP</li>
-                        <li>Tests unitarios con pytest</li>
-                    </ul>
+                    <p>Los tests de integración verifican que tu API, base de datos y autenticación funcionen juntas.</p>
 
-                    <h4 class="mt-4">Tecnologias Obligatorias</h4>
-                    <table class="table table-bordered">
-                        <tr><th>Tecnologia</th><th>Version</th><th>Uso</th></tr>
-                        <tr><td>Python</td><td>3.10+</td><td>Lenguaje principal</td></tr>
-                        <tr><td>FastAPI</td><td>0.100+</td><td>Framework web</td></tr>
-                        <tr><td>SQLAlchemy</td><td>2.0+</td><td>ORM</td></tr>
-                        <tr><td>Pydantic</td><td>2.0+</td><td>Validacion/DTOs</td></tr>
-                        <tr><td>pytest</td><td>7.0+</td><td>Testing</td></tr>
-                        <tr><td>SQLite</td><td>3.x</td><td>Base de datos</td></tr>
-                    </table>
-                </section>
+                    <h4 class="mt-4">1. Setup de Tests con SQLite en memoria</h4>
+                    <pre><code class="language-python"># tests/conftest.py
+import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.main import app
+from app.infrastructure.database import Base, get_db
 
-                <section id="arquitectura">
-                    <h2 class="text-primary border-bottom pb-2">Arquitectura Requerida</h2>
-                    
-                    <pre><code class="language-text">proyecto-final/
-├── app/
-│   ├── __init__.py
-│   ├── main.py                 # FastAPI app
-│   ├── config.py               # Configuracion
-│   │
-│   ├── domain/                 # Capa Dominio
-│   │   ├── __init__.py
-│   │   ├── entities.py         # Entidades de negocio
-│   │   └── repositories.py     # Interfaces (ABC)
-│   │
-│   ├── infrastructure/         # Capa Infraestructura
-│   │   ├── __init__.py
-│   │   ├── database.py         # SQLAlchemy setup
-│   │   ├── models.py           # Modelos ORM
-│   │   └── repositories_impl.py
-│   │
-│   ├── application/            # Capa Aplicacion
-│   │   ├── __init__.py
-│   │   ├── services.py         # Logica de negocio
-│   │   └── dtos.py             # DTOs Pydantic
-│   │
-│   └── interfaces/             # Capa Presentacion
-│       ├── __init__.py
-│       └── controllers.py      # Rutas FastAPI
-│
-├── tests/
-│   ├── __init__.py
-│   ├── conftest.py
-│   ├── test_services.py
-│   └── test_controllers.py
-│
-├── requirements.txt
-├── README.md
-└── .gitignore</code></pre>
+TEST_DATABASE_URL = "sqlite:///./test.db"
+engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def override_get_db():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+app.dependency_overrides[get_db] = override_get_db
+
+@pytest.fixture(scope="function")
+def client():
+    Base.metadata.create_all(bind=engine)
+    yield TestClient(app)
+    Base.metadata.drop_all(bind=engine)</code></pre>
+
+                    <h4 class="mt-4">2. Test de Registro y Login</h4>
+                    <pre><code class="language-python"># tests/test_auth.py
+def test_registro_y_login(client):
+    # Crear usuario
+    response = client.post("/api/v1/usuarios", json={
+        "username": "testuser",
+        "email": "test@test.com",
+        "password": "Test1234"
+    })
+    assert response.status_code == 201
+
+    # Login
+    response = client.post("/api/v1/auth/login", data={
+        "username": "testuser",
+        "password": "Test1234"
+    })
+    assert response.status_code == 200
+    assert "access_token" in response.json()</code></pre>
+
+                    <h4 class="mt-4">3. Test de Endpoint Protegido</h4>
+                    <pre><code class="language-python"># tests/test_tareas.py
+import pytest
+
+@pytest.fixture
+def auth_token(client):
+    client.post("/api/v1/usuarios", json={
+        "username": "demo",
+        "email": "demo@test.com",
+        "password": "Demo1234"
+    })
+    response = client.post("/api/v1/auth/login", data={
+        "username": "demo",
+        "password": "Demo1234"
+    })
+    return response.json()["access_token"]
+
+def test_crear_tarea_autenticado(client, auth_token):
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    response = client.post("/api/v1/tareas", json={
+        "titulo": "Tarea test",
+        "descripcion": "Desc",
+        "prioridad": "media",
+        "proyecto_id": 1
+    }, headers=headers)
+    assert response.status_code == 201
+    data = response.json()
+    assert data["titulo"] == "Tarea test"
+
+def test_listar_tareas_sin_token(client):
+    response = client.get("/api/v1/tareas")
+    assert response.status_code == 401</code></pre>
+
+                    <h4 class="mt-4">4. Cobertura</h4>
+                    <pre><code class="language-bash">pytest --cov=app --cov-report=term-missing --cov-report=html</code></pre>
 
                     <div class="alert-tip">
-                        <strong>Clean Architecture:</strong> Las dependencias van de afuera hacia adentro.
-                        El dominio NO depende de infraestructura.
+                        <strong>Meta E6:</strong> Alcanzar al menos 60% de cobertura en tests de integración.
                     </div>
                 </section>
 
-                <section id="estructura">
-                    <h2 class="text-primary border-bottom pb-2">Estructura de Entidades</h2>
-                    
-                    <pre><code class="language-python"># domain/entities.py
-from dataclasses import dataclass
-from datetime import datetime
-from typing import Optional
-from enum import Enum
+                <section id="pulido">
+                    <h2 class="text-primary border-bottom pb-2">
+                        <span class="dia-badge dia-jueves">Jueves 21/05</span>
+                        Pulido del Proyecto
+                    </h2>
 
-class Prioridad(str, Enum):
-    BAJA = "baja"
-    MEDIA = "media"
-    ALTA = "alta"
+                    <p>Dia dedicado a revisar detalles que marcan la diferencia entre un proyecto funcional y uno profesional.</p>
 
-@dataclass
-class Proyecto:
-    id: Optional[int]
-    nombre: str
-    descripcion: str
-    creado_en: datetime
-    tareas: list = None
-    
-    def __post_init__(self):
-        if self.tareas is None:
-            self.tareas = []
-
-@dataclass
-class Tarea:
-    id: Optional[int]
-    titulo: str
-    descripcion: str
-    completada: bool
-    prioridad: Prioridad
-    proyecto_id: int
-    creado_en: datetime
-    actualizado_en: Optional[datetime] = None</code></pre>
-                </section>
-
-                <section id="endpoints">
-                    <h2 class="text-primary border-bottom pb-2">Endpoints Requeridos</h2>
-                    
-                    <h4>Proyectos</h4>
-                    <table class="table table-sm table-bordered">
-                        <tr><th>Metodo</th><th>Endpoint</th><th>Descripcion</th></tr>
-                        <tr><td>GET</td><td>/api/v1/proyectos</td><td>Listar (paginado)</td></tr>
-                        <tr><td>GET</td><td>/api/v1/proyectos/{id}</td><td>Obtener por ID</td></tr>
-                        <tr><td>POST</td><td>/api/v1/proyectos</td><td>Crear</td></tr>
-                        <tr><td>PATCH</td><td>/api/v1/proyectos/{id}</td><td>Actualizar</td></tr>
-                        <tr><td>DELETE</td><td>/api/v1/proyectos/{id}</td><td>Eliminar</td></tr>
-                    </table>
-
-                    <h4 class="mt-3">Tareas</h4>
-                    <table class="table table-sm table-bordered">
-                        <tr><th>Metodo</th><th>Endpoint</th><th>Descripcion</th></tr>
-                        <tr><td>GET</td><td>/api/v1/tareas</td><td>Listar (paginado + filtros)</td></tr>
-                        <tr><td>GET</td><td>/api/v1/proyectos/{id}/tareas</td><td>Tareas de un proyecto</td></tr>
-                        <tr><td>GET</td><td>/api/v1/tareas/{id}</td><td>Obtener por ID</td></tr>
-                        <tr><td>POST</td><td>/api/v1/tareas</td><td>Crear</td></tr>
-                        <tr><td>PATCH</td><td>/api/v1/tareas/{id}</td><td>Actualizar</td></tr>
-                        <tr><td>DELETE</td><td>/api/v1/tareas/{id}</td><td>Eliminar</td></tr>
-                    </table>
-
-                    <h4 class="mt-3">Filtros Requeridos para GET /tareas</h4>
-                    <ul>
-                        <li><code>?completada=true/false</code></li>
-                        <li><code>?prioridad=alta/media/baja</code></li>
-                        <li><code>?proyecto_id=1</code></li>
-                        <li><code>?buscar=texto</code></li>
-                        <li><code>?pagina=1&por_pagina=10</code></li>
+                    <h4 class="mt-3">Checklist de Pulido</h4>
+                    <ul class="checklist">
+                        <li>Todos los endpoints responden con status codes correctos (201, 404, 422, 401)</li>
+                        <li>JWT protege las rutas que deben estar protegidas</li>
+                        <li>Passwords nunca se devuelven en responses</li>
+                        <li>Paginación funciona en listados grandes</li>
+                        <li>Filtros de búsqueda no crashean con strings vacíos</li>
+                        <li>Manejo de errores devuelve JSON consistente</li>
+                        <li>Relaciones cargan sin N+1 (usa joinedload donde sea necesario)</li>
+                        <li>README tiene instrucciones claras de instalación y uso</li>
+                        <li>Colección Postman/Insomnia incluida en repo</li>
                     </ul>
+
+                    <h4 class="mt-4">Ejemplo: Response consistente de errores</h4>
+                    <pre><code class="language-python"># api/errors.py
+from fastapi import Request
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+
+async def validation_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": True,
+            "mensaje": "Datos de entrada invalidos",
+            "detalle": exc.errors()
+        }
+    )
+
+# En main.py
+app.add_exception_handler(RequestValidationError, validation_handler)</code></pre>
                 </section>
 
-                <section id="criterios">
-                    <h2 class="text-primary border-bottom pb-2">Criterios de Evaluacion (100 pts)</h2>
-                    
+                <section id="preparacion">
+                    <h2 class="text-primary border-bottom pb-2">
+                        <span class="dia-badge dia-martes">Martes 26/05</span>
+                        Preparación para la Sustentación
+                    </h2>
+
+                    <p>La sustentación es una presentación técnica en vivo. Prepara tu demo con tiempo.</p>
+
+                    <h4 class="mt-3">Guía de la Demo (10-15 min)</h4>
                     <table class="table table-bordered">
-                        <tr><th>Criterio</th><th>Puntos</th><th>Descripcion</th></tr>
+                        <tr><th>Sección</th><th>Tiempo</th><th>Qué mostrar</th></tr>
+                        <tr><td>Introducción</td><td>2 min</td><td>Qué es TaskFlow, stack tecnológico</td></tr>
+                        <tr><td>Arquitectura</td><td>3 min</td><td>Capas, DTOs, Repository, JWT</td></tr>
+                        <tr><td>Demo API</td><td>5 min</td><td>Swagger UI: login, CRUD de tareas, filtros</td></tr>
+                        <tr><td>Tests</td><td>2 min</td><td>Correr pytest, mostrar cobertura</td></tr>
+                        <tr><td>Preguntas</td><td>3 min</td><td>Defender decisiones técnicas</td></tr>
+                    </table>
+
+                    <h4 class="mt-4">Checklist Pre-Sustentación</h4>
+                    <ul class="checklist">
+                        <li>La API levanta sin errores en una base limpia</li>
+                        <li>Tengo datos de prueba listos (seed script o migración)</li>
+                        <li>Puedo loguearme y obtener token en menos de 10 segundos</li>
+                        <li>Todos los endpoints principales responden correctamente</li>
+                        <li>El README explica cómo instalar y correr el proyecto</li>
+                        <li>Tengo un backup del código en GitHub</li>
+                        <li>Practiqué la presentación al menos una vez</li>
+                    </ul>
+
+                    <div class="alert-warning">
+                        <strong>Entrega E6:</strong> Repositorio GitHub con código, README, y colección Postman/Insomnia. Fecha límite: <strong>Jueves 28 de mayo, 7:00 AM</strong>.
+                    </div>
+                </section>
+
+                <section id="sustentacion">
+                    <h2 class="text-primary border-bottom pb-2">
+                        <span class="dia-badge dia-jueves">Jueves 28/05</span>
+                        Sustentación Final (E6)
+                    </h2>
+
+                    <div class="alert-danger">
+                        <strong>Fecha:</strong> Jueves 28 de mayo de 2026. Cada estudiante presenta su proyecto durante 10-15 minutos.
+                    </div>
+
+                    <h4 class="mt-4">Criterios de Evaluación E6 (100 pts)</h4>
+                    <table class="table table-bordered">
+                        <tr><th>Criterio</th><th>Puntos</th><th>Descripción</th></tr>
                         <tr>
                             <td>Arquitectura</td>
                             <td>25</td>
-                            <td>Separacion en capas, dependencias correctas</td>
+                            <td>Separación en capas, dependencias correctas, Clean Architecture</td>
                         </tr>
                         <tr>
                             <td>Patrones</td>
                             <td>20</td>
-                            <td>Repository, DTO, Factory implementados</td>
+                            <td>Repository, DTO, Factory implementados correctamente</td>
                         </tr>
                         <tr>
                             <td>Funcionalidad</td>
                             <td>20</td>
-                            <td>CRUD completo, filtros, paginacion</td>
+                            <td>CRUD completo, filtros, paginación, JWT funcional</td>
                         </tr>
                         <tr>
-                            <td>Calidad Codigo</td>
+                            <td>Calidad Código</td>
                             <td>15</td>
-                            <td>PEP 8, tipado, documentacion</td>
+                            <td>PEP 8, tipado, documentación, manejo de errores</td>
                         </tr>
                         <tr>
                             <td>Testing</td>
                             <td>10</td>
-                            <td>Cobertura > 70%, tests significativos</td>
+                            <td>Cobertura > 60%, tests significativos de integración</td>
                         </tr>
                         <tr>
-                            <td>Documentacion</td>
+                            <td>Documentación</td>
                             <td>10</td>
-                            <td>README claro, instrucciones de uso</td>
+                            <td>README claro, instrucciones de uso, colección Postman</td>
                         </tr>
                     </table>
 
-                    <div class="alert-warning">
-                        <strong>Entregables:</strong>
-                        <ul class="mb-0">
-                            <li>Repositorio GitHub con codigo fuente</li>
-                            <li>README con instrucciones de instalacion y uso</li>
-                            <li>Coleccion Postman/Insomnia para probar API</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section id="presentacion">
-                    <h2 class="text-primary border-bottom pb-2">Formato de Presentacion</h2>
-                    
-                    <h4>Duracion: 10-15 minutos por estudiante</h4>
-                    <ol>
-                        <li><strong>Introduccion (2 min)</strong> - Descripcion del proyecto</li>
-                        <li><strong>Arquitectura (3 min)</strong> - Explicar capas y patrones</li>
-                        <li><strong>Demo (5 min)</strong> - Mostrar API funcionando</li>
-                        <li><strong>Codigo (3 min)</strong> - Explicar partes clave</li>
-                        <li><strong>Tests (2 min)</strong> - Mostrar cobertura</li>
-                        <li><strong>Preguntas (5 min)</strong> - Defensa del proyecto</li>
-                    </ol>
-
                     <div class="alert-tip">
-                        <strong>Consejos:</strong>
+                        <strong>Consejos finales:</strong>
                         <ul class="mb-0">
-                            <li>Prepara la demo antes de la clase</li>
-                            <li>Ten la base de datos con datos de prueba</li>
-                            <li>Conoce tu codigo - se capaz de explicarlo</li>
+                            <li>Prepara la demo antes de llegar a clase</li>
+                            <li>Ten una base de datos con datos de prueba realistas</li>
+                            <li>Conoce tu código: sé explicar por qué elegiste cada patrón</li>
+                            <li>Si algo falla en vivo, explica qué pasaría y cómo lo arreglarías</li>
                         </ul>
                     </div>
                 </section>
 
                 <section>
                     <h2 class="text-primary border-bottom pb-2">Resumen del Curso</h2>
-                    
-                    <h4>Lo que aprendimos:</h4>
+
                     <table class="table table-bordered">
                         <tr><th>Unidad</th><th>Tema</th><th>Conceptos Clave</th></tr>
-                        <tr><td>0</td><td>Introduccion</td><td>POO, Python, Entorno</td></tr>
+                        <tr><td>0</td><td>Introducción</td><td>POO, Python, Entorno</td></tr>
                         <tr><td>1</td><td>POO Avanzado</td><td>Herencia, Polimorfismo, ABC</td></tr>
                         <tr><td>2</td><td>Calidad</td><td>TDD, DDD, Refactoring</td></tr>
-                        <tr><td>3</td><td>FastAPI</td><td>Rutas, Dependencias, Validacion</td></tr>
+                        <tr><td>3</td><td>FastAPI</td><td>Rutas, Dependencias, Validación</td></tr>
                         <tr><td>4</td><td>Persistencia</td><td>SQLAlchemy, ORM, Alembic</td></tr>
-                        <tr><td>5</td><td>Arquitectura</td><td>Repository, Clean Arch, DTOs</td></tr>
+                        <tr><td>5</td><td>Arquitectura</td><td>Repository, Clean Arch, DTOs, JWT</td></tr>
                     </table>
 
                     <div class="alert-note">
-                        <strong>¡Felicitaciones por completar el curso!</strong><br>
-                        Recuerda que la programacion es una habilidad que se desarrolla con practica constante.
+                        <strong>¡Felicitaciones por llegar al final!</strong><br>
+                        La programación es una habilidad que se desarrolla con práctica constante. Sigue construyendo.
                     </div>
                 </section>
             </main>
         </div>
     </div>
 
+    <!-- Navegación entre clases -->
+    <div class="container mt-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+            <div>
+                <a href="clase-04-api-rest-avanzada.html" class="btn btn-outline-secondary btn-sm">
+                    ← Anterior: API REST Avanzada
+                </a>
+            </div>
+            <div>
+                <span class="text-muted small">Clase 25 de 25</span>
+            </div>
+            <div>
+                <a href="../index.html" class="btn btn-primary btn-sm">
+                    Volver al Indice →
+                </a>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="clase-04-api-rest-avanzada.html">← Anterior</a> | <a href="../index.html">Volver al Indice</a></p>
+            <p class="mb-0">&copy; 2026 IF0100 - UNAULA | <a href="../index.html">Inicio</a></p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 </body>
 </html>

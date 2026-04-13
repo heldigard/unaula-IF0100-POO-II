@@ -36,13 +36,13 @@
 | **8** | M8: 2026-03-24 | J8: 2026-03-26 | U3 | Intro FastAPI / Rutas / Pydantic | **Eval 3 (20% Prototipo)** |
 | **-** | **M: 2026-03-31 SEMANA SANTA** | **J: 2026-04-02 SEMANA SANTA** | **-** | **Receso (29 mar - 5 abr)** | **-** |
 | **9** | M9: 2026-04-07 | J9: 2026-04-09 | U3 | Dependency Injection / SQLAlchemy | - |
-| **10** | M10: 2026-04-14 | J10: 2026-04-16 | U3 | CRUD / JWT Authentication / Práctica | - |
-| **11** | M11: 2026-04-21 | J11: 2026-04-23 | U4 | Persistencia Archivos / JSON / CSV | **Eval 4 (15% Software)** |
-| **12** | M12: 2026-04-28 | J12: 2026-04-30 | U4 | SQLAlchemy ORM / Modelos / Relaciones | - |
-| **13** | M13: 2026-05-05 | J13: 2026-05-07 | U4 | CRUD SQLAlchemy / Alembic | **Eval 5 (15% Software)** |
-| **14** | M14: 2026-05-12 | J14: 2026-05-14 | U5 | Repository Pattern / Clean Architecture | - |
-| **15** | M15: 2026-05-19 | J15: 2026-05-21 | U5 | API REST Avanzada / Caché | - |
-| **16** | M16: 2026-05-26 | J16: 2026-05-28 | U5 | **Proyecto integrador / SUSTENTACIÓN FINAL** | **Final (20% Proyecto)** |
+| **10** | M10: 2026-04-14 | J10: 2026-04-16 | U3/U4 | JWT Authentication en el proyecto / Práctica guiada | - |
+| **11** | M11: 2026-04-21 | J11: 2026-04-23 | U4 | SQLAlchemy modelos + Alembic en el proyecto | **Eval 4 (15% Software)** |
+| **12** | M12: 2026-04-28 | J12: 2026-04-30 | U4 | CRUD completo SQLAlchemy en el proyecto | - |
+| **13** | M13: 2026-05-05 | J13: 2026-05-07 | U5 | Repository Pattern / Clean Architecture + JWT | **Eval 5 (15% Software)** |
+| **14** | M14: 2026-05-12 | J14: 2026-05-14 | U5 | DTOs y Serialización / API REST Avanzada | - |
+| **15** | M15: 2026-05-19 | J15: 2026-05-21 | U5 | Testing de Integración / Pulido del Proyecto | - |
+| **16** | M16: 2026-05-26 | J16: 2026-05-28 | U5 | **Preparación sustentación / SUSTENTACIÓN FINAL** | **Final (20% Proyecto)** |
 
 ---
 
@@ -118,28 +118,28 @@
 
 ---
 
-### Unidad 4: Manejo de Persistencia (5 clases)
-**M11-M13 + J11-J13: Abr 21 - May 07**
-- Persistencia en archivos planos (JSON, CSV)
-- SQLAlchemy: modelos y relaciones
-- CRUD con SQLAlchemy
-- Migraciones con Alembic
+### Unidad 4: Persistencia Relacional con SQLAlchemy (4 clases)
+**M10-M12 + J10-J12: Abr 14 - Abr 30**
+- SQLAlchemy ORM: modelos declarativos y relaciones
+- Alembic: migraciones de esquema
+- CRUD completo con SQLAlchemy
 - Integración con FastAPI
 
-**Evaluación 4 (15% Laboratorio):** Jueves 23 de abril
-**Evaluación 5 (15% Proyecto):** Jueves 07 de mayo
+**Evaluación 4 (15% Software):** Jueves 23 de abril — Modelos + Migraciones
 
 ---
 
 ### Unidad 5: Arquitectura de Datos Desconectados (5 clases)
-**M14-M16 + J14-J16: May 12 - May 28**
+**M13-M16 + J13-J16: May 05 - May 28**
 - Patrón Repository con SQLAlchemy
-- Clean Architecture
+- Clean Architecture + JWT Authentication
 - DTOs y serialización
-- APIs REST avanzadas
-- Proyecto integrador
+- APIs REST avanzadas (paginación, filtros, rutas anidadas)
+- Testing de integración y pulido del proyecto
+- Preparación y sustentación del proyecto integrador
 
-**Examen Final (20%):** Jueves 28 de mayo
+**Evaluación 5 (15%):** Jueves 7 de mayo — CRUD + JWT + Arquitectura básica
+**Examen Final (20%):** Jueves 28 de mayo — Sustentación proyecto TaskFlow
 
 ---
 
@@ -155,8 +155,8 @@
 
 ### Segundo Seguimiento (80%) - Límite: 2026-05-15
 **Evaluaciones:**
-- Eval 4 (15%): Laboratorio - Persistencia archivos (Abr 23)
-- Eval 5 (15%): Proyecto - SQLAlchemy (May 07)
+- Eval 4 (15%): Software - SQLAlchemy modelos + migraciones (Abr 23)
+- Eval 5 (15%): Software - CRUD + JWT + arquitectura básica (May 07)
 
 **✅ CUMPLE:** Todas antes del 15 de mayo
 
@@ -187,9 +187,9 @@
 | 1 | 15% | **Taller** | Conceptos fundamentales POO (Entrega 1) | J4: Feb 26 |
 | 2 | 15% | **Laboratorio** | Técnicas de desarrollo TDD/BDD (Entrega 2) | J6: Mar 12 |
 | 3 | **20%** | **Prototipo** | Desarrollo Web: FastAPI + Jinja2 (Entrega 3) | J8: Mar 26 |
-| 4 | 15% | **Software** | Persistencia en archivos JSON/CSV (Entrega 4) | J11: Abr 23 |
-| 5 | 15% | **Software** | SQLAlchemy ORM: CRUD completo (Entrega 5) | J13: May 07 |
-| Final | **20%** | **Proyecto** | Arquitectura Limpia (Sustentación Final) | J16: May 28 |
+| 4 | 15% | **Software** | SQLAlchemy: modelos + migraciones (Entrega 4) | J11: Abr 23 |
+| 5 | 15% | **Software** | CRUD + JWT + arquitectura básica (Entrega 5) | J13: May 07 |
+| Final | **20%** | **Proyecto** | Sistema completo: sustentación aleatoria 1 persona/grupo | J16: May 28 |
 
 ---
 
@@ -219,8 +219,10 @@
 3. **Proyecto TaskFlow:** Sistema de gestión de tareas que se desarrolla durante todo el curso
 4. **Talleres:** En parejas con sustentación para prevenir uso indebido de IA
 5. **Proyecto integrador:** API REST con arquitectura limpia
+6. **Rediseño abril:** Desde semana 10 todas las clases enfocan 100% el proyecto final. Requisitos técnicos obligatorios: JWT + SQLAlchemy (MySQL, PostgreSQL o SQLite)
+7. **Sustentación final:** Se sortea aleatoriamente 1 persona por grupo para defender el proyecto
 
 ---
 
-**Última actualización:** 2026-02-14 (Actualizado a stack Python/FastAPI)
+**Última actualización:** 2026-04-13 (Rediseñado desde semana 10: proyecto TaskFlow 100% práctico con JWT + SQLAlchemy)
 **Basado en:** Syllabus actualizado + Cálculo real de fechas 2026-I

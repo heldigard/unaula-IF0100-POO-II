@@ -206,75 +206,75 @@
 
 ---
 
-## Semana 12: Persistencia Archivos (U4)
+## Semana 12: SQLAlchemy ORM + Alembic (U4)
 
-### Martes 21/04 - 2 horas: Archivos JSON/CSV
+### Martes 21/04 - 2 horas: Modelos y Migraciones
 **Distribución:**
-- **0:00-0:40 (Teoría - 33%)**: Persistencia en archivos, JSON, CSV, pathlib
-- **0:40-1:30 (Práctica - 42%)**: Leer/escribir JSON, CSV
-- **1:30-2:00 (Práctica - 25%)**: Ejercicio: sistema de persistencia en archivos
+- **0:00-0:40 (Teoría - 33%)**: SQLAlchemy 2.0 modelos declarativos, Mapped[T], tipos de columna
+- **0:40-1:30 (Práctica - 42%)**: Crear modelos Usuario, Proyecto, Tarea; configurar Alembic
+- **1:30-2:00 (Práctica - 25%)**: Ejercicio: generar primera migración autogenerada
 
 **Balance:** 33% teoría / 67% práctica
 
 ### Jueves 23/04 - 1 hora: **EVALUACIÓN 4 (15%)**
-- **Laboratorio**: Persistencia con SQLAlchemy
+- **Software**: SQLAlchemy modelos + migraciones
 - **Duración**: 1 hora completa
 
 **Balance:** Evaluación (no aplica 50/50)
 
 ---
 
-## Semana 13: SQLAlchemy Avanzado (U4)
+## Semana 13: CRUD y Relaciones SQLAlchemy (U4)
 
-### Martes 28/04 - 2 horas: ORM Avanzado
+### Martes 28/04 - 2 horas: CRUD con Transacciones
 **Distribución:**
-- **0:00-0:40 (Teoría - 33%)**: Relaciones (1-N, N-M), migraciones con Alembic
-- **0:40-1:30 (Práctica - 42%)**: Crear relaciones, migraciones
-- **1:30-2:00 (Práctica - 25%)**: Ejercicio: modelo con relaciones complejas
+- **0:00-0:40 (Teoría - 33%)**: CRUD completo, transacciones, rollback, relaciones 1-N
+- **0:40-1:30 (Práctica - 42%)**: Implementar CRUD con joins y cascadas
+- **1:30-2:00 (Práctica - 25%)**: Ejercicio: sistema con transacciones y relaciones
 
 **Balance:** 33% teoría / 67% práctica
 
 ### Jueves 30/04 - 1 hora: Práctica ORM
 **Distribución:**
-- **0:00-0:20 (Teoría - 33%)**: Repaso: relaciones, joins
-- **0:20-0:50 (Práctica - 50%)**: Ejercicio: queries con joins
+- **0:00-0:20 (Teoría - 33%)**: Repaso: relaciones, joins, manejo de sesiones
+- **0:20-0:50 (Práctica - 50%)**: Ejercicio: queries con filtros y eager loading
 - **0:50-1:00 (Teoría - 17%)**: Tarea: preparar E5
 
 **Balance:** 50% teoría / 50% práctica
 
 ---
 
-## Semana 14: CRUD SQLAlchemy (U4)
+## Semana 14: Repository Pattern + Clean Architecture + JWT (U5)
 
-### Martes 05/05 - 2 horas: CRUD con Transacciones
+### Martes 05/05 - 2 horas: Repository y JWT Auth
 **Distribución:**
-- **0:00-0:40 (Teoría - 33%)**: Transacciones, rollback, commits, manejo de errores
-- **0:40-1:30 (Práctica - 42%)**: CRUD completo con transacciones
-- **1:30-2:00 (Práctica - 25%)**: Ejercicio: sistema con transacciones
+- **0:00-0:40 (Teoría - 33%)**: Repository Pattern, Clean Architecture, capas, JWT
+- **0:40-1:30 (Práctica - 42%)**: Implementar Repository con SQLAlchemy + login JWT
+- **1:30-2:00 (Práctica - 25%)**: Ejercicio: proteger endpoints con Depends
 
 **Balance:** 33% teoría / 67% práctica
 
 ### Jueves 07/05 - 1 hora: **EVALUACIÓN 5 (15%)**
-- **Proyecto**: CRUD completo FastAPI + SQLAlchemy + Sustentación
+- **Software**: CRUD completo FastAPI + SQLAlchemy + JWT + Arquitectura
 - **Duración**: 1 hora completa
 
 **Balance:** Evaluación (no aplica 50/50)
 
 ---
 
-## Semana 15: Arquitectura Limpia (U5)
+## Semana 15: DTOs y API REST Avanzada (U5)
 
-### Martes 12/05 - 2 horas: Repository y Clean Architecture
+### Martes 12/05 - 2 horas: Serialización y Endpoints Avanzados
 **Distribución:**
-- **0:00-0:40 (Teoría - 33%)**: Repository Pattern, Clean Architecture, capas
-- **0:40-1:30 (Práctica - 42%)**: Implementar Repository con SQLAlchemy
-- **1:30-2:00 (Práctica - 25%)**: Ejercicio: refactorizar a Clean Architecture
+- **0:00-0:40 (Teoría - 33%)**: DTOs con Pydantic v2, paginación, filtros, rutas anidadas
+- **0:40-1:30 (Práctica - 42%)**: Implementar schemas anidados, paginación y búsqueda
+- **1:30-2:00 (Práctica - 25%)**: Ejercicio: endpoints /proyectos/{id}/tareas
 
 **Balance:** 33% teoría / 67% práctica
 
 ### Jueves 14/05 - 1 hora: API REST Avanzada
 **Distribución:**
-- **0:00-0:20 (Teoría - 33%)**: Repaso: arquitectura, paginación
+- **0:00-0:20 (Teoría - 33%)**: Repaso: arquitectura, optimización de queries N+1
 - **0:20-0:50 (Práctica - 50%)**: Ejercicio: implementar paginación y filtros
 - **0:50-1:00 (Teoría - 17%)**: Tarea: avanzar proyecto final
 
@@ -282,13 +282,13 @@
 
 ---
 
-## Semana 16: Cache y Proyecto Integrador (U5)
+## Semana 16: Testing y Pulido del Proyecto (U5)
 
-### Martes 19/05 - 2 horas: Caché y Optimización
+### Martes 19/05 - 2 horas: Testing de Integración
 **Distribución:**
-- **0:00-0:40 (Teoría - 33%)**: Estrategias de caché, Redis, caché en memoria
-- **0:40-1:30 (Práctica - 42%)**: Implementar caché con cachetools
-- **1:30-2:00 (Práctica - 25%)**: Trabajo en proyecto integrador
+- **0:00-0:40 (Teoría - 33%)**: Testing con DB en memoria, pytest-cov, dependency overrides
+- **0:40-1:30 (Práctica - 42%)**: Escribir tests de login y rutas protegidas
+- **1:30-2:00 (Práctica - 25%)**: Trabajo en proyecto integrador + pulido
 
 **Balance:** 33% teoría / 67% práctica
 
@@ -302,10 +302,16 @@
 
 ---
 
-## Semana 17: Cierre de Proyecto
-...
+## Semana 17: Sustentación Final (U5)
+
+### Martes 26/05 - 2 horas: Preparación Sustentación
+**Distribución:**
+- **0:00-0:40 (Teoría - 33%)**: Checklist de features, script de demo, preguntas técnicas
+- **0:40-1:30 (Práctica - 42%)**: Ensayo de presentación y demo en vivo
 - **1:30-2:00 (Práctica - 25%)**: Ajustes finales de sustentación
-...
+
+**Balance:** 33% teoría / 67% práctica
+
 ### Jueves 28/05 - 1 hora: **EVALUACIÓN 6 (20%)**
 - **Sustentación Final**: Defensa del Proyecto Integrador TaskFlow
 - **Duración**: 1 hora
