@@ -182,12 +182,12 @@ class UsuarioListResponse(PaginatedResponse[UsuarioResponse]):
                     <pre><code class="language-python"># domain/entities.py
 class Usuario:
     """Entity de dominio."""
-    def __init__(self, id: int, username: str, email: str, 
-                 password_hash: str, activo: bool = True):
+    def __init__(self, id: int, username: str, email: str,
+                 hashed_password: str, activo: bool = True):
         self.id = id
         self.username = username
         self.email = email
-        self.password_hash = password_hash
+        self.hashed_password = hashed_password
         self.activo = activo
         self.creado_en = datetime.now(timezone.utc)
 
@@ -224,7 +224,7 @@ class UsuarioService:
             id=0,  # Se asigna en repo
             username=data.username,
             email=data.email,
-            password_hash=self._hash_password(data.password)
+            hashed_password=self._hash_password(data.password)
         )
         
         # Guardar
@@ -300,13 +300,7 @@ def crear_proyecto(data: ProyectoCreate, db: Session = Depends(get_db)):
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
-from enum import Enum
-
-class Prioridad(str, Enum):
-    BAJA = "baja"
-    MEDIA = "media"
-    ALTA = "alta"
-    URGENTE = "urgente"
+from models.tarea import EstadoTarea, Prioridad
 
 class TareaBase(BaseModel):
     titulo: str = Field(..., min_length=1, max_length=200)
@@ -319,15 +313,15 @@ class TareaCreate(TareaBase):
 class TareaUpdate(BaseModel):
     titulo: Optional[str] = Field(None, min_length=1, max_length=200)
     descripcion: Optional[str] = Field(None, max_length=1000)
-    completada: Optional[bool] = None
+    estado: Optional[EstadoTarea] = None
     prioridad: Optional[Prioridad] = None
 
 class TareaResponse(TareaBase):
     id: int
-    completada: bool
+    estado: EstadoTarea
     proyecto_id: int
     creado_en: datetime
-    
+
     model_config = {"from_attributes": True}</code></pre>
 
                     <div class="alert-tip">
