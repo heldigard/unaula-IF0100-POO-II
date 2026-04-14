@@ -114,11 +114,15 @@ def listar_tareas(
                 <section id="filtros">
                     <h2 class="text-primary border-bottom pb-2">Filtros y Busqueda (20 min)</h2>
                     
-                    <pre><code class="language-python">from fastapi import Query
+                    <pre><code class="language-python">from fastapi import Query, Depends
 from typing import Optional
 from enum import Enum
 from datetime import datetime
 from sqlalchemy import select, func, or_
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
+from api.dependencies import get_db
+from models.tarea import Tarea, Prioridad, EstadoTarea
 
 class OrdenDireccion(str, Enum):
     ASC = "asc"
@@ -126,7 +130,7 @@ class OrdenDireccion(str, Enum):
 
 class TareaFiltro(BaseModel):
     """Filtros para tareas."""
-    completada: Optional[bool] = None
+    estado: Optional[EstadoTarea] = None
     prioridad: Optional[Prioridad] = None
     proyecto_id: Optional[int] = None
     buscar: Optional[str] = None
@@ -137,33 +141,30 @@ class TareaFiltro(BaseModel):
 
 @router.get("/tareas")
 def listar_tareas(
-    completada: Optional[bool] = Query(None),
-    prioridad: Optional[Prioridad] = Query(None),
-    proyecto_id: Optional[int] = Query(None),
-    buscar: Optional[str] = Query(None, min_length=2),
+    filtro: TareaFiltro = Depends(),
     pagina: int = Query(1, ge=1),
     por_pagina: int = Query(10, ge=1, le=100),
-    repo: TareaRepositorio = Depends(get_tarea_repo)
+    db: Session = Depends(get_db)
 ):
     # Construir statement
     stmt = select(Tarea)
     conditions = []
 
     # Aplicar filtros
-    if completada is not None:
-        conditions.append(Tarea.completada == completada)
+    if filtro.estado is not None:
+        conditions.append(Tarea.estado == filtro.estado)
 
-    if prioridad:
-        conditions.append(Tarea.prioridad == prioridad)
+    if filtro.prioridad:
+        conditions.append(Tarea.prioridad == filtro.prioridad)
 
-    if proyecto_id:
-        conditions.append(Tarea.proyecto_id == proyecto_id)
+    if filtro.proyecto_id:
+        conditions.append(Tarea.proyecto_id == filtro.proyecto_id)
 
-    if buscar:
+    if filtro.buscar:
         conditions.append(
             or_(
-                Tarea.titulo.ilike(f"%{buscar}%"),
-                Tarea.descripcion.ilike(f"%{buscar}%")
+                Tarea.titulo.ilike(f"%{filtro.buscar}%"),
+                Tarea.descripcion.ilike(f"%{filtro.buscar}%")
             )
         )
 
@@ -174,12 +175,12 @@ def listar_tareas(
     count_stmt = select(func.count()).select_from(Tarea)
     if conditions:
         count_stmt = count_stmt.where(*conditions)
-    total = repo.db.execute(count_stmt).scalar()
+    total = db.execute(count_stmt).scalar()
 
     # Aplicar paginacion
     offset = calcular_offset(pagina, por_pagina)
     stmt = stmt.offset(offset).limit(por_pagina)
-    tareas = repo.db.execute(stmt).scalars().all()
+    tareas = db.execute(stmt).scalars().all()
 
     return construir_respuesta_paginada(tareas, total, pagina, por_pagina)</code></pre>
                 </section>
