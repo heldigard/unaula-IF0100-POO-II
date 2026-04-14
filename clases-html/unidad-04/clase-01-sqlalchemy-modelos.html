@@ -154,6 +154,12 @@ class EstadoTarea(str, PyEnum):
     EN_PROGRESO = "en_progreso"
     COMPLETADA = "completada"
 
+class Prioridad(str, PyEnum):
+    BAJA = "baja"
+    MEDIA = "media"
+    ALTA = "alta"
+    URGENTE = "urgente"
+
 class Tarea(Base):
     __tablename__ = "tareas"
 
@@ -164,12 +170,16 @@ class Tarea(Base):
         Enum(EstadoTarea),
         default=EstadoTarea.PENDIENTE
     )
+    prioridad: Mapped[Prioridad] = mapped_column(
+        Enum(Prioridad),
+        default=Prioridad.MEDIA
+    )
 
     proyecto_id: Mapped[int] = mapped_column(ForeignKey("proyectos.id"))
     proyecto: Mapped["Proyecto"] = relationship(back_populates="tareas")
 
     def __repr__(self) -> str:
-        return f"<Tarea(id={self.id}, titulo='{self.titulo}', estado='{self.estado.value}')>"
+        return f"<Tarea(id={self.id}, titulo='{self.titulo}', estado='{self.estado.value}', prioridad='{self.prioridad.value}')>"
 
     def cambiar_estado(self, nuevo_estado: EstadoTarea) -> None:
         """Cambia el estado de la tarea."""
@@ -216,7 +226,7 @@ class Tarea(Base):
                         <ul class="mb-0">
                             <li><code>models/usuario.py</code> con <code>Usuario</code> mapeado con <code>Mapped[T]</code></li>
                             <li><code>models/proyecto.py</code> con <code>Proyecto</code> y <code>ForeignKey("usuarios.id")</code></li>
-                            <li><code>models/tarea.py</code> con <code>Tarea</code> y relaciones iniciales</li>
+                            <li><code>models/tarea.py</code> con <code>Tarea</code>, enums <code>EstadoTarea</code> y <code>Prioridad</code>, campo <code>prioridad</code> y relaciones iniciales</li>
                             <li><code>models/comentario.py</code> con <code>Comentario</code> y <code>ForeignKey("tareas.id")</code></li>
                             <li>Base de datos SQLite creada y tablas visibles en DB Browser</li>
                         </ul>
