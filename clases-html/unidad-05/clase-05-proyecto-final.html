@@ -148,11 +148,19 @@ def auth_token(client):
 
 def test_crear_tarea_autenticado(client, auth_token):
     headers = {"Authorization": f"Bearer {auth_token}"}
+
+    # Crear proyecto primero (FK)
+    proyecto = client.post("/api/v1/proyectos", json={
+        "nombre": "Proyecto test"
+    }, headers=headers)
+    assert proyecto.status_code == 201
+    proyecto_id = proyecto.json()["id"]
+
     response = client.post("/api/v1/tareas", json={
         "titulo": "Tarea test",
         "descripcion": "Desc",
         "prioridad": "media",
-        "proyecto_id": 1
+        "proyecto_id": proyecto_id
     }, headers=headers)
     assert response.status_code == 201
     data = response.json()
@@ -187,20 +195,26 @@ def auth_token(client):
 def test_actualizar_tarea(client, auth_token):
     headers = {"Authorization": f"Bearer {auth_token}"}
 
+    # Crear proyecto primero (FK)
+    proyecto = client.post("/api/v1/proyectos", json={
+        "nombre": "Proyecto update"
+    }, headers=headers)
+    proyecto_id = proyecto.json()["id"]
+
     # Crear tarea
     create = client.post("/api/v1/tareas", json={
-        "titulo": "Original", "descripcion": "Desc", "prioridad": "media", "proyecto_id": 1
+        "titulo": "Original", "descripcion": "Desc", "prioridad": "media", "proyecto_id": proyecto_id
     }, headers=headers)
     tarea_id = create.json()["id"]
 
     # Actualizar
     response = client.patch(f"/api/v1/tareas/{tarea_id}", json={
-        "titulo": "Actualizado", "completada": True
+        "titulo": "Actualizado", "estado": "completada"
     }, headers=headers)
 
-    # TODO: assert response.status_code == ?
-    # TODO: assert response.json()["titulo"] == ?
-    # TODO: assert response.json()["completada"] == ?
+    assert response.status_code == 200
+    assert response.json()["titulo"] == "Actualizado"
+    assert response.json()["estado"] == "completada"
 
 def test_actualizar_tarea_inexistente(client, auth_token):
     headers = {"Authorization": f"Bearer {auth_token}"}
