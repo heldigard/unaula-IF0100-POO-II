@@ -113,7 +113,7 @@ def crear_usuario(db: Session, username: str, email: str, password: str) -> Usua
     usuario = Usuario(
         username=username,
         email=email,
-        password_hash=pwd_context.hash(password)
+        hashed_password=pwd_context.hash(password)
     )
     
     # Agregar a la sesion
