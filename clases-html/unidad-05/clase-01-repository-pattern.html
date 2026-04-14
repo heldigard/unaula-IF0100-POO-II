@@ -50,6 +50,7 @@
                         <li><a href="#implementacion" class="text-decoration-none">Implementacion</a></li>
                         <li><a href="#inyeccion" class="text-decoration-none">Inyeccion FastAPI</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -346,6 +347,21 @@ class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
 
                     <div class="alert-tip">
                         <strong>E6 Proyecto Final:</strong> Implementa todos los repositorios con la interfaz generica.
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li><code>repositories/base.py</code> con interfaz <code>Repositorio[T]</code></li>
+                            <li><code>repositories/usuario_repo.py</code> con <code>UsuarioRepositorioSQLAlchemy</code></li>
+                            <li><code>repositories/proyecto_repo.py</code> con <code>ProyectoRepositorioSQLAlchemy</code></li>
+                            <li><code>repositories/tarea_repo.py</code> con <code>TareaRepositorioSQLAlchemy</code> y métodos adicionales</li>
+                            <li><code>api/dependencies.py</code> con <code>get_db()</code> y factories de repositorios</li>
+                            <li>Al menos un endpoint FastAPI que use <code>Depends(get_usuario_repo)</code></li>
+                        </ul>
                     </div>
                 </section>
 

@@ -46,6 +46,7 @@
                         <li><a href="#errores" class="text-decoration-none">Manejo de Errores</a></li>
                         <li><a href="#versionado" class="text-decoration-none">Versionado</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -307,6 +308,21 @@ async def version_middleware(request: Request, call_next):
 
                     <div class="alert-tip">
                         <strong>E6 Proyecto Final:</strong> La API debe implementar todas las practicas vistas.
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li><code>GET /api/v1/tareas</code> con paginación (<code>Paginado[TareaResponse]</code>)</li>
+                            <li>Filtros funcionales por <code>completada</code>, <code>prioridad</code>, <code>proyecto_id</code> y búsqueda por título</li>
+                            <li>Handlers globales para <code>AppException</code> y <code>RequestValidationError</code></li>
+                            <li>Respuestas de error consistentes con <code>{"error": true, "mensaje": ...}</code></li>
+                            <li>Rutas versionadas bajo <code>/api/v1/</code></li>
+                            <li>Documentación OpenAPI accesible en <code>/docs</code> con tags descriptivos</li>
+                        </ul>
                     </div>
                 </section>
 

@@ -51,6 +51,7 @@
                         <li><a href="#update" class="text-decoration-none">Update</a></li>
                         <li><a href="#delete" class="text-decoration-none">Delete</a></li>
                         <li><a href="#repositorio" class="text-decoration-none">Repositorio</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -306,6 +307,20 @@ class UsuarioRepositorio(RepositorioGenerico[Usuario]):
 
                     <div class="alert-tip">
                         <strong>E5 Proyecto:</strong> Implementa repositorios para Usuario, Proyecto, Tarea y Comentario.
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li>Funciones CRUD para <code>Usuario</code>, <code>Proyecto</code> y <code>Tarea</code></li>
+                            <li><code>repositories/base.py</code> con <code>RepositorioGenerico[T]</code></li>
+                            <li>Métodos <code>crear</code>, <code>obtener_por_id</code>, <code>obtener_todos</code>, <code>actualizar</code>, <code>eliminar</code></li>
+                            <li>Repositorios específicos que extienden el genérico (<code>UsuarioRepositorio</code>, etc.)</li>
+                            <li>Script de prueba que crea, lee, actualiza y elimina registros</li>
+                        </ul>
                     </div>
                 </section>
 

@@ -50,6 +50,7 @@
                         <li><a href="#migraciones" class="text-decoration-none">Crear Migraciones</a></li>
                         <li><a href="#aplicar" class="text-decoration-none">Aplicar Migraciones</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -260,6 +261,20 @@ class Tarea(Base):
 
                     <div class="alert-tip">
                         <strong>E5 Proyecto:</strong> Implementa el sistema de etiquetas y migra la base de datos.
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li><code>alembic.ini</code> configurado con la URL de <code>taskflow.db</code></li>
+                            <li><code>alembic/env.py</code> con <code>target_metadata = Base.metadata</code></li>
+                            <li>Al menos una revision generada con <code>--autogenerate</code></li>
+                            <li>Base de datos migrada con <code>alembic upgrade head</code></li>
+                            <li>Capacidad de revertir con <code>alembic downgrade -1</code> demostrada</li>
+                        </ul>
                     </div>
                 </section>
 

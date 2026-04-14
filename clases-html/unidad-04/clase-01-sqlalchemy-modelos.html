@@ -49,6 +49,7 @@
                         <li><a href="#modelos" class="text-decoration-none">Modelos Declarativos</a></li>
                         <li><a href="#relaciones" class="text-decoration-none">Relaciones Básicas</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio Práctico</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -204,6 +205,20 @@ class Tarea(Base):
                             <li>Modelos SQLAlchemy con tipado <code>Mapped[T]</code> (50%)</li>
                             <li>Relaciones correctas entre entidades (30%)</li>
                             <li>Alembic configurado y migración aplicada (20%)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li><code>models/usuario.py</code> con <code>Usuario</code> mapeado con <code>Mapped[T]</code></li>
+                            <li><code>models/proyecto.py</code> con <code>Proyecto</code> y <code>ForeignKey("usuarios.id")</code></li>
+                            <li><code>models/tarea.py</code> con <code>Tarea</code> y relaciones iniciales</li>
+                            <li><code>models/comentario.py</code> con <code>Comentario</code> y <code>ForeignKey("tareas.id")</code></li>
+                            <li>Base de datos SQLite creada y tablas visibles en DB Browser</li>
                         </ul>
                     </div>
                 </section>

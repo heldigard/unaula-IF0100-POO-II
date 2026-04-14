@@ -47,6 +47,7 @@
                         <li><a href="#mapeo" class="text-decoration-none">Mapeo Entity-DTO</a></li>
                         <li><a href="#minilab" class="text-decoration-none">Mini-lab Endpoint</a></li>
                         <li><a href="#ejercicio" class="text-decoration-none">Ejercicio</a></li>
+                        <li><a href="#entregable" class="text-decoration-none">Entregable</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -331,6 +332,20 @@ class TareaResponse(TareaBase):
 
                     <div class="alert-tip">
                         <strong>E6 Proyecto Final:</strong> Implementa DTOs para todas las entidades del sistema.
+                    </div>
+                </section>
+
+                <section id="entregable">
+                    <h2 class="text-primary border-bottom pb-2">Entregable TaskFlow</h2>
+                    <div class="alert-tip">
+                        <strong>Al finalizar esta clase debes tener:</strong>
+                        <ul class="mb-0">
+                            <li><code>api/schemas/usuario.py</code> con <code>UsuarioCreate</code>, <code>UsuarioResponse</code></li>
+                            <li><code>api/schemas/proyecto.py</code> con <code>ProyectoCreate</code>, <code>ProyectoResponse</code></li>
+                            <li><code>api/schemas/tarea.py</code> con <code>TareaCreate</code>, <code>TareaUpdate</code>, <code>TareaResponse</code></li>
+                            <li>Mapeo <code>from_entity()</code> o <code>model_validate()</code> funcionando en los endpoints</li>
+                            <li>Validaciones Pydantic probadas en Swagger UI (<code>/docs</code>)</li>
+                        </ul>
                     </div>
                 </section>
 
