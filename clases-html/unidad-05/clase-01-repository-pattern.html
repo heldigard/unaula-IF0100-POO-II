@@ -312,6 +312,7 @@ def listar_usuarios(
 
                     <pre><code class="language-python"># repositories/tarea_repo.py
 from sqlalchemy import select
+from models.tarea import Tarea, EstadoTarea
 
 class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
 
@@ -324,7 +325,7 @@ class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
         """Obtener tareas completadas."""
         stmt = select(Tarea).where(
             Tarea.proyecto_id == proyecto_id,
-            Tarea.completada == True
+            Tarea.estado == EstadoTarea.COMPLETADA
         )
         return self.db.execute(stmt).scalars().all()
 
@@ -332,7 +333,7 @@ class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
         """Obtener tareas pendientes."""
         stmt = select(Tarea).where(
             Tarea.proyecto_id == proyecto_id,
-            Tarea.completada == False
+            Tarea.estado == EstadoTarea.PENDIENTE
         )
         return self.db.execute(stmt).scalars().all()
 
@@ -340,7 +341,7 @@ class TareaRepositorioSQLAlchemy(Repositorio[Tarea]):
         """Marcar tarea como completada."""
         tarea = self.obtener_por_id(id)
         if tarea:
-            tarea.completada = True
+            tarea.estado = EstadoTarea.COMPLETADA
             self.db.commit()
             return True
         return False</code></pre>
