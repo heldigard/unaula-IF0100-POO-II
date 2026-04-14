@@ -286,7 +286,7 @@ def login(
     repo = Depends(get_usuario_repo)
 ):
     usuario = repo.obtener_por_username(form_data.username)
-    if not usuario or not verify_password(form_data.password, usuario.password_hash):
+    if not usuario or not verify_password(form_data.password, usuario.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Usuario o password incorrectos",
@@ -310,7 +310,7 @@ def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
-    from repositories.usuario_repo import UsuarioRepositorioSQLAlchemy
+    from infrastructure.repositories.usuario_repo import UsuarioRepositorioSQLAlchemy
 
     user_id = decode_token(token)
     if user_id is None:
@@ -399,7 +399,7 @@ router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), repo = Depends(get_usuario_repo)):
     usuario = repo.obtener_por_username(form_data.username)
-    if not usuario or not verify_password(form_data.password, usuario.password_hash):
+    if not usuario or not verify_password(form_data.password, usuario.hashed_password):
         raise HTTPException(status_code=401, detail="Credenciales invalidas")
     token = create_access_token(data={"sub": str(usuario.id)})
     return {"access_token": token, "token_type": "bearer"}</code></pre>
@@ -461,7 +461,7 @@ class UsuarioModel(Base):
     __tablename__ = "usuarios"
     id = Column(Integer, primary_key=True)
     username = Column(String)
-    password_hash = Column(String)
+    hashed_password = Column(String)
 
 Base.metadata.create_all(bind=engine)
 
@@ -476,7 +476,7 @@ def get_db():
 def crear_usuario(username: str, password: str, db: Session = Depends(get_db)):
     if len(username) < 3:
         raise HTTPException(status_code=400, detail="Username muy corto")
-    u = UsuarioModel(username=username, password_hash=password)
+    u = UsuarioModel(username=username, hashed_password=password)
     db.add(u)
     db.commit()
     return {"id": u.id, "username": u.username}</code></pre>
