@@ -30,7 +30,7 @@ Las preguntas están por unidad:
 ## Ejecutar localmente
 
 ```bash
-git clone https://github.com/Eldigardo/IF0100-POO-II.git
+git clone https://github.com/heldigard/unaula-IF0100-POO-II.git
 cd IF0100-POO-II/juego-kaboom
 # Abre index.html en cualquier navegador moderno
 ```
@@ -72,7 +72,7 @@ Copia la URL pública (`https://xxxxx.trycloudflare.com`) y configúrala en el c
 
 1. En Settings > Pages, rama `main` y carpeta `/ (root)`.
 2. URL esperada:
-   `https://Eldigardo.github.io/IF0100-POO-II/juego-kaboom/`
+   `https://heldigard.github.io/unaula-IF0100-POO-II/juego-kaboom/`
 
 ## Flujo de juego
 
