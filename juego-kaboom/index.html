@@ -325,11 +325,13 @@
             padding: 24px;
             z-index: 10;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: stretch;
             gap: 10px;
             text-align: center;
             backdrop-filter: blur(2px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
         }
 
         .overlay h2 { color: var(--accent); }
@@ -576,6 +578,14 @@
                 height: 150px;
             }
 
+            .overlay {
+                padding: 16px;
+            }
+
+            .btn-row {
+                grid-template-columns: 1fr;
+            }
+
             .option-btn {
                 font-size: 18px;
                 min-height: 68px;
@@ -665,7 +675,7 @@
                     </div>
                     <div class="btn-row" style="margin-top: 10px;">
                         <button id="btn-copy-room" class="btn">Copiar Link</button>
-                        <button id="btn-start-classroom" class="btn secondary">Entrar con esta unidad</button>
+                        <button id="btn-start-classroom" class="btn secondary">Entrar al juego</button>
                     </div>
                 </div>
                 <div class="btn-row single" style="margin-top: 10px;">
@@ -1729,6 +1739,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             state.classroomUnit = null;
             state.classroomCode = "";
             state.playerId = "";
+            UI.classUnitsContainer.style.display = "grid";
             hideAllOverlays();
             UI.classroomOverlay.classList.add("active");
             UI.classRoomInfo.style.display = "none";
@@ -1942,10 +1953,13 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classRoomCode.textContent = state.classroomCode || "Sin código";
             UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
             if (state.backendUrl) {
-                UI.classroomState.textContent = `Escribe tu nombre y pulsa Entrar con esta unidad.`;
+                UI.classroomState.textContent = `Escribe tu nombre y pulsa Entrar al juego.`;
                 if (state.classroomCode) {
                     renderRoomQr(UI.classRoomUrl.value);
                 }
+            }
+            if (state.classroomCode) {
+                UI.classUnitsContainer.style.display = "none";
             }
             UI.classRoomInfo.style.display = "block";
             showOverlay(UI.classroomOverlay);
