@@ -216,6 +216,91 @@
         .feedback.ok { color: var(--ok); border-color: rgba(35, 209, 139, 0.4); }
         .feedback.bad { color: var(--bad); border-color: rgba(255, 95, 109, 0.5); }
 
+        .answer-stats {
+            margin-top: 8px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .answer-row {
+            background: rgba(6, 12, 27, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 8px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .answer-row.correct {
+            border-color: rgba(46, 246, 166, 0.55);
+            box-shadow: 0 0 0 1px rgba(46, 246, 166, 0.15) inset;
+        }
+
+        .answer-row-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .answer-letter {
+            width: 24px;
+            height: 24px;
+            display: grid;
+            place-items: center;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .answer-letter.correct {
+            color: var(--ok);
+            border-color: rgba(46, 246, 166, 0.45);
+            background: rgba(46, 246, 166, 0.12);
+        }
+
+        .answer-bar-wrap {
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .answer-bar {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(61, 230, 255, 0.75), rgba(255, 255, 255, 0.8));
+            transition: width 0.5s ease;
+        }
+
+        .answer-row.opt-0 .answer-bar { background: linear-gradient(90deg, rgba(255, 119, 152, 0.85), rgba(255, 99, 132, 0.35)); }
+        .answer-row.opt-1 .answer-bar { background: linear-gradient(90deg, rgba(80, 178, 255, 0.85), rgba(54, 162, 235, 0.35)); }
+        .answer-row.opt-2 .answer-bar { background: linear-gradient(90deg, rgba(255, 216, 100, 0.85), rgba(255, 205, 86, 0.35)); }
+        .answer-row.opt-3 .answer-bar { background: linear-gradient(90deg, rgba(90, 225, 120, 0.85), rgba(75, 192, 112, 0.35)); }
+
+        .answer-row.correct .answer-bar {
+            filter: brightness(1.2) saturate(1.25);
+            border: 1px solid rgba(46, 246, 166, 0.35);
+        }
+
+        .answer-percent {
+            font-size: 12px;
+            color: var(--text);
+            text-align: right;
+        }
+
+        .answer-detail {
+            margin-top: 2px;
+            color: var(--muted);
+            font-size: 12px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.16);
+            padding-top: 6px;
+        }
+
         #progress {
             margin-top: 4px;
             border-radius: 8px;
@@ -950,6 +1035,31 @@ Usalo como referencia rapida durante la ronda.</pre>
             return `${labels.join(" · ")} | Respuestas correctas: ${correctCount} de ${total}`;
         }
 
+        function renderAnswerStats(votes, correctIndex, explainText = "") {
+            const total = votes.reduce((acc, qty) => acc + qty, 0);
+            const rows = votes
+                .filter((_, idx) => idx < 4)
+                .map((qty, idx) => {
+                    const pct = total > 0 ? Math.round((qty / total) * 100) : 0;
+                    const letter = String.fromCharCode(65 + idx);
+                    const isCorrect = idx === correctIndex;
+                    return `<div class="answer-row opt-${idx} ${isCorrect ? "correct" : ""}">
+                        <div class="answer-row-head">
+                            <span class="answer-letter ${isCorrect ? "correct" : ""}">${letter}</span>
+                            <span class="answer-text">${isCorrect ? "Correcta: " : ""}${String.fromCharCode(65 + idx)} · ${qty}</span>
+                        </div>
+                        <div class="answer-bar-wrap">
+                            <div class="answer-bar" style="width:${pct}%;"></div>
+                        </div>
+                        <div class="answer-percent">${pct}%</div>
+                    </div>`;
+                }).join("");
+            UI.explain.innerHTML = `${formatAnswerStats(votes, correctIndex)}<div class="answer-stats">${rows}</div>`;
+            if (explainText) {
+                UI.explain.innerHTML += `<div class=\"answer-detail\">${escapeHtml(explainText)}</div>`;
+            }
+        }
+
         function getLeaderboard() {
             const raw = localStorage.getItem(`${STORAGE_PREFIX}.leaderboard`);
             if (!raw) {
@@ -1147,8 +1257,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             stopTimer();
             const correctOption = q.options[q.correct];
             UI.feedback.textContent = `Respuesta correcta: ${correctOption}`;
-            const statsText = formatAnswerStats(state.questionVotes, q.correct);
-            UI.explain.textContent = `${statsText}. ${q.explain}`;
+            renderAnswerStats(state.questionVotes, q.correct, q.explain);
             if (!state.questionAnswered) {
                 state.score = Math.max(0, state.score - 10);
                 state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 10);
