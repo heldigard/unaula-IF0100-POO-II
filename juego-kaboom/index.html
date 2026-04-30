@@ -7,16 +7,18 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --bg: #0b1020;
-            --panel: #151d33;
-            --panel-soft: #1f2a4a;
-            --accent: #25c6ff;
-            --accent-soft: #1a8ab8;
-            --ok: #23d18b;
-            --bad: #ff5555;
-            --warn: #ffd166;
-            --text: #f4f7ff;
-            --muted: #9aa3bf;
+            --bg: #0f1736;
+            --bg-soft: #1f2f5c;
+            --panel: #1f3565;
+            --panel-soft: #2a4685;
+            --accent: #3de6ff;
+            --accent-soft: #24b9f2;
+            --ok: #2ef6a6;
+            --bad: #ff5f6d;
+            --warn: #ffd45f;
+            --text: #f1f5ff;
+            --muted: #bdd3ff;
+            --panel-glow: rgba(61, 230, 255, 0.36);
             --radius: 12px;
         }
 
@@ -27,7 +29,10 @@
         body {
             margin: 0;
             min-height: 100vh;
-            background: radial-gradient(circle at top, #131a30 0%, var(--bg) 55%);
+            background:
+                radial-gradient(circle at 8% 0%, rgba(61, 230, 255, 0.14), transparent 45%),
+                radial-gradient(circle at 95% 20%, rgba(126, 90, 255, 0.14), transparent 40%),
+                linear-gradient(155deg, #16274f 0%, #0e1732 50%, #081126 100%);
             color: var(--text);
             font-family: "Segoe UI", Roboto, Arial, sans-serif;
             display: grid;
@@ -50,10 +55,12 @@
         }
 
         .panel {
-            background: color-mix(in srgb, var(--panel) 88%, white 4%);
-            border: 1px solid rgba(37, 198, 255, 0.3);
+            background: linear-gradient(165deg, color-mix(in srgb, var(--panel) 88%, white 5%), color-mix(in srgb, var(--panel-soft) 78%, black 10%));
+            border: 1px solid var(--panel-glow);
             border-radius: var(--radius);
-            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.32);
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.35),
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset;
             position: relative;
             overflow: hidden;
         }
@@ -73,10 +80,11 @@
         }
 
         .hud-card {
-            background: var(--panel-soft);
-            border: 1px solid rgba(37, 198, 255, 0.2);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--panel-soft) 86%, white 10%), color-mix(in srgb, var(--panel-soft) 62%, black 20%));
+            border: 1px solid rgba(61, 230, 255, 0.28);
             border-radius: 10px;
             padding: 10px 12px;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.18);
         }
 
         .hud-label {
@@ -99,8 +107,8 @@
         #screen {
             flex: 1;
             border-radius: 10px;
-            background: #0f1730;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, #111e46, #0c1230);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             display: grid;
             grid-template-rows: auto 1fr auto;
             gap: 14px;
@@ -109,14 +117,14 @@
 
         .question-title {
             color: var(--warn);
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
         }
 
         .question-text {
-            font-size: 28px;
+            font-size: 30px;
             line-height: 1.35;
             margin: 8px 0 0;
         }
@@ -126,6 +134,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             align-content: start;
+            align-items: stretch;
         }
 
         .option-btn {
@@ -134,8 +143,8 @@
             border-radius: 10px;
             padding: 14px 16px;
             text-align: left;
-            background: #101a38;
-            border: 2px solid rgba(37, 198, 255, 0.22);
+            background: #1a2e66;
+            border: 2px solid rgba(61, 230, 255, 0.22);
             color: var(--text);
             cursor: pointer;
             font-size: 20px;
@@ -150,7 +159,7 @@
             overflow: hidden;
         }
 
-        .option-btn:hover:enabled { transform: translateY(-2px); border-color: rgba(37, 198, 255, 0.55); }
+        .option-btn:hover:enabled { transform: translateY(-2px); border-color: rgba(61, 230, 255, 0.55); }
         .option-btn:disabled { opacity: 0.72; cursor: default; }
         .option-btn.correct { background: rgba(35, 209, 139, 0.16); border-color: var(--ok); }
         .option-btn.wrong { background: rgba(255, 85, 85, 0.16); border-color: var(--bad); }
@@ -162,10 +171,10 @@
             border-left-width: 6px;
         }
 
-        .option-btn.opt-0 { background: linear-gradient(90deg, rgba(255, 99, 132, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #ff6384; }
-        .option-btn.opt-1 { background: linear-gradient(90deg, rgba(54, 162, 235, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #36a2eb; }
-        .option-btn.opt-2 { background: linear-gradient(90deg, rgba(255, 205, 86, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #ffcd56; }
-        .option-btn.opt-3 { background: linear-gradient(90deg, rgba(75, 192, 112, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #4bc070; }
+        .option-btn.opt-0 { background: linear-gradient(90deg, rgba(255, 119, 152, 0.28), rgba(18, 33, 80, 0.9)); border-left-color: #ff6384; }
+        .option-btn.opt-1 { background: linear-gradient(90deg, rgba(80, 178, 255, 0.26), rgba(18, 33, 80, 0.9)); border-left-color: #36a2eb; }
+        .option-btn.opt-2 { background: linear-gradient(90deg, rgba(255, 216, 100, 0.26), rgba(18, 33, 80, 0.9)); border-left-color: #ffcd56; }
+        .option-btn.opt-3 { background: linear-gradient(90deg, rgba(90, 225, 120, 0.24), rgba(18, 33, 80, 0.9)); border-left-color: #4bc070; }
 
         .option-key {
             width: 30px;
@@ -185,6 +194,10 @@
         .option-btn.opt-2 .option-key { color: #ffd76b; border-color: rgba(255, 215, 107, 0.45); }
         .option-btn.opt-3 .option-key { color: #80e08f; border-color: rgba(128, 224, 143, 0.45); }
 
+        .option-btn.selected {
+            outline: 2px solid rgba(255, 255, 255, 0.35);
+        }
+
         .option-text {
             flex: 1;
             white-space: normal;
@@ -194,18 +207,19 @@
             min-height: 56px;
             border-radius: 10px;
             padding: 10px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 14px;
             color: var(--muted);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .feedback.ok { color: var(--ok); border-color: rgba(35, 209, 139, 0.4); }
-        .feedback.bad { color: var(--bad); border-color: rgba(255, 85, 85, 0.45); }
+        .feedback.bad { color: var(--bad); border-color: rgba(255, 95, 109, 0.5); }
 
         #progress {
             margin-top: 4px;
             border-radius: 8px;
-            background: #0a1125;
+            background: rgba(6, 12, 27, 0.85);
             height: 12px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -221,7 +235,7 @@
         .overlay {
             position: absolute;
             inset: 0;
-            background: rgba(6, 10, 22, 0.97);
+            background: rgba(9, 16, 40, 0.95);
             display: none;
             padding: 24px;
             z-index: 10;
@@ -230,6 +244,7 @@
             align-items: stretch;
             gap: 10px;
             text-align: center;
+            backdrop-filter: blur(2px);
         }
 
         .overlay h2 { color: var(--accent); }
@@ -239,26 +254,38 @@
         }
 
         .btn {
-            border: 1px solid rgba(37, 198, 255, 0.4);
+            border: 1px solid rgba(61, 230, 255, 0.4);
             border-radius: 10px;
-            background: linear-gradient(180deg, #2a86aa 0%, #1b5f7c 100%);
+            background: linear-gradient(180deg, #1dc1ee 0%, #149ac8 100%);
             color: #f7fbff;
-            padding: 11px 16px;
+            padding: 12px 16px;
             cursor: pointer;
             font-size: 15px;
             font-weight: 700;
             transition: filter 0.12s ease, transform 0.12s ease;
+            box-shadow: 0 4px 16px rgba(29, 193, 238, 0.28);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .btn:hover {
             filter: brightness(1.07);
             transform: translateY(-1px);
+            box-shadow: 0 7px 22px rgba(29, 193, 238, 0.42);
         }
 
         .btn.secondary {
             background: transparent;
-            border-color: #5069a7;
+            border-color: rgba(61, 230, 255, 0.5);
             color: #dee6ff;
+            box-shadow: none;
+        }
+
+        .btn:focus-visible,
+        .unit-btn:focus-visible,
+        .option-btn:focus-visible {
+            outline: 2px solid rgba(61, 230, 255, 0.85);
+            outline-offset: 2px;
         }
 
         .btn-row {
@@ -275,9 +302,9 @@
         input[type="text"] {
             width: 100%;
             margin: 0 auto;
-            background: #09112a;
+            background: #14265a;
             color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(61, 230, 255, 0.22);
             border-radius: 10px;
             padding: 12px;
             font-size: 15px;
@@ -294,13 +321,21 @@
         }
 
         .unit-btn {
-            border: 1px solid rgba(37, 198, 255, 0.4);
+            border: 1px solid rgba(61, 230, 255, 0.42);
             border-radius: 10px;
             padding: 12px 10px;
-            background: #0e1530;
+            background: linear-gradient(165deg, #142d63, #101f4d);
             text-align: left;
             cursor: pointer;
             font-weight: 600;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .unit-btn:hover {
+            border-color: rgba(61, 230, 255, 0.7);
+            transform: translateY(-1px);
+            box-shadow: 0 0 16px rgba(61, 230, 255, 0.28);
         }
 
         .unit-btn span {
@@ -312,6 +347,10 @@
         }
 
         .code-panel {
+            border-left: 1px solid rgba(61, 230, 255, 0.32);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+                0 14px 40px rgba(0, 0, 0, 0.36);
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -335,19 +374,20 @@
             margin: 0;
             border-radius: 10px;
             padding: 12px;
-            background: #070c1e;
+            background: #0d1535;
             color: #d8e0ff;
             border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: pre-wrap;
             overflow: auto;
             flex: 1;
             min-height: 0;
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.22);
         }
 
         .pill {
             border-radius: 999px;
-            background: rgba(37, 198, 255, 0.14);
-            border: 1px solid rgba(37, 198, 255, 0.35);
+            background: rgba(61, 230, 255, 0.14);
+            border: 1px solid rgba(61, 230, 255, 0.35);
             color: #b8dcf0;
             padding: 4px 10px;
             display: inline-block;
@@ -379,8 +419,8 @@
             margin-top: 8px;
             padding: 10px;
             border-radius: 10px;
-            border: 1px solid rgba(37, 198, 255, 0.35);
-            background: #0a1229;
+            border: 1px solid rgba(61, 230, 255, 0.35);
+            background: linear-gradient(180deg, #101c45, #0f1b43);
         }
 
         .qr-code-box {
@@ -391,8 +431,8 @@
             display: grid;
             place-items: center;
             border: 1px solid rgba(255, 255, 255, 0.25);
-            background: linear-gradient(180deg, #060d1e 0%, #061026 100%);
-            box-shadow: inset 0 0 24px rgba(37, 198, 255, 0.2);
+            background: linear-gradient(180deg, #111f4a 0%, #101f4c 100%);
+            box-shadow: inset 0 0 24px rgba(61, 230, 255, 0.2);
         }
 
         .qr-code-box:empty {
@@ -463,7 +503,7 @@
         <section class="panel game-shell">
             <div class="hud">
                 <div class="hud-card score">
-                    <div class="hud-label">Puntuacion</div>
+                    <div class="hud-label">Puntuación</div>
                     <div id="hud-score" class="hud-value">0</div>
                 </div>
                 <div class="hud-card timer">
@@ -828,7 +868,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             timer: QUESTION_TIME,
             timerHandle: null,
             waitingNext: false,
+            questionAnswered: false,
             currentQuestion: null,
+            questionVotes: [0, 0, 0, 0],
             classroomCode: "",
             classroomUnit: null,
             baseScoreByMatch: 0
@@ -897,6 +939,15 @@ Usalo como referencia rapida durante la ronda.</pre>
                 clearInterval(state.timerHandle);
                 state.timerHandle = null;
             }
+        }
+
+        function formatAnswerStats(votes, correctIndex) {
+            const total = votes.reduce((acc, qty) => acc + qty, 0);
+            const labels = votes
+                .filter((_, idx) => idx < 4)
+                .map((voteCount, idx) => `${String.fromCharCode(65 + idx)}: ${voteCount}`);
+            const correctCount = votes[correctIndex] || 0;
+            return `${labels.join(" · ")} | Respuestas correctas: ${correctCount} de ${total}`;
         }
 
         function getLeaderboard() {
@@ -971,8 +1022,8 @@ Usalo como referencia rapida durante la ronda.</pre>
                     text: url,
                     width: 170,
                     height: 170,
-                    colorDark: "#25c6ff",
-                    colorLight: "#09112a",
+                    colorDark: "#3de6ff",
+                    colorLight: "#0d1535",
                     correctLevel: QRCode.CorrectLevel.H
                 });
             } catch {
@@ -1026,12 +1077,14 @@ Usalo como referencia rapida durante la ronda.</pre>
             const q = state.questions[state.currentIndex];
             state.currentQuestion = q;
             state.waitingNext = false;
+            state.questionAnswered = false;
+            state.questionVotes = [0, 0, 0, 0];
 
             UI.topicTitle.textContent = UNIT_LABELS[state.selectedUnit];
             UI.questionText.textContent = q.q;
             UI.progressText.textContent = `Pregunta ${state.currentIndex + 1} de ${state.questions.length}. Tiempo limite: ${QUESTION_TIME} segundos`;
             UI.feedback.className = "feedback";
-            UI.feedback.textContent = "Selecciona una opcion.";
+            UI.feedback.textContent = "Selecciona una opción.";
             UI.explain.textContent = "";
 
             renderCode(state.selectedUnit);
@@ -1052,44 +1105,39 @@ Usalo como referencia rapida durante la ronda.</pre>
 
         function answerQuestion(selectedIndex) {
             if (state.waitingNext) return;
-            state.waitingNext = true;
-            stopTimer();
+            if (state.questionAnswered) return;
             const q = state.currentQuestion;
+            if (!q) return;
+            state.questionAnswered = true;
             const isCorrect = selectedIndex === q.correct;
             const optionButtons = [...UI.options.querySelectorAll("button")];
 
+            if (Number.isInteger(selectedIndex) && selectedIndex >= 0 && selectedIndex < state.questionVotes.length) {
+                state.questionVotes[selectedIndex] += 1;
+            }
+
             optionButtons.forEach((btn, idx) => {
                 btn.disabled = true;
-                if (idx === q.correct) btn.classList.add("correct");
-                if (idx === selectedIndex && idx !== q.correct) btn.classList.add("wrong");
+                if (idx === selectedIndex) btn.classList.add("selected");
             });
 
             if (isCorrect) {
                 const gained = 80 + state.timer * 4;
                 state.score += gained;
                 state.baseScoreByMatch += gained;
-                UI.feedback.textContent = `Respuesta correcta! +${gained} puntos`;
-                UI.feedback.classList.add("ok");
+                UI.feedback.textContent = `Respuesta enviada. +${gained} puntos`;
             } else {
                 state.score = Math.max(0, state.score - 15);
-                const correctOption = q.options[q.correct];
                 state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 15);
-                UI.feedback.textContent = `Incorrecta. La respuesta era: ${correctOption}`;
-                UI.feedback.classList.add("bad");
-                UI.explain.textContent = q.explain;
+                UI.feedback.textContent = "Respuesta enviada.";
             }
-
-            state.currentIndex += 1;
-            updateHud();
-            setTimeout(() => {
-                showQuestion();
-            }, 1200);
         }
 
         function onAnswerTimeout() {
             if (state.waitingNext) return;
             state.waitingNext = true;
             const q = state.currentQuestion;
+            if (!q) return;
             const optionButtons = [...UI.options.querySelectorAll("button")];
             optionButtons.forEach((btn, idx) => {
                 btn.disabled = true;
@@ -1097,17 +1145,20 @@ Usalo como referencia rapida durante la ronda.</pre>
             });
 
             stopTimer();
-            UI.feedback.textContent = `Tiempo agotado. La respuesta correcta era: ${q.options[q.correct]}`;
-            UI.feedback.classList.add("bad");
-            UI.explain.textContent = q.explain;
-            state.score = Math.max(0, state.score - 10);
-            state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 10);
+            const correctOption = q.options[q.correct];
+            UI.feedback.textContent = `Respuesta correcta: ${correctOption}`;
+            const statsText = formatAnswerStats(state.questionVotes, q.correct);
+            UI.explain.textContent = `${statsText}. ${q.explain}`;
+            if (!state.questionAnswered) {
+                state.score = Math.max(0, state.score - 10);
+                state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 10);
+            }
 
             state.currentIndex += 1;
             updateHud();
             setTimeout(() => {
                 showQuestion();
-            }, 1500);
+            }, 1600);
         }
 
         function finishMatch() {
