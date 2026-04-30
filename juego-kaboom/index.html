@@ -653,6 +653,7 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
         };
 
         // ========== STATE ==========
+        function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
         let playerName = localStorage.getItem("tfq_name") || "";
         let currentCategory = "u0";
         let score = 0;
@@ -724,7 +725,7 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
             tbody.innerHTML = lb.map((e, i) => {
                 const medal = i === 0 ? "🥇 " : i === 1 ? "🥈 " : i === 2 ? "🥉 " : "";
                 const cls = e.name === highlightName ? 'class="current-player"' : "";
-                return `<tr ${cls}><td>${medal}${i + 1}</td><td>${e.name}</td><td>${e.score}</td><td>${e.levels}</td><td>${e.date}</td></tr>`;
+                return `<tr ${cls}><td>${medal}${i + 1}</td><td>${esc(e.name)}</td><td>${e.score}</td><td>${e.levels}</td><td>${e.date}</td></tr>`;
             }).join("");
         }
 
@@ -847,6 +848,7 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
 
         // ========== GAME SCENES ==========
         k.scene("game", (cat) => {
+            clearInterval(timerInterval);
             currentCategory = cat;
             score = 0;
             lives = 3;
@@ -892,10 +894,9 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
                     "bug",
                     { origX: b.x, range: b.range, speed: b.speed, dir: 1 }
                 ]);
-                // eyes
-                k.add([k.pos(-6, -6), k.circle(3), k.color(255, 255, 255), k.anchor("center"), { owner: bug }]);
-                k.add([k.pos(6, -6), k.circle(3), k.color(255, 255, 255), k.anchor("center"), { owner: bug }]);
-                return bug;
+                const eyeL = k.add([k.pos(b.x - 6, b.y - 6), k.circle(3), k.color(255, 255, 255), k.anchor("center")]);
+                const eyeR = k.add([k.pos(b.x + 6, b.y - 6), k.circle(3), k.color(255, 255, 255), k.anchor("center")]);
+                return { bug, eyes: [eyeL, eyeR] };
             });
 
             // Collectibles
@@ -954,18 +955,14 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
             // Bug movement
             k.onUpdate(() => {
                 if (paused) return;
-                bugObjs.forEach(bug => {
+                bugObjs.forEach(({ bug, eyes }) => {
                     if (!bug) return;
                     bug.move(bug.speed * bug.dir, 0);
                     if (Math.abs(bug.pos.x - bug.origX) > bug.range) {
                         bug.dir *= -1;
                     }
-                    // sync child eyes
-                    bug.children?.forEach(ch => {
-                        if (ch.owner === bug) {
-                            ch.pos = bug.pos.add(ch.pos.x < 0 ? k.vec2(-6, -6) : k.vec2(6, -6));
-                        }
-                    });
+                    eyes[0].pos = bug.pos.add(k.vec2(-6, -6));
+                    eyes[1].pos = bug.pos.add(k.vec2(6, -6));
                 });
             });
 
@@ -1011,6 +1008,8 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
                     gameOver("Se acabo el tiempo");
                 }
             }, 1000);
+
+            k.onSceneLeave(() => { clearInterval(timerInterval); });
         });
 
         function gameOver(reason) {
@@ -1091,7 +1090,7 @@ T = TypeVar(<span class="str">"T"</span>, bound=Entity)
             setOverlay("menu-overlay", true);
         };
 
-        document.querySelectorAll(".cat-btn").forEach(btn => {
+        document.querySelectorAll(".cat-btn:not(.room-cat-btn)").forEach(btn => {
             btn.onclick = () => {
                 const cat = btn.dataset.cat;
                 setOverlay("category-overlay", false);
