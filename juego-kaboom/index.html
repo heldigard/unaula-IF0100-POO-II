@@ -985,6 +985,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             playerId: "",
             remoteMode: false,
             remoteInLobby: false,
+            isHost: false,
             remoteAnswerCounts: [0, 0, 0, 0],
             remoteLeaderboard: [],
         };
@@ -1025,12 +1026,14 @@ Usalo como referencia rapida durante la ronda.</pre>
             const unidad = params.get("unidad");
             const sala = params.get("sala");
             const backend = params.get("backend");
+            const host = params.get("host");
             if (backend) {
                 state.backendUrl = normalizeBackendUrl(backend);
                 if (state.backendUrl && UI.backendUrlInput) {
                     UI.backendUrlInput.value = state.backendUrl;
                 }
             }
+            state.isHost = host === "1";
             if (unidad && SNIPPETS[unidad]) {
                 state.classroomUnit = unidad;
                 state.classroomCode = sala || "";
@@ -1128,7 +1131,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             }
         }
 
-        function buildRoomUrl(unit, code) {
+        function buildRoomUrl(unit, code, host = false) {
             const url = new URL(window.location.href.split("?")[0], window.location.origin);
             if (unit) {
                 url.searchParams.set("unidad", unit);
@@ -1138,6 +1141,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             }
             if (state.backendUrl) {
                 url.searchParams.set("backend", state.backendUrl);
+            }
+            if (host) {
+                url.searchParams.set("host", "1");
             }
             return url.toString();
         }
@@ -1693,6 +1699,7 @@ Usalo como referencia rapida durante la ronda.</pre>
                 const link = buildRoomUrl(unit, code);
                 state.classroomCode = code;
                 state.remoteMode = false;
+                state.isHost = true;
 
                 UI.classroomState.textContent = `Modo local. Comparte este link a la clase (sin puntaje compartido).`;
                 UI.classRoomCode.textContent = code;
@@ -1705,15 +1712,17 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classroomState.textContent = "Creando sala en el servidor...";
             UI.classRoomInfo.style.display = "block";
             state.remoteMode = true;
+            state.isHost = true;
             state.classroomCode = "";
             try {
                 const payload = await createClassroomServer(unit);
                 state.classroomCode = payload.code;
-                const url = buildRoomUrl(unit, state.classroomCode);
+                const url = buildRoomUrl(unit, state.classroomCode, false);
                 UI.classroomState.textContent = "Sala creada. Comparte el link y QR.";
                 UI.classRoomCode.textContent = state.classroomCode;
                 UI.classRoomUrl.value = url;
                 renderRoomQr(url);
+                document.getElementById("btn-start-classroom").textContent = "Iniciar juego";
                 state.remoteLeaderboard = [];
                 if (state.playerId) {
                     state.playerId = "";
@@ -1739,6 +1748,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             state.classroomUnit = null;
             state.classroomCode = "";
             state.playerId = "";
+            state.isHost = false;
             UI.classUnitsContainer.style.display = "grid";
             hideAllOverlays();
             UI.classroomOverlay.classList.add("active");
@@ -1953,7 +1963,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classRoomCode.textContent = state.classroomCode || "Sin código";
             UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
             if (state.backendUrl) {
-                UI.classroomState.textContent = `Escribe tu nombre y pulsa Entrar al juego.`;
+                UI.classroomState.textContent = state.isHost
+                    ? `Pulsa Iniciar juego cuando los estudiantes estén listos.`
+                    : `Escribe tu nombre y pulsa Entrar a sala.`;
                 if (state.classroomCode) {
                     renderRoomQr(UI.classRoomUrl.value);
                 }
@@ -1961,6 +1973,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             if (state.classroomCode) {
                 UI.classUnitsContainer.style.display = "none";
             }
+            document.getElementById("btn-start-classroom").textContent = state.isHost ? "Iniciar juego" : "Entrar a sala";
             UI.classRoomInfo.style.display = "block";
             showOverlay(UI.classroomOverlay);
         }
