@@ -1007,6 +1007,16 @@ Usalo como referencia rapida durante la ronda.</pre>
             return items;
         }
 
+        function shuffleQuestionOptions(question) {
+            const indexedOptions = question.options.map((option, index) => ({ option, index }));
+            shuffle(indexedOptions);
+            return {
+                ...question,
+                options: indexedOptions.map((entry) => entry.option),
+                correct: indexedOptions.findIndex((entry) => entry.index === question.correct),
+            };
+        }
+
         function normalizeBackendUrl(rawValue) {
             if (!rawValue) {
                 return "";
@@ -1676,7 +1686,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             }
             state.selectedUnit = unit;
             const pool = QUESTIONS[unit] || [];
-            const selected = shuffle([...pool]).slice(0, Math.min(pool.length, QUESTIONS_PER_MATCH));
+            const selected = shuffle([...pool])
+                .slice(0, Math.min(pool.length, QUESTIONS_PER_MATCH))
+                .map(shuffleQuestionOptions);
             state.questions = selected;
             state.currentIndex = 0;
             state.score = 0;

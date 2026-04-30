@@ -69,7 +69,10 @@ class Room:
             1,
             min(int(questions_per_match), len(question_bank), MAX_QUESTIONS_PER_MATCH),
         )
-        self.questions = random.sample(question_bank, k=self.questions_per_match)
+        self.questions = [
+            shuffle_question_options(question)
+            for question in random.sample(question_bank, k=self.questions_per_match)
+        ]
         self.created_at = time.time()
         self.current_index = 0
         self.status = "waiting"
@@ -97,6 +100,23 @@ class Room:
         player_id = uuid4().hex[:12]
         self.players[player_id] = PlayerState(player_id, name)
         return player_id
+
+
+def shuffle_question_options(question: Question) -> Question:
+    indexed_options = list(enumerate(question.options))
+    random.shuffle(indexed_options)
+    options = [option for _, option in indexed_options]
+    correct = next(
+        idx
+        for idx, (original_idx, _) in enumerate(indexed_options)
+        if original_idx == question.correct
+    )
+    return Question(
+        q=question.q,
+        options=options,
+        correct=correct,
+        explain=question.explain,
+    )
 
 
 class State:
