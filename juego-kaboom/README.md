@@ -35,6 +35,39 @@ cd IF0100-POO-II/juego-kaboom
 # Abre index.html en cualquier navegador moderno
 ```
 
+## Modo Clase en vivo (servidor + túnel)
+
+1. Levanta el backend local desde la raíz del repo:
+
+```bash
+cd IF0100-POO-II
+python -m pip install -r requirements.txt
+python -m uvicorn backend.main:app --app-dir juego-kaboom --host 0.0.0.0 --port 8000
+```
+
+2. En el frontend (`index.html`) agrega en **Servidor de sala**:
+
+```text
+http://localhost:8000
+```
+
+3. Entra a **Modo Clase**, crea una unidad y comparte el link/QR con tus alumnos.
+
+### Exponer el backend para celulares en otra red (gratis)
+
+- **Cloudflare Tunnel (recomendado)**:
+
+```bash
+cloudflared tunnel --url http://localhost:8000
+```
+
+Copia la URL pública (`https://xxxxx.trycloudflare.com`) y configúrala en el campo `Servidor de sala`.
+
+- También puedes usar `npx localtunnel --port 8000` (gratis, sin registro).  
+  Copia la URL HTTPS que te entrega y configúrala en el campo `Servidor de sala`.
+
+- `ngrok` también funciona, pero revisa sus límites por plan.
+
 ## GitHub Pages
 
 1. En Settings > Pages, rama `main` y carpeta `/ (root)`.
@@ -56,11 +89,14 @@ cd IF0100-POO-II/juego-kaboom
 1. Entra al **Modo Clase** y elige unidad.
 2. Copia el link o enseña el QR generado a los estudiantes.
 3. El link de la sala se ve como `index.html?unidad=uX&sala=XXXX`.
-4. Cada estudiante abre el QR/link y responde desde su móvil como en navegador desktop.
+4. Si la sala es en vivo, también incluye backend:
+
+`index.html?unidad=uX&sala=XXXX&backend=https://xxxxx.trycloudflare.com`
+5. Cada estudiante abre el QR/link y responde desde su móvil como en navegador desktop.
 
 Nota importante:
-- El podio de sala se guarda en el navegador de cada dispositivo (localStorage).
-- Para competir en vivo en muchos dispositivos, usa un método de recolección (por ejemplo que cada alumno comparta su texto de resultado) y consolida en una pantalla de clase.
+- El podio de sala en vivo se sincroniza desde servidor por código de sala.
+- También se mantiene el podio local como respaldo en tu navegador.
 
 ## Reglas de puntaje por ronda
 
@@ -72,6 +108,7 @@ Nota importante:
 
 Ejemplo de link compartible:
 
-`index.html?unidad=u3&sala=AB12`
+`index.html?unidad=u3&sala=AB12`  
+`index.html?unidad=u3&sala=AB12&backend=https://xxxxx.trycloudflare.com`
 
 `unidad` determina la temática y `sala` identifica la sesión de clase.

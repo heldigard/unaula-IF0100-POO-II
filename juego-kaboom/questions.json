@@ -1,0 +1,806 @@
+{
+  "u0": [
+    {
+      "q": "¿Qué imprime este fragmento?\n\nnums = [1, 2, 3]\nprint(nums[1])",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Error IndexError"
+      ],
+      "correct": 1,
+      "explain": "Los índices empiezan en 0, así que nums[1] es 2."
+    },
+    {
+      "q": "¿Cuál de estas opciones obtiene únicamente las teclas de un diccionario?",
+      "options": [
+        "dict.keys()",
+        "dict.values()",
+        "dict.items()",
+        "dict.get()"
+      ],
+      "correct": 0,
+      "explain": "keys() devuelve solo las llaves; values devuelve valores."
+    },
+    {
+      "q": "Para que sirve `try/except`?",
+      "options": [
+        "Manejo de errores",
+        "Bucles",
+        "Condicionales",
+        "Decoradores"
+      ],
+      "correct": 0,
+      "explain": "Sirve para atrapar excepciones y manejar errores sin terminar el programa."
+    },
+    {
+      "q": "¿Qué tipo de dato representa {'a': 1, 'b': 2}?",
+      "options": [
+        "Diccionario",
+        "Lista",
+        "Tupla",
+        "Conjunto"
+      ],
+      "correct": 0,
+      "explain": "Llaves con pares clave-valor definen un diccionario en Python."
+    },
+    {
+      "q": "¿Cómo se define una función en Python?",
+      "options": [
+        "def nombre():",
+        "function nombre()",
+        "func nombre()",
+        "public static void nombre()"
+      ],
+      "correct": 0,
+      "explain": "En Python se usa la palabra clave `def`."
+    },
+    {
+      "q": "¿Cuál es la salida de `print(3 * [1, 2])`?",
+      "options": [
+        "[1, 2, 1, 2, 1, 2]",
+        "[3, 6]",
+        "Error de tipo",
+        "Solo 3"
+      ],
+      "correct": 0,
+      "explain": "El operador * repite los elementos de la lista."
+    },
+    {
+      "q": "¿Qué hace `range(5)`?",
+      "options": [
+        "Genera 0,1,2,3,4",
+        "Genera 1,2,3,4,5",
+        "Genera 5 aleatorios",
+        "Genera un rango vacío"
+      ],
+      "correct": 0,
+      "explain": "Genera enteros desde 0 hasta 4."
+    },
+    {
+      "q": "¿Cuál es inmutable?",
+      "options": [
+        "Tupla",
+        "Lista",
+        "Diccionario",
+        "Conjunto"
+      ],
+      "correct": 0,
+      "explain": "Las tuplas no pueden cambiarse después de creadas."
+    },
+    {
+      "q": "¿Qué imprime este código?\n\nfor i in range(2):\n    print('x')\n    break\nprint('y')",
+      "options": [
+        "x y",
+        "x x",
+        "x",
+        "Nada"
+      ],
+      "correct": 0,
+      "explain": "`break` termina el ciclo temprano, y luego se ejecuta `print('y')` fuera del ciclo."
+    },
+    {
+      "q": "¿Qué estructura permite valores únicos?",
+      "options": [
+        "set",
+        "list",
+        "dict",
+        "tuple"
+      ],
+      "correct": 0,
+      "explain": "Un set no permite valores duplicados."
+    },
+    {
+      "q": "¿Qué hace `for i in range(0, 5, 2)`?",
+      "options": [
+        "0 2 4",
+        "1 3 5",
+        "0 1 2 3 4",
+        "2 4 6"
+      ],
+      "correct": 0,
+      "explain": "Empieza en 0, termina antes de 5, paso 2."
+    },
+    {
+      "q": "¿Cuál es la diferencia entre `None` y `\"\"`?",
+      "options": [
+        "None es ausencia de valor, cadena vacía es texto vacío",
+        "Son equivalentes",
+        "None es False y '' es True",
+        "Ninguna"
+      ],
+      "correct": 0,
+      "explain": "None representa ausencia/valor nulo; '' es una string con longitud cero."
+    }
+  ],
+  "u1": [
+    {
+      "q": "¿Qué método se ejecuta al instanciar una clase?",
+      "options": [
+        "__init__",
+        "__main__",
+        "__call__",
+        "__str__"
+      ],
+      "correct": 0,
+      "explain": "`__init__` se usa para inicializar atributos al crear el objeto."
+    },
+    {
+      "q": "¿Qué expresión es una clase con dataclass?",
+      "options": [
+        "@dataclass class Usuario:",
+        "class Usuario:",
+        "def Usuario():",
+        "interface Usuario()"
+      ],
+      "correct": 0,
+      "explain": "Con `@dataclass`, Python genera utilidades como __init__ automáticamente."
+    },
+    {
+      "q": "¿Qué indica `self` en métodos de instancia?",
+      "options": [
+        "La instancia actual",
+        "Nombre del archivo",
+        "Variable global",
+        "Tipo de retorno"
+      ],
+      "correct": 0,
+      "explain": "self apunta a la instancia sobre la que se ejecuta el método."
+    },
+    {
+      "q": "¿Qué decorador convierte un método en una propiedad?",
+      "options": [
+        "@property",
+        "@classmethod",
+        "@staticmethod",
+        "@abstractmethod"
+      ],
+      "correct": 0,
+      "explain": "`@property` permite usar `obj.prop` en lugar de `obj.prop()`."
+    },
+    {
+      "q": "Si se usa `@staticmethod`, el método...",
+      "options": [
+        "No recibe self ni cls",
+        "Recibe self",
+        "Recibe cls",
+        "Recibe objeto y clase"
+      ],
+      "correct": 0,
+      "explain": "Un método estático no depende de la instancia ni de la clase."
+    },
+    {
+      "q": "¿Qué diferencia hay entre `_atributo` y `__atributo`?",
+      "options": [
+        "convención privada y name mangling",
+        "sin diferencia",
+        "uno es constante y otro no",
+        "solo estética"
+      ],
+      "correct": 0,
+      "explain": "Con doble guion bajo Python aplica name mangling."
+    },
+    {
+      "q": "¿Qué hace `super()`?",
+      "options": [
+        "Llama al método de la clase padre",
+        "Importa módulos",
+        "Elimina la instancia",
+        "Crea una nueva clase"
+      ],
+      "correct": 0,
+      "explain": "Se usa para reusar inicialización y métodos heredados."
+    },
+    {
+      "q": "¿Qué patrón sugiere reemplazar la herencia con composición?",
+      "options": [
+        "\"tiene un\" en lugar de \"es un\"",
+        "\"es un\" en lugar de \"tiene un\"",
+        "métodos estáticos",
+        "múltiples módulos"
+      ],
+      "correct": 0,
+      "explain": "Composición modela relaciones de colaboración mejor que jerarquías rígidas."
+    },
+    {
+      "q": "¿Qué método mágico devuelve representación amigable?",
+      "options": [
+        "__str__",
+        "__repr__",
+        "__eq__",
+        "__len__"
+      ],
+      "correct": 0,
+      "explain": "`__str__` es para representación legible por humanos."
+    },
+    {
+      "q": "¿Qué método mágico define longitud?",
+      "options": [
+        "__len__()",
+        "__bool__()",
+        "__iter__()",
+        "__next__()"
+      ],
+      "correct": 0,
+      "explain": "El protocolo de secuencia usa `__len__`."
+    },
+    {
+      "q": "¿Qué define una clase abstracta?",
+      "options": [
+        "Hereda de ABC y usa @abstractmethod",
+        "Usa `final`",
+        "Solo define métodos privados",
+        "No usa `class`"
+      ],
+      "correct": 0,
+      "explain": "Con ABC se definen métodos obligatorios en subclases."
+    },
+    {
+      "q": "¿Cuál es el objetivo principal de un Singleton?",
+      "options": [
+        "Una sola instancia global",
+        "Objetos inmutables",
+        "Múltiples fábricas",
+        "Evitar herencia"
+      ],
+      "correct": 0,
+      "explain": "Singleton limita la creación de una única instancia de la clase."
+    }
+  ],
+  "u2": [
+    {
+      "q": "En TDD, el ciclo inicia normalmente con:",
+      "options": [
+        "Test que falla",
+        "Refactor final",
+        "Deploy en producción",
+        "Diseño de UI"
+      ],
+      "correct": 0,
+      "explain": "Red-Green-Refactor: primero test fallido y luego implementación."
+    },
+    {
+      "q": "En el formato BDD, qué significa `Given`?",
+      "options": [
+        "El contexto inicial",
+        "La acción",
+        "La aserción",
+        "La excepción"
+      ],
+      "correct": 0,
+      "explain": "Given define precondiciones del escenario."
+    },
+    {
+      "q": "¿Qué es una Value Object?",
+      "options": [
+        "Objeto inmutable comparado por valor",
+        "Objeto con ID autogenerado",
+        "Clase abstracta",
+        "Controlador de API"
+      ],
+      "correct": 0,
+      "explain": "Se comparan por sus valores y no por identidad."
+    },
+    {
+      "q": "En pytest, un fixture es...",
+      "options": [
+        "Setup reutilizable por test",
+        "Un comando de la CLI",
+        "Un plugin de logging",
+        "Un marcador de error"
+      ],
+      "correct": 0,
+      "explain": "Centraliza preparación y teardown de casos de prueba."
+    },
+    {
+      "q": "¿Qué significa Clean Code con función `assert` clara?",
+      "options": [
+        "Nombre legible + expectativa simple",
+        "Más líneas",
+        "No manejar excepciones",
+        "Más imports"
+      ],
+      "correct": 0,
+      "explain": "Las aserciones claras documentan la intención del test."
+    },
+    {
+      "q": "La S de SOLID significa...",
+      "options": [
+        "Single Responsibility",
+        "Structured Output",
+        "Static Output",
+        "Software Oriented"
+      ],
+      "correct": 0,
+      "explain": "Una clase o función debe tener una sola responsabilidad."
+    },
+    {
+      "q": "En DDD, una entidad se distingue por:",
+      "options": [
+        "Identidad",
+        "Sólo por valor",
+        "No tener estado",
+        "No relacionarse con otras"
+      ],
+      "correct": 0,
+      "explain": "Las entidades cambian su estado y se identifican por su ID."
+    },
+    {
+      "q": "¿Qué distingue un Agregado (`Aggregate`)?",
+      "options": [
+        "Tiene una raíz y reglas de consistencia",
+        "Siempre es una lista",
+        "No tiene relaciones",
+        "No puede cambiar"
+      ],
+      "correct": 0,
+      "explain": "El aggregate boundary agrupa entidades y value objects coherentes."
+    },
+    {
+      "q": "En pytest, `@pytest.mark.parametrize` permite...",
+      "options": [
+        "Probar varias entradas en un mismo test",
+        "Repetir sin asserts",
+        "Desactivar fixtures",
+        "Cambiar la versión de pytest"
+      ],
+      "correct": 0,
+      "explain": "Evita duplicar tests para casos similares."
+    },
+    {
+      "q": "¿Qué es un mock en pruebas?",
+      "options": [
+        "Objeto simulado para aislar dependencias",
+        "Dato real de base de datos",
+        "Error de red",
+        "Módulo estándar"
+      ],
+      "correct": 0,
+      "explain": "Mock simula comportamiento externo para pruebas más rápidas."
+    },
+    {
+      "q": "El enfoque AAA (Arrange-Act-Assert) implica:",
+      "options": [
+        "Preparar, ejecutar y verificar",
+        "Actualizar, ajustar y auditar",
+        "Añadir, aplicar y arreglar",
+        "Autenticar, autorizar, administrar"
+      ],
+      "correct": 0,
+      "explain": "Estandariza la estructura de pruebas unitarias."
+    },
+    {
+      "q": "¿Qué problema resuelve `scope='function'` en fixture?",
+      "options": [
+        "Crea instancia nueva por test",
+        "Comparte estado entre módulos",
+        "Desactiva limpieza",
+        "Ejecuta antes de todo el proyecto"
+      ],
+      "correct": 0,
+      "explain": "Por defecto, el fixture se crea por test y evita estado compartido."
+    }
+  ],
+  "u3": [
+    {
+      "q": "¿Qué hace `@app.get('/users/{user_id}')`?",
+      "options": [
+        "Define endpoint GET con parámetro path",
+        "Valida JSON",
+        "Inicia servidor",
+        "Conecta Base de datos"
+      ],
+      "correct": 0,
+      "explain": "Expone una ruta GET con `user_id` como parámetro dinámico."
+    },
+    {
+      "q": "Pydantic usa...",
+      "options": [
+        "BaseModel",
+        "BaseController",
+        "BaseSchema",
+        "BaseEntity"
+      ],
+      "correct": 0,
+      "explain": "BaseModel valida y serializa cuerpos y respuestas."
+    },
+    {
+      "q": "¿Qué hace `Depends()`?",
+      "options": [
+        "Inyección de dependencias",
+        "Transforma archivos",
+        "Activa CORS",
+        "Crea tablas"
+      ],
+      "correct": 0,
+      "explain": "Resuelve servicios y recursos reutilizables por endpoint."
+    },
+    {
+      "q": "¿Qué función devuelve respuestas de error en FastAPI?",
+      "options": [
+        "HTTPException",
+        "BadRequest",
+        "ValueError",
+        "KeyError"
+      ],
+      "correct": 0,
+      "explain": "HTTPException permite controlar status y detalle explícito."
+    },
+    {
+      "q": "¿Qué agrega CORS?",
+      "options": [
+        "Permitir llamadas cross-origin",
+        "Agregar encriptación",
+        "Hacer consultas SQL",
+        "Crear usuarios"
+      ],
+      "correct": 0,
+      "explain": "CORS habilita consumo desde otros dominios."
+    },
+    {
+      "q": "¿Qué significa OAuth2PasswordBearer?",
+      "options": [
+        "Extrae token de Authorization Bearer",
+        "Valida base64",
+        "Genera claves públicas",
+        "Hace login con Google"
+      ],
+      "correct": 0,
+      "explain": "Se usa para proteger endpoints con token JWT."
+    },
+    {
+      "q": "Para respuestas de creación, suele usar:",
+      "options": [
+        "201 Created",
+        "101 Continue",
+        "301 Redirect",
+        "500 Internal Error"
+      ],
+      "correct": 0,
+      "explain": "`201` indica recurso creado correctamente."
+    },
+    {
+      "q": "¿Qué permite `async def` en FastAPI?",
+      "options": [
+        "Programación concurrente de I/O",
+        "Cambiar base de datos",
+        "Reducir tipos",
+        "Desactivar CORS"
+      ],
+      "correct": 0,
+      "explain": "Útil para operaciones con await sobre llamadas externas."
+    },
+    {
+      "q": "¿Qué hace `response_model` en un endpoint?",
+      "options": [
+        "Forzar forma de respuesta",
+        "Reemplazar ruta",
+        "Configurar base de datos",
+        "Activar autenticación"
+      ],
+      "correct": 0,
+      "explain": "Valida y serializa la salida según un modelo."
+    },
+    {
+      "q": "¿Qué herramienta facilita pruebas de endpoint?",
+      "options": [
+        "TestClient",
+        "curl",
+        "pytest.mark",
+        "migrations"
+      ],
+      "correct": 0,
+      "explain": "TestClient ejecuta peticiones contra la app sin levantar servidor real."
+    },
+    {
+      "q": "¿Qué hace un `middleware`?",
+      "options": [
+        "Intercepta requests/responses",
+        "Sólo valida modelos",
+        "Crea tablas SQL",
+        "Aumenta RAM"
+      ],
+      "correct": 0,
+      "explain": "Permite lógica transversal como logs o headers globales."
+    },
+    {
+      "q": "¿Qué retorna por defecto FastAPI al decorar una ruta async?",
+      "options": [
+        "Status 200",
+        "Status 500",
+        "Status 302",
+        "Status 404"
+      ],
+      "correct": 0,
+      "explain": "Si no hay error, retorna 200 OK con el body."
+    }
+  ],
+  "u4": [
+    {
+      "q": "SQLAlchemy 2.0 se usa principalmente como:",
+      "options": [
+        "ORM",
+        "Servidor DNS",
+        "Proxy inverso",
+        "Front-end"
+      ],
+      "correct": 0,
+      "explain": "Mapea objetos Python a tablas SQL y viceversa."
+    },
+    {
+      "q": "¿Qué define `relationship()`?",
+      "options": [
+        "Navegación entre entidades",
+        "Índice único",
+        "Campo único",
+        "Trigger de BD"
+      ],
+      "correct": 0,
+      "explain": "Define asociaciones entre tablas en modelos."
+    },
+    {
+      "q": "Para relacionar tablas `Task` y `User`, qué usamos?",
+      "options": [
+        "ForeignKey y relationship",
+        "extends",
+        "classmethod",
+        "Depends"
+      ],
+      "correct": 0,
+      "explain": "ForeignKey guarda la referencia y relationship navega objetos."
+    },
+    {
+      "q": "¿Qué significa `nullable=False`?",
+      "options": [
+        "Columna obligatoria",
+        "Permite NULL",
+        "Es clave primaria",
+        "Es JSON"
+      ],
+      "correct": 0,
+      "explain": "Impide nulos en esa columna."
+    },
+    {
+      "q": "¿Qué hace `session.commit()`?",
+      "options": [
+        "Persiste transacción",
+        "Cierra sesión",
+        "Limpia cache",
+        "Crea índices"
+      ],
+      "correct": 0,
+      "explain": "Confirma cambios pendientes hacia la base de datos."
+    },
+    {
+      "q": "¿Qué hace `session.rollback()`?",
+      "options": [
+        "Revierte cambios pendientes",
+        "Reintenta commit",
+        "Crea backup",
+        "Convierte a JSON"
+      ],
+      "correct": 0,
+      "explain": "Se usa al fallar operaciones para deshacer transacciones."
+    },
+    {
+      "q": "Alembic se usa para:",
+      "options": [
+        "Migraciones",
+        "Autenticación",
+        "Caching",
+        "Renderizado"
+      ],
+      "correct": 0,
+      "explain": "Controla cambios incrementales de esquema en entornos."
+    },
+    {
+      "q": "`unique=True` en una columna garantiza:",
+      "options": [
+        "No duplicación de valor",
+        "Acepta duplicados",
+        "No permite índices",
+        "Obliga foreign key"
+      ],
+      "correct": 0,
+      "explain": "Dos filas no pueden tener el mismo valor en esa columna."
+    },
+    {
+      "q": "¿Qué consulta trae tareas del usuario ordenadas?",
+      "options": [
+        "order_by(desc(User.name))",
+        "group_by(name)",
+        "count(name)",
+        "update(table)"
+      ],
+      "correct": 0,
+      "explain": "order_by define orden explícito en resultados."
+    },
+    {
+      "q": "Índice compuesto se usa para:",
+      "options": [
+        "Acelerar búsquedas por múltiples columnas",
+        "Reemplazar clave primaria",
+        "Eliminar columnas",
+        "Evitar joins"
+      ],
+      "correct": 0,
+      "explain": "Mejora rendimiento en filtros combinados."
+    },
+    {
+      "q": "¿Qué mejora rendimiento en relaciones N+1?",
+      "options": [
+        "joinedload / eager loading",
+        "más commit",
+        "más índices primarios",
+        "más try/except"
+      ],
+      "correct": 0,
+      "explain": "Cargar datos relacionados en consulta reduce round trips."
+    },
+    {
+      "q": "¿Qué define una tabla con `metadata.create_all()`?",
+      "options": [
+        "Crea tablas si no existen",
+        "Inserta datos",
+        "Borra registros",
+        "Crea índices de código"
+      ],
+      "correct": 0,
+      "explain": "Es útil en entornos de prueba para bootstrap inicial."
+    }
+  ],
+  "u5": [
+    {
+      "q": "Clean Architecture ordena capas con dependencia hacia:",
+      "options": [
+        "Adentro",
+        "Cualquier lado",
+        "Solo UI",
+        "Solo Infraestructura"
+      ],
+      "correct": 0,
+      "explain": "La regla de dependencia siempre apunta al centro del dominio."
+    },
+    {
+      "q": "¿Qué capa expone casos de uso?",
+      "options": [
+        "Application/Use Cases",
+        "Infrastructure",
+        "UI",
+        "Framework"
+      ],
+      "correct": 0,
+      "explain": "La capa de aplicación orquesta reglas del negocio."
+    },
+    {
+      "q": "¿Qué es un DTO?",
+      "options": [
+        "Objeto de transferencia de datos",
+        "Clase abstracta",
+        "Patrón ORM",
+        "Middleware"
+      ],
+      "correct": 0,
+      "explain": "Sirve para mover datos entre capas sin lógica compleja."
+    },
+    {
+      "q": "Repository Pattern busca:",
+      "options": [
+        "Desacoplar dominio de persistencia",
+        "Mejorar CSS",
+        "Eliminar validaciones",
+        "Aumentar endpoints"
+      ],
+      "correct": 0,
+      "explain": "Aísla consultas y escritura de datos de la lógica de negocio."
+    },
+    {
+      "q": "Dependency Injection significa:",
+      "options": [
+        "Inyectar dependencias desde afuera",
+        "Crear todo en constructores",
+        "Usar variables globales",
+        "Evitar interfaces"
+      ],
+      "correct": 0,
+      "explain": "Permite intercambiar implementaciones fácilmente."
+    },
+    {
+      "q": "Service Layer típicamente:",
+      "options": [
+        "Coordina operaciones de negocio",
+        "Renderiza templates",
+        "Configura DB",
+        "Define ORM base"
+      ],
+      "correct": 0,
+      "explain": "Implementa reglas transaccionales y casos de uso específicos."
+    },
+    {
+      "q": "JWT con expiración y firma permite:",
+      "options": [
+        "Autenticación stateless",
+        "Sincronización de archivos",
+        "Migraciones automáticas",
+        "Autocompletado"
+      ],
+      "correct": 0,
+      "explain": "El token se verifica en cada request sin sesión en servidor."
+    },
+    {
+      "q": "¿Qué es serialización?",
+      "options": [
+        "Convertir objeto a JSON",
+        "Compilar código",
+        "Hacer un commit",
+        "Indexar base de datos"
+      ],
+      "correct": 0,
+      "explain": "Convierte estructuras para transporte/transición de interfaces."
+    },
+    {
+      "q": "¿Qué aporta paginación en API?",
+      "options": [
+        "Limitar tamaño de respuesta",
+        "Eliminar filtros",
+        "Ocultar errores",
+        "Aumentar payload"
+      ],
+      "correct": 0,
+      "explain": "Ayuda rendimiento y experiencia en listados grandes."
+    },
+    {
+      "q": "Al implementar API robusta conviene manejar:",
+      "options": [
+        "Errores de dominio y boundary de límites",
+        "Solo mensajes de éxito",
+        "Cero validaciones",
+        "Sin pruebas"
+      ],
+      "correct": 0,
+      "explain": "El manejo explícito de excepciones mejora mantenibilidad."
+    },
+    {
+      "q": "La regla DRY significa:",
+      "options": [
+        "No repetir lógica",
+        "Duplicar para aprender",
+        "No usar funciones",
+        "Reescribir siempre"
+      ],
+      "correct": 0,
+      "explain": "Evita duplicación y facilita cambios."
+    },
+    {
+      "q": "¿Qué diferencia hay entre Use Case y DTO?",
+      "options": [
+        "Use Case orquesta, DTO solo transporta",
+        "Son lo mismo",
+        "DTO guarda conexión",
+        "Use Case guarda persistencia"
+      ],
+      "correct": 0,
+      "explain": "Use Case coordina flujo; DTO estructura datos entre fronteras."
+    }
+  ]
+}

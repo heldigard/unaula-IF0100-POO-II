@@ -619,18 +619,22 @@
                 </div>
             </div>
 
-            <div id="menu-overlay" class="overlay active">
-                <h2>Kaboom Clase</h2>
-                <p class="muted">Preguntas con limite de tiempo por pregunta. Ideal para clase o repaso rapido.</p>
-                <p>
-                    Nombre de jugador:
-                    <input id="player-name" type="text" maxlength="20" placeholder="Tu nombre" />
-                </p>
-                <div class="btn-row">
-                    <button id="btn-play" class="btn">Jugar</button>
-                    <button id="btn-classroom" class="btn secondary">Modo Clase</button>
-                    <button id="btn-leaderboard" class="btn secondary">Ver Podio</button>
-                </div>
+                <div id="menu-overlay" class="overlay active">
+                    <h2>Kaboom Clase</h2>
+                    <p class="muted">Preguntas con limite de tiempo por pregunta. Ideal para clase o repaso rapido.</p>
+                    <p>
+                        Nombre de jugador:
+                        <input id="player-name" type="text" maxlength="20" placeholder="Tu nombre" />
+                    </p>
+                    <p>
+                        Servidor de sala (opcional):
+                        <input id="backend-url" type="text" placeholder="http://localhost:8000 o https://xxxxx.trycloudflare.com" />
+                    </p>
+                    <div class="btn-row">
+                        <button id="btn-play" class="btn">Jugar</button>
+                        <button id="btn-classroom" class="btn secondary">Modo Clase</button>
+                        <button id="btn-leaderboard" class="btn secondary">Ver Podio</button>
+                    </div>
                 <p class="small muted">Configura tiempo por pregunta y unidad en pantallas siguientes.</p>
             </div>
 
@@ -711,6 +715,7 @@ Usalo como referencia rapida durante la ronda.</pre>
         const QUESTION_TIME = 20;
         const QUESTIONS_PER_MATCH = 10;
         const STORAGE_PREFIX = "kaboom-classroom";
+        const POLL_INTERVAL_MS = 1200;
 
         const QUESTIONS = {
             u0: [
@@ -935,6 +940,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             classRoomQr: document.getElementById("class-room-qr"),
             classroomState: document.getElementById("classroom-state"),
             playerName: document.getElementById("player-name"),
+            backendUrlInput: document.getElementById("backend-url"),
             resultScore: document.getElementById("result-score"),
             resultTitle: document.getElementById("result-title"),
             resultMsg: document.getElementById("result-msg"),
@@ -947,23 +953,33 @@ Usalo como referencia rapida durante la ronda.</pre>
         const state = {
             playerName: localStorage.getItem(`${STORAGE_PREFIX}.name`) || "",
             selectedUnit: "u0",
+            backendUrl: localStorage.getItem(`${STORAGE_PREFIX}.backend`) || "",
             questions: [],
             currentIndex: 0,
             score: 0,
             timer: QUESTION_TIME,
             timerHandle: null,
+            remotePollHandle: null,
             waitingNext: false,
             questionAnswered: false,
             currentQuestion: null,
             questionVotes: [0, 0, 0, 0],
             classroomCode: "",
             classroomUnit: null,
-            baseScoreByMatch: 0
+            baseScoreByMatch: 0,
+            playerId: "",
+            remoteMode: false,
+            remoteInLobby: false,
+            remoteAnswerCounts: [0, 0, 0, 0],
+            remoteLeaderboard: [],
         };
 
         state.playerName = state.playerName.trim();
         if (state.playerName) {
             UI.playerName.value = state.playerName;
+        }
+        if (state.backendUrl) {
+            UI.backendUrlInput.value = state.backendUrl;
         }
 
         function shuffle(items) {
@@ -974,13 +990,339 @@ Usalo como referencia rapida durante la ronda.</pre>
             return items;
         }
 
+        function normalizeBackendUrl(rawValue) {
+            if (!rawValue) {
+                return "";
+            }
+            const trimmed = rawValue.trim();
+            if (!trimmed) {
+                return "";
+            }
+            if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+                return trimmed.replace(/\/$/, "");
+            }
+            return `https://${trimmed}`.replace(/\/$/, "");
+        }
+
         function parseRoomFromUrl() {
             const params = new URLSearchParams(window.location.search);
             const unidad = params.get("unidad");
             const sala = params.get("sala");
+            const backend = params.get("backend");
             if (unidad && SNIPPETS[unidad]) {
                 state.classroomUnit = unidad;
                 state.classroomCode = sala || "";
+                state.backendUrl = normalizeBackendUrl(backend || state.backendUrl);
+                if (state.backendUrl && UI.backendUrlInput) {
+                    UI.backendUrlInput.value = state.backendUrl;
+                }
+                if (state.backendUrl && state.classroomCode) {
+                    state.remoteMode = true;
+                    state.remoteInLobby = true;
+                }
+            }
+        }
+
+        function setBackendUrlFromInput() {
+            const normalized = normalizeBackendUrl(UI.backendUrlInput.value);
+            state.backendUrl = normalized;
+            localStorage.setItem(`${STORAGE_PREFIX}.backend`, normalized);
+            UI.backendUrlInput.value = normalized;
+        }
+
+        function getBackendBase() {
+            return normalizeBackendUrl(state.backendUrl);
+        }
+
+        async function apiFetch(path, options = {}) {
+            const base = getBackendBase();
+            if (!base) {
+                throw new Error("Backend no configurado");
+            }
+            const res = await fetch(`${base}${path}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(options.headers || {}),
+                },
+                ...options,
+            });
+            if (!res.ok) {
+                let detail = `${res.status} ${res.statusText}`;
+                try {
+                    const body = await res.json();
+                    if (body && body.detail) {
+                        detail = body.detail;
+                    }
+                } catch {
+                    // ignore non-json body
+                }
+                throw new Error(detail);
+            }
+            return res.json();
+        }
+
+        async function createClassroomServer(unit) {
+            return apiFetch("/api/rooms", {
+                method: "POST",
+                body: JSON.stringify({
+                    unit,
+                    question_time: QUESTION_TIME,
+                    questions_per_match: QUESTIONS_PER_MATCH,
+                }),
+            });
+        }
+
+        async function joinClassroomServer(code) {
+            return apiFetch(`/api/rooms/${code}/join`, {
+                method: "POST",
+                body: JSON.stringify({ player_name: state.playerName || "Anónimo" }),
+            });
+        }
+
+        async function startClassroomServer(code) {
+            return apiFetch(`/api/rooms/${code}/start`, {
+                method: "POST",
+                body: JSON.stringify({}),
+            });
+        }
+
+        async function submitClassroomAnswer(code, selectedIndex) {
+            return apiFetch(`/api/rooms/${code}/answer`, {
+                method: "POST",
+                body: JSON.stringify({
+                    player_id: state.playerId,
+                    selected_option: selectedIndex,
+                }),
+            });
+        }
+
+        async function pollClassroomState() {
+            if (!state.classroomCode || !state.remoteMode || !state.playerId) {
+                return null;
+            }
+            const base = getBackendBase();
+            if (!base) {
+                return null;
+            }
+            const query = `?player_id=${encodeURIComponent(state.playerId)}`;
+            const payload = await apiFetch(`/api/rooms/${state.classroomCode}${query}`, {
+                method: "GET",
+            });
+            return payload;
+        }
+
+        function stopRemotePolling() {
+            if (state.remotePollHandle) {
+                clearInterval(state.remotePollHandle);
+                state.remotePollHandle = null;
+            }
+        }
+
+        function buildRoomUrl(unit, code) {
+            const url = new URL(window.location.href.split("?")[0], window.location.origin);
+            if (unit) {
+                url.searchParams.set("unidad", unit);
+            }
+            if (code) {
+                url.searchParams.set("sala", code);
+            }
+            if (state.backendUrl) {
+                url.searchParams.set("backend", state.backendUrl);
+            }
+            return url.toString();
+        }
+
+        async function startRemoteGame() {
+            if (!state.remoteMode || !state.playerId || !state.classroomCode) {
+                return;
+            }
+            try {
+                await startClassroomServer(state.classroomCode);
+            } catch {
+                // ignore: maybe started already
+            }
+            await syncWithServer();
+            stopRemotePolling();
+            state.remotePollHandle = setInterval(syncWithServer, POLL_INTERVAL_MS);
+            state.remotePollHandle && syncWithServer();
+        }
+
+        async function syncWithServer() {
+            try {
+                const payload = await pollClassroomState();
+                if (!payload) {
+                    return;
+                }
+                state.remoteLeaderboard = payload.leaderboard || [];
+                state.score = payload.my_score || 0;
+                renderRemoteMatch(payload);
+            } catch {
+                state.classroomState.textContent = "No se pudo conectar con el servidor de sala.";
+            }
+        }
+
+        function disableOptionsForState(payload) {
+            const buttons = [...UI.options.querySelectorAll("button")];
+            buttons.forEach((btn) => {
+                btn.disabled = true;
+                btn.classList.remove("selected");
+            });
+            if (payload.status === "active" && payload.has_answered && payload.my_answer !== null) {
+                const chosen = Number(payload.my_answer);
+                if (buttons[chosen]) {
+                    buttons[chosen].classList.add("selected");
+                }
+            }
+        }
+
+        function renderRemoteQuestion(payload) {
+            const q = payload.question;
+            if (!q) {
+                return;
+            }
+            state.currentQuestion = {
+                q: q.text,
+                options: q.options,
+                correct: q.correct || 0,
+                explain: q.explain || "",
+            };
+            UI.topicTitle.textContent = UNIT_LABELS[state.classroomUnit] || "Sala en curso";
+            UI.questionText.textContent = q.text;
+            UI.progressText.textContent = `Pregunta ${payload.question_index + 1} de ${payload.total_questions}. Tiempo limite: ${payload.question_time} segundos`;
+            UI.feedback.className = "feedback";
+            UI.feedback.textContent = payload.has_answered ? "Respuesta enviada. Espera la revelación." : "Selecciona una opción.";
+            UI.explain.textContent = "";
+            UI.progressFill.style.width = `${Math.max(payload.time_left, 0) / payload.question_time * 100}%`;
+
+            UI.options.innerHTML = "";
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                const letter = String.fromCharCode(65 + idx);
+                btn.className = `option-btn opt-${idx}`;
+                btn.innerHTML = `<span class=\"option-key\">${letter}</span><span class=\"option-text\">${idx + 1}. ${opt}</span>`;
+                if (payload.status === "active" && !payload.has_answered) {
+                    btn.onclick = () => submitRemoteAnswerClick(idx);
+                } else {
+                    btn.disabled = true;
+                }
+                UI.options.appendChild(btn);
+            });
+
+            if (payload.has_answered && payload.my_answer !== null && payload.my_answer >= 0 && payload.my_answer < q.options.length) {
+                const selectedBtn = [...UI.options.querySelectorAll("button")][payload.my_answer];
+                if (selectedBtn) selectedBtn.classList.add("selected");
+            }
+
+            hideAllOverlays();
+            UI.feedback.className = "feedback";
+            UI.hudProgressText.textContent = `${payload.question_index}/${payload.total_questions}`;
+            UI.hudTime.textContent = payload.time_left;
+            updateHudScoreOnly();
+        }
+
+        function updateHudScoreOnly() {
+            UI.hudScore.textContent = String(state.score);
+            UI.hudProgressText.textContent = `${state.currentIndex}/${state.questions.length || 0}`;
+        }
+
+        function renderRemoteReveal(payload) {
+            const q = payload.question;
+            if (!q) {
+                return;
+            }
+            renderRemoteQuestion(payload);
+            const optionButtons = [...UI.options.querySelectorAll("button")];
+            optionButtons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) {
+                    btn.classList.add("correct");
+                }
+            });
+
+            const counts = payload.answer_counts || [0, 0, 0, 0];
+            state.remoteAnswerCounts = counts;
+            UI.feedback.textContent = `Respuesta correcta: ${q.options[q.correct] || "No definida"}`;
+            renderAnswerStats(counts, q.correct, q.explain || "");
+            UI.hudTime.textContent = "0";
+            UI.progressFill.style.width = "0%";
+            const total = counts.reduce((acc, value) => acc + value, 0);
+            UI.progressText.textContent = `Respuesta revelada · ${total} respuestas recibidas`;
+        }
+
+        function renderRemoteFinished(payload) {
+            stopRemotePolling();
+            hideAllOverlays();
+            UI.resultOverlay.classList.add("active");
+            UI.resultTitle.textContent = `Unidad: ${UNIT_LABELS[state.classroomUnit] || "Sala"}`;
+            UI.resultScore.textContent = `Puntuación final: ${payload.my_score || 0}`;
+            UI.resultMsg.textContent = `Sala ${state.classroomCode}. Puntaje total: ${payload.my_score || 0}`;
+            if (state.classroomCode) {
+                saveLeaderboard({
+                    name: state.playerName || "Anónimo",
+                    unit: state.classroomUnit || "u0",
+                    score: payload.my_score || 0,
+                    date: new Date().toLocaleDateString(),
+                    maxScore: payload.total_questions * 120,
+                    room: state.classroomCode,
+                });
+            }
+            UI.explain.innerHTML = "";
+            state.baseScoreByMatch = payload.my_score || 0;
+            state.currentIndex = payload.total_questions || 0;
+            state.questions = [];
+            updateHud();
+        }
+
+        function renderRemoteMatch(payload) {
+            if (!payload) {
+                return;
+            }
+
+            if (payload.status === "waiting") {
+                state.remoteInLobby = true;
+                UI.classroomState.textContent = `Sala activa. Comparte el link. Jugadores: ${payload.player_count || 0}`;
+                UI.classroomCode.textContent = state.classroomCode;
+                hideAllOverlays();
+                UI.classroomOverlay.classList.add("active");
+                UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
+                renderRoomQr(UI.classRoomUrl.value);
+                return;
+            }
+
+            state.remoteInLobby = false;
+            state.currentIndex = payload.question_index;
+            state.questions = Array.from({ length: payload.total_questions }, () => ({}));
+            state.timer = payload.time_left || 0;
+            if (payload.status === "active") {
+                renderRemoteQuestion(payload);
+            } else if (payload.status === "reveal") {
+                renderRemoteReveal(payload);
+            } else if (payload.status === "finished") {
+                renderRemoteFinished(payload);
+            }
+            updateHud();
+        }
+
+        async function submitRemoteAnswerClick(selectedIndex) {
+            if (!state.remoteMode || !state.classroomCode || !state.playerId) {
+                return;
+            }
+            const optionButtons = [...UI.options.querySelectorAll("button")];
+            optionButtons.forEach((btn, idx) => {
+                btn.disabled = idx !== selectedIndex;
+            });
+            const clicked = optionButtons[selectedIndex];
+            if (clicked) clicked.classList.add("selected");
+            try {
+                const response = await submitClassroomAnswer(state.classroomCode, selectedIndex);
+                if (response) {
+                    state.score = response.my_score || state.score;
+                    renderRemoteMatch(response);
+                    UI.feedback.textContent = "Respuesta enviada.";
+                }
+            } catch {
+                UI.feedback.textContent = "No se pudo enviar la respuesta, intenta de nuevo.";
+                disableOptionsForState({ status: "active", has_answered: false, my_answer: null });
             }
         }
 
@@ -1004,6 +1346,9 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function startTimer() {
+            if (state.remoteMode) {
+                return;
+            }
             stopTimer();
             state.timer = QUESTION_TIME;
             UI.hudTime.textContent = state.timer;
@@ -1061,6 +1406,14 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function getLeaderboard() {
+            if (state.remoteMode && state.remoteLeaderboard && state.remoteLeaderboard.length) {
+                return state.remoteLeaderboard.map((row) => ({
+                    ...row,
+                    room: state.classroomCode || row.room || "Sala",
+                    date: row.date || new Date().toLocaleDateString(),
+                    maxScore: 0,
+                }));
+            }
             const raw = localStorage.getItem(`${STORAGE_PREFIX}.leaderboard`);
             if (!raw) {
                 return [];
@@ -1166,7 +1519,9 @@ Usalo como referencia rapida durante la ronda.</pre>
                 classBtn.classList.remove("unit-btn");
                 classBtn.classList.add("unit-btn");
                 classBtn.onclick = () => {
-                    createClassroomRoom(key);
+                    createClassroomRoom(key).catch((error) => {
+                        UI.classroomState.textContent = error?.message || "No se pudo crear la sala";
+                    });
                 };
                 UI.classUnitsContainer.appendChild(classBtn);
             });
@@ -1179,6 +1534,9 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function showQuestion() {
+            if (state.remoteMode) {
+                return;
+            }
             if (state.currentIndex >= state.questions.length) {
                 finishMatch();
                 return;
@@ -1214,6 +1572,10 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function answerQuestion(selectedIndex) {
+            if (state.remoteMode) {
+                submitRemoteAnswerClick(selectedIndex);
+                return;
+            }
             if (state.waitingNext) return;
             if (state.questionAnswered) return;
             const q = state.currentQuestion;
@@ -1243,6 +1605,9 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function onAnswerTimeout() {
+            if (state.remoteMode) {
+                return;
+            }
             if (state.waitingNext) return;
             state.waitingNext = true;
             const q = state.currentQuestion;
@@ -1290,6 +1655,9 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function startMatch(unit) {
+            if (state.remoteMode) {
+                return;
+            }
             state.selectedUnit = unit;
             const pool = QUESTIONS[unit] || [];
             const selected = shuffle([...pool]).slice(0, Math.min(pool.length, QUESTIONS_PER_MATCH));
@@ -1303,21 +1671,48 @@ Usalo como referencia rapida durante la ronda.</pre>
             showQuestion();
         }
 
-        function createClassroomRoom(unit, options = {}) {
-            const preserveCode = options.preserveCode || false;
-            const code = (preserveCode && state.classroomCode) ? state.classroomCode : generateRoomCode();
+        async function createClassroomRoom(unit) {
             state.classroomUnit = unit;
-            state.classroomCode = code;
-            const link = new URL(window.location.href.split("?")[0], window.location.origin);
-            link.searchParams.set("unidad", unit);
-            link.searchParams.set("sala", code);
-            const url = link.toString();
+            state.remoteInLobby = true;
+            state.baseScoreByMatch = 0;
+            state.score = 0;
+            renderCode(unit);
 
-            UI.classroomState.textContent = `Unidad lista. Comparte este link a la clase.`;
-            UI.classRoomCode.textContent = code;
-            UI.classRoomUrl.value = url;
-            renderRoomQr(url);
+            if (!getBackendBase()) {
+                const code = generateRoomCode();
+                const link = buildRoomUrl(unit, code);
+                state.classroomCode = code;
+                state.remoteMode = false;
+
+                UI.classroomState.textContent = `Modo local. Comparte este link a la clase (sin puntaje compartido).`;
+                UI.classRoomCode.textContent = code;
+                UI.classRoomUrl.value = link;
+                renderRoomQr(link);
+                UI.classRoomInfo.style.display = "block";
+                return;
+            }
+
+            UI.classroomState.textContent = "Creando sala en el servidor...";
             UI.classRoomInfo.style.display = "block";
+            state.remoteMode = true;
+            state.classroomCode = "";
+            try {
+                const payload = await createClassroomServer(unit);
+                state.classroomCode = payload.code;
+                const url = buildRoomUrl(unit, state.classroomCode);
+                UI.classroomState.textContent = "Sala creada. Comparte el link y QR.";
+                UI.classRoomCode.textContent = state.classroomCode;
+                UI.classRoomUrl.value = url;
+                renderRoomQr(url);
+                state.remoteLeaderboard = [];
+                if (state.playerId) {
+                    state.playerId = "";
+                }
+            } catch (error) {
+                state.remoteMode = false;
+                const errorText = error?.message || "No se pudo crear la sala";
+                UI.classroomState.textContent = `No se pudo crear sala: ${errorText}`;
+            }
         }
 
         function generateRoomCode() {
@@ -1332,6 +1727,8 @@ Usalo como referencia rapida durante la ronda.</pre>
         function startClassMode() {
             state.classroomCode = "";
             state.classroomUnit = null;
+            state.classroomCode = "";
+            state.playerId = "";
             hideAllOverlays();
             UI.classroomOverlay.classList.add("active");
             UI.classRoomInfo.style.display = "none";
@@ -1343,12 +1740,59 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classroomState.textContent = "Selecciona la unidad para abrir sala.";
         }
 
-        function playNowFromClassroom() {
+        async function ensureBackendFromInputAndJoin() {
+            setBackendUrlFromInput();
+            if (!state.remoteMode && !state.classroomCode) {
+                return null;
+            }
+
+            if (!state.playerName) {
+                state.playerName = "Anónimo";
+                if (UI.playerName) {
+                    UI.playerName.value = state.playerName;
+                }
+            }
+
+            const code = state.classroomCode;
+            if (!code) {
+                return null;
+            }
+            const payload = await joinClassroomServer(code);
+            state.playerId = payload.player_id;
+            if (payload.classroom_code) {
+                state.classroomCode = payload.classroom_code;
+            }
+            state.classroomUnit = payload.unit || state.classroomUnit;
+            state.questions = Array.from({ length: payload.total_questions || QUESTIONS_PER_MATCH }, () => ({}));
+            state.currentIndex = payload.question_index || 0;
+            state.timer = payload.time_left || 0;
+            state.remoteMode = true;
+            state.score = payload.my_score || 0;
+            state.remoteInLobby = true;
+            renderRemoteMatch(payload);
+            stopRemotePolling();
+            state.remotePollHandle = setInterval(syncWithServer, POLL_INTERVAL_MS);
+            syncWithServer();
+            return payload;
+        }
+
+        async function playNowFromClassroom() {
             if (!state.classroomUnit) {
                 alert("Selecciona una unidad primero.");
                 return;
             }
-            startMatch(state.classroomUnit);
+            if (!state.backendUrl) {
+                startMatch(state.classroomUnit);
+                return;
+            }
+            const payload = await ensureBackendFromInputAndJoin();
+            if (!payload) {
+                return;
+            }
+            if (payload.status === "waiting") {
+                await startClassroomServer(state.classroomCode);
+                syncWithServer();
+            }
         }
 
         function copyRoomLink() {
@@ -1364,7 +1808,8 @@ Usalo como referencia rapida durante la ronda.</pre>
 
         function copyResult() {
             const roomPrefix = state.classroomCode ? ` | Sala ${state.classroomCode}` : "";
-            const text = `Clase Quiz IF0100 | ${state.playerName || "Anónimo"} | ${UNIT_LABELS[state.selectedUnit]} | Score ${state.score}${roomPrefix}`;
+            const unitLabel = UNIT_LABELS[state.classroomUnit || state.selectedUnit] || "Clase Quiz";
+            const text = `Clase Quiz IF0100 | ${state.playerName || "Anónimo"} | ${unitLabel} | Score ${state.score}${roomPrefix}`;
             navigator.clipboard.writeText(text);
             const btn = document.getElementById("btn-copy-result");
             const prev = btn.textContent;
@@ -1373,7 +1818,7 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         // --- Bindings ---
-        document.getElementById("btn-play").onclick = () => {
+        document.getElementById("btn-play").onclick = async () => {
             const n = UI.playerName.value.trim();
             if (!n) {
                 UI.playerName.style.borderColor = "#ff5555";
@@ -1383,8 +1828,11 @@ Usalo como referencia rapida durante la ronda.</pre>
             state.playerName = n;
             localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
             UI.playerName.style.borderColor = "";
-            if (state.classroomUnit) {
-                startMatch(state.classroomUnit);
+            setBackendUrlFromInput();
+            if (state.classroomUnit && state.classroomCode) {
+                await ensureBackendFromInputAndJoin().catch((error) => {
+                    UI.feedback.textContent = error?.message || "No se pudo unir a la sala";
+                });
                 return;
             }
             showOverlay(UI.unitsOverlay);
@@ -1396,6 +1844,7 @@ Usalo como referencia rapida durante la ronda.</pre>
                 state.playerName = n;
                 localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
             }
+            setBackendUrlFromInput();
             startClassMode();
         };
 
@@ -1406,22 +1855,36 @@ Usalo como referencia rapida durante la ronda.</pre>
 
         document.getElementById("btn-back-menu").onclick = () => {
             showOverlay(UI.menuOverlay);
+            stopRemotePolling();
         };
 
         document.getElementById("btn-class-back").onclick = () => {
             showOverlay(UI.menuOverlay);
+            stopRemotePolling();
         };
 
         document.getElementById("btn-close-leaderboard").onclick = () => {
             showOverlay(UI.menuOverlay);
         };
 
+        UI.backendUrlInput.onchange = setBackendUrlFromInput;
+
         document.getElementById("btn-replay").onclick = () => {
+            if (state.remoteMode) {
+                if (state.classroomCode && state.classroomUnit) {
+                    state.questions = [];
+                    state.currentIndex = 0;
+                    state.score = 0;
+                    startRemoteGame();
+                }
+                return;
+            }
             startMatch(state.selectedUnit);
         };
 
         document.getElementById("btn-to-menu").onclick = () => {
             showOverlay(UI.menuOverlay);
+            stopRemotePolling();
         };
 
         document.getElementById("btn-copy-result").onclick = () => {
@@ -1429,7 +1892,9 @@ Usalo como referencia rapida durante la ronda.</pre>
         };
 
         document.getElementById("btn-start-classroom").onclick = () => {
-            playNowFromClassroom();
+            playNowFromClassroom().catch((error) => {
+                UI.classroomState.textContent = error?.message || "No se pudo iniciar la sala";
+            });
         };
 
         document.getElementById("btn-copy-room").onclick = () => {
@@ -1454,8 +1919,16 @@ Usalo como referencia rapida durante la ronda.</pre>
         if (state.classroomUnit) {
             state.selectedUnit = state.classroomUnit;
             UI.classroomState.textContent = `Sala activa para ${UNIT_LABELS[state.classroomUnit]}`;
+            UI.classRoomCode.textContent = state.classroomCode || "Sin código";
+            UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
+            if (state.backendUrl) {
+                UI.classroomState.textContent = `Únete con el link y pulsa Jugar con tu nombre.`;
+                if (state.classroomCode) {
+                    renderRoomQr(UI.classRoomUrl.value);
+                }
+            }
+            UI.classRoomInfo.style.display = "block";
             showOverlay(UI.classroomOverlay);
-            createClassroomRoom(state.classroomUnit, { preserveCode: true });
         }
     </script>
 </body>
