@@ -398,6 +398,11 @@ def start_room_live(code: str) -> Dict[str, Any]:
     return start_room_payload(code)
 
 
+@app.get("/api/live/{code}/begin")
+def begin_room_live(code: str) -> Dict[str, Any]:
+    return start_room_payload(code)
+
+
 @app.post("/api/rooms/{code}/answer")
 async def submit_answer(code: str, request: Request) -> Dict[str, Any]:
     payload = await parse_request_model(request, AnswerRequest)

@@ -1095,7 +1095,7 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         async function startClassroomServer(code) {
-            return apiFetch(`/api/live/${code}/start`, { method: "GET" });
+            return apiFetch(`/api/live/${code}/begin`, { method: "GET" });
         }
 
         async function submitClassroomAnswer(code, selectedIndex) {
