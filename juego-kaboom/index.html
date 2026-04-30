@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kaboom Clase - IF0100 POO II</title>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --bg: #0b1020;
@@ -333,6 +334,56 @@
             text-transform: uppercase;
         }
 
+        .qr-wrap {
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(37, 198, 255, 0.35);
+            background: #0a1229;
+        }
+
+        .qr-code-box {
+            width: 190px;
+            height: 190px;
+            margin: 0 auto;
+            padding: 8px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: linear-gradient(180deg, #060d1e 0%, #061026 100%);
+            box-shadow: inset 0 0 24px rgba(37, 198, 255, 0.2);
+        }
+
+        .qr-code-box:empty {
+            position: relative;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .qr-code-box:empty::before {
+            content: "Generando QR...";
+            color: var(--muted);
+        }
+
+        .qr-code-box img,
+        .qr-code-box canvas {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+        }
+
+        .qr-code-box-fallback {
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.35);
+            color: var(--muted);
+            text-align: center;
+            padding: 10px;
+            min-height: 100%;
+            display: grid;
+            place-items: center;
+            font-size: 13px;
+        }
+
         @media (max-width: 980px) {
             .app {
                 grid-template-columns: 1fr;
@@ -352,6 +403,11 @@
 
             .options {
                 grid-template-columns: 1fr;
+            }
+
+            .qr-code-box {
+                width: 150px;
+                height: 150px;
             }
         }
     </style>
@@ -424,6 +480,10 @@
                 <div id="class-room-info" style="display: none; margin-top: 8px;" class="small">
                     <p class="muted">Sala: <span id="class-room-code" style="color: var(--accent); font-weight: 700;"></span></p>
                     <input id="class-room-url" type="text" readonly />
+                    <div class="qr-wrap">
+                        <p class="muted">Escanea para entrar a la sala</p>
+                        <div id="class-room-qr" class="qr-code-box" aria-label="QR de acceso a la sala"></div>
+                    </div>
                     <div class="btn-row" style="margin-top: 10px;">
                         <button id="btn-copy-room" class="btn">Copiar Link</button>
                         <button id="btn-start-classroom" class="btn secondary">Entrar con esta unidad</button>
@@ -701,6 +761,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             classRoomInfo: document.getElementById("class-room-info"),
             classRoomCode: document.getElementById("class-room-code"),
             classRoomUrl: document.getElementById("class-room-url"),
+            classRoomQr: document.getElementById("class-room-qr"),
             classroomState: document.getElementById("classroom-state"),
             playerName: document.getElementById("player-name"),
             resultScore: document.getElementById("result-score"),
@@ -829,6 +890,48 @@ Usalo como referencia rapida durante la ronda.</pre>
                     const room = row.room || "GLOBAL";
                     return `<tr><td>${medal}${index + 1}</td><td>${escapeHtml(row.name)}</td><td>${row.score}</td><td>${escapeHtml(room)}</td><td>${escapeHtml(row.date)}</td></tr>`;
                 }).join("");
+        }
+
+        function renderRoomQr(url) {
+            if (renderRoomQr._target !== url) {
+                renderRoomQr._target = url;
+                renderRoomQr._retry = 0;
+            }
+            if (!renderRoomQr._retry) {
+                renderRoomQr._retry = 0;
+            }
+            if (!UI.classRoomQr) {
+                return;
+            }
+
+            UI.classRoomQr.innerHTML = "";
+            if (!url) {
+                UI.classRoomQr.textContent = "";
+                return;
+            }
+
+            if (typeof QRCode === "undefined") {
+                if (renderRoomQr._retry < 20) {
+                    renderRoomQr._retry += 1;
+                    setTimeout(() => renderRoomQr(url), 120);
+                    return;
+                }
+                UI.classRoomQr.innerHTML = `<div class="qr-code-box-fallback">No se pudo cargar el motor QR.</div>`;
+                return;
+            }
+
+            try {
+                new QRCode(UI.classRoomQr, {
+                    text: url,
+                    width: 170,
+                    height: 170,
+                    colorDark: "#25c6ff",
+                    colorLight: "#09112a",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch {
+                UI.classRoomQr.innerHTML = `<div class="qr-code-box-fallback">No se pudo generar el QR.</div>`;
+            }
         }
 
         function escapeHtml(value) {
@@ -1007,6 +1110,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classroomState.textContent = `Unidad lista. Comparte este link a la clase.`;
             UI.classRoomCode.textContent = code;
             UI.classRoomUrl.value = url;
+            renderRoomQr(url);
             UI.classRoomInfo.style.display = "block";
         }
 
@@ -1027,6 +1131,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classRoomInfo.style.display = "none";
             UI.classRoomCode.textContent = "";
             UI.classRoomUrl.value = "";
+            if (UI.classRoomQr) {
+                UI.classRoomQr.innerHTML = "";
+            }
             UI.classroomState.textContent = "Selecciona la unidad para abrir sala.";
         }
 

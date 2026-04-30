@@ -14,6 +14,7 @@ Este archivo reemplaza la modalidad de plataformas anterior y deja el juego list
 - Podio local en `localStorage` (sin servidor).
 - En modo clase, el podio se guarda por código de sala para decidir ganadores de la sesión.
 - Modo clase: genera link con `unidad` y `sala` para compartir.
+- Sala lista con código QR para acceso rápido desde celular.
 
 ## Preguntas y contenido
 
@@ -49,6 +50,13 @@ cd IF0100-POO-II/juego-kaboom
    - seleccionas una opción,
    - pasa a la siguiente pregunta automáticamente.
 4. Al terminar, se muestra score final y se guarda el resultado en el podio de la sesión.
+
+### Modo clase desde celular
+
+1. Entra al **Modo Clase** y elige unidad.
+2. Copia el link o enseña el QR generado a los estudiantes.
+3. El link de la sala se ve como `index.html?unidad=uX&sala=XXXX`.
+4. Cada estudiante abre el QR/link y responde desde su móvil como en navegador desktop.
 
 Nota importante:
 - El podio de sala se guarda en el navegador de cada dispositivo (localStorage).
