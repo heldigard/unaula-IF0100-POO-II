@@ -50,6 +50,10 @@ cd IF0100-POO-II/juego-kaboom
    - pasa a la siguiente pregunta automáticamente.
 4. Al terminar, se muestra score final y se guarda el resultado en el podio de la sesión.
 
+Nota importante:
+- El podio de sala se guarda en el navegador de cada dispositivo (localStorage).
+- Para competir en vivo en muchos dispositivos, usa un método de recolección (por ejemplo que cada alumno comparta su texto de resultado) y consolida en una pantalla de clase.
+
 ## Reglas de puntaje por ronda
 
 - Correcta: `80 + (segundos restantes * 4)`
