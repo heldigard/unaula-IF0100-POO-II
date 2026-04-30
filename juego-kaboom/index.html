@@ -603,7 +603,7 @@
                 </div>
                 <div class="hud-card timer">
                     <div class="hud-label">Tiempo</div>
-                    <div id="hud-time" class="hud-value">20</div>
+                    <div id="hud-time" class="hud-value">30</div>
                 </div>
                 <div class="hud-card qcount">
                     <div class="hud-label">Pregunta</div>
@@ -726,7 +726,7 @@ Usalo como referencia rapida durante la ronda.</pre>
     </main>
 
     <script>
-        const QUESTION_TIME = 20;
+        const QUESTION_TIME = 30;
         const QUESTIONS_PER_MATCH = 10;
         const STORAGE_PREFIX = "kaboom-classroom";
         const POLL_INTERVAL_MS = 1200;
@@ -1306,7 +1306,9 @@ Usalo como referencia rapida durante la ronda.</pre>
 
             if (payload.status === "waiting") {
                 state.remoteInLobby = true;
-                UI.classroomState.textContent = `Sala activa. Comparte el link. Jugadores: ${payload.player_count || 0}`;
+                UI.classroomState.textContent = state.isHost
+                    ? `Sala activa. Comparte el link. Jugadores: ${payload.player_count || 0}`
+                    : `Entraste a la sala. Espera a que el host inicie el juego.`;
                 UI.classRoomCode.textContent = state.classroomCode;
                 hideAllOverlays();
                 UI.classroomOverlay.classList.add("active");
@@ -1832,9 +1834,11 @@ Usalo como referencia rapida durante la ronda.</pre>
             if (!payload) {
                 return;
             }
-            if (payload.status === "waiting") {
+            if (payload.status === "waiting" && state.isHost) {
                 await startClassroomServer(state.classroomCode);
                 syncWithServer();
+            } else if (payload.status === "waiting") {
+                UI.classroomState.textContent = `Entraste a la sala. Espera a que el host inicie el juego.`;
             }
         }
 

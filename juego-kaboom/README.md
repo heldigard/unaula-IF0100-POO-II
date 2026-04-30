@@ -8,7 +8,7 @@ Este archivo reemplaza la modalidad de plataformas anterior y deja el juego list
 ## Funcionalidad
 
 - Selección de unidad (`u0` a `u5`) por tema.
-- 20 segundos por pregunta.
+- 30 segundos por pregunta.
 - Puntuación por respuesta correcta + bonus de tiempo restante.
 - Penalización en respuesta incorrecta o timeout.
 - Podio local en `localStorage` (sin servidor).
@@ -117,7 +117,7 @@ Copia la URL pública (`https://xxxxx.trycloudflare.com`) y configúrala en el c
 1. En menú, escribes tu nombre y seleccionas **Jugar** o **Modo Clase**.
 2. Elegir unidad.
 3. En cada pregunta:
-   - tienes 20 segundos,
+   - tienes 30 segundos,
    - seleccionas una opción,
    - pasa a la siguiente pregunta automáticamente.
 4. Al terminar, se muestra score final y se guarda el resultado en el podio de la sesión.
