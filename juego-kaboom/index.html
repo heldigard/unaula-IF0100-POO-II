@@ -1009,13 +1009,15 @@ Usalo como referencia rapida durante la ronda.</pre>
             const unidad = params.get("unidad");
             const sala = params.get("sala");
             const backend = params.get("backend");
-            if (unidad && SNIPPETS[unidad]) {
-                state.classroomUnit = unidad;
-                state.classroomCode = sala || "";
-                state.backendUrl = normalizeBackendUrl(backend || state.backendUrl);
+            if (backend) {
+                state.backendUrl = normalizeBackendUrl(backend);
                 if (state.backendUrl && UI.backendUrlInput) {
                     UI.backendUrlInput.value = state.backendUrl;
                 }
+            }
+            if (unidad && SNIPPETS[unidad]) {
+                state.classroomUnit = unidad;
+                state.classroomCode = sala || "";
                 if (state.backendUrl && state.classroomCode) {
                     state.remoteMode = true;
                     state.remoteInLobby = true;
@@ -1281,7 +1283,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             if (payload.status === "waiting") {
                 state.remoteInLobby = true;
                 UI.classroomState.textContent = `Sala activa. Comparte el link. Jugadores: ${payload.player_count || 0}`;
-                UI.classroomCode.textContent = state.classroomCode;
+                UI.classRoomCode.textContent = state.classroomCode;
                 hideAllOverlays();
                 UI.classroomOverlay.classList.add("active");
                 UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
