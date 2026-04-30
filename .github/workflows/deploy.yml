@@ -46,6 +46,9 @@ jobs:
           mkdir -p output/assets/infografias
           cp -r assets/infografias/* output/assets/infografias/ 2>/dev/null || echo "No infografias"
 
+      - name: Copy juego-kaboom
+        run: cp -r juego-kaboom output/
+
       - name: Verify index.html exists
         run: |
           if [ ! -f "output/index.html" ]; then
