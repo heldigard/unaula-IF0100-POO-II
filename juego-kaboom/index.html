@@ -994,8 +994,9 @@ Usalo como referencia rapida durante la ronda.</pre>
             showQuestion();
         }
 
-        function createClassroomRoom(unit) {
-            const code = state.classroomCode || generateRoomCode();
+        function createClassroomRoom(unit, options = {}) {
+            const preserveCode = options.preserveCode || false;
+            const code = (preserveCode && state.classroomCode) ? state.classroomCode : generateRoomCode();
             state.classroomUnit = unit;
             state.classroomCode = code;
             const link = new URL(window.location.href.split("?")[0], window.location.origin);
@@ -1019,6 +1020,8 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         function startClassMode() {
+            state.classroomCode = "";
+            state.classroomUnit = null;
             hideAllOverlays();
             UI.classroomOverlay.classList.add("active");
             UI.classRoomInfo.style.display = "none";
@@ -1139,7 +1142,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             state.selectedUnit = state.classroomUnit;
             UI.classroomState.textContent = `Sala activa para ${UNIT_LABELS[state.classroomUnit]}`;
             showOverlay(UI.classroomOverlay);
-            createClassroomRoom(state.classroomUnit);
+            createClassroomRoom(state.classroomUnit, { preserveCode: true });
         }
     </script>
 </body>
