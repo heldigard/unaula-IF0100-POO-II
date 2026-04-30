@@ -1032,7 +1032,7 @@ Usalo como referencia rapida durante la ronda.</pre>
                 .filter((_, idx) => idx < 4)
                 .map((voteCount, idx) => `${String.fromCharCode(65 + idx)}: ${voteCount}`);
             const correctCount = votes[correctIndex] || 0;
-            return `${labels.join(" · ")} | Respuestas correctas: ${correctCount} de ${total}`;
+            return `${labels.join(" · ")} | Correctas: ${correctCount} · Total: ${total}`;
         }
 
         function renderAnswerStats(votes, correctIndex, explainText = "") {
