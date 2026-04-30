@@ -1235,12 +1235,11 @@ Usalo como referencia rapida durante la ronda.</pre>
                 const gained = 80 + state.timer * 4;
                 state.score += gained;
                 state.baseScoreByMatch += gained;
-                UI.feedback.textContent = `Respuesta enviada. +${gained} puntos`;
             } else {
                 state.score = Math.max(0, state.score - 15);
                 state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 15);
-                UI.feedback.textContent = "Respuesta enviada.";
             }
+            UI.feedback.textContent = "Respuesta enviada.";
         }
 
         function onAnswerTimeout() {
