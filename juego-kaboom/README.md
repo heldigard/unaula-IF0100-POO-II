@@ -1,51 +1,65 @@
-# TaskFlow Quest - Juego Educativo
+# Kaboom Clase IF0100 - POO II
 
-Juego de plataformas 2D educativo para reforzar conceptos del curso **IF0100 Programación Orientada a Objetos II**.
+Juego de preguntas por tiempo para clase:
+**una pregunta a la vez, tiempo límite por pregunta, puntaje por rapidez y ranking local**.
 
-## Descripción
+Este archivo reemplaza la modalidad de plataformas anterior y deja el juego listo para repaso rápido en GitHub Pages.
 
-- **Motor:** [KAPLAY.js](https://kaplayjs.com/) v3001.0.0
-- **Estilo:** Retro oscuro, pixel-art
-- **Objetivo:** Recolectar ítems, evitar bugs, responder preguntas de opción múltiple y completar 6 niveles temáticos.
+## Funcionalidad
 
-## Cómo ejecutar localmente
+- Selección de unidad (`u0` a `u5`) por tema.
+- 20 segundos por pregunta.
+- Puntuación por respuesta correcta + bonus de tiempo restante.
+- Penalización en respuesta incorrecta o timeout.
+- Podio local en `localStorage` (sin servidor).
+- En modo clase, el podio se guarda por código de sala para decidir ganadores de la sesión.
+- Modo clase: genera link con `unidad` y `sala` para compartir.
 
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/Eldigardo/IF0100-POO-II.git
-   ```
-2. Abre `juego-kaboom/index.html` directamente en tu navegador.
+## Preguntas y contenido
 
-No requiere servidor ni dependencias externas (KAPLAY carga vía CDN).
+Las preguntas están por unidad:
 
-## Despliegue en GitHub Pages
+- `u0`: Fundamentos de Python
+- `u1`: POO
+- `u2`: TDD / BDD / DDD
+- `u3`: FastAPI
+- `u4`: SQLAlchemy
+- `u5`: Clean Architecture
 
-1. Ve a **Settings > Pages** del repositorio.
-2. Selecciona el branch `main` y la carpeta `/ (root)`.
-3. Guarda. El juego estará disponible en:
-   ```
-   https://Eldigardo.github.io/IF0100-POO-II/juego-kaboom/
-   ```
+## Ejecutar localmente
 
-## Controles
+```bash
+git clone https://github.com/Eldigardo/IF0100-POO-II.git
+cd IF0100-POO-II/juego-kaboom
+# Abre index.html en cualquier navegador moderno
+```
 
-| Tecla | Acción |
-|-------|--------|
-| ← → | Moverse |
-| ↑ / Espacio | Saltar |
-| P | Pausar |
+## GitHub Pages
 
-## Puntuación
+1. En Settings > Pages, rama `main` y carpeta `/ (root)`.
+2. URL esperada:
+   `https://Eldigardo.github.io/IF0100-POO-II/juego-kaboom/`
 
-| Acción | Puntos |
-|--------|--------|
-| Recolectar ítem | +50 |
-| Respuesta correcta | +100 |
-| Respuesta incorrecta | -50 |
-| Sin errores en el nivel | x2 bonus |
-| Tiempo restante | +10 pts/s |
+## Flujo de juego
 
-## Datos persistentes
+1. En menú, escribes tu nombre y seleccionas **Jugar** o **Modo Clase**.
+2. Elegir unidad.
+3. En cada pregunta:
+   - tienes 20 segundos,
+   - seleccionas una opción,
+   - pasa a la siguiente pregunta automáticamente.
+4. Al terminar, se muestra score final y se guarda el resultado en el podio de la sesión.
 
-- **Podio:** Top 10 guardado en `localStorage` (clave `tfq_leaderboard`).
-- **Último jugador:** Nombre recordado entre sesiones.
+## Reglas de puntaje por ronda
+
+- Correcta: `80 + (segundos restantes * 4)`
+- Incorrecta: `-15`
+- Timeout: `-10`
+
+## Link de sala
+
+Ejemplo de link compartible:
+
+`index.html?unidad=u3&sala=AB12`
+
+`unidad` determina la temática y `sala` identifica la sesión de clase.

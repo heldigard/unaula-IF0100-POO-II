@@ -1,1245 +1,1146 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow Quest - IF0100 POO II</title>
-    <script type="importmap">
-    {
-        "imports": {
-            "kaplay": "https://unpkg.com/kaplay@3001.0.0/dist/kaboom.mjs"
-        }
-    }
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaboom Clase - IF0100 POO II</title>
     <style>
         :root {
-            --bg: #0f0f23;
-            --panel: #1a1a2e;
-            --accent: #00c8ff;
-            --class: #ffd700;
-            --object: #00ff96;
-            --inherit: #ff64ff;
-            --poly: #ff9632;
-            --bug: #ff3232;
-            --text: #f0f0f0;
-            --code-bg: #141428;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        #game-wrapper {
-            display: flex;
-            width: 960px;
-            height: 640px;
-            background: var(--panel);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(0, 200, 255, 0.15);
-            border: 1px solid rgba(0, 200, 255, 0.2);
-        }
-        #game-container {
-            width: 610px;
-            height: 640px;
-            position: relative;
-        }
-        #game-container canvas {
-            display: block;
-        }
-        #code-panel {
-            width: 350px;
-            height: 640px;
-            background: var(--code-bg);
-            border-left: 2px solid rgba(0, 200, 255, 0.15);
-            display: flex;
-            flex-direction: column;
-            padding: 16px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-        #code-panel h3 {
-            color: var(--accent);
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 14px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(0, 200, 255, 0.2);
-            padding-bottom: 8px;
-        }
-        #code-content {
-            flex: 1;
-            overflow-y: auto;
-            background: #0a0a1a;
-            border-radius: 8px;
-            padding: 12px;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        #code-content .kw { color: #ff64ff; }
-        #code-content .cls { color: #ffd700; }
-        #code-content .str { color: #00ff96; }
-        #code-content .fn { color: #00c8ff; }
-        #code-content .num { color: #ff9632; }
-        #code-content .cmt { color: #6a6a8a; font-style: italic; }
-        #code-content .dec { color: #569cd6; }
-        #code-panel .file-tag {
-            font-size: 10px;
-            color: #6a6a8a;
-            margin-top: 8px;
-            text-align: right;
+            --bg: #0b1020;
+            --panel: #151d33;
+            --panel-soft: #1f2a4a;
+            --accent: #25c6ff;
+            --accent-soft: #1a8ab8;
+            --ok: #23d18b;
+            --bad: #ff5555;
+            --warn: #ffd166;
+            --text: #f4f7ff;
+            --muted: #9aa3bf;
+            --radius: 12px;
         }
 
-        /* Overlays */
-        .overlay {
-            position: absolute;
-            top: 0; left: 0;
-            width: 610px; height: 640px;
-            display: none;
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #131a30 0%, var(--bg) 55%);
+            color: var(--text);
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            display: grid;
+            place-items: center;
+            padding: 16px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+        }
+
+        .app {
+            width: min(1100px, 100%);
+            display: grid;
+            grid-template-columns: minmax(300px, 1fr) 340px;
+            gap: 16px;
+            max-height: 90vh;
+        }
+
+        .panel {
+            background: color-mix(in srgb, var(--panel) 88%, white 4%);
+            border: 1px solid rgba(37, 198, 255, 0.3);
+            border-radius: var(--radius);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.32);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-shell {
+            padding: 20px;
+            display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: rgba(15, 15, 35, 0.95);
-            z-index: 10;
-            padding: 40px;
-            text-align: center;
+            gap: 14px;
+            min-height: 640px;
         }
-        .overlay.active { display: flex; }
-        .overlay h1 {
-            font-size: 42px;
-            color: var(--accent);
-            text-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
-            margin-bottom: 8px;
-        }
-        .overlay h2 {
-            font-size: 24px;
-            color: var(--class);
-            margin-bottom: 24px;
-        }
-        .overlay p { color: #aaa; margin-bottom: 16px; font-size: 14px; }
-        .btn {
-            background: linear-gradient(135deg, var(--accent), #0088aa);
-            border: none;
-            color: #fff;
-            padding: 12px 32px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 8px;
-            font-weight: 600;
-            transition: transform 0.1s, box-shadow 0.2s;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 200, 255, 0.3);
-        }
-        .btn.secondary {
-            background: transparent;
-            border: 2px solid var(--accent);
-        }
-        .btn.secondary:hover {
-            background: rgba(0, 200, 255, 0.1);
-        }
-        .btn.danger {
-            background: linear-gradient(135deg, #ff4444, #aa0000);
-        }
-        .category-grid {
+
+        .hud {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 16px;
+            gap: 10px;
         }
-        .cat-btn {
-            padding: 20px;
+
+        .hud-card {
+            background: var(--panel-soft);
+            border: 1px solid rgba(37, 198, 255, 0.2);
             border-radius: 10px;
-            border: 2px solid;
-            background: rgba(255,255,255,0.03);
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
+            padding: 10px 12px;
+        }
+
+        .hud-label {
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .hud-value {
+            margin-top: 4px;
+            font-size: 24px;
             font-weight: 700;
-            transition: all 0.2s;
-            font-family: 'Segoe UI', sans-serif;
         }
-        .cat-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.08); }
-        .cat-btn.locked { opacity: 0.4; cursor: not-allowed; }
-        .input-name {
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 2px solid var(--accent);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 16px;
-            width: 260px;
-            margin-bottom: 16px;
-            text-align: center;
-            outline: none;
-        }
-        .input-name:focus { box-shadow: 0 0 10px rgba(0, 200, 255, 0.3); }
 
-        /* Question Modal */
-        #question-modal {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 520px;
-            background: var(--panel);
-            border: 2px solid var(--accent);
-            border-radius: 12px;
-            padding: 28px;
-            z-index: 20;
-            display: none;
-            box-shadow: 0 0 40px rgba(0, 200, 255, 0.2);
-        }
-        #question-modal.active { display: block; }
-        #question-modal h3 {
-            color: var(--accent);
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-        #question-modal .q-text {
-            font-size: 15px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            color: var(--text);
-        }
-        .option-btn {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 12px 16px;
-            margin-bottom: 10px;
-            background: var(--code-bg);
-            border: 1px solid rgba(0, 200, 255, 0.2);
-            border-radius: 8px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.15s;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .option-btn:hover { border-color: var(--accent); background: rgba(0, 200, 255, 0.05); }
-        .option-btn.correct { border-color: #00ff96; background: rgba(0, 255, 150, 0.1); }
-        .option-btn.wrong { border-color: #ff3232; background: rgba(255, 50, 50, 0.1); }
-        #q-feedback { margin-top: 12px; font-size: 13px; color: #aaa; display: none; }
-        #q-feedback.visible { display: block; }
+        .score .hud-value { color: var(--accent); }
+        .timer .hud-value { color: var(--warn); }
+        .qcount .hud-value { color: #c7cfff; }
 
-        /* HUD */
-        #hud {
-            position: absolute;
-            top: 0; left: 0;
-            width: 610px;
-            padding: 10px 16px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 5;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            pointer-events: none;
+        #screen {
+            flex: 1;
+            border-radius: 10px;
+            background: #0f1730;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 14px;
+            padding: 16px;
         }
-        #hud.active { display: flex; }
-        .hud-item {
-            background: rgba(10, 10, 30, 0.8);
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 200, 255, 0.15);
-        }
-        .hud-label { color: #6a6a8a; font-size: 11px; }
-        .hud-value { color: var(--accent); font-weight: bold; font-size: 16px; }
-        .hud-lives { color: #ff3232; }
-        .hud-time { color: var(--class); }
 
-        /* Leaderboard */
-        .leaderboard-table {
-            width: 100%;
-            max-width: 460px;
-            border-collapse: collapse;
-            margin-top: 12px;
-        }
-        .leaderboard-table th {
-            color: var(--accent);
+        .question-title {
+            color: var(--warn);
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 8px;
-            border-bottom: 1px solid rgba(0, 200, 255, 0.2);
-            text-align: left;
+            font-weight: 600;
         }
-        .leaderboard-table td {
-            padding: 8px;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .leaderboard-table tr:nth-child(1) td { color: #ffd700; font-weight: bold; }
-        .leaderboard-table tr:nth-child(2) td { color: #c0c0c0; font-weight: bold; }
-        .leaderboard-table tr:nth-child(3) td { color: #cd7f32; font-weight: bold; }
-        .leaderboard-table tr.current-player { background: rgba(0, 200, 255, 0.08); }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 200, 255, 0.2); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 200, 255, 0.4); }
+        .question-text {
+            font-size: 28px;
+            line-height: 1.35;
+            margin: 8px 0 0;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            align-content: start;
+        }
+
+        .option-btn {
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 16px;
+            text-align: left;
+            background: #101a38;
+            border: 2px solid rgba(37, 198, 255, 0.22);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+            min-height: 72px;
+        }
+
+        .option-btn:hover:enabled { transform: translateY(-2px); border-color: rgba(37, 198, 255, 0.55); }
+        .option-btn:disabled { opacity: 0.72; cursor: default; }
+        .option-btn.correct { background: rgba(35, 209, 139, 0.16); border-color: var(--ok); }
+        .option-btn.wrong { background: rgba(255, 85, 85, 0.16); border-color: var(--bad); }
+
+        .feedback {
+            min-height: 56px;
+            border-radius: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .feedback.ok { color: var(--ok); border-color: rgba(35, 209, 139, 0.4); }
+        .feedback.bad { color: var(--bad); border-color: rgba(255, 85, 85, 0.45); }
+
+        #progress {
+            margin-top: 4px;
+            border-radius: 8px;
+            background: #0a1125;
+            height: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--warn), var(--ok));
+            transition: width 0.1s linear;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(6, 10, 22, 0.97);
+            display: none;
+            padding: 24px;
+            z-index: 10;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .overlay h2 { color: var(--accent); }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        .btn {
+            border: 1px solid rgba(37, 198, 255, 0.4);
+            border-radius: 10px;
+            background: linear-gradient(180deg, #2a86aa 0%, #1b5f7c 100%);
+            color: #f7fbff;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            transition: filter 0.12s ease, transform 0.12s ease;
+        }
+
+        .btn:hover {
+            filter: brightness(1.07);
+            transform: translateY(-1px);
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border-color: #5069a7;
+            color: #dee6ff;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-row.single {
+            grid-template-columns: 1fr;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            margin: 0 auto;
+            background: #09112a;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        .muted { color: var(--muted); }
+        .small { font-size: 13px; }
+
+        .units {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .unit-btn {
+            border: 1px solid rgba(37, 198, 255, 0.4);
+            border-radius: 10px;
+            padding: 12px 10px;
+            background: #0e1530;
+            text-align: left;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .unit-btn span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .code-panel {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            min-height: 640px;
+            gap: 10px;
+        }
+
+        .code-title {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        .code-file {
+            color: #a9b5d9;
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        .code-panel pre {
+            margin: 0;
+            border-radius: 10px;
+            padding: 12px;
+            background: #070c1e;
+            color: #d8e0ff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: pre-wrap;
+            overflow: auto;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .pill {
+            border-radius: 999px;
+            background: rgba(37, 198, 255, 0.14);
+            border: 1px solid rgba(37, 198, 255, 0.35);
+            color: #b8dcf0;
+            padding: 4px 10px;
+            display: inline-block;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 8px;
+        }
+
+        .leaderboard th,
+        .leaderboard td {
+            padding: 8px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
+        }
+
+        .leaderboard th {
+            color: var(--accent);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 980px) {
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .game-shell {
+                min-height: auto;
+            }
+
+            .code-panel {
+                max-height: 320px;
+            }
+
+            .question-text {
+                font-size: 22px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="game-wrapper">
-        <div id="game-container">
-            <canvas id="game-canvas"></canvas>
-
-            <!-- HUD -->
-            <div id="hud">
-                <div class="hud-item">
-                    <div class="hud-label">SCORE</div>
-                    <div class="hud-value" id="hud-score">0</div>
+    <main class="app">
+        <section class="panel game-shell">
+            <div class="hud">
+                <div class="hud-card score">
+                    <div class="hud-label">Puntuacion</div>
+                    <div id="hud-score" class="hud-value">0</div>
                 </div>
-                <div class="hud-item">
-                    <div class="hud-label">VIDAS</div>
-                    <div class="hud-value hud-lives" id="hud-lives">♥♥♥</div>
+                <div class="hud-card timer">
+                    <div class="hud-label">Tiempo</div>
+                    <div id="hud-time" class="hud-value">20</div>
                 </div>
-                <div class="hud-item">
-                    <div class="hud-label">TIEMPO</div>
-                    <div class="hud-value hud-time" id="hud-time">120</div>
-                </div>
-                <div class="hud-item">
-                    <div class="hud-label">NIVEL</div>
-                    <div class="hud-value" id="hud-level">U0</div>
+                <div class="hud-card qcount">
+                    <div class="hud-label">Pregunta</div>
+                    <div id="hud-progress-text" class="hud-value">0/0</div>
                 </div>
             </div>
 
-            <!-- Menu Overlay -->
-            <div id="menu-overlay" class="overlay active">
-                <h1>TaskFlow Quest</h1>
-                <p style="color: var(--accent); font-size: 16px; margin-bottom: 24px;">IF0100 - POO II</p>
-                <div id="classroom-banner" style="display: none; background: rgba(0,200,255,0.15); border: 1px solid var(--accent); border-radius: 8px; padding: 8px 16px; margin-bottom: 16px; color: var(--accent); font-size: 14px;">
-                    Sala de Clase: <strong id="classroom-unit-name"></strong>
-                </div>
-                <input type="text" id="player-name" class="input-name" placeholder="Tu nombre de Developer" maxlength="20">
+            <div id="screen">
+                <header>
+                    <div class="question-title" id="topic-title">Selecciona el tema para empezar</div>
+                    <h1 id="question-text" class="question-text">Listo para la ronda de preguntas</h1>
+                    <div id="progress-text" class="muted small" style="margin-top: 8px;">El juego muestra una pregunta por pantalla. Tienes tiempo limitado para responder.</div>
+                </header>
+
+                <div id="options" class="options" aria-live="polite"></div>
+
                 <div>
-                    <button class="btn" id="btn-play">Jugar</button>
-                    <button class="btn secondary" id="btn-classroom">Modo Clase</button>
-                    <button class="btn secondary" id="btn-leaderboard-menu">Podio</button>
-                </div>
-                <p style="margin-top: 20px; font-size: 12px; color: #555;">Flechas para moverte y saltar · Recolecta conceptos · Evita los Bugs</p>
-            </div>
-
-            <!-- Category Overlay -->
-            <div id="category-overlay" class="overlay">
-                <h2>Selecciona Unidad</h2>
-                <div class="category-grid">
-                    <button class="cat-btn" data-cat="u0" style="border-color: #00c8ff;">U0<br><small>Python</small></button>
-                    <button class="cat-btn" data-cat="u1" style="border-color: #ffd700;">U1<br><small>POO</small></button>
-                    <button class="cat-btn" data-cat="u2" style="border-color: #ff64ff;">U2<br><small>TDD/BDD</small></button>
-                    <button class="cat-btn" data-cat="u3" style="border-color: #00ff96;">U3<br><small>FastAPI</small></button>
-                    <button class="cat-btn" data-cat="u4" style="border-color: #ff9632;">U4<br><small>SQLAlchemy</small></button>
-                    <button class="cat-btn" data-cat="u5" style="border-color: #ff3232;">U5<br><small>Clean Arch</small></button>
-                </div>
-                <button class="btn secondary" id="btn-back-menu" style="margin-top: 24px;">Volver</button>
-            </div>
-
-            <!-- Victory Overlay -->
-            <div id="victory-overlay" class="overlay">
-                <h2 id="victory-title">Nivel Completado</h2>
-                <p id="victory-score">Score: 0</p>
-                <p id="victory-time">Tiempo restante: 0s</p>
-                <p id="victory-bonus">Bonus: x1</p>
-                <div style="display: flex; flex-direction: column; gap: 8px; align-items: center; margin-top: 8px;">
-                    <button class="btn" id="btn-next-cat">Otra Unidad</button>
-                    <button class="btn secondary" id="btn-victory-leaderboard">Ver Podio</button>
-                    <button class="btn secondary" id="btn-share-score">Copiar Puntuacion</button>
+                    <div class="feedback" id="feedback"></div>
+                    <div id="progress">
+                        <div id="progress-fill"></div>
+                    </div>
+                    <div class="small muted" id="explain" style="margin-top: 8px;"></div>
                 </div>
             </div>
 
-            <!-- GameOver Overlay -->
-            <div id="gameover-overlay" class="overlay">
-                <h2 style="color: #ff3232;">Game Over</h2>
-                <p id="gameover-reason">Te quedaste sin vidas</p>
-                <p id="gameover-score">Score final: 0</p>
-                <div style="display: flex; flex-direction: column; gap: 8px; align-items: center; margin-top: 8px;">
-                    <button class="btn" id="btn-retry">Reintentar</button>
-                    <button class="btn secondary" id="btn-go-menu">Menu</button>
-                    <button class="btn secondary" id="btn-share-score-go">Copiar Puntuacion</button>
+            <div id="menu-overlay" class="overlay active">
+                <h2>Kaboom Clase</h2>
+                <p class="muted">Preguntas con limite de tiempo por pregunta. Ideal para clase o repaso rapido.</p>
+                <p>
+                    Nombre de jugador:
+                    <input id="player-name" type="text" maxlength="20" placeholder="Tu nombre" />
+                </p>
+                <div class="btn-row">
+                    <button id="btn-play" class="btn">Jugar</button>
+                    <button id="btn-classroom" class="btn secondary">Modo Clase</button>
+                    <button id="btn-leaderboard" class="btn secondary">Ver Podio</button>
+                </div>
+                <p class="small muted">Configura tiempo por pregunta y unidad en pantallas siguientes.</p>
+            </div>
+
+            <div id="units-overlay" class="overlay">
+                <h2>Elige Unidad</h2>
+                <p class="muted">Tambien puedes abrir una sala de clase con codigo + link.</p>
+                <div class="units" id="units-container"></div>
+                <div class="btn-row">
+                    <button id="btn-back-menu" class="btn secondary">Volver</button>
+                    <button id="btn-start-custom" class="btn">Iniciar Partida</button>
                 </div>
             </div>
 
-            <!-- Leaderboard Overlay -->
-            <div id="leaderboard-overlay" class="overlay">
-                <h2>Podio TaskFlow</h2>
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr><th>#</th><th>Nombre</th><th>Score</th><th>Niveles</th><th>Fecha</th></tr>
-                    </thead>
-                    <tbody id="leaderboard-body"></tbody>
-                </table>
-                <button class="btn secondary" id="btn-leaderboard-back" style="margin-top: 16px;">Volver</button>
-            </div>
-
-            <!-- Classroom Overlay -->
             <div id="classroom-overlay" class="overlay">
                 <h2>Modo Clase</h2>
-                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Crea una sala para que tus alumnos participen</p>
-                <div id="classroom-main" style="display: flex; flex-direction: column; gap: 12px; align-items: center;">
-                    <button class="btn" id="btn-create-room" style="width: 220px;">Crear Sala</button>
-                    <button class="btn secondary" id="btn-classroom-back" style="margin-top: 12px;">Volver</button>
-                </div>
-                <div id="classroom-create" style="display: none; flex-direction: column; gap: 12px; align-items: center;">
-                    <p style="color: var(--text-secondary); font-size: 14px;">Selecciona la unidad para la clase:</p>
-                    <div class="category-grid" style="margin-bottom: 12px;">
-                        <button class="cat-btn room-cat-btn" data-cat="u0" style="border-color: #00c8ff;">U0<br><small>Python</small></button>
-                        <button class="cat-btn room-cat-btn" data-cat="u1" style="border-color: #ffd700;">U1<br><small>POO</small></button>
-                        <button class="cat-btn room-cat-btn" data-cat="u2" style="border-color: #ff64ff;">U2<br><small>TDD/BDD</small></button>
-                        <button class="cat-btn room-cat-btn" data-cat="u3" style="border-color: #00ff88;">U3<br><small>FastAPI</small></button>
-                        <button class="cat-btn room-cat-btn" data-cat="u4" style="border-color: #ff8c00;">U4<br><small>SQLAlchemy</small></button>
-                        <button class="cat-btn room-cat-btn" data-cat="u5" style="border-color: #00c8ff;">U5<br><small>Clean Arch</small></button>
+                <p id="classroom-state" class="muted">Selecciona unidad para generar el link y compartir.</p>
+                <div class="units" id="class-units-container"></div>
+                <div id="class-room-info" style="display: none; margin-top: 8px;" class="small">
+                    <p class="muted">Sala: <span id="class-room-code" style="color: var(--accent); font-weight: 700;"></span></p>
+                    <input id="class-room-url" type="text" readonly />
+                    <div class="btn-row" style="margin-top: 10px;">
+                        <button id="btn-copy-room" class="btn">Copiar Link</button>
+                        <button id="btn-start-classroom" class="btn secondary">Entrar con esta unidad</button>
                     </div>
-                    <button class="btn secondary" id="btn-create-back" style="margin-top: 8px;">Volver</button>
                 </div>
-                <div id="classroom-room" style="display: none; flex-direction: column; gap: 12px; align-items: center;">
-                    <p style="color: var(--accent); font-size: 18px; font-weight: bold;">Sala: <span id="room-code" style="font-family: monospace; font-size: 24px; color: var(--gold);"></span></p>
-                    <p style="color: var(--text-secondary); font-size: 12px;">Comparte el QR o el link con tus alumnos</p>
-                    <img id="room-qr" src="" alt="QR Code" style="width: 180px; height: 180px; border: 2px solid var(--accent); border-radius: 8px; background: #fff;">
-                    <input type="text" id="room-url" readonly style="width: 280px; padding: 8px; border-radius: 4px; border: 1px solid var(--accent); background: #0a0a1a; color: var(--text); font-size: 11px; text-align: center;">
-                    <button class="btn" id="btn-copy-url" style="width: 200px;">Copiar Link</button>
-                    <button class="btn secondary" id="btn-start-class-game" style="width: 200px;">Iniciar Partida</button>
-                    <button class="btn secondary" id="btn-room-back" style="margin-top: 8px;">Volver</button>
+                <div class="btn-row single" style="margin-top: 10px;">
+                    <button id="btn-class-back" class="btn secondary">Volver</button>
                 </div>
             </div>
 
-            <!-- Question Modal -->
-            <div id="question-modal">
-                <h3 id="q-title">Concepto de POO</h3>
-                <div class="q-text" id="q-text">Pregunta aqui</div>
-                <div id="q-options"></div>
-                <div id="q-feedback"></div>
+            <div id="result-overlay" class="overlay">
+                <h2>Fin de la ronda</h2>
+                <p id="result-title" class="muted">Resumen</p>
+                <p id="result-score"></p>
+                <p id="result-msg"></p>
+                <div class="btn-row">
+                    <button id="btn-replay" class="btn">Reintentar</button>
+                    <button id="btn-to-menu" class="btn secondary">Menu</button>
+                    <button id="btn-leaderboard-after" class="btn secondary">Ver Podio</button>
+                    <button id="btn-copy-result" class="btn secondary">Copiar Resultado</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Code Panel -->
-        <div id="code-panel">
-            <h3 id="code-title">Codigo del Proyecto</h3>
-            <div id="code-content">Selecciona una unidad para ver el codigo real del proyecto TaskFlow.</div>
-            <div class="file-tag" id="code-file">taskflow/</div>
-        </div>
-    </div>
+            <div id="leaderboard-overlay" class="overlay">
+                <h2>Podio</h2>
+                <table class="leaderboard">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Score</th>
+                        <th>Sala</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+                <div class="btn-row single" style="margin-top: 10px;">
+                    <button id="btn-close-leaderboard" class="btn secondary">Volver</button>
+                </div>
+            </div>
+        </section>
 
-    <script type="module">
-        import kaplay from "kaplay";
+        <aside class="panel code-panel">
+            <h3 class="code-title" id="code-title">Materia IF0100</h3>
+            <div class="code-file" id="code-file">Selecciona una unidad</div>
+            <pre id="code-content">Aca se muestra un codigo de ejemplo de la unidad escogida.
+Usalo como referencia rapida durante la ronda.</pre>
+            <p class="small muted">Cada unidad esta alineada con la banca de preguntas.</p>
+        </aside>
+    </main>
 
-        // ========== DATA: PREGUNTAS ==========
+    <script>
+        const QUESTION_TIME = 20;
+        const QUESTIONS_PER_MATCH = 10;
+        const STORAGE_PREFIX = "kaboom-classroom";
+
         const QUESTIONS = {
             u0: [
-                { q: "Que hace una list comprehension?", options: ["Crear listas en una linea", "Definir funciones", "Manejar excepciones"], correct: 0, explain: "Las list comprehensions permiten crear listas de forma concisa en una sola linea." },
-                { q: "Cual es la diferencia entre `is` y `==`?", options: ["Identidad vs Igualdad", "Mayor vs Menor", "And vs Or"], correct: 0, explain: "`==` compara valores (igualdad), mientras que `is` compara referencias de memoria (identidad)." },
-                { q: "Para que sirve `try/except`?", options: ["Manejo de errores", "Bucles", "Condicionales"], correct: 0, explain: "try/except captura excepciones y permite manejar errores sin que el programa se detenga." },
-                { q: "Que tipo es `{'a': 1, 'b': 2}`?", options: ["Diccionario", "Lista", "Tupla"], correct: 0, explain: "Las llaves `{}` con pares clave:valor definen un diccionario en Python." },
-                { q: "Como se define una funcion?", options: ["def nombre():", "function nombre()", "func nombre()"], correct: 0, explain: "En Python las funciones se definen con la palabra clave `def`." },
-                { q: "Cual es la salida de `print(3 * [1, 2])`?", options: ["[1, 2, 1, 2, 1, 2]", "[3, 6]", "Error"], correct: 0, explain: "El operador `*` repite la lista el numero de veces indicado." },
-                { q: "Que hace `range(5)`?", options: ["Genera 0,1,2,3,4", "Genera 1,2,3,4,5", "Genera 5 numeros aleatorios"], correct: 0, explain: "range(5) genera numeros del 0 al 4 (5 numeros en total)." },
-                { q: "Cual es inmutable?", options: ["Tupla", "Lista", "Diccionario"], correct: 0, explain: "Las tuplas son inmutables: no se pueden modificar despues de crearlas." },
+                {
+                    q: "¿Qué imprime este fragmento?\n\nnums = [1, 2, 3]\nprint(nums[1])",
+                    options: ["1", "2", "3", "Error IndexError"],
+                    correct: 1,
+                    explain: "Los índices empiezan en 0, así que nums[1] es 2."
+                },
+                {
+                    q: "¿Cuál de estas opciones obtiene únicamente las teclas de un diccionario?",
+                    options: ["dict.keys()", "dict.values()", "dict.items()", "dict.get()"],
+                    correct: 0,
+                    explain: "keys() devuelve solo las llaves; values devuelve valores."
+                },
+                {
+                    q: "Para que sirve `try/except`?",
+                    options: ["Manejo de errores", "Bucles", "Condicionales", "Decoradores"],
+                    correct: 0,
+                    explain: "Sirve para atrapar excepciones y manejar errores sin terminar el programa."
+                },
+                {
+                    q: "¿Qué tipo de dato representa {'a': 1, 'b': 2}?",
+                    options: ["Diccionario", "Lista", "Tupla", "Conjunto"],
+                    correct: 0,
+                    explain: "Llaves con pares clave-valor definen un diccionario en Python."
+                },
+                {
+                    q: "¿Cómo se define una función en Python?",
+                    options: ["def nombre():", "function nombre()", "func nombre()", "public static void nombre()"],
+                    correct: 0,
+                    explain: "En Python se usa la palabra clave `def`."
+                },
+                {
+                    q: "¿Cuál es la salida de `print(3 * [1, 2])`?",
+                    options: ["[1, 2, 1, 2, 1, 2]", "[3, 6]", "Error de tipo", "Solo 3"],
+                    correct: 0,
+                    explain: "El operador * repite los elementos de la lista."
+                },
+                {
+                    q: "¿Qué hace `range(5)`?",
+                    options: ["Genera 0,1,2,3,4", "Genera 1,2,3,4,5", "Genera 5 aleatorios", "Genera un rango vacío"],
+                    correct: 0,
+                    explain: "Genera enteros desde 0 hasta 4."
+                },
+                {
+                    q: "¿Cuál es inmutable?",
+                    options: ["Tupla", "Lista", "Diccionario", "Conjunto"],
+                    correct: 0,
+                    explain: "Las tuplas no pueden cambiarse después de creadas."
+                },
+                {
+                    q: "¿Qué imprime este código?\n\nfor i in range(2):\n    print('x')\n    break\nprint('y')",
+                    options: [
+                        "x y",
+                        "x x",
+                        "x",
+                        "Nada"
+                    ],
+                    correct: 0,
+                    explain: "`break` termina el ciclo temprano, y luego se ejecuta `print('y')` fuera del ciclo."
+                },
+                {
+                    q: "¿Qué estructura permite valores únicos?",
+                    options: ["set", "list", "dict", "tuple"],
+                    correct: 0,
+                    explain: "Un set no permite valores duplicados."
+                },
+                {
+                    q: "¿Qué hace `for i in range(0, 5, 2)`?",
+                    options: ["0 2 4", "1 3 5", "0 1 2 3 4", "2 4 6"],
+                    correct: 0,
+                    explain: "Empieza en 0, termina antes de 5, paso 2."
+                },
+                {
+                    q: "¿Cuál es la diferencia entre `None` y `\"\"`?",
+                    options: [
+                        "None es ausencia de valor, cadena vacía es texto vacío",
+                        "Son equivalentes",
+                        "None es False y '' es True",
+                        "Ninguna"
+                    ],
+                    correct: 0,
+                    explain: "None representa ausencia/valor nulo; '' es una string con longitud cero."
+                }
             ],
             u1: [
-                { q: "Que metodo se ejecuta al crear un objeto?", options: ["__init__", "__main__", "__call__"], correct: 0, explain: "`__init__` es el constructor que se ejecuta automaticamente al instanciar una clase." },
-                { q: "Como se define una clase abstracta?", options: ["from abc import ABC", "class abstract:", "@abstract"], correct: 0, explain: "Se importa `ABC` de `abc` y se hereda de el para crear clases abstractas." },
-                { q: "Que decorador convierte un metodo en propiedad?", options: ["@property", "@classmethod", "@staticmethod"], correct: 0, explain: "`@property` permite acceder a un metodo como si fuera un atributo." },
-                { q: "En Python, `_atributo` indica...", options: ["Protegido", "Privado", "Publico"], correct: 0, explain: "Un guion bajo indica que el atributo es protegido (convencion, no enforceada)." },
-                { q: "El polimorfismo permite...", options: ["Mismo metodo, distinto comportamiento", "Herencia multiple", "Encapsulacion total"], correct: 0, explain: "Polimorfismo: objetos de diferentes clases responden al mismo mensaje de distinta forma." },
-                { q: "`@dataclass` genera automaticamente...", options: ["__init__, __repr__, __eq__", "Solo __init__", "Nada"], correct: 0, explain: "`@dataclass` genera automaticamente constructor, repr y comparacion de igualdad." },
-                { q: "`@staticmethod` indica que el metodo...", options: ["No usa self ni cls", "Recibe self", "Recibe cls"], correct: 0, explain: "Un metodo estatico no recibe ni `self` ni `cls`; es independiente de la instancia." },
-                { q: "Que metodo especial compara con `==`?", options: ["__eq__", "__lt__", "__gt__"], correct: 0, explain: "`__eq__` se invoca cuando se usa el operador de igualdad `==`." },
+                { q: "¿Qué método se ejecuta al instanciar una clase?", options: ["__init__", "__main__", "__call__", "__str__"], correct: 0, explain: "`__init__` se usa para inicializar atributos al crear el objeto." },
+                { q: "¿Qué expresión es una clase con dataclass?", options: ["@dataclass class Usuario:", "class Usuario:", "def Usuario():", "interface Usuario()"], correct: 0, explain: "Con `@dataclass`, Python genera utilidades como __init__ automáticamente." },
+                { q: "¿Qué indica `self` en métodos de instancia?", options: ["La instancia actual", "Nombre del archivo", "Variable global", "Tipo de retorno"], correct: 0, explain: "self apunta a la instancia sobre la que se ejecuta el método." },
+                { q: "¿Qué decorador convierte un método en una propiedad?", options: ["@property", "@classmethod", "@staticmethod", "@abstractmethod"], correct: 0, explain: "`@property` permite usar `obj.prop` en lugar de `obj.prop()`." },
+                { q: "Si se usa `@staticmethod`, el método...", options: ["No recibe self ni cls", "Recibe self", "Recibe cls", "Recibe objeto y clase"], correct: 0, explain: "Un método estático no depende de la instancia ni de la clase." },
+                { q: "¿Qué diferencia hay entre `_atributo` y `__atributo`?", options: ["convención privada y name mangling", "sin diferencia", "uno es constante y otro no", "solo estética"], correct: 0, explain: "Con doble guion bajo Python aplica name mangling." },
+                { q: "¿Qué hace `super()`?", options: ["Llama al método de la clase padre", "Importa módulos", "Elimina la instancia", "Crea una nueva clase"], correct: 0, explain: "Se usa para reusar inicialización y métodos heredados." },
+                { q: "¿Qué patrón sugiere reemplazar la herencia con composición?", options: ["\"tiene un\" en lugar de \"es un\"", "\"es un\" en lugar de \"tiene un\"", "métodos estáticos", "múltiples módulos"], correct: 0, explain: "Composición modela relaciones de colaboración mejor que jerarquías rígidas." },
+                { q: "¿Qué método mágico devuelve representación amigable?", options: ["__str__", "__repr__", "__eq__", "__len__"], correct: 0, explain: "`__str__` es para representación legible por humanos." },
+                { q: "¿Qué método mágico define longitud?", options: ["__len__()", "__bool__()", "__iter__()", "__next__()"], correct: 0, explain: "El protocolo de secuencia usa `__len__`." },
+                { q: "¿Qué define una clase abstracta?", options: ["Hereda de ABC y usa @abstractmethod", "Usa `final`", "Solo define métodos privados", "No usa `class`"], correct: 0, explain: "Con ABC se definen métodos obligatorios en subclases." },
+                { q: "¿Cuál es el objetivo principal de un Singleton?", options: ["Una sola instancia global", "Objetos inmutables", "Múltiples fábricas", "Evitar herencia"], correct: 0, explain: "Singleton limita la creación de una única instancia de la clase." },
             ],
             u2: [
-                { q: "En TDD, cual es el primer paso?", options: ["Escribir test que falla", "Escribir codigo", "Refactorizar"], correct: 0, explain: "Red-Green-Refactor: primero escribes un test que falle (Red)." },
-                { q: "BDD usa el formato...", options: ["Given-When-Then", "If-Then-Else", "Try-Catch-Finally"], correct: 0, explain: "BDD describe comportamiento con escenarios: Given (contexto), When (accion), Then (resultado)." },
-                { q: "En DDD, un Value Object se caracteriza por...", options: ["Inmutabilidad y comparacion por valor", "Tener ID unico", "Ser mutable"], correct: 0, explain: "Los Value Objects no tienen identidad; se comparan por su contenido y son inmutables." },
-                { q: "En pytest, `assert` se usa para...", options: ["Verificar condiciones", "Capturar excepciones", "Definir fixtures"], correct: 0, explain: "pytest usa `assert` nativo de Python para verificar que el codigo cumple lo esperado." },
-                { q: "Un `fixture` en pytest es...", options: ["Setup reutilizable", "Un assert", "Un mock"], correct: 0, explain: "Las fixtures preparan datos/estado reutilizables para multiples tests." },
-                { q: "Clean Code recomienda funciones...", options: ["Pequenas y con un solo proposito", "Grandes y completas", "Con muchos parametros"], correct: 0, explain: "Las funciones deben ser pequenas y hacer una sola cosa (Single Responsibility)." },
-                { q: "La S de SOLID significa...", options: ["Single Responsibility", "Simple Syntax", "Strong Typing"], correct: 0, explain: "Single Responsibility Principle: una clase debe tener una sola razon para cambiar." },
-                { q: "Que es un Agregado en DDD?", options: ["Cluster de entidades con raiz", "Un test unitario", "Una tabla SQL"], correct: 0, explain: "Un agregado es un conjunto de entidades y value objects con una entidad raiz." },
+                { q: "En TDD, el ciclo inicia normalmente con:", options: ["Test que falla", "Refactor final", "Deploy en producción", "Diseño de UI"], correct: 0, explain: "Red-Green-Refactor: primero test fallido y luego implementación." },
+                { q: "En el formato BDD, qué significa `Given`?", options: ["El contexto inicial", "La acción", "La aserción", "La excepción"], correct: 0, explain: "Given define precondiciones del escenario." },
+                { q: "¿Qué es una Value Object?", options: ["Objeto inmutable comparado por valor", "Objeto con ID autogenerado", "Clase abstracta", "Controlador de API"], correct: 0, explain: "Se comparan por sus valores y no por identidad." },
+                { q: "En pytest, un fixture es...", options: ["Setup reutilizable por test", "Un comando de la CLI", "Un plugin de logging", "Un marcador de error"], correct: 0, explain: "Centraliza preparación y teardown de casos de prueba." },
+                { q: "¿Qué significa Clean Code con función `assert` clara?", options: ["Nombre legible + expectativa simple", "Más líneas", "No manejar excepciones", "Más imports"], correct: 0, explain: "Las aserciones claras documentan la intención del test." },
+                { q: "La S de SOLID significa...", options: ["Single Responsibility", "Structured Output", "Static Output", "Software Oriented"], correct: 0, explain: "Una clase o función debe tener una sola responsabilidad." },
+                { q: "En DDD, una entidad se distingue por:", options: ["Identidad", "Sólo por valor", "No tener estado", "No relacionarse con otras"], correct: 0, explain: "Las entidades cambian su estado y se identifican por su ID." },
+                { q: "¿Qué distingue un Agregado (`Aggregate`)?", options: ["Tiene una raíz y reglas de consistencia", "Siempre es una lista", "No tiene relaciones", "No puede cambiar"], correct: 0, explain: "El aggregate boundary agrupa entidades y value objects coherentes." },
+                { q: "En pytest, `@pytest.mark.parametrize` permite...", options: ["Probar varias entradas en un mismo test", "Repetir sin asserts", "Desactivar fixtures", "Cambiar la versión de pytest"], correct: 0, explain: "Evita duplicar tests para casos similares." },
+                { q: "¿Qué es un mock en pruebas?", options: ["Objeto simulado para aislar dependencias", "Dato real de base de datos", "Error de red", "Módulo estándar"], correct: 0, explain: "Mock simula comportamiento externo para pruebas más rápidas." },
+                { q: "El enfoque AAA (Arrange-Act-Assert) implica:", options: ["Preparar, ejecutar y verificar", "Actualizar, ajustar y auditar", "Añadir, aplicar y arreglar", "Autenticar, autorizar, administrar"], correct: 0, explain: "Estandariza la estructura de pruebas unitarias." },
+                { q: "¿Qué problema resuelve `scope='function'` en fixture?", options: ["Crea instancia nueva por test", "Comparte estado entre módulos", "Desactiva limpieza", "Ejecuta antes de todo el proyecto"], correct: 0, explain: "Por defecto, el fixture se crea por test y evita estado compartido." },
             ],
             u3: [
-                { q: "Que clase de Pydantic valida request bodies?", options: ["BaseModel", "BaseSchema", "BaseDTO"], correct: 0, explain: "`BaseModel` de Pydantic es la clase base para definir esquemas con validacion automatica." },
-                { q: "Para que sirve `OAuth2PasswordBearer`?", options: ["Autenticacion JWT", "Conexion a BD", "Renderizar HTML"], correct: 0, explain: "`OAuth2PasswordBearer` configura el esquema de autenticacion con tokens JWT." },
-                { q: "`@app.get('/')` define...", options: ["Un endpoint HTTP GET", "Una funcion estatica", "Un modelo de datos"], correct: 0, explain: "Es un decorador de FastAPI que expone una funcion como endpoint REST GET." },
-                { q: "CORS permite...", options: ["Que frontend en otro dominio consuma la API", "Encriptar datos", "Conectar a PostgreSQL"], correct: 0, explain: "CORS (Cross-Origin Resource Sharing) permite peticiones desde otros origenes." },
-                { q: "`Depends()` en FastAPI se usa para...", options: ["Inyeccion de dependencias", "Renderizar templates", "Conectar a BD directamente"], correct: 0, explain: "`Depends()` inyecta dependencias como sesiones de BD, auth, servicios, etc." },
-                { q: "`status.HTTP_201_CREATED` significa...", options: ["Recurso creado exitosamente", "Error de servidor", "No autorizado"], correct: 0, explain: "HTTP 201 indica que la peticion fue exitosa y se creo un nuevo recurso." },
-                { q: "JWT significa...", options: ["JSON Web Token", "Java Web Token", "Joint Web Transfer"], correct: 0, explain: "JSON Web Token: estandar compacto y seguro para transmitir claims entre partes." },
-                { q: "En FastAPI, `async def` se recomienda para...", options: ["Operaciones de IO (BD, API)", "Calculo intensivo", "Renderizado sincrono"], correct: 0, explain: "`async` es ideal para operaciones de entrada/salida que esperan respuestas externas." },
+                { q: "¿Qué hace `@app.get('/users/{user_id}')`?", options: ["Define endpoint GET con parámetro path", "Valida JSON", "Inicia servidor", "Conecta Base de datos"], correct: 0, explain: "Expone una ruta GET con `user_id` como parámetro dinámico." },
+                { q: "Pydantic usa...", options: ["BaseModel", "BaseController", "BaseSchema", "BaseEntity"], correct: 0, explain: "BaseModel valida y serializa cuerpos y respuestas." },
+                { q: "¿Qué hace `Depends()`?", options: ["Inyección de dependencias", "Transforma archivos", "Activa CORS", "Crea tablas"], correct: 0, explain: "Resuelve servicios y recursos reutilizables por endpoint." },
+                { q: "¿Qué función devuelve respuestas de error en FastAPI?", options: ["HTTPException", "BadRequest", "ValueError", "KeyError"], correct: 0, explain: "HTTPException permite controlar status y detalle explícito." },
+                { q: "¿Qué agrega CORS?", options: ["Permitir llamadas cross-origin", "Agregar encriptación", "Hacer consultas SQL", "Crear usuarios"], correct: 0, explain: "CORS habilita consumo desde otros dominios." },
+                { q: "¿Qué significa OAuth2PasswordBearer?", options: ["Extrae token de Authorization Bearer", "Valida base64", "Genera claves públicas", "Hace login con Google"], correct: 0, explain: "Se usa para proteger endpoints con token JWT." },
+                { q: "Para respuestas de creación, suele usar:", options: ["201 Created", "101 Continue", "301 Redirect", "500 Internal Error"], correct: 0, explain: "`201` indica recurso creado correctamente." },
+                { q: "¿Qué permite `async def` en FastAPI?", options: ["Programación concurrente de I/O", "Cambiar base de datos", "Reducir tipos", "Desactivar CORS"], correct: 0, explain: "Útil para operaciones con await sobre llamadas externas." },
+                { q: "¿Qué hace `response_model` en un endpoint?", options: ["Forzar forma de respuesta", "Reemplazar ruta", "Configurar base de datos", "Activar autenticación"], correct: 0, explain: "Valida y serializa la salida según un modelo." },
+                { q: "¿Qué herramienta facilita pruebas de endpoint?", options: ["TestClient", "curl", "pytest.mark", "migrations"], correct: 0, explain: "TestClient ejecuta peticiones contra la app sin levantar servidor real." },
+                { q: "¿Qué hace un `middleware`?", options: ["Intercepta requests/responses", "Sólo valida modelos", "Crea tablas SQL", "Aumenta RAM"], correct: 0, explain: "Permite lógica transversal como logs o headers globales." },
+                { q: "¿Qué retorna por defecto FastAPI al decorar una ruta async?", options: ["Status 200", "Status 500", "Status 302", "Status 404"], correct: 0, explain: "Si no hay error, retorna 200 OK con el body." },
             ],
             u4: [
-                { q: "SQLAlchemy 2.0 usa el patron...", options: ["ORM", "MVC", "MVP"], correct: 0, explain: "SQLAlchemy es un ORM (Object-Relational Mapper) que mapea clases a tablas SQL." },
-                { q: "Alembic se usa para...", options: ["Migraciones de BD", "Testing", "Deploy"], correct: 0, explain: "Alembic gestiona migraciones de esquema de base de datos de forma versionada." },
-                { q: "En SQLAlchemy, `relationship()` define...", options: ["Relaciones entre tablas", "Validaciones de Pydantic", "Rutas de API"], correct: 0, explain: "`relationship()` declara relaciones entre modelos (one-to-many, many-to-one)." },
-                { q: "`session.commit()` en SQLAlchemy...", options: ["Guarda cambios en BD", "Cierra la conexion", "Crea una tabla"], correct: 0, explain: "Commit persiste los cambios pendientes de la sesion en la base de datos." },
-                { q: "Un indice en PostgreSQL acelera...", options: ["Busquedas y filtros", "Inserciones", "Eliminaciones"], correct: 0, explain: "Los indices aceleran consultas SELECT pero ralentizan escrituras." },
-                { q: "`unique=True` en Column...", options: ["Evita valores duplicados", "Permite nulos", "Crea un indice automatico"], correct: 0, explain: "La constraint UNIQUE garantiza que no haya valores repetidos en esa columna." },
-                { q: "El Repository Pattern abstrae...", options: ["El acceso a datos", "La logica de negocio", "La interfaz de usuario"], correct: 0, explain: "El Repository actua como mediador entre el dominio y el mecanismo de persistencia." },
-                { q: "`nullable=False` significa...", options: ["La columna no puede ser nula", "La columna es unica", "La columna es PK"], correct: 0, explain: "nullable=False requiere que la columna tenga siempre un valor (NOT NULL)." },
+                { q: "SQLAlchemy 2.0 se usa principalmente como:", options: ["ORM", "Servidor DNS", "Proxy inverso", "Front-end"], correct: 0, explain: "Mapea objetos Python a tablas SQL y viceversa." },
+                { q: "¿Qué define `relationship()`?", options: ["Navegación entre entidades", "Índice único", "Campo único", "Trigger de BD"], correct: 0, explain: "Define asociaciones entre tablas en modelos." },
+                { q: "Para relacionar tablas `Task` y `User`, qué usamos?", options: ["ForeignKey y relationship", "extends", "classmethod", "Depends"], correct: 0, explain: "ForeignKey guarda la referencia y relationship navega objetos." },
+                { q: "¿Qué significa `nullable=False`?", options: ["Columna obligatoria", "Permite NULL", "Es clave primaria", "Es JSON"], correct: 0, explain: "Impide nulos en esa columna." },
+                { q: "¿Qué hace `session.commit()`?", options: ["Persiste transacción", "Cierra sesión", "Limpia cache", "Crea índices"], correct: 0, explain: "Confirma cambios pendientes hacia la base de datos." },
+                { q: "¿Qué hace `session.rollback()`?", options: ["Revierte cambios pendientes", "Reintenta commit", "Crea backup", "Convierte a JSON"], correct: 0, explain: "Se usa al fallar operaciones para deshacer transacciones." },
+                { q: "Alembic se usa para:", options: ["Migraciones", "Autenticación", "Caching", "Renderizado"], correct: 0, explain: "Controla cambios incrementales de esquema en entornos." },
+                { q: "`unique=True` en una columna garantiza:", options: ["No duplicación de valor", "Acepta duplicados", "No permite índices", "Obliga foreign key"], correct: 0, explain: "Dos filas no pueden tener el mismo valor en esa columna." },
+                { q: "¿Qué consulta trae tareas del usuario ordenadas?", options: ["order_by(desc(User.name))", "group_by(name)", "count(name)", "update(table)"], correct: 0, explain: "order_by define orden explícito en resultados." },
+                { q: "Índice compuesto se usa para:", options: ["Acelerar búsquedas por múltiples columnas", "Reemplazar clave primaria", "Eliminar columnas", "Evitar joins"], correct: 0, explain: "Mejora rendimiento en filtros combinados." },
+                { q: "¿Qué mejora rendimiento en relaciones N+1?", options: ["joinedload / eager loading", "más commit", "más índices primarios", "más try/except"], correct: 0, explain: "Cargar datos relacionados en consulta reduce round trips." },
+                { q: "¿Qué define una tabla con `metadata.create_all()`?", options: ["Crea tablas si no existen", "Inserta datos", "Borra registros", "Crea índices de código"], correct: 0, explain: "Es útil en entornos de prueba para bootstrap inicial." },
             ],
             u5: [
-                { q: "La Clean Architecture separa en capas...", options: ["Presentacion, Dominio, Datos", "Solo Frontend y Backend", "Modelo y Vista"], correct: 0, explain: "Clean Architecture organiza el codigo en capas con dependencias hacia adentro." },
-                { q: "Un DTO sirve para...", options: ["Transferir datos entre capas", "Renderizar HTML", "Ejecutar queries SQL"], correct: 0, explain: "DTO (Data Transfer Object) transporta datos entre procesos/capas sin logica." },
-                { q: "La capa de Dominio NO debe depender de...", options: ["Frameworks externos", "Otras entidades", "Value Objects"], correct: 0, explain: "La regla de dependencia: la capa interna no debe conocer detalles de la externa." },
-                { q: "Dependency Injection permite...", options: ["Desacoplar componentes", "Acoplar mas codigo", "Eliminar tests"], correct: 0, explain: "DI inyecta dependencias desde afuera, permitiendo cambiar implementaciones facilmente." },
-                { q: "Separation of Concerns significa...", options: ["Cada modulo una responsabilidad", "Todo en un solo archivo", "Minimizar clases"], correct: 0, explain: "SoC: separar un programa en secciones distintas, cada una abordando una preocupacion." },
-                { q: "Un Service Layer contiene...", options: ["Logica de negocio", "Consultas SQL crudas", "Templates HTML"], correct: 0, explain: "La capa de servicios orquesta el flujo de datos y aplica reglas de negocio." },
-                { q: "`Generic[T]` en Python permite...", options: ["Tipos parametrizados", "Herencia multiple", "Metodos abstractos"], correct: 0, explain: "Los genericos permiten definir clases/funciones que funcionan con cualquier tipo." },
-                { q: "El principio DRY significa...", options: ["Don't Repeat Yourself", "Do Repeat Yourself", "Data Reuse Yearly"], correct: 0, explain: "DRY: evita duplicacion de logica; cada pieza de conocimiento debe tener una representacion unica." },
+                { q: "Clean Architecture ordena capas con dependencia hacia:", options: ["Adentro", "Cualquier lado", "Solo UI", "Solo Infraestructura"], correct: 0, explain: "La regla de dependencia siempre apunta al centro del dominio." },
+                { q: "¿Qué capa expone casos de uso?", options: ["Application/Use Cases", "Infrastructure", "UI", "Framework"], correct: 0, explain: "La capa de aplicación orquesta reglas del negocio." },
+                { q: "¿Qué es un DTO?", options: ["Objeto de transferencia de datos", "Clase abstracta", "Patrón ORM", "Middleware"], correct: 0, explain: "Sirve para mover datos entre capas sin lógica compleja." },
+                { q: "Repository Pattern busca:", options: ["Desacoplar dominio de persistencia", "Mejorar CSS", "Eliminar validaciones", "Aumentar endpoints"], correct: 0, explain: "Aísla consultas y escritura de datos de la lógica de negocio." },
+                { q: "Dependency Injection significa:", options: ["Inyectar dependencias desde afuera", "Crear todo en constructores", "Usar variables globales", "Evitar interfaces"], correct: 0, explain: "Permite intercambiar implementaciones fácilmente." },
+                { q: "Service Layer típicamente:", options: ["Coordina operaciones de negocio", "Renderiza templates", "Configura DB", "Define ORM base"], correct: 0, explain: "Implementa reglas transaccionales y casos de uso específicos." },
+                { q: "JWT con expiración y firma permite:", options: ["Autenticación stateless", "Sincronización de archivos", "Migraciones automáticas", "Autocompletado"], correct: 0, explain: "El token se verifica en cada request sin sesión en servidor." },
+                { q: "¿Qué es serialización?", options: ["Convertir objeto a JSON", "Compilar código", "Hacer un commit", "Indexar base de datos"], correct: 0, explain: "Convierte estructuras para transporte/transición de interfaces." },
+                { q: "¿Qué aporta paginación en API?", options: ["Limitar tamaño de respuesta", "Eliminar filtros", "Ocultar errores", "Aumentar payload"], correct: 0, explain: "Ayuda rendimiento y experiencia en listados grandes." },
+                { q: "Al implementar API robusta conviene manejar:", options: ["Errores de dominio y boundary de límites", "Solo mensajes de éxito", "Cero validaciones", "Sin pruebas"], correct: 0, explain: "El manejo explícito de excepciones mejora mantenibilidad." },
+                { q: "La regla DRY significa:", options: ["No repetir lógica", "Duplicar para aprender", "No usar funciones", "Reescribir siempre"], correct: 0, explain: "Evita duplicación y facilita cambios." },
+                { q: "¿Qué diferencia hay entre Use Case y DTO?", options: ["Use Case orquesta, DTO solo transporta", "Son lo mismo", "DTO guarda conexión", "Use Case guarda persistencia"], correct: 0, explain: "Use Case coordina flujo; DTO estructura datos entre fronteras." },
             ],
         };
 
-        // ========== DATA: CODE SNIPPETS ==========
-        const CODE_SNIPPETS = {
+        const SNIPPETS = {
             u0: {
-                title: "Python Fundamentos",
-                file: "taskflow/examples/fundamentos.py",
-                code: `<span class="cmt"># List comprehension</span>
-numeros = [1, 2, 3, 4, 5]
-cuadrados = [x**2 <span class="kw">for</span> x <span class="kw">in</span> numeros]
-<span class="fn">print</span>(cuadrados)  <span class="cmt"># [1, 4, 9, 16, 25]</span>
-
-<span class="cmt"># Manejo de excepciones</span>
-<span class="kw">try</span>:
-    resultado = <span class="num">10</span> / <span class="num">0</span>
-<span class="kw">except</span> ZeroDivisionError:
-    <span class="fn">print</span>(<span class="str">"No se puede dividir por cero"</span>)
-
-<span class="cmt"># Diccionario</span>
-usuario = {<span class="str">"nombre"</span>: <span class="str">"Ana"</span>, <span class="str">"edad"</span>: <span class="num">25</span>}
-<span class="fn">print</span>(usuario[<span class="str">"nombre"</span>])`
+                title: "Python - Fundamentos",
+                file: "lesson/u0_fundamentos.py",
+                code: `# List comprehension\nnums = [1, 2, 3, 4]\nsquares = [x ** 2 for x in nums]\nprint(squares)\n\n# Manejo basico de excepciones\ntry:\n    valor = 10 / 0\nexcept ZeroDivisionError:\n    print("No se puede dividir por cero")`
             },
             u1: {
-                title: "POO Avanzada - Modelo Usuario",
-                file: "taskflow/models/usuario.py",
-                code: `<span class="kw">from</span> dataclasses <span class="kw">import</span> dataclass, field
-<span class="kw">from</span> datetime <span class="kw">import</span> datetime
-<span class="kw">from</span> typing <span class="kw">import</span> Optional
-
-<span class="dec">@dataclass</span>
-<span class="kw">class</span> <span class="cls">Usuario</span>:
-    id: Optional[<span class="cls">int</span>] = <span class="kw">None</span>
-    username: <span class="cls">str</span> = <span class="str">""</span>
-    email: <span class="cls">str</span> = <span class="str">""</span>
-    estado: <span class="cls">EstadoUsuario</span> =
-        EstadoUsuario.ACTIVO
-
-    <span class="kw">def</span> <span class="fn">validar</span>(<span class="kw">self</span>) -> <span class="cls">list</span>[<span class="cls">str</span>]:
-        errores = []
-        <span class="kw">if not</span> <span class="kw">self</span>.username:
-            errores.append(<span class="str">"Requerido"</span>)
-        <span class="kw">return</span> errores
-
-    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="kw">self</span>) -> <span class="cls">str</span>:
-        <span class="kw">return</span> <span class="str">f"Usuario(</span>{<span class="kw">self</span>.username}<span class="str">)"</span>`
+                title: "Python - POO",
+                file: "lesson/u1_poo.py",
+                code: `from dataclasses import dataclass\n\n@dataclass\nclass Usuario:\n    username: str\n    email: str\n\n    def saludar(self):\n        return f\"Hola, {self.username}\"`
             },
             u2: {
-                title: "TDD con pytest",
-                file: "tests/test_models.py",
-                code: `<span class="kw">import</span> pytest
-<span class="kw">from</span> taskflow.models <span class="kw">import</span> Usuario
-
-<span class="kw">def</span> <span class="fn">test_usuario_valido</span>():
-    user = Usuario(
-        username=<span class="str">"jdoe"</span>,
-        email=<span class="str">"jdoe@example.com"</span>
-    )
-    <span class="kw">assert</span> user.es_valido()
-
-<span class="kw">def</span> <span class="fn">test_usuario_sin_username</span>():
-    user = Usuario(username=<span class="str">""</span>)
-    <span class="kw">assert not</span> user.es_valido()
-
-<span class="cmt"># Fixture reutilizable</span>
-<span class="dec">@pytest.fixture</span>
-<span class="kw">def</span> <span class="fn">usuario_activo</span>():
-    <span class="kw">return</span> Usuario(
-        username=<span class="str">"ana"</span>,
-        email=<span class="str">"ana@test.com"</span>
-    )`
+                title: "Python - TDD con pytest",
+                file: "lesson/u2_tdd.py",
+                code: `def sumar(a, b):\n    return a + b\n\n\ndef test_sumar():\n    assert sumar(2, 3) == 5`
             },
             u3: {
-                title: "FastAPI + JWT Auth",
-                file: "taskflow/api/routes/auth.py",
-                code: `<span class="kw">from</span> fastapi <span class="kw">import</span> APIRouter, Depends
-<span class="kw">from</span> fastapi.security <span class="kw">import</span> OAuth2PasswordBearer
-
-router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=<span class="str">"/api/auth/login"</span>
-)
-
-<span class="dec">@router.post</span>(<span class="str">"/login"</span>)
-<span class="kw">def</span> <span class="fn">login</span>(
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    repo: UsuarioRepository = Depends(get_usuario_repo),
-):
-    service = UsuarioService(repo)
-    usuario = service.autenticar(
-        form_data.username,
-        form_data.password
-    )
-    access_token = create_access_token(
-        data={<span class="str">"sub"</span>: usuario.username}
-    )
-    <span class="kw">return</span> {<span class="str">"access_token"</span>: access_token}`
+                title: "FastAPI - API basica",
+                file: "lesson/u3_fastapi.py",
+                code: `from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get('/')\ndef home():\n    return {"ok": True}`
             },
             u4: {
-                title: "SQLAlchemy Repository",
-                file: "taskflow/infrastructure/repositories.py",
-                code: `<span class="kw">from</span> typing <span class="kw">import</span> Generic, TypeVar
-<span class="kw">from</span> sqlalchemy.orm <span class="kw">import</span> Session
-
-T = TypeVar(<span class="str">"T"</span>, bound=Entity)
-
-<span class="kw">class</span> <span class="cls">Repository</span>(Generic[T]):
-    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>,
-        session: Session,
-        model_class: type[T]
-    ) -> <span class="kw">None</span>:
-        <span class="kw">self</span>.session = session
-        <span class="kw">self</span>.model_class = model_class
-
-    <span class="kw">async def</span> <span class="fn">save</span>(<span class="kw">self</span>, entity: T) -> T:
-        <span class="kw">self</span>.session.add(entity)
-        <span class="kw">self</span>.session.commit()
-        <span class="kw">self</span>.session.refresh(entity)
-        <span class="kw">return</span> entity
-
-    <span class="kw">async def</span> <span class="fn">find_by_id</span>(<span class="kw">self</span>, entity_id: <span class="cls">str</span>) -> T | <span class="kw">None</span>:
-        <span class="kw">return</span> <span class="kw">self</span>.session.query(
-            <span class="kw">self</span>.model_class
-        ).filter(
-            <span class="kw">self</span>.model_class.id == entity_id
-        ).first()`
+                title: "SQLAlchemy - Modelo",
+                file: "lesson/u4_sqlalchemy.py",
+                code: `from sqlalchemy import Column, Integer, String\nfrom sqlalchemy.orm import declarative_base\n\nBase = declarative_base()\n\nclass Usuario(Base):\n    __tablename__ = "usuarios"\n    id = Column(Integer, primary_key=True)\n    username = Column(String, unique=True)`
             },
             u5: {
-                title: "Service Layer + DI",
-                file: "taskflow/application/services.py",
-                code: `<span class="kw">class</span> <span class="cls">TaskService</span>:
-    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>,
-        task_repository: Any
-    ) -> <span class="kw">None</span>:
-        <span class="kw">self</span>.task_repository = task_repository
-
-    <span class="kw">async def</span> <span class="fn">create_task</span>(<span class="kw">self</span>,
-        title: <span class="cls">str</span>,
-        description: <span class="cls">str</span> | <span class="kw">None</span> = <span class="kw">None</span>,
-        priority: <span class="cls">str</span> = <span class="str">"medium"</span>,
-    ) -> Task:
-        task = Task.create(
-            title=title,
-            description=description,
-            priority=priority,
-        )
-        <span class="kw">return await</span> <span class="kw">self</span>.task_repository.save(task)
-
-    <span class="kw">async def</span> <span class="fn">get_task</span>(<span class="kw">self</span>, task_id: <span class="cls">str</span>) -> Task:
-        task = <span class="kw">await</span> <span class="kw">self</span>.task_repository.find_by_id(task_id)
-        <span class="kw">if</span> task <span class="kw">is None</span>:
-            <span class="kw">raise</span> NotFoundError(<span class="str">"Task"</span>, task_id)
-        <span class="kw">return</span> task`
+                title: "Clean Architecture",
+                file: "lesson/u5_arch.py",
+                code: `class User:\n    def __init__(self, username):\n        self.username = username\n\nclass UserService:\n    def __init__(self, repo):\n        self.repo = repo\n\n    def create(self, username):\n        return self.repo.save(User(username))`
             },
         };
 
-        // ========== STATE ==========
-        function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
-        let playerName = localStorage.getItem("tfq_name") || "";
-        let currentCategory = "u0";
-        let score = 0;
-        let lives = 3;
-        let timer = 120;
-        let timerInterval = null;
-        let questionsUsed = [];
-        let errorsInLevel = 0;
-        let paused = false;
-        let gameState = "menu"; // menu, category, playing, question, victory, gameover
-
-        // ========== KAPLAY SETUP ==========
-        const k = kaplay({
-            width: 610,
-            height: 640,
-            canvas: document.getElementById("game-canvas"),
-            background: [15, 15, 35],
-            crisp: true,
-            debug: false,
-        });
-
-        // Colors
-        const C = {
-            accent: k.rgb(0, 200, 255),
-            bug: k.rgb(255, 50, 50),
-            collect: [k.rgb(0, 200, 255), k.rgb(255, 215, 0), k.rgb(255, 100, 255), k.rgb(0, 255, 150), k.rgb(255, 150, 50)],
-            platform: k.rgb(40, 40, 70),
-            grid: k.rgb(30, 30, 55),
-            text: k.rgb(240, 240, 240),
+        const UNIT_LABELS = {
+            u0: "U0 - Python basico",
+            u1: "U1 - POO",
+            u2: "U2 - TDD y BDD",
+            u3: "U3 - FastAPI",
+            u4: "U4 - SQLAlchemy",
+            u5: "U5 - Clean Architecture"
         };
 
-        // ========== HELPERS ==========
-        function setOverlay(id, active) {
-            document.getElementById(id).classList.toggle("active", active);
+        const UI = {
+            menuOverlay: document.getElementById("menu-overlay"),
+            unitsOverlay: document.getElementById("units-overlay"),
+            classroomOverlay: document.getElementById("classroom-overlay"),
+            resultOverlay: document.getElementById("result-overlay"),
+            leaderboardOverlay: document.getElementById("leaderboard-overlay"),
+            topicTitle: document.getElementById("topic-title"),
+            questionText: document.getElementById("question-text"),
+            progressText: document.getElementById("progress-text"),
+            options: document.getElementById("options"),
+            feedback: document.getElementById("feedback"),
+            explain: document.getElementById("explain"),
+            progressFill: document.getElementById("progress-fill"),
+            hudScore: document.getElementById("hud-score"),
+            hudTime: document.getElementById("hud-time"),
+            hudProgressText: document.getElementById("hud-progress-text"),
+            unitsContainer: document.getElementById("units-container"),
+            classUnitsContainer: document.getElementById("class-units-container"),
+            classRoomInfo: document.getElementById("class-room-info"),
+            classRoomCode: document.getElementById("class-room-code"),
+            classRoomUrl: document.getElementById("class-room-url"),
+            classroomState: document.getElementById("classroom-state"),
+            playerName: document.getElementById("player-name"),
+            resultScore: document.getElementById("result-score"),
+            resultTitle: document.getElementById("result-title"),
+            resultMsg: document.getElementById("result-msg"),
+            leaderboardBody: document.getElementById("leaderboard-body"),
+            codeTitle: document.getElementById("code-title"),
+            codeFile: document.getElementById("code-file"),
+            codeContent: document.getElementById("code-content"),
+        };
+
+        const state = {
+            playerName: localStorage.getItem(`${STORAGE_PREFIX}.name`) || "",
+            selectedUnit: "u0",
+            questions: [],
+            currentIndex: 0,
+            score: 0,
+            timer: QUESTION_TIME,
+            timerHandle: null,
+            waitingNext: false,
+            currentQuestion: null,
+            classroomCode: "",
+            classroomUnit: null,
+            baseScoreByMatch: 0
+        };
+
+        state.playerName = state.playerName.trim();
+        if (state.playerName) {
+            UI.playerName.value = state.playerName;
         }
-        function setHud(active) {
-            document.getElementById("hud").classList.toggle("active", active);
-        }
-        function updateHud() {
-            document.getElementById("hud-score").textContent = score;
-            document.getElementById("hud-lives").textContent = "♥".repeat(lives);
-            document.getElementById("hud-time").textContent = timer;
-            document.getElementById("hud-level").textContent = currentCategory.toUpperCase();
-        }
-        function showCode(cat) {
-            const data = CODE_SNIPPETS[cat] || CODE_SNIPPETS.u0;
-            document.getElementById("code-title").textContent = data.title;
-            document.getElementById("code-content").innerHTML = data.code;
-            document.getElementById("code-file").textContent = data.file;
-        }
-        function getLeaderboard() {
-            try {
-                return JSON.parse(localStorage.getItem("tfq_leaderboard")) || [];
-            } catch { return []; }
-        }
-        function saveLeaderboard(entry) {
-            const lb = getLeaderboard();
-            lb.push(entry);
-            lb.sort((a, b) => b.score - a.score);
-            localStorage.setItem("tfq_leaderboard", JSON.stringify(lb.slice(0, 20)));
-        }
-        function renderLeaderboard(highlightName) {
-            const lb = getLeaderboard().slice(0, 10);
-            const tbody = document.getElementById("leaderboard-body");
-            if (lb.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#555;">Sin registros aun. Se el primero!</td></tr>';
-                return;
+
+        function shuffle(items) {
+            for (let i = items.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [items[i], items[j]] = [items[j], items[i]];
             }
-            tbody.innerHTML = lb.map((e, i) => {
-                const medal = i === 0 ? "🥇 " : i === 1 ? "🥈 " : i === 2 ? "🥉 " : "";
-                const cls = e.name === highlightName ? 'class="current-player"' : "";
-                return `<tr ${cls}><td>${medal}${i + 1}</td><td>${esc(e.name)}</td><td>${e.score}</td><td>${e.levels}</td><td>${e.date}</td></tr>`;
-            }).join("");
+            return items;
         }
 
-        // ========== LEVEL GENERATION ==========
-        function generateLevel(cat) {
-            const platforms = [];
-            const bugs = [];
-            const collectibles = [];
-
-            // Ground platforms
-            const floorY = 560;
-            for (let x = 0; x < 610; x += 60) {
-                platforms.push({ x, y: floorY, w: 60, h: 80 });
+        function parseRoomFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const unidad = params.get("unidad");
+            const sala = params.get("sala");
+            if (unidad && SNIPPETS[unidad]) {
+                state.classroomUnit = unidad;
+                state.classroomCode = sala || "";
             }
-
-            // Floating platforms
-            const rows = [
-                { y: 480, x: [80, 200, 320, 440] },
-                { y: 400, x: [40, 160, 280, 400, 520] },
-                { y: 320, x: [100, 220, 340, 460] },
-                { y: 240, x: [60, 180, 300, 420, 540] },
-                { y: 160, x: [120, 240, 360, 480] },
-            ];
-
-            rows.forEach((row, ri) => {
-                row.x.forEach(x => {
-                    platforms.push({ x, y: row.y, w: 80, h: 16 });
-                });
-            });
-
-            // Bugs on some platforms
-            const bugRows = [480, 400, 320, 240];
-            bugRows.forEach((y, i) => {
-                const x = 120 + i * 130;
-                bugs.push({ x, y: y - 20, range: 100, speed: (i % 2 === 0 ? 1 : -1) * (60 + Math.random() * 40) });
-            });
-
-            // Collectibles
-            const collectPositions = [
-                { x: 100, y: 440 }, { x: 240, y: 360 }, { x: 380, y: 280 },
-                { x: 520, y: 200 }, { x: 160, y: 280 }, { x: 300, y: 440 },
-                { x: 460, y: 360 }, { x: 200, y: 200 },
-            ];
-            collectPositions.forEach((p, i) => {
-                collectibles.push({ x: p.x, y: p.y, color: i % C.collect.length });
-            });
-
-            // Exit door at top
-            const exit = { x: 520, y: 120 };
-
-            return { platforms, bugs, collectibles, exit, playerStart: { x: 50, y: 500 } };
         }
 
-        // ========== QUESTION SYSTEM ==========
-        function showQuestion(cat) {
-            const qs = QUESTIONS[cat];
-            if (!qs) return;
-
-            // pick random unused
-            let avail = qs.map((_, i) => i).filter(i => !questionsUsed.includes(i));
-            if (avail.length === 0) {
-                questionsUsed = [];
-                avail = qs.map((_, i) => i);
-            }
-            const idx = avail[Math.floor(Math.random() * avail.length)];
-            questionsUsed.push(idx);
-            const q = qs[idx];
-
-            paused = true;
-            gameState = "question";
-
-            document.getElementById("q-title").textContent = `Concepto ${cat.toUpperCase()}`;
-            document.getElementById("q-text").textContent = q.q;
-            const optsDiv = document.getElementById("q-options");
-            optsDiv.innerHTML = "";
-            const feedback = document.getElementById("q-feedback");
-            feedback.classList.remove("visible");
-            feedback.textContent = "";
-
-            q.options.forEach((opt, i) => {
-                const btn = document.createElement("button");
-                btn.className = "option-btn";
-                btn.textContent = opt;
-                btn.onclick = () => {
-                    // disable all
-                    optsDiv.querySelectorAll("button").forEach(b => b.disabled = true);
-                    if (i === q.correct) {
-                        btn.classList.add("correct");
-                        score += 100;
-                        feedback.textContent = `✅ Correcto! +100 pts. ${q.explain}`;
-                        feedback.style.color = "#00ff96";
-                    } else {
-                        btn.classList.add("wrong");
-                        score -= 50;
-                        errorsInLevel++;
-                        feedback.textContent = `❌ Incorrecto. -50 pts. ${q.explain}`;
-                        feedback.style.color = "#ff3232";
-                        if (lives > 0) {
-                            lives--;
-                            updateHud();
-                            if (lives <= 0) {
-                                setTimeout(() => gameOver("Te quedaste sin vidas"), 1500);
-                                return;
-                            }
-                        }
-                    }
-                    feedback.classList.add("visible");
-                    updateHud();
-                    setTimeout(() => {
-                        document.getElementById("question-modal").classList.remove("active");
-                        paused = false;
-                        gameState = "playing";
-                    }, 2500);
-                };
-                optsDiv.appendChild(btn);
-            });
-
-            document.getElementById("question-modal").classList.add("active");
+        function renderCode(unit) {
+            const s = SNIPPETS[unit];
+            UI.codeTitle.textContent = s.title;
+            UI.codeFile.textContent = s.file;
+            UI.codeContent.textContent = s.code;
         }
 
-        // ========== GAME SCENES ==========
-        k.scene("game", (cat) => {
-            clearInterval(timerInterval);
-            currentCategory = cat;
-            score = 0;
-            lives = 3;
-            timer = 120;
-            errorsInLevel = 0;
-            questionsUsed = [];
-            paused = false;
-            gameState = "playing";
-
-            updateHud();
-            setHud(true);
-            showCode(cat);
-
-            const level = generateLevel(cat);
-
-            // Background grid
-            const gridLines = [];
-            for (let i = 0; i < 610; i += 40) {
-                gridLines.push(k.add([k.pos(i, 0), k.rect(1, 640), k.color(30, 30, 55), k.z(-1)]));
-            }
-            for (let i = 0; i < 640; i += 40) {
-                gridLines.push(k.add([k.pos(0, i), k.rect(610, 1), k.color(30, 30, 55), k.z(-1)]));
-            }
-
-            // Platforms
-            level.platforms.forEach(p => {
-                k.add([k.pos(p.x, p.y), k.rect(p.w, p.h), k.color(40, 40, 70), k.area(), k.body({ isStatic: true }), "platform"]);
+        function showOverlay(target) {
+            [UI.menuOverlay, UI.unitsOverlay, UI.classroomOverlay, UI.resultOverlay, UI.leaderboardOverlay].forEach((ov) => {
+                ov.classList.toggle("active", ov === target);
             });
+        }
 
-            // Exit door
-            const exitObj = k.add([k.pos(level.exit.x, level.exit.y), k.rect(40, 60), k.color(0, 200, 255), k.area(), "exit"]);
-            // door label
-            k.add([k.pos(level.exit.x, level.exit.y - 20), k.text("EXIT", { size: 12 }), k.color(0, 200, 255)]);
-
-            // Bugs
-            const bugObjs = level.bugs.map(b => {
-                const bug = k.add([
-                    k.pos(b.x, b.y),
-                    k.rect(24, 24),
-                    k.color(255, 50, 50),
-                    k.area(),
-                    k.anchor("center"),
-                    "bug",
-                    { origX: b.x, range: b.range, speed: b.speed, dir: 1 }
-                ]);
-                const eyeL = k.add([k.pos(b.x - 6, b.y - 6), k.circle(3), k.color(255, 255, 255), k.anchor("center")]);
-                const eyeR = k.add([k.pos(b.x + 6, b.y - 6), k.circle(3), k.color(255, 255, 255), k.anchor("center")]);
-                return { bug, eyes: [eyeL, eyeR] };
+        function hideAllOverlays() {
+            [UI.menuOverlay, UI.unitsOverlay, UI.classroomOverlay, UI.resultOverlay, UI.leaderboardOverlay].forEach((ov) => {
+                ov.classList.remove("active");
             });
+        }
 
-            // Collectibles
-            const collectObjs = level.collectibles.map(c => {
-                return k.add([
-                    k.pos(c.x, c.y),
-                    k.circle(12),
-                    k.color(C.collect[c.color]),
-                    k.area(),
-                    k.anchor("center"),
-                    "collectible",
-                    { active: true }
-                ]);
-            });
-
-            // Player
-            const player = k.add([
-                k.pos(level.playerStart.x, level.playerStart.y),
-                k.rect(28, 28),
-                k.color(0, 200, 255),
-                k.area(),
-                k.body(),
-                k.anchor("center"),
-                "player",
-            ]);
-
-            // Player label
-            k.add([k.pos(0, -22), k.text(playerName || "Dev", { size: 10 }), k.color(255, 255, 255), k.anchor("center"), { owner: player }]);
-
-            // Controls
-            const SPEED = 200;
-            const JUMP = 420;
-
-            k.onKeyDown("left", () => { if (!paused) player.move(-SPEED, 0); });
-            k.onKeyDown("right", () => { if (!paused) player.move(SPEED, 0); });
-            k.onKeyPress("up", () => { if (!paused && player.isGrounded()) player.jump(JUMP); });
-            k.onKeyPress("space", () => { if (!paused && player.isGrounded()) player.jump(JUMP); });
-            k.onKeyPress("p", () => { paused = !paused; });
-
-            // Prevent leaving bounds
-            k.onUpdate(() => {
-                if (paused) return;
-                if (player.pos.x < 14) player.pos.x = 14;
-                if (player.pos.x > 596) player.pos.x = 596;
-                if (player.pos.y > 650) {
-                    lives--;
-                    updateHud();
-                    if (lives <= 0) {
-                        gameOver("Caiste al vacio");
-                        return;
-                    }
-                    player.pos = k.vec2(level.playerStart.x, level.playerStart.y);
-                }
-            });
-
-            // Bug movement
-            k.onUpdate(() => {
-                if (paused) return;
-                bugObjs.forEach(({ bug, eyes }) => {
-                    if (!bug) return;
-                    bug.move(bug.speed * bug.dir, 0);
-                    if (Math.abs(bug.pos.x - bug.origX) > bug.range) {
-                        bug.dir *= -1;
-                    }
-                    eyes[0].pos = bug.pos.add(k.vec2(-6, -6));
-                    eyes[1].pos = bug.pos.add(k.vec2(6, -6));
-                });
-            });
-
-            // Collisions
-            k.onCollide("player", "collectible", (p, c) => {
-                if (!c.active || paused) return;
-                c.active = false;
-                c.destroy();
-                score += 50;
-                updateHud();
-                showQuestion(cat);
-            });
-
-            k.onCollide("player", "bug", (p, b) => {
-                if (paused) return;
-                lives--;
-                updateHud();
-                p.pos = k.vec2(level.playerStart.x, level.playerStart.y);
-                k.shake(5);
-                if (lives <= 0) {
-                    gameOver("Te atrapo un Bug");
-                }
-            });
-
-            k.onCollide("player", "exit", (p, e) => {
-                if (paused) return;
-                // Check if all collectibles gathered
-                const remaining = collectObjs.filter(c => c && c.active).length;
-                if (remaining === 0) {
-                    levelComplete();
+        function startTimer() {
+            stopTimer();
+            state.timer = QUESTION_TIME;
+            UI.hudTime.textContent = state.timer;
+            UI.progressFill.style.width = "100%";
+            state.timerHandle = setInterval(() => {
+                state.timer -= 1;
+                if (state.timer <= 0) {
+                    onAnswerTimeout();
                 } else {
-                    // Show hint
-                    k.add([k.pos(p.pos.x, p.pos.y - 30), k.text(`Faltan ${remaining} conceptos!`, { size: 12 }), k.color(255, 200, 0), k.lifespan(1.5)]);
-                }
-            });
-
-            // Timer
-            timerInterval = setInterval(() => {
-                if (paused || gameState !== "playing") return;
-                timer--;
-                updateHud();
-                if (timer <= 0) {
-                    gameOver("Se acabo el tiempo");
+                    UI.hudTime.textContent = state.timer;
+                    UI.progressFill.style.width = `${(state.timer / QUESTION_TIME) * 100}%`;
                 }
             }, 1000);
+        }
 
-            k.onSceneLeave(() => { clearInterval(timerInterval); });
-        });
-
-        function gameOver(reason) {
-            gameState = "gameover";
-            clearInterval(timerInterval);
-            setHud(false);
-            document.getElementById("gameover-reason").textContent = reason;
-            document.getElementById("gameover-score").textContent = `Score final: ${score}`;
-            setOverlay("gameover-overlay", true);
-
-            // Save if score > 0
-            if (score > 0) {
-                saveLeaderboard({
-                    name: playerName || "Anonimo",
-                    score: score,
-                    date: new Date().toISOString().split("T")[0],
-                    levels: 1,
-                });
+        function stopTimer() {
+            if (state.timerHandle) {
+                clearInterval(state.timerHandle);
+                state.timerHandle = null;
             }
         }
 
-        function levelComplete() {
-            gameState = "victory";
-            clearInterval(timerInterval);
-            setHud(false);
+        function getLeaderboard() {
+            const raw = localStorage.getItem(`${STORAGE_PREFIX}.leaderboard`);
+            if (!raw) {
+                return [];
+            }
+            try {
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        }
 
-            const timeBonus = timer * 10;
-            const noErrorBonus = errorsInLevel === 0 ? 2 : 1;
-            const finalScore = (score + timeBonus) * noErrorBonus;
-            score = finalScore;
+        function saveLeaderboard(entry) {
+            const list = getLeaderboard();
+            list.push(entry);
+            list.sort((a, b) => b.score - a.score);
+            localStorage.setItem(`${STORAGE_PREFIX}.leaderboard`, JSON.stringify(list.slice(0, 100)));
+        }
 
-            document.getElementById("victory-score").textContent = `Score: ${score}`;
-            document.getElementById("victory-time").textContent = `Tiempo restante: ${timer}s (+${timeBonus} pts)`;
-            document.getElementById("victory-bonus").textContent = `Bonus sin errores: x${noErrorBonus}`;
-            setOverlay("victory-overlay", true);
+        function renderLeaderboard() {
+            const list = getLeaderboard();
+            const scope = state.classroomCode || "GLOBAL";
+            const visible = scope === "GLOBAL"
+                ? list
+                : list.filter((row) => row.room === scope);
+            if (visible.length === 0) {
+                UI.leaderboardBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#8b95b4;">Sin datos aun</td></tr>`;
+                return;
+            }
+            UI.leaderboardBody.innerHTML = visible
+                .slice(0, 10)
+                .map((row, index) => {
+                    const medal = index === 0 ? "🥇 " : index === 1 ? "🥈 " : index === 2 ? "🥉 " : "";
+                    const room = row.room || "GLOBAL";
+                    return `<tr><td>${medal}${index + 1}</td><td>${escapeHtml(row.name)}</td><td>${row.score}</td><td>${escapeHtml(room)}</td><td>${escapeHtml(row.date)}</td></tr>`;
+                }).join("");
+        }
 
-            saveLeaderboard({
-                name: playerName || "Anonimo",
-                score: score,
-                date: new Date().toISOString().split("T")[0],
-                levels: 1,
+        function escapeHtml(value) {
+            const d = document.createElement("div");
+            d.textContent = String(value);
+            return d.innerHTML;
+        }
+
+        function renderUnitSelectors() {
+            UI.unitsContainer.innerHTML = "";
+            UI.classUnitsContainer.innerHTML = "";
+            Object.entries(UNIT_LABELS).forEach(([key, label]) => {
+                const button = document.createElement("button");
+                button.className = "unit-btn";
+                button.textContent = label;
+                button.innerHTML += `<span>${label.replace(" - ", " · ")}</span>`;
+                button.onclick = () => {
+                    state.selectedUnit = key;
+                    hideAllOverlays();
+                    startMatch(key);
+                };
+                UI.unitsContainer.appendChild(button);
+
+                const classBtn = button.cloneNode(true);
+                classBtn.classList.remove("unit-btn");
+                classBtn.classList.add("unit-btn");
+                classBtn.onclick = () => {
+                    createClassroomRoom(key);
+                };
+                UI.classUnitsContainer.appendChild(classBtn);
             });
         }
 
-        // ========== MENU SCENE ==========
-        k.scene("menu", () => {
-            setHud(false);
-            setOverlay("menu-overlay", true);
-            document.getElementById("player-name").value = playerName;
-        });
+        function updateHud() {
+            UI.hudScore.textContent = String(state.score);
+            UI.hudProgressText.textContent = `${state.currentIndex}/${state.questions.length}`;
+            UI.hudTime.textContent = state.timer;
+        }
 
-        // ========== UI EVENTS ==========
-        document.getElementById("btn-play").onclick = () => {
-            const name = document.getElementById("player-name").value.trim();
-            if (!name) {
-                document.getElementById("player-name").style.borderColor = "#ff3232";
-                setTimeout(() => document.getElementById("player-name").style.borderColor = "", 500);
+        function showQuestion() {
+            if (state.currentIndex >= state.questions.length) {
+                finishMatch();
                 return;
             }
-            playerName = name;
-            localStorage.setItem("tfq_name", playerName);
-            setOverlay("menu-overlay", false);
-            if (classroomUnit) {
-                k.go("game", classroomUnit);
+
+            const q = state.questions[state.currentIndex];
+            state.currentQuestion = q;
+            state.waitingNext = false;
+
+            UI.topicTitle.textContent = UNIT_LABELS[state.selectedUnit];
+            UI.questionText.textContent = q.q;
+            UI.progressText.textContent = `Pregunta ${state.currentIndex + 1} de ${state.questions.length}. Tiempo limite: ${QUESTION_TIME} segundos`;
+            UI.feedback.className = "feedback";
+            UI.feedback.textContent = "Selecciona una opcion.";
+            UI.explain.textContent = "";
+
+            renderCode(state.selectedUnit);
+            UI.options.innerHTML = "";
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.textContent = `${idx + 1}. ${opt}`;
+                btn.onclick = () => answerQuestion(idx);
+                UI.options.appendChild(btn);
+            });
+
+            updateHud();
+            startTimer();
+        }
+
+        function answerQuestion(selectedIndex) {
+            if (state.waitingNext) return;
+            state.waitingNext = true;
+            stopTimer();
+            const q = state.currentQuestion;
+            const isCorrect = selectedIndex === q.correct;
+            const optionButtons = [...UI.options.querySelectorAll("button")];
+
+            optionButtons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) btn.classList.add("correct");
+                if (idx === selectedIndex && idx !== q.correct) btn.classList.add("wrong");
+            });
+
+            if (isCorrect) {
+                const gained = 80 + state.timer * 4;
+                state.score += gained;
+                state.baseScoreByMatch += gained;
+                UI.feedback.textContent = `Respuesta correcta! +${gained} puntos`;
+                UI.feedback.classList.add("ok");
             } else {
-                setOverlay("category-overlay", true);
+                state.score = Math.max(0, state.score - 15);
+                const correctOption = q.options[q.correct];
+                state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 15);
+                UI.feedback.textContent = `Incorrecta. La respuesta era: ${correctOption}`;
+                UI.feedback.classList.add("bad");
+                UI.explain.textContent = q.explain;
             }
-        };
 
-        document.getElementById("btn-leaderboard-menu").onclick = () => {
-            renderLeaderboard(playerName);
-            setOverlay("menu-overlay", false);
-            setOverlay("leaderboard-overlay", true);
-        };
+            state.currentIndex += 1;
+            updateHud();
+            setTimeout(() => {
+                showQuestion();
+            }, 1200);
+        }
 
-        document.getElementById("btn-back-menu").onclick = () => {
-            setOverlay("category-overlay", false);
-            setOverlay("menu-overlay", true);
-        };
+        function onAnswerTimeout() {
+            if (state.waitingNext) return;
+            state.waitingNext = true;
+            const q = state.currentQuestion;
+            const optionButtons = [...UI.options.querySelectorAll("button")];
+            optionButtons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) btn.classList.add("correct");
+            });
 
-        document.querySelectorAll(".cat-btn:not(.room-cat-btn)").forEach(btn => {
-            btn.onclick = () => {
-                const cat = btn.dataset.cat;
-                setOverlay("category-overlay", false);
-                k.go("game", cat);
-            };
-        });
+            stopTimer();
+            UI.feedback.textContent = `Tiempo agotado. La respuesta correcta era: ${q.options[q.correct]}`;
+            UI.feedback.classList.add("bad");
+            UI.explain.textContent = q.explain;
+            state.score = Math.max(0, state.score - 10);
+            state.baseScoreByMatch = Math.max(0, state.baseScoreByMatch - 10);
 
-        document.getElementById("btn-next-cat").onclick = () => {
-            setOverlay("victory-overlay", false);
-            setOverlay("category-overlay", true);
-        };
+            state.currentIndex += 1;
+            updateHud();
+            setTimeout(() => {
+                showQuestion();
+            }, 1500);
+        }
 
-        document.getElementById("btn-victory-leaderboard").onclick = () => {
-            setOverlay("victory-overlay", false);
-            renderLeaderboard(playerName);
-            setOverlay("leaderboard-overlay", true);
-        };
+        function finishMatch() {
+            stopTimer();
+            hideAllOverlays();
+            UI.resultOverlay.classList.add("active");
+            const maxScore = state.questions.length * 120;
+            UI.resultScore.textContent = `Puntuacion final: ${state.score}`;
+            UI.resultTitle.textContent = `Unidad: ${UNIT_LABELS[state.selectedUnit]}`;
+            UI.resultMsg.textContent = state.classroomCode
+                ? `Sala: ${state.classroomCode}. Puntaje base: ${state.baseScoreByMatch} pts.`
+                : `Ritmo clasico de clase: ${state.baseScoreByMatch} pts.`;
+            saveLeaderboard({
+                name: state.playerName || "Anónimo",
+                unit: state.selectedUnit,
+                score: state.score,
+                date: new Date().toLocaleDateString(),
+                maxScore,
+                room: state.classroomCode || "GLOBAL",
+            });
+        }
 
-        document.getElementById("btn-retry").onclick = () => {
-            setOverlay("gameover-overlay", false);
-            k.go("game", currentCategory);
-        };
+        function startMatch(unit) {
+            state.selectedUnit = unit;
+            const pool = QUESTIONS[unit] || [];
+            const selected = shuffle([...pool]).slice(0, Math.min(pool.length, QUESTIONS_PER_MATCH));
+            state.questions = selected;
+            state.currentIndex = 0;
+            state.score = 0;
+            state.baseScoreByMatch = 0;
+            renderCode(unit);
+            hideAllOverlays();
+            updateHud();
+            showQuestion();
+        }
 
-        document.getElementById("btn-go-menu").onclick = () => {
-            setOverlay("gameover-overlay", false);
-            setOverlay("menu-overlay", true);
-        };
+        function createClassroomRoom(unit) {
+            const code = state.classroomCode || generateRoomCode();
+            state.classroomUnit = unit;
+            state.classroomCode = code;
+            const link = new URL(window.location.href.split("?")[0], window.location.origin);
+            link.searchParams.set("unidad", unit);
+            link.searchParams.set("sala", code);
+            const url = link.toString();
 
-        document.getElementById("btn-leaderboard-back").onclick = () => {
-            setOverlay("leaderboard-overlay", false);
-            setOverlay("menu-overlay", true);
-        };
-
-        // ========== CLASSROOM MODE ==========
-        let classroomUnit = null;
-        let classroomCode = null;
-
-        const UNIT_NAMES = {
-            u0: "Python Fundamentos",
-            u1: "POO Avanzada",
-            u2: "TDD/BDD/DDD",
-            u3: "FastAPI",
-            u4: "SQLAlchemy y Persistencia",
-            u5: "Clean Architecture",
-        };
+            UI.classroomState.textContent = `Unidad lista. Comparte este link a la clase.`;
+            UI.classRoomCode.textContent = code;
+            UI.classRoomUrl.value = url;
+            UI.classRoomInfo.style.display = "block";
+        }
 
         function generateRoomCode() {
             const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
             let code = "";
-            for (let i = 0; i < 4; i++) code += chars[Math.floor(Math.random() * chars.length)];
+            for (let i = 0; i < 4; i += 1) {
+                code += chars[Math.floor(Math.random() * chars.length)];
+            }
             return code;
         }
 
-        function getBaseUrl() {
-            return window.location.href.split("?")[0];
+        function startClassMode() {
+            hideAllOverlays();
+            UI.classroomOverlay.classList.add("active");
+            UI.classRoomInfo.style.display = "none";
+            UI.classRoomCode.textContent = "";
+            UI.classRoomUrl.value = "";
+            UI.classroomState.textContent = "Selecciona la unidad para abrir sala.";
         }
 
-        function parseUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            const u = params.get("unidad");
-            if (u && UNIT_NAMES[u]) {
-                classroomUnit = u;
-                classroomCode = params.get("sala") || "";
-                document.getElementById("classroom-banner").style.display = "block";
-                document.getElementById("classroom-unit-name").textContent = UNIT_NAMES[u];
-            }
-        }
-
-        document.getElementById("btn-classroom").onclick = () => {
-            setOverlay("menu-overlay", false);
-            setOverlay("classroom-overlay", true);
-            document.getElementById("classroom-main").style.display = "flex";
-            document.getElementById("classroom-create").style.display = "none";
-            document.getElementById("classroom-room").style.display = "none";
-        };
-
-        document.getElementById("btn-classroom-back").onclick = () => {
-            setOverlay("classroom-overlay", false);
-            setOverlay("menu-overlay", true);
-        };
-
-        document.getElementById("btn-create-room").onclick = () => {
-            document.getElementById("classroom-main").style.display = "none";
-            document.getElementById("classroom-create").style.display = "flex";
-        };
-
-        document.getElementById("btn-create-back").onclick = () => {
-            document.getElementById("classroom-create").style.display = "none";
-            document.getElementById("classroom-main").style.display = "flex";
-        };
-
-        document.querySelectorAll(".room-cat-btn").forEach(btn => {
-            btn.onclick = () => {
-                const cat = btn.dataset.cat;
-                classroomUnit = cat;
-                classroomCode = generateRoomCode();
-                const url = `${getBaseUrl()}?unidad=${cat}&sala=${classroomCode}`;
-                document.getElementById("room-code").textContent = classroomCode;
-                document.getElementById("room-url").value = url;
-                document.getElementById("room-qr").src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
-                document.getElementById("classroom-create").style.display = "none";
-                document.getElementById("classroom-room").style.display = "flex";
-            };
-        });
-
-        document.getElementById("btn-room-back").onclick = () => {
-            document.getElementById("classroom-room").style.display = "none";
-            document.getElementById("classroom-create").style.display = "flex";
-        };
-
-        document.getElementById("btn-copy-url").onclick = () => {
-            const url = document.getElementById("room-url").value;
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = document.getElementById("btn-copy-url");
-                const oldText = btn.textContent;
-                btn.textContent = "Link copiado!";
-                setTimeout(() => btn.textContent = oldText, 1500);
-            });
-        };
-
-        document.getElementById("btn-start-class-game").onclick = () => {
-            const name = document.getElementById("player-name").value.trim();
-            if (!name) {
-                setOverlay("classroom-overlay", false);
-                setOverlay("menu-overlay", true);
-                document.getElementById("player-name").style.borderColor = "#ff3232";
-                setTimeout(() => document.getElementById("player-name").style.borderColor = "", 500);
+        function playNowFromClassroom() {
+            if (!state.classroomUnit) {
+                alert("Selecciona una unidad primero.");
                 return;
             }
-            playerName = name;
-            localStorage.setItem("tfq_name", playerName);
-            setOverlay("classroom-overlay", false);
-            k.go("game", classroomUnit);
-        };
+            startMatch(state.classroomUnit);
+        }
 
-        function shareScore() {
-            const text = `TaskFlow Quest | ${playerName || "Anonimo"} | ${currentCategory.toUpperCase()} | Score: ${score} | Tiempo: ${timer}s`;
-            navigator.clipboard.writeText(text).then(() => {
-                alert("Puntuacion copiada al portapapeles. Pegala en el chat de clase!");
+        function copyRoomLink() {
+            const url = UI.classRoomUrl.value;
+            if (!url) return;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById("btn-copy-room");
+                const prev = btn.textContent;
+                btn.textContent = "Copiado";
+                setTimeout(() => (btn.textContent = prev), 1200);
             });
         }
 
-        document.getElementById("btn-share-score").onclick = shareScore;
-        document.getElementById("btn-share-score-go").onclick = shareScore;
+        function copyResult() {
+            const roomPrefix = state.classroomCode ? ` | Sala ${state.classroomCode}` : "";
+            const text = `Clase Quiz IF0100 | ${state.playerName || "Anónimo"} | ${UNIT_LABELS[state.selectedUnit]} | Score ${state.score}${roomPrefix}`;
+            navigator.clipboard.writeText(text);
+            const btn = document.getElementById("btn-copy-result");
+            const prev = btn.textContent;
+            btn.textContent = "Resultado copiado";
+            setTimeout(() => (btn.textContent = prev), 1200);
+        }
 
-        parseUrlParams();
+        // --- Bindings ---
+        document.getElementById("btn-play").onclick = () => {
+            const n = UI.playerName.value.trim();
+            if (!n) {
+                UI.playerName.style.borderColor = "#ff5555";
+                UI.playerName.focus();
+                return;
+            }
+            state.playerName = n;
+            localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
+            UI.playerName.style.borderColor = "";
+            if (state.classroomUnit) {
+                startMatch(state.classroomUnit);
+                return;
+            }
+            showOverlay(UI.unitsOverlay);
+        };
 
-        // ========== START ==========
-        k.go("menu");
+        document.getElementById("btn-classroom").onclick = () => {
+            const n = UI.playerName.value.trim();
+            if (n) {
+                state.playerName = n;
+                localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
+            }
+            startClassMode();
+        };
+
+        document.getElementById("btn-leaderboard").onclick = () => {
+            renderLeaderboard();
+            showOverlay(UI.leaderboardOverlay);
+        };
+
+        document.getElementById("btn-back-menu").onclick = () => {
+            showOverlay(UI.menuOverlay);
+        };
+
+        document.getElementById("btn-class-back").onclick = () => {
+            showOverlay(UI.menuOverlay);
+        };
+
+        document.getElementById("btn-close-leaderboard").onclick = () => {
+            showOverlay(UI.menuOverlay);
+        };
+
+        document.getElementById("btn-replay").onclick = () => {
+            startMatch(state.selectedUnit);
+        };
+
+        document.getElementById("btn-to-menu").onclick = () => {
+            showOverlay(UI.menuOverlay);
+        };
+
+        document.getElementById("btn-copy-result").onclick = () => {
+            copyResult();
+        };
+
+        document.getElementById("btn-start-classroom").onclick = () => {
+            playNowFromClassroom();
+        };
+
+        document.getElementById("btn-copy-room").onclick = () => {
+            copyRoomLink();
+        };
+
+        document.getElementById("btn-leaderboard-after").onclick = () => {
+            renderLeaderboard();
+            showOverlay(UI.leaderboardOverlay);
+        };
+
+        document.getElementById("btn-start-custom").onclick = () => {
+            if (!state.selectedUnit) state.selectedUnit = "u0";
+            startMatch(state.selectedUnit);
+        };
+
+        // Init
+        renderUnitSelectors();
+        renderLeaderboard();
+        showOverlay(UI.menuOverlay);
+        parseRoomFromUrl();
+        if (state.classroomUnit) {
+            state.selectedUnit = state.classroomUnit;
+            UI.classroomState.textContent = `Sala activa para ${UNIT_LABELS[state.classroomUnit]}`;
+            showOverlay(UI.classroomOverlay);
+            createClassroomRoom(state.classroomUnit);
+        }
     </script>
 </body>
 </html>
