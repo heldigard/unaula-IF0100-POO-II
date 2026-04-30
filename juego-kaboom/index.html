@@ -138,16 +138,57 @@
             border: 2px solid rgba(37, 198, 255, 0.22);
             color: var(--text);
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
             min-height: 72px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
         }
 
         .option-btn:hover:enabled { transform: translateY(-2px); border-color: rgba(37, 198, 255, 0.55); }
         .option-btn:disabled { opacity: 0.72; cursor: default; }
         .option-btn.correct { background: rgba(35, 209, 139, 0.16); border-color: var(--ok); }
         .option-btn.wrong { background: rgba(255, 85, 85, 0.16); border-color: var(--bad); }
+
+        .option-btn.opt-0,
+        .option-btn.opt-1,
+        .option-btn.opt-2,
+        .option-btn.opt-3 {
+            border-left-width: 6px;
+        }
+
+        .option-btn.opt-0 { background: linear-gradient(90deg, rgba(255, 99, 132, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #ff6384; }
+        .option-btn.opt-1 { background: linear-gradient(90deg, rgba(54, 162, 235, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #36a2eb; }
+        .option-btn.opt-2 { background: linear-gradient(90deg, rgba(255, 205, 86, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #ffcd56; }
+        .option-btn.opt-3 { background: linear-gradient(90deg, rgba(75, 192, 112, 0.16), rgba(17, 24, 43, 0.95)); border-left-color: #4bc070; }
+
+        .option-key {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .option-btn.opt-0 .option-key { color: #ff7c98; border-color: rgba(255, 124, 152, 0.45); }
+        .option-btn.opt-1 .option-key { color: #6fbfff; border-color: rgba(111, 191, 255, 0.45); }
+        .option-btn.opt-2 .option-key { color: #ffd76b; border-color: rgba(255, 215, 107, 0.45); }
+        .option-btn.opt-3 .option-key { color: #80e08f; border-color: rgba(128, 224, 143, 0.45); }
+
+        .option-text {
+            flex: 1;
+            text-wrap: balance;
+        }
 
         .feedback {
             min-height: 56px;
@@ -993,8 +1034,9 @@ Usalo como referencia rapida durante la ronda.</pre>
 
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement("button");
-                btn.className = "option-btn";
-                btn.textContent = `${idx + 1}. ${opt}`;
+                const letter = String.fromCharCode(65 + idx);
+                btn.className = `option-btn opt-${idx}`;
+                btn.innerHTML = `<span class=\"option-key\">${letter}</span><span class=\"option-text\">${idx + 1}. ${opt}</span>`;
                 btn.onclick = () => answerQuestion(idx);
                 UI.options.appendChild(btn);
             });
