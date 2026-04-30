@@ -37,6 +37,44 @@ cd IF0100-POO-II/juego-kaboom
 
 ## Modo Clase en vivo (servidor + túnel)
 
+### Desde Windows (ruta exacta: `F:\Clases\UNAULA\IF0100-POO-II`)
+
+```powershell
+cd /d F:\Clases\UNAULA\IF0100-POO-II
+python -m venv .venv-win
+.\.venv-win\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m uvicorn backend.main:app --app-dir juego-kaboom --host 0.0.0.0 --port 8000 --reload
+```
+
+Si usas CMD:
+
+```bat
+cd /d F:\Clases\UNAULA\IF0100-POO-II
+python -m venv .venv-win
+.\.venv-win\Scripts\activate.bat
+python -m pip install -r requirements.txt
+python -m uvicorn backend.main:app --app-dir juego-kaboom --host 0.0.0.0 --port 8000 --reload
+```
+
+Con `--host 0.0.0.0` el backend queda accesible para reenvío de puertos desde VS Code.
+
+### Exponer desde VS Code (tunnel gratuito)
+
+1. Abre el repo en Windows con VS Code.
+2. Ve a **Ports** (Panel lateral).
+3. Añade **Forward a port** `8000`.
+4. Marca el puerto como **Public**.
+5. Copia la URL pública del puerto (ej. `https://xxxxxx-8000.app.github.dev`).
+6. En `juego-kaboom/index.html`, en **Servidor de sala** coloca esa URL.
+
+### En GitHub Pages
+
+La URL pública del túnel debe usarse como backend:
+
+- `index.html?unidad=u3&sala=ABCD&backend=https://xxxxxx-8000.app.github.dev`
+- También puedes guardarla en el campo **Servidor de sala** para reutilizarla desde el menú.
+
 1. Levanta el backend local desde la raíz del repo:
 
 ```bash

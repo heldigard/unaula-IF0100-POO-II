@@ -46,6 +46,8 @@ __pycache__/
 *.so
 .Python
 venv/
+.venv/
+.venv-win/
 
 # C
 *.out

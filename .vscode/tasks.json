@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "kaboom: Install dependencies",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "windows": {
+        "command": "cmd",
+        "args": [
+          "/d",
+          "/c",
+          "if not exist .venv-win\\Scripts\\python.exe python -m venv .venv-win && .venv-win\\Scripts\\python.exe -m pip install --upgrade pip && .venv-win\\Scripts\\python.exe -m pip install -r requirements.txt"
+        ]
+      },
+      "linux": {
+        "command": "${workspaceFolder}/.venv/bin/python"
+      },
+      "args": [
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements.txt"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

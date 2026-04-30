@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Kaboom Backend (install + run)",
+      "type": "python",
+      "request": "launch",
+      "python": "${workspaceFolder}/.venv-win/Scripts/python.exe",
+      "pythonPath": "${workspaceFolder}/.venv-win/Scripts/python.exe",
+      "windows": {
+        "python": "${workspaceFolder}/.venv-win/Scripts/python.exe",
+        "pythonPath": "${workspaceFolder}/.venv-win/Scripts/python.exe"
+      },
+      "linux": {
+        "python": "${workspaceFolder}/.venv/bin/python",
+        "pythonPath": "${workspaceFolder}/.venv/bin/python"
+      },
+      "osx": {
+        "python": "${workspaceFolder}/.venv/bin/python",
+        "pythonPath": "${workspaceFolder}/.venv/bin/python"
+      },
+      "module": "uvicorn",
+      "args": [
+        "backend.main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--reload"
+      ],
+      "preLaunchTask": "kaboom: Install dependencies",
+      "cwd": "${workspaceFolder}/juego-kaboom",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONPATH": "${workspaceFolder}/juego-kaboom"
+      }
+    }
+  ]
+}
