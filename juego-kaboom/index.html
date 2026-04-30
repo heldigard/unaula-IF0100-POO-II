@@ -651,6 +651,10 @@
             <div id="classroom-overlay" class="overlay">
                 <h2>Modo Clase</h2>
                 <p id="classroom-state" class="muted">Selecciona unidad para generar el link y compartir.</p>
+                <p>
+                    Nombre de jugador:
+                    <input id="class-player-name" type="text" maxlength="20" placeholder="Tu nombre" />
+                </p>
                 <div class="units" id="class-units-container"></div>
                 <div id="class-room-info" style="display: none; margin-top: 8px;" class="small">
                     <p class="muted">Sala: <span id="class-room-code" style="color: var(--accent); font-weight: 700;"></span></p>
@@ -940,6 +944,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             classRoomQr: document.getElementById("class-room-qr"),
             classroomState: document.getElementById("classroom-state"),
             playerName: document.getElementById("player-name"),
+            classPlayerName: document.getElementById("class-player-name"),
             backendUrlInput: document.getElementById("backend-url"),
             resultScore: document.getElementById("result-score"),
             resultTitle: document.getElementById("result-title"),
@@ -977,6 +982,7 @@ Usalo como referencia rapida durante la ronda.</pre>
         state.playerName = state.playerName.trim();
         if (state.playerName) {
             UI.playerName.value = state.playerName;
+            UI.classPlayerName.value = state.playerName;
         }
         if (state.backendUrl) {
             UI.backendUrlInput.value = state.backendUrl;
@@ -1041,9 +1047,10 @@ Usalo como referencia rapida durante la ronda.</pre>
             if (!base) {
                 throw new Error("Backend no configurado");
             }
+            const hasBody = typeof options.body !== "undefined";
             const res = await fetch(`${base}${path}`, {
                 headers: {
-                    "Content-Type": "application/json",
+                    ...(hasBody ? { "Content-Type": "text/plain;charset=UTF-8" } : {}),
                     ...(options.headers || {}),
                 },
                 ...options,
@@ -1064,38 +1071,29 @@ Usalo como referencia rapida durante la ronda.</pre>
         }
 
         async function createClassroomServer(unit) {
-            return apiFetch("/api/rooms", {
-                method: "POST",
-                body: JSON.stringify({
-                    unit,
-                    question_time: QUESTION_TIME,
-                    questions_per_match: QUESTIONS_PER_MATCH,
-                }),
+            const params = new URLSearchParams({
+                unit,
+                question_time: String(QUESTION_TIME),
+                questions_per_match: String(QUESTIONS_PER_MATCH),
             });
+            return apiFetch(`/api/live/create?${params.toString()}`, { method: "GET" });
         }
 
         async function joinClassroomServer(code) {
-            return apiFetch(`/api/rooms/${code}/join`, {
-                method: "POST",
-                body: JSON.stringify({ player_name: state.playerName || "Anónimo" }),
-            });
+            const params = new URLSearchParams({ player_name: state.playerName || "Anónimo" });
+            return apiFetch(`/api/live/${code}/join?${params.toString()}`, { method: "GET" });
         }
 
         async function startClassroomServer(code) {
-            return apiFetch(`/api/rooms/${code}/start`, {
-                method: "POST",
-                body: JSON.stringify({}),
-            });
+            return apiFetch(`/api/live/${code}/start`, { method: "GET" });
         }
 
         async function submitClassroomAnswer(code, selectedIndex) {
-            return apiFetch(`/api/rooms/${code}/answer`, {
-                method: "POST",
-                body: JSON.stringify({
-                    player_id: state.playerId,
-                    selected_option: selectedIndex,
-                }),
+            const params = new URLSearchParams({
+                player_id: state.playerId,
+                selected_option: String(selectedIndex),
             });
+            return apiFetch(`/api/live/${code}/answer?${params.toString()}`, { method: "GET" });
         }
 
         async function pollClassroomState() {
@@ -1748,10 +1746,20 @@ Usalo como referencia rapida durante la ronda.</pre>
                 return null;
             }
 
+            const className = UI.classPlayerName ? UI.classPlayerName.value.trim() : "";
+            if (className) {
+                state.playerName = className;
+                UI.playerName.value = className;
+                localStorage.setItem(`${STORAGE_PREFIX}.name`, className);
+            }
+
             if (!state.playerName) {
                 state.playerName = "Anónimo";
                 if (UI.playerName) {
                     UI.playerName.value = state.playerName;
+                }
+                if (UI.classPlayerName) {
+                    UI.classPlayerName.value = state.playerName;
                 }
             }
 
@@ -1844,10 +1852,20 @@ Usalo como referencia rapida durante la ronda.</pre>
             const n = UI.playerName.value.trim();
             if (n) {
                 state.playerName = n;
+                UI.classPlayerName.value = n;
                 localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
             }
             setBackendUrlFromInput();
             startClassMode();
+        };
+
+        UI.classPlayerName.oninput = () => {
+            const n = UI.classPlayerName.value.trim();
+            UI.playerName.value = n;
+            state.playerName = n;
+            if (n) {
+                localStorage.setItem(`${STORAGE_PREFIX}.name`, n);
+            }
         };
 
         document.getElementById("btn-leaderboard").onclick = () => {
@@ -1924,7 +1942,7 @@ Usalo como referencia rapida durante la ronda.</pre>
             UI.classRoomCode.textContent = state.classroomCode || "Sin código";
             UI.classRoomUrl.value = buildRoomUrl(state.classroomUnit, state.classroomCode);
             if (state.backendUrl) {
-                UI.classroomState.textContent = `Únete con el link y pulsa Jugar con tu nombre.`;
+                UI.classroomState.textContent = `Escribe tu nombre y pulsa Entrar con esta unidad.`;
                 if (state.classroomCode) {
                     renderRoomQr(UI.classRoomUrl.value);
                 }

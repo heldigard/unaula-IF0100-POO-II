@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -271,8 +271,14 @@ def validate_unit(unit: str) -> None:
         raise HTTPException(status_code=400, detail="Unidad sin preguntas")
 
 
-@app.post("/api/rooms")
-def create_room(payload: CreateRoomRequest) -> Dict[str, Any]:
+async def parse_request_model(request: Request, model: type[BaseModel]) -> BaseModel:
+    try:
+        return model(**await request.json())
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Payload inválido") from exc
+
+
+def create_room_payload(payload: CreateRoomRequest) -> Dict[str, Any]:
     validate_unit(payload.unit)
 
     with STATE.lock:
@@ -291,8 +297,7 @@ def create_room(payload: CreateRoomRequest) -> Dict[str, Any]:
     return payload_state
 
 
-@app.post("/api/rooms/{code}/join")
-def join_room(code: str, payload: JoinRequest) -> Dict[str, Any]:
+def join_room_payload(code: str, payload: JoinRequest) -> Dict[str, Any]:
     if not payload.player_name.strip():
         raise HTTPException(status_code=400, detail="Nombre requerido")
 
@@ -308,8 +313,7 @@ def join_room(code: str, payload: JoinRequest) -> Dict[str, Any]:
     return {"player_id": player_id, **response}
 
 
-@app.post("/api/rooms/{code}/start")
-def start_room(code: str) -> Dict[str, Any]:
+def start_room_payload(code: str) -> Dict[str, Any]:
     code = code.upper()
     with STATE.lock:
         room = get_room(code)
@@ -320,8 +324,7 @@ def start_room(code: str) -> Dict[str, Any]:
     return response
 
 
-@app.post("/api/rooms/{code}/answer")
-def submit_answer(code: str, payload: AnswerRequest) -> Dict[str, Any]:
+def submit_answer_payload(code: str, payload: AnswerRequest) -> Dict[str, Any]:
     code = code.upper()
     selected = payload.selected_option
 
@@ -353,6 +356,60 @@ def submit_answer(code: str, payload: AnswerRequest) -> Dict[str, Any]:
         advance_if_needed(room)
 
     return response
+
+
+@app.post("/api/rooms")
+async def create_room(request: Request) -> Dict[str, Any]:
+    payload = await parse_request_model(request, CreateRoomRequest)
+    return create_room_payload(payload)
+
+
+@app.get("/api/live/create")
+def create_room_live(
+    unit: str,
+    question_time: int = DEFAULT_QUESTION_TIME,
+    questions_per_match: int = DEFAULT_QUESTIONS_PER_MATCH,
+) -> Dict[str, Any]:
+    return create_room_payload(CreateRoomRequest(
+        unit=unit,
+        question_time=question_time,
+        questions_per_match=questions_per_match,
+    ))
+
+
+@app.post("/api/rooms/{code}/join")
+async def join_room(code: str, request: Request) -> Dict[str, Any]:
+    payload = await parse_request_model(request, JoinRequest)
+    return join_room_payload(code, payload)
+
+
+@app.get("/api/live/{code}/join")
+def join_room_live(code: str, player_name: str) -> Dict[str, Any]:
+    return join_room_payload(code, JoinRequest(player_name=player_name))
+
+
+@app.post("/api/rooms/{code}/start")
+def start_room(code: str) -> Dict[str, Any]:
+    return start_room_payload(code)
+
+
+@app.get("/api/live/{code}/start")
+def start_room_live(code: str) -> Dict[str, Any]:
+    return start_room_payload(code)
+
+
+@app.post("/api/rooms/{code}/answer")
+async def submit_answer(code: str, request: Request) -> Dict[str, Any]:
+    payload = await parse_request_model(request, AnswerRequest)
+    return submit_answer_payload(code, payload)
+
+
+@app.get("/api/live/{code}/answer")
+def submit_answer_live(code: str, player_id: str, selected_option: int) -> Dict[str, Any]:
+    return submit_answer_payload(
+        code,
+        AnswerRequest(player_id=player_id, selected_option=selected_option),
+    )
 
 
 @app.get("/api/rooms/{code}")
